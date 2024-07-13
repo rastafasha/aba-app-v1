@@ -8,7 +8,23 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Location } from '@angular/common';
 // declare function alertClose():any;
 declare var $:any;  
-@Component({
+
+
+export interface ResponseBackend{
+  users:User[];
+  doctores:any [];
+  locations:any[];
+  location:any;
+  insurances:any[];
+ }
+export interface User{
+  id:string;
+  full_name:string;
+  status:string;
+  roles:any [];
+  insurances:string;
+ }
+ @Component({
   selector: 'app-edit-patient-m',
   templateUrl: './edit-patient-m.component.html',
   styleUrls: ['./edit-patient-m.component.scss']
@@ -20,6 +36,7 @@ export class EditPatientMComponent {
   public selectedValueInsurer!: string;
   public selectedValueCode!: string;
   public selectedValuePosCovered!: string;
+  
   option_selected:number = 0;
 
   public patient_id: any;
@@ -205,31 +222,36 @@ export class EditPatientMComponent {
     });
   }
 
-  getConfig(){
-    this.patientService.listConfig(this.selectedValueLocation).subscribe((resp:any)=>{
-      // console.log(resp);
-      this.specialists = resp.specialists;
+  getInitConfig(){
+    this.patientService.listConfig(this.patient_selected.location_id).subscribe((resp:any)=>{
+      console.log(resp);
+      this.specialists = resp.users;
       this.insurances = resp.insurances;
       this.insurance_id = resp.insurances.length > 0 ? resp.insurances[0].id : '';
-      // console.log(this.insurance_id);
-      // this.insurances_name = resp.insurances[0].insurer_name;
-      // console.log(this.insurances_name);
+      
+      this.location = resp.location;
       this.locations = resp.locations;
-      this.roles_rbt = resp.roles_rbt;
-      this.roles_bcba = resp.roles_bcba;
-      this.roles_manager = resp.roles_manager;
-      this.role_localmanager = resp.role_localmanager;
-
+      this.roles_rbt = this.specialists.filter(user=> user.roles[0].name == 'RBT');
+      this.roles_bcba = this.specialists.filter(user=> user.roles[0].name == 'BCBA');
+     
+    })
+  }
+  getConfig(){
+    this.patientService.listConfig(this.selectedValueLocation).subscribe((resp:any)=>{
+      console.log(resp);
+      this.specialists = resp.users;
+      this.insurances = resp.insurances;
+      this.insurance_id = resp.insurances.length > 0 ? resp.insurances[0].id : '';
+      
+      this.locations = resp.locations;
+      this.roles_rbt = this.specialists.filter(user=> user.roles[0].name == 'RBT');
+      this.roles_bcba = this.specialists.filter(user=> user.roles[0].name == 'BCBA');
+     
 
       this.insuranceService.showInsurance(this.insurance_id).subscribe((resp:any)=>{
-        // console.log(resp);
-        this.insuranceiddd= resp.id;
         
-        // console.log(this.insuranceiddd);
+        this.insuranceiddd= resp.id;
         this.insurer_name = resp.insurer_name;
-        // console.log(this.insurer_name);
-        // this.notes = resp.notes;
-        // this.services = resp.services;
   
         
       })
@@ -288,6 +310,7 @@ showUser(){
 
         //valores de los selectores
         this.selectedValuePosCovered = this.patient_selected.pos_covered;
+
         this.selectedValueLocation = this.patient_selected.location_id;
           this.selectedValue_rbt = this.patient_selected.rbt_home_id ? this.patient_selected.rbt_home_id : null;
           this.selectedValue_rbt2 = this.patient_selected.rbt2_school_id ? this.patient_selected.rbt2_school_id : null;
@@ -346,7 +369,7 @@ showUser(){
           this.FilesAdded = resp.patientFiles.data ? resp.patientFiles.data : null;
         })
 
-        this.getConfig();
+        this.getInitConfig();
     })
   }
 

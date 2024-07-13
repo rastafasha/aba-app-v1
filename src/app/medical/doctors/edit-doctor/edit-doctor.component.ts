@@ -151,29 +151,43 @@ export class EditDoctorComponent {
         this.languages = this.doctor_selected.languages;
         this.ss_number = this.doctor_selected.ss_number;
 
-        if(this.birth_date == 'null'){
+        if(this.birth_date ){
+          this.birth_date = new Date(this.doctor_selected.birth_date).toISOString();
+        }else{
           this.birth_date = this.doctor_selected.birth_date;
+
         }
-        if(this.date_of_hire == 'null'){
+        if(this.date_of_hire ){
+          this.date_of_hire = new Date(this.doctor_selected.date_of_hire).toISOString();
+        }else{
+
           this.date_of_hire = this.doctor_selected.date_of_hire;
         }
-        if(this.start_pay == 'null'){
+        if(this.start_pay ){
+          this.start_pay = new Date(this.doctor_selected.start_pay).toISOString();
+        }else{
+
           this.start_pay = this.doctor_selected.start_pay;
         }
-        if(this.driver_license_expiration == 'null'){
+        if(this.driver_license_expiration ){
+          this.driver_license_expiration = new Date(this.doctor_selected.driver_license_expiration).toISOString();
+        }else{
           this.driver_license_expiration = this.doctor_selected.driver_license_expiration;
+
         }
-        if(this.bacb_license_expiration == 'null'){
+        if(this.bacb_license_expiration ){
+          this.bacb_license_expiration = new Date(this.doctor_selected.bacb_license_expiration).toISOString();
+        }else{
+
           this.bacb_license_expiration = this.doctor_selected.bacb_license_expiration;
         }
 
         
-        this.birth_date = new Date(this.doctor_selected.birth_date).toISOString();
-        this.date_of_hire = new Date(this.doctor_selected.date_of_hire).toISOString();
-        this.start_pay = new Date(this.doctor_selected.start_pay).toISOString();
-        this.driver_license_expiration = new Date(this.doctor_selected.driver_license_expiration).toISOString();
-        this.bacb_license_expiration = new Date(this.doctor_selected.bacb_license_expiration).toISOString();
-
+        
+        
+        
+        
+        
         // this.birth_date = moment(this.doctor_selected.birth_date).format('YYYY-MM-DD');
         // this.date_of_hire = moment(this.doctor_selected.date_of_hire).format('YYYY-MM-DD');
         // this.start_pay = moment(this.doctor_selected.start_pay).format('YYYY-MM-DD');

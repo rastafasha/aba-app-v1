@@ -6,6 +6,22 @@ import { DoctorService } from '../../doctors/service/doctor.service';
 import { InsuranceService } from '../../insurance/service/insurance.service';
 import Swal from 'sweetalert2';
 import { Location } from '@angular/common';
+
+export interface ResponseBackend{
+  users:User[];
+  doctores:any [];
+  locations:any[];
+  location:any;
+  insurances:any[];
+ }
+export interface User{
+  id:string;
+  full_name:string;
+  status:string;
+  roles:any [];
+  insurances:string;
+ }
+
 @Component({
   selector: 'app-add-patient-m',
   templateUrl: './add-patient-m.component.html',
@@ -185,18 +201,20 @@ export class AddPatientMComponent {
   }
 
   getConfig(){
-    this.patientService.listConfig(this.selectedValueLocation).subscribe((resp:any)=>{
+    this.patientService.listConfig(this.selectedValueLocation).subscribe((resp:ResponseBackend)=>{
       console.log(resp);
-      this.specialists = resp.user;
       this.locations = resp.locations;
-      this.doctor = resp.user;
-      this.roles_doctor = resp.user.roles;
-      console.log(this.roles_doctor);
+      this.specialists = resp.users;
+      console.log('Doctores', this.specialists);
       this.insurances = resp.insurances;
-      this.roles_rbt = this.doctor.roles?.[0].name === 'RBT' ? true : false;
+
+      this.roles_rbt = this.specialists.filter(user=> user.roles[0].name == 'RBT');
+      
       console.log(this.roles_rbt);
-      // this.roles_bcba = this.user?.roles?.[0] === 'BCBA';
-      this.roles_bcba = this.doctor.roles?.[0].name === 'BCBA' ? true : false;
+      
+      this.roles_bcba = this.specialists.filter(user=> user.roles[0].name == 'BCBA');
+      this.roles_bcba = this.doctor.roles[0];
+      // this.roles_bcba = this.doctor.roles?.[0].name === 'BCBA' ? true : false;
       console.log(this.roles_bcba);
       // this.insurance_id = resp.insurances[0].id;
       // console.log(this.insurance_codes);

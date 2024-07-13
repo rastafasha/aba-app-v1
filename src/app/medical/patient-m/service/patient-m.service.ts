@@ -112,10 +112,10 @@ export class PatientMService {
     return this.http.get(URL,{headers:headers});
   }
 
-  listConfig(location_id:any): Observable<any[]>{
+  listConfig(location_id:any): Observable<any>{
     let headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token})
     let URL = url_servicios+'/patients/config/'+location_id;
-    return this.http.get<any[]>(URL, {headers:headers}).pipe(
+    return this.http.get<any>(URL, {headers:headers}).pipe(
       map((resp: any) => resp)
     );
 

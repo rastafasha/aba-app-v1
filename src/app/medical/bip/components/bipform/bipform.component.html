@@ -244,19 +244,45 @@
                                                 <tbody>
                                                     <tr *ngFor="let maladap of maladaptives; let i = index">
                                                         <td>
-                                                            {{maladap.maladaptive_behavior}}
+                                                            <!-- {{maladap.maladaptive_behavior}} -->
+                                                            <input class="form-control" name="maladaptive_behavior"
+                                                            [ngModelOptions]="{standalone: true}"  
+                                                            (change)="cambiarStatusSto(maladap)"
+                                                            [(ngModel)]="maladap.maladaptive_behavior" type="text"  >
                                                         </td>
                                                         <td>
-                                                            {{maladap.topografical_definition}}
+                                                            <!-- {{maladap.topografical_definition}} -->
+                                                            <textarea class="form-control" name="initial_interesting"
+                                                            [ngModelOptions]="{standalone: true}" 
+                                                            (change)="cambiarStatusSto(maladap)"
+                                                             [(ngModel)]="maladap.topografical_definition" rows="3" cols="30"></textarea>
                                                         </td>
                                                         <td>
-                                                             {{maladap.baseline_level}}
+                                                             <!-- {{maladap.baseline_level}} -->
+                                                             <input class="form-control" name="baseline_level" 
+                                                             [ngModelOptions]="{standalone: true}"  
+                                                             (change)="cambiarStatusSto(maladap)"
+                                                             [(ngModel)]="maladap.baseline_level" type="text"  >
                                                         </td>
                                                         <td>
-                                                             {{maladap.baseline_date| date}}
+                                                             <!-- {{maladap.baseline_date| date}} -->
+                                                             
+                                                             <div class="form-group local-forms">
+                                                                <input class="form-control datetimepicker"  name="baseline_date" 
+                                                                [(ngModel)]="maladap.baseline_date" type="text" matInput [matDatepicker]="picker"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                (change)="cambiarStatusSto(maladap)"  >
+                                                                <mat-datepicker #picker></mat-datepicker>
+                                                                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                                            </div>
                                                         </td>
                                                         <td>
-                                                            {{maladap.initial_interesting}}
+                                                            <!-- {{maladap.initial_interesting}} -->
+                                                             
+                                                            <input class="form-control" name="baseline_level" 
+                                                            [ngModelOptions]="{standalone: true}" 
+                                                            (change)="cambiarStatusSto(maladap)"
+                                                            [(ngModel)]="maladap.initial_interesting" type="number"  >
                                                         </td>
                                                         <td>
                                                             <button class="btn btn-outline-danger btn-sm" (click)="deleteMaladaptive(i)">x</button>

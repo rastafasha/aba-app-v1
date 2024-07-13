@@ -114,15 +114,12 @@ export class LoginComponent implements OnInit {
       if(this.user.roles == 'SUPERADMIN' ){
         this.router.navigate([routes.adminDashboard]);
       }
+      // solo tiene una locacion pero se comporta como superadmin
       if(this.user.roles == 'MANAGER' ){
         // this.router.navigate([routes.adminDashboard]);
         this.router.navigate(['location/view/', this.user.location_id]);
       }
-      if(this.user.roles == 'LM' ){
-        // this.router.navigate([routes.adminDashboard]);
-        this.router.navigate(['location/view/', this.user.location_id]);
-      }
-      //roles secundarios
+      //roles secundarios son multilocation
       if(this.user.roles == 'BCBA' ){
         this.router.navigate(['doctors/profile/', this.user.id]);
       }

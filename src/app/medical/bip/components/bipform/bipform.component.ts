@@ -69,6 +69,9 @@ export class BipformComponent {
   public baseline_level: any;
   public baseline_date: any;
   public initial_interesting: any;
+
+  public maladaptive_edit: any = [];
+  
   
   
   //assestments
@@ -298,8 +301,30 @@ export class BipformComponent {
   // deleteAssesstmentOption(i:any){
   //   this.assesstments.splice(i,1);
   // }
+
   
+  cambiarStatusSto(maladap:any){debugger
+    this.maladaptive_edit = maladap;
+    console.log(this.maladaptive_edit);
+
+    // let data ={
+    //   rbt_training_goals: this.training_goals,
+    // }
+    
+    // this.monitoringEvaluatingService.editMonitoringEvaluating(data, this.monitoringtid).subscribe(
+    //   resp =>{
+    //     // console.log(resp);
+    //     // this.getTableData();
+    //     Swal.fire('Updated', `Goal Updated successfully!`, 'success');
+    //     this.ngOnInit();
+    //   }
+    // )
+  }
+
 //fin listados
+
+
+
 
 
   save(){
