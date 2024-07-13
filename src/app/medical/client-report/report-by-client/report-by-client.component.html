@@ -1,0 +1,442 @@
+<div class="page-wrapper">
+    <div class="content">
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <!-- <ul class="breadcrumb">
+                        <li class="breadcrumb-item active"><a routerLink="/">Dashboard </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active"><a routerLink="/patients/list">Client List  </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">Log Report by Client</li>
+                    </ul> -->
+                    <div class=" doctor-submit text-start">
+                        <button class="btn btn-primary btn-sm " (click)="goBack() ">Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div class="card card-table show-entire">
+                    <div class="card-body">
+
+                        <!-- Table Header -->
+                        <div class="staff-search-table">
+                            <form>
+                                <div class="row">
+                                    <!-- <div class="col-12 col-md-6 col-xl-4">  
+                                        <div class="form-group local-forms">
+                                            <label >Doctor Name </label>
+                                            <input [(ngModel)]="searchDataDoctor" name="searchDataDoctor" class="form-control" type="text"  >
+                                        </div>
+                                    </div> -->
+                                    <!-- <div class="col-12 col-md-6 col-xl-4">  
+                                        <div class="form-group local-forms">
+                                            <label >Patient Name </label>
+                                            <input [(ngModel)]="searchDataValue" name="searchDataValue" class="form-control" type="text"  >
+                                        </div>
+                                    </div> -->
+                                    <!-- <div class="col-12 col-md-6 col-xl-4">
+                                        <div class="form-group local-forms">
+                                            <label >Specialities </label>
+                                            <mat-select [(ngModel)]="speciality_id" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select Speciality">
+                                              <mat-option *ngFor="let data of specialities" [value]="data.id">
+                                              {{data.name}}
+                                              </mat-option>
+                                          </mat-select>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-12 col-md-6 col-xl-4">
+                                        <div class="form-group local-forms">
+                                            <label >From </label>
+                                            <input class="form-control datetimepicker" name="date_start" [(ngModel)]="date_start" type="date"   >
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-xl-4">
+                                        <div class="form-group local-forms">
+                                            <label >To </label>
+                                            <input class="form-control datetimepicker" name="date_end" [(ngModel)]="date_end" type="date"   >
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-xl-4">
+                                        <div class="doctor-submit">
+                                            <button type="button" class="btn btn-primary submit-list-form me-2" (click)="searchData(patientId)">Search</button>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <div class="doctor-submit">
+                                            <button type="button" class="btn btn-outline-primary submit-list-form me-2" (click)="PageSize()"><img src="assets/img/icons/re-fresh.svg" alt=""></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- /Table Header -->
+
+                        <!-- paciente -->
+                        <div class="container">
+                            <div class="row align-items-center py-4">
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label>Patient Name <span class="login-danger">*</span></label>
+                                        <input class="form-control" name="patientName" disabled
+                                            [(ngModel)]="patientName" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label>Patient ID <span class="login-danger">*</span></label>
+                                        <input class="form-control" name="patientID" disabled [(ngModel)]="patientID"
+                                            type="text">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label>Insurer <span class="login-danger">*</span></label>
+                                        <input class="form-control" name="insurer_name" disabled
+                                            [(ngModel)]="insurer_name" type="text">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label>Insurer rate <span class="login-danger">*</span></label>
+                                        <input class="form-control" name="n_units" disabled [(ngModel)]="n_units"
+                                            type="text">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label>CPT <span class="login-danger">*</span></label>
+                                        <input class="form-control" name="cpt" disabled [(ngModel)]="cpt" type="text">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- paciente -->
+
+                        
+
+                        <div class="container">
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>PA Services</th>
+                                            <th>CPT</th>
+                                            <th>Units Allowed</th>
+                                            <th>Beginning</th>
+                                            <th>Expiration</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let asses of pa_assessmentsgroup; let i = index">
+                                            <td>
+                                                {{asses.pa_services}}
+                                            </td>
+                                            <td>
+                                                {{asses.cpt}}
+                                            </td>
+                                            <td>
+                                                {{asses.n_units}}
+                                            </td>
+                                            <td>
+                                                {{asses.pa_services_start_date | date}}
+                                            </td>
+                                            <td>
+                                                {{asses.pa_services_end_date | date}}
+                                            </td>
+
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <br>
+                        <hr>
+
+
+                        <div class="table-responsive">
+                            <table matSort (matSortChange)="sortData($event)"
+                                class="table border-0 custom-table comman-table datatable mb-0">
+                                <thead>
+                                    <tr>
+
+                                        <th mat-sort-header="date_note">Date of Note</th>
+                                        <th mat-sort-header="pos">POS</th>
+                                        <th mat-sort-header="time_in">Total Hours</th>
+                                        <th mat-sort-header="cpt">CPT</th>
+                                        <th mat-sort-header="md">Modifier </th>
+                                        <th mat-sort-header="md2">Modifier </th>
+                                        <th mat-sort-header="totalunits">Total Units</th>
+                                        <th mat-sort-header="units">Units Price</th>
+                                        <th mat-sort-header="charges">Charges</th>
+                                        <!-- <th mat-sort-header="total">Total</th> -->
+                                        <th mat-sort-header="sponsor_id">Provider</th>
+                                        <th mat-sort-header="pa_number">PA Number</th>
+                                        <th mat-sort-header="npi">Npi</th>
+                                        <th mat-sort-header="billed">Billed</th>
+                                        <th mat-sort-header="pay">Pay</th>
+                                        <!-- <th mat-sort-header="created">Created At</th> -->
+                                        <th></th> <!--acciones -->
+                                    </tr>
+                                </thead>
+                                <!-- *ngIf="billing_generals?.length > 0; else noData" -->
+                                <tbody>
+                                    <tr *ngFor="let data of clientReportList">
+                                        <td>
+                                            {{data.session_date |date}}
+                                        </td>
+                                        <td>{{data.pos}}</td>
+                                        <!-- | transformToDate -->
+                                        <td>{{data.total_hours   }}</td>
+
+                                        <td>{{cpt}}</td>
+                                        <!-- <td>{{data.md}}</td> -->
+                                        <td>
+                                            <span *ngIf="insurer_name == 'Medicaid'">
+                                                <div class="form-group local-forms">
+                                                    <select
+                                                        class="form-control form-select-solid fw-bolder"
+                                                        name="md" #md [(ngModel)]="data.md" (change)="isSelectedModifier(md.value)"   >
+                                                        <option>-- Select --</option>
+                                                        <option value="HM">HM</option>
+                                                        <option value="XE">XE</option>
+                                                        <option value="HO">HO</option>
+                                                    </select>
+                                                    
+                                                </div>
+                                            </span>
+                                            <span *ngIf="insurer_name !== 'Medicaid'">
+                                                <div class="form-group local-forms">
+                                                    <select
+                                                        class="form-control form-select-solid fw-bolder"
+                                                        name="md" #md  [(ngModel)]="data.md" (change)="isSelectedModifier(md.value)"  >
+                                                        <option>-- Select --</option>
+                                                        <option value="HM">HM</option>
+                                                        <option value="HO">HO</option>
+                                                    </select>
+                                                </div>
+                                            </span>
+                                            
+                                        </td>
+                                        <td>
+                                            <span *ngIf="insurer_name == 'Medicaid'">
+                                                <div class="form-group local-forms">
+                                                    <select
+                                                        class="form-control form-select-solid fw-bolder"
+                                                        name="md2" #md2 [(ngModel)]="data.md2"  (change)="isSelectedModifier2(md2.value)"  >
+                                                        <option>-- Select --</option>
+                                                        <option value="HM">HM</option>
+                                                        <option value="XE">XE</option>
+                                                        <option value="HO">HO</option>
+                                                    </select>
+                                                </div>
+                                            </span>
+                                            <span *ngIf="insurer_name !== 'Medicaid'">
+                                                <div class="form-group local-forms">
+                                                    <select
+                                                        class="form-control form-select-solid fw-bolder"
+                                                        name="md2" #md2 [(ngModel)]="data.md2"  (change)="isSelectedModifier2(md2.value)"  >
+                                                        <option>-- Select --</option>
+                                                        <option value="HM">HM</option>
+                                                        <option value="HO">HO</option>
+                                                    </select>
+                                                </div>
+                                            </span>
+                                        </td>
+                                        
+                                        <!-- <td>{{(( data.total_units * unitPrize - md | currency))}}</td> -->
+                                        <td>{{data.session_units_total}}</td>
+                                        <td>{{unitPrize | currency}}</td>
+                                        <td>
+                                            {{(( data.session_units_total * unitPrize  | currency))}}
+                                            <span *ngIf="md == 'XE' || md2 == 'XE'">
+                                               xe:{{(( data.session_units_total * unitPrize * xe | currency))}}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            {{data.tecnicoRbt.name}}
+                                        </td>
+
+                                        <td>{{pa_number}}</td>
+                                        <td>{{data.supervisor.npi}} </td>
+
+                                        <td>
+                                            
+                                            <div  class="note-checkit">
+                                                <label class="custom_check">
+                                                    <input type="checkbox" name="billed" [(ngModel)]="data.billed"  (change)="isCheckedBilled()"    >
+                                                    <span class="checkmark" value="false"></span>  
+                                                </label>
+                                            </div>
+
+                                            <!-- <div class="form-group ">
+                                                <div _ngcontent-rhp-c92="" class="card-header d-flex justify-content-between align-items-center">
+                                                    
+                                                    <div _ngcontent-rhp-c92="" class="status-toggle d-flex justify-content-between align-items-center">
+                                                        <input _ngcontent-rhp-c92="" type="checkbox" id="billed" class="check" name="billed" [ngModelOptions]="{standalone: true}" >
+                                                        <label _ngcontent-rhp-c92="" for="billed" class="checktoggle" value="true">checkbox</label>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                        </td>
+                                        <td>
+                                            <div  class="note-checkit">
+                                                <label class="custom_check">
+                                                    <input type="checkbox" name="pay" [(ngModel)]="data.pay" (change)="isCheckedPay()"    >
+                                                    <span class="checkmark" value="false"></span> 
+                                                </label>
+                                            </div>
+                                            <!-- <div class="form-group ">
+                                                <div _ngcontent-rhp-c92="" class="card-header d-flex justify-content-between align-items-center">
+                                                    
+                                                    <div _ngcontent-rhp-c92="" class="status-toggle d-flex justify-content-between align-items-center">
+                                                        <input _ngcontent-rhp-c92="" type="checkbox" id="pay" class="check" name="pay" [ngModelOptions]="{standalone: true}" >
+                                                        <label _ngcontent-rhp-c92="" for="pay" class="checktoggle" value="true">checkbox</label>
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                        </td>
+
+                                        <!-- <td>{{data.created_at | date }}</td> -->
+
+                                        <td class="text-end">
+                                            <div class="doctor-submit text-end">
+                                                <button type="button" class="btn btn-primary submit-form me-2" (click)="save(data)">Save</button>
+                                                
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <ng-template #noData>
+                                    <p>No data available.</p>
+                                </ng-template>
+                            </table>
+                            <div class="table_footer">
+                                <div class="col-sm-12 col-md-5">
+                                    <div class="dataTables_info">
+                                        Showing {{ serialNumberArray[0] }} to
+                                        {{ serialNumberArray[serialNumberArray.length - 1] }} of
+                                        {{ totalDataClientReport }} entries
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-7">
+                                    <div class="pagination_section">
+                                        <ul class="pagination">
+                                            <li class="page-item" [ngClass]="{
+                                          disabled: currentPage === 1
+                                        }">
+                                                <a (click)="getMoreData('previous')" class="page-link"
+                                                    href="javascript:void(0);" tabindex="-1">Previous</a>
+                                            </li>
+
+                                            <ng-container *ngFor="let item of pageNumberArray; let i = index">
+                                                <li class="page-item" [class.active]="item === currentPage" [ngClass]="
+                                            (pageNumberArray[currentPage - 2] > item &&
+                                              item !== 1 &&
+                                              pageNumberArray.length > 6) ||
+                                            (pageNumberArray[currentPage] < item &&
+                                              item !== 1 &&
+                                              pageNumberArray.length > 6 &&
+                                              pageNumberArray.length !== item)
+                                              ? 'hide-page-no'
+                                              : 'show-page-no'
+                                          ">
+                                                    <a (click)="moveToPage(item)" class="page-link"
+                                                        href="javascript:void(0);">
+                                                        {{ item }}
+                                                    </a>
+                                                </li>
+                                                <li class="page-item" *ngIf="
+                                            i === 0 &&
+                                            pageNumberArray.length > 6 &&
+                                            currentPage > 2
+                                          " [hidden]="currentPage === 1" (click)="moveToPage(currentPage - 2)">
+                                                    <a class="page-link" href="javascript:void(0);">
+                                                        ...
+                                                    </a>
+                                                </li>
+                                                <!-- <li
+                                          *ngIf="
+                                            i === pageNumberArray.length - 2 &&
+                                            pageNumberArray.length > 6
+                                          "
+                                          [hidden]="
+                                            currentPage >=
+                                              pageNumberArray[pageNumberArray.length - 2] ||
+                                            totalData <
+                                              serialNumberArray[serialNumberArray.length - 1]
+                                          "
+                                          class="page-item"
+                                          (click)="moveToPage(currentPage + 2)"
+                                        >
+                                          <a class="page-link" href="javascript:void(0);">
+                                            ...
+                                          </a>
+                                        </li> -->
+                                            </ng-container>
+
+                                            <li class="page-item" [ngClass]="{
+                                          disabled:
+                                            currentPage ===
+                                              pageNumberArray[pageNumberArray.length - 1] ||
+                                              clientReportList.length === 0
+                                        }">
+                                                <a (click)="getMoreData('next')" class="page-link"
+                                                    href="javascript:void(0);">Next
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- totales -->
+                        <div class="container">
+
+                            <div class="row">
+                              <!-- <div class="col-12 col-md-6 col-xl-4">
+                                <div class="form-group local-forms">
+                                    <label >Billing Total <span class="login-danger">*</span></label>
+                                    <input class="form-control"  name="billing_total"  disabled [(ngModel)]="billing_total" type="number"  >
+                                </div>
+                            </div> -->
+                              <div class="col-12 col-md-6 col-xl-4">
+                                <div class="form-group local-forms">
+                                    <label >Week Total Hours<span class="login-danger">*</span></label>
+                                    <input class="form-control"  name="week_total_hours"  disabled [(ngModel)]="week_total_hours" type="text"  >
+                                </div>
+                            </div>
+                              <div class="col-12 col-md-6 col-xl-4">
+                                <div class="form-group local-forms">
+                                    <label >Week Total Units<span class="login-danger">*</span></label>
+                                    <input class="form-control"  name="week_total_units"  disabled [(ngModel)]="week_total_units" type="number"  >
+                                </div>
+                            </div>
+                            </div>
+                          </div>
+                          <!-- totales -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,438 @@
+<div class="col-sm-12" *ngIf="!maladaptives">
+    please fill maladaptives to view this section.
+</div>
+
+<div class="col-sm-12" *ngIf="maladaptives" >
+    <div class="card" >
+        <div class="card-body">
+            <div class="col-xs-12">
+                <!-- lista inicial -->
+                <div class="table-responsive" *ngIf="!maladaptiveSelected && !maladaptiveSelectedSon">
+                    <h3 class="card-title">Maladaptives Behaviors</h3>
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th>Behavior</th>
+                                <th>Topographical Definition</th>
+                                <th>Baseline Level</th>
+                                <th>Intensity Initial</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let maladap of maladaptives; let i = index">
+                                <td>
+                                    {{maladap.maladaptive_behavior}}
+                                </td>
+                                <td>
+                                     {{maladap.topografical_definition}}
+                                </td>
+                                <td>
+                                     {{maladap.baseline_level}}
+                                </td>
+                                <td>
+                                    {{maladap.initial_interesting}}
+                                </td>
+                                <td>
+                                    
+                                    <button class="btn btn-outline-primary btn-sm" (click)="selectedMaladaptive(maladap)"><i class="fa fa-edit"></i> Edit</button>
+                                    <button class="btn btn-outline-success btn-sm" (click)="selectedMaladaptiveGraphic(maladap)"><i class="fa fa-bar-chart" ></i> View</button>
+                                    <!-- <button class="btn btn-danger btn-sm" (click)="deleteMaladaptive(i)">x</button> -->
+                                </td>
+                            </tr>
+                            
+                            
+                        </tbody>
+                    </table>
+                    
+                </div>
+                <!-- fin lista inicial    -->
+                <div *ngIf="maladaptiveSelected" class=" doctor-submit text-end">
+                    <button class="btn btn-primary btn-sm " (click)="back() ">Back</button>
+                </div>
+                <!-- maladaptiveSelected -->
+                <div class="rbt-dashboard-table table-responsive mobile-table-750" *ngIf="maladaptiveSelected">
+                    
+
+                    <form autocomplete="false">
+                        <div class="row" >
+        
+                            <h3 class="card-title">Reduction Goals</h3>
+                            <!-- goals form -->
+                            
+                            <!-- sto -->
+                            <div class="row align-items-center" >
+                                <div class="col-xs-12 col-md-6 ">  
+                                    <div class="form-group local-forms">
+                                        <label >Goal:  <span class="login-danger">*</span></label>
+                                        <input class="form-control" name="maladaptive_title"  disabled [(ngModel)]="maladaptiveSelected.maladaptive_behavior" type="text" placeholder="maladaptive_title"  >
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6 ">
+                                    <div class="form-group local-forms">
+                                        <label>Curren Status <span class="login-danger">*</span></label>
+                                        <input class="form-control"  name="current_status"   [(ngModel)]="current_status" type="text"  >
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="row align-items-center" >
+                                        <h3 class="card-title">STO</h3>
+                                        
+                                        <div class="col-xs-12 col-md-4 col-xl-4">
+                                            <div class="form-group local-forms">
+                                                <label>STO <span class="login-danger">*</span></label>
+                                                <input class="form-control"  name="sto"   [(ngModel)]="sto" type="text"  >
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-xl-4">
+                                            <div class="form-group local-forms">
+                                                <label >Status<span class="login-danger">*</span></label>
+                                                <select
+                                                    class="form-control form-select-solid fw-bolder"
+                                                    name="status_sto" [(ngModel)]="status_sto" [ngModelOptions]="{standalone: true}" >
+                                                    <option>-- Select --</option>
+                                                    <option value="inprogress">in progress</option>
+                                                    <option value="initiated">Initiated</option>
+                                                    <option value="mastered">mastered</option>
+                                                    <option value="on hold">On Hold</option>
+                                                    <option value="discontinued">Discontinued</option>
+                                                    <option value="maintenance">Maintenance</option>
+                                                      </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4 col-xl-4">
+                                            <div class="form-group local-forms">
+                                                <label >Date<span class="login-danger">*</span></label>
+                                                <input class="form-control datetimepicker" name="date_sto" [(ngModel)]="date_sto" type="text" matInput [matDatepicker]="pickerDateSTO"  >
+                                                <mat-datepicker #pickerDateSTO></mat-datepicker>
+                                                <mat-datepicker-toggle matIconSuffix [for]="pickerDateSTO"></mat-datepicker-toggle>
+                                            </div>
+                                        </div>
+        
+                                    </div>
+                                    <div class="row align-items-center" >
+                                        <div class="col-xs-12">
+                                            <div class="form-group local-forms">
+                                                <label>Description <span class="login-danger">*</span></label>
+                                                <textarea class="form-control" name="decription_sto" [(ngModel)]="decription_sto" rows="4" cols="30"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-3 doctor-submit text-end">
+                                        <button class="btn btn-primary btn-sm" (click)="addSTOGoal()">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- fin sto -->
+
+                            <!-- goals sto -->
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="card-title">Goals STO</h3>
+                                    <div class="col-xs-12">
+                                        <div class="table-responsive">
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>STO</th>
+                                                        <th>goal</th>
+                                                        <th>description</th>
+                                                        <th>status</th>
+                                                        <th>update status</th>
+                                                        <th>date</th>
+                                                    </tr>
+                                                </thead>
+                                                <!-- *ngIf="goalReductions !== null || goalReductionId !== undefined && current_status " -->
+                                                <tbody >
+                                                    <tr *ngFor="let goalsto of golsto; let i = index">
+                                                        <td>
+                                                            {{goalsto.sto}}
+                                                        </td>
+                                                        <td>
+                                                             {{goalsto.maladaptive}}
+                                                        </td>
+                                                        <td>
+                                                            {{goalsto.decription_sto}}
+                                                        </td>
+                                                        <td>
+                                                            <!-- {{goalsto.status_sto}} -->
+                                                            <span class="badge bg-success" *ngIf="goalsto.status_sto === 'inprogress'">In progress</span>
+                                                            <span class="badge bg-success" *ngIf="goalsto.status_sto === 'initiated'">Initiated</span>
+                                                            <span class="badge bg-primary" *ngIf="goalsto.status_sto === 'mastered'">Mastered</span>
+                                                            <span class="badge bg-warning" *ngIf="goalsto.status_sto === 'on hold'">On Hold</span>
+                                                            <span class="badge bg-danger" *ngIf="goalsto.status_sto === 'discontinued'">Discontinued</span>
+                                                            <span class="badge bg-warning" *ngIf="goalsto.status_sto === 'maintenance'">Maintenance</span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-group local-forms">
+                                                                <select
+                                                                    class="form-control form-select-solid fw-bolder"
+                                                                    name="status_sto_edit" [(ngModel)]="goalsto.status_sto" [ngModelOptions]="{standalone: true}"  (change)="cambiarStatus(goalsto)">
+                                                                    <option>-- Select --</option>
+                                                                      <option value="inprogress">in progress</option>
+                                                                      <option value="initiated">Initiated</option>
+                                                                      <option value="mastered">mastered</option>
+                                                                      <option value="on hold">On Hold</option>
+                                                                      <option value="discontinued">Discontinued</option>
+                                                                      <option value="maintenance">Maintenance</option>
+                                                                      </select>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            {{goalsto.date_sto | date}}
+                                                        </td>
+                                                        <td>
+                                                            <!-- <button class="btn btn-outline-success btn-sm" (click)="selectedMaladaptiveSon(goalsto)"><i class="fa fa-bar-chart"></i></button> -->
+                                                            <button class="btn btn-outline-danger btn-sm" (click)="deleteSTOGoal(goalsto)">x</button>
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <!-- fin goals sto -->
+
+                            <!--  lto -->
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="row align-items-center" >
+                                        <h3 class="card-title">LTO</h3>
+                                        
+                                        <div class="col-xs-12 col-md-4">
+                                            <div class="form-group local-forms">
+                                                <label>LTO <span class="login-danger">*</span></label>
+                                                <input class="form-control"  name="lto"   [(ngModel)]="lto" type="text"  >
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <div class="form-group local-forms">
+                                                <label >Status<span class="login-danger">*</span></label>
+                                                <select
+                                                    class="form-control form-select-solid fw-bolder"
+                                                    name="status_lto" [ngModelOptions]="{standalone: true}"  [(ngModel)]="status_lto">
+                                                    <option>-- Select --</option>
+                                                    <option value="inprogress">in progress</option>
+                                                    <option value="initiated">Initiated</option>
+                                                    <option value="mastered">mastered</option>
+                                                    <option value="on hold">On Hold</option>
+                                                    <option value="discontinued">Discontinued</option>
+                                                    <option value="maintenance">Maintenance</option>
+                                                    </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-4">
+                                            <div class="form-group local-forms">
+                                                <label >Date<span class="login-danger">*</span></label>
+                                                <input class="form-control datetimepicker" name="date_lto" [(ngModel)]="date_lto" type="text" matInput [matDatepicker]="pickerDateLTO"  >
+                                                <mat-datepicker #pickerDateLTO></mat-datepicker>
+                                                <mat-datepicker-toggle matIconSuffix [for]="pickerDateLTO"></mat-datepicker-toggle>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row align-items-center" >
+                                        <div class="col-xs-12">
+                                            <div class="form-group local-forms">
+                                                <label>Description LTO <span class="login-danger">*</span></label>
+                                                <textarea class="form-control" name="decription_lto" [(ngModel)]="decription_lto" rows="4" cols="30"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-3 doctor-submit text-end">
+                                        <button class="btn btn-primary btn-sm" (click)="addLTOGoal()">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- fin  lto -->
+                            <!--  goals lto -->
+                            <div class="card">
+                                <div class="card-body">
+                                    <h3 class="card-title">Goals LTO</h3>
+                                    <div class="col-xs-12">
+                                        <div class="table-responsive">
+                                            <table class="table mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>LTO</th>
+                                                        <th>decription</th>
+                                                        <th>status</th>
+                                                        <th>update status</th>
+                                                        <th>date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody *ngIf="goalmaladaptive !== null && current_status  ">
+                                                    <tr *ngFor="let goall of gollto; let i = index">
+                                                        <td>
+                                                            {{goall.lto}}
+                                                        </td>
+                                                        <td>
+                                                            {{goall.decription_lto}}
+                                                        </td>
+                                                        <td>
+                                                            <!-- {{goall.status_lto}} -->
+                                                            <span class="badge bg-success" *ngIf="goall.status_lto === 'inprogress'">In progress</span>
+                                                            <span class="badge bg-success" *ngIf="goall.status_lto === 'initiated'">Initiated</span>
+                                                            <span class="badge bg-primary" *ngIf="goall.status_lto === 'mastered'">Mastered</span>
+                                                            <span class="badge bg-warning" *ngIf="goall.status_lto === 'on hold'">On Hold</span>
+                                                            <span class="badge bg-danger" *ngIf="goall.status_lto === 'discontinued'">Discontinued</span>
+                                                            <span class="badge bg-warning" *ngIf="goall.status_lto === 'maintenance'">Maintenance</span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-group local-forms">
+                                                                <select
+                                                                    class="form-control form-select-solid fw-bolder"
+                                                                    name="status_lto_edit" [(ngModel)]="goall.status_lto" [ngModelOptions]="{standalone: true}"  (change)="cambiarStatusLto(goallto)">
+                                                                    <option>-- Select --</option>
+                                                                      <option value="inprogress">in progress</option>
+                                                                      <option value="initiated">Initiated</option>
+                                                                      <option value="mastered">mastered</option>
+                                                                      <option value="on hold">On Hold</option>
+                                                                      <option value="discontinued">Discontinued</option>
+                                                                      <option value="maintenance">Maintenance</option>
+                                                                      </select>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            {{goall.date_lto | date}}
+                                                        </td>
+                                                        <td>
+                                                            <!-- <button class="btn btn-outline-success btn-sm" (click)="selectedMaladaptiveSon(goallto)"><i class="fa fa-bar-chart"></i></button> -->
+                                                            <button class="btn btn-outline-danger btn-sm" (click)="deleteLTOGoal(goall)">x</button>
+                                                        </td>
+                                                    </tr>
+                                                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <!-- fin goals lto -->
+                            
+                            
+                            <!-- validaciones -->
+                            <div class="form-group row" *ngIf="text_success">
+                                <div class="col-12">
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <strong>Exito!</strong>{{text_success}}.
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <div class="form-group row" *ngIf="text_validation">
+                                <div class="col-12">
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                        <strong>!</strong> {{ text_validation }}.
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true"> </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- validaciones -->
+                            
+                            <div class="col-12">
+                                <div class="doctor-submit text-end">
+                                    <button type="button" class="btn btn-primary submit-form me-2" (click)="saveGoal()">Save</button>
+                                    <!-- <button type="submit" class="btn btn-primary cancel-form">Cancel</button> -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </form>
+                    
+                    
+                    
+                    
+                </div>
+                <!-- fin maladaptiveSelected -->
+                <hr>
+                <!-- maladaptiveSelectedSon  grafico-->
+                <div *ngIf="maladaptiveSelectedSon" class=" doctor-submit text-end">
+                    <button class="btn btn-primary btn-sm" (click)="back() ">Back</button>
+                </div>
+                <div class="col-xs-12" *ngIf="maladaptiveSelectedSon">
+                    <div class="rbt-dashboard-table table-responsive mobile-table-750" >
+                        <!-- <h3 class="card-title"><b>Graphic:</b> {{maladaptive_child}}</h3>
+                        <div class="row" >
+                        </div> -->
+                        <app-chart-reduction [maladaptive_behavior]="maladaptiveSelectedSon.maladaptive_behavior"  [baseline_date]="maladaptiveSelectedSon.baseline_date" [baseline_level]="maladaptiveSelectedSon.baseline_level" [initial_interesting]="maladaptiveSelectedSon.initial_interesting"></app-chart-reduction>
+                    </div>
+                </div>
+                <!-- fin maladaptiveSelectedSon grafico -->
+            </div>
+            
+            
+            
+        </div>
+        
+    </div>
+    <!-- <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">Target Behavior to decrease</h3>
+            <div class="col-xs-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="col-xs-12">
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>STO</th>
+                                            <th>goal</th>
+                                            <th>decription_goal</th>
+                                            <th>status</th>
+                                            <th>date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let goalm of goals; let i = index">
+                                            <td>
+                                                {{goalm.sto}}
+                                            </td>
+                                            <td>
+                                                 {{goalm.goal}}
+                                            </td>
+                                            <td>
+                                                {{goalm.decription_goal}}
+                                            </td>
+                                            <td>
+                                                {{goalm.status}}
+                                            </td>
+                                            <td>
+                                                {{goalm.date}}
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-success btn-sm" (click)="selectedMaladaptiveSon(goalm)"><i class="fa-eye"></i></button>
+                                            </td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            
+            
+        </div>
+        
+    </div> -->
+
+        
+</div>

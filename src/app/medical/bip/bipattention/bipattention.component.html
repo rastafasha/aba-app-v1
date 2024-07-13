@@ -1,0 +1,191 @@
+<div class="page-wrapper">
+    <div class="content">
+    
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <!-- <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/patients/list">Clients List </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">Edit/ Add: Behavior analisis Assestment </li>
+                    </ul> -->
+                    <div class=" doctor-submit text-start">
+                        <button class="btn btn-primary btn-sm " (click)="goBack() ">Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+        <div class="row">
+            <!-- paciente -->
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form autocomplete="false">
+                            
+                            <!-- paciente -->
+                            <div class="row align-items-center py-4" >
+                                <div class="col-12 py-4">
+                                    <h4>Data Client</h4>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >Patient ID <span class="login-danger">*</span></label>
+                                        <input class="form-control"  name="patient_id"  disabled [(ngModel)]="patient_id" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-4">  
+                                    <div class="form-group local-forms">
+                                        <label >First Name <span class="login-danger">*</span></label>
+                                        <input class="form-control" name="first_name"  disabled [(ngModel)]="first_name" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >Last Name <span class="login-danger">*</span></label>
+                                        <input class="form-control" name="last_name"  disabled [(ngModel)]="last_name" type="text"  >
+                                    </div>
+                                </div>
+                               
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >Mobile <span class="login-danger">*</span></label>
+                                        <input class="form-control" name="phone"  disabled [(ngModel)]="phone" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-4">  
+                                    <div class="form-group local-forms">
+                                        <label >Parent/Guardian Name <span class="login-danger">*</span></label>
+                                        <input class="form-control" name="parent_guardian_name"  disabled [(ngModel)]="parent_guardian_name" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-4">  
+                                    <div class="form-group local-forms">
+                                        <label >Relationship <span class="login-danger">*</span></label>
+                                        <input class="form-control" name="relationship"  disabled [(ngModel)]="relationship" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-8">  
+                                    <div class="form-group local-forms">
+                                        <label >address <span class="login-danger">*</span></label>
+                                        <input class="form-control" name="address"  disabled [(ngModel)]="address" type="text"  >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-2">  
+                                    <div class="form-group local-forms">
+                                        <label >age <span class="login-danger">*</span></label>
+                                        <input class="form-control" name="age"  disabled [(ngModel)]="age" type="text"  >
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12 col-md-6 col-xl-2">
+                                    <div class="form-group local-forms">
+                                        <label >Birth day <span class="login-danger">*</span></label>
+                                        <input class="form-control datetimepicker" disabled name="birth_date" [(ngModel)]="birth_date" type="text" matInput [matDatepicker]="picker"  >
+                                        <mat-datepicker #picker></mat-datepicker>
+                                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <!-- paciente -->
+                        </form>
+                        
+                    </div>
+                </div>	
+                	
+            </div>
+            <!-- fin paciente -->
+            <div class="tab-content-set">
+                <ul class="nav">
+                    <li>
+                        <a href="#" onclick="return false;" [ngClass]="{'active': option_selected == 1}" (click)="optionSelected(1)"><span class="set-about-icon me-2"><img src="assets/img/icons/menu-icon-02.svg" alt=""></span>BIP</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="return false;" [ngClass]="{'active': option_selected == 2}" (click)="optionSelected(2)"><span class="set-about-icon me-2"><img src="assets/img/icons/menu-icon-02.svg" alt=""></span>Reduction Goals </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="return false;" [ngClass]="{'active': option_selected == 3}" (click)="optionSelected(3)"><span class="set-about-icon me-2"><img src="assets/img/icons/menu-icon-02.svg" alt=""></span>Replacement Goals </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="return false;" [ngClass]="{'active': option_selected == 4}" (click)="optionSelected(4)"><span class="set-about-icon me-2"><img src="assets/img/icons/menu-icon-02.svg" alt=""></span>Family Involvement</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="return false;" [ngClass]="{'active': option_selected == 5}" (click)="optionSelected(5)"><span class="set-about-icon me-2"><img src="assets/img/icons/menu-icon-02.svg" alt=""></span>Monitoring & Evaluating</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="return false;" [ngClass]="{'active': option_selected == 6}" (click)="optionSelected(6)"><span class="set-about-icon me-2"><img src="assets/img/icons/menu-icon-02.svg" alt=""></span>Behavior Assistant</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="return false;" [ngClass]="{'active': option_selected == 7}" (click)="optionSelected(7)"><span class="set-about-icon me-2"><img src="assets/img/icons/menu-icon-02.svg" alt=""></span>Generalization Training </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="return false;" [ngClass]="{'active': option_selected == 8}" (click)="optionSelected(8)"><span class="set-about-icon me-2"><img src="assets/img/icons/menu-icon-02.svg" alt=""></span>Crisis Plan</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="return false;" [ngClass]="{'active': option_selected == 9}" (click)="optionSelected(9)"><span class="set-about-icon me-2"><img src="assets/img/icons/menu-icon-02.svg" alt=""></span>De-escalation Techniques</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="return false;" [ngClass]="{'active': option_selected == 10}" (click)="optionSelected(10)"><span class="set-about-icon me-2"><img src="assets/img/icons/menu-icon-02.svg" alt=""></span>Consent to Treatment</a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/bip/profile/', patient_id]"><span class="set-about-icon me-2"><img src="assets/img/icons/menu-icon-02.svg" alt=""></span>View BIP</a>
+                    </li>
+                </ul>
+            </div>
+            <ng-container *ngIf="option_selected == 1">
+               <!-- bip --><app-bipform></app-bipform>
+               <!-- fin bip -->
+            </ng-container>	
+            <ng-container *ngIf="option_selected == 2">
+                <!-- Reduction Goal -->
+                <app-reduction-goal-form></app-reduction-goal-form>
+                <!-- fin Reduction Goal -->	
+            </ng-container>	
+            <ng-container *ngIf="option_selected == 3">
+                <!-- Reduction Goal -->
+                <!-- <app-sustitution-goal-form></app-sustitution-goal-form> -->
+                <app-sustitution-list></app-sustitution-list>
+                <!-- fin Reduction Goal -->	
+            </ng-container>	
+            <ng-container *ngIf="option_selected == 4">
+                <!-- Reduction Goal -->
+                <app-family-involvement-goal-form></app-family-involvement-goal-form>
+                <!-- fin Reduction Goal -->	
+            </ng-container>	
+            <ng-container *ngIf="option_selected == 5">
+                <!-- Reduction Goal -->
+                <app-monitoring-evaluating></app-monitoring-evaluating>
+                <!-- fin Reduction Goal -->	
+            </ng-container>	
+            <ng-container *ngIf="option_selected == 6">
+                <!-- Reduction Goal -->
+                <app-behavior-assistant></app-behavior-assistant>
+                <!-- fin Reduction Goal -->	
+            </ng-container>	
+            <ng-container *ngIf="option_selected == 7">
+                <!-- Reduction Goal -->
+                <app-generalization-training></app-generalization-training>
+                <!-- fin Reduction Goal -->	
+            </ng-container>	
+            <ng-container *ngIf="option_selected == 8">
+                <!-- Reduction Goal -->
+                <app-crisis-plan></app-crisis-plan>
+                <!-- fin Reduction Goal -->	
+            </ng-container>	
+            <ng-container *ngIf="option_selected == 9">
+                <!-- Reduction Goal -->
+                <app-de-escalation-tecniques></app-de-escalation-tecniques>
+                <!-- fin Reduction Goal -->	
+            </ng-container>	
+            <ng-container *ngIf="option_selected == 10">
+                <!-- Reduction Goal -->
+                <app-consent-treatment-form></app-consent-treatment-form>
+                <!-- fin Reduction Goal -->	
+            </ng-container>	
+            					
+        </div>
+    </div>
+</div>
+ 
