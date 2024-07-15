@@ -91,22 +91,47 @@
                                                             {{caregiver.caregiver_goal}}
                                                         </td>
                                                         <td>
-                                                             {{caregiver.outcome_measure}}
+                                                             <!-- {{caregiver.outcome_measure}} -->
+                                                             <textarea class="form-control" 
+                                                             [ngModelOptions]="{standalone: true}"
+                                                             name="outcome_measure" [(ngModel)]="caregiver.outcome_measure" ></textarea>
                                                         </td>
                                                         <td>
-                                                             {{caregiver.criteria}}
+                                                             <!-- {{caregiver.criteria}} -->
+                                                             <input class="form-control" 
+                                                             [ngModelOptions]="{standalone: true}"
+                                                             name="criteria"  [(ngModel)]="caregiver.criteria" type="text"  >
                                                         </td>
                                                         <td>
-                                                             {{caregiver.initiation | date}}
+                                                             <!-- {{caregiver.initiation | date}} -->
+                                                             <input class="form-control datetimepicker" autocomplete="false" name="initiation" [(ngModel)]="caregiver.initiation" type="text" matInput [matDatepicker]="pickerInitiation"  >
+                                                    <mat-datepicker #pickerInitiation></mat-datepicker>
+                                                    <mat-datepicker-toggle matIconSuffix [for]="pickerInitiation"></mat-datepicker-toggle>
                                                         </td>
                                                         <td>
-                                                             {{caregiver.end_date | date}}
+                                                             <!-- {{caregiver.end_date | date}} -->
+                                                             <input class="form-control datetimepicker" 
+                                                             [ngModelOptions]="{standalone: true}"
+                                                              name="end_date" [(ngModel)]="caregiver.end_date" type="text" matInput [matDatepicker]="picker"  >
+                                                    <mat-datepicker #picker></mat-datepicker>
+                                                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                                                         </td>
                                                         <td>
-                                                             {{caregiver.current_status}}
+                                                             <!-- {{caregiver.current_status}} -->
+                                                             <select class="form-control form-select-solid fw-bolder"
+                                                             name="current_status" [(ngModel)]="caregiver.current_status"
+                                                             [ngModelOptions]="{standalone: true}" 
+                                                             placeholder="state">
+                                                             <option>-- Select --</option>
+                                                             <option value="new">New</option>
+                                                             <option value="in progress">In Progress</option>
+                                                             <option value="mastered date">Mastered Date</option>
+                                                             <option value="initiate date">Initiate Date</option>
+                                                             </select>
                                                         </td>
                                                         <td>
-                                                            <button class="btn btn-outline-danger btn-sm" (click)="deleteDocument(i)">x</button>
+                                                            <button class="btn btn-outline-success btn-sm" (click)="cambiarStatusSto(caregiver, i)"><i class="fa fa-pencil"></i> Edit</button>
+                                                            <button class="btn btn-outline-danger btn-sm" (click)="deleteDocument(i)">x Delete</button>
                                                         </td>
                                                         
                                                     </tr>

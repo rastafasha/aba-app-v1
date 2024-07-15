@@ -50,6 +50,29 @@ export class LocationService {
     let URL = url_servicios+"/location";
     return this.http.get(URL, {headers:headers});
   }
+
+  listLocationPatients(search:any, status: any, location_id:any){
+    let headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token});
+
+    let LINK = "?T=";
+    if(search){
+      LINK += "&search="+search;
+    }
+    if(status){
+      LINK += "&state="+status;
+
+    }
+    if(location_id){
+      LINK += "&location_id="+location_id;
+
+    }
+
+    let URL = url_servicios+'/patients'+LINK;
+    return this.http.get(URL, {headers:headers});
+    // return this.http.get(URL, {headers: headers}).pipe(
+    //   finalize(()=> this.isLoadingSubject.next(false))
+    // )
+  }
   listConfig(){
     let headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token});
     let URL = url_servicios+"/location/config";

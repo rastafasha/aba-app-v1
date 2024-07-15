@@ -42,6 +42,8 @@ export class GeneralizationTrainingComponent {
   public generalizationTrainingid: any;
   public generalizationid: any;
 
+  public family_edit: any = [];
+
   constructor(
     public bipService:BipService,
     public patientService:PatientMService,
@@ -138,6 +140,12 @@ export class GeneralizationTrainingComponent {
 
   deleteDocument(i:any){
     this.generalizations.splice(i,1);
+  }
+
+  cambiarStatusSto(generalization:any){
+    this.family_edit = generalization;
+        Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    
   }
 
   save(){

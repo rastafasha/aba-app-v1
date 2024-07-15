@@ -204,6 +204,7 @@ export class CrisisPlanComponent {
     if(this.risk_added.length > 1){
       this.risk_added.splice(this.risk_added,1);
     }
+    Swal.fire('Updated', `Risk option added!`, 'success');
 
   }
 
@@ -224,6 +225,7 @@ addSuicidality(){
   if(this.suicidality_added.length > 1){
     this.suicidality_added.splice(this.suicidality_added,1);
   }
+  Swal.fire('Updated', `Suicidality option added!`, 'success');
 }
 
 deleteSuicidality(i:any){
@@ -241,6 +243,7 @@ addHomicidality(){
   if(this.homicidality_added.length > 1){
     this.homicidality_added.splice(this.homicidality_added,1);
   }
+  Swal.fire('Updated', `Homicidality option added!`, 'success');
 }
 
 deleteHomicidality(i:any){
@@ -250,10 +253,10 @@ deleteHomicidality(i:any){
   
 save(){
   this.text_validation = '';
-  if(!this.crisis_description || !this.crisis_note || !this.caregiver_requirements_for_prevention_of_crisis){
-    this.text_validation = 'All Fields (*) are required';
-    return;
-  }
+  // if(!this.crisis_description || !this.crisis_note || !this.caregiver_requirements_for_prevention_of_crisis){
+  //   this.text_validation = 'All Fields (*) are required';
+  //   return;
+  // }
 
   let data ={
     id:this.crisisplanId,

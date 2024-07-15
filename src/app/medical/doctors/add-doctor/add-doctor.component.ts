@@ -82,12 +82,13 @@ export class AddDoctorComponent {
   public locations_selected: number[] = [];
   public user: any;
   public doctor_id: any;
+  public location: any;
 
   
   constructor(
     public doctorService:DoctorService,
     public router: Router,
-    public location: Location,
+    public locationBack: Location,
 
   ){
 
@@ -104,7 +105,7 @@ export class AddDoctorComponent {
   }
 
   goBack() {
-    this.location.back(); // <-- go back to previous location on cancel
+    this.locationBack.back(); // <-- go back to previous location on cancel
   }
 
   getConfig(){

@@ -73,6 +73,7 @@ export class EditDoctorComponent {
 
   public roles:any = [];
   public locations:any = [];
+  public location:any;
   
   public FILE_AVATAR:any;
   public IMAGE_PREVISUALIZA:any = 'assets/img/user-06.jpg';
@@ -96,9 +97,8 @@ export class EditDoctorComponent {
     public doctorService:DoctorService,
     public router: Router,
     public activatedRoute:ActivatedRoute,
-    public location: Location,
+    private locationBack: Location,
   ){
-
   }
 
   ngOnInit(): void {
@@ -121,7 +121,7 @@ export class EditDoctorComponent {
   
   
   goBack() {
-    this.location.back(); // <-- go back to previous location on cancel
+    this.locationBack.back(); // <-- go back to previous location on cancel
   }
 
   getConfig(){

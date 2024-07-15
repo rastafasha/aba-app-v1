@@ -158,6 +158,7 @@ export class AddPatientMComponent {
   public roles:any = [];
   public doctor_id:any ;
   public locationId:any ;
+  public location:any ;
   
 
   valid_form:boolean = false;
@@ -169,7 +170,7 @@ export class AddPatientMComponent {
     public doctorService:DoctorService,
     public insuranceService:InsuranceService,
     public router: Router,
-    public location: Location,
+    public locationBack: Location,
   ){
 
   }
@@ -194,7 +195,7 @@ export class AddPatientMComponent {
   }
 
   goBack() {
-    this.location.back(); // <-- go back to previous location on cancel
+    this.locationBack.back(); // <-- go back to previous location on cancel
     
   }
   getPoscoveredList(){

@@ -80,10 +80,12 @@
                                                             {{generalization.phase}}
                                                         </td>
                                                         <td>
-                                                             {{generalization.description}}
+                                                             <!-- {{generalization.description}} -->
+                                                             <textarea class="form-control" [ngModelOptions]="{standalone: true}" name="description" [(ngModel)]="generalization.description" ></textarea>
                                                         </td>
                                                         <td>
-                                                            <button class="btn btn-outline-danger btn-sm" (click)="deleteDocument(i)">x</button>
+                                                            <button class="btn btn-outline-success btn-sm" (click)="cambiarStatusSto(generalization, i)"><i class="fa fa-pencil"></i> Edit</button>
+                                                            <button class="btn btn-outline-danger btn-sm" (click)="deleteDocument(i)">x Delete</button>
                                                         </td>
                                                         
                                                     </tr>

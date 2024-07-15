@@ -170,6 +170,7 @@ export class EditPatientMComponent {
   public user:any ;
   public doctor_id:any ;
   public location_id:any ;
+  public location:any ;
 
   FILES:any = [];
   FilesAdded:any = [];
@@ -184,7 +185,7 @@ export class EditPatientMComponent {
     public insuranceService: InsuranceService,
     private readonly sanitizer: DomSanitizer,
     private _sanitizer: DomSanitizer,
-    private location: Location,
+    private locationBack: Location,
 
   ){
 
@@ -213,7 +214,7 @@ export class EditPatientMComponent {
   }
 
   goBack() {
-    this.location.back(); // <-- go back to previous location on cancel
+    this.locationBack.back(); // <-- go back to previous location on cancel
     
   }
 

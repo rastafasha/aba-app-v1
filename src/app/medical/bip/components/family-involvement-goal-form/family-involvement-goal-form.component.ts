@@ -25,6 +25,7 @@ export class FamilyInvolvementGoalFormComponent {
   public current_status: any;
   public caregivers_training_goals: any = [];
   public caregivers: any = [];
+  public family_edit: any = [];
   
   public client_id: any;
   public user: any;
@@ -138,6 +139,12 @@ export class FamilyInvolvementGoalFormComponent {
 
   deleteDocument(i:any){
     this.caregivers.splice(i,1);
+  }
+
+  cambiarStatusSto(caregiver:any){
+    this.family_edit = caregiver;
+        Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    
   }
 
   save(){
