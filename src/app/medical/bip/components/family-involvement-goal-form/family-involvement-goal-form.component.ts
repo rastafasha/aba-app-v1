@@ -21,6 +21,7 @@ export class FamilyInvolvementGoalFormComponent {
   public outcome_measure: any;
   public criteria: any;
   public initiation: Date;
+  public end_date: Date;
   public current_status: any;
   public caregivers_training_goals: any = [];
   public caregivers: any = [];
@@ -118,18 +119,20 @@ export class FamilyInvolvementGoalFormComponent {
   }
 
 
-  addDocument(){debugger
+  addDocument(){
     this.caregivers.push({
       caregiver_goal: this.caregiver_goal,
       outcome_measure: this.outcome_measure,
       criteria: this.criteria,
       initiation: this.initiation,
+      end_date: this.end_date,
       current_status: this.current_status,
     })
     this.caregiver_goal = '';
     this.outcome_measure = '';
     this.criteria = '';
     this.initiation = null;
+    this.end_date = null;
     this.current_status = '';
   }
 
@@ -137,7 +140,7 @@ export class FamilyInvolvementGoalFormComponent {
     this.caregivers.splice(i,1);
   }
 
-  save(){debugger
+  save(){
     this.text_validation = '';
     // if(!this.goalFamilyEnvolmentid 
     //   || !this.caregivers

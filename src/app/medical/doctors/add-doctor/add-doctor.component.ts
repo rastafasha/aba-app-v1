@@ -111,7 +111,9 @@ export class AddDoctorComponent {
     this.doctorService.listConfig().subscribe((resp:any)=>{
       // console.log(resp);
       this.roles = resp.roles;
+      
       this.locations = resp.locations;
+      this.location = resp.location;
     })
   }
 
@@ -139,7 +141,7 @@ export class AddDoctorComponent {
     reader2.onloadend = ()=> this.IMAGE_PREVISUALIZA_SIGNATURE = reader2.result;
   }
 
-  save(){
+  save(){debugger
     this.text_validation = '';
     if(!this.name||!this.email ||!this.surname ||!this.phone 
       ||!this.birth_date ||!this.address
@@ -215,34 +217,52 @@ export class AddDoctorComponent {
       else {
         locations += location.toString();
       }
-    })
-    formData.append('locations_selected', locations);
-
-    this.doctorService.storeDoctor(formData).subscribe((resp:any)=>{
-      // console.log(resp);
       
-      if(resp.status == 500){
-        this.text_validation = resp.message_text;
-        Swal.fire('Warning', resp.message_text, 'warning');
-      }if(resp.message == 403){
-        this.text_validation = resp.message_text;
-        Swal.fire('Warning', resp.message_text, 'warning');
-      }else{
-        // this.text_success = 'Employer created';
-        // this.ngOnInit();
-        Swal.fire('Created', `Employee Created successfully!`, 'success');
-        this.ngOnInit();
-        window.scrollTo(0, 0);
-        // if(this.user.roles === 'SUPERADMIN'){
-        //   formData['locations_selected'] = this.locations_selected;
-        //   this.router.navigate(['/doctors/list']);
-          
-        // }
-        // if(this.user.roles === 'MANAGER' || this.user.roles === 'LM'){
-        //   this.router.navigate(['/location/view/', this.user.location_id]);
-        // }
-      }
     })
+    if(this.user.roles[0] == 'SUPERADMIN'){
+      formData.append('locations_selected', locations);
+    }
+    if(this.user.roles[0] == 'MANAGER'){
+      formData.append('locations_selected', this.user.location_id);
+    }
+
+    if(this.user.roles[0] == 'SUPERADMIN'){
+      this.doctorService.storeDoctor(formData).subscribe((resp:any)=>{
+        // console.log(resp);
+        
+        if(resp.status == 500){
+          this.text_validation = resp.message_text;
+          Swal.fire('Warning', resp.message_text, 'warning');
+        }if(resp.message == 403){
+          this.text_validation = resp.message_text;
+          Swal.fire('Warning', resp.message_text, 'warning');
+        }else{
+          // this.text_success = 'Employer created';
+          // this.ngOnInit();
+          Swal.fire('Created', `Employee Created successfully!`, 'success');
+          this.router.navigate(['/doctors/list']);
+          // this.ngOnInit();
+          // window.scrollTo(0, 0);
+        }
+      })
+    }
+    if(this.user.roles[0] == 'MANAGER'){
+      this.doctorService.storeDoctor(formData).subscribe((resp:any)=>{
+        // console.log(resp);
+        
+        if(resp.status == 500){
+          this.text_validation = resp.message_text;
+          Swal.fire('Warning', resp.message_text, 'warning');
+        }if(resp.message == 403){
+          this.text_validation = resp.message_text;
+          Swal.fire('Warning', resp.message_text, 'warning');
+        }else{
+          Swal.fire('Created', `Employee Created successfully!`, 'success');
+          this.router.navigate(['/location/view/', this.user.location_id]);
+        }
+      })
+    }
+      
 
 
   }

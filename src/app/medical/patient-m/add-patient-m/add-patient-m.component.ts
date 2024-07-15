@@ -35,6 +35,8 @@ export class AddPatientMComponent {
   public selectedValuePosCovered!: string;
   public selectedValueUnitPrize!: string;
   option_selected:number = 0;
+
+  
   
   public first_name: string = '';
   public last_name: string = '';
@@ -185,6 +187,9 @@ export class AddPatientMComponent {
     this.roles = this.user.roles[0];
     // console.log(this.locationId);
 
+    if(this.user.roles[0] == 'MANAGER'){
+      this.selectedValueLocation = this.user.location_id;
+    }
     this.getConfig();
   }
 
@@ -204,20 +209,13 @@ export class AddPatientMComponent {
     this.patientService.listConfig(this.selectedValueLocation).subscribe((resp:ResponseBackend)=>{
       console.log(resp);
       this.locations = resp.locations;
+      this.location = resp.location;
       this.specialists = resp.users;
-      console.log('Doctores', this.specialists);
       this.insurances = resp.insurances;
 
       this.roles_rbt = this.specialists.filter(user=> user.roles[0].name == 'RBT');
-      
-      console.log(this.roles_rbt);
-      
       this.roles_bcba = this.specialists.filter(user=> user.roles[0].name == 'BCBA');
-      this.roles_bcba = this.doctor.roles[0];
-      // this.roles_bcba = this.doctor.roles?.[0].name === 'BCBA' ? true : false;
       console.log(this.roles_bcba);
-      // this.insurance_id = resp.insurances[0].id;
-      // console.log(this.insurance_codes);
     })
   }
 
@@ -392,7 +390,12 @@ export class AddPatientMComponent {
     formData.append('copayments', this.copayments);
     formData.append('oop', this.oop);
 
-    formData.append('location_id', this.selectedValueLocation);
+    if(this.user.roles[0] == 'SUPERADMIN'){
+      formData.append('location_id', this.selectedValueLocation);
+    }
+    if(this.user.roles[0] == 'MANAGER'){
+      formData.append('location_id', this.user.location_id);
+    }
     // formData.append('location_id', this.locationId);
 
     
@@ -446,19 +449,28 @@ export class AddPatientMComponent {
     this.valid_form_success = false;
     this.text_validation = '';
 
-    this.patientService.createPatient(formData).subscribe((resp:any)=>{
-      // console.log(resp);
-      if(resp.message == 403){
-        this.text_validation = resp.message_text;
-      }else{
-        // this.valid_form_success = true;
-        // this.ngOnInit();
-        Swal.fire('Created', `Client Created successfully!`, 'success');
-        window.scrollTo(0, 0);
-        // this.router.navigate(['/patients/list']);
-        // this.ngOnInit();
-      }
-    })
+    if(this.user.roles[0] == 'SUPERADMIN'){
+      this.patientService.createPatient(formData).subscribe((resp:any)=>{
+        if(resp.message == 403){
+          this.text_validation = resp.message_text;
+        }else{
+          Swal.fire('Created', `Client Created successfully!`, 'success');
+          this.router.navigate(['/patients/list']);
+        }
+      })
+    }
+    if(this.user.roles[0] == 'MANAGER'){
+      this.patientService.createPatient(formData).subscribe((resp:any)=>{
+        if(resp.message == 403){
+          this.text_validation = resp.message_text;
+        }else{
+          Swal.fire('Created', `Client Created successfully!`, 'success');
+          this.router.navigate(['/location/view/', this.user.location_id]);
+        }
+      })
+    }
+
+    
 
 
   }

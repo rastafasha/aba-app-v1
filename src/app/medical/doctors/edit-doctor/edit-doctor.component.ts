@@ -90,6 +90,7 @@ export class EditDoctorComponent {
  
   public doctor_id:any;
   public doctor_selected:any;
+  public user:any;
 
   constructor(
     public doctorService:DoctorService,
@@ -102,6 +103,11 @@ export class EditDoctorComponent {
 
   ngOnInit(): void {
     // window.scrollTo(0, 0);
+    this.doctorService.closeMenuSidebar();
+    let USER = localStorage.getItem("user");
+    this.user = JSON.parse(USER ? USER: '');
+    this.roles = this.user.roles[0];
+    this.doctor_id = this.user.id;
     this.activatedRoute.params.subscribe((resp:any)=>{
       // console.log(resp);
       this.doctor_id = resp.id;
@@ -123,6 +129,7 @@ export class EditDoctorComponent {
       // console.log(resp);
       this.roles = resp.roles;
       this.locations = resp.locations;
+      this.location = resp.location;
 
       this.doctorService.showDoctor(this.doctor_id).subscribe((resp:any)=>{
         this.locations_selected = resp.locations || [];
@@ -181,18 +188,6 @@ export class EditDoctorComponent {
 
           this.bacb_license_expiration = this.doctor_selected.bacb_license_expiration;
         }
-
-        
-        
-        
-        
-        
-        
-        // this.birth_date = moment(this.doctor_selected.birth_date).format('YYYY-MM-DD');
-        // this.date_of_hire = moment(this.doctor_selected.date_of_hire).format('YYYY-MM-DD');
-        // this.start_pay = moment(this.doctor_selected.start_pay).format('YYYY-MM-DD');
-        // this.driver_license_expiration = moment(this.doctor_selected.driver_license_expiration).format('YYYY-MM-DD');
-        // this.bacb_license_expiration = moment(this.doctor_selected.bacb_license_expiration).format('YYYY-MM-DD');
 
         this.cpr_every_2_years = this.doctor_selected.cpr_every_2_years;
         this.background_every_5_years = this.doctor_selected.background_every_5_years;
@@ -405,18 +400,23 @@ export class EditDoctorComponent {
         locations += location.toString();
       }
     })
-    formData.append('locations_selected', locations);
+
+    if(this.user.roles[0] == 'SUPERADMIN'){
+      formData.append('locations_selected', locations);
+    }
+    if(this.user.roles[0] == 'MANAGER'){
+      formData.append('locations_selected', this.user.location_id);
+    }
+
+    
     
     this.doctorService.editDoctor(formData, this.doctor_id).subscribe((resp:any)=>{
-      // console.log(resp);
-      
       if(resp.message == 403){
         this.text_validation = resp.message_text;
       }else{
         // this.text_success = 'El usuario ha sido actualizado correctamente';
         Swal.fire('Updated', ` Employee Has updated`, 'success');
         this.ngOnInit();
-        window.scrollTo(0, 0);
       }
     })
 

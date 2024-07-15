@@ -30,13 +30,13 @@
                                                     <textarea class="form-control" name="outcome_measure" [(ngModel)]="outcome_measure" rows="4" cols="30"></textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-xs-12 col-sm-4">  
+                                            <div class="col-xs-12 col-sm-3">  
                                                 <div class="form-group local-forms">
                                                     <label >Criteria<span class="login-danger">*</span></label>
                                                     <input class="form-control" name="criteria"  [(ngModel)]="criteria" type="text"  >
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-md-4">
+                                            <div class="col-12 col-md-3">
                                                 <div class="form-group local-forms">
                                                     <label >Initiation<span class="login-danger">*</span></label>
                                                     <input class="form-control datetimepicker" autocomplete="false" name="initiation" [(ngModel)]="initiation" type="text" matInput [matDatepicker]="pickerInitiation"  >
@@ -44,7 +44,15 @@
                                                     <mat-datepicker-toggle matIconSuffix [for]="pickerInitiation"></mat-datepicker-toggle>
                                                 </div>
                                             </div>
-                                            <div class="col-xs-12 col-sm-4">  
+                                            <div class="col-12 col-sm-3">
+                                                <div class="form-group local-forms">
+                                                    <label >End Date <span class="login-danger">*</span></label>
+                                                    <input class="form-control datetimepicker"  name="end_date" [(ngModel)]="end_date" type="text" matInput [matDatepicker]="picker"  >
+                                                    <mat-datepicker #picker></mat-datepicker>
+                                                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-3">  
                                                 <div class="form-group local-forms">
                                                     <label >Current Status<span class="login-danger">*</span></label>
                                                     <select class="form-control form-select-solid fw-bolder"
@@ -58,9 +66,6 @@
                                                     </select>
                                                 </div>
                                             </div>
-
-                                            
-                                            
                                             <div class="col-12 mb-3 doctor-submit text-end">
                                                 <button class="btn btn-primary btn-sm" (click)="addDocument()">Update List</button>
                                             </div>
@@ -75,7 +80,9 @@
                                                         <th>Outcome Measure</th>
                                                         <th>Criteria</th>
                                                         <th>Initiation</th>
+                                                        <th>End Date</th>
                                                         <th>Current Status</th>
+                                                        <th>Options</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -91,6 +98,9 @@
                                                         </td>
                                                         <td>
                                                              {{caregiver.initiation | date}}
+                                                        </td>
+                                                        <td>
+                                                             {{caregiver.end_date | date}}
                                                         </td>
                                                         <td>
                                                              {{caregiver.current_status}}

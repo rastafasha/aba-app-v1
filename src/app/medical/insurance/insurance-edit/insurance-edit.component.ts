@@ -87,7 +87,7 @@ export class InsuranceEditComponent {
       provider: this.provider,
       description: this.description,
       unit_prize: this.unit_prize,
-      hourly_fee: this.hourly_fee,
+      hourly_fee: this.unit_prize*4,
       max_allowed: this.max_allowed,
     })
     this.code = '';

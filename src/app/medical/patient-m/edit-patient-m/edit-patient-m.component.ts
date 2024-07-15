@@ -206,6 +206,9 @@ export class EditPatientMComponent {
     this.doctor_id = this.user.id;
     this.location_id = this.user.location_id;
 
+    if(this.user.roles[0] == 'MANAGER'){
+      this.selectedValueLocation = this.user.location_id;
+    }
     
   }
 
@@ -665,8 +668,15 @@ saveFiles(){
       formData.append('oop', this.oop);
     }
 
-    if(this.selectedValueLocation ){
+    // if(this.selectedValueLocation ){
+    //   formData.append('location_id', this.selectedValueLocation);
+    // }
+
+    if(this.selectedValueLocation  || this.user.roles[0] == 'SUPERADMIN'){
       formData.append('location_id', this.selectedValueLocation);
+    }
+    if(this.user.roles[0] == 'MANAGER'){
+      formData.append('location_id', this.user.location_id);
     }
     
 
@@ -729,11 +739,8 @@ saveFiles(){
         this.text_validation = resp.message_text;
         // Swal.fire('Error al eliminar', `resp.message_text`, 'error');
       }else{
-        // this.text_success = "Patient Has updated";
         Swal.fire('Updated', ` Patient Has updated`, 'success');
         this.ngOnInit();
-        window.scrollTo(0, 0);
-        // this.router.navigate(['/patients/list']);
       }
     })
 

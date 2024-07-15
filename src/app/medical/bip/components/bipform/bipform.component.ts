@@ -71,14 +71,23 @@ export class BipformComponent {
   public initial_interesting: any;
 
   public maladaptive_edit: any = [];
+  public medication_edit: any = [];
+  public evaluation_edit: any = [];
+  public prevalent_edit: any = [];
+  
   
   
   
   //assestments
   public assesstments:any = [];
   public assesstmentsDocuments:any = [];
+  public assestmentEvaluationSettings:any = [];
+  public accesstoTangibles:any = [];
   public assestment_title: any;
   public assestment_status: any;
+  public tangible: any;
+  public activities: any;
+  public other: any;
   
   // created comments by Malcolm Cordova at 4 feb 2004
   // mercadocreativo@gmail.com
@@ -89,8 +98,23 @@ export class BipformComponent {
   public prevalent_setting_event_and_atecedent: any;
   public behavior: any;
   public hypothesized_functions: any;
+  public strengths: any;
+  public weakneses: any;
+
+  public hypothesis_based_intervention: any;
+  public preventive_strategies: any;
+  public replacement_skills: any;
+  public manager_strategies: any;
+  public medication: any;
+  public dose: any;
+  public frecuency: any;
+  public reason: any;
+  public preescribing_physician: any;
+  public phiysical_and_medical: any;
   
   public interventions:any = [];
+  public phiysicalAndMedicalSt:any = [];
+  public phiysical_and_medical_status:any = [];
   pairing:any;
   premack_principal:any;
   response_block:any;
@@ -108,6 +132,7 @@ export class BipformComponent {
   bip_selectedid:any;
   
   inteventionSelected:any;
+  access_to_tangibles: any;
 
 
   constructor(
@@ -182,15 +207,28 @@ export class BipformComponent {
         this.education_status = this.bip_selected.bip.education_status,
         this.phisical_and_medical_status = this.bip_selected.bip.phisical_and_medical_status,
         this.assestment_conducted = this.bip_selected.bip.assestment_conducted,
-        
+        this.strengths =this.bip_selected.bip.strengths;
+        this.weakneses =this.bip_selected.bip.weakneses;
+
         this.documents =this.bip_selected.documents_reviewed;
         this.maladaptives =this.bip_selected.maladaptives;
         this.maladaptive_behavior =this.bip_selected.maladaptives[0].title;
 
         this.assesstments =this.bip_selected.assestment_conducted_options;
         this.assesstmentsDocuments =this.bip_selected.assestment_conducted_options;
+        
+        this.hypothesis_based_intervention =this.bip_selected.bip.hypothesis_based_intervention;
+        this.assestmentEvaluationSettings =this.bip_selected.assestmentEvaluationSettings;
+      
+        
+        this.accesstoTangibles =this.bip_selected.access_to_tangibles;
+        
+        this.phiysical_and_medical =this.bip_selected.bip.phiysical_and_medical;
+        this.phiysical_and_medical_status =this.bip_selected.phiysical_and_medical_status;
+        
         this.prevalent_setting_event_and_atecedents =this.bip_selected.prevalent_setting_event_and_atecedents;
         this.interventions =this.bip_selected.interventions;
+        
   
       })
     }
@@ -231,7 +269,30 @@ export class BipformComponent {
     this.maladaptives.splice(i,1);
   }
 
-  addAssesstmentDocument(){debugger
+  addEvaluationSettings(){
+    this.assestmentEvaluationSettings.push({
+      tangible: this.tangible,
+      activities: this.activities,
+      other: this.other,
+    })
+    this.tangible = '';
+    this.activities = '';
+    this.other = '';
+  }
+
+  deleteEvaluationSetting(i:any){
+    this.assestmentEvaluationSettings.splice(i,1);
+  }
+
+  updateItemListEvaluationSetting(evaluation:any){
+    this.evaluation_edit = evaluation;
+        Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    
+  }
+  
+
+
+  addAssesstmentDocument(){
     this.assesstmentsDocuments.push({
       assestment_title: this.assestment_title,
       assestment_status: this.assestment_status,
@@ -258,6 +319,58 @@ export class BipformComponent {
   deleteAssesstment(i:any){
     this.prevalent_setting_event_and_atecedents.splice(i,1);
   }
+
+  updateItemListPrevalent(prevalent:any){
+    this.prevalent_edit = prevalent;
+        Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    
+  }
+  addTangible(){
+    this.accesstoTangibles.push({
+      preventive_strategies: this.preventive_strategies,
+      replacement_skills: this.replacement_skills,
+      manager_strategies: this.manager_strategies,
+    })
+    this.preventive_strategies = '';
+    this.replacement_skills = '';
+    this.manager_strategies = '';
+  }
+
+  deleteTangible(i:any){
+    this.accesstoTangibles.splice(i,1);
+  }
+
+  
+  updateItemListTangibles(maladap:any){
+    this.maladaptive_edit = maladap;
+        Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    
+  }
+  addMedication(){
+    this.phiysical_and_medical_status.push({
+      medication: this.medication,
+      dose: this.dose,
+      frecuency: this.frecuency,
+      reason: this.reason,
+      preescribing_physician: this.preescribing_physician,
+    })
+    this.medication = '';
+    this.dose = '';
+    this.frecuency = '';
+    this.reason = '';
+    this.preescribing_physician = '';
+  }
+
+  deleteMedication(i:any){
+    this.phiysical_and_medical_status.splice(i,1);
+  }
+
+  updateItemListMedications(medication:any){
+    this.medication_edit = medication;
+        Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    
+  }
+
   addIntervention(){
     this.interventions.push({
       pairing: this.pairing,
@@ -287,38 +400,30 @@ export class BipformComponent {
     this.interventions.splice(i,1);
   }
 
-  // addAssesstmentOption(){
-  //   this.assesstments.push({
-  //     assestment_title: this.assestment_title,
-  //     assestment_status: this.assestment_status,
-  //   })
-  //    si existe un elemento actualiza ese elemento en la lista
-  //   if(this.assesstments.length > 1){
-  //     this.assesstments.splice(this.assesstments,1);
-  //   }
-  // }
-
-  // deleteAssesstmentOption(i:any){
-  //   this.assesstments.splice(i,1);
-  // }
-
   
-  cambiarStatusSto(maladap:any){debugger
+  cambiarStatusSto(maladap:any){
     this.maladaptive_edit = maladap;
-    console.log(this.maladaptive_edit);
-
-    // let data ={
-    //   rbt_training_goals: this.training_goals,
-    // }
+        Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    // console.log(this.maladaptive_edit);
     
-    // this.monitoringEvaluatingService.editMonitoringEvaluating(data, this.monitoringtid).subscribe(
+    // let data ={
+      //   rbt_training_goals: this.training_goals,
+      // }
+    
+      // this.monitoringEvaluatingService.editMonitoringEvaluating(data, this.monitoringtid).subscribe(
     //   resp =>{
-    //     // console.log(resp);
-    //     // this.getTableData();
-    //     Swal.fire('Updated', `Goal Updated successfully!`, 'success');
+      //     // console.log(resp);
+      //     // this.getTableData();
+      //     Swal.fire('Updated', `Goal Updated successfully!`, 'success');
     //     this.ngOnInit();
     //   }
     // )
+  }
+
+  updateItemList(maladap:any){
+    this.maladaptive_edit = maladap;
+        Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    
   }
 
 //fin listados
@@ -354,11 +459,22 @@ export class BipformComponent {
       current_treatment_and_progress: this.current_treatment_and_progress,
       education_status: this.education_status,
       phisical_and_medical_status: this.phisical_and_medical_status,
+      strengths: this.strengths,
+      weakneses: this.weakneses,
 
       maladaptives: this.maladaptives,
 
       assestment_conducted: this.assestment_conducted,
       assestment_conducted_options  : this.assesstmentsDocuments,
+
+      assestmentEvaluationSettings  : this.assestmentEvaluationSettings,
+      
+      hypothesis_based_intervention  : this.hypothesis_based_intervention,
+      
+      phiysical_and_medical_status   : this.phiysical_and_medical_status,
+      access_to_tangibles   : this.accesstoTangibles,
+
+      phiysical_and_medical   : this.phiysical_and_medical,
 
       prevalent_setting_event_and_atecedents: this.prevalent_setting_event_and_atecedents,
       

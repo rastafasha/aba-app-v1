@@ -94,7 +94,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-4 col-xl-4">
+                                <div class="col-12 col-md-4 col-xl-4"*ngIf="user.roles == 'SUPERADMIN'">
                                     <div class="form-group local-forms">
                                         <label>Roles <span class="login-danger">*</span></label>
                                         <mat-select [(ngModel)]="selectedValue" [ngModelOptions]="{standalone: true}"
@@ -105,8 +105,19 @@
                                         </mat-select>
                                     </div>
                                 </div>
-                                <!-- *ngIf="selectedValue == '2'" -->
-                                <div class="col-12 col-md-4 col-xl-4">
+                                <div class="col-12 col-md-4 col-xl-4" *ngIf="user.roles == 'MANAGER'">
+                                    <div class="form-group local-forms">
+                                        <label>Roles <span class="login-danger">*</span></label>
+                                        <mat-select [(ngModel)]="selectedValue" [ngModelOptions]="{standalone: true}"
+                                            class="form-control select" placeholder="Select Role">
+                                            <mat-option *ngFor="let data of roles | roleFilter" [value]="data.id">
+                                                <!-- {{data.name}} -->
+                                                {{ data.name === 'BCBA' || data.name === 'RBT'? data.name : '' }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4 col-xl-4" *ngIf="user.roles == 'SUPERADMIN'">
                                     <div class="form-group local-forms">
                                         <label>Location <span class="login-danger">*</span></label>
                                         <mat-select multiple="multiple" [(ngModel)]="locations_selected" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select Location">
@@ -116,7 +127,14 @@
                                         </mat-select>
                                     </div>
                                 </div>
-                                <!-- <div class="col-12 col-md-4 col-xl-4" *ngIf="user.roles == 'MANAGER'">
+                                <div class="col-12 col-md-6 col-xl-4" *ngIf="user.roles == 'MANAGER'">
+                                    <div class="form-group local-forms">
+                                        <label>Location </label>
+                                        <h4 style="padding:15px">{{location.title}}</h4>
+
+                                    </div>
+                                </div>
+                                <!-- <div class="col-12 col-md-4 col-xl-4" >
                                     <div class="form-group local-forms">
                                         <label>Location <span class="login-danger">*</span></label>
                                         <mat-select [(ngModel)]="locations_selected" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select Location">

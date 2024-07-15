@@ -204,21 +204,23 @@
                                         <img [src]="IMAGE_PREVISUALIZA" style="width: 250px;" alt="">
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6 col-xl-4">
+                                <div class="col-12 col-md-6 col-xl-4" *ngIf="user.roles == 'SUPERADMIN'">
                                     <div class="form-group local-forms">
                                         <label >Location <span class="login-danger">*</span></label>
-                                        <!-- <mat-select [(ngModel)]="selectedValueLocation" name="location_id" [ngModelOptions]="{standalone: true}" (change)="selectCategory($event)" class="form-control select"  placeholder="Select Location">
-                                            <mat-option *ngFor="let data of locations?.slice()" [value]="data.id">
-                                            {{data.title}}
-                                            </mat-option>
-                                        </mat-select> -->
-
+                                
                                         <mat-select [(ngModel)]="selectedValueLocation" name="location" [ngModelOptions]="{standalone: true}" class="form-control select" (ngModelChange)="selectCategory($event)"  placeholder="Select Location">
                                             <mat-option *ngFor="let data of locations" [value]="data.id">
                                             {{data.title}}
                                             </mat-option>
                                         </mat-select>
                                         
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-4" *ngIf="user.roles == 'MANAGER'">
+                                    <div class="form-group local-forms">
+                                        <label>Location </label>
+                                        <h4 style="padding:15px">{{location.title}}</h4>
+
                                     </div>
                                 </div>
                                 <div class="col-12" *ngIf="valid_form">
