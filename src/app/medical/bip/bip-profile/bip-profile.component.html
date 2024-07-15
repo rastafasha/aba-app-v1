@@ -218,6 +218,66 @@
                                                 <h3>{{bip_selected.phisical_and_medical_status}}</h3>
                                             </div>
                                         </div>
+                                        <div class="col-xs-12 col-md-6">
+                                            <div class="detail-personal">
+                                                <h2>Strengths</h2>
+                                                <h3>{{bip_selected.strengths}}</h3>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-md-6">
+                                            <div class="detail-personal">
+                                                <h2>Weakneses</h2>
+                                                <h3>{{bip_selected.weakneses}}</h3>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-body">
+                                            <div class="about-info mb-10">
+                                                <h4>Physical And Medical Status</h4>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <div class="detail-personal">
+                                                        <h2>Physical And Medical Status</h2>
+                                                        <h3>{{bip_selected.phiysical_and_medical}}</h3>
+                                                    </div>
+                                                </div>
+                                                <ng-container *ngFor="let medication of phiysical_and_medical_status">
+                                                    <div class="col-xs-12 col-sm-3">
+                                                        <div class="detail-personal">
+                                                            <h2>Medication</h2>
+                                                            <h3>{{medication.medication}}</h3>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-3">
+                                                        <div class="detail-personal">
+                                                            <h2>Dose</h2>
+                                                            <h3>{{medication.dose}}</h3>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-3">
+                                                        <div class="detail-personal">
+                                                            <h2>Frecuency </h2>
+                                                            <h3>{{medication.frecuency}}</h3>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-3">
+                                                        <div class="detail-personal">
+                                                            <h2>Preescribing Physician</h2>
+                                                            <h3>{{medication.preescribing_physician}}</h3>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 ">
+                                                        <div class="detail-personal">
+                                                            <h2>Reason</h2>
+                                                            <h3>{{medication.reason}}</h3>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </ng-container>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -304,9 +364,41 @@
                                         </ng-container>
                                         
                                     </div>
+
+                                    
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="about-info mb-10">
+                                        <h4>Evaluation Settings</h4>
+                                    </div>
+                                    <div class="row">
+                                        <ng-container *ngFor="let evaluationSt of assestmentEvaluationSettings">
+                                            <div class="col-xs-12 col-sm-6">
+                                                <div class="detail-personal">
+                                                    <h2>Tangible</h2>
+                                                    <h3>{{evaluationSt.tangible}}</h3>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6">
+                                                <div class="detail-personal">
+                                                    <h2>Activities</h2>
+                                                    <h3>{{evaluationSt.activities}}</h3>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <div class="detail-personal">
+                                                    <h2>Other </h2>
+                                                    <h3>{{evaluationSt.other}}</h3>
+                                                </div>
+                                            </div>
+                                            
+                                        </ng-container>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
                 <!-- Assestment Conducted end-->
@@ -351,6 +443,56 @@
                     </div>
                 </div>
                 <!-- Prevalent Setting Events & Antecedents end-->
+                <!-- Hypothesis-based interventions-->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="personal-list-out">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="about-info mb-10">
+                                        <h4>Hypothesis-based interventions</h4>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 ">
+                                            <div class="detail-personal">
+                                                <h2>Hypothesis-based interventions</h2>
+                                                <h3>{{bip_selected.hypothesis_based_intervention}}</h3>
+                                            </div>
+                                        </div>
+
+                                        <div class="about-info mb-10">
+                                            <h4>Access to Tangibles/Activities</h4>
+                                        </div>
+                                        <ng-container *ngFor="let access of accesstoTangibles">
+
+                                            <div class="col-xs-12 col-sm-4">
+                                                <div class="detail-personal">
+                                                    <h2>Preventtive Strategies</h2>
+                                                    <h3>{{access.preventive_strategies}}</h3>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-4">
+                                                <div class="detail-personal">
+                                                    <h2>Replacement Skills </h2>
+                                                    <h3>{{access.replacement_skills}}</h3>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-4">
+                                                <div class="detail-personal">
+                                                    <h2>Manager Strategies </h2>
+                                                    <h3>{{access.manager_strategies}}</h3>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Hypothesis-based interventions end-->
                 <!-- Reduction Goals-->
                 <div class="row">
                     <div class="col-12">
@@ -571,16 +713,22 @@
                                                     <h3>{{item.current_status}}</h3>
                                                 </div>
                                             </div>
-                                            <div class="col-xs-12 col-sm-6">
+                                            <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>outcome measure</h2>
                                                     <h3>{{item.outcome_measure}}</h3>
                                                 </div>
                                             </div>
-                                            <div class="col-xs-12 col-sm-6">
+                                            <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>initiation  </h2>
                                                     <h3>{{item.initiation | date }}</h3>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-4">
+                                                <div class="detail-personal">
+                                                    <h2>End Date  </h2>
+                                                    <h3>{{item.end_date | date }}</h3>
                                                 </div>
                                             </div>
                                         </div>

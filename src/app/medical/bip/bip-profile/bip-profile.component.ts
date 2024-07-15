@@ -107,6 +107,13 @@ export class BipProfileComponent {
   public patientId:any;
   public roles:any=[];
   public permissions:any=[];
+  public preescribing_physician: any;
+  public phiysical_and_medical: any;
+  public phiysical_and_medical_status:any=[];
+  public hypothesis_based_intervention: any=[];
+  public assestmentEvaluationSettings: any=[];
+  public accesstoTangibles: any=[];
+  
   
 
   imagenSerUrl = environment.url_media;
@@ -196,6 +203,16 @@ export class BipProfileComponent {
       this.transition_fading_plans =this.bip_selected.generalization_training[0].transition_fading_plans;
       this.de_escalation_techniques =this.bip_selected.de_escalation_technique[0].recomendation_lists;
       
+
+      this.hypothesis_based_intervention =this.bip_selected.hypothesis_based_intervention;
+        this.assestmentEvaluationSettings =this.bip_selected.assestmentEvaluationSettings;
+      
+        
+        this.accesstoTangibles =this.bip_selected.access_to_tangibles;
+        
+        this.phiysical_and_medical =this.bip_selected.phiysical_and_medical;
+        this.phiysical_and_medical_status =this.bip_selected.phiysical_and_medical_status;
+        
       
 
       this.caregiver_requirements_for_prevention_of_crisis =this.bip_selected.crisis_plan[0].caregiver_requirements_for_prevention_of_crisis;

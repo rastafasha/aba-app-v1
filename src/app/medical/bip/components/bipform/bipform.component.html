@@ -158,7 +158,7 @@
                         </div>
 
                         <div class="row align-items-center " style="margin-bottom: 30px;" >
-                            <h4 class="card-title">Phiysical And Medical Status</h4>
+                            <h4 class="card-title">Physical And Medical Status</h4>
                                     <div class="row align-items-center" >
                                         <div class="col-xs-12">
                                             <div class="row">
@@ -215,7 +215,7 @@
                                                             <tr>
                                                                 <th>Medication</th>
                                                                 <th>Dose</th>
-                                                                <th>fecuency</th>
+                                                                <th>Frecuency</th>
                                                                 <th>Reason</th>
                                                                 <th>Preescribing Physician</th>
                                                                 <th>Options</th>
@@ -518,15 +518,15 @@
                                                         <tr *ngFor="let evaluation of assestmentEvaluationSettings; let i = index">
                                                             <td>
                                                                 <!-- {{evaluation.tangible}} -->
-                                                                <textarea class="form-control" name="tangible" [(ngModel)]="evaluation.tangible" ></textarea>
+                                                                <textarea class="form-control" name="tangible" [ngModelOptions]="{standalone: true}" [(ngModel)]="evaluation.tangible" ></textarea>
                                                             </td>
                                                             <td>
                                                                  <!-- {{evaluation.activities}} -->
-                                                                 <textarea class="form-control" name="activities" [(ngModel)]="evaluation.activities" ></textarea>
+                                                                 <textarea class="form-control" name="activities" [ngModelOptions]="{standalone: true}" [(ngModel)]="evaluation.activities" ></textarea>
                                                             </td>
                                                             <td>
                                                                  <!-- {{evaluation.other}} -->
-                                                                 <textarea class="form-control" name="other" [(ngModel)]="evaluation.other" ></textarea>
+                                                                 <textarea class="form-control" name="other" [ngModelOptions]="{standalone: true}" [(ngModel)]="evaluation.other" ></textarea>
                                                             </td>
                                                             <td>
                                                                 <button class="btn btn-outline-success btn-sm" (click)="updateItemListEvaluationSetting(evaluation, i)"><i class="fa fa-pencil"></i> Edit</button>
@@ -701,16 +701,16 @@
                                                     <tr *ngFor="let prevalent of prevalent_setting_event_and_atecedents; let i = index">
                                                         <td>
                                                             <!-- {{prevalent.prevalent_setting_event_and_atecedent}} -->
-                                                            <textarea class="form-control" name="prevalent_setting_event_and_atecedent" [(ngModel)]="prevalent.prevalent_setting_event_and_atecedent" ></textarea>
+                                                            <textarea class="form-control" name="prevalent_setting_event_and_atecedent"[ngModelOptions]="{standalone: true}"  [(ngModel)]="prevalent.prevalent_setting_event_and_atecedent" ></textarea>
                                                             
                                                         </td>
                                                         <td>
                                                              <!-- {{prevalent.behavior}} -->
-                                                             <textarea class="form-control" name="behavior" [(ngModel)]="prevalent.behavior" ></textarea>
+                                                             <textarea class="form-control" name="behavior" [ngModelOptions]="{standalone: true}" [(ngModel)]="prevalent.behavior" ></textarea>
                                                         </td>
                                                         <td>
                                                             <!-- {{prevalent.hypothesized_functions}} -->
-                                                            <textarea class="form-control" name="hypothesized_functions" [(ngModel)]="prevalent.hypothesized_functions" ></textarea>
+                                                            <textarea class="form-control" name="hypothesized_functions" [ngModelOptions]="{standalone: true}" [(ngModel)]="prevalent.hypothesized_functions" ></textarea>
                                                         </td>
                                                         <td>
                                                             <button class="btn btn-outline-success btn-sm" (click)="updateItemListPrevalent(prevalent, i)"><i class="fa fa-pencil"></i> Edit</button>
@@ -827,15 +827,15 @@
                                                         <tr *ngFor="let assesstment of accesstoTangibles; let i = index">
                                                             <td>
                                                                 <!-- {{assesstment.preventive_strategies}} -->
-                                                                <textarea class="form-control" name="preventive_strategies" [(ngModel)]="assesstment.preventive_strategies" ></textarea>
+                                                                <textarea class="form-control" name="preventive_strategies" [ngModelOptions]="{standalone: true}" [(ngModel)]="assesstment.preventive_strategies" ></textarea>
                                                             </td>
                                                             <td>
                                                                  <!-- {{assesstment.replacement_skills}} -->
-                                                                 <textarea class="form-control" name="replacement_skills" [(ngModel)]="assesstment.replacement_skills" ></textarea>
+                                                                 <textarea class="form-control" name="replacement_skills" [ngModelOptions]="{standalone: true}" [(ngModel)]="assesstment.replacement_skills" ></textarea>
                                                             </td>
                                                             <td>
                                                                  <!-- {{assesstment.manager_strategies}} -->
-                                                                 <textarea class="form-control" name="manager_strategies" [(ngModel)]="assesstment.manager_strategies" ></textarea>
+                                                                 <textarea class="form-control" name="manager_strategies" [ngModelOptions]="{standalone: true}" [(ngModel)]="assesstment.manager_strategies" ></textarea>
                                                             </td>
                                                             <td>
                                                                 <button class="btn btn-outline-success btn-sm" (click)="updateItemListTangibles(assesstment, i)"><i class="fa fa-pencil"></i> Edit</button>
