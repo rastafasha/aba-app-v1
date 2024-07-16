@@ -21,6 +21,8 @@ export class InsuranceEditComponent {
   public note: any;
 
   public services:any = [];
+  public maladaptive_edit:any = [];
+  public note_edit:any = [];
   public code: any;
   public provider: any;
   public description: any;
@@ -110,6 +112,17 @@ export class InsuranceEditComponent {
 
   deleteNote(i:any){
     this.notes.splice(i,1);
+  }
+
+  cambiarStatus(serv:any){
+    this.maladaptive_edit = serv;
+        Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    
+  }
+  cambiarNote(note:any){
+    this.note_edit = note;
+        Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    
   }
 
 

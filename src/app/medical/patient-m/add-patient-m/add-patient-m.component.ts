@@ -111,6 +111,7 @@ export class AddPatientMComponent {
   public insurance_codes:any = [];
   public insurance:any;
   public code:any;
+  public provider:any;
 
   public selectedValue_rbt!: string;
   public selectedValue_rbt2!: string;
@@ -292,6 +293,7 @@ export class AddPatientMComponent {
       pa_services_end_date: this.pa_services_end_date,
       cpt: this.selectedValueCode,
       n_units: this.n_units,
+      provider: this.selectedValueCode,
     })
     this.pa_assessment = '';
     this.pa_assessment_start_date = null;
@@ -301,6 +303,7 @@ export class AddPatientMComponent {
     this.pa_services_end_date = null;
     this.selectedValueCode = null;
     this.n_units = 0;
+    this.provider = '';
   }
 
   deletePAAssestment(i:any){

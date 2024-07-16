@@ -14,11 +14,14 @@
             </div>
         </div>
         <!-- /Page Header -->
-        <div class="row backrgoundimage"  >
+        <div class="row "  >
             <div class="col-sm-12">
+              <div class="backrgoundimage" *ngIf="location_selected.avatar != null">
+                <img [src]="location_selected.avatar"  alt="">
+              </div>
             
                 <div class="card">
-                    <div class="card-body" [style.background-image]="location_selected.avatar">
+                    <div class="card-body" >
                         <div class="row" >
                             <div class="col-12">
                                 <div class="form-heading">
@@ -28,20 +31,21 @@
                             
                             
                             <div class="row" >
-                                <div class="col-xs-12 col-sm-4">
+                                <div class="col-xs-12 col-sm-3">
                                     <p><b>Location Name:</b>&nbsp;{{location_selected.title}}</p>
-                                    <p><b>City:</b>&nbsp;{{location_selected.city}}</p>
-                                    <p><b>State:</b>&nbsp;{{location_selected.state}}</p>
                                     <p><b>Email:</b>&nbsp;{{location_selected.email}}</p>
                                     <p><b>zip:</b>&nbsp;{{location_selected.zip}}</p>
                                     <p><b>Phone 1:</b>&nbsp;{{location_selected.phone1}}</p>
                                     <p><b>Phone 2:</b>&nbsp;{{location_selected.phone2}}</p>
-                                </div>
-                                <div class="col-xs-12 col-sm-4">
+                                    <p><b>Fax:</b>&nbsp;{{location_selected.telfax}}</p>
+                                  </div>
+                                  <div class="col-xs-12 col-sm-3">
+                                    <p><b>State:</b>&nbsp;{{location_selected.state}}</p>
+                                    <p><b>City:</b>&nbsp;{{location_selected.city}}</p>
                                     <p><b>Address:</b><br>
                                         {{location_selected.address}}</p>
                                 </div>
-                                <div class="col-xs-12 col-sm-4">
+                                <div class="col-xs-12 col-sm-6">
                                     <!-- <p>mapa</p> -->
                                     <img [src]="location_selected.avatar" style="width: 100%; margin-bottom: 20px;" alt="">
                                     

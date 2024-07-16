@@ -114,6 +114,7 @@
                                                         <th>Unit Prize</th>
                                                         <th>Hourly Fee</th>
                                                         <th>Max Allowed</th>
+                                                        <th>Options</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -122,22 +123,28 @@
                                                             {{serv.code}}
                                                         </td>
                                                         <td>
-                                                             {{serv.provider}}
+                                                             <!-- {{serv.provider}} -->
+                                                             <input class="form-control" name="provider"  [(ngModel)]="serv.provider" type="text"  >
                                                         </td>
                                                         <td>
                                                             {{serv.description}}
+                                                            <textarea class="form-control" name="description" [(ngModel)]="serv.description" ></textarea>
                                                         </td>
                                                         <td>
-                                                           {{serv.unit_prize | currency}}
+                                                           <!-- {{serv.unit_prize | currency}} -->
+                                                           <input class="form-control" name="unit_prize"  [(ngModel)]="serv.unit_prize" type="text"  >
                                                         </td>
                                                         <td>
-                                                             {{serv.unit_prize*4 | currency}}
+                                                             <!-- {{serv.unit_prize*4 | currency}} -->
+                                                             <input class="form-control" name="unit_prize"  [(ngModel)]="serv.unit_prize" type="text"  >
                                                         </td>
                                                         <td>
-                                                            {{serv.max_allowed}}
+                                                            <!-- {{serv.max_allowed}} -->
+                                                            <textarea class="form-control" name="max_allowed" [(ngModel)]="serv.max_allowed" ></textarea>
                                                         </td>
                                                         <td>
-                                                            <button class="btn btn-outline-danger btn-sm" (click)="deleteService(i)">x</button>
+                                                            <button class="btn btn-outline-success btn-sm" (click)="cambiarStatus(serv, i)"><i class="fa fa-pencil"></i> Edit</button>
+                                                            <button class="btn btn-outline-danger btn-sm" (click)="deleteService(i)">x Delete</button>
                                                         </td>
                                                     </tr>
                                                     
@@ -179,10 +186,13 @@
                                                     <tbody>
                                                         <tr *ngFor="let note of notes; let i = index">
                                                             <td>
-                                                                Note: {{note.note}}
+                                                                Note: 
+                                                                <!-- {{note.note}} -->
+                                                                <textarea class="form-control" name="note" [(ngModel)]="note.note" ></textarea>
                                                             </td>
                                                             <td>
-                                                                <button class="btn btn-outline-danger btn-sm" (click)="deleteNote(i)">x</button>
+                                                                <button class="btn btn-outline-success btn-sm" (click)="cambiarNote(note, i)"><i class="fa fa-pencil"></i> Edit</button>
+                                                                <button class="btn btn-outline-danger btn-sm" (click)="deleteNote(i)">x Delete</button>
                                                             </td>
                                                         </tr>
                                                         

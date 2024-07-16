@@ -862,7 +862,21 @@
                                                     <input class="form-control" autocomplete="false" name="n_units" [(ngModel)]="n_units" type="number"  >
                                                 </div>
                                             </div>
-                                            
+                                            <div class="col-12 col-md-4">
+                                                <div class="form-group local-forms">
+                                                    <label>Provider <span class="login-danger">*</span></label>
+                                                    <mat-select [(ngModel)]="selectedValueCode" name="provider"
+                                                        [ngModelOptions]="{standalone: true}"
+                                                        class="form-control select"
+                                                        placeholder="Select Code"
+                                                        disabled>
+                                                        <mat-option *ngFor="let data of services, let i= index;"
+                                                            [value]="data.code">
+                                                            {{data.provider}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </div>
+                                            </div>
                                             <div class="col-12 mb-3 doctor-submit text-end">
                                                 <button class="btn btn-primary btn-sm" (click)="addPAAssestment()">Add</button>
                                             </div>
@@ -879,8 +893,10 @@
                                                         <th>PA Services</th>
                                                         <th>Patient Services Start Date</th>
                                                         <th>Patient Services End Date</th>
-                                                        <th>cpt</th>
+                                                        <th>CPT</th>
+                                                        <!-- <th>Provider</th> -->
                                                         <th>n units</th>
+                                                        <th>Options</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -906,6 +922,9 @@
                                                         <td>
                                                             {{asses.cpt}}
                                                         </td>
+                                                        <!-- <td>
+                                                            {{asses.provider}}
+                                                        </td> -->
                                                         <td>
                                                             {{asses.n_units}}
                                                         </td>

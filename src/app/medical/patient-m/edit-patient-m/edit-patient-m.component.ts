@@ -34,7 +34,8 @@ export class EditPatientMComponent {
   public selectedValue!: string;
   public selectedValueLocation!: string;
   public selectedValueInsurer!: string;
-  public selectedValueCode!: string;
+  public selectedValueCode!: any;
+  public selectedValueCodeProvider!: string;
   public selectedValuePosCovered!: string;
   
   option_selected:number = 0;
@@ -171,6 +172,7 @@ export class EditPatientMComponent {
   public doctor_id:any ;
   public location_id:any ;
   public location:any ;
+  public provider:any ;
 
   FILES:any = [];
   FilesAdded:any = [];
@@ -188,6 +190,8 @@ export class EditPatientMComponent {
     private locationBack: Location,
 
   ){
+
+    this.selectedValueCodeProvider = this.selectedValueCode;
 
   }
 
@@ -387,15 +391,17 @@ showUser(){
   //recibe el id y muestra la lista 
   insuranceData(selectedValueInsurer){
     this.insuranceService.showInsurance(selectedValueInsurer).subscribe((resp:any)=>{
-      // console.log('desde el insurer seleccionado',resp);
+      console.log('desde el insurer seleccionado',resp);
       this.services = resp.services;
+      this.code = resp.services.code;
+      this.provider = resp.services.provider;
     })
   }
 
   //listas
   
 
-  addPAAssestment(){
+  addPAAssestment(){debugger
     this.pa_assessmentgroup.push({
       pa_assessment: this.pa_assessment,
       pa_assessment_start_date: this.pa_assessment_start_date,
@@ -405,6 +411,11 @@ showUser(){
       pa_services_end_date: this.pa_services_end_date,
       cpt: this.selectedValueCode,
       n_units: this.n_units,
+      // aqui guardo el provider traido del cpt
+      // debo extraer de selectedValueCode el cpt para traer el provider
+      // provider: this.selectedValueCode,
+      provider: this.provider,
+      // aqui guardo el insurer traido del cpt
     })
     this.pa_assessment = '';
     this.pa_assessment_start_date = null;
@@ -413,6 +424,7 @@ showUser(){
     this.pa_services_start_date = null;
     this.pa_services_end_date = null;
     this.selectedValueCode = null;
+    this.provider = null;
     this.n_units = 0;
   }
 

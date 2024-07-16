@@ -22,6 +22,7 @@ export class LocationAddComponent {
   public title: string = '';
   public phone1: string = '';
   public phone2: string = '';
+  public telfax: string = '';
   public zip: string = '';
   public state: string = '';
   public email: string = '';
@@ -93,6 +94,7 @@ export class LocationAddComponent {
     formData.append('title', this.title);
     formData.append('phone1', this.phone1);
     formData.append('phone2', this.phone2);
+    formData.append('telfax', this.telfax);
     formData.append('city', this.city);
     formData.append('state', this.state);
     formData.append('zip', this.zip);

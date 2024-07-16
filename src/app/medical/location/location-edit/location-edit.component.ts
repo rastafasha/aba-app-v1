@@ -21,6 +21,7 @@ export class LocationEditComponent {
   public title: string = '';
   public phone1: string = '';
   public phone2: string = '';
+  public telfax: string = '';
   public zip: string = '';
   public state: string = '';
   public email: string = '';
@@ -82,6 +83,7 @@ showLocation(){
         this.email = this.location_selected.email;
         this.phone1 = this.location_selected.phone1;
         this.phone2 = this.location_selected.phone2;
+        this.telfax = this.location_selected.telfax;
         this.zip = this.location_selected.zip;
         this.email = this.location_selected.email;
         this.address = this.location_selected.address;
@@ -126,6 +128,9 @@ showLocation(){
     }
     if(this.phone2 ){
       formData.append('phone2', this.phone2);
+    }
+    if(this.telfax ){
+      formData.append('telfax', this.telfax);
     }
     if(this.address ){
       formData.append('address', this.address);
