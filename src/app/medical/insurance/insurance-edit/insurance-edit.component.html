@@ -127,7 +127,7 @@
                                                              <input class="form-control" name="provider"  [(ngModel)]="serv.provider" type="text"  >
                                                         </td>
                                                         <td>
-                                                            {{serv.description}}
+                                                            <!-- {{serv.description}} -->
                                                             <textarea class="form-control" name="description" [(ngModel)]="serv.description" ></textarea>
                                                         </td>
                                                         <td>
@@ -135,8 +135,8 @@
                                                            <input class="form-control" name="unit_prize"  [(ngModel)]="serv.unit_prize" type="text"  >
                                                         </td>
                                                         <td>
-                                                             <!-- {{serv.unit_prize*4 | currency}} -->
-                                                             <input class="form-control" name="unit_prize"  [(ngModel)]="serv.unit_prize" type="text"  >
+                                                             {{serv.unit_prize*4 | currency}}
+                                                             <!-- <input class="form-control" name="unit_prize"  [(ngModel)]="serv.unit_prize" type="text"  > -->
                                                         </td>
                                                         <td>
                                                             <!-- {{serv.max_allowed}} -->

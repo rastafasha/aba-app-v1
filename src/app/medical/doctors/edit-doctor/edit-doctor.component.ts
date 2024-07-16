@@ -158,12 +158,12 @@ export class EditDoctorComponent {
         this.languages = this.doctor_selected.languages;
         this.ss_number = this.doctor_selected.ss_number;
 
-        if(this.birth_date ){
-          this.birth_date = new Date(this.doctor_selected.birth_date).toISOString();
-        }else{
-          this.birth_date = this.doctor_selected.birth_date;
+        this.birth_date = new Date(this.doctor_selected.birth_date).toISOString();
+        // if(this.birth_date ){
+        // }else{
+        //   this.birth_date = this.doctor_selected.birth_date;
 
-        }
+        // }
         if(this.date_of_hire ){
           this.date_of_hire = new Date(this.doctor_selected.date_of_hire).toISOString();
         }else{

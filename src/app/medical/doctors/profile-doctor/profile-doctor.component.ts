@@ -8,6 +8,7 @@ import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
 import { RolesService } from '../../roles/service/roles.service';
 import { Location } from '@angular/common';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-profile-doctor',
   templateUrl: './profile-doctor.component.html',
@@ -157,8 +158,10 @@ getDoctor(){
       
       if(resp.message == 403){
         this.text_validation = resp.message_text;
+        Swal.fire('Error', resp.message_text, 'warning');
       }else{
-        this.text_success = 'El usuario ha sido actualizado correctamente';
+        // this.text_success = 'User info updated';
+        Swal.fire('Updated', ` User info updated`, 'success');
         this.ngOnInit();
       }
     })
