@@ -192,6 +192,7 @@ export class EditNoteRbtComponent {
       this.selectedValueRBT = this.note_selected.provider_name;
       this.selectedValueBCBA = this.note_selected.supervisor_name;
       console.log(this.selectedValueRBT);
+      console.log(this.selectedValueBCBA);
 
       this.interventions = resp.interventions;
       let jsonObj = JSON.parse(this.interventions) || '';
@@ -577,8 +578,8 @@ export class EditNoteRbtComponent {
     if(this.selectedValueRBT ){
       formData.append('provider_name', this.selectedValueRBT);
     }
-    if(this.selectedValueRBT ){
-      formData.append('supervisor_name', this.selectedValueRBT);
+    if(this.selectedValueBCBA ){
+      formData.append('supervisor_name', this.selectedValueBCBA);
     }
     if(this.replacementgroup ){
       formData.append('replacements', JSON.stringify(this.replacementgroup));

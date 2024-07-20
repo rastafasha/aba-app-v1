@@ -51,7 +51,7 @@
                                                     <h5>diagnosis_code</h5>
                                                     <h4>{{patient_selected.diagnosis_code}}</h4>
                                                 </div>
-                                                <div class="doctor-follows">
+                                                <!-- <div class="doctor-follows">
                                                     <h5>Status</h5>
                                                     <span class="badge bg-primary"
                                                         *ngIf="patient_selected.status === 'incoming'">Incoming</span>
@@ -60,12 +60,12 @@
                                                     <span class="badge bg-danger"
                                                         *ngIf="patient_selected.status === 'inactive'">Inactive</span>
 
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-4 d-flex align-items-center">
                                             <div class="follow-btn-group">
-                                                <a [routerLink]="['/note-rbt/edit/', note_id]" *ngIf="roles ==='SUPERADMIN' ||  permissions ==='edit_noterbt' " class="btn btn-info follow-btns">Edit</a>
+                                                <a [routerLink]="['/note-rbt/edit/', note_id]"  *ngIf="roles === 'SUPERADMIN' || roles === 'MANAGER' ||  permissions ==='edit_noterbt' " class="btn btn-info follow-btns">Edit</a>
                                                 <button class="btn btn-info follow-btns" (click)="convertToPdf()">Save PDF</button>
                                                 <!-- <button type="submit" class="btn btn-info message-btns">Message</button> -->
                                             </div>
@@ -106,22 +106,35 @@
                                                         <h3>{{patient_selected.diagnosis_code}}</h3>
                                                     </div>
                                                 </div>
+                                                <div class="col-xl-3 col-md-6 ">
+                                                    <div class="detail-personal">
+                                                        <h2>POS</h2>
+                                                        <h3>{{note_selected.pos}}</h3>
+                                                    </div>
+                                                </div>
                                                 <div class="col-xl-3 col-md-6">
                                                     <div class="detail-personal">
                                                         <h2>Provider Name</h2>
                                                         <h3>{{doctor_selected_full_name}}</h3>
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-3 col-md-6 col-xl-4">
+                                                <div class="col-xl-3 col-md-6 col-xl-3">
                                                     <div class="detail-personal">
                                                         <h2>Provider Credential</h2>
                                                         <h3>{{note_selected.provider_credential}}</h3>
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-3 col-md-6 col-xl-4">
+                                                
+                                                <div class="col-xl-3 col-md-6 col-xl-3">
                                                     <div class="detail-personal">
-                                                        <h2>POS</h2>
-                                                        <h3>{{note_selected.pos}}</h3>
+                                                        <h2>Modifier</h2>
+                                                        <h3>{{note_selected.md}}</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-3 col-md-6 col-xl-3">
+                                                    <div class="detail-personal">
+                                                        <h2>Modifier 2 (optional)</h2>
+                                                        <h3>{{note_selected.md2}}</h3>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-3 col-md-6 col-xl-4">

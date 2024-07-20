@@ -397,7 +397,9 @@
                                                                     <span class="badge bg-danger" *ngIf="notes_rbt.billed === 0">Pending</span>
                                                                     <span class="badge bg-success" *ngIf="notes_rbt.billed === 1">Billed</span>
                                                                     <span class="badge bg-danger" *ngIf="notes_rbt.pay === 0">Pending</span>
-                                                                    <span class="badge bg-success" *ngIf="notes_rbt.pay === 1">Pay</span>
+                                                                    <span class="badge bg-success" *ngIf="notes_rbt.pay === 1">Pay</span><br>
+                                                                    <span class="badge bg-warning" *ngIf="notes_rbt.md ">{{notes_rbt.md}}</span>
+                                                                    <span class="badge bg-warning" *ngIf="notes_rbt.md2 ">{{notes_rbt.md2}}</span>
                                                                 </div>
                                                                 <div class="comman-activitys flex-grow-1">
                                                                     <h3>{{notes_rbt.patient_id}} <span> <br>

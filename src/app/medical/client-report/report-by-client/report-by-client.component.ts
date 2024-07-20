@@ -562,6 +562,8 @@ export class ReportByClientComponent {
       pa_number: this.pa_number,
       billed: data.billed,
       pay: data.pay,
+      md: this.md,
+      md2: this.md2,
       // noterbt_id: data.id,
       
     };
@@ -578,7 +580,7 @@ export class ReportByClientComponent {
         Swal.fire('Updated', `Bip Updated successfully!`, 'success');
         this.ngOnInit();
       })
-      this.noteRbtService.editNote(VALUE2,data.id).subscribe((resp:any)=>{
+      this.noteRbtService.noteUpdateStatus(VALUE2,data.id).subscribe((resp:any)=>{
         console.log(resp);
       })
       
@@ -592,7 +594,7 @@ export class ReportByClientComponent {
         this.ngOnInit();
       })
 
-      this.noteRbtService.editNote(VALUE2,data.id ).subscribe((resp:any)=>{
+      this.noteRbtService.noteUpdateStatus(VALUE2,data.id ).subscribe((resp:any)=>{
         console.log(resp);
         
         

@@ -137,6 +137,8 @@ export class NoteBcbaEditComponent {
   rbt_training_goalsgroup:any =[];
   caregivers_training_goalsgroup:any =[];
   pa_assessmentsgroup:any =[];
+  pa_assessments:any =[];
+  n_un:any =[];
 
   public location: any;
   public porcent_of_occurrences:number = 0;
@@ -175,6 +177,8 @@ export class NoteBcbaEditComponent {
     let USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER: '');
     this.doctor_id = this.user.id;
+
+    
   }
 
   goBack() {
@@ -193,6 +197,8 @@ export class NoteBcbaEditComponent {
       
     })
   }
+
+  
 
   getNote(){
     this.noteBcbaService.getNote(this.note_id).subscribe((resp:any)=>{
@@ -250,6 +256,7 @@ export class NoteBcbaEditComponent {
       this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED = this.note_selected.supervisor_signature;
 
       this.getProfileBip();
+
     })
   }
 
@@ -265,7 +272,22 @@ export class NoteBcbaEditComponent {
       // this.pos = JSON.parse(resp.patient.pos_covered) ;
       this.pos = JSON.parse(resp.patient.pos_covered) ;
       this.insuranceData();
+      this.getReplacementsByPatientId();
     });
+  }
+
+  getReplacementsByPatientId(){
+    this.noteBcbaService.showReplacementbyPatient(this.patient_id).subscribe((resp:any)=>{
+      console.log(resp);
+      this.pa_assessments = resp.pa_assessments;
+      let jsonObj = JSON.parse(this.pa_assessments) || '';
+      this.pa_assessmentsgroup = jsonObj;
+      this.n_un = this.pa_assessmentsgroup[0].n_units;
+      // this.unitsAsignated = this.pa_assessmentsgroup.n_units;
+      // console.log(this.pa_assessmentsgroup);
+      this.cpt = this.pa_assessmentsgroup[0].cpt;
+      console.log(this.cpt);  
+    })
   }
 
   insuranceData(){
