@@ -395,8 +395,8 @@
                                         <mat-select multiple="multiple" [(ngModel)]="selectedValuePosCovered"
                                             [ngModelOptions]="{standalone: true}" class="form-control select"
                                             placeholder="Select">
-                                            <mat-option *ngFor="let data of poscoveredList" [value]="data.value">
-                                                {{data.value}}
+                                            <mat-option *ngFor="let data of poscoveredList" [value]="data.name">
+                                                {{data.name}}
                                             </mat-option>
 
                                         </mat-select>

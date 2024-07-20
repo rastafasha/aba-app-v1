@@ -10,6 +10,12 @@ import Swal from 'sweetalert2';
 import { url_media } from 'src/app/config/config';
 import { Location } from '@angular/common';
 declare var $:any;  
+
+export interface POSModel{
+  id: number;
+  name:string;
+  code:string;
+}
 @Component({
   selector: 'app-note-rbt',
   templateUrl: './note-rbt.component.html',
@@ -51,7 +57,7 @@ export class NoteRbtComponent {
   
   public provider_name_g:string = '';
   public provider_credential:string = '';
-  public pos:string = '';
+  public pos:POSModel ;
   public session_date:string = '';
   public time_in:string = '';
   public time_out:string = '';
@@ -193,7 +199,8 @@ export class NoteRbtComponent {
       this.selectedValueProviderName = resp.patient.rbt_id;
       this.selectedValueRBT = resp.patient.rbt_id;
       this.selectedValueBCBA = resp.patient.bcba_id;
-      this.pos = JSON.parse(resp.patient.pos_covered) ;
+      this.pos = resp.patient.pos_covered ;
+      // this.pos = JSON.parse(resp.patient.pos_covered) ;
       
       console.log( this.pos);  
       this.diagnosis_code = this.client_selected.patient.diagnosis_code;  
@@ -306,9 +313,19 @@ export class NoteRbtComponent {
     this.maladaptiveSelected = behavior;
     this.maladaptives[i]= behavior
     
-    this.maladaptiveSelected = null;
+    
+
+    if(this.maladaptiveSelected.number_of_occurrences  === undefined){
+      Swal.fire('Warning', `Must add less one`, 'warning');
+      return;
+    }else{
+      Swal.fire('Added', ` Maladaptive - ${this.maladaptives[i].maladaptive_behavior} - Added`, 'success');
+
+      this.maladaptiveSelected = null;
     this.maladaptive_behavior = '';
     this.number_of_occurrences = null;
+    }
+
     
   }
 
@@ -316,21 +333,28 @@ export class NoteRbtComponent {
   addReplacement(replacemen){
     
     this.replacementSelected = replacemen;
-    this.replacementGoals.push({
-      goal: this.replacementSelected.goal,
-      total_trials: this.replacementSelected.total_trials,
-      number_of_correct_response: this.replacementSelected.number_of_correct_response ,
-      // number_of_correct_response: this.number_of_correct_response ? this.number_of_correct_response :0 ,
-      
-    })
-    if(this.replacementGoals.length > 1){
-      this.replacementGoals.splice(this.replacementGoals,1);
-    }
-    this.replacementSelected = null;
-    this.goal = '';
-    this.total_trials = null;
-    this.number_of_correct_response = null;
 
+    if(this.replacementSelected.number_of_correct_response  === undefined){
+      Swal.fire('Warning', `Must add less one`, 'warning');
+      return;
+    }else{
+      this.replacementGoals.push({
+        goal: this.replacementSelected.goal,
+        total_trials: this.replacementSelected.total_trials,
+        number_of_correct_response: this.replacementSelected.number_of_correct_response ,
+        // number_of_correct_response: this.number_of_correct_response ? this.number_of_correct_response :0 ,
+        
+      })
+      this.replacementGoals.splice(this.replacementGoals,1);
+      Swal.fire('Updated', ` Replacement - ${this.replacementSelected.goal} - Added`, 'success');
+      this.replacementSelected = null;
+      this.goal = '';
+      this.total_trials = null;
+      this.number_of_correct_response = null;
+
+      
+    }
+    
     
   }
 
@@ -399,8 +423,10 @@ export class NoteRbtComponent {
      //si existe un elemento actualiza ese elemento en la lista
     if(this.intervention_added.length > 1){
       this.intervention_added.splice(this.intervention_added,1);
+      Swal.fire('Updated', ` Interventions Added`, 'success');
+    }else{
+      Swal.fire('Warning', `Must add less one`, 'warning');
     }
-    Swal.fire('Updated', ` Interventions Added`, 'success');
   }
 
   //funcion para la primera imagen.. funciona
@@ -451,15 +477,17 @@ export class NoteRbtComponent {
   }
 
   
-  save(){
+  save(){debugger
     this.text_validation = '';
-    // if(!this.replacementGoals||!this.maladaptives 
-    //   // ||!this.provider_credential 
-    //   || !this.supervisor_name
-    // ){
-    //   this.text_validation = 'All Fields (*) are required';
-    //   return;
-    // }
+    if(this.intervention_added.length == 0 
+      || this.maladaptives[0].number_of_occurrences == undefined
+      || this.intervention_added.length == 0 
+      // || !this.supervisor_name
+    ){
+      this.text_validation = 'All Fields (*) are required';
+      Swal.fire('Warning', `Must add less one`, 'warning');
+      return;
+    }
 
     
 
@@ -472,7 +500,7 @@ export class NoteRbtComponent {
     formData.append('last_name', this.last_name);
     formData.append('diagnosis_code', this.diagnosis_code);
     formData.append('provider_credential', this.provider_credential);
-    formData.append('pos', this.pos);
+    // formData.append('pos', this.pos);
     formData.append('session_date', this.session_date);
 
     
@@ -522,6 +550,7 @@ export class NoteRbtComponent {
     // formData.append('imagen', this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED);
     // formData.append('imagenn', this.FILE_SIGNATURE_BCBA);
     // formData.append('imagenn', this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED);
+
     if(this.FILE_SIGNATURE_RBT ){
       formData.append('imagen', this.FILE_SIGNATURE_RBT);
     }

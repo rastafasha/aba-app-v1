@@ -119,6 +119,12 @@ export class InsuranceEditComponent {
         Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
     
   }
+  seleccionarParaEdit(serv:any){
+    this.maladaptive_edit = serv;
+    // console.log(this.maladaptive_edit);
+        
+    
+  }
   cambiarNote(note:any){
     this.note_edit = note;
         Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');

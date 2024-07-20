@@ -61,7 +61,9 @@
                                 <div class="col-12 col-md-6 col-xl-4">
                                     <div class="form-group local-forms">
                                         <label >Rendering Provider <span class="login-danger">*</span></label>
-                                        <mat-select [(ngModel)]="selectedValueRendering" name="rendering_provider" [ngModelOptions]="{standalone: true}" class="form-control select" (selectionChange)="selectSpecialist($event)"  placeholder="Select Specialist">
+                                        <mat-select [(ngModel)]="selectedValueRendering" name="rendering_provider" 
+                                        [ngModelOptions]="{standalone: true}" class="form-control select" 
+                                        (selectionChange)="selectSpecialist($event)"  placeholder="Select Specialist">
                                             <mat-option *ngFor="let data of roles_bcba" [value]="data.id">
                                             {{data.name}} {{data.surname}}
                                             </mat-option>
@@ -84,10 +86,50 @@
                                     <div class="form-group local-forms">
                                         <label >CPT <span class="login-danger">*</span></label>
                                         <mat-select [(ngModel)]="selectedValueCode" name="cpt_code" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select Code">
-                                            <mat-option *ngFor="let data of services" [value]="data.code">
+                                            <mat-option *ngFor="let data of pa_assessmentsgroup" [value]="data.code">
                                             {{data.code}}
                                             </mat-option>
                                         </mat-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-4 ">
+                                    <div class="form-group local-forms">
+                                        <label >Units Allowed <span class="login-danger">*</span></label>
+                                        <mat-select [(ngModel)]="selectedValueCode" name="cpt_code" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select Code">
+                                            <mat-option *ngFor="let data of pa_assessmentsgroup" [value]="data.code">
+                                            {{data.n_units}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >Modifier <span class="login-danger">*</span></label>
+                                        <!-- (change)="isSelectedModifier2(md2.value)"  -->
+                                        <span *ngIf="insurer_name == 'Medicaid'">
+                                            <div class="form-group local-forms">
+                                                <select
+                                                    class="form-control form-select-solid fw-bolder"
+                                                    name="md2" #md2    >
+                                                    <option>-- Select --</option>
+                                                    <option value="HM">HM</option>
+                                                    <option value="XE">XE</option>
+                                                    <option value="HO">HO</option>
+                                                </select>
+                                            </div>
+                                        </span>
+                                        <span *ngIf="insurer_name !== 'Medicaid'">
+                                            <div class="form-group local-forms">
+                                                <!-- (change)="isSelectedModifier2(md2.value)" -->
+                                                <select
+                                                    class="form-control form-select-solid fw-bolder"
+                                                    name="md2" #md2   >
+                                                    <option>-- Select --</option>
+                                                    <option value="HM">HM</option>
+                                                    <option value="HO">HO</option>
+                                                </select>
+                                            </div>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-xl-4">

@@ -387,13 +387,14 @@ export class AddPatientMComponent {
     // formData.append('insuranceId_secundary', this.insuranceId_secundary);
     formData.append('elegibility_date', this.elegibility_date);
     // formData.append('pos_covered', this.pos_covered);
-    formData.append('pos_covered', this.poscoveredList);
     formData.append('deductible_individual_I_F', this.deductible_individual_I_F);
     formData.append('balance', this.balance);
     formData.append('coinsurance', this.coinsurance);
     formData.append('copayments', this.copayments);
     formData.append('oop', this.oop);
-
+    
+    formData.append('pos_covered', this.poscoveredList);
+    
     if(this.user.roles[0] == 'SUPERADMIN'){
       formData.append('location_id', this.selectedValueLocation);
     }

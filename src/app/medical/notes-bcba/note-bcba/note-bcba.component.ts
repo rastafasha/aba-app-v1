@@ -134,6 +134,7 @@ export class NoteBcbaComponent {
   monitoringEvaluatingPatientIds:any =[];
   caregivers_training_goals:any =[];
   rbt_training_goals:any =[];
+  posGruoup:any =[];
   note_description:any ;
   insurer_name:any ;
   services:any ;
@@ -143,6 +144,8 @@ export class NoteBcbaComponent {
   electronic_signature:any ;
   doctor:any ;
   full_name:any ;
+  unitsAsignated:any ;
+  n_un:number ;
 
   constructor(
     public bipService:BipService,
@@ -210,7 +213,14 @@ export class NoteBcbaComponent {
       this.first_name = this.client_selected.first_name;
       this.last_name = this.client_selected.last_name;
       this.patient_id = this.client_selected.patient_id;
-      this.pos = JSON.parse(resp.patient.pos_covered) ;
+      this.pos = this.client_selected.pos_covered ;
+      // this.pos = JSON.parse(resp.patient.pos_covered) ;
+      
+      // let jsonObjPOS = JSON.parse(this.pos) || '';
+      // this.posGruoup = jsonObjPOS;
+      // console.log(this.posGruoup);
+      console.log(this.pos);
+
       this.birth_date = this.client_selected.birth_date ? new Date(this.client_selected.birth_date).toISOString(): '';
       console.log(this.birth_date); 
       this.diagnosis_code = this.client_selected.diagnosis_code;  
@@ -248,6 +258,8 @@ export class NoteBcbaComponent {
       this.pa_assessments = resp.pa_assessments;
       let jsonObj = JSON.parse(this.pa_assessments) || '';
       this.pa_assessmentsgroup = jsonObj;
+      this.n_un = this.pa_assessmentsgroup[0].n_units;
+      // this.unitsAsignated = this.pa_assessmentsgroup.n_units;
       console.log(this.pa_assessmentsgroup);
       // this.cpt = this.pa_assessmentsgroup[0].cpt;
       console.log(this.cpt);  
@@ -271,6 +283,14 @@ export class NoteBcbaComponent {
       // this.services = resp.services;
     })
   }
+  getCPtList(selectedValueCode){
+    // this.doctorService.showDoctorProfile(selectedValueCode).subscribe((resp:any)=>{
+    //   // console.log(resp);
+    //   this.unitsAsignated = resp.doctor.certificate_number;
+    //   // this.notes = resp.notes;
+    //   // this.services = resp.services;
+    // })
+  }
 
   getMaladaptivesBipByPatientId(){
     this.bipService.getBipProfilePatient_id(this.patient_id).subscribe((resp:any)=>{
@@ -290,6 +310,13 @@ export class NoteBcbaComponent {
     event = this.selectedValueAba;
     this.specialistDataSupervisor(this.selectedValueAba);
     console.log(this.selectedValueAba);
+    
+  }
+
+  selectCpt(event:any){
+    event = this.selectedValueCode;
+    this.getCPtList(this.selectedValueCode);
+    console.log(this.selectedValueCode);
     
   }
 

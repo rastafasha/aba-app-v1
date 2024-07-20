@@ -203,8 +203,10 @@ export class CrisisPlanComponent {
      //si existe un elemento actualiza ese elemento en la lista
     if(this.risk_added.length > 1){
       this.risk_added.splice(this.risk_added,1);
+      Swal.fire('Updated', `Risk option added!`, 'success');
+    }else{
+      Swal.fire('Warning', `Must add less one`, 'warning');
     }
-    Swal.fire('Updated', `Risk option added!`, 'success');
 
   }
 
@@ -224,8 +226,11 @@ addSuicidality(){
    //si existe un elemento actualiza ese elemento en la lista
   if(this.suicidality_added.length > 1){
     this.suicidality_added.splice(this.suicidality_added,1);
+    Swal.fire('Updated', `Suicidality option added!`, 'success');
+  }else{
+    Swal.fire('Warning', `Must add less one`, 'warning');
   }
-  Swal.fire('Updated', `Suicidality option added!`, 'success');
+
 }
 
 deleteSuicidality(i:any){
@@ -242,8 +247,10 @@ addHomicidality(){
    //si existe un elemento actualiza ese elemento en la lista
   if(this.homicidality_added.length > 1){
     this.homicidality_added.splice(this.homicidality_added,1);
+    Swal.fire('Updated', `Homicidality option added!`, 'success');
+  }else{
+    Swal.fire('Warning', `Must add less one`, 'warning');
   }
-  Swal.fire('Updated', `Homicidality option added!`, 'success');
 }
 
 deleteHomicidality(i:any){

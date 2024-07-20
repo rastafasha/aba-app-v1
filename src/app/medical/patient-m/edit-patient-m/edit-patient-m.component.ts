@@ -149,6 +149,7 @@ export class EditPatientMComponent {
   public services_code: any= [];
   public services: any= [];
   public pa_assessmentgroup: any= [];
+  public posGroup: any= [];
   public poscoveredList: any = [];
 
   public roles_rbt:any = [];
@@ -276,6 +277,14 @@ export class EditPatientMComponent {
    
   }
 
+  selectPOS(event: any){
+    let VALUE = event;
+    this.selectedValuePosCovered = VALUE;
+    // console.log(this.selectedValuePosCovered);
+    this.getConfig();
+   
+  }
+
   
   
 showUser(){
@@ -317,7 +326,7 @@ showUser(){
         this.diagnosis_code = this.patient_selected.diagnosis_code;
 
         //valores de los selectores
-        this.selectedValuePosCovered = this.patient_selected.pos_covered;
+        
 
         this.selectedValueLocation = this.patient_selected.location_id;
           this.selectedValue_rbt = this.patient_selected.rbt_home_id ? this.patient_selected.rbt_home_id : null;
@@ -365,6 +374,14 @@ showUser(){
         this.pa_assessmentss = resp.pa_assessments ? resp.pa_assessments : null;// ?
         let jsonObj = JSON.parse(this.pa_assessmentss) || '';
         this.pa_assessmentgroup = jsonObj;
+
+        // this.selectedValuePosCovered = resp.pos_covered ? resp.pos_covered : null;
+        // let jsonObj2 = JSON.parse(this.selectedValuePosCovered) || '';
+        // this.posGroup= jsonObj2;
+        // console.log(this.posGroup);
+
+        this.selectedValuePosCovered = resp.pos_covered;
+        console.log(this.selectedValuePosCovered);
 
         
         // console.log(this.selectedValue_rbt);

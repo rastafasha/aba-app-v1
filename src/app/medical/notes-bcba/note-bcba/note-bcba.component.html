@@ -32,9 +32,15 @@
                                 </div>
                                 <div class="col-12 col-md-6 col-xl-4">
                                     <div class="form-group local-forms">
-                                        <label >POS  <span class="login-danger">*</span></label>
-                                        <input multiple="multiple" class="form-control" name="pos" disabled
+                                        <label >POS  Avaiable<span class="login-danger">*</span></label>
+                                        <input class="form-control" name="pos" disabled
                                             [(ngModel)]="pos" type="text">
+
+                                            <!-- <mat-select [(ngModel)]="pos" name="pos" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select POS Asigned">
+                                                <mat-option *ngFor="let data of pos, let i=index"  [value]="data.name">
+                                                {{data.name}}
+                                                </mat-option>
+                                            </mat-select> -->
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-xl-4">
@@ -60,7 +66,7 @@
                                 <div class="col-12 col-md-6 col-xl-4">
                                     <div class="form-group local-forms">
                                         <label >Rendering Provider <span class="login-danger">*</span></label>
-                                        <p style="padding:10px">{{doctor.full_name}}</p>
+                                        <p style="padding:10px">{{doctor.full_name ? doctor.full_name: ''}}</p>
                                         <!-- <mat-select [(ngModel)]="selectedValueRendering" name="rendering_provider" [ngModelOptions]="{standalone: true}" class="form-control select" 
                                         (selectionChange)="selectSpecialist($event)"  placeholder="Select Specialist">
                                             <mat-option *ngFor="let data of roles_bcba" [value]="data.id">
@@ -75,7 +81,7 @@
                                         <label >Aba Supervisor<span class="login-danger">*</span></label>
                                         <mat-select [(ngModel)]="selectedValueAba" name="aba_supervisor" [ngModelOptions]="{standalone: true}" class="form-control select"
                                          (selectionChange)="selectSpecialistab($event)"  placeholder="Select Specialist">
-                                            <mat-option *ngFor="let data of specialists" [value]="data.id">
+                                            <mat-option *ngFor="let data of specialists, let i=index;" [value]="data.id">
                                             {{data.name}} {{data.surname}}
                                             </mat-option>
                                         </mat-select>
@@ -85,13 +91,33 @@
                                 <div class="col-12 col-md-6 col-xl-4 ">
                                     <div class="form-group local-forms">
                                         <label >CPT <span class="login-danger">*</span></label>
-                                        <mat-select [(ngModel)]="selectedValueCode" name="code" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select Code">
-                                            <mat-option *ngFor="let data of services" [value]="data.code">
-                                            {{data.code}}
+                                        <mat-select [(ngModel)]="selectedValueCode" name="code" [ngModelOptions]="{standalone: true}" 
+                                        class="form-control select"  placeholder="Select Code"
+                                        (selectionChange)="selectCpt($event)"
+                                        >
+                                            <mat-option *ngFor="let data of pa_assessmentsgroup, let i=index;" [value]="data.cpt">
+                                            {{data.cpt}}
                                             </mat-option>
                                         </mat-select>
                                     </div>
                                 </div>
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >Units Asigned <span class="login-danger">*</span></label>
+                                        <!-- <input class="form-control" name="n_units" disabled
+                                            [(ngModel)]="unitsAsignated" type="text" > -->
+                                            <!-- {{n_un}} -->
+                                            <!-- <mat-option *ngFor="let data of pa_assessmentsgroup, let i=index;">
+                                            </mat-option> -->
+                                            <!-- {{unitsAsignated}} -->
+                                        <mat-select [(ngModel)]="selectedValueCode" name="n_units" disable [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select Code">
+                                            <mat-option *ngFor="let data of pa_assessmentsgroup" disable  [value]="data.cpt">
+                                            {{data.n_units}} 
+                                            </mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                                
                                 <div class="col-12 col-md-6 col-xl-4">
                                     <div class="form-group local-forms">
                                         <label>Date <span class="login-danger">*</span></label>
@@ -304,7 +330,7 @@
                                 <div class="col-12 col-md-6 col-xl-4">
                                     <div class="form-group local-forms">
                                         <label >Provider name BCBA </label>
-                                        <p style="padding:10px">{{doctor.full_name}}</p>
+                                        <p style="padding:10px">{{doctor.full_name ? doctor.full_name: ''}}</p>
                                         <!-- <mat-select [(ngModel)]="selectedValueRBT" name="rbt" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select Specialist" (selectionChange)="selectFirmaSpecialistRbt($event)">
                                             <mat-option *ngFor="let data of roles_bcba" [value]="data.id">
                                             {{data.name}} {{data.surname}}

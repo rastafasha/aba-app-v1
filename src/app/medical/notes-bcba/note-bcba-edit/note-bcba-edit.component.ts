@@ -136,6 +136,7 @@ export class NoteBcbaEditComponent {
   rbt_training_goals:any =[];
   rbt_training_goalsgroup:any =[];
   caregivers_training_goalsgroup:any =[];
+  pa_assessmentsgroup:any =[];
 
   public location: any;
   public porcent_of_occurrences:number = 0;
@@ -261,6 +262,7 @@ export class NoteBcbaEditComponent {
       this.last_name = this.client_selected.patient.last_name;
       this.patient_id = resp.patient.patient_id;
       this.insurer_id = resp.patient.insurer_id;
+      // this.pos = JSON.parse(resp.patient.pos_covered) ;
       this.pos = JSON.parse(resp.patient.pos_covered) ;
       this.insuranceData();
     });
@@ -287,7 +289,7 @@ export class NoteBcbaEditComponent {
     })
   }
 
-  selectSpecialist(event:any){
+  selectSpecialist(event:any){debugger
     event = this.selectedValueProviderName;
     this.specialistData(this.selectedValueProviderName);
     

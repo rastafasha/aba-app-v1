@@ -87,6 +87,12 @@
                                         <label>POS <span class="login-danger">*</span></label>
                                         <input class="form-control" name="pos" disabled
                                             [(ngModel)]="pos" type="text">
+
+                                            <!-- <mat-select [(ngModel)]="pos" name="pos" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select POS Asigned">
+                                                <mat-option *ngFor="let data of pos, let i=index"  [value]="data.name">
+                                                {{data.name}}
+                                                </mat-option>
+                                            </mat-select> -->
                                         <!-- <select class="form-control form-select-solid fw-bolder" name="pos"
                                             [(ngModel)]="pos" disabled>
                                             <option>-- Select --</option>

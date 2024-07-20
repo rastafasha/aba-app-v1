@@ -2,16 +2,24 @@
     "data": [
        
         {
-            "value" : "03 School"
+            "id" : "1"
+            ,"name" : "03 School"
+            ,"code" : "03"
         },
           {
-            "value" : "12 Home"
+            "id" : "2"
+            ,"name" : "12 Home"
+            ,"code" : "12"
         },
           {
-            "value" : "02 Telehealth"
+            "id" : "3"
+            ,"name" : "02 Telehealth"
+            ,"code" : "02"
         },
         {
-            "value" : "99 Other"
+            "id" : "4"
+            ,"name" : "99 Other"
+            ,"code" : "99"
         }
     ],
     "totalData":4

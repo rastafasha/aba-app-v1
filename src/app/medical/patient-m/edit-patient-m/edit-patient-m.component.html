@@ -418,9 +418,12 @@
                                     <div class="form-group local-forms">
                                         <label >POS Covered<span class="login-danger">*</span></label>
                                         
-                                          <mat-select multiple="multiple" [(ngModel)]="selectedValuePosCovered" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select">
-                                            <mat-option *ngFor="let data of poscoveredList" [value]="data.value">
-                                            {{data.value}}
+                                          <mat-select multiple="multiple" [(ngModel)]="selectedValuePosCovered" 
+                                          [ngModelOptions]="{standalone: true}" class="form-control select" 
+                                          (ngModelChange)="selectPOS($event)" 
+                                          placeholder="Select">
+                                            <mat-option *ngFor="let data of poscoveredList" [value]="data.name">
+                                            {{data.name}}
                                             </mat-option>
                                             
                                         </mat-select>

@@ -201,7 +201,14 @@
                                         <td>
                                             {{data.session_date |date}}
                                         </td>
-                                        <td>{{data.pos}}</td>
+                                        <td>
+                                            {{pos_covered}}
+                                            <!-- <ul *ngFor="let d of pos_covered, let i= index">
+                                                <li *ngIf="i == 0">
+                                                    {{d.pos_covered}}
+                                                </li>
+                                            </ul> -->
+                                        </td>
                                         <!-- | transformToDate -->
                                         <td>{{data.total_hours   }}</td>
 

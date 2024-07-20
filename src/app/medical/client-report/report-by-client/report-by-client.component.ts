@@ -65,6 +65,7 @@ export class ReportByClientComponent {
   public sponsors:any=[];
   public modifiers:any=[];
   public noteRbt:any=[];
+  public pos_covered:any=[];
   public pa_assessmentgroup:any=[];
   public noteBcba:any=[];
   public patient:any;
@@ -200,6 +201,7 @@ export class ReportByClientComponent {
       this.insurance_id = resp.patient.insurer_id;
       this.billed = resp.noteRbts;
       this.pay = resp.noteRbts;
+      this.pos_covered = resp.pos_covered;
 
       // obtengo la info resumida de las notas rbt
       this.noteRbt = resp.noteRbts;
