@@ -479,8 +479,9 @@ export class NoteRbtComponent {
   
   save(){debugger
     this.text_validation = '';
-    if(this.intervention_added.length == 0 
-      || this.maladaptives[0].number_of_occurrences == undefined
+    if(
+      this.maladaptives[0].number_of_occurrences == undefined
+      || this.replacementGoals[0].number_of_correct_response == undefined 
       || this.intervention_added.length == 0 
       // || !this.supervisor_name
     ){

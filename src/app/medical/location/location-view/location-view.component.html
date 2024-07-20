@@ -124,7 +124,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                              <a class="dropdown-item" [routerLink]="['/doctors/profile/', specialist.id]">
+                                              <a [routerLink]="['/doctors/profile/', specialist.id]">
                                                 <!-- {{specialist.name + ' ' + (specialist.surname ? specialist.surname: '')}} -->
                                                 {{specialist.full_name }}
                                               </a>
@@ -316,7 +316,7 @@
                                                 </div> 
                                             </td>
                                             <td>
-                                              <a class="dropdown-item" [routerLink]="['/patients/profile/', patient.id]">
+                                              <a  [routerLink]="['/patients/profile/', patient.id]">
                                                 {{patient.first_name + ' ' + (patient.first_name ? patient.last_name: '')}}
                                               </a>
                                             </td>
