@@ -119,6 +119,7 @@ export class ReportByClientComponent {
   public doctors: any;
   public tecnicoDoctorNames: any;
   public patientId: any;
+  public services: any;
 
   public providersSponsorsList:any;
   public factorPorcentual: number =  1.66666666666667
@@ -286,12 +287,13 @@ export class ReportByClientComponent {
   getInsurer(){
     //sacamos los detalles insurance seleccionado
     this.insuranceService.showInsurance(this.insurance_id).subscribe((resp:any)=>{
-      // console.log(resp);
+      console.log(resp);
       this.insuranceiddd= resp.id;
       
       this.insurer_name = resp.insurer_name;
       this.modifiers = resp.notes;
       // console.log('modificadores',this.modifiers);
+      this.services = resp.services;
       this.unitPrize = resp.services[0].unit_prize;
       // console.log('precio unidad',this.unitPrize);
       // this.convertirHOra();

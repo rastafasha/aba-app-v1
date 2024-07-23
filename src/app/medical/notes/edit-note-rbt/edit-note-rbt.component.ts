@@ -26,6 +26,7 @@ export class EditNoteRbtComponent {
   public selectedValueProvider!: string;
   public selectedValueRBT!: string;
   public selectedValueBCBA!: string;
+  public selectedValueCode!: string;
   public selectedValueTimeIn!: number;
   public selectedValueTimeOut!: number;
   public selectedValueTimeIn2!: number;
@@ -125,6 +126,9 @@ export class EditNoteRbtComponent {
 
   maladaptiveSelected:any =null;
   replacementSelected:any =null;
+  pa_assessments:any =null;
+  pa_assessmentsgroup:any =null;
+  cpt_code:any =null;
 
   constructor(
     public bipService:BipService,
@@ -188,16 +192,17 @@ export class EditNoteRbtComponent {
       this.client_appeared = this.note_selected.client_appeared;
       this.client_response_to_treatment_this_session = this.note_selected.client_response_to_treatment_this_session;
       
+      this.selectedValueCode = this.note_selected.cpt_code;
+      
       this.selectedValueProviderName = this.note_selected.provider_name_g ? this.note_selected.provider_name_g : null;
       this.selectedValueRBT = this.note_selected.provider_name;
       this.selectedValueBCBA = this.note_selected.supervisor_name;
-      console.log(this.selectedValueRBT);
-      console.log(this.selectedValueBCBA);
+      
 
       this.interventions = resp.interventions;
       let jsonObj = JSON.parse(this.interventions) || '';
       this.interventionsgroup = jsonObj;
-      console.log(this.interventionsgroup);
+      
 
       this.pairing = this.interventionsgroup[0].pairing;
       this.response_block = this.interventionsgroup[0].response_block;
@@ -260,12 +265,29 @@ export class EditNoteRbtComponent {
       this.first_name = this.client_selected.patient.first_name;
       this.last_name = this.client_selected.patient.last_name;
       this.patient_id = resp.patient.patient_id;
-      this.pos = JSON.parse(resp.patient.pos_covered) ;
-      this.diagnosis_code = this.client_selected.patient.diagnosis_code;  
+
+      // this.pos = JSON.parse(resp.patient.pos_covered) ;
+      this.pos = resp.patient.pos_covered ;
+      this.diagnosis_code = this.client_selected.patient.diagnosis_code; 
+      
+      this.pa_assessments = resp.patient.pa_assessments;
+      let jsonObj = JSON.parse(this.pa_assessments) || '';
+      this.pa_assessmentsgroup = jsonObj;
+      // this.n_un = this.pa_assessmentsgroup[0].n_units;
+      // this.unitsAsignated = this.pa_assessmentsgroup.n_units;
+      // console.log(this.pa_assessments);
+      console.log(this.pa_assessmentsgroup);
       
     });
   }
 
+
+  selectCpt(event:any){
+    event = this.selectedValueCode;
+    // this.getCPtLißst(this.selectedValueCode);
+    console.log(this.selectedValueCode);
+    
+  }
   
 
 
@@ -552,6 +574,9 @@ export class EditNoteRbtComponent {
     formData.append('diagnosis_code', this.diagnosis_code);
     formData.append('provider_credential', this.provider_credential);
     formData.append('pos', this.pos);
+
+    formData.append('cpt_code', this.selectedValueCode);
+
     formData.append('session_date', this.session_date);
 
     if(this.selectedValueProviderName ){

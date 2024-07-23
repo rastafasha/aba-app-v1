@@ -65,7 +65,8 @@
                                         </div>
                                         <div class="col-lg-4 col-md-4 d-flex align-items-center">
                                             <div class="follow-btn-group">
-                                                <a [routerLink]="['/note-rbt/edit/', note_id]"  *ngIf="roles === 'SUPERADMIN' || roles === 'MANAGER' ||  permissions ==='edit_noterbt' " class="btn btn-info follow-btns">Edit</a>
+                                                <!-- *ngIf="roles === 'SUPERADMIN' || roles === 'MANAGER' ||  permissions ==='edit_noterbt' " -->
+                                                <a [routerLink]="['/note-rbt/edit/', note_id]"   class="btn btn-info follow-btns">Edit</a>
                                                 <button class="btn btn-info follow-btns" (click)="convertToPdf()">Save PDF</button>
                                                 <!-- <button type="submit" class="btn btn-info message-btns">Message</button> -->
                                             </div>
@@ -141,6 +142,18 @@
                                                     <div class="detail-personal">
                                                         <h2>Date Session</h2>
                                                         <h3>{{note_selected.session_date|date}}</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-3 col-md-6 col-xl-4">
+                                                    <div class="detail-personal">
+                                                        <h2>Create At</h2>
+                                                        <h3>{{note_selected.created_at|date}}</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-3 col-md-6 col-xl-4">
+                                                    <div class="detail-personal">
+                                                        <h2>Updated At</h2>
+                                                        <h3>{{note_selected.updated_at|date}}</h3>
                                                     </div>
                                                 </div>
                                                 <div class="clear"></div>

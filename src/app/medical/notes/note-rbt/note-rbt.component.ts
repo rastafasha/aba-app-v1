@@ -34,6 +34,7 @@ export class NoteRbtComponent {
   public selectedValueProvider!: string;
   public selectedValueRBT!: string;
   public selectedValueBCBA!: string;
+  public selectedValueCode!: string;
   public selectedValueTimeIn: number = 0;
   public selectedValueTimeOut: number = 0;
   public selectedValueTimeIn2: number = 0;
@@ -133,6 +134,9 @@ export class NoteRbtComponent {
   electronic_signature:any ;
   doctor:any ;
   full_name:any ;
+  pa_assessments:any ;
+  pa_assessmentsgroup:any ;
+  n_un:any ;
 
   constructor(
     public bipService:BipService,
@@ -190,7 +194,7 @@ export class NoteRbtComponent {
 
   getProfileBip(){
     this.bipService.showBipProfile(this.patient_id).subscribe((resp:any)=>{
-      // console.log(resp);
+      console.log(resp);
       this.client_selected = resp;
 
       this.first_name = this.client_selected.patient.first_name;
@@ -203,10 +207,29 @@ export class NoteRbtComponent {
       // this.pos = JSON.parse(resp.patient.pos_covered) ;
       
       console.log( this.pos);  
-      this.diagnosis_code = this.client_selected.patient.diagnosis_code;  
+      this.diagnosis_code = this.client_selected.patient.diagnosis_code; 
+      
+      
+      this.pa_assessments = resp.patient.pa_assessments;
+      let jsonObj = JSON.parse(this.pa_assessments) || '';
+      this.pa_assessmentsgroup = jsonObj;
+      // this.n_un = this.pa_assessmentsgroup[0].n_units;
+      // this.unitsAsignated = this.pa_assessmentsgroup.n_units;
+      // console.log(this.pa_assessments);
+      console.log(this.pa_assessmentsgroup);
+      // this.cpt = this.pa_assessmentsgroup[0].cpt;
+      // console.log(this.cpt);  
+
       this.getMaladaptivesBipByPatientId();
       this.getReplacementsByPatientId();
     });
+  }
+
+  selectCpt(event:any){
+    event = this.selectedValueCode;
+    // this.getCPtLißst(this.selectedValueCode);
+    console.log(this.selectedValueCode);
+    
   }
 
   getMaladaptivesBipByPatientId(){
@@ -511,6 +534,8 @@ export class NoteRbtComponent {
     formData.append('provider_name_g', this.doctor_id);
     formData.append('provider_name', this.doctor_id);
     formData.append('supervisor_name', this.selectedValueBCBA);
+
+    formData.append('cpt_code', this.selectedValueCode);
     
 
     if(this.selectedValueTimeIn ){

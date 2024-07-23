@@ -103,6 +103,29 @@
                                         </select> -->
                                     </div>
                                 </div>
+                                <div class="col-12 col-md-6 col-xl-4 ">
+                                    <div class="form-group local-forms">
+                                        <label >CPT <span class="login-danger">*</span></label>
+                                        <mat-select [(ngModel)]="selectedValueCode" name="code" [ngModelOptions]="{standalone: true}" 
+                                        class="form-control select"  placeholder="Select Code"
+                                        (selectionChange)="selectCpt($event)"
+                                        >
+                                            <mat-option *ngFor="let data of pa_assessmentsgroup, let i=index;" [value]="data.cpt">
+                                            {{data.cpt}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label >Units Asigned <span class="login-danger">*</span></label>
+                                        <mat-select [(ngModel)]="selectedValueCode" name="n_units" disable [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select Code">
+                                            <mat-option *ngFor="let data of pa_assessmentsgroup" disable  [value]="data.cpt">
+                                            {{data.n_units}} 
+                                            </mat-option>
+                                        </mat-select>
+                                    </div>
+                                </div>
                                 <div class="col-12 col-md-6 col-xl-4">
                                     <div class="form-group local-forms">
                                         <label>Date <span class="login-danger">*</span></label>

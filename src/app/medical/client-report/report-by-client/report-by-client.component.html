@@ -199,10 +199,12 @@
                                 <tbody>
                                     <tr *ngFor="let data of clientReportList">
                                         <td>
-                                            {{data.session_date |date}}
+                                            <a [routerLink]="['/note-rbt/view/', data.id]">
+                                                {{data.session_date |date}}
+                                            </a>
                                         </td>
                                         <td>
-                                            {{pos_covered}}
+                                            {{data.meet_with_client_at}}
                                             <!-- <ul *ngFor="let d of pos_covered, let i= index">
                                                 <li *ngIf="i == 0">
                                                     {{d.pos_covered}}
@@ -212,9 +214,26 @@
                                         <!-- | transformToDate -->
                                         <td>{{data.total_hours   }}</td>
 
-                                        <td>{{cpt}}</td>
+                                        <td>
+                                            {{data.cpt_code}}
+                                            <!-- {{cpt}} -->
+
+                                        </td>
                                         <!-- <td>{{data.md}}</td> -->
                                         <td>
+
+                                            <!-- <span *ngIf="data.md">
+                                                <div class="form-group local-forms">
+                                                    <select
+                                                        class="form-control form-select-solid fw-bolder"
+                                                        name="md" #md  [(ngModel)]="data.md" (change)="isSelectedModifier(md.value)"  >
+                                                        <option>-- No Funciona --</option>
+                                                        <option value="HM">Funciona</option>
+                                                        <option value="HO">HO</option>
+                                                    </select>
+                                                </div>
+                                            </span>  -->
+
                                             <span *ngIf="insurer_name == 'Medicaid'">
                                                 <div class="form-group local-forms">
                                                     <select
@@ -277,7 +296,7 @@
                                             </span>
                                         </td>
                                         <td>
-                                            {{data.tecnicoRbt.name}}
+                                            {{data.tecnicoRbt.name}} {{data.tecnicoRbt.surname}}
                                         </td>
 
                                         <td>{{pa_number}}</td>
