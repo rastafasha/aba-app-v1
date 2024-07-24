@@ -130,7 +130,8 @@
                                     <div class="form-group local-forms">
                                         <label>Date <span class="login-danger">*</span></label>
                                         <input class="form-control datetimepicker" autocomplete="false"
-                                            name="session_date" [(ngModel)]="session_date" type="text" matInput
+                                            name="session_date" [(ngModel)]="session_date"
+                                            (dateChange)="onDateChange($event)" type="text" matInput
                                             [matDatepicker]="pickerSesDate">
                                         <mat-datepicker #pickerSesDate></mat-datepicker>
                                         <mat-datepicker-toggle matIconSuffix
@@ -236,7 +237,7 @@
 
             </div>
             <!-- fin paciente -->
-            <!-- pruba grafica -->
+            <!-- Cards Maladaptives -->
             <div class="col-xs-12">
                 <div class="card">
                     <div class="card-body">
@@ -280,10 +281,10 @@
                     </div>
                 </div>
             </div>
-            <!-- pruba grafica -->
+            <!-- Cards Maladaptives -->
 
 
-
+<!-- Cards Replacements -->
             <div class="col-xs-12">
                 <div class="card">
                     <div class="card-body">

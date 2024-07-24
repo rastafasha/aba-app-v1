@@ -7,8 +7,8 @@ import { PatientMService } from '../../patient-m/service/patient-m.service';
 import { NoteRbtService } from '../services/note-rbt.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import Swal from 'sweetalert2';
-import { url_media } from 'src/app/config/config';
 import { Location } from '@angular/common';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 declare var $:any;  
 
 export interface POSModel{
@@ -138,6 +138,9 @@ export class NoteRbtComponent {
   pa_assessmentsgroup:any ;
   n_un:any ;
 
+  // session_date: Date;
+  // next_session_is_scheduled_for: Date;
+
   constructor(
     public bipService:BipService,
     public patientService:PatientMService,
@@ -241,7 +244,7 @@ export class NoteRbtComponent {
   }
   getReplacementsByPatientId(){
     this.noteRbtService.showReplacementbyPatient(this.patient_id).subscribe((resp:any)=>{
-      // console.log(resp);
+      console.log(resp);
       this.replacementGoals = resp.replacementGoals;
     })
   }
@@ -609,6 +612,13 @@ export class NoteRbtComponent {
 
   }
 
+
+  onDateChange(event: MatDatepickerInputEvent<Date>) {
+    const date = event.value;
+    const nextDate = new Date(date);
+    nextDate.setDate(nextDate.getDate() + 2);
+    this.next_session_is_scheduled_for = nextDate.toISOString().split('T')[0];
+  }
 
 //   class Calculadora {
 //     sumar(num1, num2) {

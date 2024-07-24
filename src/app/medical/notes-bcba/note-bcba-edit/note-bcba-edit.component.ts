@@ -462,7 +462,7 @@ export class NoteBcbaEditComponent {
 
     let formData = new FormData();
     formData.append('patient_id', this.patient_id);
-    formData.append('doctor_id', this.doctor_id);
+    formData.append('doctor_id', this.selectedValueRendering);
     formData.append('bip_id', this.bip_id);
     formData.append('diagnosis_code', this.diagnosis_code);
     formData.append('location', this.location);
