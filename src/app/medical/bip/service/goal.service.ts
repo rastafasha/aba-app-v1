@@ -40,6 +40,11 @@ export class GoalService {
     let URL = url_servicios+'/goal/showgbyPatientId/'+patient_id;
     return this.http.get(URL, {headers:headers});
   }
+  getStobyGoalinProgress(goal:any){
+    let headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token})
+    let URL = url_servicios+'/sustitutiongoal/showStogbyGoal/'+goal;
+    return this.http.get(URL, {headers:headers});
+  }
   getGoalbyBipId(bip_id:any){
     let headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token})
     let URL = url_servicios+'/goal/showBipId/'+bip_id;

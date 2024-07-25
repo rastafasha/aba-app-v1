@@ -164,18 +164,18 @@ export class EditDoctorComponent {
         //   this.birth_date = this.doctor_selected.birth_date;
 
         // }
+
+        this.start_pay = this.doctor_selected.start_pay;
+
+
+
         if(this.date_of_hire ){
           this.date_of_hire = new Date(this.doctor_selected.date_of_hire).toISOString();
         }else{
 
           this.date_of_hire = this.doctor_selected.date_of_hire;
         }
-        if(this.start_pay ){
-          this.start_pay = new Date(this.doctor_selected.start_pay).toISOString();
-        }else{
-
-          this.start_pay = this.doctor_selected.start_pay;
-        }
+        
         if(this.driver_license_expiration ){
           this.driver_license_expiration = new Date(this.doctor_selected.driver_license_expiration).toISOString();
         }else{

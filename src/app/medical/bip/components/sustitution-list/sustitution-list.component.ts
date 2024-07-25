@@ -83,6 +83,7 @@ export class SustitutionListComponent {
   public goal:any;
   public goals:any;
   public initial_interesting:any;
+  public target:any;
 
   public createSelected:any;
   public golltoCreateds:any;
@@ -193,7 +194,8 @@ export class SustitutionListComponent {
     this.description = '',
 
     this.sustitution_sto = '';
-    this.initial_interesting = '';
+    this.target = '';
+    // this.initial_interesting = '';
     this.sustitution_status_sto = '';
     this.sustitution_status_sto_edit = '';
     this.sustitution_date_lto = null;
@@ -253,14 +255,16 @@ export class SustitutionListComponent {
     this.golstoSustiutions.push({
       
       sustitution_sto: this.sustitution_sto,
-      initial_interesting: this.initial_interesting,
+      target: this.target,
+      // initial_interesting: this.initial_interesting,
       sustitution_status_sto: this.sustitution_status_sto,
       sustitution_status_sto_edit: this.sustitution_status_sto,
       sustitution_date_sto: this.sustitution_date_sto,
       sustitution_decription_sto: this.sustitution_decription_sto,
     })
     this.sustitution_sto = '';
-    this.initial_interesting = '';
+    this.target = '';
+    // this.initial_interesting = '';
     this.sustitution_status_sto = '';
     this.sustitution_status_sto_edit = '';
     this.sustitution_date_lto = null;

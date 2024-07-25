@@ -137,6 +137,8 @@ export class NoteRbtComponent {
   pa_assessments:any ;
   pa_assessmentsgroup:any ;
   n_un:any ;
+  stoGoalinProgress:any ;
+  target:any ;
 
   // session_date: Date;
   // next_session_is_scheduled_for: Date;
@@ -165,7 +167,7 @@ export class NoteRbtComponent {
     let USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER: '');
     this.doctor_id = this.user.id;
-    console.log(this.doctor_id);
+    // console.log(this.doctor_id);
     this.getDoctor();
     this.specialistData();
 
@@ -185,7 +187,7 @@ export class NoteRbtComponent {
   
   getConfig(){
     this.noteRbtService.listConfigNote().subscribe((resp:any)=>{
-      console.log(resp);
+      // console.log(resp);
 
       this.roles_rbt = resp.roles_rbt;
       this.roles_bcba = resp.roles_bcba;
@@ -197,7 +199,7 @@ export class NoteRbtComponent {
 
   getProfileBip(){
     this.bipService.showBipProfile(this.patient_id).subscribe((resp:any)=>{
-      console.log(resp);
+      // console.log(resp);
       this.client_selected = resp;
 
       this.first_name = this.client_selected.patient.first_name;
@@ -209,7 +211,7 @@ export class NoteRbtComponent {
       this.pos = resp.patient.pos_covered ;
       // this.pos = JSON.parse(resp.patient.pos_covered) ;
       
-      console.log( this.pos);  
+      // console.log( this.pos);  
       this.diagnosis_code = this.client_selected.patient.diagnosis_code; 
       
       
@@ -219,7 +221,7 @@ export class NoteRbtComponent {
       // this.n_un = this.pa_assessmentsgroup[0].n_units;
       // this.unitsAsignated = this.pa_assessmentsgroup.n_units;
       // console.log(this.pa_assessments);
-      console.log(this.pa_assessmentsgroup);
+      // console.log(this.pa_assessmentsgroup);
       // this.cpt = this.pa_assessmentsgroup[0].cpt;
       // console.log(this.cpt);  
 
@@ -231,32 +233,44 @@ export class NoteRbtComponent {
   selectCpt(event:any){
     event = this.selectedValueCode;
     // this.getCPtLißst(this.selectedValueCode);
-    console.log(this.selectedValueCode);
+    // console.log(this.selectedValueCode);
     
   }
 
   getMaladaptivesBipByPatientId(){
     this.bipService.getBipProfilePatient_id(this.patient_id).subscribe((resp:any)=>{
-      console.log(resp);
+      // console.log(resp);
       this.maladaptives = resp.maladaptives;
       this.bip_id = resp.id;
     })
   }
   getReplacementsByPatientId(){
     this.noteRbtService.showReplacementbyPatient(this.patient_id).subscribe((resp:any)=>{
-      console.log(resp);
+      // console.log(resp);
       this.replacementGoals = resp.replacementGoals;
+      this.goal = resp.replacementGoals[0].goal;
+      console.log(this.goal);
+      this.getStoInprogressGoal();
     })
   }
 
   specialistData(){
     this.doctorService.showDoctorProfile(this.doctor_id).subscribe((resp:any)=>{
-      console.log(resp);
+      // console.log(resp);
       this.provider_credential = resp.doctor.certificate_number;
       // this.notes = resp.notes;
       // this.services = resp.services;
     })
   }
+
+  getStoInprogressGoal(){
+    this.goalService.getStobyGoalinProgress(this.goal).subscribe((resp:any)=>{
+      console.log(resp);
+      this.stoGoalinProgress = resp.goalstos.in_progress[0].sustitution_status_sto;
+      this.target = resp.goalstos.in_progress[0].target;
+    })
+  }
+  
 
   // selectSpecialist(event:any){
   //   event = this.selectedValueProviderName;
@@ -297,6 +311,8 @@ export class NoteRbtComponent {
     console.log(this.selectedValueBCBA);
     
   }
+
+  
   
  
 
@@ -447,6 +463,7 @@ export class NoteRbtComponent {
       natural_teaching: this.natural_teaching,
     })
      //si existe un elemento actualiza ese elemento en la lista
+    //  this.intervention_added.splice(this.intervention_added,1);
     if(this.intervention_added.length > 1){
       this.intervention_added.splice(this.intervention_added,1);
       Swal.fire('Updated', ` Interventions Added`, 'success');

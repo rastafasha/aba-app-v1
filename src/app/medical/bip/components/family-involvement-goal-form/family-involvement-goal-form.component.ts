@@ -37,6 +37,8 @@ export class FamilyInvolvementGoalFormComponent {
   public bip_selectedIdd: any;
   public maladaptives: any;
 
+  public maladaptive_edit:any = [];
+
 
   public goalFamilyEnvolments: any;
   public client_id_goalFamilyEnvolments: any;
@@ -141,8 +143,21 @@ export class FamilyInvolvementGoalFormComponent {
     this.caregivers.splice(i,1);
   }
 
+  seleccionarParaEdit(caregiver:any){
+    this.family_edit = caregiver;
+    console.log(this.family_edit);
+        
+    
+  }
+
   cambiarStatusSto(caregiver:any){
     this.family_edit = caregiver;
+        Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    
+  }
+
+  cambiarStatus(serv:any){
+    this.maladaptive_edit = serv;
         Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
     
   }

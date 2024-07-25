@@ -157,6 +157,7 @@ export class EditNoteRbtComponent {
     let USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER: '');
     this.doctor_id = this.user.id;
+    this.getNote();
     this.getConfig();
      
   }
@@ -579,6 +580,9 @@ export class EditNoteRbtComponent {
 
     formData.append('session_date', this.session_date);
 
+    if(this.meet_with_client_at ){
+      formData.append('meet_with_client_at', this.meet_with_client_at);
+    }
     if(this.selectedValueProviderName ){
       formData.append('provider_name_g', this.selectedValueProviderName);
     }

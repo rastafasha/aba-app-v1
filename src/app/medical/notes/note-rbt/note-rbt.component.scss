@@ -81,5 +81,13 @@
 .qty input:disabled{
     background-color:white;
 }
+
+.tope_replacement{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    width: 200px;
+}
          
   

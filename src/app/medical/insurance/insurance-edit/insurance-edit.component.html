@@ -140,7 +140,9 @@
                                                             {{serv.max_allowed}}
                                                         </td>
                                                         <td>
-                                                            <button class="btn btn-outline-success btn-sm" (click)="seleccionarParaEdit(serv,i)"  data-bs-toggle="modal" [attr.data-bs-target]="'#edit-endurance-'+serv.code"><i class="fa fa-pencil"></i> Edit ({{serv.code}})</button>
+                                                            <button class="btn btn-outline-success btn-sm" (click)="seleccionarParaEdit(serv,i)"  
+                                                            data-bs-toggle="modal" [attr.data-bs-target]="'#edit-endurance-'+serv.code"
+                                                            ><i class="fa fa-pencil"></i> Edit</button>
                                                             <button class="btn btn-outline-danger btn-sm" (click)="deleteService(i)">x Delete</button>
                                                         </td>
 

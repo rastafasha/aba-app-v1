@@ -77,7 +77,7 @@
                                           <div class="col-12 col-md-6 ">  
                                               <div class="form-group local-forms">
                                                   <label >Goal:  <span class="login-danger">*</span></label>
-                                                  <input class="form-control" name="goal" [(ngModel)]="goal" type="text"  >
+                                                  <input class="form-control" name="goal" disabled [(ngModel)]="goal" type="text"  >
                                               </div>
                                           </div>
                                           <div class="col-xs-12 col-md-6">
@@ -108,8 +108,8 @@
                                                   </div>
                                                   <div class="col-xs-12 col-md-3">
                                                       <div class="form-group local-forms">
-                                                          <label>Initial Interesting <span class="login-danger">*</span></label>
-                                                          <input class="form-control"  name="initial_interesting"   [(ngModel)]="initial_interesting" type="text"  >
+                                                          <label>Target <span class="login-danger">*</span></label>
+                                                          <input class="form-control"  name="target"   [(ngModel)]="target" type="text"  >
                                                       </div>
                                                   </div>
                                                   <div class="col-12 col-md-3">
@@ -165,7 +165,7 @@
                                                               <tr>
                                                                   <th>STO</th>
                                                                   <th>decription</th>
-                                                                  <th>Initial Interesting</th>
+                                                                  <th>target</th>
                                                                   <th>status</th>
                                                                   <th>update status</th>
                                                                   <th>date</th>
@@ -181,7 +181,7 @@
                                                                       {{goalsto.sustitution_decription_sto}}
                                                                   </td>
                                                                   <td>
-                                                                      {{goalsto.initial_interesting}}
+                                                                      {{goalsto.target}}
                                                                   </td>
                                                                   <td>
                                                                       <!-- {{goalsto.status_sto}} -->
