@@ -261,6 +261,7 @@ export class AddPatientMComponent {
       this.insurer_name = resp.insurer_name;
       // this.notes = resp.notes;
       this.services = resp.services;
+      this.provider = resp.services[0].provider;
     })
   }
 
@@ -283,7 +284,7 @@ export class AddPatientMComponent {
   //   this.services.splice(i,1);
   // }
 
-  addPAAssestment(){
+  addPAAssestment(){debugger
     this.pa_assessments.push({
       pa_assessment: this.pa_assessment,
       pa_assessment_start_date: this.pa_assessment_start_date,
@@ -293,7 +294,7 @@ export class AddPatientMComponent {
       pa_services_end_date: this.pa_services_end_date,
       cpt: this.selectedValueCode,
       n_units: this.n_units,
-      provider: this.selectedValueCode,
+      provider: this.provider,
     })
     this.pa_assessment = '';
     this.pa_assessment_start_date = null;

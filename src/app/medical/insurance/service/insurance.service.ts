@@ -38,6 +38,12 @@ export class InsuranceService {
     return this.http.get(URL,{headers:headers});
   }
 
+  showInsuranceCptPrize(insurer_name:any, code:any, provider:any){
+    let headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token});
+    let URL = url_servicios+"/insurance/showInsuranceCpt/"+insurer_name+"/"+code+"/"+provider;
+    return this.http.get(URL,{headers:headers});
+  }
+
   editInsurance(data:any, insurance_id:any){
     let headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token});
     let URL = url_servicios+"/insurance/update/"+insurance_id;

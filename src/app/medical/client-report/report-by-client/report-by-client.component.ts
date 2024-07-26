@@ -79,6 +79,7 @@ export class ReportByClientComponent {
   public total_units:number = 0;
   public charges:number = 0;
   public unitPrize:number = 0;
+  public unitPrizeCpt:number = 0;
   public xe:number = 0;
   public is_xe:boolean;
   
@@ -120,6 +121,7 @@ export class ReportByClientComponent {
   public tecnicoDoctorNames: any;
   public patientId: any;
   public services: any;
+  public provider: any;
 
   public providersSponsorsList:any;
   public factorPorcentual: number =  1.66666666666667
@@ -206,29 +208,16 @@ export class ReportByClientComponent {
 
       // obtengo la info resumida de las notas rbt
       this.noteRbt = resp.noteRbts;
+      
       // aqui traigo los nombres de los doctores relacionados al paciente
       this.doctors = resp.doctors;
       this.supervisor = resp.noteRbts.length > 0 ? resp.noteRbts[0].supervisor : '';
       this.tecnicoRbts = resp.noteRbts.length > 0 ? resp.noteRbts[0].tecnicoRbts : '';
       
-      // this.tecnicoRbts = resp.noteRbts[0].tecnicoRbts;
+      this.noteBcba = resp.noteBcbas;
+      // this.billed= resp.noteBcbas;
+      // this.pay = resp.noteBcbas;
 
-      // de this.noteRbt extraer los nombres de los doctores  que estan en el array y guardarlos
-      // for (let i=0;i<this.noteRbt.length;i++){
-      //   let doctor = this.noteRbt[i].tecnicoRbts;
-      //   if (this.tecnicoDoctorNames &&!this.tecnicoDoctorNames.includes(doctor.tecnicoRbts)){
-      //     this.doctors.push(doctor.name)
-      //   }
-      //   console.log(this.tecnicoDoctorNames);
-        
-      // };
-
-
-      // let INDEX = this.noteRbt.findIndex((tecnicoRbts:any)=> tecnicoRbts);
-      // if(INDEX != -1){
-      //   this.noteRbt.splice(INDEX,1);
-      //   console.log(this.tecnicoRbts);
-      // }
       
 
       this.rbt_id = resp.patient.rbt_id;
@@ -249,11 +238,14 @@ export class ReportByClientComponent {
       
       // aqui deberia ser el mas reciente.. 
       //quizas se pueda cambiar de desc a asc para que agarre el mas reciente
-      this.cpt = this.pa_assessmentsgroup[0].cpt;
+      // this.cpt = this.pa_assessmentsgroup[0].cpt;
       //igual aqui
-      this.n_units = this.pa_assessmentsgroup[0].n_units;
+      // this.n_units = this.pa_assessmentsgroup[0].n_units;
       // igual aqui
-      this.pa_number = this.pa_assessmentsgroup[0].pa_services;
+      // this.pa_number = this.pa_assessmentsgroup[0].pa_services;
+
+      // this.provider = this.pa_assessmentsgroup.provider;
+      // console.log(this.provider);
       
       
 
@@ -274,7 +266,7 @@ export class ReportByClientComponent {
      this.getTableDataGeneral();
      this.getInsurer();
      this.getDoctorRBT();
-     this.getDoctorBcba();
+    //  this.getDoctorBcba();
     //  this.extractDataHours();
     })
 
@@ -294,10 +286,27 @@ export class ReportByClientComponent {
       this.modifiers = resp.notes;
       // console.log('modificadores',this.modifiers);
       this.services = resp.services;
-      this.unitPrize = resp.services[0].unit_prize;
-      // console.log('precio unidad',this.unitPrize);
-      // this.convertirHOra();
       
+      this.provider = resp.services[0].provider;
+      this.cpt = resp.services[0].code;
+      // console.log('precio unidad',this.unitPrize);
+      console.log('cpt',this.cpt);
+      // this.convertirHOra();
+      this.getPrizeCptNote();
+      
+    }, (error: any) => {
+      console.error('Error fetching insurance data:', error);
+    });
+  }
+
+  getPrizeCptNote(){
+    this.insuranceService.showInsuranceCptPrize(
+      this.insurer_name, this.cpt, this.provider  
+    ).subscribe((resp:any)=>{
+      console.log(resp);
+      this.unitPrizeCpt = resp.unit_prize;
+      console.log(this.unitPrizeCpt);
+
     })
   }
  

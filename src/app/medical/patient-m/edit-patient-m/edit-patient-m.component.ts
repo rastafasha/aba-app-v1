@@ -24,6 +24,13 @@ export interface User{
   roles:any [];
   insurances:string;
  }
+
+ export interface Service {
+  code: string;
+  provider: string;
+  // Add other service properties here
+}
+
  @Component({
   selector: 'app-edit-patient-m',
   templateUrl: './edit-patient-m.component.html',
@@ -180,6 +187,7 @@ export class EditPatientMComponent {
   public file_selected:any;
   public doc:any;
   public FILE:any;
+  public datacode:any;
   
   constructor(
     public patientService:PatientMService,
@@ -284,6 +292,8 @@ export class EditPatientMComponent {
     this.getConfig();
    
   }
+
+ 
 
   
   
@@ -415,6 +425,20 @@ showUser(){
     })
   }
 
+  selectProviderCpt(event: any){debugger
+    const selectedValue = event.target.value;
+    console.log(selectedValue);
+
+    const cptservice = this.services.find((service: Service) => service.code === selectedValue);
+    if (cptservice) {
+      this.provider = cptservice.provider;
+      console.log(this.provider);
+    } else {
+      console.log('No se encontró el proveedor');
+    }
+
+  }
+
   //listas
   
 
@@ -430,9 +454,8 @@ showUser(){
       n_units: this.n_units,
       // aqui guardo el provider traido del cpt
       // debo extraer de selectedValueCode el cpt para traer el provider
-      // provider: this.selectedValueCode,
+      // provider: this.selectedValueCode ?
       provider: this.provider,
-      // aqui guardo el insurer traido del cpt
     })
     this.pa_assessment = '';
     this.pa_assessment_start_date = null;
@@ -444,6 +467,8 @@ showUser(){
     this.provider = null;
     this.n_units = 0;
   }
+
+  
 
   deletePAAssestment(i:any){
     this.pa_assessmentgroup.splice(i,1);

@@ -197,7 +197,7 @@
                                 </thead>
                                 <!-- *ngIf="billing_generals?.length > 0; else noData" -->
                                 <tbody>
-                                    <tr *ngFor="let data of clientReportList">
+                                    <tr *ngFor="let data of clientReportList, let i = index;">
                                         <td>
                                             <a [routerLink]="['/note-rbt/view/', data.id]">
                                                 {{data.session_date |date}}
@@ -222,17 +222,6 @@
                                         <!-- <td>{{data.md}}</td> -->
                                         <td>
 
-                                            <!-- <span *ngIf="data.md">
-                                                <div class="form-group local-forms">
-                                                    <select
-                                                        class="form-control form-select-solid fw-bolder"
-                                                        name="md" #md  [(ngModel)]="data.md" (change)="isSelectedModifier(md.value)"  >
-                                                        <option>-- No Funciona --</option>
-                                                        <option value="HM">Funciona</option>
-                                                        <option value="HO">HO</option>
-                                                    </select>
-                                                </div>
-                                            </span>  -->
 
                                             <span *ngIf="insurer_name == 'Medicaid'">
                                                 <div class="form-group local-forms">
@@ -286,13 +275,12 @@
                                             </span>
                                         </td>
                                         
-                                        <!-- <td>{{(( data.total_units * unitPrize - md | currency))}}</td> -->
                                         <td>{{data.session_units_total}}</td>
-                                        <td>{{unitPrize | currency}}</td>
+                                        <td>{{unitPrizeCpt | currency}}</td>
                                         <td>
-                                            {{(( data.session_units_total * unitPrize  | currency))}}
+                                            {{(( data.session_units_total * unitPrizeCpt  | currency))}}
                                             <span *ngIf="md == 'XE' || md2 == 'XE'">
-                                               xe:{{(( data.session_units_total * unitPrize * xe | currency))}}
+                                               xe:{{(( data.session_units_total * unitPrizeCpt * xe | currency))}}
                                             </span>
                                         </td>
                                         <td>
@@ -311,15 +299,6 @@
                                                 </label>
                                             </div>
 
-                                            <!-- <div class="form-group ">
-                                                <div _ngcontent-rhp-c92="" class="card-header d-flex justify-content-between align-items-center">
-                                                    
-                                                    <div _ngcontent-rhp-c92="" class="status-toggle d-flex justify-content-between align-items-center">
-                                                        <input _ngcontent-rhp-c92="" type="checkbox" id="billed" class="check" name="billed" [ngModelOptions]="{standalone: true}" >
-                                                        <label _ngcontent-rhp-c92="" for="billed" class="checktoggle" value="true">checkbox</label>
-                                                    </div>
-                                                </div>
-                                            </div> -->
                                         </td>
                                         <td>
                                             <div  class="note-checkit">
@@ -328,15 +307,6 @@
                                                     <span class="checkmark" value="false"></span> 
                                                 </label>
                                             </div>
-                                            <!-- <div class="form-group ">
-                                                <div _ngcontent-rhp-c92="" class="card-header d-flex justify-content-between align-items-center">
-                                                    
-                                                    <div _ngcontent-rhp-c92="" class="status-toggle d-flex justify-content-between align-items-center">
-                                                        <input _ngcontent-rhp-c92="" type="checkbox" id="pay" class="check" name="pay" [ngModelOptions]="{standalone: true}" >
-                                                        <label _ngcontent-rhp-c92="" for="pay" class="checktoggle" value="true">checkbox</label>
-                                                    </div>
-                                                </div>
-                                            </div> -->
                                         </td>
 
                                         <!-- <td>{{data.created_at | date }}</td> -->

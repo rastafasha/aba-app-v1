@@ -789,13 +789,13 @@
                                                         <div class="col-12 col-md-4">
                                                             <div class="form-group local-forms">
                                                                 <label>Provider <span class="login-danger">*</span></label>
-                                                                <mat-select [(ngModel)]="selectedValueCode" name="provider"
+                                                                <mat-select [(ngModel)]="provider" name="provider"
                                                                     [ngModelOptions]="{standalone: true}"
                                                                     class="form-control select"
                                                                     placeholder="Select Code"
                                                                     disabled>
                                                                     <mat-option *ngFor="let data of services"
-                                                                        [value]="data.code">
+                                                                        [value]="data.provider">
                                                                         {{data.provider}}
                                                                     </mat-option>
                                                                 </mat-select>
