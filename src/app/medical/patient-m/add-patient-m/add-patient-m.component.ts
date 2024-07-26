@@ -22,6 +22,13 @@ export interface User{
   insurances:string;
  }
 
+ export interface Service {
+  code: string;
+  provider: string;
+  // Add other service properties here
+}
+
+
 @Component({
   selector: 'app-add-patient-m',
   templateUrl: './add-patient-m.component.html',
@@ -229,6 +236,8 @@ export class AddPatientMComponent {
     this.getConfig();
    
   }
+
+  
   // insuranceData(){
   //   this.option_selected=this.option_selected
   //   this.insuranceService.showInsurance(this.option_selected).subscribe((resp:any)=>{
@@ -265,6 +274,20 @@ export class AddPatientMComponent {
     })
   }
 
+  selectProviderCpt(event: any){debugger
+    const selectedValue = event.target.value;
+    console.log(selectedValue);
+
+    const cptservice = this.services.find((service: Service) => service.code === selectedValue);
+    if (cptservice) {
+      this.provider = cptservice.provider;
+      console.log(this.provider);
+    } else {
+      console.log('No se encontró el proveedor');
+    }
+
+  }
+
   selectInsurance(event:any){
     event = this.selectedValueInsurer;
     this.insuranceData(this.selectedValueInsurer);
@@ -284,7 +307,7 @@ export class AddPatientMComponent {
   //   this.services.splice(i,1);
   // }
 
-  addPAAssestment(){debugger
+  addPAAssestment(){
     this.pa_assessments.push({
       pa_assessment: this.pa_assessment,
       pa_assessment_start_date: this.pa_assessment_start_date,

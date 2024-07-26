@@ -11,6 +11,8 @@ import { routes } from 'src/app/shared/routes/routes';
 import { BillingService } from '../billing.service';
 import { InsuranceService } from '../../insurance/service/insurance.service';
 import { Location } from '@angular/common';
+import { zip } from 'rxjs';
+
 @Component({
   selector: 'app-billing-by-client',
   templateUrl: './billing-by-client.component.html',
@@ -176,6 +178,8 @@ export class BillingByClientComponent {
   private getTableData(): void {
     this.billingList = [];
     this.serialNumberArray = [];
+
+    
 
     this.billingService.showBillingbyPatient(this.patient_id).subscribe((resp:any)=>{
       

@@ -442,7 +442,7 @@ showUser(){
   //listas
   
 
-  addPAAssestment(){debugger
+  addPAAssestment(){
     this.pa_assessmentgroup.push({
       pa_assessment: this.pa_assessment,
       pa_assessment_start_date: this.pa_assessment_start_date,

@@ -11,7 +11,9 @@ import { ClientReportService } from '../client-report.service';
 import Swal from 'sweetalert2';
 import { NoteRbtService } from '../../notes/services/note-rbt.service';
 import { Location } from '@angular/common';
-declare var $:any;  
+import { zip, map } from 'rxjs';
+declare var $:any; 
+
 
 @Component({
   selector: 'app-report-by-client',
@@ -32,7 +34,7 @@ export class ReportByClientComponent {
   
 
 
-  public clientReportList: any = [];
+  public clientReportList: any=[] = [];
   public clientReport_generals:any = [];
   dataSource!: MatTableDataSource<any>;
   public showFilter = false;
@@ -127,6 +129,9 @@ export class ReportByClientComponent {
   public factorPorcentual: number =  1.66666666666667
 
   doctor_selected:any =null;
+  combinedList: any[];
+
+  
 
   
   constructor(
@@ -178,7 +183,7 @@ export class ReportByClientComponent {
 
   getConfig(){
     this.clientReportService.config().subscribe((resp:any)=>{
-      console.log(resp);
+      // console.log(resp);
       this.insurances = resp.insurances;
       this.sponsors = resp.doctors;
       
@@ -187,6 +192,7 @@ export class ReportByClientComponent {
 
 
   private getTableData(page=1): void {
+    // this.clientReportList = [];
     this.clientReportList = [];
     this.serialNumberArray = [];
 
@@ -197,7 +203,7 @@ export class ReportByClientComponent {
     this.clientReportService.getAllClientReportByPatient(this.patientId, page, 
       this.date_start,this.date_end).subscribe((resp:any)=>{
       
-      console.log(resp);
+      console.log('todo',resp);
       // traemos la info necesaria del paciente
       this.patientName = resp.patient.full_name;
       this.patientID = resp.patient.patient_id;
@@ -217,6 +223,19 @@ export class ReportByClientComponent {
       this.noteBcba = resp.noteBcbas;
       // this.billed= resp.noteBcbas;
       // this.pay = resp.noteBcbas;
+
+      //unimos las notas rbt y bcba para mostrarlas en la misma tabla
+      const clientReportList = zip(this.noteRbt, this.noteBcba).pipe(
+        map(([rbt, bcba]) => ({ rbt, bcba }))
+      );
+      
+      clientReportList.subscribe((report:any) => {
+        // this.clientReportList = report;
+        // console.log(this.clientReportList);
+        this.clientReportList.push(report);
+        console.log('lista combinada',this.clientReportList);
+      });
+      //fin union
 
       
 
@@ -279,7 +298,7 @@ export class ReportByClientComponent {
   getInsurer(){
     //sacamos los detalles insurance seleccionado
     this.insuranceService.showInsurance(this.insurance_id).subscribe((resp:any)=>{
-      console.log(resp);
+      console.log('insurer', resp);
       this.insuranceiddd= resp.id;
       
       this.insurer_name = resp.insurer_name;
@@ -303,9 +322,9 @@ export class ReportByClientComponent {
     this.insuranceService.showInsuranceCptPrize(
       this.insurer_name, this.cpt, this.provider  
     ).subscribe((resp:any)=>{
-      console.log(resp);
+      console.log('precio cpt',resp);
       this.unitPrizeCpt = resp.unit_prize;
-      console.log(this.unitPrizeCpt);
+      console.log('precio unidad',this.unitPrizeCpt);
 
     })
   }
@@ -315,7 +334,7 @@ export class ReportByClientComponent {
   //trae el nombre del doctor quien hizo la nota rbt
   getDoctorRBT(){
     this.doctorService.showDoctor(this.tecnicoRbts).subscribe((resp:any)=>{
-      console.log('rbt',resp);
+      console.log('doctor rbt y location',resp);
       this.doctor_selected = resp.user;
       this.full_name = resp.user.full_name;
     });
@@ -417,7 +436,7 @@ export class ReportByClientComponent {
   }
 
   calculateUnitsAndHours() {
-    console.log(this.clientReportList)
+    console.log('notas rbt',this.clientReportList)
     const totalUnits = this.clientReportList.reduce((total, objeto) => total + objeto.session_units_total, 0);
     let minutes = 0;
     this.clientReportList.forEach(element => {
@@ -427,7 +446,7 @@ export class ReportByClientComponent {
     const horasTotales = Math.floor(minutes / 60);
     const minutosTotales = minutes % 60;
     let stringMinutos: string;
-    console.log(horasTotales, minutosTotales)
+    console.log('horas totales - minutos totales',horasTotales, minutosTotales)
     if(minutosTotales === 0)
       stringMinutos = '00'
     else if(minutosTotales < 10)

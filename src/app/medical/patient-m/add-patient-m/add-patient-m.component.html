@@ -770,10 +770,12 @@
                                                                 <mat-select [(ngModel)]="selectedValueCode" name="code"
                                                                     [ngModelOptions]="{standalone: true}"
                                                                     class="form-control select"
-                                                                    placeholder="Select Code">
+                                                                    placeholder="Select Code"
+                                                                    (change)="selectProviderCpt($event)"
+                                                                    >
                                                                     <mat-option *ngFor="let data of services"
                                                                         [value]="data.code">
-                                                                        {{data.code}}
+                                                                        {{data.code}} | {{data.provider}}
                                                                     </mat-option>
                                                                 </mat-select>
                                                             </div>
@@ -786,7 +788,7 @@
                                                                     name="n_units" [(ngModel)]="n_units" type="number">
                                                             </div>
                                                         </div>
-                                                        <div class="col-12 col-md-4">
+                                                        <!-- <div class="col-12 col-md-4">
                                                             <div class="form-group local-forms">
                                                                 <label>Provider <span class="login-danger">*</span></label>
                                                                 <mat-select [(ngModel)]="provider" name="provider"
@@ -800,7 +802,7 @@
                                                                     </mat-option>
                                                                 </mat-select>
                                                             </div>
-                                                        </div>
+                                                        </div> -->
 
                                                         <div class="col-12 mb-3 doctor-submit text-end">
                                                             <button class="btn btn-primary btn-sm"
