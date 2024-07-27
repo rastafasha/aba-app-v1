@@ -16,6 +16,7 @@ export class EditDoctorComponent {
 
   public routes = routes;
   public selectedValue!: string;
+  public selectedValueLocation!: string;
 
   public name: string = '';
   public surname: string = '';
@@ -113,7 +114,12 @@ export class EditDoctorComponent {
       this.doctor_id = resp.id;
     });
 
-    this.getConfig();
+    if(this.user.roles[0] == 'MANAGER'){
+      this.selectedValueLocation = this.user.location_id;
+      this.getConfigLocation();
+    }else{
+      this.getConfig();
+    }
 
     
   }
@@ -124,98 +130,112 @@ export class EditDoctorComponent {
     this.locationBack.back(); // <-- go back to previous location on cancel
   }
 
+  getConfigLocation(){
+    this.doctorService.listConfigLocation(this.selectedValueLocation ).subscribe((resp:any)=>{
+      // console.log(resp);
+      this.roles = resp.roles;
+      
+      this.locations = resp.locations;
+      this.location = resp.location;
+      this.showDoctortoEdit();
+    })
+  }
   getConfig(){
     this.doctorService.listConfig().subscribe((resp:any)=>{
       // console.log(resp);
       this.roles = resp.roles;
       this.locations = resp.locations;
       this.location = resp.location;
-
-      this.doctorService.showDoctor(this.doctor_id).subscribe((resp:any)=>{
-        this.locations_selected = resp.locations || [];
-        this.doctor_selected = resp.user;
-
-        this.selectedValue = this.doctor_selected.roles.id;
-        this.name = this.doctor_selected.name;
-        this.surname = this.doctor_selected.surname;
-        this.phone = this.doctor_selected.phone;
-        this.email = this.doctor_selected.email;
-        this.education = this.doctor_selected.education;
-        this.designation = this.doctor_selected.designation;
-        this.gender = this.doctor_selected.gender;
-        this.address = this.doctor_selected.address;
-        this.IMAGE_PREVISUALIZA = this.doctor_selected.avatar;
-        this.IMAGE_PREVISUALIZA_SIGNATURE = this.doctor_selected.electronic_signature;
-        
-        
-        this.currently_pay_through_company = this.doctor_selected.currently_pay_through_company;
-        this.llc = this.doctor_selected.llc;
-        this.ien = this.doctor_selected.ien;
-        this.wc = this.doctor_selected.wc;
-        
-        this.agency_location = this.doctor_selected.agency_location;
-        this.city = this.doctor_selected.city;
-        this.languages = this.doctor_selected.languages;
-        this.ss_number = this.doctor_selected.ss_number;
-
-        this.birth_date = new Date(this.doctor_selected.birth_date).toISOString();
-        // if(this.birth_date ){
-        // }else{
-        //   this.birth_date = this.doctor_selected.birth_date;
-
-        // }
-
-        this.start_pay = this.doctor_selected.start_pay;
-
-
-
-        if(this.date_of_hire ){
-          this.date_of_hire = new Date(this.doctor_selected.date_of_hire).toISOString();
-        }else{
-
-          this.date_of_hire = this.doctor_selected.date_of_hire;
-        }
-        
-        if(this.driver_license_expiration ){
-          this.driver_license_expiration = new Date(this.doctor_selected.driver_license_expiration).toISOString();
-        }else{
-          this.driver_license_expiration = this.doctor_selected.driver_license_expiration;
-
-        }
-        if(this.bacb_license_expiration ){
-          this.bacb_license_expiration = new Date(this.doctor_selected.bacb_license_expiration).toISOString();
-        }else{
-
-          this.bacb_license_expiration = this.doctor_selected.bacb_license_expiration;
-        }
-
-        this.cpr_every_2_years = this.doctor_selected.cpr_every_2_years;
-        this.background_every_5_years = this.doctor_selected.background_every_5_years;
-        this.e_verify = this.doctor_selected.e_verify;
-        this.national_sex_offender_registry = this.doctor_selected.national_sex_offender_registry;
-        this.certificate_number = this.doctor_selected.certificate_number;
-        this.liability_insurance_annually = this.doctor_selected.liability_insurance_annually;
-        this.local_police_rec_every_5_years = this.doctor_selected.local_police_rec_every_5_years;
-        this.npi = this.doctor_selected.npi;
-        this.medicaid_provider = this.doctor_selected.medicaid_provider;
-
-        this.ceu_hippa_annually = this.doctor_selected.ceu_hippa_annually;
-        this.ceu_domestic_violence_no_expiration = this.doctor_selected.ceu_domestic_violence_no_expiration;
-        this.ceu_security_awareness_annually = this.doctor_selected.ceu_security_awareness_annually;
-        this.ceu_zero_tolerance_every_3_years = this.doctor_selected.ceu_zero_tolerance_every_3_years;
-        this.ceu_hiv_bloodborne_pathogens_infection_control_no_expiration = this.doctor_selected.ceu_hiv_bloodborne_pathogens_infection_control_no_expiration;
-        this.ceu_civil_rights_no_expiration = this.doctor_selected.ceu_civil_rights_no_expiration;
-
-        this.school_badge = this.doctor_selected.school_badge;
-        this.w_9_w_4_form = this.doctor_selected.w_9_w_4_form;
-        this.contract = this.doctor_selected.contract;
-        this.two_four_week_notice_agreement = this.doctor_selected.two_four_week_notice_agreement;
-        this.credentialing_package_bcbas_only = this.doctor_selected.credentialing_package_bcbas_only;
-        this.caqh_bcbas_only = this.doctor_selected.caqh_bcbas_only;
-        this.contract_type = this.doctor_selected.contract_type;
-        this.salary = this.doctor_selected.salary;
-      })
+      this.showDoctortoEdit();
       
+      
+    })
+  }
+
+  showDoctortoEdit(){
+    this.doctorService.showDoctor(this.doctor_id).subscribe((resp:any)=>{
+      this.locations_selected = resp.locations || [];
+      this.doctor_selected = resp.user;
+
+      this.selectedValue = this.doctor_selected.roles.id;
+      this.name = this.doctor_selected.name;
+      this.surname = this.doctor_selected.surname;
+      this.phone = this.doctor_selected.phone;
+      this.email = this.doctor_selected.email;
+      this.education = this.doctor_selected.education;
+      this.designation = this.doctor_selected.designation;
+      this.gender = this.doctor_selected.gender;
+      this.address = this.doctor_selected.address;
+      this.IMAGE_PREVISUALIZA = this.doctor_selected.avatar;
+      this.IMAGE_PREVISUALIZA_SIGNATURE = this.doctor_selected.electronic_signature;
+      
+      
+      this.currently_pay_through_company = this.doctor_selected.currently_pay_through_company;
+      this.llc = this.doctor_selected.llc;
+      this.ien = this.doctor_selected.ien;
+      this.wc = this.doctor_selected.wc;
+      
+      this.agency_location = this.doctor_selected.agency_location;
+      this.city = this.doctor_selected.city;
+      this.languages = this.doctor_selected.languages;
+      this.ss_number = this.doctor_selected.ss_number;
+
+      this.birth_date = new Date(this.doctor_selected.birth_date).toISOString();
+      // if(this.birth_date ){
+      // }else{
+      //   this.birth_date = this.doctor_selected.birth_date;
+
+      // }
+
+      this.start_pay = this.doctor_selected.start_pay;
+
+
+
+      if(this.date_of_hire ){
+        this.date_of_hire = new Date(this.doctor_selected.date_of_hire).toISOString();
+      }else{
+
+        this.date_of_hire = this.doctor_selected.date_of_hire;
+      }
+      
+      if(this.driver_license_expiration ){
+        this.driver_license_expiration = new Date(this.doctor_selected.driver_license_expiration).toISOString();
+      }else{
+        this.driver_license_expiration = this.doctor_selected.driver_license_expiration;
+
+      }
+      if(this.bacb_license_expiration ){
+        this.bacb_license_expiration = new Date(this.doctor_selected.bacb_license_expiration).toISOString();
+      }else{
+
+        this.bacb_license_expiration = this.doctor_selected.bacb_license_expiration;
+      }
+
+      this.cpr_every_2_years = this.doctor_selected.cpr_every_2_years;
+      this.background_every_5_years = this.doctor_selected.background_every_5_years;
+      this.e_verify = this.doctor_selected.e_verify;
+      this.national_sex_offender_registry = this.doctor_selected.national_sex_offender_registry;
+      this.certificate_number = this.doctor_selected.certificate_number;
+      this.liability_insurance_annually = this.doctor_selected.liability_insurance_annually;
+      this.local_police_rec_every_5_years = this.doctor_selected.local_police_rec_every_5_years;
+      this.npi = this.doctor_selected.npi;
+      this.medicaid_provider = this.doctor_selected.medicaid_provider;
+
+      this.ceu_hippa_annually = this.doctor_selected.ceu_hippa_annually;
+      this.ceu_domestic_violence_no_expiration = this.doctor_selected.ceu_domestic_violence_no_expiration;
+      this.ceu_security_awareness_annually = this.doctor_selected.ceu_security_awareness_annually;
+      this.ceu_zero_tolerance_every_3_years = this.doctor_selected.ceu_zero_tolerance_every_3_years;
+      this.ceu_hiv_bloodborne_pathogens_infection_control_no_expiration = this.doctor_selected.ceu_hiv_bloodborne_pathogens_infection_control_no_expiration;
+      this.ceu_civil_rights_no_expiration = this.doctor_selected.ceu_civil_rights_no_expiration;
+
+      this.school_badge = this.doctor_selected.school_badge;
+      this.w_9_w_4_form = this.doctor_selected.w_9_w_4_form;
+      this.contract = this.doctor_selected.contract;
+      this.two_four_week_notice_agreement = this.doctor_selected.two_four_week_notice_agreement;
+      this.credentialing_package_bcbas_only = this.doctor_selected.credentialing_package_bcbas_only;
+      this.caqh_bcbas_only = this.doctor_selected.caqh_bcbas_only;
+      this.contract_type = this.doctor_selected.contract_type;
+      this.salary = this.doctor_selected.salary;
     })
   }
 

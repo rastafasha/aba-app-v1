@@ -108,6 +108,7 @@
                                             <th mat-sort-header="telefonos">Phone</th>
                                             <th mat-sort-header="role">Role</th>
                                             <th mat-sort-header="status">Status</th>
+                                            <th mat-sort-header="op" *ngIf="roles ==='SUPERADMIN' || roles ==='MANAGER'">Options</th>
                                             <th mat-sort-header="createds">Created At</th>
                                              <th ></th> <!--acciones -->
                                         </tr>
@@ -142,6 +143,18 @@
                                               <span class="badge bg-dark"
                                                   *ngIf="specialist.status === 'black list'">Black list</span>
     
+                                          </td>
+                                          <td>
+                                            <select
+                                            class="form-control form-select-solid fw-bolder"
+                                            name="state" [(ngModel)]="specialist.status" (change)="cambiarStatusDoctor(specialist)"
+                                            placeholder="state">
+                                            <option>-- Select --</option>
+                                            <option value="inactive">Inactive</option>
+                                              <option value="active">Active</option>
+                                              <option value="incoming">Incoming</option>
+                                              <option value="black list">Black list</option>
+                                              </select>
                                           </td>
                                             <td>{{specialist.created_at | date }}</td>
                                             
@@ -288,7 +301,7 @@
                             </div>
                             
                             
-                            <div class="row align-items-center" >
+                            <div class="row align-items-center table-responsive" >
                                 
                                 
                                 <table matSort  class="table border-0 custom-table comman-table datatable mb-0">
@@ -299,7 +312,9 @@
                                             <th mat-sort-header="namep">Full Name</th>
                                             <th mat-sort-header="emailp">Email</th>
                                             <th mat-sort-header="telefonop">Phone</th>
-                                            <th mat-sort-header="elegibilityp">Elegibility</th>
+                                            <!-- <th mat-sort-header="elegibilityp">Elegibility</th> -->
+                                            <th mat-sort-header="elegible">Status</th>
+                                            <th mat-sort-header="ops" *ngIf="roles ==='SUPERADMIN' || roles ==='MANAGER'">Options</th>
                                             <th mat-sort-header="createdp">Created At</th>
                                              <th ></th> <!--acciones -->
                                         </tr>
@@ -322,7 +337,7 @@
                                             </td>
                                             <td>{{patient.email}}</td>
                                             <td>{{patient.phone}}</td>
-                                            <td>
+                                            <!-- <td>
                                               <span class="badge bg-danger"
                                                   *ngIf="patient.eligibility === 'no'">No</span>
                                               <span class="badge bg-success"
@@ -340,6 +355,61 @@
                                               <span class="badge bg-primary"
                                                   *ngIf="patient.eligibility === '2 insurance'">2 insurance</span>
     
+                                          </td> -->
+                                          <td>
+                                            <span class="badge bg-primary"
+                                                *ngIf="patient.status === 'incoming'">Incoming</span>
+                                            <span class="badge bg-success"
+                                                *ngIf="patient.status === 'active'">Active</span>
+                                            <span class="badge bg-danger"
+                                                *ngIf="patient.status === 'inactive'">Inactive</span>
+                                                <span class="badge bg-primary"
+                                                      *ngIf="patient.status === 'onHold'">On Hold</span>
+                                            <span class="badge bg-primary"
+                                                *ngIf="patient.status === 'onDischarge'">On Discharge</span>
+                                            <span class="badge bg-primary"
+                                                *ngIf="patient.status === 'waitintOnPa'">Waiting on PA</span>
+                                            <span class="badge bg-primary"
+                                                *ngIf="patient.status === 'waitintOnPaIa'">Waiting on PA IA</span>
+                                            <span class="badge bg-primary"
+                                                *ngIf="patient.status === 'waitintOnIa'">Waiting on School</span>
+                                            <span class="badge bg-primary"
+                                                *ngIf="patient.status === 'waitintOnServices'">Waiting on Services</span>
+                                            <span class="badge bg-primary"
+                                                *ngIf="patient.status === 'waitintOnStaff'">Waiting on Staff</span>
+                                            <span class="badge bg-primary"
+                                                *ngIf="patient.status === 'waitintOnSchool'">Waiting on School</span>
+      
+                                            <span *ngIf="patient.status === 'active'">
+                                              <button class="btn btn-outline-success" *ngIf="roles ==='SUPERADMIN' || roles === 'MANAGER'|| roles === 'LM' || roles ==='BCBA'" [routerLink]="['/bip/attention/', patient.patient_id]" tooltip="BIP Create"><i class="fa fa-address-book"></i></button>
+                                              <button class="btn btn-outline-dark" *ngIf="isPermission('view_bip')" [routerLink]="['/bip/profile/', patient.patient_id]" tooltip="BIP View"><i class="fa fa-eye"></i></button>
+                                              <button class="btn btn-outline-success" *ngIf="roles ==='SUPERADMIN' || roles === 'MANAGER'|| roles === 'LM' ||  roles ==='RBT'" [routerLink]="['/note-rbt/', patient.patient_id]" tooltip="Create RBT Note"> <i class="fa fa-id-card "></i> </button>
+                                              <button class="btn btn-outline-primary" *ngIf="roles ==='SUPERADMIN' || roles === 'MANAGER'|| roles === 'LM' ||  roles ==='RBT'" [routerLink]="['/note-rbt/listbyclient/', patient.patient_id]" tooltip="RBT Note list"> <i class="fa fa-bars"></i> </button>
+                                              <button class="btn btn-outline-secondary" *ngIf="roles ==='SUPERADMIN' || roles === 'MANAGER'|| roles === 'LM' || roles ==='BCBA'" [routerLink]="['/note-bcba/', patient.patient_id]" tooltip="Create BCBA Note"> <i class="fa fa-id-badge"></i> </button>
+                                              <button class="btn btn-outline-primary" *ngIf="roles ==='SUPERADMIN' || roles === 'MANAGER'|| roles === 'LM' || roles ==='BCBA'" [routerLink]="['/note-bcba/listbyclient/', patient.patient_id]" tooltip="BCBA Note list"> <i class="fa fa-bars"></i> </button>
+                                              <button class="btn btn-outline-warning" *ngIf="roles ==='SUPERADMIN' || roles === 'MANAGER'" [routerLink]="['/client-report/byclient/', patient.patient_id]" tooltip="Log Report"> <i class="fa fa-check-circle"></i> </button>
+                                              <!-- <button class="btn btn-outline-warning" *ngIf="roles ==='SUPERADMIN' || roles === 'MANAGER'" [routerLink]="['/billing/byclient/', patient.patient_id]" tooltip="Billing by this user"> <i class="fa fa-credit-card"></i> </button> -->
+                                            </span>
+                                        </td>
+                                          <td *ngIf="roles ==='SUPERADMIN'">
+                                            <select
+                                            class="form-control form-select-solid fw-bolder"
+                                            
+                                            name="state" [(ngModel)]="patient.status" (change)="cambiarStatusCliente(patient)"
+                                            placeholder="state">
+                                            <option>-- Select --</option>
+                                            <option value="incoming">Incoming</option>
+                                              <option value="active">Active</option>
+                                              <option value="inactive">Inactive</option>
+                                                      <option value="onHold">On Hold</option>
+                                                      <option value="onDischarge">On Discharge</option>
+                                                      <option value="waitintOnPa">Waiting on PA</option>
+                                                      <option value="waitintOnPaIa">Waiting on PA IA</option>
+                                                      <option value="waitintOnIa">Waiting on IA</option>
+                                                      <option value="waitintOnServices">Waiting on Services</option>
+                                                      <option value="waitintOnStaff">Waiting on Staff</option>
+                                                      <option value="waitintOnSchool">Waiting on School</option>
+                                              </select>
                                           </td>
                                             <td>{{patient.created_at | date }}</td>
                                             

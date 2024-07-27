@@ -198,32 +198,32 @@
                                 <!-- *ngIf="billing_generals?.length > 0; else noData" -->
                                 <tbody>
                                     <!-- *ngFor="let data of clientReportList, let i = index;" -->
-                                    <tr *ngFor="let report of clientReportList | keyvalue">
+                                    <tr *ngFor="let data of clientReportList | keyvalue, let i = index;">
                                         <td>
-                                            <a [routerLink]="['/note-rbt/view/', report.id]">
-                                                {{ report.rbt?.session_date | date }}
+                                            <a [routerLink]="['/note-rbt/view/', data.rbt?.id]">
+                                                {{ data.rbt?.session_date | date }}
                                             </a>
-                                            <a [routerLink]="['/note-bcba/view/', report.id]">
-                                                {{ report.bcba?.session_date | date  }}
+                                            <a [routerLink]="['/note-bcba/view/', data.rbt?.id]">
+                                                {{ data.rbt?.session_date | date  }}
                                             </a>
                                         </td>
                                         <td>
-                                            <span *ngIf="report.rbt">
-                                                {{report.rbt?.meet_with_client_at ?? 'N/A'}}
+                                            <span *ngIf="data?.rbt">
+                                                {{data.rbt?.meet_with_client_at ?? 'N/A'}}
                                             </span>
                                         </td>
                                         <td>
-                                            <span *ngIf="report.rbt">RBT: {{ report.rbt?.total_hours ?? 'N/A' }}</span>
-                                            <span *ngIf="report.bcba">BCBA: {{ report.bcba?.total_hours ?? 'N/A' }}</span>
+                                            <span *ngIf="data.rbt">RBT: {{ data.rbt?.total_hours ?? 'N/A' }}</span>
+                                            <span *ngIf="data.bcba">BCBA: {{ data.bcba?.total_hours ?? 'N/A' }}</span>
 
                                         </td>
 
                                         <td>
-                                            <span *ngIf="report.rbt">
-                                                {{report.rbt?.cpt_code}}
+                                            <span *ngIf="data.rbt">
+                                                {{data.rbt?.cpt_code}}
                                             </span>
-                                            <span *ngIf="report.bcba">
-                                                {{report.bcba?.cpt_code}}
+                                            <span *ngIf="data.bcba">
+                                                {{data.bcba?.cpt_code}}
                                             </span>
 
                                         </td>
@@ -233,7 +233,7 @@
                                                 <div class="form-group local-forms">
                                                     <select
                                                         class="form-control form-select-solid fw-bolder"
-                                                        name="md" #md [(ngModel)]="report.md" (change)="isSelectedModifier(md.value)"   >
+                                                        name="md" #md [(ngModel)]="data.md" (change)="isSelectedModifier(md.value)"   >
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM</option>
                                                         <option value="XE">XE</option>
@@ -246,7 +246,7 @@
                                                 <div class="form-group local-forms">
                                                     <select
                                                         class="form-control form-select-solid fw-bolder"
-                                                        name="md" #md  [(ngModel)]="report.md" (change)="isSelectedModifier(md.value)"  >
+                                                        name="md" #md  [(ngModel)]="data.md" (change)="isSelectedModifier(md.value)"  >
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM</option>
                                                         <option value="HO">HO</option>
@@ -260,7 +260,7 @@
                                                 <div class="form-group local-forms">
                                                     <select
                                                         class="form-control form-select-solid fw-bolder"
-                                                        name="md2" #md2 [(ngModel)]="report.md2"  (change)="isSelectedModifier2(md2.value)"  >
+                                                        name="md2" #md2 [(ngModel)]="data.md2"  (change)="isSelectedModifier2(md2.value)"  >
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM</option>
                                                         <option value="XE">XE</option>
@@ -272,7 +272,7 @@
                                                 <div class="form-group local-forms">
                                                     <select
                                                         class="form-control form-select-solid fw-bolder"
-                                                        name="md2" #md2 [(ngModel)]="report.md2"  (change)="isSelectedModifier2(md2.value)"  >
+                                                        name="md2" #md2 [(ngModel)]="data.md2"  (change)="isSelectedModifier2(md2.value)"  >
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM</option>
                                                         <option value="HO">HO</option>
@@ -282,43 +282,43 @@
                                         </td>
                                         <!-- modificadores -->
                                         <td>
-                                            <span *ngIf="report.rbt">
-                                                {{report.rbt?.session_units_total}}
+                                            <span *ngIf="data.rbt">
+                                                {{data.rbt?.session_units_total}}
                                             </span>
-                                            <span *ngIf="report.bcba">
-                                                {{report.rbt?.session_units_total}}
+                                            <span *ngIf="data.bcba">
+                                                {{data.rbt?.session_units_total}}
                                             </span>
 
                                         </td>
                                         <td>{{unitPrizeCpt | currency}}</td>
                                         <td>
-                                            {{(( report.session_units_total * unitPrizeCpt  | currency))}}
+                                            {{(( data.session_units_total * unitPrizeCpt  | currency))}}
                                             <span *ngIf="md == 'XE' || md2 == 'XE'">
-                                               xe:{{(( report.session_units_total * unitPrizeCpt * xe | currency))}}
+                                               xe:{{(( data.session_units_total * unitPrizeCpt * xe | currency))}}
                                             </span>
                                         </td>
                                         <td>
-                                            <span *ngIf="report.rbt">
-                                                {{report.rbt?.tecnicoRbt.name}} 
-                                                {{report.rbt?.tecnicoRbt.surname}}
+                                            <span *ngIf="data.rbt">
+                                                {{data.rbt?.tecnicoRbt.name}} 
+                                                {{data.rbt?.tecnicoRbt.surname}}
 
                                             </span>
                                         </td>
 
                                         <td>{{pa_number}}</td>
-                                        <td>{{report.rbt?.supervisor.npi}} </td>
+                                        <td>{{data.rbt?.supervisor.npi}} </td>
 
                                         <td style="display: inline-flex;">
                                             
                                             <div  class="note-checkit">
                                                 <label class="custom_check">
-                                                    <input type="checkbox" *ngIf="report.rbt" name="billed" [(ngModel)]="report.billed"  (change)="isCheckedBilled()"    >
+                                                    <input type="checkbox" *ngIf="data.rbt" name="billed" [(ngModel)]="data.billed"  (change)="isCheckedBilled()"    >
                                                     <span class="checkmark" value="false"></span>  
                                                 </label>
                                             </div>
                                             <div  class="note-checkit">
                                                 <label class="custom_check">
-                                                    <input type="checkbox" *ngIf="report.bcba" name="billed" [(ngModel)]="report.billed"  (change)="isCheckedBilled()"    >
+                                                    <input type="checkbox" *ngIf="data.bcba" name="billed" [(ngModel)]="data.billed"  (change)="isCheckedBilled()"    >
                                                     <span class="checkmark" value="false"></span>  
                                                 </label>
                                             </div>
@@ -327,13 +327,13 @@
                                         <td style="display: inline-flex;">
                                             <div  class="note-checkit">
                                                 <label class="custom_check">
-                                                    <input type="checkbox" *ngIf="report.rbt" name="pay" [(ngModel)]="report.pay" (change)="isCheckedPay()"    >
+                                                    <input type="checkbox" *ngIf="data.rbt" name="pay" [(ngModel)]="data.pay" (change)="isCheckedPay()"    >
                                                     <span class="checkmark" value="false"></span> 
                                                 </label>
                                             </div>
                                             <div  class="note-checkit">
                                                 <label class="custom_check">
-                                                    <input type="checkbox" *ngIf="report.bcba" name="pay" [(ngModel)]="report.pay" (change)="isCheckedPay()"    >
+                                                    <input type="checkbox" *ngIf="data.bcba" name="pay" [(ngModel)]="data.pay" (change)="isCheckedPay()"    >
                                                     <span class="checkmark" value="false"></span> 
                                                 </label>
                                             </div>

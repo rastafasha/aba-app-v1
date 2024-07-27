@@ -604,7 +604,7 @@
                                             <hr>
                                             <ng-container *ngFor="let item of sustitution_goal_stos">
                                                 <div class="row">
-                                                    <h3>Goal Sto</h3>
+                                                    <h3 style="font-size: 1.2rem; padding: 20px 10px;">Goal Sto</h3>
                                                     <div class="col-xs-12 col-sm-3">
                                                         <div class="detail-personal">
                                                             <h2>Sto</h2>
@@ -614,26 +614,26 @@
                                                     
                                                     <div class="col-xs-12 col-sm-3">
                                                         <div class="detail-personal">
-                                                            <h2>initial_interesting</h2>
-                                                            <h3>{{item.initial_interesting}}</h3>
+                                                            <h2>Target</h2>
+                                                            <h3>{{item.target}}</h3>
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-12 col-sm-3">
                                                         <div class="detail-personal">
-                                                            <h2>sustitution Status</h2>
+                                                            <h2>Sustitution Status</h2>
                                                             <h3>{{item.sustitution_status_sto}}</h3>
                                                         </div>
                                                     </div>
                                                     
                                                     <div class="col-xs-12 col-sm-3">
                                                         <div class="detail-personal">
-                                                            <h2>date</h2>
+                                                            <h2>Date</h2>
                                                             <h3>{{item.sustitution_date_sto |date}}</h3>
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-12 ">
                                                         <div class="detail-personal">
-                                                            <h2>decription </h2>
+                                                            <h2>Description </h2>
                                                             <h3>{{item.sustitution_decription_sto}}</h3>
                                                         </div>
                                                     </div>
@@ -642,7 +642,7 @@
                                             </ng-container>
                                             <ng-container *ngFor="let item of sustitution_goal_ltos">
                                                 <div class="row">
-                                                    <h3>Goal Lto</h3>
+                                                    <h3 style="font-size: 1.2rem; padding: 20px 10px;">Goal Lto</h3>
                                                     <div class="col-xs-12 col-sm-3">
                                                         <div class="detail-personal">
                                                             <h2>Lto</h2>
@@ -1666,7 +1666,8 @@
                                                 <h2>Analyst Signature</h2>
                                                 <!-- <h3>{{analyst_signature}}</h3> -->
                                                 <!-- <img  [src]="analyst_signature" style="width:100%"  > -->
-                                                <img  src="{{imagenSerUrl}}{{analyst_signature}}" style="width:100%"  >
+                                                <img  src="{{imagenSerUrl}}{{analyst_signature}}" style="width:100%" alt=""  >
+                                                <!-- <img  [src]="imageData2" style="width:100%"  > -->
                                                 
                                             </div>
                                         </div>
@@ -1681,7 +1682,8 @@
                                                 <h2>Parent/Guardian/Caregiver Signature</h2>
                                                 <!-- <h3>{{parent_guardian_signature}}</h3> -->
                                                 <!-- <img  [src]="parent_guardian_signature" style="width:100%"  > -->
-                                                <img  src="{{imagenSerUrl}}{{parent_guardian_signature}}" style="width:100%"  >
+                                                <img  src="{{imagenSerUrl}}{{parent_guardian_signature}}" style="width:100%" alt=""  >
+                                                <!-- <img  [src]="imageData" style="width:100%"  > -->
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-sm-3">

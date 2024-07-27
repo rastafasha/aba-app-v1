@@ -6,6 +6,8 @@ import { Location } from '@angular/common';
 import { LocationService } from '../services/location.service';
 import { url_media } from 'src/app/config/config';
 import { MatTableDataSource } from '@angular/material/table';
+import { PatientMService } from '../../patient-m/service/patient-m.service';
+import Swal from 'sweetalert2';
 
 
 
@@ -80,6 +82,7 @@ export class LocationViewComponent {
     public router: Router,
     public activatedRoute: ActivatedRoute,
     private location: Location,
+    public patientService: PatientMService,
     
   ){
 
@@ -253,5 +256,31 @@ export class LocationViewComponent {
   public searchDataDoct(value: any): void {debugger
     this.dataSource.filter = value.trim().toLowerCase();
     this.specialistList = this.dataSource.filteredData;
+  }
+
+  cambiarStatusCliente(patient:any){
+    let VALUE = patient.status;
+    // console.log(VALUE);
+    
+    this.patientService.updateStatus(patient, patient.id).subscribe(
+      resp =>{
+        // console.log(resp);
+        Swal.fire('Updated', `Client Status Updated successfully!`, 'success');
+        this.getLocation();
+      }
+    )
+  }
+
+  cambiarStatusDoctor(specialist:any){
+    let VALUE = specialist.status;
+    console.log(VALUE);
+    
+    this.doctorService.updateStatus(specialist, specialist.id).subscribe(
+      resp =>{
+        // console.log(resp);
+        Swal.fire('Updated', `Employee Status Updated successfully!`, 'success');
+        this.getLocation();
+      }
+    )
   }
 }

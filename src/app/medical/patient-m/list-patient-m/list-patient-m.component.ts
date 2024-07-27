@@ -8,6 +8,7 @@ import * as XLSX from 'xlsx';
 import { RolesService } from '../../roles/service/roles.service';
 import { BipService } from '../../bip/service/bip.service';
 import { Location } from '@angular/common';
+import Swal from 'sweetalert2';
 
 declare var $:any;  
 @Component({
@@ -365,11 +366,12 @@ export class ListPatientMComponent {
 
   cambiarStatus(data:any){
     let VALUE = data.status;
-    console.log(VALUE);
+    // console.log(VALUE);
     
     this.patientService.updateStatus(data, data.id).subscribe(
       resp =>{
         // console.log(resp);
+        Swal.fire('Updated', `Client Status Updated successfully!`, 'success');
         this.getTableData();
       }
     )

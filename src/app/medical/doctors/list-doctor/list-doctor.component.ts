@@ -7,6 +7,7 @@ import * as XLSX from 'xlsx';
 import * as jsPDF from 'jspdf';
 import { RolesService } from '../../roles/service/roles.service';
 import { Location } from '@angular/common';
+import Swal from 'sweetalert2';
 declare var $:any;  
 @Component({
   selector: 'app-list-doctor',
@@ -320,6 +321,7 @@ export class ListDoctorComponent {
     this.doctorService.updateStatus(data, data.id).subscribe(
       resp =>{
         // console.log(resp);
+        Swal.fire('Updated', `Employee Status Updated successfully!`, 'success');
         this.getTableData();
       }
     )

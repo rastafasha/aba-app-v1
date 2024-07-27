@@ -31,6 +31,11 @@ permissions :any = [];
     let URL = url_servicios+'/doctors/config';
     return this.http.get(URL, {headers:headers});
   }
+  listConfigLocation(location_id:any){
+    let headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token})
+    let URL = url_servicios+'/doctors/configlocation/'+location_id;
+    return this.http.get(URL, {headers:headers});
+  }
   storeDoctor(data:any){
     let headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token});
     let URL = url_servicios+"/doctors/store";

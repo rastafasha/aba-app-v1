@@ -101,7 +101,12 @@ export class AddDoctorComponent {
     this.user = JSON.parse(USER ? USER: '');
     this.roles = this.user.roles[0];
     this.doctor_id = this.user.id;
-    this.getConfig();
+    if(this.user.roles[0] == 'MANAGER'){
+      this.selectedValueLocation = this.user.location_id;
+      this.getConfigLocation();
+    }else{
+      this.getConfig();
+    }
   }
 
   goBack() {
@@ -109,7 +114,16 @@ export class AddDoctorComponent {
   }
 
   getConfig(){
-    this.doctorService.listConfig().subscribe((resp:any)=>{
+    this.doctorService.listConfig( ).subscribe((resp:any)=>{
+      // console.log(resp);
+      this.roles = resp.roles;
+      
+      this.locations = resp.locations;
+      this.location = resp.location;
+    })
+  }
+  getConfigLocation(){
+    this.doctorService.listConfigLocation(this.selectedValueLocation ).subscribe((resp:any)=>{
       // console.log(resp);
       this.roles = resp.roles;
       

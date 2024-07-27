@@ -232,8 +232,14 @@ export class ReportByClientComponent {
       clientReportList.subscribe((report:any) => {
         // this.clientReportList = report;
         // console.log(this.clientReportList);
+        ///se cambio el nombre de combinedReportList, porque todo esta en base
+        // a la nota rbt y aqui se une con todo lo que hay para poder sacar 
+        // una tabla con las notas rbt y bcba para poder manipularlas por su id o fecha
+        let i = this.clientReportList.length;
         this.clientReportList.push(report);
-        console.log('lista combinada',this.clientReportList);
+        this.combinedList = this.clientReportList;
+        console.log('lista combinada',this.combinedList);
+
       });
       //fin union
 
@@ -270,14 +276,15 @@ export class ReportByClientComponent {
 
       this.totalDataClientReport = resp.noteRbts.length;
       this.clientReport_generals = resp.noteRbts;
+      // this.clientReport_generals = this.combinedList;
       this.patient_id = resp.patient_id;
 
       for (let i=0;i<this.pa_assessmentsgroup.length;i++){
         if (!this.serialNumberArray.includes(this.pa_assessmentsgroup[i].serial_number)) {
           this.serialNumberArray.push(this.pa_assessmentsgroup[i].serial_number)
         }
-        
-        this.clientReportList.push(this.pa_assessmentsgroup[i]);
+        //aqui se agrega pa assestment al total
+        // this.clientReportList.push(this.pa_assessmentsgroup[i]);
       };
 
       

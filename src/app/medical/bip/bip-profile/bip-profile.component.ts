@@ -187,8 +187,13 @@ export class BipProfileComponent {
       this.analyst_signature =this.bip_selected.consent_to_treatment[0].analyst_signature;
       this.analyst_signature_date =this.bip_selected.consent_to_treatment[0].analyst_signature_date;
       this.parent_guardian_signature =this.bip_selected.consent_to_treatment[0].parent_guardian_signature;
-      this.parent_guardian_signature_date =this.bip_selected.consent_to_treatment[0].parent_guardian_signature_date;
       
+      const imageData = 'data:image/png;base64,' + btoa(this.parent_guardian_signature);
+      // const imageData2 = 'data:image/png;base64,' + btoa(this.analyst_signature);
+      console.log(imageData);
+      // this.parent_guardian_signature = imageData;
+
+      this.parent_guardian_signature_date =this.bip_selected.consent_to_treatment[0].parent_guardian_signature_date;
       this.reduction_goals =this.bip_selected.reduction_goal;
       this.reduction_goals_goalltos =this.bip_selected.reduction_goal[0].goalltos;
       this.reduction_goals_goalstos =this.bip_selected.reduction_goal[0].goalstos;
@@ -343,32 +348,38 @@ export class BipProfileComponent {
 public convertToPdf(): void {
   const data = this.contentToConvert.nativeElement;
 
-    html2canvas(data).then(canvas => {
-    // Few necessary setting options
-    const imgWidth = 210;
-    const pageHeight = 295;
-    const imgHeight = canvas.height * imgWidth / canvas.width;
-    var heightLeft = imgHeight;
+html2canvas(data).then((canvas) => {
+  // Define necessary settings
+  const imgWidth = 210;
+  const pageHeight = 295;
+  const imgHeight = canvas.height * imgWidth / canvas.width;
+  let heightLeft = imgHeight;
 
-    // Create a new PDF document
-    const pdf = new jspdf.jsPDF('p', 'mm');
-    var position = 0;
+  // Create a new PDF document
+  const pdf = new jspdf.jsPDF('p', 'mm');
+  let position = 0;
 
+  // Add image to PDF
+  pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, position, imgWidth, imgHeight);
+  heightLeft -= pageHeight;
+
+  pdf.addImage(canvas.toDataURL('image/jpg'), 'JPG', 0, position, imgWidth, imgHeight);
+  heightLeft -= pageHeight;
+
+  // Add additional pages if necessary
+  while (heightLeft >= 0) {
+    position = heightLeft - imgHeight;
+    pdf.addPage();
     pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, position, imgWidth, imgHeight);
     heightLeft -= pageHeight;
+  }
 
-    while (heightLeft >= 0) {
-      position = heightLeft - imgHeight;
-      pdf.addPage();
-      pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-    }
-
-    // Save the PDF
-    pdf.save('bip_'+this.patient_selected.patient_id+".pdf");
-    // pdf.save('note_rbt_client_'+this.patient_selected.patient_id+'_'+this.patient_selected.last_name+".pdf");
-  });
+  // Save the PDF
+  const filename = `bip_${this.patient_selected.patient_id}.pdf`;
+  pdf.save(filename);
+});
 
     
 }
+
 }
