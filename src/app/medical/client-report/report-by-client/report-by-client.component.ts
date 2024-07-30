@@ -124,6 +124,7 @@ export class ReportByClientComponent {
   public patientId: any;
   public services: any;
   public provider: any;
+  // public data: any;
 
   public providersSponsorsList:any;
   public factorPorcentual: number =  1.66666666666667
@@ -192,7 +193,6 @@ export class ReportByClientComponent {
 
 
   private getTableData(page=1): void {
-    // this.clientReportList = [];
     this.clientReportList = [];
     this.serialNumberArray = [];
 
@@ -261,22 +261,12 @@ export class ReportByClientComponent {
 
       this.pa_assessmentsgroup = jsonObj;
       
-      // aqui deberia ser el mas reciente.. 
-      //quizas se pueda cambiar de desc a asc para que agarre el mas reciente
-      // this.cpt = this.pa_assessmentsgroup[0].cpt;
-      //igual aqui
-      // this.n_units = this.pa_assessmentsgroup[0].n_units;
-      // igual aqui
-      // this.pa_number = this.pa_assessmentsgroup[0].pa_services;
-
-      // this.provider = this.pa_assessmentsgroup.provider;
-      // console.log(this.provider);
-      
       
 
       this.totalDataClientReport = resp.noteRbts.length;
       this.clientReport_generals = resp.noteRbts;
       // this.clientReport_generals = this.combinedList;
+      
       this.patient_id = resp.patient_id;
 
       for (let i=0;i<this.pa_assessmentsgroup.length;i++){
