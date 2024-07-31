@@ -186,7 +186,7 @@
                                         <th mat-sort-header="totalunits">Total Units</th>
                                         <th mat-sort-header="units">Units Price</th>
                                         <th mat-sort-header="charges">Charges</th>
-                                        <th mat-sort-header="total">Total</th>
+                                        <!-- <th mat-sort-header="total">Total</th> -->
                                         <th mat-sort-header="sponsor_id">Provider</th>
                                         <th mat-sort-header="pa_number">PA Number</th>
                                         <th mat-sort-header="npi">Npi</th>
@@ -295,9 +295,9 @@
                                         </td>
                                         <td>{{unitPrizeCpt | currency}}</td>
                                         <td>
-                                            <!-- {{(( data.session_units_total * unitPrizeCpt  | currency))}} -->
+                                            {{(( data.rbt?.session_units_total * unitPrizeCpt  | currency))}}
                                             <span *ngIf="md == 'XE' || md2 == 'XE'">
-                                               xe:{{(( data.session_units_total * unitPrizeCpt * xe | currency))}}
+                                               xe:{{(( data.rbt?.session_units_total * unitPrizeCpt * xe | currency))}}
                                             </span>
                                         </td>
                                         <td>
@@ -449,9 +449,9 @@
                                         </td>
                                         <td>{{unitPrizeCpt | currency}}</td>
                                         <td>
-                                            <!-- {{(( data.session_units_total * unitPrizeCpt  | currency))}} -->
+                                            {{(( data.bcba?.session_units_total * unitPrizeCpt  | currency))}}
                                             <span *ngIf="md == 'XE' || md2 == 'XE'">
-                                               xe:{{(( data.session_units_total * unitPrizeCpt * xe | currency))}}
+                                               xe:{{(( data.bcba?.session_units_total * unitPrizeCpt * xe | currency))}}
                                             </span>
                                         </td>
                                        
