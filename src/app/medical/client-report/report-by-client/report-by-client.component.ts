@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import { NoteRbtService } from '../../notes/services/note-rbt.service';
 import { Location } from '@angular/common';
 import { zip, map } from 'rxjs';
+import { NoteBcbaService } from '../../notes-bcba/services/note-bcba.service';
 declare var $:any; 
 
 
@@ -93,8 +94,12 @@ export class ReportByClientComponent {
   public pos:any;
   public billed:boolean ;
   public pay:boolean ;
+  public billedbcba:boolean ;
+  public paybcba:boolean ;
   public md:any;
   public md2:any;
+  public mdbcba:any;
+  public md2bcba:any;
   public pay_selected:any;
   public billed_selected:any;
   public total:any;
@@ -144,6 +149,7 @@ export class ReportByClientComponent {
     public insuranceService: InsuranceService,
     public patientService: PatientMService,
     public noteRbtService: NoteRbtService,
+    public noteBCbaService: NoteBcbaService,
     public location: Location,
   ){}
 
@@ -159,6 +165,8 @@ export class ReportByClientComponent {
      this.getConfig();
      this.billed = false;
      this.pay = false;
+     this.billedbcba = false;
+     this.paybcba = false;
      
      this.doctorService.getUserRoles();
     this.user = this.roleService.authService.user;
@@ -210,6 +218,8 @@ export class ReportByClientComponent {
       this.insurance_id = resp.patient.insurer_id;
       this.billed = resp.noteRbts;
       this.pay = resp.noteRbts;
+      this.billedbcba = resp.noteBcbas;
+      this.paybcba = resp.noteBcbas;
       this.pos_covered = resp.pos_covered;
 
       // obtengo la info resumida de las notas rbt
@@ -530,8 +540,8 @@ export class ReportByClientComponent {
   }
 
   addXe(value:any){
-    let VALUE = value;
-    console.log(VALUE);
+    this.xe = value;
+    console.log(this.xe);
   }
 
   
@@ -540,9 +550,19 @@ export class ReportByClientComponent {
     console.log(this.md);
   }
 
+  isSelectedModifierBcba(value:string){
+    this.mdbcba = value;
+    console.log(this.mdbcba);
+  }
+
   isSelectedModifier2(value:string){
     this.md2 = value;
     console.log(this.md2);
+  }
+
+  isSelectedModifier2Bcba(value:string){
+    this.md2bcba = value;
+    console.log(this.md2bcba);
   }
 
 
@@ -553,6 +573,10 @@ export class ReportByClientComponent {
     // if ( event.target.checked ) {
     // }
   }
+  isCheckedBilledBcba(){
+    this.billedbcba = !this.billedbcba;
+    console.log(this.billedbcba);
+  }
 
     isCheckedPay(){
       this.pay = !this.pay;
@@ -560,37 +584,85 @@ export class ReportByClientComponent {
       // if ( event.target.checked ) {
       // }
     }
+    isCheckedPayBcba(){
+      this.paybcba = !this.paybcba;
+      console.log(this.paybcba);
+    }
 
 
 
-  save(data:any){
+  save(data:any){debugger
+
+    let note_rbt_id: any = null;
+    let note_bcba_id: any = null;
+  
+    if (data.rbt.id) {
+      note_rbt_id = data.rbt.id;
+    }
+  
+    if (data.bcba.id) {
+      note_bcba_id = data.bcba.id;
+    }
+
     let VALUE = {
-      session_date: data.session_date,
+      session_date: data.rbt.session_date,
       pos: data.pos,
       total_hours:data.total_hours,
-      cpt_code: this.cpt,
+      cpt_code: data.rbt.cpt_code,
       md: this.md,
       md2: this.md2,
+      mdbcba: this.mdbcba,
+      md2bcba: this.md2bcba,
       xe: this.xe,
-      total_units: data.total_units,
-      charges: data.session_units_total * this.unitPrize,
-      // n_units: this.n_units,
+      
+      // charges: data.session_units_total * this.unitPrize,
+      chargesrbt: data.rbt.session_units_total * this.unitPrize,
+      chargesbcba: data.bcba.session_units_total * this.unitPrize,
+      n_units: this.n_units,
       pa_number: this.pa_number,
-      billed: data.billed,
-      pay: data.pay,
-      sponsor_id: data.provider_name_g,
+      
       patient_id: this.patient_id,
       insurer_id: this.insurance_id,
-      noterbt_id: data.id,
       npi: this.npi,
+      note_rbt_id: note_rbt_id,
+      note_bcba_id: note_bcba_id,
+      billed: data.rbt.billed,
+      pay: data.rbt.pay,
+      billedbcba: data.bcba.billedbcba,
+      paybcba: data.bcba.paybcba,
+      
       
     };
     let VALUE2 = {
+      session_date: data.rbt.session_date,
+      cpt_code: data.rbt.cpt_code,
+      pos: data.rbt.pos,
       pa_number: this.pa_number,
-      billed: data.billed,
-      pay: data.pay,
+      total_hours:data.rbt.total_hours,
+      billed: data.rbt.billed,
+      pay: data.rbt.pay,
       md: this.md,
       md2: this.md2,
+      note_rbt_id: data.rbt.id,
+      total_units: data.rbt.total_units,
+      sponsor_id: data.rbt.provider_name_g,
+      chargesrbt: data.rbt.session_units_total * this.unitPrize,
+      // noterbt_id: data.id,
+      
+    };
+    let VALUE3 = {
+      session_date: data.bcba.session_date,
+      cpt_code: data.bcba.cpt_code,
+      pos: data.bcba.meet_with_client_at,
+      billedbcba: data.bcba.billedbcba,
+      paybcba: data.bcba.paybcba,
+      mdbcba: this.mdbcba,
+      md2bcba: this.md2bcba,
+      note_bcba_id: data.bcba.id,
+      total_units: data.bcba.total_units,
+      total_hours:data.rbt.total_hours,
+      sponsor_id: data.bcba.provider_name_g,
+      chargesbcba: data.bcba.session_units_total * this.unitPrize,
       // noterbt_id: data.id,
       
     };
@@ -598,16 +670,21 @@ export class ReportByClientComponent {
     //   this.xe= data.total_units * this.unitPrize * this.xe,
     
     console.log(VALUE);
+
+    let totalValue = [VALUE, VALUE2, VALUE3];
     
     if(this.billing_selected){//si  tiene bip se agrega a la informacion de la consulta
 
-      this.clientReportService.udpate(VALUE, this.billing_selected).subscribe((resp:any)=>{
+      this.clientReportService.udpate(VALUE,   this.billing_selected).subscribe((resp:any)=>{
         // console.log(resp);
         // this.text_success = 'Bip Updated'
         Swal.fire('Updated', `Bip Updated successfully!`, 'success');
         this.ngOnInit();
       })
-      this.noteRbtService.noteUpdateStatus(VALUE2,data.id).subscribe((resp:any)=>{
+      this.noteRbtService.noteUpdateModifier(VALUE2,data.rbt.id).subscribe((resp:any)=>{
+        console.log(resp);
+      })
+      this.noteBCbaService.noteBCBAUpdateModifier(VALUE3,data.bcba.id).subscribe((resp:any)=>{
         console.log(resp);
       })
       
@@ -621,7 +698,12 @@ export class ReportByClientComponent {
         this.ngOnInit();
       })
 
-      this.noteRbtService.noteUpdateStatus(VALUE2,data.id ).subscribe((resp:any)=>{
+      this.noteRbtService.noteUpdateModifier(VALUE2,data.rbt.id ).subscribe((resp:any)=>{
+        console.log(resp);
+        
+        
+      })
+      this.noteBCbaService.noteBCBAUpdateModifier(VALUE3,data.bcba.id ).subscribe((resp:any)=>{
         console.log(resp);
         
         

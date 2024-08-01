@@ -45,11 +45,12 @@ export class NoteRbtService {
     return this.http.post(URL,data,{headers:headers});
   }
 
-  noteUpdateStatus(data:any, client_id:any){
+  noteUpdateModifier(data:any, client_id:any){
     let headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token});
     let URL = url_servicios+"/note_rbt/update/modifier/"+client_id;
     return this.http.put(URL,data,{headers:headers});
   }
+  
   deleteNote(patient_id:any){
     let headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token})
     let URL = url_servicios+'/note_rbt/destroy/'+patient_id;

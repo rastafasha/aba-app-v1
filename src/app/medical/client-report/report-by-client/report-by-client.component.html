@@ -236,7 +236,7 @@
                                                 <div class="form-group local-forms">
                                                     <select
                                                         class="form-control form-select-solid fw-bolder"
-                                                        name="md"  [(ngModel)]="md" (change)="isSelectedModifier($event.target.value)"   >
+                                                        name="md"  [(ngModel)]="data.rbt.md" (change)="isSelectedModifier($event.target.value)"   >
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM</option>
                                                         <option value="XE">XE</option>
@@ -249,7 +249,7 @@
                                                 <div class="form-group local-forms">
                                                     <select
                                                         class="form-control form-select-solid fw-bolder"
-                                                        name="md"   [(ngModel)]="md" (change)="isSelectedModifier($event.target.value)"  >
+                                                        name="md"  [(ngModel)]="data.rbt.md" (change)="isSelectedModifier($event.target.value)"  >
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM</option>
                                                         <option value="HO">HO</option>
@@ -265,7 +265,7 @@
                                                 <div class="form-group local-forms">
                                                     <select
                                                         class="form-control form-select-solid fw-bolder"
-                                                        name="md2"  [(ngModel)]="md2"  (change)="isSelectedModifier2($event.target.value)"  >
+                                                        name="md2"   [(ngModel)]="data.rbt.md2"  (change)="isSelectedModifier2($event.target.value)"  >
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM</option>
                                                         <option value="XE">XE</option>
@@ -277,7 +277,7 @@
                                                 <div class="form-group local-forms">
                                                     <select
                                                         class="form-control form-select-solid fw-bolder"
-                                                        name="md2"  [(ngModel)]="md2"  (change)="isSelectedModifier2($event.target.value)"  >
+                                                        name="md2"   [(ngModel)]="data.rbt.md2"  (change)="isSelectedModifier2($event.target.value)"  >
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM</option>
                                                         <option value="HO">HO</option>
@@ -324,7 +324,7 @@
                                             
                                             <div  class="note-checkit">
                                                 <label class="custom_check">
-                                                    <input type="checkbox"  name="billed" [(ngModel)]="billed"  (change)="isCheckedBilled()"    >
+                                                    <input type="checkbox"  name="billed" [(ngModel)]="data.rbt.billed"  (change)="isCheckedBilled()"    >
                                                     <span class="checkmark" value="false"></span>  
                                                 </label>
                                             </div>
@@ -333,7 +333,7 @@
                                         <td style="display: inline-flex;">
                                             <div  class="note-checkit">
                                                 <label class="custom_check">
-                                                    <input type="checkbox"  name="pay" [(ngModel)]="pay" (change)="isCheckedPay()"    >
+                                                    <input type="checkbox"  name="pay" [(ngModel)]="data.rbt.pay" (change)="isCheckedPay()"    >
                                                     <span class="checkmark" value="false"></span> 
                                                 </label>
                                             </div>
@@ -388,7 +388,7 @@
                                                 <div class="form-group local-forms">
                                                     <select
                                                         class="form-control form-select-solid fw-bolder"
-                                                        name="mdbcba"  [(ngModel)]="mdbcba" (change)="isSelectedModifier($event.target.value)"   >
+                                                        name="mdbcba"  [(ngModel)]="data.bcba.mdbcba" (change)="isSelectedModifierBcba($event.target.value)"   >
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM</option>
                                                         <option value="XE">XE</option>
@@ -401,7 +401,7 @@
                                                 <div class="form-group local-forms">
                                                     <select
                                                         class="form-control form-select-solid fw-bolder"
-                                                        name="mdbcba"   [(ngModel)]="mdbcba" (change)="isSelectedModifier($event.target.value)"  >
+                                                        name="mdbcba"   [(ngModel)]="data.bcba.mdbcba" (change)="isSelectedModifierBcba($event.target.value)"  >
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM</option>
                                                         <option value="HO">HO</option>
@@ -417,7 +417,7 @@
                                                 <div class="form-group local-forms">
                                                     <select
                                                         class="form-control form-select-solid fw-bolder"
-                                                        name="md2bcba"  [(ngModel)]="md2bcba"  (change)="isSelectedModifier2($event.target.value)"  >
+                                                        name="md2bcba"  [(ngModel)]="data.bcba.md2bcba"  (change)="isSelectedModifier2Bcba($event.target.value)"  >
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM</option>
                                                         <option value="XE">XE</option>
@@ -429,7 +429,7 @@
                                                 <div class="form-group local-forms">
                                                     <select
                                                         class="form-control form-select-solid fw-bolder"
-                                                        name="md2bcba"  [(ngModel)]="md2bcba"  (change)="isSelectedModifier2($event.target.value)"  >
+                                                        name="md2bcba"  [(ngModel)]="data.bcba.md2bcba"  (change)="isSelectedModifier2Bcba($event.target.value)"  >
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM</option>
                                                         <option value="HO">HO</option>
@@ -450,7 +450,7 @@
                                         <td>{{unitPrizeCpt | currency}}</td>
                                         <td>
                                             {{(( data.bcba?.session_units_total * unitPrizeCpt  | currency))}}
-                                            <span *ngIf="md == 'XE' || md2 == 'XE'">
+                                            <span *ngIf="mdbcba == 'XE' || md2bcba == 'XE'">
                                                xe:{{(( data.bcba?.session_units_total * unitPrizeCpt * xe | currency))}}
                                             </span>
                                         </td>
@@ -480,7 +480,7 @@
                                             
                                             <div  class="note-checkit">
                                                 <label class="custom_check">
-                                                    <input type="checkbox"  name="billed" [(ngModel)]="billed"  (change)="isCheckedBilled()"    >
+                                                    <input type="checkbox"  name="billedbcba" [(ngModel)]="data.bcba.billedbcba"  (change)="isCheckedBilledBcba()"    >
                                                     <span class="checkmark" value="false"></span>  
                                                 </label>
                                             </div>
@@ -489,13 +489,13 @@
                                         <td style="display: inline-flex;">
                                             <div  class="note-checkit">
                                                 <label class="custom_check">
-                                                    <input type="checkbox"  name="pay" [(ngModel)]="pay" (change)="isCheckedPay()"    >
+                                                    <input type="checkbox"  name="paybcba" [(ngModel)]="data.bcba.paybcba" (change)="isCheckedPayBcba()"    >
                                                     <span class="checkmark" value="false"></span> 
                                                 </label>
                                             </div>
                                         </td>
 
-                                        <td>{{data.rbt?.created_at | date }}</td>
+                                        <td>{{data.bcba?.created_at | date }}</td>
 
                                         <td class="text-end">
                                             <div class="doctor-submit text-end">

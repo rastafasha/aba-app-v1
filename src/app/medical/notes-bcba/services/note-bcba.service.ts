@@ -78,4 +78,10 @@ export class NoteBcbaService {
     return this.http.put(URL,data,{headers:headers});
   }
 
+  noteBCBAUpdateModifier(data:any, client_id:any){
+    let headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token});
+    let URL = url_servicios+"/note_bcba/update/modifier/"+client_id;
+    return this.http.put(URL,data,{headers:headers});
+  }
+
 }

@@ -216,7 +216,7 @@ export class NoteBcbaEditComponent {
       this.client_appeared = this.note_selected.client_appeared;
       this.diagnosis_code = this.note_selected.diagnosis_code;
       this.selectedValueCode = this.note_selected.cpt_code;
-      console.log(this.cpt_code);
+      this.meet_with_client_at = this.note_selected.meet_with_client_at;
       this.note_description = this.note_selected.note_description;
       this.client_response_to_treatment_this_session = this.note_selected.client_response_to_treatment_this_session;
       this.pos = this.note_selected.pos;
@@ -225,13 +225,13 @@ export class NoteBcbaEditComponent {
       this.caregivers_training_goalsgroup = resp.caregiver_goals;
       let jsonObj = JSON.parse(this.caregivers_training_goalsgroup) || '';
       this.caregivers_training_goals = jsonObj;
-      console.log(this.caregivers_training_goals);
+      // console.log(this.caregivers_training_goals);
 
       
       this.rbt_training_goalsgroup = resp.rbt_training_goals;
       let jsonObj1 = JSON.parse(this.rbt_training_goalsgroup) || '';
       this.rbt_training_goals = jsonObj1;
-      console.log(this.rbt_training_goals);
+      // console.log(this.rbt_training_goals);
 
       this.selectedValueAba = resp.noteBcba.aba_supervisor;
       this.selectedValueRendering = resp.noteBcba.rendering_provider;
@@ -286,13 +286,13 @@ export class NoteBcbaEditComponent {
       // this.unitsAsignated = this.pa_assessmentsgroup.n_units;
       // console.log(this.pa_assessmentsgroup);
       this.cpt = this.pa_assessmentsgroup[0].cpt;
-      console.log(this.cpt);  
+      // console.log(this.cpt);  
     })
   }
 
   insuranceData(){
     this.insuranceService.showInsurance(this.insurer_id).subscribe((resp:any)=>{
-      console.log(resp);
+      // console.log(resp);
       this.insurer_name = resp.insurer_name;
       // this.notes = resp.notes;
       this.services = resp.services;
@@ -304,7 +304,7 @@ export class NoteBcbaEditComponent {
 
   specialistData(selectedValueInsurer){
     this.doctorService.showDoctorProfile(selectedValueInsurer).subscribe((resp:any)=>{
-      console.log(resp);
+      // console.log(resp);
       this.provider_credential = resp.doctor.certificate_number;
       // this.notes = resp.notes;
       // this.services = resp.services;
@@ -320,11 +320,11 @@ export class NoteBcbaEditComponent {
 
   hourTimeInSelected(value:number){
     this.selectedValueTimeIn = value;
-    console.log(value);
+    // console.log(value);
   }
   hourTimeOutSelected(value:number){
     this.selectedValueTimeOut = value;
-    console.log(value);
+    // console.log(value);
 
   }
 
@@ -416,7 +416,7 @@ export class NoteBcbaEditComponent {
     this.doctorService.showDoctorProfile(selectedValueRBT).subscribe((resp:any)=>{
       console.log(resp);
       this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED = resp.doctor.electronic_signature;
-      console.log(this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED);
+      // console.log(this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED);
       // this.notes = resp.notes;
       // this.services = resp.services;
     })
@@ -424,15 +424,15 @@ export class NoteBcbaEditComponent {
   selectFirmaSpecialistRbt(event:any){
     event = this.selectedValueRBT;
     this.speciaFirmaDataRbt(this.selectedValueRBT);
-    console.log(this.selectedValueRBT);
+    // console.log(this.selectedValueRBT);
     
   }
 
   speciaFirmaDataBcba(selectedValueBCBA){
     this.doctorService.showDoctorProfile(selectedValueBCBA).subscribe((resp:any)=>{
-      console.log(resp);
+      // console.log(resp);
       this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED = resp.doctor.electronic_signature;
-      console.log(this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED);
+      // console.log(this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED);
       // this.notes = resp.notes;
       // this.services = resp.services;
     })
@@ -441,7 +441,7 @@ export class NoteBcbaEditComponent {
   selectFirmaSpecialistBcba(event:any){
     event = this.selectedValueBCBA;
     this.speciaFirmaDataBcba(this.selectedValueBCBA);
-    console.log(this.selectedValueBCBA);
+    // console.log(this.selectedValueBCBA);
     
   }
   
@@ -490,6 +490,9 @@ export class NoteBcbaEditComponent {
     }
     if(this.selectedValueCode ){
       formData.append('cpt_code', this.selectedValueCode);
+    }
+    if(this.meet_with_client_at ){
+      formData.append('meet_with_client_at', this.meet_with_client_at);
     }
     if(this.selectedValueRBT ){
       formData.append('provider_name', this.selectedValueRBT);

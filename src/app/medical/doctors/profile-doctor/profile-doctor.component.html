@@ -431,6 +431,12 @@
                                                             <div class="activity-content timeline-group-blk">
                                                                 <div class="timeline-group flex-shrink-0">
                                                                     <h4>{{notes_bcba.created_at | date}}</h4>
+                                                                    <span class="badge bg-danger" *ngIf="notes_bcba.billedbcba === 0">Pending</span>
+                                                                    <span class="badge bg-success" *ngIf="notes_bcba.billedbcba === 1">Billed</span>
+                                                                    <span class="badge bg-danger" *ngIf="notes_bcba.paybcba === 0">Pending</span>
+                                                                    <span class="badge bg-success" *ngIf="notes_bcba.paybcba === 1">Pay</span><br>
+                                                                    <span class="badge bg-warning" *ngIf="notes_bcba.mdbcba ">{{notes_bcba.mdbcba}}</span>
+                                                                    <span class="badge bg-warning" *ngIf="notes_bcba.md2bcba ">{{notes_bcba.md2bcba}}</span>
                                                                 </div>
                                                                 <div class="comman-activitys flex-grow-1">
                                                                     <h3>PatientId:{{notes_bcba.patient_id}} </h3>
