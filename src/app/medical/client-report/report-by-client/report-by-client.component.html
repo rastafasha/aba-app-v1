@@ -172,11 +172,11 @@
 
                         <div class="table-responsive">
                             <table matSort (matSortChange)="sortData($event)"
-                                class="table border-0 custom-table comman-table datatable mb-0">
+                                class="table table-striped border-0 custom-table comman-table datatable mb-0">
                                 <thead>
                                     <tr>
 
-                                        <th mat-sort-header="role">Role</th>
+                                        <th mat-sort-header="role">Type of Note</th>
                                         <th mat-sort-header="date_note">Date of Note</th>
                                         <th mat-sort-header="pos">POS</th>
                                         <th mat-sort-header="time_in">Total Hours</th>
@@ -224,8 +224,10 @@
 
                                         <td>
                                             <!-- {{data.cpt_code}} -->
-                                            <span *ngIf="data.rbt">
-                                               {{data.rbt?.cpt_code}}
+                                            <span *ngIf="data.rbt" >
+                                               {{data.rbt?.cpt_code }}
+                                               <!-- {{ getPrizeCptNoteRbt(data.rbt?.cpt_code) }} -->
+                                               
                                             </span>
                                             
 
@@ -236,7 +238,7 @@
                                                 <div class="form-group local-forms">
                                                     <select
                                                         class="form-control form-select-solid fw-bolder"
-                                                        name="md"  [(ngModel)]="data.rbt.md" (change)="isSelectedModifier($event.target.value)"   >
+                                                        name="md" style="position: relative;top: 11px;" [(ngModel)]="data.rbt.md" (change)="isSelectedModifier($event.target.value)"   >
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM</option>
                                                         <option value="XE">XE</option>
@@ -249,7 +251,7 @@
                                                 <div class="form-group local-forms">
                                                     <select
                                                         class="form-control form-select-solid fw-bolder"
-                                                        name="md"  [(ngModel)]="data.rbt.md" (change)="isSelectedModifier($event.target.value)"  >
+                                                        name="md" style="position: relative;top: 11px;" [(ngModel)]="data.rbt.md" (change)="isSelectedModifier($event.target.value)"  >
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM</option>
                                                         <option value="HO">HO</option>
@@ -265,7 +267,7 @@
                                                 <div class="form-group local-forms">
                                                     <select
                                                         class="form-control form-select-solid fw-bolder"
-                                                        name="md2"   [(ngModel)]="data.rbt.md2"  (change)="isSelectedModifier2($event.target.value)"  >
+                                                        name="md2" style="position: relative;top: 11px;"  [(ngModel)]="data.rbt.md2"  (change)="isSelectedModifier2($event.target.value)"  >
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM</option>
                                                         <option value="XE">XE</option>
@@ -277,7 +279,7 @@
                                                 <div class="form-group local-forms">
                                                     <select
                                                         class="form-control form-select-solid fw-bolder"
-                                                        name="md2"   [(ngModel)]="data.rbt.md2"  (change)="isSelectedModifier2($event.target.value)"  >
+                                                        name="md2" style="position: relative;top: 11px;"  [(ngModel)]="data.rbt.md2"  (change)="isSelectedModifier2($event.target.value)"  >
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM</option>
                                                         <option value="HO">HO</option>
@@ -293,11 +295,11 @@
                                             </span>
 
                                         </td>
-                                        <td>{{unitPrizeCpt | currency}}</td>
+                                        <td>{{unitPrize | currency }}</td>
                                         <td>
-                                            {{(( data.rbt?.session_units_total * unitPrizeCpt  | currency))}}
+                                            {{(( data.rbt?.session_units_total * unitPrize  | currency))}}
                                             <span *ngIf="md == 'XE' || md2 == 'XE'">
-                                               xe:{{(( data.rbt?.session_units_total * unitPrizeCpt * xe | currency))}}
+                                               xe:{{(( data.rbt?.session_units_total * unitPrize * xe | currency))}}
                                             </span>
                                         </td>
                                         <td>
@@ -320,7 +322,7 @@
                                         </td>
                                         
 
-                                        <td style="display: inline-flex;">
+                                        <td >
                                             
                                             <div  class="note-checkit">
                                                 <label class="custom_check">
@@ -330,7 +332,7 @@
                                             </div>
 
                                         </td>
-                                        <td style="display: inline-flex;">
+                                        <td >
                                             <div  class="note-checkit">
                                                 <label class="custom_check">
                                                     <input type="checkbox"  name="pay" [(ngModel)]="data.rbt.pay" (change)="isCheckedPay()"    >
@@ -377,8 +379,9 @@
 
                                         <td>
                                             
-                                            <span *ngIf="data.bcba">
-                                               {{data.bcba?.cpt_code}}
+                                            <span *ngIf="data.bcba"  >
+                                               {{data.bcba?.cpt_code }}
+                                               <!-- {{ getPrizeCptNoteRbt(data.bcba?.cpt_code) }} -->
                                             </span>
 
                                         </td>
@@ -388,7 +391,7 @@
                                                 <div class="form-group local-forms">
                                                     <select
                                                         class="form-control form-select-solid fw-bolder"
-                                                        name="mdbcba"  [(ngModel)]="data.bcba.mdbcba" (change)="isSelectedModifierBcba($event.target.value)"   >
+                                                        name="mdbcba" style="position: relative;top: 11px;" [(ngModel)]="data.bcba.mdbcba" (change)="isSelectedModifierBcba($event.target.value)"   >
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM</option>
                                                         <option value="XE">XE</option>
@@ -401,7 +404,7 @@
                                                 <div class="form-group local-forms">
                                                     <select
                                                         class="form-control form-select-solid fw-bolder"
-                                                        name="mdbcba"   [(ngModel)]="data.bcba.mdbcba" (change)="isSelectedModifierBcba($event.target.value)"  >
+                                                        name="mdbcba" style="position: relative;top: 11px;"  [(ngModel)]="data.bcba.mdbcba" (change)="isSelectedModifierBcba($event.target.value)"  >
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM</option>
                                                         <option value="HO">HO</option>
@@ -417,7 +420,7 @@
                                                 <div class="form-group local-forms">
                                                     <select
                                                         class="form-control form-select-solid fw-bolder"
-                                                        name="md2bcba"  [(ngModel)]="data.bcba.md2bcba"  (change)="isSelectedModifier2Bcba($event.target.value)"  >
+                                                        name="md2bcba" style="position: relative;top: 11px;"  [(ngModel)]="data.bcba.md2bcba"  (change)="isSelectedModifier2Bcba($event.target.value)"  >
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM</option>
                                                         <option value="XE">XE</option>
@@ -429,7 +432,7 @@
                                                 <div class="form-group local-forms">
                                                     <select
                                                         class="form-control form-select-solid fw-bolder"
-                                                        name="md2bcba"  [(ngModel)]="data.bcba.md2bcba"  (change)="isSelectedModifier2Bcba($event.target.value)"  >
+                                                        name="md2bcba" style="position: relative;top: 11px;"  [(ngModel)]="data.bcba.md2bcba"  (change)="isSelectedModifier2Bcba($event.target.value)"  >
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM</option>
                                                         <option value="HO">HO</option>
@@ -447,11 +450,11 @@
                                             </span>
 
                                         </td>
-                                        <td>{{unitPrizeCpt | currency}}</td>
+                                        <td>{{unitPrize | currency}}</td>
                                         <td>
-                                            {{(( data.bcba?.session_units_total * unitPrizeCpt  | currency))}}
+                                            {{(( data.bcba?.session_units_total * unitPrize  | currency))}}
                                             <span *ngIf="mdbcba == 'XE' || md2bcba == 'XE'">
-                                               xe:{{(( data.bcba?.session_units_total * unitPrizeCpt * xe | currency))}}
+                                               xe:{{(( data.bcba?.session_units_total * unitPrize * xe | currency))}}
                                             </span>
                                         </td>
                                        
@@ -476,7 +479,7 @@
 
                                         </td>
 
-                                        <td style="display: inline-flex;">
+                                        <td >
                                             
                                             <div  class="note-checkit">
                                                 <label class="custom_check">
@@ -486,7 +489,7 @@
                                             </div>
 
                                         </td>
-                                        <td style="display: inline-flex;">
+                                        <td >
                                             <div  class="note-checkit">
                                                 <label class="custom_check">
                                                     <input type="checkbox"  name="paybcba" [(ngModel)]="data.bcba.paybcba" (change)="isCheckedPayBcba()"    >

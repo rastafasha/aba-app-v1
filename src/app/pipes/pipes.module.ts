@@ -4,6 +4,7 @@ import { SecureResourceUrlPipe } from './secure-resource-url.pipe';
 import { TransformToDatePipe } from './transform-to-date.pipe';
 import { RoleFilterPipe } from './roles-filter.pipe';
 import { LocationFilterPipe } from './location-filter.pipe';
+import { GetPrizeCptNotePipe } from './prize-cpt.pipe';
 
 
 
@@ -12,13 +13,15 @@ import { LocationFilterPipe } from './location-filter.pipe';
     SecureResourceUrlPipe,
     TransformToDatePipe,
     RoleFilterPipe,
-    LocationFilterPipe
+    LocationFilterPipe,
+    GetPrizeCptNotePipe,
   ],
   exports: [
     SecureResourceUrlPipe,
     TransformToDatePipe,
     RoleFilterPipe,
-    LocationFilterPipe
+    LocationFilterPipe,
+    GetPrizeCptNotePipe,
   ],
   imports: [
     CommonModule

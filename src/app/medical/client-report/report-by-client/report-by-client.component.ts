@@ -11,11 +11,21 @@ import { ClientReportService } from '../client-report.service';
 import Swal from 'sweetalert2';
 import { NoteRbtService } from '../../notes/services/note-rbt.service';
 import { Location } from '@angular/common';
-import { zip, map } from 'rxjs';
+import { zip, map, forkJoin, Observable, tap } from 'rxjs';
 import { NoteBcbaService } from '../../notes-bcba/services/note-bcba.service';
 declare var $:any; 
 
+export interface InsuranceCptPrizeResponse {
+  unit_prize: number;
+}
 
+export interface NoteBcba {
+  cpt_code: string;
+}
+
+export interface NoteRbt {
+  cpt_code: string;
+}
 @Component({
   selector: 'app-report-by-client',
   templateUrl: './report-by-client.component.html',
@@ -129,6 +139,7 @@ export class ReportByClientComponent {
   public patientId: any;
   public services: any;
   public provider: any;
+  public selectedCpt: any;
   // public data: any;
 
   public providersSponsorsList:any;
@@ -136,6 +147,10 @@ export class ReportByClientComponent {
 
   doctor_selected:any =null;
   combinedList: any[];
+  unitPrizeCptBcba: any;
+  unitPrizeCptRbt: any;
+  bcbaCptCode: string;
+rbtCptCode: string;
 
   
 
@@ -234,6 +249,7 @@ export class ReportByClientComponent {
       // this.billed= resp.noteBcbas;
       // this.pay = resp.noteBcbas;
 
+      
       //unimos las notas rbt y bcba para mostrarlas en la misma tabla
       const clientReportList = zip(this.noteRbt, this.noteBcba).pipe(
         map(([rbt, bcba]) => ({ rbt, bcba }))
@@ -307,34 +323,59 @@ export class ReportByClientComponent {
     this.insuranceService.showInsurance(this.insurance_id).subscribe((resp:any)=>{
       console.log('insurer', resp);
       this.insuranceiddd= resp.id;
-      
+  
       this.insurer_name = resp.insurer_name;
       this.modifiers = resp.notes;
-      // console.log('modificadores',this.modifiers);
       this.services = resp.services;
-      
+  
       this.provider = resp.services[0].provider;
       this.cpt = resp.services[0].code;
-      // console.log('precio unidad',this.unitPrize);
+      this.unitPrize = resp.services[0].unit_prize;
       console.log('cpt',this.cpt);
-      // this.convertirHOra();
-      this.getPrizeCptNote();
-      
+  
+      // Call getPrizeCptNote with the correct parameters from noterbta list and notebcba list
+      this.getPrizeCptNote(this.insurer_name, this.noteBcba.cpt_code, this.noteRbt.cpt_code, this.provider).subscribe();
+
     }, (error: any) => {
       console.error('Error fetching insurance data:', error);
     });
   }
 
-  getPrizeCptNote(){
-    this.insuranceService.showInsuranceCptPrize(
-      this.insurer_name, this.cpt, this.provider  
-    ).subscribe((resp:any)=>{
-      console.log('precio cpt',resp);
-      this.unitPrizeCpt = resp.unit_prize;
-      console.log('precio unidad',this.unitPrizeCpt);
-
-    })
+  getPrizeCptNoteRbt(cptCode: string) {
+    this.getPrizeCptNote(this.insurer_name, cptCode, this.noteRbt.cpt_code, this.provider).subscribe((result: any) => {
+      return result;
+    });
   }
+  
+  getUnitPrizes(insurerName: string, bcbaCptCode: string, rbtCptCode: string, provider: any): Observable<InsuranceCptPrizeResponse[]> {
+    const bcbaObservable = this.insuranceService.showInsuranceCptPrize(insurerName, bcbaCptCode, provider);
+    const rbtObservable = this.insuranceService.showInsuranceCptPrize(insurerName, rbtCptCode, provider);
+  
+    return forkJoin([bcbaObservable, rbtObservable]).pipe(
+      map(([bcbaResponse, rbtResponse]: [InsuranceCptPrizeResponse, InsuranceCptPrizeResponse]) => {
+        return [
+          { unit_prize: bcbaResponse.unit_prize },
+          { unit_prize: rbtResponse.unit_prize }
+        ];
+      })
+    );
+  }
+  
+  getPrizeCptNote(insurer_name: string, bcbaCptCode: string, rbtCptCode: string, provider: any): Observable<InsuranceCptPrizeResponse[]> {
+    return this.getUnitPrizes(insurer_name, bcbaCptCode, rbtCptCode, provider).pipe(
+      tap((result: InsuranceCptPrizeResponse[]) => {
+        console.log('Precios unidad', result);
+        this.unitPrizeCptBcba = result[0].unit_prize;
+        this.unitPrizeCptRbt = result[1].unit_prize;
+      })
+    );
+  }
+
+  // selectCpt(value:any){
+  //   this.selectedCpt = this.combinedList
+  //   this.getPrizeCptNote();
+    
+  // }
  
 
 
@@ -641,8 +682,8 @@ export class ReportByClientComponent {
       total_hours:data.rbt.total_hours,
       billed: data.rbt.billed,
       pay: data.rbt.pay,
-      md: this.md,
-      md2: this.md2,
+      md: data.rbt.md,
+      md2: data.rbt.md2,
       note_rbt_id: data.rbt.id,
       total_units: data.rbt.total_units,
       sponsor_id: data.rbt.provider_name_g,
@@ -656,8 +697,8 @@ export class ReportByClientComponent {
       pos: data.bcba.meet_with_client_at,
       billedbcba: data.bcba.billedbcba,
       paybcba: data.bcba.paybcba,
-      mdbcba: this.mdbcba,
-      md2bcba: this.md2bcba,
+      mdbcba: data.bcba.mdbcba,
+      md2bcba: data.bcba.md2bcba,
       note_bcba_id: data.bcba.id,
       total_units: data.bcba.total_units,
       total_hours:data.rbt.total_hours,
