@@ -270,7 +270,7 @@ export class NoteBcbaEditComponent {
       this.patient_id = resp.patient.patient_id;
       this.insurer_id = resp.patient.insurer_id;
       // this.pos = JSON.parse(resp.patient.pos_covered) ;
-      this.pos = JSON.parse(resp.patient.pos_covered) ;
+      this.pos = resp.patient.pos_covered ;
       this.insuranceData();
       this.getReplacementsByPatientId();
     });

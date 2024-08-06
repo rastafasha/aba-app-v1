@@ -97,7 +97,7 @@
                                         (selectionChange)="selectCpt($event)"
                                         >
                                             <mat-option *ngFor="let data of pa_assessmentsgroup, let i=index;" [value]="data.cpt">
-                                            {{data.cpt}}
+                                            {{data.cpt}} | {{data.provider}}
                                             </mat-option>
                                         </mat-select>
                                     </div>

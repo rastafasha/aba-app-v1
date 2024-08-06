@@ -87,7 +87,7 @@
                                         <label >CPT <span class="login-danger">*</span></label>
                                         <mat-select [(ngModel)]="selectedValueCode" name="cpt" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select Code">
                                             <mat-option *ngFor="let data of pa_assessmentsgroup, let i=index;" [value]="data.cpt">
-                                            {{data.cpt}}
+                                            {{data.cpt}} | {{data.provider}}
                                             </mat-option>
                                         </mat-select>
                                     </div>

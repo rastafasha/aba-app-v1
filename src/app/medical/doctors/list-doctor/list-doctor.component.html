@@ -146,7 +146,9 @@
                                               <div class="modal-content">
                                                   <div class="modal-body text-center">
                                                       <img src="assets/img/sent.png" alt="" width="50" height="46">
-                                                      <h3 *ngIf="doctor_selected">Are you sure want to delete this doctor {{doctor_selected.email}}?</h3>
+                                                      <h3 *ngIf="doctor_selected">Are you sure want to delete <br> 
+                                                        this Employee: {{doctor_selected.email}}?</h3>
+                                                      <p>You can desactive this Employee, to keep the history file.</p>
                                                       <!-- validacion si esta en uso -->
                                                       <div class="form-group row" *ngIf="text_validation">
                                                         <div class="col-md-12">

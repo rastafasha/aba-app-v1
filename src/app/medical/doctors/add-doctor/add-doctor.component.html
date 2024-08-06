@@ -119,7 +119,7 @@
                                 </div>
                                 <div class="col-12 col-md-4 col-xl-4" *ngIf="user.roles == 'SUPERADMIN'">
                                     <div class="form-group local-forms">
-                                        <label>Location <span class="login-danger">*</span></label>
+                                        <label>Location <span class="login-danger">*</span> <i class="fa fa-info-circle" style="padding: 5px 0px;" tooltip="SUPERADMIN, RBT and BCBA: All Locations, MANAGER: only 1 Location"></i></label>
                                         <mat-select multiple="multiple" [(ngModel)]="locations_selected" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select Location">
                                             <mat-option *ngFor="let data of locations" [value]="data.id">
                                             {{data.title}}

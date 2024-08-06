@@ -42,6 +42,7 @@ export class HeaderComponent implements OnInit{
     this.user = JSON.parse(USER ? USER: '');
     this.roles = this.user.roles[0];
     this.locationId = this.user.location_id;
+    // console.log(this.user);
   }
 
   openBoxFunc() {
