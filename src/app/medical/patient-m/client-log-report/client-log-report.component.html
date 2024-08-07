@@ -133,7 +133,8 @@
                         <!-- /Table Header -->
                         
                         <div class="table-responsive" >
-                            <table matSort (matSortChange)="sortData($event)" class="table border-0 custom-table comman-table datatable mb-0">
+                            <table matSort (matSortChange)="sortData($event)" 
+                            class="table  table-striped border-0 custom-table comman-table datatable mb-0">
                                 <thead>
                                     <tr>
                                         
@@ -272,7 +273,7 @@
                                       </a>
                                       <td > {{data.last_name }} </td>
                                       <td>{{data.birth_date}}</td>
-                                      <td>{{data.address}}</td>
+                                      <td>{{data.address | slice:0:10}}... <i class="fa fa-info-circle" style="padding: 5px 0px;" [tooltip]="data.address "></i></td>
                                       <td>{{data.city}}</td>
                                       <td>{{data.zip}}</td>
                                       <td>{{data.phone}}</td>
@@ -311,7 +312,7 @@
                                         {{data.pa_assessments[0]?.pa_services_start_date| date}}
                                       </td>
                                     
-                                    <td>{{data.schedule}}</td>
+                                    <td>{{data.schedule | slice:0:10}}... <i class="fa fa-info-circle" style="padding: 5px 0px;" [tooltip]="data.schedule "></i></td>
                                     <td>average ??</td>
                                     <td>
                                       <span *ngIf="data.pa_assessments[0]?.cpt == '97153'">

@@ -1,0 +1,11 @@
+
+@import url('darkmode.css');
+:root {
+    --base: #0f48bb;
+    --morado: #c80cd2;
+    --fondo-blanco: #f2f2f2;
+    --fondo-negro: #272626;
+    --blanco: #e3e3e3;
+    --gris: #a8a8a8;
+    --black: #202020;
+}

@@ -78,5 +78,18 @@ export class AuthService {
   this.router.navigate([routes.login]);
  }
 
+ getLocalDarkMode(){
+  setTimeout(()=>{
+    if(localStorage.getItem('darkmode')){
+        var element = document.body;
+      element.classList.add("darkmode");
+      
+    }
+
+  },500)
+  // console.log(this.user);
+  
+}
+
 
 }
