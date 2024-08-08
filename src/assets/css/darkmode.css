@@ -1,82 +1,8 @@
 .darkmode{
     
 }
-.darkmode,
-.darkmode .header
- {
-    background-color: var(--fondo-negro);
-    background: var(--fondo-negro);
-}
 
-.darkmode .sidebar-menu
- {
-    background: var(--fondo-negro);
-    border: 1px solid #393939;
-}
-
-.darkmode .sidebar-menu > ul > li > a {
-    color: var(--blanco);
-}
-
-.darkmode .good-morning-blk
- {
-    background-color: var(--black);
-    background: var(--black);
-    color: var(--blanco);
-}
-
-
-
-.darkmode h4,
-.darkmode .chart-title h4,
-.darkmode .card .card-header .card-title  {
-    color: var(--blanco);
-}
-
-
-.darkmode .form-control {
-    color: var(--blanco);
-    background-color: var(--fondo-negro);
-    background: var(--fondo-negro);
-    border: 1px solid #393939;
-    box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .11), 0 5px 15px 0 rgba(0, 0, 0, .08);
-}
-
-.darkmode .form-control:disabled {
-    background-color: var(--black);
-    opacity: 1;
-    border: 1px solid #393939;
-    box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .11), 0 5px 15px 0 rgba(0, 0, 0, .08);
-}
-
-
-.darkmode .local-forms label {
-    color:var(--blanco);
-    background: var(--fondo-negro);
-}
-
-.darkmode .login-wrapper .loginbox {
-    background: var(--fondo-negro);
-    box-shadow: 0 15px 30px 0 rgba(254, 254, 254, 0.11), 0 5px 15px 0 rgba(255, 255, 255, 0.08);
-}
-
-.darkmode .detail-personal h3, 
-.darkmode .doctor-follows h5,
-.darkmode .about-me-list ul li span {
-    color: var(--blanco);
-}
-
-
-.darkmode .header .menuright .menu {
-    background-color: var(--black);
-    border: 1px solid var(--blanco);
-}
-.darkmode .sidemenu-toggler>span {
-    display: block;
-    background-color: #d2cece;
-    height: 2px;
-}
-
+/* elementos */
 .globoblack {
     display: none;
     
@@ -104,6 +30,53 @@
     
     
 }
+/* elementos */
+
+.darkmode,
+.darkmode .header
+ {
+    background-color: var(--fondo-negro);
+    background: var(--fondo-negro);
+}
+/* side-menu */
+.darkmode .sidebar-menu
+ {
+    background: var(--fondo-negro);
+    border: 1px solid #393939;
+}
+
+.darkmode .sidebar-menu > ul > li > a {
+    color: var(--blanco);
+}
+
+
+.darkmode .header .menuright .menu {
+    background-color: var(--black);
+    border: 1px solid var(--blanco);
+}
+.darkmode .sidemenu-toggler>span {
+    display: block;
+    background-color: #d2cece;
+    height: 2px;
+}
+
+/* home */
+
+.darkmode .good-morning-blk
+ {
+    background-color: var(--black);
+    background: var(--black);
+    color: var(--blanco);
+}
+
+/* cards  */
+
+.darkmode h4,
+.darkmode .chart-title h4,
+.darkmode .card .card-header .card-title  {
+    color: var(--blanco);
+}
+
 
 
 .darkmode .card,
@@ -118,6 +91,8 @@
     color: var(--blanco);
     height: auto;
 }
+
+/* tablas */
 .darkmode .table, 
 .darkmode .table-responsive,
 .darkmode .custom-table tr,
@@ -135,12 +110,47 @@
 }
 
 
-.darkmode .clinicaname{
-    border-left: 1px solid var(--blanco);
-    
+/* formularios */
+.darkmode .form-control {
+    color: var(--blanco);
+    background-color: var(--fondo-negro);
+    background: var(--fondo-negro);
+    border: 1px solid #393939;
+    box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .11), 0 5px 15px 0 rgba(0, 0, 0, .08);
+}
+
+.darkmode .form-control:disabled {
+    background-color: var(--black);
+    opacity: 1;
+    border: 1px solid #393939;
+    box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .11), 0 5px 15px 0 rgba(0, 0, 0, .08);
 }
 
 
+.darkmode .local-forms label {
+    color:var(--blanco);
+    background: var(--fondo-negro);
+}
+
+.darkmode .login-wrapper .loginbox {
+    background: var(--fondo-negro);
+    box-shadow: 0 15px 30px 0 rgba(254, 254, 254, 0.11), 0 5px 15px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* titulo y texto */
+
+.darkmode .detail-personal h3, 
+.darkmode .doctor-follows h5,
+.darkmode .about-me-list ul li span {
+    color: var(--blanco);
+}
+
+.darkmode .breadcrumb-item.active {
+    color: rgb(83 130 177);
+}
+
+
+/* tab */
 .darkmode .tab-content-set .active{
     text-shadow: 0 15px 30px 0 rgba(0, 0, 0, .11), 0 5px 15px 0 rgba(255, 255, 255, 0.08);
 }

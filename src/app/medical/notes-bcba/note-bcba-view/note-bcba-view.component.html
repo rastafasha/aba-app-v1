@@ -98,8 +98,8 @@
                                                 <div class="col-xl-3 col-md-6">
                                                    
                                                     <div class="detail-personal">
-                                                        <h2>Location</h2>
-                                                        <h3>{{note_selected.location}}</h3>
+                                                        <h2>PO </h2>
+                                                        <h3>{{patient_selected.pos_covered}}</h3>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-3 col-md-6">
@@ -152,6 +152,24 @@
                                                     </div>
                                                 </div>
                                                 <div class="clear"></div>
+                                                <div class="col-xl-3 col-md-6 col-xl-4">
+                                                    <div class="detail-personal">
+                                                        <h2>Date Session</h2>
+                                                        <h3>{{note_selected.session_date|date}}</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-3 col-md-6 col-xl-4">
+                                                    <div class="detail-personal">
+                                                        <h2>Create At</h2>
+                                                        <h3>{{note_selected.created_at|date}}</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-3 col-md-6 col-xl-4">
+                                                    <div class="detail-personal">
+                                                        <h2>Updated At</h2>
+                                                        <h3>{{note_selected.updated_at|date}}</h3>
+                                                    </div>
+                                                </div>
                                                 <div class="col-xl-3 col-md-6 col-xl-4">
                                                     <div class="detail-personal">
                                                         <h2>Time In</h2>

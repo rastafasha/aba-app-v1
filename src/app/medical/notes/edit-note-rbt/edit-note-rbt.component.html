@@ -105,7 +105,9 @@
                                 <div class="col-12 col-md-6 col-xl-4">
                                     <div class="form-group local-forms">
                                         <label >Units Asigned <span class="login-danger">*</span></label>
-                                        <mat-select [(ngModel)]="selectedValueCode" name="n_units" disable [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select Code">
+                                        <mat-select [(ngModel)]="selectedValueCode" name="n_units" disable 
+                                        [ngModelOptions]="{standalone: true}" class="form-control select"  
+                                        placeholder="Select Code">
                                             <mat-option *ngFor="let data of pa_assessmentsgroup" disable  [value]="data.cpt">
                                             {{data.n_units}} 
                                             </mat-option>

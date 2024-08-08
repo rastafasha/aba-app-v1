@@ -129,6 +129,7 @@ export class EditNoteRbtComponent {
   pa_assessments:any =null;
   pa_assessmentsgroup:any =null;
   cpt_code:any =null;
+  provider:any =null;
 
   constructor(
     public bipService:BipService,
@@ -286,7 +287,7 @@ export class EditNoteRbtComponent {
   selectCpt(event:any){
     event = this.selectedValueCode;
     // this.getCPtLißst(this.selectedValueCode);
-    console.log(this.selectedValueCode);
+    console.log(event);
     
   }
   
@@ -344,9 +345,7 @@ export class EditNoteRbtComponent {
 
   speciaFirmaDataRbt(selectedValueRBT){
     this.doctorService.showDoctorProfile(selectedValueRBT).subscribe((resp:any)=>{
-      console.log(resp);
       this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED = resp.doctor.electronic_signature;
-      console.log(this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED);
       // this.notes = resp.notes;
       // this.services = resp.services;
     })
@@ -354,15 +353,12 @@ export class EditNoteRbtComponent {
   selectFirmaSpecialistRbt(event:any){
     event = this.selectedValueRBT;
     this.speciaFirmaDataRbt(this.selectedValueRBT);
-    console.log(this.selectedValueRBT);
     
   }
 
   speciaFirmaDataBcba(selectedValueBCBA){
     this.doctorService.showDoctorProfile(selectedValueBCBA).subscribe((resp:any)=>{
-      console.log(resp);
       this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED = resp.doctor.electronic_signature;
-      console.log(this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED);
       // this.notes = resp.notes;
       // this.services = resp.services;
     })
@@ -371,7 +367,6 @@ export class EditNoteRbtComponent {
   selectFirmaSpecialistBcba(event:any){
     event = this.selectedValueBCBA;
     this.speciaFirmaDataBcba(this.selectedValueBCBA);
-    console.log(this.selectedValueBCBA);
     
   }
   
@@ -577,6 +572,7 @@ export class EditNoteRbtComponent {
     formData.append('pos', this.pos);
 
     formData.append('cpt_code', this.selectedValueCode);
+    formData.append('provider', this.provider);
 
     formData.append('session_date', this.session_date);
 

@@ -126,19 +126,20 @@ export class NoteRbtComponent {
   public intervention_added:any =[];
   public replacements:any =[];
 
-  maladaptiveSelected:any =null;
-  replacementSelected:any =null;
-  maladp_added:any =[];
-  replacement_added:any =[];
-  maladaptive_behavior:any =null;
-  electronic_signature:any ;
-  doctor:any ;
-  full_name:any ;
-  pa_assessments:any ;
-  pa_assessmentsgroup:any ;
-  n_un:any ;
-  stoGoalinProgress:any ;
-  target:any ;
+  public maladaptiveSelected:any =null;
+  public replacementSelected:any =null;
+  public maladp_added:any =[];
+  public replacement_added:any =[];
+  public maladaptive_behavior:any =null;
+  public electronic_signature:any ;
+  public doctor:any ;
+  public full_name:any ;
+  public pa_assessments:any ;
+  public pa_assessmentsgroup:any ;
+  public n_un:any ;
+  public stoGoalinProgress:any ;
+  public target:any ;
+  public provider:any ;
 
   // session_date: Date;
   // next_session_is_scheduled_for: Date;
@@ -233,7 +234,7 @@ export class NoteRbtComponent {
   selectCpt(event:any){
     event = this.selectedValueCode;
     // this.getCPtLißst(this.selectedValueCode);
-    // console.log(this.selectedValueCode);
+    console.log(this.selectedValueCode);
     
   }
 
@@ -556,6 +557,7 @@ export class NoteRbtComponent {
     formData.append('supervisor_name', this.selectedValueBCBA);
 
     formData.append('cpt_code', this.selectedValueCode);
+    formData.append('provider', this.provider);
     
 
     if(this.selectedValueTimeIn ){

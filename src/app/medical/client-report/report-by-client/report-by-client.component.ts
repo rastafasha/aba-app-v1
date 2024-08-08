@@ -13,6 +13,8 @@ import { NoteRbtService } from '../../notes/services/note-rbt.service';
 import { Location } from '@angular/common';
 import { zip, map, forkJoin, Observable, tap } from 'rxjs';
 import { NoteBcbaService } from '../../notes-bcba/services/note-bcba.service';
+import { ClientReportModel } from '../client-report.model';
+
 declare var $:any; 
 
 export interface InsuranceCptPrizeResponse {
@@ -32,6 +34,7 @@ export interface NoteRbt {
   styleUrls: ['./report-by-client.component.scss']
 })
 export class ReportByClientComponent {
+
   public searchDataDoctor = '';
   public date_start:any;
   public date_end:any;
@@ -42,7 +45,7 @@ export class ReportByClientComponent {
   noterbt_id:any;
   user:any;
 
-  
+  clientReport:ClientReportModel;
 
 
   public clientReportList: any=[] = [];
@@ -65,6 +68,8 @@ export class ReportByClientComponent {
 
   public roles:any=[];
   public permissions:any=[];
+  public patientID:any;
+  public patientId: any;
 
   public pa_assessments:any=[];
   public pa_assessmentsgroup:any=[];
@@ -82,7 +87,7 @@ export class ReportByClientComponent {
   public pa_assessmentgroup:any=[];
   public noteBcba:any=[];
   public patient:any;
-  public patientID:any;
+  
   public patientName:any;
   public doctor_selected_full_name:any;
   public billing_total:number = 0;
@@ -136,7 +141,7 @@ export class ReportByClientComponent {
   public full_name: any;
   public doctors: any;
   public tecnicoDoctorNames: any;
-  public patientId: any;
+  
   public services: any;
   public provider: any;
   public selectedCpt: any;
@@ -150,7 +155,7 @@ export class ReportByClientComponent {
   unitPrizeCptBcba: any;
   unitPrizeCptRbt: any;
   bcbaCptCode: string;
-rbtCptCode: string;
+  rbtCptCode: string;
 
   
 
@@ -222,7 +227,6 @@ rbtCptCode: string;
     // this.patientId = patient_id
     // // this.patientId = 'cliente3243';
 
-    // this.clientReportService.showClientReportbyPatient(this.patient_id).subscribe((resp:any)=>{
     this.clientReportService.getAllClientReportByPatient(this.patientId, page, 
       this.date_start,this.date_end).subscribe((resp:any)=>{
       
@@ -330,7 +334,9 @@ rbtCptCode: string;
   
       this.provider = resp.services[0].provider;
       this.cpt = resp.services[0].code;
-      this.unitPrize = resp.services[0].unit_prize;
+      // el valor de la unidad que viene desde el seguro,
+      // ahora debe ser desde la funcion mas abajo
+      this.unitPrize = resp.services[0].unit_prize; 
       console.log('cpt',this.cpt);
   
       // Call getPrizeCptNote with the correct parameters from noterbta list and notebcba list
@@ -340,7 +346,7 @@ rbtCptCode: string;
       console.error('Error fetching insurance data:', error);
     });
   }
-
+  // funcion para obtener el valor de la unidad del cpt 
   getPrizeCptNoteRbt(cptCode: string) {
     this.getPrizeCptNote(this.insurer_name, cptCode, this.noteRbt.cpt_code, this.provider).subscribe((result: any) => {
       return result;
@@ -370,6 +376,8 @@ rbtCptCode: string;
       })
     );
   }
+
+  // fin funcion para obtener el valor de la unidad del cpt 
 
   // selectCpt(value:any){
   //   this.selectedCpt = this.combinedList

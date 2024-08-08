@@ -143,6 +143,8 @@ public selectedValueProvider!: string;
   doctor_selected_full_name_rbt:any =null;
   doctor_selected_bcba:any =null;
   doctor_selected_full_name_bcba:any =null;
+  pa_assessments:any =[];
+  pa_assessmentsgroup:any =[];
 
 constructor(
   public noteBcbaService : NoteBcbaService,
@@ -263,11 +265,15 @@ getProfileBip(){
     console.log(resp);
     this.patient_selected = resp.patient;
 
-    this.first_name = this.patient_selected.patient.first_name;
-    this.last_name = this.patient_selected.patient.last_name;
+    this.first_name = this.patient_selected.first_name;
+    this.last_name = this.patient_selected.last_name;
     this.patient_id = resp.patient.patient_id;
     // console.log(this.patient_id);  
-    this.diagnosis_code = this.patient_selected.patient.diagnosis_code;  
+    this.diagnosis_code = this.patient_selected.diagnosis_code; 
+    
+    // this.pa_assessments = resp.patient.pa_assessments;
+    //   let jsonObj = JSON.parse(this.pa_assessments) || '';
+    //   this.pa_assessmentsgroup = jsonObj;
     
   });
 }

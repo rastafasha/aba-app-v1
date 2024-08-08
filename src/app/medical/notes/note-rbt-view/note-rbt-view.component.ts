@@ -203,7 +203,8 @@ getNote(){
     this.replacementgroup = jsonObj2;
     // console.log(this.replacementgroup);
 
-    this.pos = this.note_selected.pos;
+    this.pos = this.note_selected.pos_covered;
+
     this.environmental_changes = this.note_selected.environmental_changes;
     this.meet_with_client_at = this.note_selected.meet_with_client_at;
     this.progress_noted_this_session_compared_to_previous_session = this.note_selected.progress_noted_this_session_compared_to_previous_session;
@@ -270,11 +271,11 @@ getProfileBip(){
     console.log(resp);
     this.patient_selected = resp.patient;
 
-    this.first_name = this.patient_selected.patient.first_name;
-    this.last_name = this.patient_selected.patient.last_name;
+    this.first_name = this.patient_selected.first_name;
+    this.last_name = this.patient_selected.last_name;
     this.patient_id = resp.patient.patient_id;
     // console.log(this.patient_id);  
-    this.diagnosis_code = this.patient_selected.patient.diagnosis_code;  
+    this.diagnosis_code = this.patient_selected.diagnosis_code;  
     
   });
 }
