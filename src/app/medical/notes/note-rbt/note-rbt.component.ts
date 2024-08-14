@@ -158,6 +158,12 @@ export class NoteRbtComponent {
   ngOnInit(): void {
     
     // window.scrollTo(0, 0);
+    let USER = localStorage.getItem("user");
+    this.user = JSON.parse(USER ? USER: '');
+    this.doctor_id = this.user.id;
+    // console.log(this.doctor_id);
+    this.getDoctor();
+    
     this.ativatedRoute.params.subscribe((resp:any)=>{
       this.patient_id = resp.patient_id;
      })
@@ -165,11 +171,7 @@ export class NoteRbtComponent {
      this.getProfileBip();
     //  this.countValue();
 
-    let USER = localStorage.getItem("user");
-    this.user = JSON.parse(USER ? USER: '');
-    this.doctor_id = this.user.id;
-    // console.log(this.doctor_id);
-    this.getDoctor();
+    
     this.specialistData();
 
   }
@@ -181,6 +183,7 @@ export class NoteRbtComponent {
   getDoctor(){
     this.doctorService.showDoctor(this.doctor_id).subscribe((resp:any)=>{
       this.doctor = resp.user;
+      console.log(this.doctor);
       this.electronic_signature = resp.user.electronic_signature;
       this.full_name = resp.user.full_name;
     })
@@ -200,7 +203,7 @@ export class NoteRbtComponent {
 
   getProfileBip(){
     this.bipService.showBipProfile(this.patient_id).subscribe((resp:any)=>{
-      // console.log(resp);
+      console.log(resp);
       this.client_selected = resp;
 
       this.first_name = this.client_selected.patient.first_name;
@@ -217,8 +220,11 @@ export class NoteRbtComponent {
       
       
       this.pa_assessments = resp.patient.pa_assessments;
+      // console.log(this.pa_assessments);
       let jsonObj = JSON.parse(this.pa_assessments) || '';
       this.pa_assessmentsgroup = jsonObj;
+      console.log(this.pa_assessmentsgroup);
+
       // this.n_un = this.pa_assessmentsgroup[0].n_units;
       // this.unitsAsignated = this.pa_assessmentsgroup.n_units;
       // console.log(this.pa_assessments);

@@ -45,6 +45,7 @@ export class LocationService {
     let URL = url_servicios+'/appointmentpay?page='+page+LINK;
     return this.http.get(URL, {headers:headers});
     }
+    
   getLocations(){
     let headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token});
     let URL = url_servicios+"/location";

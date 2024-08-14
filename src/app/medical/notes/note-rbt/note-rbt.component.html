@@ -61,7 +61,7 @@
                                 <div class="col-12 col-md-6 col-xl-4">
                                     <div class="form-group local-forms">
                                         <label>Provider Name <span class="login-danger">*</span></label>
-                                        <p style="padding:10px">{{doctor.full_name}}</p>
+                                        <p style="padding:10px">{{doctor?.full_name}}</p>
                                         
                                         <!-- <mat-select [(ngModel)]="selectedValueProviderName" name="provider_name_g" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select Specialist" 
                                          (selectionChange)="selectSpecialist($event)">
@@ -716,7 +716,7 @@
                                     <div class="form-group local-forms">
                                         <!-- <label> <span class="login-danger">*</span></label> -->
                                         <h4>Provider name RBT</h4>
-                                        <p style="padding:10px">{{doctor.full_name}}</p>
+                                        <p style="padding:10px">{{doctor?.full_name}}</p>
                                         <!-- <mat-select [(ngModel)]="selectedValueRBT" name="rbt"
                                             [ngModelOptions]="{standalone: true}" class="form-control select"
                                             placeholder="Select Specialist"
