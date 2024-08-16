@@ -71,7 +71,7 @@
                                         </div>
                                     </div>
                                     <div class="col-xs-12 ">
-                                        <div class="table-responsive">
+                                        <div class="table-responsive mb-3">
                                             <table class="table mb-0">
                                                 <thead>
                                                     <tr>
@@ -780,8 +780,9 @@
                         </div>
                         
                     </div>
+                    <!-- Tangibles -->
                     <div class="row align-items-center" >
-                        <h4 class="card-title">Access to Tangibles/Activities</h4>
+                        <h4 class="card-title">Access to Tangibles Activities</h4>
                                 <div class="row align-items-center" >
                                     <div class="col-xs-12">
                                         <div class="row">
@@ -803,17 +804,13 @@
                                                     <textarea class="form-control" name="manager_strategies" [(ngModel)]="manager_strategies" rows="4" cols="30"></textarea>
                                                 </div>
                                             </div>
-                                            
-
-                                            
-                                            
                                             <div class="col-12 mb-3 doctor-submit text-end">
                                                 <button class="btn btn-primary btn-sm" (click)="addTangible()">Update List Tangibles</button>
                                             </div>
                                         </div>
                                         
                                         <div class="col-xs-12 ">
-                                            <div class="table-responsive">
+                                            <div class="table-responsive mb-3">
                                                 <table class="table mb-0">
                                                     <thead>
                                                         <tr>
@@ -853,8 +850,244 @@
                                 </div>
                         
                     </div>
-                    
-                    
+                     <!-- Tangibles -->
+                    <br>
+                    <hr>
+                    <br>
+                     <!-- Sensory -->
+                    <div class="row align-items-center" >
+                        <h4 class="card-title">Access to Sensory Activities</h4>
+                                <div class="row align-items-center" >
+                                    <div class="col-xs-12">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-6">  
+                                                <div class="form-group local-forms">
+                                                    <label >Preventtive Strategies (atecedent-based)<span class="login-danger">*</span></label>
+                                                    <textarea class="form-control" name="preventive_strategies" [(ngModel)]="preventive_strategies" rows="4" cols="30"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6">  
+                                                <div class="form-group local-forms">
+                                                    <label >Replacement Skills (relate to function)<span class="login-danger">*</span></label>
+                                                    <textarea class="form-control" name="replacement_skills" [(ngModel)]="replacement_skills" rows="4" cols="30"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 ">  
+                                                <div class="form-group local-forms">
+                                                    <label >Manager Strategies (consecuences Based)<span class="login-danger">*</span></label>
+                                                    <textarea class="form-control" name="manager_strategies" [(ngModel)]="manager_strategies" rows="4" cols="30"></textarea>
+                                                </div>
+                                            </div>
+                                            
+
+                                            
+                                            
+                                            <div class="col-12 mb-3 doctor-submit text-end">
+                                                <button class="btn btn-primary btn-sm" (click)="addSensory()">Update List Sensory</button>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-xs-12 ">
+                                            <div class="table-responsive mb-3">
+                                                <table class="table mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Preventtive Strategies</th>
+                                                            <th>Replacement Skills</th>
+                                                            <th>Manager Strategies</th>
+                                                            <th>Options</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let assesstment of accesstoSensory; let i = index">
+                                                            <td>
+                                                                <!-- {{assesstment.preventive_strategies}} -->
+                                                                <textarea class="form-control" name="preventive_strategies" [ngModelOptions]="{standalone: true}" [(ngModel)]="assesstment.preventive_strategies" ></textarea>
+                                                            </td>
+                                                            <td>
+                                                                 <!-- {{assesstment.replacement_skills}} -->
+                                                                 <textarea class="form-control" name="replacement_skills" [ngModelOptions]="{standalone: true}" [(ngModel)]="assesstment.replacement_skills" ></textarea>
+                                                            </td>
+                                                            <td>
+                                                                 <!-- {{assesstment.manager_strategies}} -->
+                                                                 <textarea class="form-control" name="manager_strategies" [ngModelOptions]="{standalone: true}" [(ngModel)]="assesstment.manager_strategies" ></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn btn-outline-success btn-sm" (click)="updateItemListSensory(assesstment, i)"><i class="fa fa-pencil"></i> Edit</button>
+                                                                <button class="btn btn-outline-danger btn-sm" (click)="deleteSensory(i)">x Delete</button>
+                                                            </td>
+                                                        </tr>
+                                                        
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                </div>
+                        
+                    </div>
+                     <!-- Sensory -->
+<br>
+<hr>
+<br>
+                      <!-- Escape -->
+                    <div class="row align-items-center" >
+                        <h4 class="card-title">Access to Escape Activities</h4>
+                                <div class="row align-items-center" >
+                                    <div class="col-xs-12">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-6">  
+                                                <div class="form-group local-forms">
+                                                    <label >Preventtive Strategies (atecedent-based)<span class="login-danger">*</span></label>
+                                                    <textarea class="form-control" name="preventive_strategies" [(ngModel)]="preventive_strategies" rows="4" cols="30"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6">  
+                                                <div class="form-group local-forms">
+                                                    <label >Replacement Skills (relate to function)<span class="login-danger">*</span></label>
+                                                    <textarea class="form-control" name="replacement_skills" [(ngModel)]="replacement_skills" rows="4" cols="30"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 ">  
+                                                <div class="form-group local-forms">
+                                                    <label >Manager Strategies (consecuences Based)<span class="login-danger">*</span></label>
+                                                    <textarea class="form-control" name="manager_strategies" [(ngModel)]="manager_strategies" rows="4" cols="30"></textarea>
+                                                </div>
+                                            </div>
+                                            
+
+                                            
+                                            
+                                            <div class="col-12 mb-3 doctor-submit text-end">
+                                                <button class="btn btn-primary btn-sm" (click)="addEscape()">Update List Escape</button>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-xs-12 ">
+                                            <div class="table-responsive mb-3">
+                                                <table class="table mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Preventtive Strategies</th>
+                                                            <th>Replacement Skills</th>
+                                                            <th>Manager Strategies</th>
+                                                            <th>Options</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let assesstment of accesstoEscape; let i = index">
+                                                            <td>
+                                                                <!-- {{assesstment.preventive_strategies}} -->
+                                                                <textarea class="form-control" name="preventive_strategies" [ngModelOptions]="{standalone: true}" [(ngModel)]="assesstment.preventive_strategies" ></textarea>
+                                                            </td>
+                                                            <td>
+                                                                 <!-- {{assesstment.replacement_skills}} -->
+                                                                 <textarea class="form-control" name="replacement_skills" [ngModelOptions]="{standalone: true}" [(ngModel)]="assesstment.replacement_skills" ></textarea>
+                                                            </td>
+                                                            <td>
+                                                                 <!-- {{assesstment.manager_strategies}} -->
+                                                                 <textarea class="form-control" name="manager_strategies" [ngModelOptions]="{standalone: true}" [(ngModel)]="assesstment.manager_strategies" ></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn btn-outline-success btn-sm" (click)="updateItemListEscape(assesstment, i)"><i class="fa fa-pencil"></i> Edit</button>
+                                                                <button class="btn btn-outline-danger btn-sm" (click)="deleteEscape(i)">x Delete</button>
+                                                            </td>
+                                                        </tr>
+                                                        
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                </div>
+                        
+                    </div>
+                     <!-- Escape -->
+<br>
+<hr>
+<br>
+                     <!-- Attention -->
+                    <div class="row align-items-center" >
+                        <h4 class="card-title">Access to Attention Activities</h4>
+                                <div class="row align-items-center" >
+                                    <div class="col-xs-12">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-6">  
+                                                <div class="form-group local-forms">
+                                                    <label >Preventtive Strategies (atecedent-based)<span class="login-danger">*</span></label>
+                                                    <textarea class="form-control" name="preventive_strategies" [(ngModel)]="preventive_strategies" rows="4" cols="30"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6">  
+                                                <div class="form-group local-forms">
+                                                    <label >Replacement Skills (relate to function)<span class="login-danger">*</span></label>
+                                                    <textarea class="form-control" name="replacement_skills" [(ngModel)]="replacement_skills" rows="4" cols="30"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12 ">  
+                                                <div class="form-group local-forms">
+                                                    <label >Manager Strategies (consecuences Based)<span class="login-danger">*</span></label>
+                                                    <textarea class="form-control" name="manager_strategies" [(ngModel)]="manager_strategies" rows="4" cols="30"></textarea>
+                                                </div>
+                                            </div>
+                                            
+
+                                            
+                                            
+                                            <div class="col-12 mb-3 doctor-submit text-end">
+                                                <button class="btn btn-primary btn-sm" (click)="addAttention()">Update List Tangibles</button>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-xs-12 ">
+                                            <div class="table-responsive mb-3">
+                                                <table class="table mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Preventtive Strategies</th>
+                                                            <th>Replacement Skills</th>
+                                                            <th>Manager Strategies</th>
+                                                            <th>Options</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let assesstment of accesstoAttention; let i = index">
+                                                            <td>
+                                                                <!-- {{assesstment.preventive_strategies}} -->
+                                                                <textarea class="form-control" name="preventive_strategies" [ngModelOptions]="{standalone: true}" [(ngModel)]="assesstment.preventive_strategies" ></textarea>
+                                                            </td>
+                                                            <td>
+                                                                 <!-- {{assesstment.replacement_skills}} -->
+                                                                 <textarea class="form-control" name="replacement_skills" [ngModelOptions]="{standalone: true}" [(ngModel)]="assesstment.replacement_skills" ></textarea>
+                                                            </td>
+                                                            <td>
+                                                                 <!-- {{assesstment.manager_strategies}} -->
+                                                                 <textarea class="form-control" name="manager_strategies" [ngModelOptions]="{standalone: true}" [(ngModel)]="assesstment.manager_strategies" ></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn btn-outline-success btn-sm" (click)="updateItemListAttention(assesstment, i)"><i class="fa fa-pencil"></i> Edit</button>
+                                                                <button class="btn btn-outline-danger btn-sm" (click)="deleteAttention(i)">x Delete</button>
+                                                            </td>
+                                                        </tr>
+                                                        
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                </div>
+                        
+                    </div>
+                     <!-- Attention -->
+                    <br>
+                    <hr>
+                    <br>
                     <!-- validaciones -->
                    
                     <div class="form-group row" *ngIf="text_validation">

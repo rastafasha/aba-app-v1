@@ -112,7 +112,11 @@ export class BipProfileComponent {
   public phiysical_and_medical_status:any=[];
   public hypothesis_based_intervention: any=[];
   public assestmentEvaluationSettings: any=[];
-  public accesstoTangibles: any=[];
+  
+  public accesstoTangibles:any = [];
+  public accesstoAttention:any = [];
+  public accesstoEscape:any = [];
+  public accesstoSensory:any = [];
   
   
 
@@ -213,7 +217,10 @@ export class BipProfileComponent {
         this.assestmentEvaluationSettings =this.bip_selected.assestmentEvaluationSettings;
       
         
-        this.accesstoTangibles =this.bip_selected.access_to_tangibles;
+        this.accesstoTangibles =this.bip_selected.tangibles;
+        this.accesstoAttention =this.bip_selected.attention;
+        this.accesstoEscape =this.bip_selected.escape;
+        this.accesstoSensory =this.bip_selected.sensory;
         
         this.phiysical_and_medical =this.bip_selected.phiysical_and_medical;
         this.phiysical_and_medical_status =this.bip_selected.phiysical_and_medical_status;

@@ -563,7 +563,7 @@ export class NoteRbtComponent {
     formData.append('supervisor_name', this.selectedValueBCBA);
 
     formData.append('cpt_code', this.selectedValueCode);
-    formData.append('provider', this.provider);
+    // formData.append('provider', this.provider); // para el calculo de las unidades
     
 
     if(this.selectedValueTimeIn ){

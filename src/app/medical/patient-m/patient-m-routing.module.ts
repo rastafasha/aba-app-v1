@@ -17,7 +17,7 @@ const routes: Routes = [
       path:'list', component:ListPatientMComponent
     },
     {
-      path:'clientlogreport', component:ClientLogReportComponent
+      path:'ws', component:ClientLogReportComponent
     },
     {
       path:'list/edit/:id', component:EditPatientMComponent

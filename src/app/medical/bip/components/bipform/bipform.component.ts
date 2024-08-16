@@ -83,6 +83,9 @@ export class BipformComponent {
   public assesstmentsDocuments:any = [];
   public assestmentEvaluationSettings:any = [];
   public accesstoTangibles:any = [];
+  public accesstoAttention:any = [];
+  public accesstoEscape:any = [];
+  public accesstoSensory:any = [];
   public assestment_title: any;
   public assestment_status: any;
   public tangible: any;
@@ -221,7 +224,10 @@ export class BipformComponent {
         this.assestmentEvaluationSettings =this.bip_selected.assestmentEvaluationSettings;
       
         
-        this.accesstoTangibles =this.bip_selected.access_to_tangibles;
+        this.accesstoTangibles =this.bip_selected.tangibles;
+        this.accesstoAttention =this.bip_selected.attention;
+        this.accesstoEscape =this.bip_selected.escape;
+        this.accesstoSensory =this.bip_selected.sensory;
         
         this.phiysical_and_medical =this.bip_selected.bip.phiysical_and_medical;
         this.phiysical_and_medical_status =this.bip_selected.phiysical_and_medical_status;
@@ -325,6 +331,8 @@ export class BipformComponent {
         Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
     
   }
+
+  //Access to Tangibles/Attention/Attention/escape/sensory
   addTangible(){
     this.accesstoTangibles.push({
       preventive_strategies: this.preventive_strategies,
@@ -346,6 +354,74 @@ export class BipformComponent {
         Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
     
   }
+
+  addSensory(){
+    this.accesstoSensory.push({
+      preventive_strategies: this.preventive_strategies,
+      replacement_skills: this.replacement_skills,
+      manager_strategies: this.manager_strategies,
+    })
+    this.preventive_strategies = '';
+    this.replacement_skills = '';
+    this.manager_strategies = '';
+  }
+
+  deleteSensory(i:any){
+    this.accesstoSensory.splice(i,1);
+  }
+
+  updateItemListSensory(maladap:any){
+    this.maladaptive_edit = maladap;
+        Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    
+  }
+
+  addEscape(){
+    this.accesstoEscape.push({
+      preventive_strategies: this.preventive_strategies,
+      replacement_skills: this.replacement_skills,
+      manager_strategies: this.manager_strategies,
+    })
+    this.preventive_strategies = '';
+    this.replacement_skills = '';
+    this.manager_strategies = '';
+  }
+
+  deleteEscape(i:any){
+    this.accesstoEscape.splice(i,1);
+  }
+
+  updateItemListEscape(maladap:any){
+    this.maladaptive_edit = maladap;
+        Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    
+  }
+
+  addAttention(){
+    this.accesstoAttention.push({
+      preventive_strategies: this.preventive_strategies,
+      replacement_skills: this.replacement_skills,
+      manager_strategies: this.manager_strategies,
+    })
+    this.preventive_strategies = '';
+    this.replacement_skills = '';
+    this.manager_strategies = '';
+  }
+
+  deleteAttention(i:any){
+    this.accesstoAttention.splice(i,1);
+  }
+
+  
+  updateItemListAttention(maladap:any){
+    this.maladaptive_edit = maladap;
+        Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    
+  }
+
+  //Access to Tangibles/Attention
+
+
   addMedication(){
     this.phiysical_and_medical_status.push({
       medication: this.medication,

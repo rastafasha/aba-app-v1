@@ -572,7 +572,7 @@ export class EditNoteRbtComponent {
     formData.append('pos', this.pos);
 
     formData.append('cpt_code', this.selectedValueCode);
-    formData.append('provider', this.provider);
+    // formData.append('provider', this.provider); // para el calculo de las unidades
 
     formData.append('session_date', this.session_date);
 
