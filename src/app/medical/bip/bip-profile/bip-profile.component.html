@@ -1,4 +1,8 @@
-<div class="page-wrapper" >
+<div *ngIf="!patient_selected || patient_selected === null">
+    <app-no-info></app-no-info>
+</div>
+
+<div class="page-wrapper" *ngIf="patient_selected" >
     <div class="content">
     
         <!-- Page Header -->
@@ -18,8 +22,9 @@
             </div>
         </div>
         <!-- /Page Header -->
-        <div class="row" id="contentToConvert" #contentToConvert>
-            <div class="col-sm-12" *ngIf="patient_selected">
+        <div class="row" id="contentToConvert" #contentToConvert >
+            
+            <div class="col-sm-12" >
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
@@ -155,6 +160,9 @@
                                         <h4>Documents Reviewed</h4>
                                     </div>
                                     <div class="row">
+                                        <div *ngIf="!documents || documents === null">
+                                            <app-no-info></app-no-info>
+                                        </div>
                                         <ng-container *ngFor="let doc of documents">
                                             <div class="col-xs-12 col-sm-6">
                                                 <div class="detail-personal">
@@ -242,6 +250,9 @@
                                                         <h3>{{bip_selected.phiysical_and_medical}}</h3>
                                                     </div>
                                                 </div>
+                                                <div *ngIf="!phiysical_and_medical_status || phiysical_and_medical_status === null">
+                                                    <app-no-info></app-no-info>
+                                                </div>
                                                 <ng-container *ngFor="let medication of phiysical_and_medical_status">
                                                     <div class="col-xs-12 col-sm-3">
                                                         <div class="detail-personal">
@@ -296,6 +307,9 @@
                                         <h4>Maladaptive Behaviors</h4>
                                     </div>
                                     <div class="row">
+                                        <div *ngIf="!maladaptives || maladaptives === null">
+                                            <app-no-info></app-no-info>
+                                        </div>
                                         <ng-container *ngFor="let malad of maladaptives">
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
@@ -347,6 +361,9 @@
                                         <h4>Assessments Conducted</h4>
                                     </div>
                                     <div class="row">
+                                        <div *ngIf="!assesstments || assesstments === null">
+                                            <app-no-info></app-no-info>
+                                        </div>
                                         <ng-container *ngFor="let assesst of assesstments">
 
                                             <div class="col-xs-12 col-sm-6">
@@ -373,6 +390,9 @@
                                         <h4>Evaluation Settings</h4>
                                     </div>
                                     <div class="row">
+                                        <div *ngIf="!assestmentEvaluationSettings || assestmentEvaluationSettings === null">
+                                            <app-no-info></app-no-info>
+                                        </div>
                                         <ng-container *ngFor="let evaluationSt of assestmentEvaluationSettings">
                                             <div class="col-xs-12 col-sm-6">
                                                 <div class="detail-personal">
@@ -413,6 +433,9 @@
                                         <h4>Prevalent Setting Events & Antecedents</h4>
                                     </div>
                                     <div class="row">
+                                        <div *ngIf="!prevalent_setting_event_and_atecedents || prevalent_setting_event_and_atecedents === null">
+                                            <app-no-info></app-no-info>
+                                        </div>
                                         <ng-container *ngFor="let prevalent of prevalent_setting_event_and_atecedents">
 
                                             <div class="col-xs-12 col-sm-4">
@@ -463,8 +486,11 @@
                                         <div class="about-info mb-10">
                                             <h4>Tangibles</h4>
                                         </div>
+                                        
                                         <ng-container *ngFor="let access of accesstoTangibles">
-
+                                            <div *ngIf="!accesstoTangibles || accesstoTangibles == null">
+                                                <app-no-info></app-no-info>
+                                            </div>
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>Preventtive Strategies</h2>
@@ -487,32 +513,40 @@
                                         <div class="about-info mb-10">
                                             <h4>Attention</h4>
                                         </div>
-                                        <ng-container *ngFor="let access of accesstoAttention">
-
-                                            <div class="col-xs-12 col-sm-4">
-                                                <div class="detail-personal">
-                                                    <h2>Preventtive Strategies</h2>
-                                                    <h3>{{access.preventive_strategies}}</h3>
+                                        
+                                        <div *ngIf="accesstoTangibles === null || accesstoTangibles === undefined">
+                                            <app-no-info></app-no-info>
+                                        </div>
+                                        <div *ngIf="accesstoTangibles !== null && accesstoTangibles !== undefined">
+                                            <ng-container  *ngFor="let access of accesstoAttention">
+                                                <div class="col-xs-12 col-sm-4">
+                                                    <div class="detail-personal">
+                                                        <h2>Preventtive Strategies</h2>
+                                                        <h3>{{access.preventive_strategies}}</h3>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-4">
-                                                <div class="detail-personal">
-                                                    <h2>Replacement Skills </h2>
-                                                    <h3>{{access.replacement_skills}}</h3>
+                                                <div class="col-xs-12 col-sm-4">
+                                                    <div class="detail-personal">
+                                                        <h2>Replacement Skills </h2>
+                                                        <h3>{{access.replacement_skills}}</h3>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-4">
-                                                <div class="detail-personal">
-                                                    <h2>Manager Strategies </h2>
-                                                    <h3>{{access.manager_strategies}}</h3>
+                                                <div class="col-xs-12 col-sm-4">
+                                                    <div class="detail-personal">
+                                                        <h2>Manager Strategies </h2>
+                                                        <h3>{{access.manager_strategies}}</h3>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </ng-container>
+                                            </ng-container>
+                                        </div>
                                         <div class="about-info mb-10">
                                             <h4>Escape</h4>
                                         </div>
+                                        
                                         <ng-container *ngFor="let access of accesstoEscape">
-
+                                            <div *ngIf="!accesstoEscape || accesstoEscape === 'null'">
+                                                <app-no-info></app-no-info>
+                                            </div>
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>Preventtive Strategies</h2>
@@ -535,8 +569,11 @@
                                         <div class="about-info mb-10">
                                             <h4>Sensory</h4>
                                         </div>
+                                        
                                         <ng-container *ngFor="let access of accesstoSensory">
-
+                                            <div *ngIf="!accesstoSensory || accesstoSensory === null">
+                                                <app-no-info></app-no-info>
+                                            </div>
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>Preventtive Strategies</h2>
@@ -574,7 +611,11 @@
                                     <div class="about-info mb-10">
                                         <h4>Reduction Goals</h4>
                                     </div>
+                                    
                                     <div class="row">
+                                        <div *ngIf="!reduction_goals || reduction_goals === null">
+                                            <app-no-info></app-no-info>
+                                        </div>
                                         <ng-container *ngFor="let item of reduction_goals">
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
@@ -593,6 +634,9 @@
                                                     <h2>Created at</h2>
                                                     <h3>{{item.created_at|date}}</h3>
                                                 </div>
+                                            </div>
+                                            <div *ngIf="!reduction_goals_goalstos || reduction_goals_goalstos === null">
+                                                <app-no-info></app-no-info>
                                             </div>
                                             <ng-container *ngFor="let item of reduction_goals_goalstos">
                                                 <div class="row">
@@ -643,6 +687,9 @@
                                         <h4>Replacement Goals</h4>
                                     </div>
                                     <div class="row">
+                                        <div *ngIf="!sustitution_goal || sustitution_goal === null">
+                                            <app-no-info></app-no-info>
+                                        </div>
                                         <ng-container *ngFor="let item of sustitution_goal">
                                             <div class="col-xs-12 bg-gray">
                                                 <div class="row">
@@ -765,6 +812,9 @@
                                 <p>“All training provided is in relevant context/routines to caregivers supporting client once on-going treatment begins. During visit, clinicians will teach and train the behavior plan to caregivers. The behavior analyst will describe, model, and/or prompt use of the procedures, making sure that the interventions fit well within existing routines and are feasible. The expectation is that the caregiver or school staff will initially be implementing the plan with the assistance and support of the behavior assistant. If necessary, behavioral staff will provide simplified versions of the behavior and teaching plans to facilitate implementation. The analyst will observe caregivers and provide feedback, gradually fading the assistance they provide. Parent training will occur weekly by the BCBA but modeling of appropriate interventions and procedures will occur daily by RBT/lead analyst, depending on who is providing the service.  All implementation of fidelity procedures, data collection, and analyzing of data will occur under the direction and guidance of the lead analyst; revisions will occur as needed. Participation by the parents or caregivers are expected, and continued authorization for ABA services will take consideration of their participation in at least 85% of planned sessions.Teaching Methods: To develop the acquisition skills and replacement behaviors, the behavioral intervention professionals and caregivers will task analyze complex skills, develop routine-specific instructional plans, and use appropriate chaining, shaping, and prompting methods.  Specifically, these will include natural environment training, incidental or milieu teaching, peer mediated instruction, and role play-based intervention.             Teaching plans will be developed for complex skills and will include the environments in which the instruction is taking place. These teaching plans will include the specific skills or skill sequences to be taught, environmental arrangements to promote skill use (e.g., social stories, videos, token boards, timers, visual schedules), and other specific instructional procedures.  Routines and skills targeted for instruction will be prioritized by the caregivers, addressing the most essential areas first.  Caregivers will be taught a variety of behavior interventions throughout the session. This will allow parents to successfully work with client and any of his problem behaviors when the behavior assistant and analyst are not present. Ongoing training and monitoring will continue to occur on a weekly basis to ensure proper implementation of the behavior program. Each month, clinicians will conduct competency checks of the caregivers to ensure proper program implementation."</p>
                                 
                                     </div>
+                                    <div *ngIf="!family_envolment || family_envolment === null">
+                                        <app-no-info></app-no-info>
+                                    </div>
                                     <ng-container *ngFor="let item of family_envolment">
                                         <div class="row">
                                             <div class="col-xs-12 col-sm-4">
@@ -851,6 +901,9 @@
                                             
                                         </div>
                                     </ng-container> -->
+                                    <div *ngIf="!monitoring_evalutating_goals || monitoring_evalutating_goals === null ">
+                                        <app-no-info></app-no-info>
+                                    </div>
                                      <ng-container *ngFor="let item of monitoring_evalutating_goals">
                                         <div class="row">
                                             <h3>RBT Training Goals</h3>
@@ -1229,6 +1282,9 @@
                                             Caregivers are to be trained on possible effects of treatment modalities such as Extinction Burst. Common effects of this intervention are an increase in the frequency of the target response (extinction burst) and increase in aggression (extinction-induced aggression). If parents/caregivers are not adequately trained to understand the process, they usually think that treatment is not working and make efforts to stop these interventions. <br><br>
                                             Punishment procedures are not used in this program and least restrictive strategies are always encouraged first. In the case that Response Cost or Simple Corrections are used, procedures will be described and all people involved in treatment will learn and demonstrate how to use them and what the contingencies will be.  
                                             </p>
+                                    </div>
+                                    <div *ngIf="!generalization_training || generalization_training === null ">
+                                        <app-no-info></app-no-info>
                                     </div>
                                     <ng-container *ngFor="let item of generalization_training">
                                     <div class="row">
@@ -1679,6 +1735,9 @@
                                             </div>
                                         </div>
                                         
+                                    </div>
+                                    <div *ngIf="!de_escalation_techniques || de_escalation_techniques === null">
+                                        <app-no-info></app-no-info>
                                     </div>
                                     <ng-container *ngFor="let item of de_escalation_techniques">
                                         <div class="row">
