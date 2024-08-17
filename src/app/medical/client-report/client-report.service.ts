@@ -101,6 +101,7 @@ export class ClientReportService {
     page:number=1, 
     date_start:string='', 
     date_end:string='', 
+    noteType?: string 
     ){
     let headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token});
     let LINK = "";
@@ -111,6 +112,8 @@ export class ClientReportService {
       if(date_end){
       LINK+="&date_end="+date_end;
       }
+      if(noteType)
+        LINK+=`&noteType=${noteType}`
     let URL = url_servicios+'/client_report/byprofile/'+patient_id+'/?page='+page+LINK;
     return this.http.get(URL, {headers:headers});
   }
