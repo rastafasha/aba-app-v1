@@ -351,7 +351,7 @@ export class ReportByClientComponent {
       console.log('cpt',this.cpt);
   
       // Call getPrizeCptNote with the correct parameters from noterbta list and notebcba list
-      this.getPrizeCptNote(this.insurer_name, this.noteBcba.cpt_code, this.noteRbt.cpt_code, this.provider).subscribe();
+      // this.getPrizeCptNote(this.insurer_name, this.noteBcba.cpt_code, this.noteRbt.cpt_code, this.provider).subscribe();
 
     }, (error: any) => {
       console.error('Error fetching insurance data:', error);
