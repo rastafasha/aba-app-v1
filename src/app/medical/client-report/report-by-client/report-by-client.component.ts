@@ -146,6 +146,7 @@ export class ReportByClientComponent {
   public provider: any;
   public selectedCpt: any;
   // public data: any;
+  public noteType: string;
 
   public providersSponsorsList:any;
   public factorPorcentual: number =  1.66666666666667
@@ -228,7 +229,7 @@ export class ReportByClientComponent {
     // // this.patientId = 'cliente3243';
 
     this.clientReportService.getAllClientReportByPatient(this.patientId, page, 
-      this.date_start,this.date_end).subscribe((resp:any)=>{
+      this.date_start,this.date_end,this.noteType).subscribe((resp:any)=>{
       
       console.log('todo',resp);
       // traemos la info necesaria del paciente
@@ -255,22 +256,33 @@ export class ReportByClientComponent {
 
       
       //unimos las notas rbt y bcba para mostrarlas en la misma tabla
-      const clientReportList = zip(this.noteRbt, this.noteBcba).pipe(
-        map(([rbt, bcba]) => ({ rbt, bcba }))
-      );
-      
-      clientReportList.subscribe((report:any) => {
-        // this.clientReportList = report;
-        // console.log(this.clientReportList);
-        ///se cambio el nombre de combinedReportList, porque todo esta en base
-        // a la nota rbt y aqui se une con todo lo que hay para poder sacar 
-        // una tabla con las notas rbt y bcba para poder manipularlas por su id o fecha
-        let i = this.clientReportList.length;
-        this.clientReportList.push(report);
-        this.combinedList = this.clientReportList;
-        console.log('lista combinada',this.combinedList);
+      const clientReportList = this.noteRbt.length > this.noteBcba.length 
+      ? this.noteRbt : this.noteBcba;
 
+      this.combinedList = [];
+      clientReportList.forEach((item,index) => {
+        console.log(this.noteRbt[index])
+        console.log(this.noteBcba[index])
+        if(this.noteRbt[index] && this.noteBcba[index])
+          this.combinedList.push({rbt: this.noteRbt[index], bcba: this.noteBcba[index]})
+        else if(this.noteRbt[index])
+          this.combinedList.push({rbt: this.noteRbt[index], bcba: null});
+        else if(this.noteBcba[index])
+          this.combinedList.push({rbt: null, bcba: this.noteBcba[index]});
       });
+      
+      // clientReportList.subscribe((report:any) => {
+      //   // this.clientReportList = report;
+      //   // console.log(this.clientReportList);
+      //   ///se cambio el nombre de combinedReportList, porque todo esta en base
+      //   // a la nota rbt y aqui se une con todo lo que hay para poder sacar 
+      //   // una tabla con las notas rbt y bcba para poder manipularlas por su id o fecha
+      //   let i = this.clientReportList.length;
+      //   this.clientReportList.push(report);
+      //   this.combinedList = this.clientReportList;
+      //   console.log('lista combinada',this.combinedList);
+
+      // });
       //fin union
 
       
@@ -295,7 +307,6 @@ export class ReportByClientComponent {
 
       this.totalDataClientReport = resp.noteRbts.length;
       this.clientReport_generals = resp.noteRbts;
-      // this.clientReport_generals = this.combinedList;
       
       this.patient_id = resp.patient_id;
 
@@ -464,6 +475,7 @@ export class ReportByClientComponent {
   public searchData(patientId:any) {
     // this.dataSource.filter = value.trim().toLowerCase();
     // this.patientList = this.dataSource.filteredData;
+    this.combinedList = [];
     this.pageSelection = [];
     this.limit = this.pageSize;
     this.skip = 0;
