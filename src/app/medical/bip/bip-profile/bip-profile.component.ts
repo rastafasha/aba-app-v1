@@ -135,7 +135,7 @@ export class BipProfileComponent {
     this.doctorService.closeMenuSidebar();
     // this.doctorService.getUserRoles();
     this.activatedRoute.params.subscribe((resp:any)=>{
-      this.patient_id = resp.patient_id;
+      this.patient_id = resp.patient_id  ;
       console.log(this.patient_id);
       this.getPatient();
     });
@@ -162,7 +162,7 @@ export class BipProfileComponent {
     this.bipService.getBipProfilePatientPdf_id(this.patient_id).subscribe((resp:any)=>{
       console.log(resp);
       this.bip_selected= resp.bip;
-      this.patient_selected= resp.patient;
+      this.patient_selected= resp.patient ? resp.patient : null;
       this.patientId= resp.patient.patient_id;
 
 
@@ -217,10 +217,10 @@ export class BipProfileComponent {
         this.assestmentEvaluationSettings =this.bip_selected.assestmentEvaluationSettings;
       
         
-        this.accesstoTangibles =this.bip_selected.tangibles;
-        this.accesstoAttention =this.bip_selected.attention;
-        this.accesstoEscape =this.bip_selected.escape;
-        this.accesstoSensory =this.bip_selected.sensory;
+        this.accesstoTangibles =this.bip_selected.tangibles ? this.bip_selected.tangibles: null;
+        this.accesstoAttention =this.bip_selected.attention ? this.bip_selected.attention: null;
+        this.accesstoEscape =this.bip_selected.escape ? this.bip_selected.escape: null; 
+        this.accesstoSensory =this.bip_selected.sensory ? this.bip_selected.sensory: null; 
         
         this.phiysical_and_medical =this.bip_selected.phiysical_and_medical;
         this.phiysical_and_medical_status =this.bip_selected.phiysical_and_medical_status;
