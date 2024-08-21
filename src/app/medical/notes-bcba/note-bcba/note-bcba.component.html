@@ -169,7 +169,7 @@
                                                 <div class="form-group local-forms">
                                                     <label>Time Out <span class="login-danger">*</span></label>
                                                     <input [ngxTimepicker]="toggleTimepicker2" [disableClick]="true" readonly  
-                                                    [(ngModel)]="selectedValueTimeOut" name="time_out" [format]="24" [min]="'12:00'"  (onChange)="hourTimeOutSelected($event)" [ngModelOptions]="{standalone: true}">
+                                                    [(ngModel)]="selectedValueTimeOut" name="time_out" [format]="24" [max]="'12:00'"  (onChange)="hourTimeOutSelected($event)" [ngModelOptions]="{standalone: true}">
                                                     <ngx-material-timepicker-toggle [for]="toggleTimepicker2"></ngx-material-timepicker-toggle>
                                                     <ngx-material-timepicker #toggleTimepicker2></ngx-material-timepicker>
                                                 </div>

@@ -92,6 +92,24 @@
     height: auto;
 }
 
+.darkmode .card-title {
+    color: var(--blanco);
+}
+.darkmode .modal, .darkmode .modal-content {
+    background: var(--black);
+    color: var(--blanco);
+}
+
+.darkmode .comman-flex-center {
+    filter: invert(1);
+}
+
+.darkmode a h4 {
+    color: var(--naranja) !important;
+}
+
+
+
 /* tablas */
 .darkmode .table, 
 .darkmode .table-responsive,
@@ -107,6 +125,11 @@
     color: #fff;
     background-color: var(--black);
     background: var(--black);
+}
+
+.darkmode .bg-gray {
+    background-color: var(--black) !important;
+    color: var(--blanco);
 }
 
 
