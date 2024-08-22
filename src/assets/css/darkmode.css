@@ -35,14 +35,17 @@
 .darkmode,
 .darkmode .header
  {
-    background-color: var(--fondo-negro);
-    background: var(--fondo-negro);
+    background-color: var(--fondo-negro) !important;
+    background: var(--fondo-negro) !important;
 }
 /* side-menu */
-.darkmode .sidebar-menu
+.darkmode .sidebar-menu,
+.darkmode .sidebar
  {
     background: var(--fondo-negro);
-    border: 1px solid #393939;
+    border: transparent;
+    background-color: var(--fondo-negro) !important;
+    background: var(--fondo-negro) !important;
 }
 
 .darkmode .sidebar-menu > ul > li > a {
@@ -131,6 +134,7 @@
     background-color: var(--black) !important;
     color: var(--blanco);
 }
+
 
 
 /* formularios */

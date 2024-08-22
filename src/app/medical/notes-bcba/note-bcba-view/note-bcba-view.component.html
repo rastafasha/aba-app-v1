@@ -67,7 +67,7 @@
                                         </div>
                                         <div class="col-lg-4 col-md-4 d-flex align-items-center">
                                             <div class="follow-btn-group">
-                                                <a [routerLink]="['/note-bcba/edit/', note_id]" class="btn btn-info follow-btns">Edit</a>
+                                                <a [routerLink]="['/note-bcba/edit/', note_id]" *ngIf="note_selected.billed === 0 || note_selected.pay === 0 "   class="btn btn-info follow-btns">Edit</a>
                                                 <button class="btn btn-info follow-btns" (click)="convertToPdf()">Save PDF</button>
                                                 <!-- <button type="submit" class="btn btn-info message-btns">Message</button> -->
                                             </div>
