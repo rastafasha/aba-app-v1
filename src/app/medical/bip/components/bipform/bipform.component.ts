@@ -74,18 +74,20 @@ export class BipformComponent {
   public medication_edit: any = [];
   public evaluation_edit: any = [];
   public prevalent_edit: any = [];
+  public sensory_edit: any = [];
+  public escape_edit: any = [];
   
   
   
   
   //assestments
-  public assesstments:any = [];
-  public assesstmentsDocuments:any = [];
-  public assestmentEvaluationSettings:any = [];
-  public accesstoTangibles:any = [];
-  public accesstoAttention:any = [];
-  public accesstoEscape:any = [];
-  public accesstoSensory:any = [];
+  public assesstments:any[] = [];
+  public assesstmentsDocuments:any[] = [];
+  public assestmentEvaluationSettings:any[] = [];
+  public accesstoTangibles:any[] = [];
+  public accesstoSensories:any[] = [];
+  public accesstoAttention:any[] = [];
+  public accesstoEscape:any[] = [];
   public assestment_title: any;
   public assestment_status: any;
   public tangible: any;
@@ -105,9 +107,23 @@ export class BipformComponent {
   public weakneses: any;
 
   public hypothesis_based_intervention: any;
+  
   public preventive_strategies: any;
   public replacement_skills: any;
   public manager_strategies: any;
+
+  public preventive_strategies_s: any;
+  public replacement_skills_s: any;
+  public manager_strategies_s: any;
+
+  public preventive_strategies_e: any;
+  public replacement_skills_e: any;
+  public manager_strategies_e: any;
+
+  public preventive_strategies_a: any;
+  public replacement_skills_a: any;
+  public manager_strategies_a: any;
+
   public medication: any;
   public dose: any;
   public frecuency: any;
@@ -118,6 +134,7 @@ export class BipformComponent {
   public interventions:any = [];
   public phiysicalAndMedicalSt:any = [];
   public phiysical_and_medical_status:any = [];
+  
   pairing:any;
   premack_principal:any;
   response_block:any;
@@ -162,7 +179,7 @@ export class BipformComponent {
     this.user = JSON.parse(USER ? USER: ''); //  si no hay un usuario en el localstorage retorna un objeto vacio
     this.doctor_id = this.user.id;  //se asigna el doctor logueado a este campo para poderlo enviar en los
 
-
+    this.accesstoSensories = [];
     
   }
 
@@ -227,7 +244,7 @@ export class BipformComponent {
         this.accesstoTangibles =this.bip_selected.tangibles;
         this.accesstoAttention =this.bip_selected.attention;
         this.accesstoEscape =this.bip_selected.escape;
-        this.accesstoSensory =this.bip_selected.sensory;
+        this.accesstoSensories =this.bip_selected.sensory;
         
         this.phiysical_and_medical =this.bip_selected.bip.phiysical_and_medical;
         this.phiysical_and_medical_status =this.bip_selected.phiysical_and_medical_status;
@@ -311,6 +328,7 @@ export class BipformComponent {
     this.assesstmentsDocuments.splice(i,1);
   }
 
+
   addAssesstment(){
     this.prevalent_setting_event_and_atecedents.push({
       prevalent_setting_event_and_atecedent: this.prevalent_setting_event_and_atecedent,
@@ -333,12 +351,21 @@ export class BipformComponent {
   }
 
   //Access to Tangibles/Attention/Attention/escape/sensory
+ 
   addTangible(){
-    this.accesstoTangibles.push({
-      preventive_strategies: this.preventive_strategies,
+    if (this.accesstoTangibles) {
+      this.accesstoTangibles.push({
+        preventive_strategies: this.preventive_strategies,
       replacement_skills: this.replacement_skills,
       manager_strategies: this.manager_strategies,
-    })
+      })
+    } else {
+      this.accesstoTangibles = [{
+        preventive_strategies: this.preventive_strategies,
+        replacement_skills: this.replacement_skills,
+        manager_strategies: this.manager_strategies,
+      }]
+    }
     this.preventive_strategies = '';
     this.replacement_skills = '';
     this.manager_strategies = '';
@@ -349,63 +376,99 @@ export class BipformComponent {
   }
 
   
-  updateItemListTangibles(maladap:any){
-    this.maladaptive_edit = maladap;
+  updateItemListTangibles(tang:any){
+    this.maladaptive_edit = tang;
         Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
     
   }
 
   addSensory(){
-    this.accesstoSensory.push({
-      preventive_strategies: this.preventive_strategies,
-      replacement_skills: this.replacement_skills,
-      manager_strategies: this.manager_strategies,
-    })
-    this.preventive_strategies = '';
-    this.replacement_skills = '';
-    this.manager_strategies = '';
+    if (this.accesstoSensories) {
+      this.accesstoSensories.push({
+        preventive_strategies_s: this.preventive_strategies_s,
+        replacement_skills_s: this.replacement_skills_s,
+        manager_strategies_s: this.manager_strategies_s,
+      })
+    } else {
+      this.accesstoSensories = [{
+        preventive_strategies_s: this.preventive_strategies_s,
+        replacement_skills_s: this.replacement_skills_s,
+        manager_strategies_s: this.manager_strategies_s,
+      }]
+    }
+    this.preventive_strategies_s = '';
+    this.replacement_skills_s = '';
+    this.manager_strategies_s = '';
   }
+
+  // addSensory(){
+  //   this.accesstoSensories.push({
+  //     preventive_strategies_s: this.preventive_strategies_s,
+  //     replacement_skills_s: this.replacement_skills_s,
+  //     manager_strategies_s: this.manager_strategies_s,
+  //   })
+  //   this.preventive_strategies_s = '';
+  //   this.replacement_skills_s = '';
+  //   this.manager_strategies_s = '';
+  // }
 
   deleteSensory(i:any){
-    this.accesstoSensory.splice(i,1);
+    this.accesstoSensories.splice(i,1);
   }
 
-  updateItemListSensory(maladap:any){
-    this.maladaptive_edit = maladap;
+  updateItemListSensory(accsens:any){
+    this.sensory_edit = accsens;
         Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
     
   }
 
+  
   addEscape(){
-    this.accesstoEscape.push({
-      preventive_strategies: this.preventive_strategies,
-      replacement_skills: this.replacement_skills,
-      manager_strategies: this.manager_strategies,
-    })
-    this.preventive_strategies = '';
-    this.replacement_skills = '';
-    this.manager_strategies = '';
+    if (this.accesstoEscape) {
+      this.accesstoEscape.push({
+        preventive_strategies_e: this.preventive_strategies_e,
+      replacement_skills_e: this.replacement_skills_e,
+      manager_strategies_e: this.manager_strategies_e,
+      })
+    } else {
+      this.accesstoEscape = [{
+        preventive_strategies_e: this.preventive_strategies_e,
+      replacement_skills_e: this.replacement_skills_e,
+      manager_strategies_e: this.manager_strategies_e,
+      }]
+    }
+    this.preventive_strategies_e = '';
+    this.replacement_skills_e = '';
+    this.manager_strategies_e = '';
   }
 
   deleteEscape(i:any){
     this.accesstoEscape.splice(i,1);
   }
 
-  updateItemListEscape(maladap:any){
-    this.maladaptive_edit = maladap;
+  updateItemListEscape(escape:any){
+    this.escape_edit = escape;
         Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
     
   }
 
   addAttention(){
-    this.accesstoAttention.push({
-      preventive_strategies: this.preventive_strategies,
-      replacement_skills: this.replacement_skills,
-      manager_strategies: this.manager_strategies,
-    })
-    this.preventive_strategies = '';
-    this.replacement_skills = '';
-    this.manager_strategies = '';
+    if (this.accesstoAttention) {
+      this.accesstoAttention.push({
+        preventive_strategies_a: this.preventive_strategies_a,
+        replacement_skills_a: this.replacement_skills_a,
+        manager_strategies_a: this.manager_strategies_a,
+      })
+    } else {
+      this.accesstoAttention = [{
+        preventive_strategies_a: this.preventive_strategies_a,
+        replacement_skills_a: this.replacement_skills_a,
+        manager_strategies_a: this.manager_strategies_a,
+      }]
+    }
+    this.preventive_strategies_a = '';
+    this.replacement_skills_a = '';
+    this.manager_strategies_a = '';
   }
 
   deleteAttention(i:any){
@@ -413,8 +476,8 @@ export class BipformComponent {
   }
 
   
-  updateItemListAttention(maladap:any){
-    this.maladaptive_edit = maladap;
+  updateItemListAttention(attent:any){
+    this.maladaptive_edit = attent;
         Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
     
   }
@@ -508,7 +571,7 @@ export class BipformComponent {
 
 
 
-  save(){
+  save(){debugger
     this.text_validation = '';
     if(!this.type_of_assessment
       ||!this.background_information 
@@ -548,7 +611,11 @@ export class BipformComponent {
       hypothesis_based_intervention  : this.hypothesis_based_intervention,
       
       phiysical_and_medical_status   : this.phiysical_and_medical_status,
-      access_to_tangibles   : this.accesstoTangibles,
+
+      tangibles   : this.accesstoTangibles,
+      attention   : this.accesstoAttention,
+      sensory   : this.accesstoSensories,
+      escape   : this.accesstoEscape,
 
       phiysical_and_medical   : this.phiysical_and_medical,
 

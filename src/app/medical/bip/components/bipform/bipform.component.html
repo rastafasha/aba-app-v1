@@ -821,21 +821,21 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr *ngFor="let assesstment of accesstoTangibles; let i = index">
+                                                        <tr *ngFor="let tang of accesstoTangibles; let i = index">
                                                             <td>
                                                                 <!-- {{assesstment.preventive_strategies}} -->
-                                                                <textarea class="form-control" name="preventive_strategies" [ngModelOptions]="{standalone: true}" [(ngModel)]="assesstment.preventive_strategies" ></textarea>
+                                                                <textarea class="form-control" name="preventive_strategies" [ngModelOptions]="{standalone: true}" [(ngModel)]="tang.preventive_strategies" ></textarea>
                                                             </td>
                                                             <td>
                                                                  <!-- {{assesstment.replacement_skills}} -->
-                                                                 <textarea class="form-control" name="replacement_skills" [ngModelOptions]="{standalone: true}" [(ngModel)]="assesstment.replacement_skills" ></textarea>
+                                                                 <textarea class="form-control" name="replacement_skills" [ngModelOptions]="{standalone: true}" [(ngModel)]="tang.replacement_skills" ></textarea>
                                                             </td>
                                                             <td>
                                                                  <!-- {{assesstment.manager_strategies}} -->
-                                                                 <textarea class="form-control" name="manager_strategies" [ngModelOptions]="{standalone: true}" [(ngModel)]="assesstment.manager_strategies" ></textarea>
+                                                                 <textarea class="form-control" name="manager_strategies" [ngModelOptions]="{standalone: true}" [(ngModel)]="tang.manager_strategies" ></textarea>
                                                             </td>
                                                             <td>
-                                                                <button class="btn btn-outline-success btn-sm" (click)="updateItemListTangibles(assesstment, i)"><i class="fa fa-pencil"></i> Edit</button>
+                                                                <button class="btn btn-outline-success btn-sm" (click)="updateItemListTangibles(tang, i)"><i class="fa fa-pencil"></i> Edit</button>
                                                                 <button class="btn btn-outline-danger btn-sm" (click)="deleteTangible(i)">x Delete</button>
                                                             </td>
                                                         </tr>
@@ -863,25 +863,21 @@
                                             <div class="col-xs-12 col-sm-6">  
                                                 <div class="form-group local-forms">
                                                     <label >Preventtive Strategies (atecedent-based)<span class="login-danger">*</span></label>
-                                                    <textarea class="form-control" name="preventive_strategies" [(ngModel)]="preventive_strategies" rows="4" cols="30"></textarea>
+                                                    <textarea class="form-control" name="preventive_strategies_s" [(ngModel)]="preventive_strategies_s" rows="4" cols="30"></textarea>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-6">  
                                                 <div class="form-group local-forms">
                                                     <label >Replacement Skills (relate to function)<span class="login-danger">*</span></label>
-                                                    <textarea class="form-control" name="replacement_skills" [(ngModel)]="replacement_skills" rows="4" cols="30"></textarea>
+                                                    <textarea class="form-control" name="replacement_skills_s" [(ngModel)]="replacement_skills_s" rows="4" cols="30"></textarea>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 ">  
                                                 <div class="form-group local-forms">
                                                     <label >Manager Strategies (consecuences Based)<span class="login-danger">*</span></label>
-                                                    <textarea class="form-control" name="manager_strategies" [(ngModel)]="manager_strategies" rows="4" cols="30"></textarea>
+                                                    <textarea class="form-control" name="manager_strategies_s" [(ngModel)]="manager_strategies_s" rows="4" cols="30"></textarea>
                                                 </div>
                                             </div>
-                                            
-
-                                            
-                                            
                                             <div class="col-12 mb-3 doctor-submit text-end">
                                                 <button class="btn btn-primary btn-sm" (click)="addSensory()">Update List Sensory</button>
                                             </div>
@@ -899,21 +895,21 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr *ngFor="let assesstment of accesstoSensory; let i = index">
+                                                        <tr *ngFor="let accsens of accesstoSensories; let i = index">
                                                             <td>
                                                                 <!-- {{assesstment.preventive_strategies}} -->
-                                                                <textarea class="form-control" name="preventive_strategies" [ngModelOptions]="{standalone: true}" [(ngModel)]="assesstment.preventive_strategies" ></textarea>
+                                                                <textarea class="form-control" name="preventive_strategies_s" [ngModelOptions]="{standalone: true}" [(ngModel)]="accsens.preventive_strategies_s" ></textarea>
                                                             </td>
                                                             <td>
                                                                  <!-- {{assesstment.replacement_skills}} -->
-                                                                 <textarea class="form-control" name="replacement_skills" [ngModelOptions]="{standalone: true}" [(ngModel)]="assesstment.replacement_skills" ></textarea>
+                                                                 <textarea class="form-control" name="replacement_skills_s" [ngModelOptions]="{standalone: true}" [(ngModel)]="accsens.replacement_skills_s" ></textarea>
                                                             </td>
                                                             <td>
                                                                  <!-- {{assesstment.manager_strategies}} -->
-                                                                 <textarea class="form-control" name="manager_strategies" [ngModelOptions]="{standalone: true}" [(ngModel)]="assesstment.manager_strategies" ></textarea>
+                                                                 <textarea class="form-control" name="manager_strategies_s" [ngModelOptions]="{standalone: true}" [(ngModel)]="accsens.manager_strategies_s" ></textarea>
                                                             </td>
                                                             <td>
-                                                                <button class="btn btn-outline-success btn-sm" (click)="updateItemListSensory(assesstment, i)"><i class="fa fa-pencil"></i> Edit</button>
+                                                                <button class="btn btn-outline-success btn-sm" (click)="updateItemListSensory(accsens, i)"><i class="fa fa-pencil"></i> Edit</button>
                                                                 <button class="btn btn-outline-danger btn-sm" (click)="deleteSensory(i)">x Delete</button>
                                                             </td>
                                                         </tr>
@@ -941,19 +937,19 @@
                                             <div class="col-xs-12 col-sm-6">  
                                                 <div class="form-group local-forms">
                                                     <label >Preventtive Strategies (atecedent-based)<span class="login-danger">*</span></label>
-                                                    <textarea class="form-control" name="preventive_strategies" [(ngModel)]="preventive_strategies" rows="4" cols="30"></textarea>
+                                                    <textarea class="form-control" name="preventive_strategies_e" [(ngModel)]="preventive_strategies_e" rows="4" cols="30"></textarea>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-6">  
                                                 <div class="form-group local-forms">
                                                     <label >Replacement Skills (relate to function)<span class="login-danger">*</span></label>
-                                                    <textarea class="form-control" name="replacement_skills" [(ngModel)]="replacement_skills" rows="4" cols="30"></textarea>
+                                                    <textarea class="form-control" name="replacement_skills_e" [(ngModel)]="replacement_skills_e" rows="4" cols="30"></textarea>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 ">  
                                                 <div class="form-group local-forms">
                                                     <label >Manager Strategies (consecuences Based)<span class="login-danger">*</span></label>
-                                                    <textarea class="form-control" name="manager_strategies" [(ngModel)]="manager_strategies" rows="4" cols="30"></textarea>
+                                                    <textarea class="form-control" name="manager_strategies_e" [(ngModel)]="manager_strategies_e" rows="4" cols="30"></textarea>
                                                 </div>
                                             </div>
                                             
@@ -977,21 +973,21 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr *ngFor="let assesstment of accesstoEscape; let i = index">
+                                                        <tr *ngFor="let escape of accesstoEscape; let i = index">
                                                             <td>
                                                                 <!-- {{assesstment.preventive_strategies}} -->
-                                                                <textarea class="form-control" name="preventive_strategies" [ngModelOptions]="{standalone: true}" [(ngModel)]="assesstment.preventive_strategies" ></textarea>
+                                                                <textarea class="form-control" name="preventive_strategies_e" [ngModelOptions]="{standalone: true}" [(ngModel)]="escape.preventive_strategies_e" ></textarea>
                                                             </td>
                                                             <td>
                                                                  <!-- {{assesstment.replacement_skills}} -->
-                                                                 <textarea class="form-control" name="replacement_skills" [ngModelOptions]="{standalone: true}" [(ngModel)]="assesstment.replacement_skills" ></textarea>
+                                                                 <textarea class="form-control" name="replacement_skills_e" [ngModelOptions]="{standalone: true}" [(ngModel)]="escape.replacement_skills_e" ></textarea>
                                                             </td>
                                                             <td>
                                                                  <!-- {{assesstment.manager_strategies}} -->
-                                                                 <textarea class="form-control" name="manager_strategies" [ngModelOptions]="{standalone: true}" [(ngModel)]="assesstment.manager_strategies" ></textarea>
+                                                                 <textarea class="form-control" name="manager_strategies_e" [ngModelOptions]="{standalone: true}" [(ngModel)]="escape.manager_strategies_e" ></textarea>
                                                             </td>
                                                             <td>
-                                                                <button class="btn btn-outline-success btn-sm" (click)="updateItemListEscape(assesstment, i)"><i class="fa fa-pencil"></i> Edit</button>
+                                                                <button class="btn btn-outline-success btn-sm" (click)="updateItemListEscape(escape, i)"><i class="fa fa-pencil"></i> Edit</button>
                                                                 <button class="btn btn-outline-danger btn-sm" (click)="deleteEscape(i)">x Delete</button>
                                                             </td>
                                                         </tr>
@@ -1019,19 +1015,19 @@
                                             <div class="col-xs-12 col-sm-6">  
                                                 <div class="form-group local-forms">
                                                     <label >Preventtive Strategies (atecedent-based)<span class="login-danger">*</span></label>
-                                                    <textarea class="form-control" name="preventive_strategies" [(ngModel)]="preventive_strategies" rows="4" cols="30"></textarea>
+                                                    <textarea class="form-control" name="preventive_strategies_a" [(ngModel)]="preventive_strategies_a" rows="4" cols="30"></textarea>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-6">  
                                                 <div class="form-group local-forms">
                                                     <label >Replacement Skills (relate to function)<span class="login-danger">*</span></label>
-                                                    <textarea class="form-control" name="replacement_skills" [(ngModel)]="replacement_skills" rows="4" cols="30"></textarea>
+                                                    <textarea class="form-control" name="replacement_skills_a" [(ngModel)]="replacement_skills_a" rows="4" cols="30"></textarea>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 ">  
                                                 <div class="form-group local-forms">
                                                     <label >Manager Strategies (consecuences Based)<span class="login-danger">*</span></label>
-                                                    <textarea class="form-control" name="manager_strategies" [(ngModel)]="manager_strategies" rows="4" cols="30"></textarea>
+                                                    <textarea class="form-control" name="manager_strategies_a" [(ngModel)]="manager_strategies_a" rows="4" cols="30"></textarea>
                                                 </div>
                                             </div>
                                             
@@ -1055,21 +1051,21 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr *ngFor="let assesstment of accesstoAttention; let i = index">
+                                                        <tr *ngFor="let attent of accesstoAttention; let i = index">
                                                             <td>
                                                                 <!-- {{assesstment.preventive_strategies}} -->
-                                                                <textarea class="form-control" name="preventive_strategies" [ngModelOptions]="{standalone: true}" [(ngModel)]="assesstment.preventive_strategies" ></textarea>
+                                                                <textarea class="form-control" name="preventive_strategies_a" [ngModelOptions]="{standalone: true}" [(ngModel)]="attent.preventive_strategies_a" ></textarea>
                                                             </td>
                                                             <td>
                                                                  <!-- {{assesstment.replacement_skills}} -->
-                                                                 <textarea class="form-control" name="replacement_skills" [ngModelOptions]="{standalone: true}" [(ngModel)]="assesstment.replacement_skills" ></textarea>
+                                                                 <textarea class="form-control" name="replacement_skills_a" [ngModelOptions]="{standalone: true}" [(ngModel)]="attent.replacement_skills_a" ></textarea>
                                                             </td>
                                                             <td>
                                                                  <!-- {{assesstment.manager_strategies}} -->
-                                                                 <textarea class="form-control" name="manager_strategies" [ngModelOptions]="{standalone: true}" [(ngModel)]="assesstment.manager_strategies" ></textarea>
+                                                                 <textarea class="form-control" name="manager_strategies_a" [ngModelOptions]="{standalone: true}" [(ngModel)]="attent.manager_strategies_a" ></textarea>
                                                             </td>
                                                             <td>
-                                                                <button class="btn btn-outline-success btn-sm" (click)="updateItemListAttention(assesstment, i)"><i class="fa fa-pencil"></i> Edit</button>
+                                                                <button class="btn btn-outline-success btn-sm" (click)="updateItemListAttention(attent, i)"><i class="fa fa-pencil"></i> Edit</button>
                                                                 <button class="btn btn-outline-danger btn-sm" (click)="deleteAttention(i)">x Delete</button>
                                                             </td>
                                                         </tr>
