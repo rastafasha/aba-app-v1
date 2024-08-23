@@ -251,8 +251,6 @@ export class ReportByClientComponent {
       this.tecnicoRbts = resp.noteRbts.length > 0 ? resp.noteRbts[0].tecnicoRbts : '';
       
       this.noteBcba = resp.noteBcbas;
-      // this.billed= resp.noteBcbas;
-      // this.pay = resp.noteBcbas;
 
       
       //unimos las notas rbt y bcba para mostrarlas en la misma tabla
@@ -271,18 +269,6 @@ export class ReportByClientComponent {
           this.combinedList.push({rbt: null, bcba: this.noteBcba[index]});
       });
       
-      // clientReportList.subscribe((report:any) => {
-      //   // this.clientReportList = report;
-      //   // console.log(this.clientReportList);
-      //   ///se cambio el nombre de combinedReportList, porque todo esta en base
-      //   // a la nota rbt y aqui se une con todo lo que hay para poder sacar 
-      //   // una tabla con las notas rbt y bcba para poder manipularlas por su id o fecha
-      //   let i = this.clientReportList.length;
-      //   this.clientReportList.push(report);
-      //   this.combinedList = this.clientReportList;
-      //   console.log('lista combinada',this.combinedList);
-
-      // });
       //fin union
 
       

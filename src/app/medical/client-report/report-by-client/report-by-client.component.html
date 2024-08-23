@@ -27,81 +27,7 @@
                     <div class="card-body">
 
                         <!-- Table Header -->
-                        <div class="staff-search-table">
-                            <form>
-                                <div class="row">
-                                    <!-- <div class="col-12 col-md-6 col-xl-4">  
-                                        <div class="form-group local-forms">
-                                            <label >Doctor Name </label>
-                                            <input [(ngModel)]="searchDataDoctor" name="searchDataDoctor" class="form-control" type="text"  >
-                                        </div>
-                                    </div> -->
-                                    <!-- <div class="col-12 col-md-6 col-xl-4">  
-                                        <div class="form-group local-forms">
-                                            <label >Patient Name </label>
-                                            <input [(ngModel)]="searchDataValue" name="searchDataValue" class="form-control" type="text"  >
-                                        </div>
-                                    </div> -->
-                                    <!-- <div class="col-12 col-md-6 col-xl-4">
-                                        <div class="form-group local-forms">
-                                            <label >Specialities </label>
-                                            <mat-select [(ngModel)]="speciality_id" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select Speciality">
-                                              <mat-option *ngFor="let data of specialities" [value]="data.id">
-                                              {{data.name}}
-                                              </mat-option>
-                                          </mat-select>
-                                        </div>
-                                    </div> -->
-                                    <div class="col-12 col-md-4 col-xl-3">
-                                        <div class="form-group local-forms">
-                                            <label >From </label>
-                                            <input class="form-control datetimepicker" name="date_start" [(ngModel)]="date_start" type="date"   >
-                                            
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4 col-xl-3">
-                                        <div class="form-group local-forms">
-                                            <label >To </label>
-                                            <input class="form-control datetimepicker" name="date_end" [(ngModel)]="date_end" type="date"   >
-                                           
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4 col-xl-3">
-                                        <div class="form-group local-forms">
-                                            <label >Note type </label>
-                                            <mat-select
-                                                [(ngModel)]="noteType" 
-                                                [ngModelOptions]="{standalone: true}" 
-                                                class="form-control select"  
-                                                placeholder="Select Note Type"
-                                            >
-                                                <mat-option [value]="null">
-                                                    All
-                                                </mat-option>
-                                                <mat-option [value]="'rbt'">
-                                                    Rbt
-                                                </mat-option>
-                                                <mat-option [value]="'bcba'">
-                                                    Bcba
-                                                </mat-option>
-                                            </mat-select>
-                                            
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-4 col-xl-3">
-                                        <div class="doctor-submit">
-                                            <button type="button" class="btn btn-primary submit-list-form me-2" (click)="searchData(patientId)">Search</button>
-                                            
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-3">
-                                        <div class="doctor-submit">
-                                            <button type="button" class="btn btn-outline-primary submit-list-form me-2" (click)="PageSize()"><img src="assets/img/icons/re-fresh.svg" alt=""></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                        
                         <!-- /Table Header -->
 
                         <!-- paciente -->
@@ -147,7 +73,7 @@
                             </div>
                         </div>
                         <!-- paciente -->
-
+                        
                         
 
                         <div class="container">
@@ -163,7 +89,7 @@
 
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody class="overlaylist">
                                         <tr *ngFor="let asses of pa_assessmentsgroup; let i = index">
                                             <td>
                                                 {{asses.pa_services}}
@@ -190,6 +116,63 @@
                         </div>
                         <br>
                         <hr>
+
+                        <!-- search -->
+                        <div class="staff-search-table">
+                            <form>
+                                <div class="row search5">
+                                    
+                                    <div class="col-12 col-md-3">
+                                        <div class="form-group local-forms">
+                                            <label >From </label>
+                                            <input class="form-control datetimepicker" name="date_start" [(ngModel)]="date_start" type="date"   >
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <div class="form-group local-forms">
+                                            <label >To </label>
+                                            <input class="form-control datetimepicker" name="date_end" [(ngModel)]="date_end" type="date"   >
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <div class="form-group local-forms">
+                                            <label >Note type </label>
+                                            <mat-select
+                                                [(ngModel)]="noteType" 
+                                                [ngModelOptions]="{standalone: true}" 
+                                                class="form-control select"  
+                                                placeholder="Select Note Type"
+                                            >
+                                                <mat-option [value]="null">
+                                                    All
+                                                </mat-option>
+                                                <mat-option [value]="'rbt'">
+                                                    Rbt
+                                                </mat-option>
+                                                <mat-option [value]="'bcba'">
+                                                    Bcba
+                                                </mat-option>
+                                            </mat-select>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-2 ">
+                                        <div class="doctor-submit">
+                                            <button type="button" class="btn btn-primary submit-list-form me-2" (click)="searchData(patientId)">Search</button>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-1">
+                                        <div class="doctor-submit">
+                                            <button type="button" class="btn btn-outline-primary submit-list-form me-2" (click)="PageSize()"><img src="assets/img/icons/re-fresh.svg" alt=""></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- search -->
 
 
                         <div class="table-responsive">
@@ -254,7 +237,10 @@
                                             
 
                                         </td>
-                                        <!-- modificadores1 -->
+
+                                        <!-- modificadores  -->
+
+                                        <!-- modificadores Medicaid 1 -->
                                         <td>
                                             <span *ngIf="insurer_name == 'Medicaid'">
                                                 <div class="form-group local-forms">
@@ -265,6 +251,8 @@
                                                         <option value="HM">HM</option>
                                                         <option value="XE">XE</option>
                                                         <option value="HO">HO</option>
+                                                        <option value="GT">GT</option>
+                                                        <option value="TS">TS</option>
                                                     </select>
                                                     
                                                 </div>
@@ -276,14 +264,17 @@
                                                         name="md" style="position: relative;top: 11px;" [(ngModel)]="data.rbt.md" (change)="isSelectedModifier($event.target.value)"  >
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM</option>
+                                                        <option value="XE">XE</option>
                                                         <option value="HO">HO</option>
+                                                        <option value="GT">GT</option>
+                                                        <option value="TS">TS</option>
                                                     </select>
                                                 </div>
                                             </span>
                                             
                                         </td>
                                         <!-- modificadores1 -->
-                                        <!-- modificadores2 -->
+                                        <!-- modificadores Medicaid2 -->
                                         <td>
                                             <span *ngIf="insurer_name == 'Medicaid'">
                                                 <div class="form-group local-forms">
@@ -294,6 +285,8 @@
                                                         <option value="HM">HM</option>
                                                         <option value="XE">XE</option>
                                                         <option value="HO">HO</option>
+                                                        <option value="GT">GT</option>
+                                                        <option value="TS">TS</option>
                                                     </select>
                                                 </div>
                                             </span>
@@ -304,12 +297,19 @@
                                                         name="md2" style="position: relative;top: 11px;"  [(ngModel)]="data.rbt.md2"  (change)="isSelectedModifier2($event.target.value)"  >
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM</option>
+                                                        <option value="XE">XE</option>
                                                         <option value="HO">HO</option>
+                                                        <option value="GT">GT</option>
+                                                        <option value="TS">TS</option>
                                                     </select>
                                                 </div>
                                             </span>
                                         </td>
                                         <!-- modificadores2 -->
+
+                                        <!-- fin modificadores -->
+
+
                                         <td>
                                             <!-- {{data.session_units_total}} -->
                                             <span *ngIf="data?.rbt">
@@ -418,6 +418,8 @@
                                                         <option value="HM">HM</option>
                                                         <option value="XE">XE</option>
                                                         <option value="HO">HO</option>
+                                                        <option value="GT">GT</option>
+                                                        <option value="TS">TS</option>
                                                     </select>
                                                     
                                                 </div>
@@ -429,7 +431,10 @@
                                                         name="mdbcba" style="position: relative;top: 11px;"  [(ngModel)]="data.bcba.mdbcba" (change)="isSelectedModifierBcba($event.target.value)"  >
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM</option>
+                                                        <option value="XE">XE</option>
                                                         <option value="HO">HO</option>
+                                                        <option value="GT">GT</option>
+                                                        <option value="TS">TS</option>
                                                     </select>
                                                 </div>
                                             </span>
@@ -447,6 +452,8 @@
                                                         <option value="HM">HM</option>
                                                         <option value="XE">XE</option>
                                                         <option value="HO">HO</option>
+                                                        <option value="GT">GT</option>
+                                                        <option value="TS">TS</option>
                                                     </select>
                                                 </div>
                                             </span>
@@ -457,7 +464,10 @@
                                                         name="md2bcba" style="position: relative;top: 11px;"  [(ngModel)]="data.bcba.md2bcba"  (change)="isSelectedModifier2Bcba($event.target.value)"  >
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM</option>
+                                                        <option value="XE">XE</option>
                                                         <option value="HO">HO</option>
+                                                        <option value="GT">GT</option>
+                                                        <option value="TS">TS</option>
                                                     </select>
                                                 </div>
                                             </span>

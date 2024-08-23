@@ -13,7 +13,7 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
 
 @NgModule({
   declarations: [
-    ReportByClientComponent
+    ReportByClientComponent,
   ],
   imports: [
     CommonModule,

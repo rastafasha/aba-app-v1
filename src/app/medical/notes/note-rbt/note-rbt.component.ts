@@ -453,24 +453,64 @@ export class NoteRbtComponent {
 
   
 
-  addInterventions(){
+  // addInterventions(){
     
-    this.intervention_added.push({
-      pairing: this.pairing,
-      response_block: this.response_block,
-      DRA: this.DRA,
-      DRO: this.DRO,
-      redirection: this.redirection,
-      errorless_teaching: this.errorless_teaching,
-      NCR: this.NCR,
-      shaping: this.shaping,
-      chaining: this.chaining,
-      token_economy: this.token_economy,
-      extinction: this.extinction,
-      natural_teaching: this.natural_teaching,
-    })
-     //si existe un elemento actualiza ese elemento en la lista
-    //  this.intervention_added.splice(this.intervention_added,1);
+  //   this.intervention_added.push({
+  //     pairing: this.pairing,
+  //     response_block: this.response_block,
+  //     DRA: this.DRA,
+  //     DRO: this.DRO,
+  //     redirection: this.redirection,
+  //     errorless_teaching: this.errorless_teaching,
+  //     NCR: this.NCR,
+  //     shaping: this.shaping,
+  //     chaining: this.chaining,
+  //     token_economy: this.token_economy,
+  //     extinction: this.extinction,
+  //     natural_teaching: this.natural_teaching,
+  //   })
+  //    //si existe un elemento actualiza ese elemento en la lista
+  //   //  this.intervention_added.splice(this.intervention_added,1);
+  //   if(this.intervention_added.length > 1){
+  //     this.intervention_added.splice(this.intervention_added,1);
+  //     Swal.fire('Updated', ` Interventions Added`, 'success');
+  //   }else{
+  //     Swal.fire('Warning', `Must add less one`, 'warning');
+  //   }
+  // }
+
+  addInterventions(){
+    if (this.intervention_added) {
+      this.intervention_added.push({
+        pairing: this.pairing,
+        response_block: this.response_block,
+        DRA: this.DRA,
+        DRO: this.DRO,
+        redirection: this.redirection,
+        errorless_teaching: this.errorless_teaching,
+        NCR: this.NCR,
+        shaping: this.shaping,
+        chaining: this.chaining,
+        token_economy: this.token_economy,
+        extinction: this.extinction,
+        natural_teaching: this.natural_teaching,
+      })
+    } else {
+      this.intervention_added = [{
+        pairing: this.pairing,
+        response_block: this.response_block,
+        DRA: this.DRA,
+        DRO: this.DRO,
+        redirection: this.redirection,
+        errorless_teaching: this.errorless_teaching,
+        NCR: this.NCR,
+        shaping: this.shaping,
+        chaining: this.chaining,
+        token_economy: this.token_economy,
+        extinction: this.extinction,
+        natural_teaching: this.natural_teaching,
+      }]
+    }
     if(this.intervention_added.length > 1){
       this.intervention_added.splice(this.intervention_added,1);
       Swal.fire('Updated', ` Interventions Added`, 'success');
