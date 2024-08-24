@@ -263,10 +263,8 @@ export class BipformComponent {
   addDocument(){
     this.documents.push({
       document_title: this.document_title,
-      document_status: this.document_status,
     })
     this.document_title = '';
-    this.document_status = '';
   }
 
   deleteDocument(i:any){
@@ -574,8 +572,9 @@ export class BipformComponent {
   save(){debugger
     this.text_validation = '';
     if(!this.type_of_assessment
-      ||!this.background_information 
-      ||!this.previus_treatment_and_result 
+      || !this.background_information 
+      || !this.maladaptives
+      || !this.previus_treatment_and_result 
       || !this.education_status
       || !this.phisical_and_medical_status
     ){

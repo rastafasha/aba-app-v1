@@ -159,9 +159,21 @@ export class AddDoctorComponent {
   save(){debugger
     this.text_validation = '';
     if(!this.name||!this.email ||!this.surname ||!this.phone 
-      ||!this.birth_date ||!this.address
+      ||!this.birth_date ||!this.address ||!this.gender 
+      ||!this.currently_pay_through_company ||!this.llc ||!this.ien 
+      ||!this.wc ||!this.agency_location ||!this.city 
+      ||!this.languages ||!this.ss_number ||!this.date_of_hire 
+      ||!this.cpr_every_2_years ||!this.background_every_5_years ||!this.ceu_hippa_annually 
+      ||!this.e_verify ||!this.national_sex_offender_registry ||!this.ceu_security_awareness_annually 
+      ||!this.certificate_number ||!this.bacb_license_expiration ||!this.liability_insurance_annually 
+      ||!this.local_police_rec_every_5_years ||!this.ceu_security_awareness_annually ||!this.ceu_domestic_violence_no_expiration 
+      ||!this.ceu_zero_tolerance_every_3_years ||!this.ceu_hiv_bloodborne_pathogens_infection_control_no_expiration ||!this.ceu_civil_rights_no_expiration 
+      ||!this.local_police_rec_every_5_years ||!this.ceu_civil_rights_no_expiration ||!this.school_badge 
+      ||!this.w_9_w_4_form ||!this.contract ||!this.two_four_week_notice_agreement 
+      ||!this.credentialing_package_bcbas_only ||!this.caqh_bcbas_only ||!this.contract_type 
+      ||!this.salary 
     ){
-      this.text_validation = 'Los campos con * son obligatorios';
+      this.text_validation = 'All the fields are required';
       // return;
     }
 

@@ -45,7 +45,7 @@ export class AddPatientMComponent {
 
   
   
-  public first_name: string = '';
+  public first_name: string;
   public last_name: string = '';
   public parent_guardian_name: string = '';
   public relationship: any;
@@ -371,8 +371,19 @@ export class AddPatientMComponent {
 
   save(){
     this.text_validation = '';
-    if(!this.first_name ||!this.last_name || !this.patient_id ){
-      this.text_validation = 'Los campos con * son obligatorios';
+    if(
+      !this.first_name ||!this.last_name || !this.patient_id ||
+      !this.birth_date ||!this.parent_guardian_name || !this.relationship || 
+      !this.language ||!this.gender || !this.phone || 
+      !this.state ||!this.address || !this.city || 
+      !this.diagnosis_code ||!this.insuranceId || !this.eligibility || 
+      !this.welcome ||!this.consent || !this.insurance_card || 
+      !this.mnl ||!this.referral || !this.ados || 
+      !this.iep ||!this.asd_diagnosis || !this.cde || 
+      !this.submitted ||!this.eqhlid || !this.interview  
+
+    ){
+      this.text_validation = 'All the fields are required';
       return;
     }
     

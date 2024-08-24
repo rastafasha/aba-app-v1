@@ -145,11 +145,12 @@
                                                     
                                                 </div>
                                             </div>
+                                            <!-- [max]="'12:00'" -->
                                             <div class="col-xs-12 col-sm-6">
                                                 <div class="form-group local-forms">
                                                     <label>Time Out <span class="login-danger">*</span></label>
                                                     <input [ngxTimepicker]="toggleTimepicker2" [disableClick]="true" readonly  
-                                                    [(ngModel)]="selectedValueTimeOut" name="time_out" [format]="24" [max]="'12:00'"  (onChange)="hourTimeOutSelected($event)" [ngModelOptions]="{standalone: true}">
+                                                    [(ngModel)]="selectedValueTimeOut" name="time_out" [format]="24"  (onChange)="hourTimeOutSelected($event)" [ngModelOptions]="{standalone: true}">
                                                     <ngx-material-timepicker-toggle [for]="toggleTimepicker2"></ngx-material-timepicker-toggle>
                                                     <ngx-material-timepicker #toggleTimepicker2></ngx-material-timepicker>
                                                 </div>
@@ -159,20 +160,22 @@
                                     <div class="col-xs-12 col-sm-6">
                                         <h5 class="mb-3">Afternoon Session</h5>
                                         <div class="row">
+                                            <!-- [min]="'12:00'" -->
                                             <div class="col-xs-12 col-sm-6">
                                                 <div class="form-group local-forms">
                                                     <label >Time In <span class="login-danger">*</span></label>
                                                     <input [ngxTimepicker]="toggleTimepicker3" [disableClick]="true" readonly  
-                                                    [(ngModel)]="selectedValueTimeIn2" name="time_in2" [format]="24" [min]="'12:00'"  (onChange)="hourTimeInSelected($event)" [ngModelOptions]="{standalone: true}">
+                                                    [(ngModel)]="selectedValueTimeIn2" name="time_in2" [format]="24"   (onChange)="hourTimeInSelected($event)" [ngModelOptions]="{standalone: true}">
                                                     <ngx-material-timepicker-toggle [for]="toggleTimepicker3"></ngx-material-timepicker-toggle>
                                                     <ngx-material-timepicker #toggleTimepicker3></ngx-material-timepicker>
                                                 </div>
                                             </div>
+                                            <!-- [min]="'12:00'" -->
                                             <div class="col-xs-12 col-sm-6">
                                                 <div class="form-group local-forms">
                                                     <label >Time Out <span class="login-danger">*</span></label>
                                                     <input [ngxTimepicker]="toggleTimepicker4" [disableClick]="true" readonly  
-                                                    [(ngModel)]="selectedValueTimeOut2" name="time_out2" [format]="24" [min]="'12:00'"  (onChange)="hourTimeInSelected($event)" [ngModelOptions]="{standalone: true}">
+                                                    [(ngModel)]="selectedValueTimeOut2" name="time_out2" [format]="24"   (onChange)="hourTimeInSelected($event)" [ngModelOptions]="{standalone: true}">
                                                     <ngx-material-timepicker-toggle [for]="toggleTimepicker4"></ngx-material-timepicker-toggle>
                                                     <ngx-material-timepicker #toggleTimepicker4></ngx-material-timepicker>
                                                 </div>
