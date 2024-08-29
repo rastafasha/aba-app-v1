@@ -221,9 +221,10 @@ export class ReportByClientComponent {
   }
 
 
-  private getTableData(page=1): void {
+  public getTableData(page=1): void {
     this.clientReportList = [];
     this.serialNumberArray = [];
+    this.currentPage = page;
 
     // this.patientId = patient_id
     // // this.patientId = 'cliente3243';
@@ -232,6 +233,27 @@ export class ReportByClientComponent {
       this.date_start,this.date_end,this.noteType).subscribe((resp:any)=>{
       
       console.log('todo',resp);
+      const pa = resp.arrayPages
+      // const pa = [1,2,3,4,5,6,7,8,9,10]
+      this.pageNumberArray = [];
+      if(pa.length > 5) {
+        if(this.currentPage > 2 && this.currentPage < (pa.length-2)){
+          for (let index = this.currentPage-2; index < this.currentPage+3; index++) {
+            this.pageNumberArray.push(index);
+          }
+        } else if(this.currentPage <= 2) {
+          for (let index = 1; index < 6; index++) {
+            this.pageNumberArray.push(index);
+          }
+        } else if(this.currentPage >= pa.length-2) {
+          for (let index = pa.length-4; index <= pa.length; index++) {
+            this.pageNumberArray.push(index);
+          }
+        }
+      }
+      else {
+        this.pageNumberArray = pa;
+      }
       // traemos la info necesaria del paciente
       this.patientName = resp.patient.full_name;
       this.patientID = resp.patient.patient_id;
@@ -484,7 +506,7 @@ export class ReportByClientComponent {
     }
   });
   this.dataSource = new MatTableDataSource<any>(this.clientReportList);
-    this.calculateTotalPages(this.totalDataClientReport, this.pageSize);
+    // this.calculateTotalPages(this.totalDataClientReport, this.pageSize);
   
     this.calculateUnitsAndHours();
   }
@@ -568,7 +590,7 @@ export class ReportByClientComponent {
   
   
   private calculateTotalPages(totalDatapatient: number, pageSize: number): void {
-    this.pageNumberArray = [];
+    // this.pageNumberArray = [];
     this.totalPages = totalDatapatient / pageSize;
     if (this.totalPages % 1 != 0) {
       this.totalPages = Math.trunc(this.totalPages + 1);
