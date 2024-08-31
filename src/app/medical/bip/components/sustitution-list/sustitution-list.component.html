@@ -100,19 +100,19 @@
                                               <div class="row align-items-center" >
                                                   <h3 class="card-title">STO</h3>
                                                   
-                                                  <div class="col-xs-12 col-md-3">
+                                                  <div class="col-xs-12 col-md-4">
                                                       <div class="form-group local-forms">
                                                           <label>STO <span class="login-danger">*</span></label>
                                                           <input class="form-control"  name="sustitution_sto"   [(ngModel)]="sustitution_sto" type="text"  >
                                                       </div>
                                                   </div>
-                                                  <div class="col-xs-12 col-md-3">
+                                                  <div class="col-xs-12 col-md-4">
                                                       <div class="form-group local-forms">
                                                           <label>Target <span class="login-danger">*</span></label>
                                                           <input class="form-control"  name="target"   [(ngModel)]="target" type="text"  >
                                                       </div>
                                                   </div>
-                                                  <div class="col-12 col-md-3">
+                                                  <div class="col-12 col-md-4">
                                                       <div class="form-group local-forms">
                                                           <label >Status<span class="login-danger">*</span></label>
                                                           <select
@@ -128,10 +128,18 @@
                                                                 </select>
                                                       </div>
                                                   </div>
-                                                  <div class="col-12 col-md-3">
+                                                  <div class="col-12 col-md-4">
                                                       <div class="form-group local-forms">
-                                                          <label >Date<span class="login-danger">*</span></label>
+                                                          <label >Initial Date<span class="login-danger">*</span></label>
                                                           <input class="form-control datetimepicker" name="sustitution_date_sto" [(ngModel)]="sustitution_date_sto" type="text" matInput [matDatepicker]="pickerDateSTO"  >
+                                                          <mat-datepicker #pickerDateSTO></mat-datepicker>
+                                                          <mat-datepicker-toggle matIconSuffix [for]="pickerDateSTO"></mat-datepicker-toggle>
+                                                      </div>
+                                                  </div>
+                                                  <div class="col-12 col-md-4">
+                                                      <div class="form-group local-forms">
+                                                          <label >End Date<span class="login-danger">*</span></label>
+                                                          <input class="form-control datetimepicker" name="end_sustitution_date_sto" [(ngModel)]="end_sustitution_date_sto" type="text" matInput [matDatepicker]="pickerDateSTO"  >
                                                           <mat-datepicker #pickerDateSTO></mat-datepicker>
                                                           <mat-datepicker-toggle matIconSuffix [for]="pickerDateSTO"></mat-datepicker-toggle>
                                                       </div>
@@ -163,12 +171,13 @@
                                                       <table class="table mb-0">
                                                           <thead>
                                                               <tr>
-                                                                  <th>STO</th>
-                                                                  <th>decription</th>
-                                                                  <th>target</th>
-                                                                  <th>status</th>
-                                                                  <th>update status</th>
-                                                                  <th>date</th>
+                                                                <th>STO</th>
+                                                                <th>Decription</th>
+                                                                <th>Target</th>
+                                                                <th>Status</th>
+                                                                <th>update status</th>
+                                                                <th>Initial Date</th>
+                                                                <th>End Date</th>
                                                               </tr>
                                                           </thead>
                                                               <!-- *ngIf="goalmaladaptive !== null && current_sustitution "-->
@@ -211,6 +220,9 @@
                                                                       {{goalsto.sustitution_date_sto | date}}
                                                                   </td>
                                                                   <td>
+                                                                      {{goalsto.end_sustitution_date_sto | date}}
+                                                                  </td>
+                                                                  <td>
                                                                       <!-- <button class="btn btn-outline-success btn-sm" (click)="selectedMaladaptiveSon(goalsto)"><i class="fa fa-bar-chart"></i></button> -->
                                                                       <button class="btn btn-outline-danger btn-sm" (click)="deleteSTOGoal(goalsto)">x</button>
                                                                   </td>
@@ -231,13 +243,13 @@
                                               <div class="row align-items-center" >
                                                   <h3 class="card-title">LTO</h3>
                                                   
-                                                  <div class="col-xs-12 col-md-4">
+                                                  <div class="col-xs-12 col-md-3">
                                                       <div class="form-group local-forms">
                                                           <label>LTO <span class="login-danger">*</span></label>
                                                           <input class="form-control"  name="sustitution_lto"   [(ngModel)]="sustitution_lto" type="text"  >
                                                       </div>
                                                   </div>
-                                                  <div class="col-12 col-md-4">
+                                                  <div class="col-12 col-md-3">
                                                       <div class="form-group local-forms">
                                                           <label >Status<span class="login-danger">*</span></label>
                                                           <select
@@ -253,10 +265,18 @@
                                                               </select>
                                                       </div>
                                                   </div>
-                                                  <div class="col-12 col-md-4">
+                                                  <div class="col-12 col-md-3">
                                                       <div class="form-group local-forms">
-                                                          <label >Date<span class="login-danger">*</span></label>
+                                                          <label >Initial Date<span class="login-danger">*</span></label>
                                                           <input class="form-control datetimepicker" name="sustitution_date_lto" [(ngModel)]="sustitution_date_lto" type="text" matInput [matDatepicker]="pickerDateLTO"  >
+                                                          <mat-datepicker #pickerDateLTO></mat-datepicker>
+                                                          <mat-datepicker-toggle matIconSuffix [for]="pickerDateLTO"></mat-datepicker-toggle>
+                                                      </div>
+                                                  </div>
+                                                  <div class="col-12 col-md-3">
+                                                      <div class="form-group local-forms">
+                                                          <label >End Date<span class="login-danger">*</span></label>
+                                                          <input class="form-control datetimepicker" name="end_sustitution_date_lto" [(ngModel)]="end_sustitution_date_lto" type="text" matInput [matDatepicker]="pickerDateLTO"  >
                                                           <mat-datepicker #pickerDateLTO></mat-datepicker>
                                                           <mat-datepicker-toggle matIconSuffix [for]="pickerDateLTO"></mat-datepicker-toggle>
                                                       </div>
@@ -289,7 +309,8 @@
                                                                   <th>decription</th>
                                                                   <th>status</th>
                                                                   <th>update status</th>
-                                                                  <th>date</th>
+                                                                  <th>Initial date</th>
+                                                                  <th>End date</th>
                                                               </tr>
                                                           </thead>
                                                           <tbody >
@@ -324,6 +345,9 @@
                                                                   </td>
                                                                   <td>
                                                                       {{goallto.sustitution_date_lto | date}}
+                                                                  </td>
+                                                                  <td>
+                                                                      {{goallto.end_sustitution_date_lto | date}}
                                                                   </td>
                                                                   <td>
                                                                       <!-- <button class="btn btn-outline-success btn-sm" (click)="selectedMaladaptiveSon(goallto)"><i class="fa fa-bar-chart"></i></button> -->
@@ -386,6 +410,10 @@
                   
               </div>
               <!-- fin editGoalSelected -->
+               
+
+
+
               <!-- fin lista inicial    -->
               <div *ngIf="createSelected" class=" doctor-submit text-end">
                 <button class="btn btn-primary btn-sm " (click)="back() ">Back</button>
@@ -415,8 +443,6 @@
                                         
                                         <!-- goals form -->
             
-                                        
-                                        
                                         <!-- sto -->
                                         <div class="row align-items-center" >
                                             <div class="col-12 col-md-6 ">  
@@ -445,19 +471,19 @@
                                                 <div class="row align-items-center" >
                                                     <h3 class="card-title">STO</h3>
                                                     
-                                                    <div class="col-xs-12 col-md-3">
+                                                    <div class="col-xs-12 col-md-4">
                                                         <div class="form-group local-forms">
                                                             <label>STO <span class="login-danger">*</span></label>
                                                             <input class="form-control"  name="sustitution_sto"   [(ngModel)]="sustitution_sto" type="text"  >
                                                         </div>
                                                     </div>
-                                                    <div class="col-xs-12 col-md-3">
+                                                    <div class="col-xs-12 col-md-4">
                                                         <div class="form-group local-forms">
-                                                            <label>Initial Interesting <span class="login-danger">*</span></label>
-                                                            <input class="form-control"  name="initial_interesting"   [(ngModel)]="initial_interesting" type="text"  >
+                                                            <label>Target <span class="login-danger">*</span></label>
+                                                            <input class="form-control"  name="target"   [(ngModel)]="target" type="text"  >
                                                         </div>
                                                     </div>
-                                                    <div class="col-12 col-md-3">
+                                                    <div class="col-12 col-md-4">
                                                         <div class="form-group local-forms">
                                                             <label >Status<span class="login-danger">*</span></label>
                                                             <select
@@ -473,12 +499,20 @@
                                                                   </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-12 col-md-3">
+                                                    <div class="col-12 col-md-4">
                                                         <div class="form-group local-forms">
-                                                            <label >Date<span class="login-danger">*</span></label>
+                                                            <label >Initial Date<span class="login-danger">*</span></label>
                                                             <input class="form-control datetimepicker" name="sustitution_date_sto" [(ngModel)]="sustitution_date_sto" type="text" matInput [matDatepicker]="pickerDateSTO"  >
                                                             <mat-datepicker #pickerDateSTO></mat-datepicker>
                                                             <mat-datepicker-toggle matIconSuffix [for]="pickerDateSTO"></mat-datepicker-toggle>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-4">
+                                                        <div class="form-group local-forms">
+                                                            <label >End Date<span class="login-danger">*</span></label>
+                                                            <input class="form-control datetimepicker" name="end_sustitution_date_sto" [(ngModel)]="end_sustitution_date_sto" type="text" matInput [matDatepicker]="pickerDateSTOC"  >
+                                                            <mat-datepicker #pickerDateSTOC></mat-datepicker>
+                                                            <mat-datepicker-toggle matIconSuffix [for]="pickerDateSTOC"></mat-datepicker-toggle>
                                                         </div>
                                                     </div>
                     
@@ -509,11 +543,12 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th>STO</th>
-                                                                    <th>decription</th>
-                                                                    <th>Initial Interesting</th>
-                                                                    <th>status</th>
+                                                                    <th>Decription</th>
+                                                                    <th>Target</th>
+                                                                    <th>Status</th>
                                                                     <th>update status</th>
-                                                                    <th>date</th>
+                                                                    <th>Initial Date</th>
+                                                                    <th>End Date</th>
                                                                 </tr>
                                                             </thead>
                                                                 <!--*ngIf="goalmaladaptive !== null && current_sustitution " -->
@@ -526,7 +561,7 @@
                                                                         {{goalsto.sustitution_decription_sto}}
                                                                     </td>
                                                                     <td>
-                                                                        {{goalsto.initial_interesting}}
+                                                                        {{goalsto.target}}
                                                                     </td>
                                                                     <td>
                                                                         <!-- {{goalsto.status_sto}} -->
@@ -556,6 +591,9 @@
                                                                         {{goalsto.sustitution_date_sto | date}}
                                                                     </td>
                                                                     <td>
+                                                                        {{goalsto.end_sustitution_date_sto | date}}
+                                                                    </td>
+                                                                    <td>
                                                                         <!-- <button class="btn btn-outline-success btn-sm" (click)="selectedMaladaptiveSon(goalsto)"><i class="fa fa-bar-chart"></i></button> -->
                                                                         <button class="btn btn-outline-danger btn-sm" (click)="deleteSTOGoal(goalsto)">x</button>
                                                                     </td>
@@ -576,13 +614,13 @@
                                                 <div class="row align-items-center" >
                                                     <h3 class="card-title">LTO</h3>
                                                     
-                                                    <div class="col-xs-12 col-md-4">
+                                                    <div class="col-xs-12 col-md-3">
                                                         <div class="form-group local-forms">
                                                             <label>LTO <span class="login-danger">*</span></label>
                                                             <input class="form-control"  name="sustitution_lto"   [(ngModel)]="sustitution_lto" type="text"  >
                                                         </div>
                                                     </div>
-                                                    <div class="col-12 col-md-4">
+                                                    <div class="col-12 col-md-3">
                                                         <div class="form-group local-forms">
                                                             <label >Status<span class="login-danger">*</span></label>
                                                             <select
@@ -598,10 +636,18 @@
                                                                 </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-12 col-md-4">
+                                                    <div class="col-12 col-md-3">
                                                         <div class="form-group local-forms">
-                                                            <label >Date<span class="login-danger">*</span></label>
+                                                            <label >Initial Date<span class="login-danger">*</span></label>
                                                             <input class="form-control datetimepicker" name="sustitution_date_lto" [(ngModel)]="sustitution_date_lto" type="text" matInput [matDatepicker]="pickerDateLTO"  >
+                                                            <mat-datepicker #pickerDateLTO></mat-datepicker>
+                                                            <mat-datepicker-toggle matIconSuffix [for]="pickerDateLTO"></mat-datepicker-toggle>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-md-3">
+                                                        <div class="form-group local-forms">
+                                                            <label >End Date<span class="login-danger">*</span></label>
+                                                            <input class="form-control datetimepicker" name="end_sustitution_date_lto" [(ngModel)]="end_sustitution_date_lto" type="text" matInput [matDatepicker]="pickerDateLTO"  >
                                                             <mat-datepicker #pickerDateLTO></mat-datepicker>
                                                             <mat-datepicker-toggle matIconSuffix [for]="pickerDateLTO"></mat-datepicker-toggle>
                                                         </div>
@@ -634,7 +680,8 @@
                                                                     <th>decription</th>
                                                                     <th>status</th>
                                                                     <th>update status</th>
-                                                                    <th>date</th>
+                                                                    <th>Initial date</th>
+                                                                    <th>End date</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody >
@@ -669,6 +716,9 @@
                                                                     </td>
                                                                     <td>
                                                                         {{goallto.sustitution_date_lto | date}}
+                                                                    </td>
+                                                                    <td>
+                                                                        {{goallto.end_sustitution_date_lto | date}}
                                                                     </td>
                                                                     <td>
                                                                         <!-- <button class="btn btn-outline-success btn-sm" (click)="selectedMaladaptiveSon(goallto)"><i class="fa fa-bar-chart"></i></button> -->

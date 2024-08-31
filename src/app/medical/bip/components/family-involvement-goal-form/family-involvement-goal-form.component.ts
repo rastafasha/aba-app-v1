@@ -123,14 +123,31 @@ export class FamilyInvolvementGoalFormComponent {
 
 
   addDocument(){
-    this.caregivers.push({
+
+    if (this.caregivers) {
+      this.caregivers.push({
+        index: this.caregivers.length + 1,
+        caregiver_goal: this.caregiver_goal,
+        outcome_measure: this.outcome_measure,
+        criteria: this.criteria,
+        initiation: this.initiation,
+        end_date: this.end_date,
+        current_status: this.current_status,
+      
+      })
+    } else {
+      this.caregivers = [{
+        index: 1, // initial index
       caregiver_goal: this.caregiver_goal,
       outcome_measure: this.outcome_measure,
       criteria: this.criteria,
       initiation: this.initiation,
       end_date: this.end_date,
       current_status: this.current_status,
-    })
+      
+      }]
+    }
+
     this.caregiver_goal = '';
     this.outcome_measure = '';
     this.criteria = '';

@@ -52,6 +52,9 @@
                                     <div class="form-group local-forms">
                                         <label>Email <span class="login-danger">*</span></label>
                                         <input class="form-control" name="email" [(ngModel)]="email" type="email">
+                                        <div *ngIf="emailExists">
+                                            <small class="text-danger">Email already exists</small>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-xl-6">

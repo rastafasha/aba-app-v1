@@ -26,6 +26,9 @@ permissions :any = [];
     let URL = url_servicios+"/doctors";
     return this.http.get(URL, {headers:headers});
   }
+
+ 
+
   listConfig(){
     let headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token})
     let URL = url_servicios+'/doctors/config';

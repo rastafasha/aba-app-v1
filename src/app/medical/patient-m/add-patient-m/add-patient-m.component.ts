@@ -6,6 +6,8 @@ import { DoctorService } from '../../doctors/service/doctor.service';
 import { InsuranceService } from '../../insurance/service/insurance.service';
 import Swal from 'sweetalert2';
 import { Location } from '@angular/common';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 export interface ResponseBackend{
   users:User[];
@@ -28,7 +30,7 @@ export interface User{
   // Add other service properties here
 }
 
-
+const url_servicios =environment.url_servicios
 @Component({
   selector: 'app-add-patient-m',
   templateUrl: './add-patient-m.component.html',
@@ -167,11 +169,13 @@ export class AddPatientMComponent {
   public doctor_id:any ;
   public locationId:any ;
   public location:any ;
+  public emailExists: boolean;
   
 
   valid_form:boolean = false;
   valid_form_success:boolean = false;
   text_validation:any = null;
+
   
   constructor(
     public patientService:PatientMService,
@@ -179,6 +183,7 @@ export class AddPatientMComponent {
     public insuranceService:InsuranceService,
     public router: Router,
     public locationBack: Location,
+    private http: HttpClient
   ){
 
   }
@@ -206,6 +211,21 @@ export class AddPatientMComponent {
     this.locationBack.back(); // <-- go back to previous location on cancel
     
   }
+
+
+  checkEmailExistence(): void {
+    this.http.get(`${url_servicios}/doctors/check-email-exist/${this.email}`)
+      .subscribe((response: any) => {
+        this.emailExists = response.exist.email;
+        console.log(this.emailExists);
+        if(this.emailExists == null){
+          this.emailExists = false;
+        }else{
+          this.emailExists = true;
+        }
+      });
+  }
+
   getPoscoveredList(){
     this.patientService.getPosCovered().subscribe((res:any)=> {
         console.log("pos covered list", res);

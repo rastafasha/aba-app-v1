@@ -94,50 +94,50 @@
                                         <div class="col-xl-3 col-md-6">
                                             <div class="detail-personal">
                                                 <h2>Name</h2>
-                                                <h3>{{patient_selected.first_name}} {{patient_selected.last_name}}</h3>
+                                                <p>{{patient_selected.first_name}} {{patient_selected.last_name}}</p>
                                             </div>
                                         </div>
                                         <div class="col-xl-3 col-md-6">
                                             <div class="detail-personal">
                                                 <h2>Patient Id</h2>
-                                                <h3>{{patient_selected.patient_id}}</h3>
+                                                <p>{{patient_selected.patient_id}}</p>
                                             </div>
                                         </div>
                                         <div class="col-xl-3 col-md-6">
                                             <div class="detail-personal">
                                                 <h2>Birth Day </h2>
-                                                <h3>{{patient_selected.birth_date}}</h3>
+                                                <p>{{patient_selected.birth_date}}</p>
                                             </div>
                                         </div>
                                         <div class="col-xl-3 col-md-6">
                                             <div class="detail-personal">
                                                 <h2>Age </h2>
-                                                <h3>{{patient_selected.age}}</h3>
+                                                <p>{{patient_selected.age}}</p>
                                             </div>
                                         </div>
                                         <div class="col-xl-3 col-md-6 col-xl-3">
                                             <div class="detail-personal">
                                                 <h2>Phone</h2>
-                                                <h3>{{patient_selected.phone}}</h3>
+                                                <p>{{patient_selected.phone}}</p>
                                             </div>
                                         </div>
                                         <div class="col-xl-3 col-md-6 col-xl-6">
                                             <div class="detail-personal">
                                                 <h2>Address</h2>
-                                                <h3>{{patient_selected.address}}</h3>
+                                                <p>{{patient_selected.address}}</p>
                                             </div>
                                         </div>
                                         <div class="col-xl-3 col-md-6 col-xl-3">
                                             <div class="detail-personal">
                                                 <h2>Type of Assessment</h2>
-                                                <h3>
+                                                <p>
                                                     <span 
                                                         *ngIf="bip_selected.type_of_assessment === 1">Assestment</span>
                                                     <span 
                                                         *ngIf="bip_selected.type_of_assessment === 2">Reassestment</span>
                                                     <span 
                                                         *ngIf="bip_selected.type_of_assessment === 3">Initial</span>
-                                                </h3>
+                                                </p>
                                             </div>
                                         </div>
                                         
@@ -167,13 +167,13 @@
                                             <div class="col-xs-12 col-sm-6">
                                                 <div class="detail-personal">
                                                     <h2>Document Title</h2>
-                                                    <h3>{{doc.document_title}}</h3>
+                                                    <p>{{doc.document_title}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-6">
                                                 <div class="detail-personal">
                                                     <h2>Document Status</h2>
-                                                    <h3>{{doc.document_status}}</h3>
+                                                    <p>{{doc.document_status}}</p>
                                                 </div>
                                             </div>
                                         </ng-container>
@@ -199,43 +199,43 @@
                                         <div class="col-xs-12 ">
                                             <div class="detail-personal">
                                                 <h2>Background Information</h2>
-                                                <h3>{{bip_selected.background_information}}</h3>
+                                                <p>{{bip_selected.background_information}}</p>
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-md-6">
                                             <div class="detail-personal">
                                                 <h2>Previous treatments and results</h2>
-                                                <h3>{{bip_selected.previus_treatment_and_result}}</h3>
+                                                <p>{{bip_selected.previus_treatment_and_result}}</p>
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-md-6">
                                             <div class="detail-personal">
                                                 <h2>Current treatment and progress </h2>
-                                                <h3>{{bip_selected.current_treatment_and_progress}}</h3>
+                                                <p>{{bip_selected.current_treatment_and_progress}}</p>
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-md-6">
                                             <div class="detail-personal">
                                                 <h2>Education status</h2>
-                                                <h3>{{bip_selected.education_status}}</h3>
+                                                <p>{{bip_selected.education_status}}</p>
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-md-6">
                                             <div class="detail-personal">
                                                 <h2>Physical and Medical Status</h2>
-                                                <h3>{{bip_selected.phisical_and_medical_status}}</h3>
+                                                <p>{{bip_selected.phisical_and_medical_status}}</p>
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-md-6">
                                             <div class="detail-personal">
                                                 <h2>Strengths</h2>
-                                                <h3>{{bip_selected.strengths}}</h3>
+                                                <p>{{bip_selected.strengths}}</p>
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-md-6">
                                             <div class="detail-personal">
                                                 <h2>Weakneses</h2>
-                                                <h3>{{bip_selected.weakneses}}</h3>
+                                                <p>{{bip_selected.weakneses}}</p>
                                             </div>
                                         </div>
 
@@ -247,7 +247,7 @@
                                                 <div class="col-xs-12">
                                                     <div class="detail-personal">
                                                         <h2>Physical And Medical Status</h2>
-                                                        <h3>{{bip_selected.phiysical_and_medical}}</h3>
+                                                        <p>{{bip_selected.phiysical_and_medical}}</p>
                                                     </div>
                                                 </div>
                                                 <div *ngIf="!phiysical_and_medical_status || phiysical_and_medical_status === null">
@@ -257,31 +257,31 @@
                                                     <div class="col-xs-12 col-sm-3">
                                                         <div class="detail-personal">
                                                             <h2>Medication</h2>
-                                                            <h3>{{medication.medication}}</h3>
+                                                            <p>{{medication.medication}}</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-12 col-sm-3">
                                                         <div class="detail-personal">
                                                             <h2>Dose</h2>
-                                                            <h3>{{medication.dose}}</h3>
+                                                            <p>{{medication.dose}}</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-12 col-sm-3">
                                                         <div class="detail-personal">
                                                             <h2>Frecuency </h2>
-                                                            <h3>{{medication.frecuency}}</h3>
+                                                            <p>{{medication.frecuency}}</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-12 col-sm-3">
                                                         <div class="detail-personal">
                                                             <h2>Preescribing Physician</h2>
-                                                            <h3>{{medication.preescribing_physician}}</h3>
+                                                            <p>{{medication.preescribing_physician}}</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-12 ">
                                                         <div class="detail-personal">
                                                             <h2>Reason</h2>
-                                                            <h3>{{medication.reason}}</h3>
+                                                            <p>{{medication.reason}}</p>
                                                         </div>
                                                     </div>
                                                     
@@ -314,31 +314,31 @@
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>Behavior</h2>
-                                                    <h3>{{malad.maladaptive_behavior}}</h3>
+                                                    <p>{{malad.maladaptive_behavior}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>Topografical Definition </h2>
-                                                    <h3>{{malad.topografical_definition}}</h3>
+                                                    <p>{{malad.topografical_definition}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>Baseline level</h2>
-                                                    <h3>{{malad.baseline_level}}</h3>
+                                                    <p>{{malad.baseline_level}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>Intensity Initial</h2>
-                                                    <h3>{{malad.initial_interesting}}</h3>
+                                                    <p>{{malad.initial_interesting}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>Baseline Date</h2>
-                                                    <h3>{{malad.baseline_date|date}}</h3>
+                                                    <p>{{malad.baseline_date|date}}</p>
                                                 </div>
                                             </div>
                                             <app-chart-reduction [maladaptive_behavior]="malad.maladaptive_behavior"  [baseline_date]="malad.baseline_date" [baseline_level]="malad.baseline_level" [initial_interesting]="malad.initial_interesting"></app-chart-reduction>
@@ -369,13 +369,13 @@
                                             <div class="col-xs-12 col-sm-6">
                                                 <div class="detail-personal">
                                                     <h2>Assessments title</h2>
-                                                    <h3>{{assesst.assestment_title}}</h3>
+                                                    <p>{{assesst.assestment_title}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-6">
                                                 <div class="detail-personal">
                                                     <h2>Documents Status </h2>
-                                                    <h3>{{assesst.assestment_status}}</h3>
+                                                    <p>{{assesst.assestment_status}}</p>
                                                 </div>
                                             </div>
                                         </ng-container>
@@ -397,19 +397,19 @@
                                             <div class="col-xs-12 col-sm-6">
                                                 <div class="detail-personal">
                                                     <h2>Tangible</h2>
-                                                    <h3>{{evaluationSt.tangible}}</h3>
+                                                    <p>{{evaluationSt.tangible}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-6">
                                                 <div class="detail-personal">
                                                     <h2>Activities</h2>
-                                                    <h3>{{evaluationSt.activities}}</h3>
+                                                    <p>{{evaluationSt.activities}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12">
                                                 <div class="detail-personal">
                                                     <h2>Other </h2>
-                                                    <h3>{{evaluationSt.other}}</h3>
+                                                    <p>{{evaluationSt.other}}</p>
                                                 </div>
                                             </div>
                                             
@@ -441,19 +441,19 @@
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>Prevalent Setting Events & Antecedents</h2>
-                                                    <h3>{{prevalent.prevalent_setting_event_and_atecedent}}</h3>
+                                                    <p>{{prevalent.prevalent_setting_event_and_atecedent}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>Behavior </h2>
-                                                    <h3>{{prevalent.behavior}}</h3>
+                                                    <p>{{prevalent.behavior}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>Hypothesized Function(s) </h2>
-                                                    <h3>{{prevalent.hypothesized_functions}}</h3>
+                                                    <p>{{prevalent.hypothesized_functions}}</p>
                                                 </div>
                                             </div>
                                         </ng-container>
@@ -479,7 +479,7 @@
                                         <div class="col-xs-12 ">
                                             <div class="detail-personal">
                                                 <h2>Hypothesis-based interventions</h2>
-                                                <h3>{{bip_selected.hypothesis_based_intervention}}</h3>
+                                                <p>{{bip_selected.hypothesis_based_intervention}}</p>
                                             </div>
                                         </div>
 
@@ -494,19 +494,19 @@
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>Preventtive Strategies</h2>
-                                                    <h3>{{access.preventive_strategies}}</h3>
+                                                    <p>{{access.preventive_strategies}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>Replacement Skills </h2>
-                                                    <h3>{{access.replacement_skills}}</h3>
+                                                    <p>{{access.replacement_skills}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>Manager Strategies </h2>
-                                                    <h3>{{access.manager_strategies}}</h3>
+                                                    <p>{{access.manager_strategies}}</p>
                                                 </div>
                                             </div>
                                         </ng-container>
@@ -521,19 +521,19 @@
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>Preventtive Strategies</h2>
-                                                    <h3>{{access.preventive_strategies_a}}</h3>
+                                                    <p>{{access.preventive_strategies_a}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>Replacement Skills </h2>
-                                                    <h3>{{access.replacement_skills_a}}</h3>
+                                                    <p>{{access.replacement_skills_a}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>Manager Strategies </h2>
-                                                    <h3>{{access.manager_strategies_a}}</h3>
+                                                    <p>{{access.manager_strategies_a}}</p>
                                                 </div>
                                             </div>
                                         </ng-container>
@@ -549,19 +549,19 @@
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>Preventtive Strategies</h2>
-                                                    <h3>{{access.preventive_strategies_e}}</h3>
+                                                    <p>{{access.preventive_strategies_e}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>Replacement Skills </h2>
-                                                    <h3>{{access.replacement_skills_e}}</h3>
+                                                    <p>{{access.replacement_skills_e}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>Manager Strategies </h2>
-                                                    <h3>{{access.manager_strategies_e}}</h3>
+                                                    <p>{{access.manager_strategies_e}}</p>
                                                 </div>
                                             </div>
                                         </ng-container>
@@ -577,19 +577,19 @@
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>Preventtive Strategies</h2>
-                                                    <h3>{{access.preventive_strategies_s}}</h3>
+                                                    <p>{{access.preventive_strategies_s}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>Replacement Skills </h2>
-                                                    <h3>{{access.replacement_skills_s}}</h3>
+                                                    <p>{{access.replacement_skills_s}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>Manager Strategies </h2>
-                                                    <h3>{{access.manager_strategies_s}}</h3>
+                                                    <p>{{access.manager_strategies_s}}</p>
                                                 </div>
                                             </div>
                                         </ng-container>
@@ -602,6 +602,96 @@
                     </div>
                 </div>
                 <!-- Hypothesis-based interventions end-->
+                <!-- interventions -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="personal-list-out">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="about-info mb-10">
+                                        <h4>Interventions</h4>
+                                    </div>
+                                    <div class="row">
+                                        <p>The teaching strategies described will be used either through Discrete Trials interventions or Natural Environment
+                                            approaches:
+                                            </p>
+                                            <div class="col-xs-12 col-sm-6">
+                                                <h4>Differential Reinforcement of Alternative Behaviors</h4>
+                                        <p>
+                                            Differential reinforcement of alternative behaviors will involve delivery of reinforcement each time the alternative
+                                            behavior occurs while extinguishing problem behavior. Initially, reinforcement (praise, small edibles, access to tangibles)
+                                            will be provided on a continuous schedule and then thinned to an intermittent schedule.
+                                            
+                                            </p>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6">
+                                                <h4>Redirection</h4>
+                                            <p>
+                                                This will be used to redirect the consumer to alternative activities when she engages in elopement, Physical
+                                                aggression, etc. Redirection will be used either during precursor behaviors or after a period of no maladaptives if a
+                                                maladaptive behavior has occurred.</p>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6">
+                                                <h4>Response Block</h4>
+                                            <p>
+                                                
+                                                When Client attempts to engage in aggression, elopement, caregiver will use response block to prevent it, while
+                                                minimizing eye contact and talking. The response block should not last for more than 15 seconds. This technique does not
+                                                involve restraint. Problem behavior responses are blocked without grabbing the individual. The parent and behavior
+                                                analyst will block by placing their arm or open hand between Client and the area being targeted.
+                                                </p>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6">
+                                                <h4>Premack Principle</h4>
+                                                <p>
+                                                    
+                                                    Client will engage in high-probability behavior, contingent upon completing programming, or chores (less
+                                                    probability behavior). Restricting the high-probability activity to below baseline rates will increase its reinforcing
+                                                    efficacy. To ensure that the high-probability activity will function as a reinforcer, this activity will only be available
+                                                    contingent upon the completion of the low-probability activity.
+                                                    </p>
+                                            </div>
+                                               <div class="col-xs-12 col-sm-6">
+                                                <h4>Shaping</h4>
+                                                    <p>
+                                                        
+                                                        
+                                                        Will be used to build target behaviors that do not yet exist such as waiting for tangibles, requesting tangibles,
+                                                        sharing/taking turns, interacting with peers, etc. Approximations to the target behavior will be consistently reinforced.
+                                                        </p>
+                                               </div> 
+                                                <div class="col-xs-12 col-sm-6">
+                                                    <h4>Escape Extinction</h4>
+                                                    <p>
+                                                        As some of her behaviors are reinforced by escape from demands, extinction will be utilized to eliminate escape
+                                                        after the mentioned maladaptive behaviors. Client will be given a direction to complete a task, if maladaptive behaviors
+                                                        occur, then physical guidance (gently placing hand on her back and or hand over hand) will be used so that Client will not
+                                                        be able to escape from the demand or task. Regardless of how long Client engages in these behaviors caregivers will
+                                                        continue to present the demand and use physical guidance for two minutes maximum to prevent escape. Praise will be
+                                                        provided as Client completes each step of the task and a tangible when she completes all the steps.
+                                                        Escape independent response delivery</p>
+                                                </div>
+                                                        
+                                    </div>
+                                    <div class="row">
+                                        <ng-container *ngFor="let item of interventions ; let i = index">
+                                            <div class="col-xs-12 col-sm-6">
+                                                
+                                                <h4>{{item.title}}</h4>
+                                        <p>{{item.descriptionIntervention}} </p>
+                                            </div>
+
+                                        </ng-container>
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- interventions end-->
+
                 <!-- Reduction Goals-->
                 <div class="row">
                     <div class="col-12">
@@ -620,19 +710,19 @@
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>Goal</h2>
-                                                    <h3>{{item.maladaptive}}</h3>
+                                                    <p>{{item.maladaptive}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>Current Status  </h2>
-                                                    <h3>{{item.current_status }}</h3>
+                                                    <p>{{item.current_status }}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>Created at</h2>
-                                                    <h3>{{item.created_at|date}}</h3>
+                                                    <p>{{item.created_at|date}}</p>
                                                 </div>
                                             </div>
                                             <div *ngIf="!reduction_goals_goalstos || reduction_goals_goalstos === null">
@@ -643,26 +733,26 @@
                                                     <div class="col-xs-12 col-sm-3">
                                                         <div class="detail-personal">
                                                             <h2>Sto</h2>
-                                                            <h3>{{item.sto}}</h3>
+                                                            <p>{{item.sto}}</p>
                                                         </div>
                                                     </div>
                                                     
                                                     <div class="col-xs-12 col-sm-3">
                                                         <div class="detail-personal">
                                                             <h2>status</h2>
-                                                            <h3>{{item.status_sto}}</h3>
+                                                            <p>{{item.status_sto}}</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-12 col-sm-3">
                                                         <div class="detail-personal">
                                                             <h2>decription </h2>
-                                                            <h3>{{item.decription_sto}}</h3>
+                                                            <p>{{item.decription_sto}}</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-12 col-sm-3">
                                                         <div class="detail-personal">
                                                             <h2>date</h2>
-                                                            <h3>{{item.date_sto |date}}</h3>
+                                                            <p>{{item.date_sto |date}}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -696,25 +786,25 @@
                                                     <div class="col-xs-12 col-sm-4">
                                                         <div class="detail-personal">
                                                             <h2>Goal</h2>
-                                                            <h3>{{item.goal}}</h3>
+                                                            <p>{{item.goal}}</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-12 col-sm-4">
                                                         <div class="detail-personal">
                                                             <h2>Current Status  </h2>
-                                                            <h3>{{item.current_status }}</h3>
+                                                            <p>{{item.current_status }}</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-12 col-sm-4">
                                                         <div class="detail-personal">
                                                             <h2>Created at</h2>
-                                                            <h3>{{item.created_at|date}}</h3>
+                                                            <p>{{item.created_at|date}}</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-12">
                                                         <div class="detail-personal">
                                                             <h2>Description  </h2>
-                                                            <h3>{{item.description }}</h3>
+                                                            <p>{{item.description }}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -723,37 +813,37 @@
                                             <hr>
                                             <ng-container *ngFor="let item of sustitution_goal_stos">
                                                 <div class="row">
-                                                    <h3 style="font-size: 1.2rem; padding: 20px 10px;">Goal Sto</h3>
+                                                    <p style="font-size: 1.2rem; padding: 20px 10px;">Goal Sto</p>
                                                     <div class="col-xs-12 col-sm-3">
                                                         <div class="detail-personal">
                                                             <h2>Sto</h2>
-                                                            <h3>{{item.sustitution_sto}}</h3>
+                                                            <p>{{item.sustitution_sto}}</p>
                                                         </div>
                                                     </div>
                                                     
                                                     <div class="col-xs-12 col-sm-3">
                                                         <div class="detail-personal">
                                                             <h2>Target</h2>
-                                                            <h3>{{item.target}}</h3>
+                                                            <p>{{item.target}}</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-12 col-sm-3">
                                                         <div class="detail-personal">
                                                             <h2>Sustitution Status</h2>
-                                                            <h3>{{item.sustitution_status_sto}}</h3>
+                                                            <p>{{item.sustitution_status_sto}}</p>
                                                         </div>
                                                     </div>
                                                     
                                                     <div class="col-xs-12 col-sm-3">
                                                         <div class="detail-personal">
                                                             <h2>Date</h2>
-                                                            <h3>{{item.sustitution_date_sto |date}}</h3>
+                                                            <p>{{item.sustitution_date_sto |date}}</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-12 ">
                                                         <div class="detail-personal">
                                                             <h2>Description </h2>
-                                                            <h3>{{item.sustitution_decription_sto}}</h3>
+                                                            <p>{{item.sustitution_decription_sto}}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -761,30 +851,30 @@
                                             </ng-container>
                                             <ng-container *ngFor="let item of sustitution_goal_ltos">
                                                 <div class="row">
-                                                    <h3 style="font-size: 1.2rem; padding: 20px 10px;">Goal Lto</h3>
+                                                    <p style="font-size: 1.2rem; padding: 20px 10px;">Goal Lto</p>
                                                     <div class="col-xs-12 col-sm-3">
                                                         <div class="detail-personal">
                                                             <h2>Lto</h2>
-                                                            <h3>{{item.sustitution_lto}}</h3>
+                                                            <p>{{item.sustitution_lto}}</p>
                                                         </div>
                                                     </div>
                                                     
                                                     <div class="col-xs-12 col-sm-3">
                                                         <div class="detail-personal">
                                                             <h2>sustitution Status</h2>
-                                                            <h3>{{item.sustitution_status_lto}}</h3>
+                                                            <p>{{item.sustitution_status_lto}}</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-12 col-sm-3">
                                                         <div class="detail-personal">
                                                             <h2>decription </h2>
-                                                            <h3>{{item.sustitution_decription_lto}}</h3>
+                                                            <p>{{item.sustitution_decription_lto}}</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-12 col-sm-3">
                                                         <div class="detail-personal">
                                                             <h2>date</h2>
-                                                            <h3>{{item.sustitution_date_lto |date}}</h3>
+                                                            <p>{{item.sustitution_date_lto |date}}</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -820,37 +910,37 @@
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>Criteria</h2>
-                                                    <h3>{{item.criteria}}</h3>
+                                                    <p>{{item.criteria}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>caregiver goal</h2>
-                                                    <h3>{{item.caregiver_goal}}</h3>
+                                                    <p>{{item.caregiver_goal}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>current status</h2>
-                                                    <h3>{{item.current_status}}</h3>
+                                                    <p>{{item.current_status}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>outcome measure</h2>
-                                                    <h3>{{item.outcome_measure}}</h3>
+                                                    <p>{{item.outcome_measure}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>initiation  </h2>
-                                                    <h3>{{item.initiation | date }}</h3>
+                                                    <p>{{item.initiation | date }}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-4">
                                                 <div class="detail-personal">
                                                     <h2>End Date  </h2>
-                                                    <h3>{{item.end_date | date }}</h3>
+                                                    <p>{{item.end_date | date }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -888,13 +978,13 @@
                                             <div class="col-xs-12 col-sm-3">
                                                 <div class="detail-personal">
                                                     <h2>treatment fidelity</h2>
-                                                    <h3>{{item.treatment_fidelity}}</h3>
+                                                    <p>{{item.treatment_fidelity}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-3">
                                                 <div class="detail-personal">
                                                     <h2>created_at  </h2>
-                                                    <h3>{{item.created_at | date }}</h3>
+                                                    <p>{{item.created_at | date }}</p>
                                                 </div>
                                             </div>
                                             
@@ -906,11 +996,11 @@
                                     </div>
                                      <ng-container *ngFor="let item of monitoring_evalutating_goals">
                                         <div class="row">
-                                            <h3>RBT Training Goals</h3>
+                                            <p>RBT Training Goals</p>
                                             <div class="col-xs-12">
                                                 <div class="detail-personal">
                                                     <h2>lto</h2>
-                                                    <h3>{{item.lto}}</h3>
+                                                    <p>{{item.lto}}</p>
                                                 </div>
                                             </div>
                                             
@@ -918,25 +1008,25 @@
                                             <!-- <div class="col-xs-12 col-sm-3">
                                                 <div class="detail-personal">
                                                     <h2>goal</h2>
-                                                    <h3>{{item.goal}}</h3>
+                                                    <p>{{item.goal}}</p>
                                                 </div>
                                             </div> -->
                                             <div class="col-xs-12 col-sm-6">
                                                 <div class="detail-personal">
                                                     <h2>status</h2>
-                                                    <h3>{{item.status}}</h3>
+                                                    <p>{{item.status}}</p>
                                                 </div>
                                             </div>
                                             <!-- <div class="col-xs-12 col-sm-3">
                                                 <div class="detail-personal">
                                                     <h2>current status</h2>
-                                                    <h3>{{item.current_status}}</h3>
+                                                    <p>{{item.current_status}}</p>
                                                 </div>
                                             </div> -->
                                             <div class="col-xs-12 col-sm-6">
                                                 <div class="detail-personal">
                                                     <h2>date</h2>
-                                                    <h3>{{item.date |date}}</h3>
+                                                    <p>{{item.date |date}}</p>
                                                 </div>
                                             </div>
                                             
@@ -954,7 +1044,7 @@
                     <div class="col-12">
                         <div class="card-box">
                             <div class="card-block">
-                                <h3 class="card-title">Behavior Assistant Rationale</h3>
+                                <p class="card-title">Behavior Assistant Rationale</p>
                                 <p>Specific duties and responsibilities: Collect data on target behaviors identified for
                                     reduction/acquisition/replacement, implement the behavior program and train the
                                     caregivers on data collection and implementation of the procedures outline within
@@ -1276,7 +1366,7 @@
                                             </p>
                                     </div>
                                     <div class="col-xs-12 ">
-                                        <h3 class="card-title">Risk Assestment</h3>
+                                        <p class="card-title">Risk Assestment</p>
                                         <p>Implementation of this intervention plan could be affected by the following: not consistent implementation of behavior plan by program implementers (caregivers, therapists). In an effort to overcome these barriers, we will monitor caregivers/ staff  to ensure that the implementation of the programs is occurring on consistent and appropriate basis. It is also important to avoid gaps in services to avoid disrupting progress or failing to acquire functional skills. In addition, maladaptive behaviors that put consumer at risk might escalate if treatment is withheld. <br><br>
                                             Client’s maladaptive behaviors can have negative social consequences as others may avoid interaction with the client. Client needs close monitoring and external regulation. Non-compliance, prevents client from engaging in the acquisition of new behaviors that would foster learning, instruction following, independence and habituation to rule-bound settings, which pose subsequent risks. Maladaptive behaviors reduce opportunities for learning new things and interacting with peers. Helping Client communicate their needs, understand instructions and demands and regulate impulsive behavior is imperative to successful functioning in home, school and community settings.<br><br>  
                                             Caregivers are to be trained on possible effects of treatment modalities such as Extinction Burst. Common effects of this intervention are an increase in the frequency of the target response (extinction burst) and increase in aggression (extinction-induced aggression). If parents/caregivers are not adequately trained to understand the process, they usually think that treatment is not working and make efforts to stop these interventions. <br><br>
@@ -1291,7 +1381,7 @@
                                             <div class="col-xs-12">
                                                 <div class="detail-personal">
                                                     <h2>discharge plan</h2>
-                                                    <h3>{{item.discharge_plan}}</h3>
+                                                    <p>{{item.discharge_plan}}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -1301,13 +1391,13 @@
                                                 <div class="col-xs-12 col-sm-6">
                                                     <div class="detail-personal">
                                                         <h2>phase</h2>
-                                                        <h3>{{item.phase}}</h3>
+                                                        <p>{{item.phase}}</p>
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-12 col-sm-6">
                                                     <div class="detail-personal">
                                                         <h2>description  </h2>
-                                                        <h3>{{item.description }}</h3>
+                                                        <p>{{item.description }}</p>
                                                     </div>
                                                 </div>
                                                 
@@ -1334,19 +1424,19 @@
                                             <div class="col-xs-12">
                                                 <div class="detail-personal">
                                                     <h2>crisis description</h2>
-                                                    <h3>{{crisis_description}}</h3>
+                                                    <p>{{crisis_description}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12">
                                                 <div class="detail-personal">
                                                     <h2>crisis note</h2>
-                                                    <h3>{{crisis_note}}</h3>
+                                                    <p>{{crisis_note}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12">
                                                 <div class="detail-personal">
                                                     <h2>Caregiver Requirements for Prevention of Crisis</h2>
-                                                    <h3>{{caregiver_requirements_for_prevention_of_crisis}}</h3>
+                                                    <p>{{caregiver_requirements_for_prevention_of_crisis}}</p>
                                                 </div>
                                             </div>
                                             
@@ -1354,7 +1444,7 @@
                                         </div>
                                         <br>
                                         <br>
-                                        <h3 class="card-title">Please check risk factors as applicable.</h3>
+                                        <p class="card-title">Please check risk factors as applicable.</p>
                                         <div class="col-xs-12">  
                                             <div class="row">  
                                                 
@@ -1549,7 +1639,7 @@
                                                 
                                             </div>
                                         </div>
-                                        <h3 class="card-title">Suicidality.</h3>
+                                        <p class="card-title">Suicidality.</p>
                                         <div class="col-xs-12">  
                                             <div class="row">  
                                                 
@@ -1617,7 +1707,7 @@
                                                 
                                             </div>
                                         </div>
-                                        <h3 class="card-title">Homicidality.</h3>
+                                        <p class="card-title">Homicidality.</p>
                                         <div class="col-xs-12">  
                                             <div class="row">  
                                                 
@@ -1744,31 +1834,31 @@
                                             <div class="col-xs-12 col-sm-3">
                                                 <div class="detail-personal">
                                                     <h2>cpt</h2>
-                                                    <h3>{{item.cpt}}</h3>
+                                                    <p>{{item.cpt}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-3">
                                                 <div class="detail-personal">
                                                     <h2>num units</h2>
-                                                    <h3>{{item.num_units}}</h3>
+                                                    <p>{{item.num_units}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-3">
                                                 <div class="detail-personal">
                                                     <h2>breakdown per week</h2>
-                                                    <h3>{{item.breakdown_per_week}}</h3>
+                                                    <p>{{item.breakdown_per_week}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-3">
                                                 <div class="detail-personal">
                                                     <h2>location</h2>
-                                                    <h3>{{item.location}}</h3>
+                                                    <p>{{item.location}}</p>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 ">
                                                 <div class="detail-personal">
                                                     <h2>description service</h2>
-                                                    <h3>{{item.description_service}}</h3>
+                                                    <p>{{item.description_service}}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -1795,7 +1885,7 @@
                                         <div class="col-xs-12 col-sm-3">
                                             <div class="detail-personal">
                                                 <h2>Analyst Signature</h2>
-                                                <!-- <h3>{{analyst_signature}}</h3> -->
+                                                <!-- <p>{{analyst_signature}}</p> -->
                                                 <!-- <img  [src]="analyst_signature" style="width:100%"  > -->
                                                 <img  src="{{imagenSerUrl}}{{analyst_signature}}" style="width:100%" alt=""  >
                                                 <!-- <img  [src]="imageData2" style="width:100%"  > -->
@@ -1805,13 +1895,13 @@
                                         <div class="col-xs-12 col-sm-3">
                                             <div class="detail-personal">
                                                 <h2>Analyst Signature date</h2>
-                                                <h3>{{analyst_signature_date | date}}</h3>
+                                                <p>{{analyst_signature_date | date}}</p>
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-sm-3">
                                             <div class="detail-personal">
                                                 <h2>Parent/Guardian/Caregiver Signature</h2>
-                                                <!-- <h3>{{parent_guardian_signature}}</h3> -->
+                                                <!-- <p>{{parent_guardian_signature}}</p> -->
                                                 <!-- <img  [src]="parent_guardian_signature" style="width:100%"  > -->
                                                 <img  src="{{imagenSerUrl}}{{parent_guardian_signature}}" style="width:100%" alt=""  >
                                                 <!-- <img  [src]="imageData" style="width:100%"  > -->
@@ -1820,7 +1910,7 @@
                                         <div class="col-xs-12 col-sm-3">
                                             <div class="detail-personal">
                                                 <h2>Guardian Signature day</h2>
-                                                <h3>{{parent_guardian_signature_date | date}}</h3>
+                                                <p>{{parent_guardian_signature_date | date}}</p>
                                             </div>
                                         </div>
                                             

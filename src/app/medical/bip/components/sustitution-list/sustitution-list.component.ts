@@ -71,6 +71,8 @@ export class SustitutionListComponent {
   
   public sustitution_date_sto:Date ;
   public sustitution_date_lto:Date;
+  public end_sustitution_date_sto:Date;
+  public end_sustitution_date_lto:Date;
   public sustitution_status_sto:any;
   public sustitution_status_lto:any;
   public sustitution_status_sto_edit:any;
@@ -186,7 +188,7 @@ export class SustitutionListComponent {
 
   //selectores 
 
-  createGoal(){debugger
+  createGoal(){
     this.createSelected = true;
 
     this.goal = '',
@@ -260,6 +262,7 @@ export class SustitutionListComponent {
       sustitution_status_sto: this.sustitution_status_sto,
       sustitution_status_sto_edit: this.sustitution_status_sto,
       sustitution_date_sto: this.sustitution_date_sto,
+      end_sustitution_date_sto: this.end_sustitution_date_sto,
       sustitution_decription_sto: this.sustitution_decription_sto,
     })
     this.sustitution_sto = '';
@@ -268,6 +271,7 @@ export class SustitutionListComponent {
     this.sustitution_status_sto = '';
     this.sustitution_status_sto_edit = '';
     this.sustitution_date_lto = null;
+    this.end_sustitution_date_sto = null;
     this.sustitution_decription_sto = '';
   }
 
@@ -279,11 +283,13 @@ export class SustitutionListComponent {
       sustitution_lto: this.sustitution_lto,
       sustitution_status_lto: this.sustitution_status_lto,
       sustitution_date_lto: this.sustitution_date_lto,
+      end_sustitution_date_lto: this.end_sustitution_date_lto,
       sustitution_decription_lto: this.sustitution_decription_lto,
     })
     this.sustitution_lto = '';
     this.sustitution_status_lto = '';
     this.sustitution_date_lto = null;
+    this.end_sustitution_date_lto = null;
     this.sustitution_decription_lto = '';
   }
 

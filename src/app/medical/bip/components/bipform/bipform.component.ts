@@ -69,6 +69,7 @@ export class BipformComponent {
   public baseline_level: any;
   public baseline_date: any;
   public initial_interesting: any;
+  public current_intensity: any;
 
   public maladaptive_edit: any = [];
   public medication_edit: any = [];
@@ -76,6 +77,7 @@ export class BipformComponent {
   public prevalent_edit: any = [];
   public sensory_edit: any = [];
   public escape_edit: any = [];
+  public intervention_edit: any = [];
   
   
   
@@ -145,6 +147,8 @@ export class BipformComponent {
   ncr:any;
   shaping:any;
   chaining:any;
+  title:any;
+  descriptionIntervention:any;
   
   
   patient_selected:any;
@@ -271,19 +275,79 @@ export class BipformComponent {
     this.documents.splice(i,1);
   }
 
+  addMedication(){
+
+    if (this.phiysical_and_medical_status) {
+      this.phiysical_and_medical_status.push({
+        index: this.phiysical_and_medical_status.length + 1,
+        medication: this.medication,
+      dose: this.dose,
+      frecuency: this.frecuency,
+      reason: this.reason,
+      preescribing_physician: this.preescribing_physician,
+      
+      })
+    } else {
+      this.phiysical_and_medical_status = [{
+        index: 1, // initial index
+        medication: this.medication,
+        dose: this.dose,
+        frecuency: this.frecuency,
+        reason: this.reason,
+        preescribing_physician: this.preescribing_physician,
+      
+      }]
+    }
+    
+    this.medication = '';
+    this.dose = '';
+    this.frecuency = '';
+    this.reason = '';
+    this.preescribing_physician = '';
+  }
+
+  deleteMedication(i:any){
+    this.phiysical_and_medical_status.splice(i,1);
+  }
+
+  updateItemListMedications(medication:any){
+    this.medication_edit = medication;
+        Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    
+  }
+
   addMaladaptive(){
-    this.maladaptives.push({
-      maladaptive_behavior: this.maladaptive_behavior,
+
+    if (this.maladaptives) {
+      this.maladaptives.push({
+        index: this.maladaptives.length + 1,
+        maladaptive_behavior: this.maladaptive_behavior,
       topografical_definition: this.topografical_definition,
       baseline_level: this.baseline_level,
       baseline_date: this.baseline_date,
       initial_interesting: this.initial_interesting,
-    })
+      current_intensity: this.current_intensity,
+      
+      })
+    } else {
+      this.maladaptives = [{
+        index: 1, // initial index
+        maladaptive_behavior: this.maladaptive_behavior,
+      topografical_definition: this.topografical_definition,
+      baseline_level: this.baseline_level,
+      baseline_date: this.baseline_date,
+      initial_interesting: this.initial_interesting,
+      current_intensity: this.current_intensity,
+      
+      }]
+    }
+   
     this.maladaptive_behavior = '';
     this.topografical_definition = '';
     this.baseline_level = '';
     this.baseline_date = '';
     this.initial_interesting = '';
+    this.current_intensity = '';
   }
 
   deleteMaladaptive(i:any){
@@ -476,6 +540,7 @@ export class BipformComponent {
   
   updateItemListAttention(attent:any){
     this.maladaptive_edit = attent;
+    
         Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
     
   }
@@ -483,58 +548,51 @@ export class BipformComponent {
   //Access to Tangibles/Attention
 
 
-  addMedication(){
-    this.phiysical_and_medical_status.push({
-      medication: this.medication,
-      dose: this.dose,
-      frecuency: this.frecuency,
-      reason: this.reason,
-      preescribing_physician: this.preescribing_physician,
-    })
-    this.medication = '';
-    this.dose = '';
-    this.frecuency = '';
-    this.reason = '';
-    this.preescribing_physician = '';
-  }
-
-  deleteMedication(i:any){
-    this.phiysical_and_medical_status.splice(i,1);
-  }
-
-  updateItemListMedications(medication:any){
-    this.medication_edit = medication;
-        Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
-    
-  }
+ 
 
   addIntervention(){
-    this.interventions.push({
-      pairing: this.pairing,
-      premack_principal: this.premack_principal,
-      response_block: this.response_block,
-      dro: this.dro,
-      dra: this.dra,
-      errorless_teaching: this.errorless_teaching,
-      redirection: this.redirection,
-      ncr: this.ncr,
-      shaping: this.shaping,
-      chaining: this.chaining,
-    })
-    this.pairing = '';
-    this.premack_principal = '';
-    this.response_block = '';
-    this.dro = '';
-    this.dra = '';
-    this.errorless_teaching = '';
-    this.redirection = '';
-    this.ncr = '';
-    this.shaping = '';
-    this.chaining = '';
+    if (this.interventions) {
+      this.interventions.push({
+        index: this.interventions.length + 1,
+        title: this.title,
+        descriptionIntervention: this.descriptionIntervention,
+      
+      })
+    } else {
+      this.interventions = [{
+        index: 1, // initial index
+        title: this.title,
+        descriptionIntervention: this.descriptionIntervention,
+      
+      }]
+    }
+    
+    this.title = '';
+    this.descriptionIntervention = '';
   }
 
   deleteIntervention(i:any){
     this.interventions.splice(i,1);
+    this.interventions.forEach((intervention, index) => {
+      intervention.index = index + 1;
+    });
+  }
+
+  updateIntervention(item:any){
+    this.intervention_edit = item;
+        Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    
+  }
+
+  seleccionarParaEdit(item:any){
+    this.intervention_edit = item;
+    console.log(this.intervention_edit);
+        
+    
+  }
+
+  closeReload(){
+    this.intervention_edit = null;
   }
 
   
@@ -615,6 +673,7 @@ export class BipformComponent {
       attention   : this.accesstoAttention,
       sensory   : this.accesstoSensories,
       escape   : this.accesstoEscape,
+      interventions   : this.interventions,
 
       phiysical_and_medical   : this.phiysical_and_medical,
 

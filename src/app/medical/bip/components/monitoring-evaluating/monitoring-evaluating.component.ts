@@ -22,6 +22,7 @@ export class MonitoringEvaluatingComponent {
   public goal: any;
   public lto: any;
   public date: Date;
+  public end_date: Date;
   public decription: any;
   public status: any;
   public rbt_training_goals: any = [];
@@ -131,18 +132,20 @@ export class MonitoringEvaluatingComponent {
       lto: this.lto,
       status: this.status,
       date: this.date,
+      end_date: this.end_date,
     })
     this.lto = '';
     this.status = '';
     this.date = null;
+    this.end_date = null;
   }
 
   deleteDocument(i:any){
     this.training_goals.splice(i,1);
   }
 
-  cambiarStatusSto(goalsto:any){
-    this.monitoring_status_sto_edit = goalsto;
+  cambiarStatusSto(caregiver:any){
+    this.monitoring_status_sto_edit = caregiver;
     // console.log(this.monitoring_status_sto_edit.status_sto);
 
     let data ={

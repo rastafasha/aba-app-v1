@@ -222,6 +222,8 @@ export class BipProfileComponent {
         this.accesstoEscape =this.bip_selected.escape ? this.bip_selected.escape: null; 
         this.accesstoSensory =this.bip_selected.sensory ? this.bip_selected.sensory: null; 
         
+        this.interventions =this.bip_selected.interventions ? this.bip_selected.interventions: null; 
+        
         this.phiysical_and_medical =this.bip_selected.phiysical_and_medical;
         this.phiysical_and_medical_status =this.bip_selected.phiysical_and_medical_status;
         

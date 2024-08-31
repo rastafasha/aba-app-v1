@@ -70,8 +70,10 @@ export class ReductionGoalFormComponent {
   public status_sto_edit:any;
   public status_lto_edit:any;
   public status_lto:any;
-  public date_sto:Date ;
-  public date_lto:Date;
+  public initial_date_sto:Date ;
+  public end_date_sto:Date ;
+  public initial_date_lto:Date;
+  public end_date_lto:Date;
 
 
   //revisar
@@ -276,13 +278,15 @@ export class ReductionGoalFormComponent {
       sto: this.sto,
       status_sto: this.status_sto,
       status_sto_edit: this.status_sto,
-      date_sto: this.date_sto,
+      initial_date_sto: this.initial_date_sto,
+      end_date_sto: this.end_date_sto,
       decription_sto: this.decription_sto,
     })
     this.sto = '';
     this.status_sto = '';
     this.status_sto_edit = '';
-    this.date_lto = null;
+    this.initial_date_sto = null;
+    this.end_date_sto = null;
     this.decription_sto = '';
   }
 
@@ -294,12 +298,14 @@ export class ReductionGoalFormComponent {
     this.gollto.push({
       lto: this.lto,
       status_lto: this.status_lto,
-      date_lto: this.date_lto,
+      initial_date_lto: this.initial_date_lto,
+      end_date_lto: this.end_date_lto,
       decription_lto: this.decription_lto,
     })
     this.lto = '';
     this.status_lto = '';
-    this.date_lto = null;
+    this.initial_date_lto = null;
+    this.end_date_lto = null;
     this.decription_lto = '';
   }
 

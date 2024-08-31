@@ -4,7 +4,10 @@ import { routes } from 'src/app/shared/routes/routes';
 import { DoctorService } from '../service/doctor.service';
 import Swal from 'sweetalert2';
 import { Location } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
+const url_servicios =environment.url_servicios
 @Component({
   selector: 'app-add-doctor',
   templateUrl: './add-doctor.component.html',
@@ -83,12 +86,14 @@ export class AddDoctorComponent {
   public user: any;
   public doctor_id: any;
   public location: any;
+  public emailExists: boolean;
 
   
   constructor(
     public doctorService:DoctorService,
     public router: Router,
     public locationBack: Location,
+    private http: HttpClient
 
   ){
 
@@ -107,6 +112,19 @@ export class AddDoctorComponent {
     }else{
       this.getConfig();
     }
+  }
+
+  checkEmailExistence(): void {
+    this.http.get(`${url_servicios}/doctors/check-email-exist/${this.email}`)
+      .subscribe((response: any) => {
+        this.emailExists = response.exist.email;
+        console.log(this.emailExists);
+        if(this.emailExists == null){
+          this.emailExists = false;
+        }else{
+          this.emailExists = true;
+        }
+      });
   }
 
   goBack() {
