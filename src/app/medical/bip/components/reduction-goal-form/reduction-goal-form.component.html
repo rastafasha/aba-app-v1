@@ -233,9 +233,9 @@
                                                                                             <div class="col-12 col-md-3 col-xl-3">
                                                                                                 <div class="form-group local-forms">
                                                                                                     <label >Initial Date<span class="login-danger">*</span></label>
-                                                                                                    <input class="form-control datetimepicker" name="initial_date_sto" [(ngModel)]="golsto_edit.date_sto" type="text" matInput [matDatepicker]="pickerDateSTO"  >
-                                                                                                    <mat-datepicker #pickerDateSTO></mat-datepicker>
-                                                                                                    <mat-datepicker-toggle matIconSuffix [for]="pickerDateSTO"></mat-datepicker-toggle>
+                                                                                                    <input class="form-control datetimepicker" name="initial_date_sto" [(ngModel)]="golsto_edit.date_sto" type="text" matInput [matDatepicker]="pickerDateSTO33"  >
+                                                                                                    <mat-datepicker #pickerDateSTO33></mat-datepicker>
+                                                                                                    <mat-datepicker-toggle matIconSuffix [for]="pickerDateSTO33"></mat-datepicker-toggle>
                                                                                                 </div>
                                                                                             </div>
                                                                                             <div class="col-12 col-md-3 col-xl-3">
@@ -524,9 +524,7 @@
                 </div>
                 <div class="col-xs-12" *ngIf="maladaptiveSelectedSon">
                     <div class="rbt-dashboard-table table-responsive mobile-table-750" >
-                        <!-- <h3 class="card-title"><b>Graphic:</b> {{maladaptive_child}}</h3>
-                        <div class="row" >
-                        </div> -->
+                        
                         <app-chart-reduction [maladaptive_behavior]="maladaptiveSelectedSon.maladaptive_behavior"  [baseline_date]="maladaptiveSelectedSon.baseline_date" [baseline_level]="maladaptiveSelectedSon.baseline_level" [initial_interesting]="maladaptiveSelectedSon.initial_interesting"></app-chart-reduction>
                     </div>
                 </div>
@@ -538,61 +536,7 @@
         </div>
         
     </div>
-    <!-- <div class="card">
-        <div class="card-body">
-            <h3 class="card-title">Target Behavior to decrease</h3>
-            <div class="col-xs-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="col-xs-12">
-                            <div class="table-responsive">
-                                <table class="table mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th>STO</th>
-                                            <th>goal</th>
-                                            <th>decription_goal</th>
-                                            <th>status</th>
-                                            <th>date</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let goalm of goals; let i = index">
-                                            <td>
-                                                {{goalm.sto}}
-                                            </td>
-                                            <td>
-                                                 {{goalm.goal}}
-                                            </td>
-                                            <td>
-                                                {{goalm.decription_goal}}
-                                            </td>
-                                            <td>
-                                                {{goalm.status}}
-                                            </td>
-                                            <td>
-                                                {{goalm.date}}
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-success btn-sm" (click)="selectedMaladaptiveSon(goalm)"><i class="fa-eye"></i></button>
-                                            </td>
-                                        </tr>
-                                        
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        
-                        
-                    </div>
-                </div>
-            </div>
-            
-            
-            
-        </div>
-        
-    </div> -->
+    
 
         
 </div>

@@ -340,9 +340,9 @@
                                                   <div class="col-12 col-md-3">
                                                       <div class="form-group local-forms">
                                                           <label >Initial Date<span class="login-danger">*</span></label>
-                                                          <input class="form-control datetimepicker" name="sustitution_date_lto" [(ngModel)]="sustitution_date_lto" type="text" matInput [matDatepicker]="pickerDateLTO"  >
-                                                          <mat-datepicker #pickerDateLTO></mat-datepicker>
-                                                          <mat-datepicker-toggle matIconSuffix [for]="pickerDateLTO"></mat-datepicker-toggle>
+                                                          <input class="form-control datetimepicker" name="sustitution_date_lto" [(ngModel)]="sustitution_date_lto" type="text" matInput [matDatepicker]="pickerDateLTO24"  >
+                                                          <mat-datepicker #pickerDateLTO24></mat-datepicker>
+                                                          <mat-datepicker-toggle matIconSuffix [for]="pickerDateLTO24"></mat-datepicker-toggle>
                                                       </div>
                                                   </div>
                                                   <div class="col-12 col-md-3">
@@ -483,7 +483,7 @@
                                                                                                         </div>
                                                                                                     </div>
                                                                                                     <div class="col-12 mb-3 doctor-submit text-end">
-                                                                                                        <button class="btn btn-primary btn-sm" (click)="addLTOGoal()">Add</button>
+                                                                                                        <button class="btn btn-primary btn-sm" (click)="updateGoalLto(gollto_edit)">Update </button>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>

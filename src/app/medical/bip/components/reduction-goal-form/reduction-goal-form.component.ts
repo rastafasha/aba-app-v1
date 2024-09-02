@@ -345,15 +345,17 @@ export class ReductionGoalFormComponent {
     if (this.gollto) {
       this.gollto.push({
         index: this.gollto.length + 1,
+        lto: this.lto,
         status_lto: this.status_lto,
-      initial_date_lto: this.initial_date_lto,
-      end_date_lto: this.end_date_lto,
-      decription_lto: this.decription_lto,
+        initial_date_lto: this.initial_date_lto,
+        end_date_lto: this.end_date_lto,
+        decription_lto: this.decription_lto,
       
       })
     } else {
       this.gollto = [{
         index: 1, // initial index
+        lto: this.lto,
         status_lto: this.status_lto,
       initial_date_lto: this.initial_date_lto,
       end_date_lto: this.end_date_lto,
