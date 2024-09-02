@@ -27,6 +27,7 @@ export class DeEscalationTecniquesComponent {
 
   public caregivers_training_goals: any = [];
   public deEscalationopts: any = [];
+  public escalation_edit: any = [];
   
   public client_id: any;
   public user: any;
@@ -128,13 +129,26 @@ export class DeEscalationTecniquesComponent {
 
 
   addDocument(){
-    this.deEscalationopts.push({
-      cpt: this.cpt,
+    if (this.deEscalationopts) {
+      this.deEscalationopts.push({
+        index: this.deEscalationopts.length + 1,
+        cpt: this.cpt,
       description_service: this.description_service,
       num_units: this.num_units,
       breakdown_per_week: this.breakdown_per_week,
       location: this.location,
-    })
+      })
+    } else {
+      this.deEscalationopts = [{
+        index: 1, // initial index
+        cpt: this.cpt,
+        description_service: this.description_service,
+        num_units: this.num_units,
+        breakdown_per_week: this.breakdown_per_week,
+        location: this.location,
+      }]
+    }
+   
     this.cpt = '';
     this.description_service = '';
     this.num_units = '';
@@ -145,6 +159,28 @@ export class DeEscalationTecniquesComponent {
   deleteDocument(i:any){
     this.deEscalationopts.splice(i,1);
   }
+
+  seleccionarParaEdit(escalation:any){debugger
+
+    const selectedEscalation = this.deEscalationopts.find((item) => item.index === escalation.index);
+    if (selectedEscalation) {
+      this.escalation_edit = selectedEscalation;
+      // Ahora puedes editar el objeto selectedCaregiver
+      selectedEscalation.nombre = 'Nuevo nombre'; // Por ejemplo
+    }
+        
+    
+  }
+
+  updateEscalation(escalation:any){
+    const index = this.deEscalationopts.findIndex((item) => item.index === escalation.index);
+    if (index !== -1) {
+      this.deEscalationopts[index] = escalation;
+      Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    }
+    
+  }
+
 
   save(){
     this.text_validation = '';

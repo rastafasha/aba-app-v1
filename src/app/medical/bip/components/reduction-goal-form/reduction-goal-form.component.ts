@@ -83,6 +83,9 @@ export class ReductionGoalFormComponent {
   goals:any = [];
   goalReductions:any = [];
 
+  golsto_edit:any = [];
+  gollto_edit:any = [];
+
   goalmaladaptive_clientId:any;
   goalReductionId:any;
 
@@ -148,7 +151,7 @@ export class ReductionGoalFormComponent {
   //si existe enviamos el client_id_goal para actualizar el goal del paciente
   getPatientGoals(patient_id){
     this.goalService.getGoalbyPatientId(patient_id).subscribe((resp:any)=>{
-      console.log('goals by patientid',resp);
+      // console.log('goals by patientid',resp);
       this.goalReductions = resp.goalReductionPatientIds.data[0] ==""?[] : resp.goalReductionPatientIds.data;
       this.goalReductionId = resp.goalReductionPatientIds.data[0].id || undefined;
       this.client_id_goal = resp.goalReductionPatientIds.data[0].client_id;
@@ -209,7 +212,7 @@ export class ReductionGoalFormComponent {
     this.goalService.listMaladaptivesGoals(this.maladaptiveSelected.maladaptive_behavior, this.patient_id).subscribe((resp:any)=>{
     //  console.log(resp);
     //  console.log('palabra maladaptive', resp.goalsmaladaptive.data[0].maladaptive);
-     
+    if (resp && resp.goalsmaladaptive && resp.goalsmaladaptive.data && resp.goalsmaladaptive.data[0]) {
       this.goalmaladaptive = resp.goalsmaladaptive.data[0];
       this.goalmaladaptiveid = resp.goalsmaladaptive.data[0].id || null;
       this.goalmaladaptive_clientId = resp.goalsmaladaptive.data[0].client_id || null;
@@ -217,16 +220,18 @@ export class ReductionGoalFormComponent {
       this.current_status = this.goalmaladaptive.current_status;
       this.golsto = resp.goalsmaladaptive.data[0].goalstos;
       this.gollto = resp.goalsmaladaptive.data[0].goalltos;
+      // ...
+    } else {
+      console.log('empty');
+      // Handle the error case, e.g., show an error message to the user
+    }
       
-
-      // console.log(this.goalmaladaptive_clientId); //devuelve el client_id guardado
-
       //si el client_id guardado no es igual al que se esta viendo en este momento, 
       //debe traer su informacion     
       //comparamos si es igual al que tiene session activa, si no lo es 
       if (this.client_id === this.goalmaladaptive_clientId  ) {
         //si no existe no recibe nada..pero esta trayendo cosas de otras personas     
-        console.log('son iguales');
+        // console.log('son iguales');
 
       }else{
         console.log('No son iguales');
@@ -273,15 +278,32 @@ export class ReductionGoalFormComponent {
 
   //listas
   addSTOGoal(){
-    this.golsto.push({
-      maladaptive: this.maladaptiveSelected.maladaptive_behavior,
+    if (this.golsto) {
+      this.golsto.push({
+        index: this.golsto.length + 1,
+        maladaptive: this.maladaptiveSelected.maladaptive_behavior,
       sto: this.sto,
       status_sto: this.status_sto,
       status_sto_edit: this.status_sto,
       initial_date_sto: this.initial_date_sto,
       end_date_sto: this.end_date_sto,
       decription_sto: this.decription_sto,
-    })
+      
+      })
+    } else {
+      this.golsto = [{
+        index: 1, // initial index
+        maladaptive: this.maladaptiveSelected.maladaptive_behavior,
+        sto: this.sto,
+        status_sto: this.status_sto,
+        status_sto_edit: this.status_sto,
+        initial_date_sto: this.initial_date_sto,
+        end_date_sto: this.end_date_sto,
+        decription_sto: this.decription_sto,
+      
+      }]
+    }
+
     this.sto = '';
     this.status_sto = '';
     this.status_sto_edit = '';
@@ -294,14 +316,52 @@ export class ReductionGoalFormComponent {
     this.golsto.splice(i,1);
   }
 
+  seleccionarParaEdit(goalst:any){
+
+    const selectedGoalSto = this.golsto.find((item) => item.index === goalst.index);
+    if (selectedGoalSto) {
+      this.golsto_edit = selectedGoalSto;
+      // Ahora puedes editar el objeto selectedCaregiver
+      selectedGoalSto.nombre = 'Nuevo nombre'; // Por ejemplo
+    }
+        
+    
+  }
+
+  updateGoalSto(goalst:any){
+    const index = this.golsto.findIndex((item) => item.index === goalst.index);
+    if (index !== -1) {
+      this.golsto[index] = goalst;
+      Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    }
+    
+  }
+
+  
+
+
+
   addLTOGoal(){
-    this.gollto.push({
-      lto: this.lto,
-      status_lto: this.status_lto,
+    if (this.gollto) {
+      this.gollto.push({
+        index: this.gollto.length + 1,
+        status_lto: this.status_lto,
       initial_date_lto: this.initial_date_lto,
       end_date_lto: this.end_date_lto,
       decription_lto: this.decription_lto,
-    })
+      
+      })
+    } else {
+      this.gollto = [{
+        index: 1, // initial index
+        status_lto: this.status_lto,
+      initial_date_lto: this.initial_date_lto,
+      end_date_lto: this.end_date_lto,
+      decription_lto: this.decription_lto,
+      
+      }]
+    }
+    
     this.lto = '';
     this.status_lto = '';
     this.initial_date_lto = null;
@@ -311,6 +371,24 @@ export class ReductionGoalFormComponent {
 
   deleteLTOGoal(i:any){
     this.gollto.splice(i,1);
+  }
+
+  seleccionarParaEditLto(goall:any){
+    const selectedGoalLto = this.gollto.find((item) => item.index === goall.index);
+    if (selectedGoalLto) {
+      this.gollto_edit = selectedGoalLto;
+      // Ahora puedes editar el objeto selectedCaregiver
+      selectedGoalLto.nombre = 'Nuevo nombre'; // Por ejemplo
+    }   
+  }
+
+  updateGoalLto(goall:any){
+    const index = this.gollto.findIndex((item) => item.index === goall.index);
+    if (index !== -1) {
+      this.gollto[index] = goall;
+      Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    }
+    
   }
 
   cambiarStatus(goalsto:any){

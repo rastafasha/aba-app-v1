@@ -115,9 +115,9 @@
                                         <div class="col-12 col-md-3 col-xl-3">
                                             <div class="form-group local-forms">
                                                 <label >End Date<span class="login-danger">*</span></label>
-                                                <input class="form-control datetimepicker" name="end_date_sto" [(ngModel)]="date_sto" type="text" matInput [matDatepicker]="pickerDateSTO"  >
-                                                <mat-datepicker #pickerDateSTO></mat-datepicker>
-                                                <mat-datepicker-toggle matIconSuffix [for]="pickerDateSTO"></mat-datepicker-toggle>
+                                                <input class="form-control datetimepicker" name="end_date_sto" [(ngModel)]="end_date_sto" type="text" matInput [matDatepicker]="pickerDateSTO2"  >
+                                                <mat-datepicker #pickerDateSTO2></mat-datepicker>
+                                                <mat-datepicker-toggle matIconSuffix [for]="pickerDateSTO2"></mat-datepicker-toggle>
                                             </div>
                                         </div>
         
@@ -151,57 +151,124 @@
                                                         <th>goal</th>
                                                         <th>description</th>
                                                         <th>status</th>
-                                                        <th>update status</th>
                                                         <th>Initial Date</th>
                                                         <th>End date</th>
+                                                        <th>Options</th>
                                                     </tr>
                                                 </thead>
-                                                <!-- *ngIf="goalReductions !== null || goalReductionId !== undefined && current_status " -->
-                                                <tbody >
-                                                    <tr *ngFor="let goalsto of golsto; let i = index">
+                                                <!--  -->
+                                                <tbody *ngIf="goalmaladaptive !== null && current_status  ">
+                                                    <tr *ngFor="let goalst of golsto; let i = index">
                                                         <td>
-                                                            {{goalsto.sto}}
+                                                            {{goalst.sto}}
                                                         </td>
                                                         <td>
-                                                             {{goalsto.maladaptive}}
+                                                             {{goalst.maladaptive}}
                                                         </td>
                                                         <td>
-                                                            {{goalsto.decription_sto}}
+                                                            {{goalst.decription_sto}}
                                                         </td>
                                                         <td>
                                                             <!-- {{goalsto.status_sto}} -->
-                                                            <span class="badge bg-success" *ngIf="goalsto.status_sto === 'inprogress'">In progress</span>
-                                                            <span class="badge bg-success" *ngIf="goalsto.status_sto === 'initiated'">Initiated</span>
-                                                            <span class="badge bg-primary" *ngIf="goalsto.status_sto === 'mastered'">Mastered</span>
-                                                            <span class="badge bg-warning" *ngIf="goalsto.status_sto === 'on hold'">On Hold</span>
-                                                            <span class="badge bg-danger" *ngIf="goalsto.status_sto === 'discontinued'">Discontinued</span>
-                                                            <span class="badge bg-warning" *ngIf="goalsto.status_sto === 'maintenance'">Maintenance</span>
+                                                            <span class="badge bg-success" *ngIf="goalst.status_sto === 'inprogress'">In progress</span>
+                                                            <span class="badge bg-success" *ngIf="goalst.status_sto === 'initiated'">Initiated</span>
+                                                            <span class="badge bg-primary" *ngIf="goalst.status_sto === 'mastered'">Mastered</span>
+                                                            <span class="badge bg-warning" *ngIf="goalst.status_sto === 'on hold'">On Hold</span>
+                                                            <span class="badge bg-danger" *ngIf="goalst.status_sto === 'discontinued'">Discontinued</span>
+                                                            <span class="badge bg-warning" *ngIf="goalst.status_sto === 'maintenance'">Maintenance</span>
                                                         </td>
                                                         <td>
-                                                            <div class="form-group local-forms">
-                                                                <select
-                                                                    class="form-control form-select-solid fw-bolder"
-                                                                    name="status_sto_edit" [(ngModel)]="goalsto.status_sto" [ngModelOptions]="{standalone: true}"  (change)="cambiarStatus(goalsto)">
-                                                                    <option>-- Select --</option>
-                                                                      <option value="inprogress">in progress</option>
-                                                                      <option value="initiated">Initiated</option>
-                                                                      <option value="mastered">mastered</option>
-                                                                      <option value="on hold">On Hold</option>
-                                                                      <option value="discontinued">Discontinued</option>
-                                                                      <option value="maintenance">Maintenance</option>
-                                                                      </select>
-                                                            </div>
+                                                            {{goalst.date_sto | date}}
                                                         </td>
                                                         <td>
-                                                            {{goalsto.date_sto | date}}
-                                                        </td>
-                                                        <td>
-                                                            {{goalsto.end_date_sto | date}}
+                                                            {{goalst.end_date_sto | date}}
                                                         </td>
                                                         <td>
                                                             <!-- <button class="btn btn-outline-success btn-sm" (click)="selectedMaladaptiveSon(goalsto)"><i class="fa fa-bar-chart"></i></button> -->
-                                                            <button class="btn btn-outline-danger btn-sm" (click)="deleteSTOGoal(goalsto)">x</button>
+                                                            
+                                                            <button class="btn btn-outline-success btn-sm" (click)="seleccionarParaEdit(goalst)" 
+                                                                data-bs-toggle="modal" [attr.data-bs-target]="'#edit-goalst-'+goalst.i"><i class="fa fa-pencil"></i> Edit</button>
+                                                            <button class="btn btn-outline-danger btn-sm" (click)="deleteSTOGoal(goalst)"><i class="fa fa-trash"></i> Delete</button>
                                                         </td>
+
+                                                         <!-- modal edit STO-->
+           
+                                                         <div [id]="'edit-goalst-'+goalst.i" class="modal  fade" role="dialog">
+                                                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="modalEscape">{{golsto_edit?.sto}}</h5>
+                                                                        <a href="javascript:void(0);"  data-bs-dismiss="modal" aria-label="Close" class="btn btn-white me-1"
+                                                                            >Close</a>
+                                                                    </div>
+                                                                    <div class="modal-body text-center">
+                                                                        <div class="col-xs-12 ">
+                                                                            <form action="">
+                                                                                <div class="row">
+                                                                                    <div class="col-xs-12">
+                                                                                        <div class="row align-items-center" >
+                                                                                            
+                                                                                            <div class="col-xs-12 col-md-3 col-xl-3">
+                                                                                                <div class="form-group local-forms">
+                                                                                                    <label>STO <span class="login-danger">*</span></label>
+                                                                                                    <input class="form-control"  name="sto"   [(ngModel)]="golsto_edit.sto" type="text"  >
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-12 col-md-3 col-xl-3">
+                                                                                                <div class="form-group local-forms">
+                                                                                                    <label >Status<span class="login-danger">*</span></label>
+                                                                                                    <select
+                                                                                                        class="form-control form-select-solid fw-bolder"
+                                                                                                        name="status_sto" [(ngModel)]="golsto_edit.status_sto" [ngModelOptions]="{standalone: true}" >
+                                                                                                        <option>-- Select --</option>
+                                                                                                        <option value="inprogress">in progress</option>
+                                                                                                        <option value="initiated">Initiated</option>
+                                                                                                        <option value="mastered">mastered</option>
+                                                                                                        <option value="on hold">On Hold</option>
+                                                                                                        <option value="discontinued">Discontinued</option>
+                                                                                                        <option value="maintenance">Maintenance</option>
+                                                                                                          </select>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-12 col-md-3 col-xl-3">
+                                                                                                <div class="form-group local-forms">
+                                                                                                    <label >Initial Date<span class="login-danger">*</span></label>
+                                                                                                    <input class="form-control datetimepicker" name="initial_date_sto" [(ngModel)]="golsto_edit.date_sto" type="text" matInput [matDatepicker]="pickerDateSTO"  >
+                                                                                                    <mat-datepicker #pickerDateSTO></mat-datepicker>
+                                                                                                    <mat-datepicker-toggle matIconSuffix [for]="pickerDateSTO"></mat-datepicker-toggle>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-12 col-md-3 col-xl-3">
+                                                                                                <div class="form-group local-forms">
+                                                                                                    <label >End Date<span class="login-danger">*</span></label>
+                                                                                                    <input class="form-control datetimepicker" name="end_date_sto" [(ngModel)]="golsto_edit.end_date_sto" type="text" matInput [matDatepicker]="pickerDateSTO2"  >
+                                                                                                    <mat-datepicker #pickerDateSTO2></mat-datepicker>
+                                                                                                    <mat-datepicker-toggle matIconSuffix [for]="pickerDateSTO2"></mat-datepicker-toggle>
+                                                                                                </div>
+                                                                                            </div>
+                                                            
+                                                                                        </div>
+                                                                                        <div class="row align-items-center" >
+                                                                                            <div class="col-xs-12">
+                                                                                                <div class="form-group local-forms">
+                                                                                                    <label>Description <span class="login-danger">*</span></label>
+                                                                                                    <textarea class="form-control" name="decription_sto" [(ngModel)]="golsto_edit.decription_sto" rows="4" cols="30"></textarea>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-12 mb-3 doctor-submit text-end">
+                                                                                            <button class="btn btn-primary btn-sm" (click)="updateGoalSto(golsto_edit)">Update Item</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- modal edit STO end-->
                                                     </tr>
                                                     
                                                 </tbody>
@@ -284,9 +351,9 @@
                                                         <th>LTO</th>
                                                         <th>decription</th>
                                                         <th>status</th>
-                                                        <th>update status</th>
                                                         <th>Initial date</th>
                                                         <th>End date</th>
+                                                        <th>Options</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody *ngIf="goalmaladaptive !== null && current_status  ">
@@ -306,21 +373,7 @@
                                                             <span class="badge bg-danger" *ngIf="goall.status_lto === 'discontinued'">Discontinued</span>
                                                             <span class="badge bg-warning" *ngIf="goall.status_lto === 'maintenance'">Maintenance</span>
                                                         </td>
-                                                        <td>
-                                                            <div class="form-group local-forms">
-                                                                <select
-                                                                    class="form-control form-select-solid fw-bolder"
-                                                                    name="status_lto_edit" [(ngModel)]="goall.status_lto" [ngModelOptions]="{standalone: true}"  (change)="cambiarStatusLto(goallto)">
-                                                                    <option>-- Select --</option>
-                                                                      <option value="inprogress">in progress</option>
-                                                                      <option value="initiated">Initiated</option>
-                                                                      <option value="mastered">mastered</option>
-                                                                      <option value="on hold">On Hold</option>
-                                                                      <option value="discontinued">Discontinued</option>
-                                                                      <option value="maintenance">Maintenance</option>
-                                                                      </select>
-                                                            </div>
-                                                        </td>
+                                                        
                                                         <td>
                                                             {{goall.initial_date_lto | date}}
                                                         </td>
@@ -328,9 +381,91 @@
                                                             {{goall.end_date_lto | date}}
                                                         </td>
                                                         <td>
-                                                            <!-- <button class="btn btn-outline-success btn-sm" (click)="selectedMaladaptiveSon(goallto)"><i class="fa fa-bar-chart"></i></button> -->
-                                                            <button class="btn btn-outline-danger btn-sm" (click)="deleteLTOGoal(goall)">x</button>
+                                                            <button class="btn btn-outline-success btn-sm" (click)="seleccionarParaEditLto(goall)" 
+                                                                data-bs-toggle="modal" [attr.data-bs-target]="'#edit-goall-'+goall.i"><i class="fa fa-pencil"></i> Edit</button>
+                                                            <button class="btn btn-outline-danger btn-sm" (click)="deleteLTOGoal(goall)"><i class="fa fa-trash"></i> Delete</button>
                                                         </td>
+
+                                                        <!-- modal edit Lto-->
+           
+                                                        <div [id]="'edit-goall-'+goall.i" class="modal  fade" role="dialog">
+                                                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="modalEscape">{{gollto_edit?.sto}}</h5>
+                                                                        <a href="javascript:void(0);"  data-bs-dismiss="modal" aria-label="Close" class="btn btn-white me-1"
+                                                                            >Close</a>
+                                                                    </div>
+                                                                    <div class="modal-body text-center">
+                                                                        <div class="col-xs-12 ">
+                                                                            <form action="">
+                                                                                <!--  lto -->
+                                                                                <div class="row">
+                                                                                    <div class="col-xs-12">
+                                                                                        <div class="row align-items-center" >
+                                                                                            <h3 class="card-title">LTO</h3>
+                                                                                            
+                                                                                            <div class="col-xs-12 col-md-3">
+                                                                                                <div class="form-group local-forms">
+                                                                                                    <label>LTO <span class="login-danger">*</span></label>
+                                                                                                    <input class="form-control"  name="lto"   [(ngModel)]="gollto_edit.lto" type="text"  >
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-12 col-md-3">
+                                                                                                <div class="form-group local-forms">
+                                                                                                    <label >Status<span class="login-danger">*</span></label>
+                                                                                                    <select
+                                                                                                        class="form-control form-select-solid fw-bolder"
+                                                                                                        name="status_lto" [ngModelOptions]="{standalone: true}"  [(ngModel)]="gollto_edit.status_lto">
+                                                                                                        <option>-- Select --</option>
+                                                                                                        <option value="inprogress">in progress</option>
+                                                                                                        <option value="initiated">Initiated</option>
+                                                                                                        <option value="mastered">mastered</option>
+                                                                                                        <option value="on hold">On Hold</option>
+                                                                                                        <option value="discontinued">Discontinued</option>
+                                                                                                        <option value="maintenance">Maintenance</option>
+                                                                                                        </select>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-12 col-md-3">
+                                                                                                <div class="form-group local-forms">
+                                                                                                    <label >Initial Date<span class="login-danger">*</span></label>
+                                                                                                    <input class="form-control datetimepicker" name="initial_date_lto" [(ngModel)]="gollto_edit.initial_date_lto" type="text" matInput [matDatepicker]="pickerDateLTO"  >
+                                                                                                    <mat-datepicker #pickerDateLTO></mat-datepicker>
+                                                                                                    <mat-datepicker-toggle matIconSuffix [for]="pickerDateLTO"></mat-datepicker-toggle>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-12 col-md-3">
+                                                                                                <div class="form-group local-forms">
+                                                                                                    <label >End Date<span class="login-danger">*</span></label>
+                                                                                                    <input class="form-control datetimepicker" name="end_date_lto" [(ngModel)]="gollto_edit.end_date_lto" type="text" matInput [matDatepicker]="pickerDateLTO1"  >
+                                                                                                    <mat-datepicker #pickerDateLTO1></mat-datepicker>
+                                                                                                    <mat-datepicker-toggle matIconSuffix [for]="pickerDateLTO1"></mat-datepicker-toggle>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="row align-items-center" >
+                                                                                            <div class="col-xs-12">
+                                                                                                <div class="form-group local-forms">
+                                                                                                    <label>Description LTO <span class="login-danger">*</span></label>
+                                                                                                    <textarea class="form-control" name="decription_lto" [(ngModel)]="gollto_edit.decription_lto" rows="4" cols="30"></textarea>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-12 mb-3 doctor-submit text-end">
+                                                                                            <button class="btn btn-primary btn-sm" (click)="updateGoalLto(gollto_edit)">Update Item</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <!-- fin  lto -->
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- modal edit Lto end-->
                                                     </tr>
                                                     
                                                 </tbody>

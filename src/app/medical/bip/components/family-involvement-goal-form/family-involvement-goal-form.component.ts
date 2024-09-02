@@ -44,6 +44,7 @@ export class FamilyInvolvementGoalFormComponent {
   public client_id_goalFamilyEnvolments: any;
   public goalFamilyEnvolmentid: any;
   public goalFamilyid: any;
+  public selectedCaregiver: any= [];
 
   constructor(
     public bipService:BipService,
@@ -160,11 +161,15 @@ export class FamilyInvolvementGoalFormComponent {
     this.caregivers.splice(i,1);
   }
 
-  seleccionarParaEdit(caregiver:any){
-    this.family_edit = caregiver;
-    console.log(this.family_edit);
-        
-    
+  seleccionarParaEdit(caregiver: any) {
+    const selectedCaregiver = this.caregivers.find((item) => item.index === caregiver.index);
+    if (selectedCaregiver) {
+      this.family_edit = selectedCaregiver;
+      this.selectedCaregiver = selectedCaregiver;
+      // Ahora puedes editar el objeto selectedCaregiver
+      selectedCaregiver.nombre = 'Nuevo nombre'; // Por ejemplo
+      console.log('Objeto seleccionado:', this.selectedCaregiver);
+    }
   }
 
   cambiarStatusSto(caregiver:any){
@@ -173,10 +178,22 @@ export class FamilyInvolvementGoalFormComponent {
     
   }
 
-  cambiarStatus(serv:any){
-    this.maladaptive_edit = serv;
-        Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
-    
+  updateItem(caregiver:any, ){
+    const index = this.caregivers.findIndex((item) => item.index === caregiver.index);
+    if (index !== -1) {
+      this.caregivers[index] = caregiver;
+      Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    }
+  }
+
+
+  closeReload(){
+    this.caregiver_goal = '';
+    this.outcome_measure = '';
+    this.criteria = '';
+    this.initiation = null;
+    this.end_date = null;
+    this.current_status = '';
   }
 
   save(){

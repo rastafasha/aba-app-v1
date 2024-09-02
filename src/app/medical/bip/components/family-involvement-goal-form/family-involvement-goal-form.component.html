@@ -16,60 +16,62 @@
                                 <h4 class="card-title">Caregiver Training Goals</h4>
                                 <div class="row align-items-center" >
                                     <div class="col-xs-12">
-                                        <div class="row">
-                                            
-                                            <div class="col-12 col-sm-6">
-                                                <div class="form-group local-forms">
-                                                    <label>Caregiver Goal <span class="login-danger">*</span></label>
-                                                    <textarea class="form-control" name="caregiver_goal" [(ngModel)]="caregiver_goal" rows="4" cols="30"></textarea>
+                                        <form autocomplete="off">
+                                            <div class="row">
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group local-forms">
+                                                        <label>Caregiver Goal <span class="login-danger">*</span></label>
+                                                        <textarea class="form-control" name="caregiver_goal" [(ngModel)]="caregiver_goal" rows="4" cols="30"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-6">
+                                                    <div class="form-group local-forms">
+                                                        <label>Outcome measure <span class="login-danger">*</span></label>
+                                                        <textarea class="form-control" name="outcome_measure" [(ngModel)]="outcome_measure" rows="4" cols="30"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-3">  
+                                                    <div class="form-group local-forms">
+                                                        <label >Criteria<span class="login-danger">*</span></label>
+                                                        <input class="form-control" name="criteria"  [(ngModel)]="criteria" type="text"  >
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-3">
+                                                    <div class="form-group local-forms">
+                                                        <label >Initiation<span class="login-danger">*</span></label>
+                                                        <input class="form-control datetimepicker" autocomplete="false" [ngModelOptions]="{standalone: true}" name="initiation"  [(ngModel)]="initiation" type="text" matInput [matDatepicker]="pickerInitiation"  >
+                                                        <mat-datepicker #pickerInitiation></mat-datepicker>
+                                                        <mat-datepicker-toggle matIconSuffix [for]="pickerInitiation"></mat-datepicker-toggle>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-sm-3">
+                                                    <div class="form-group local-forms">
+                                                        <label >End Date <span class="login-danger">*</span></label>
+                                                        <input class="form-control datetimepicker"  name="end_date" [ngModelOptions]="{standalone: true}" [(ngModel)]="end_date" type="text" matInput [matDatepicker]="picker"  >
+                                                        <mat-datepicker #picker></mat-datepicker>
+                                                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-3">  
+                                                    <div class="form-group local-forms">
+                                                        <label >Current Status<span class="login-danger">*</span></label>
+                                                        <select class="form-control form-select-solid fw-bolder"
+                                                        name="current_status" [(ngModel)]="current_status" 
+                                                        placeholder="state">
+                                                        <option>-- Select --</option>
+                                                        <option value="new">New</option>
+                                                        <option value="in progress">In Progress</option>
+                                                        <option value="mastered date">Mastered Date</option>
+                                                        <option value="initiate date">Initiate Date</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 mb-3 doctor-submit text-end">
+                                                    <button class="btn btn-primary btn-sm" (click)="addDocument()">Update List</button>
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-sm-6">
-                                                <div class="form-group local-forms">
-                                                    <label>Outcome measure <span class="login-danger">*</span></label>
-                                                    <textarea class="form-control" name="outcome_measure" [(ngModel)]="outcome_measure" rows="4" cols="30"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-3">  
-                                                <div class="form-group local-forms">
-                                                    <label >Criteria<span class="login-danger">*</span></label>
-                                                    <input class="form-control" name="criteria"  [(ngModel)]="criteria" type="text"  >
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-md-3">
-                                                <div class="form-group local-forms">
-                                                    <label >Initiation<span class="login-danger">*</span></label>
-                                                    <input class="form-control datetimepicker" autocomplete="false" [ngModelOptions]="{standalone: true}" name="initiation"  [(ngModel)]="initiation" type="text" matInput [matDatepicker]="pickerInitiation"  >
-                                                    <mat-datepicker #pickerInitiation></mat-datepicker>
-                                                    <mat-datepicker-toggle matIconSuffix [for]="pickerInitiation"></mat-datepicker-toggle>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 col-sm-3">
-                                                <div class="form-group local-forms">
-                                                    <label >End Date <span class="login-danger">*</span></label>
-                                                    <input class="form-control datetimepicker"  name="end_date" [ngModelOptions]="{standalone: true}" [(ngModel)]="end_date" type="text" matInput [matDatepicker]="picker"  >
-                                                    <mat-datepicker #picker></mat-datepicker>
-                                                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-3">  
-                                                <div class="form-group local-forms">
-                                                    <label >Current Status<span class="login-danger">*</span></label>
-                                                    <select class="form-control form-select-solid fw-bolder"
-                                                    name="current_status" [(ngModel)]="current_status" 
-                                                    placeholder="state">
-                                                    <option>-- Select --</option>
-                                                    <option value="new">New</option>
-                                                    <option value="in progress">In Progress</option>
-                                                    <option value="mastered date">Mastered Date</option>
-                                                    <option value="initiate date">Initiate Date</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-12 mb-3 doctor-submit text-end">
-                                                <button class="btn btn-primary btn-sm" (click)="addDocument()">Update List</button>
-                                            </div>
-                                        </div>
+
+                                        </form>
                                     </div>
                                     <div class="col-xs-12 ">
                                         <div class="table-responsive">
@@ -111,7 +113,7 @@
                                                              
                                                         </td>
                                                         <td>
-                                                            <button class="btn btn-outline-success btn-sm" (click)="seleccionarParaEdit(caregiver,i)" 
+                                                            <button class="btn btn-outline-success btn-sm" (click)="seleccionarParaEdit(caregiver)" 
                                                             data-bs-toggle="modal" [attr.data-bs-target]="'#edit-family-'+caregiver.i"
                                                             ><i class="fa fa-pencil"></i> Edit</button>
                                                             <button class="btn btn-outline-danger btn-sm" (click)="deleteDocument(i)">x Delete</button>
@@ -123,67 +125,69 @@
                                                             <div class="modal-dialog modal-dialog-centered modal-lg">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h5 class="modal-title" id="modalFamily">{{caregiver.caregiver_goal}}</h5>
-                                                                        <a href="javascript:void(0);" (click)="closeReload()" class="btn btn-white me-1"
-                                                                            data-bs-dismiss="modal">Close</a>
+                                                                        <h5 class="modal-title" id="modalFamily">{{selectedCaregiver.caregiver_goal}} | {{selectedCaregiver.i}}</h5>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                     </div>
                                                                     <div class="modal-body text-center">
                                                                         <div class="col-xs-12 ">
-                                                                            <div class="row">
-                                            
-                                                                                <div class="col-12 col-sm-6">
-                                                                                    <div class="form-group local-forms">
-                                                                                        <label>Caregiver Goal <span class="login-danger">*</span></label>
-                                                                                        <textarea class="form-control" name="caregiver_goal_edit" 
-                                                                                         [(ngModel)]="caregiver.caregiver_goal" rows="4" cols="30"></textarea>
+                                                                            <form autocomplete="off">
+                                                                                <div class="row">
+                                                
+                                                                                    <div class="col-12 col-sm-6">
+                                                                                        <div class="form-group local-forms">
+                                                                                            <label>Caregiver Goal <span class="login-danger">*</span></label>
+                                                                                            <textarea class="form-control" name="caregiver_goal_edit" 
+                                                                                             [(ngModel)]="selectedCaregiver.caregiver_goal" rows="4" cols="30"></textarea>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-12 col-sm-6">
+                                                                                        <div class="form-group local-forms">
+                                                                                            <label>Outcome measure <span class="login-danger">*</span></label>
+                                                                                            <textarea class="form-control" name="outcome_measure_edit" [(ngModel)]="selectedCaregiver.outcome_measure" rows="4" cols="30"></textarea>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-xs-12 col-sm-3">  
+                                                                                        <div class="form-group local-forms">
+                                                                                            <label >Criteria<span class="login-danger">*</span></label>
+                                                                                            <input class="form-control" name="criteria_edit"  [(ngModel)]="selectedCaregiver.criteria" type="text"  >
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-12 col-md-3">
+                                                                                        <div class="form-group local-forms">
+                                                                                            <label >Initiation<span class="login-danger">*</span></label>
+                                                                                            <input class="form-control datetimepicker" autocomplete="false" [ngModelOptions]="{standalone: true}" name="initiation_edit"  [(ngModel)]="selectedCaregiver.initiation" type="text" matInput [matDatepicker]="pickerInitiation"  >
+                                                                                            <mat-datepicker #pickerInitiation></mat-datepicker>
+                                                                                            <mat-datepicker-toggle matIconSuffix [for]="pickerInitiation"></mat-datepicker-toggle>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-12 col-sm-3">
+                                                                                        <div class="form-group local-forms">
+                                                                                            <label >End Date <span class="login-danger">*</span></label>
+                                                                                            <input class="form-control datetimepicker"  name="end_date_edit" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedCaregiver.end_date" type="text" matInput [matDatepicker]="picker"  >
+                                                                                            <mat-datepicker #picker></mat-datepicker>
+                                                                                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-xs-12 col-sm-3">  
+                                                                                        <div class="form-group local-forms">
+                                                                                            <label >Current Status<span class="login-danger">*</span></label>
+                                                                                            <select class="form-control form-select-solid fw-bolder"
+                                                                                            name="current_status_edit" [(ngModel)]="selectedCaregiver.current_status" 
+                                                                                            placeholder="state">
+                                                                                            <option>-- Select --</option>
+                                                                                            <option value="new">New</option>
+                                                                                            <option value="in progress">In Progress</option>
+                                                                                            <option value="mastered date">Mastered Date</option>
+                                                                                            <option value="initiate date">Initiate Date</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-12 mb-3 doctor-submit text-end">
+                                                                                        <button class="btn btn-primary btn-sm" (click)="updateItem(selectedCaregiver)">Update Info</button>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="col-12 col-sm-6">
-                                                                                    <div class="form-group local-forms">
-                                                                                        <label>Outcome measure <span class="login-danger">*</span></label>
-                                                                                        <textarea class="form-control" name="outcome_measure_edit" [(ngModel)]="caregiver.outcome_measure" rows="4" cols="30"></textarea>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-xs-12 col-sm-3">  
-                                                                                    <div class="form-group local-forms">
-                                                                                        <label >Criteria<span class="login-danger">*</span></label>
-                                                                                        <input class="form-control" name="criteria_edit"  [(ngModel)]="caregiver.criteria" type="text"  >
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-12 col-md-3">
-                                                                                    <div class="form-group local-forms">
-                                                                                        <label >Initiation<span class="login-danger">*</span></label>
-                                                                                        <input class="form-control datetimepicker" autocomplete="false" [ngModelOptions]="{standalone: true}" name="initiation_edit"  [(ngModel)]="caregiver.initiation" type="text" matInput [matDatepicker]="pickerInitiation"  >
-                                                                                        <mat-datepicker #pickerInitiation></mat-datepicker>
-                                                                                        <mat-datepicker-toggle matIconSuffix [for]="pickerInitiation"></mat-datepicker-toggle>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-12 col-sm-3">
-                                                                                    <div class="form-group local-forms">
-                                                                                        <label >End Date <span class="login-danger">*</span></label>
-                                                                                        <input class="form-control datetimepicker"  name="end_date_edit" [ngModelOptions]="{standalone: true}" [(ngModel)]="caregiver.end_date" type="text" matInput [matDatepicker]="picker"  >
-                                                                                        <mat-datepicker #picker></mat-datepicker>
-                                                                                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-xs-12 col-sm-3">  
-                                                                                    <div class="form-group local-forms">
-                                                                                        <label >Current Status<span class="login-danger">*</span></label>
-                                                                                        <select class="form-control form-select-solid fw-bolder"
-                                                                                        name="current_status_edit" [(ngModel)]="caregiver.current_status" 
-                                                                                        placeholder="state">
-                                                                                        <option>-- Select --</option>
-                                                                                        <option value="new">New</option>
-                                                                                        <option value="in progress">In Progress</option>
-                                                                                        <option value="mastered date">Mastered Date</option>
-                                                                                        <option value="initiate date">Initiate Date</option>
-                                                                                        </select>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-12 mb-3 doctor-submit text-end">
-                                                                                    <button class="btn btn-primary btn-sm" (click)="cambiarStatus(family_edit, i)">Update Info</button>
-                                                                                </div>
-                                                                            </div>
+
+                                                                            </form>
                                                                         </div>
                                                                     </div>
                                                                 </div>

@@ -78,6 +78,8 @@ export class BipformComponent {
   public sensory_edit: any = [];
   public escape_edit: any = [];
   public intervention_edit: any = [];
+  public atention_edit: any = [];
+  public tangible_edit: any = [];
   
   
   
@@ -149,6 +151,7 @@ export class BipformComponent {
   chaining:any;
   title:any;
   descriptionIntervention:any;
+  titleIntervention:any;
   
   
   patient_selected:any;
@@ -156,7 +159,8 @@ export class BipformComponent {
   bip_selectedid:any;
   
   inteventionSelected:any;
-  access_to_tangibles: any;
+  access_to_tangibles: any = [];
+  
 
 
   constructor(
@@ -310,11 +314,21 @@ export class BipformComponent {
     this.phiysical_and_medical_status.splice(i,1);
   }
 
-  updateItemListMedications(medication:any){
-    this.medication_edit = medication;
+  updateItemListMedications(medication:any, index:number){
+    this.phiysical_and_medical_status[index] = medication;
         Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
     
   }
+  seleccionarParaEditM(medication:any){
+    const selectedMedication = this.phiysical_and_medical_status.find((item) => item.index === medication.index);
+    if (selectedMedication) {
+      this.medication_edit = selectedMedication;
+      // Ahora puedes editar el objeto selectedCaregiver
+      selectedMedication.nombre = 'Nuevo nombre'; // Por ejemplo
+    }
+    
+  }
+
 
   addMaladaptive(){
 
@@ -354,12 +368,47 @@ export class BipformComponent {
     this.maladaptives.splice(i,1);
   }
 
+  seleccionarParaEditMal(maladap:any){
+        
+    const selectedMaladaptive = this.maladaptives.find((item) => item.index === maladap.index);
+    if (selectedMaladaptive) {
+      this.maladaptive_edit = selectedMaladaptive;
+      // Ahora puedes editar el objeto selectedCaregiver
+      selectedMaladaptive.nombre = 'Nuevo nombre'; // Por ejemplo
+    }
+    
+  }
+
+  updateMaladaptive(maladap:any){
+   
+        const index = this.maladaptives.findIndex((item) => item.index === maladap.index);
+        if (index !== -1) {
+          this.maladaptives[index] = maladap;
+          Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+        }    
+  }
+
+
   addEvaluationSettings(){
-    this.assestmentEvaluationSettings.push({
-      tangible: this.tangible,
+
+    if (this.assestmentEvaluationSettings) {
+      this.assestmentEvaluationSettings.push({
+        index: this.assestmentEvaluationSettings.length + 1,
+        tangible: this.tangible,
       activities: this.activities,
       other: this.other,
-    })
+      
+      })
+    } else {
+      this.assestmentEvaluationSettings = [{
+        index: 1, // initial index
+        tangible: this.tangible,
+      activities: this.activities,
+      other: this.other,
+      
+      }]
+    }
+    
     this.tangible = '';
     this.activities = '';
     this.other = '';
@@ -370,18 +419,42 @@ export class BipformComponent {
   }
 
   updateItemListEvaluationSetting(evaluation:any){
-    this.evaluation_edit = evaluation;
-        Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    const index = this.assestmentEvaluationSettings.findIndex((item) => item.index === evaluation.index);
+    if (index !== -1) {
+      this.assestmentEvaluationSettings[index] = evaluation;
+      Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    }
+  }
+
+  seleccionarParaEva(evaluation:any){
     
+    const selectedEvaluation = this.assestmentEvaluationSettings.find((item) => item.index === evaluation.index);
+    if (selectedEvaluation) {
+      this.evaluation_edit = selectedEvaluation;
+      // Ahora puedes editar el objeto selectedCaregiver
+      selectedEvaluation.nombre = 'Nuevo nombre'; // Por ejemplo
+    }
   }
   
 
 
   addAssesstmentDocument(){
-    this.assesstmentsDocuments.push({
-      assestment_title: this.assestment_title,
+    if (this.assesstmentsDocuments) {
+      this.assesstmentsDocuments.push({
+        index: this.assesstmentsDocuments.length + 1,
+        assestment_title: this.assestment_title,
       assestment_status: this.assestment_status,
-    })
+      
+      })
+    } else {
+      this.assesstmentsDocuments = [{
+        index: 1, // initial index
+        assestment_title: this.assestment_title,
+      assestment_status: this.assestment_status,
+      
+      }]
+    }
+
     this.assestment_title = '';
     this.assestment_status = '';
   }
@@ -391,25 +464,52 @@ export class BipformComponent {
   }
 
 
-  addAssesstment(){
-    this.prevalent_setting_event_and_atecedents.push({
-      prevalent_setting_event_and_atecedent: this.prevalent_setting_event_and_atecedent,
+  addPrevalent(){
+    if (this.prevalent_setting_event_and_atecedents) {
+      this.prevalent_setting_event_and_atecedents.push({
+        index: this.prevalent_setting_event_and_atecedents.length + 1,
+        prevalent_setting_event_and_atecedent: this.prevalent_setting_event_and_atecedent,
+        behavior: this.behavior,
+        hypothesized_functions: this.hypothesized_functions,
+      
+      })
+    } else {
+      this.prevalent_setting_event_and_atecedents = [{
+        index: 1, // initial index
+        prevalent_setting_event_and_atecedent: this.prevalent_setting_event_and_atecedent,
       behavior: this.behavior,
       hypothesized_functions: this.hypothesized_functions,
-    })
+      
+      }]
+    }
     this.prevalent_setting_event_and_atecedent = '';
     this.behavior = '';
     this.hypothesized_functions = '';
   }
 
-  deleteAssesstment(i:any){
+  deletePrevalent(i:any){
     this.prevalent_setting_event_and_atecedents.splice(i,1);
+  }
+
+  seleccionarPrevalent(tang:any){
+
+    const selectedTangible = this.prevalent_setting_event_and_atecedents.find((item) => item.index === tang.index);
+    if (selectedTangible) {
+      this.prevalent_edit = selectedTangible;
+      // Ahora puedes editar el objeto selectedCaregiver
+      selectedTangible.nombre = 'Nuevo nombre'; // Por ejemplo
+    }
   }
 
   updateItemListPrevalent(prevalent:any){
     this.prevalent_edit = prevalent;
-        Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
-    
+    Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    const index = this.prevalent_setting_event_and_atecedents.findIndex((item) => item.index === prevalent.index);
+    if (index !== -1) {
+      this.prevalent_setting_event_and_atecedents[index] = prevalent;
+      Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    }
+
   }
 
   //Access to Tangibles/Attention/Attention/escape/sensory
@@ -417,12 +517,14 @@ export class BipformComponent {
   addTangible(){
     if (this.accesstoTangibles) {
       this.accesstoTangibles.push({
+        index: this.accesstoTangibles.length + 1,
         preventive_strategies: this.preventive_strategies,
-      replacement_skills: this.replacement_skills,
-      manager_strategies: this.manager_strategies,
+        replacement_skills: this.replacement_skills,
+        manager_strategies: this.manager_strategies,
       })
     } else {
       this.accesstoTangibles = [{
+        index: 1,
         preventive_strategies: this.preventive_strategies,
         replacement_skills: this.replacement_skills,
         manager_strategies: this.manager_strategies,
@@ -437,22 +539,40 @@ export class BipformComponent {
     this.accesstoTangibles.splice(i,1);
   }
 
-  
-  updateItemListTangibles(tang:any){
-    this.maladaptive_edit = tang;
-        Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
-    
+  seleccionarTangible(tang:any){
+
+    const selectedTangible = this.accesstoTangibles.find((item) => item.index === tang.index);
+    if (selectedTangible) {
+      this.tangible_edit = selectedTangible;
+      // Ahora puedes editar el objeto selectedCaregiver
+      selectedTangible.nombre = 'Nuevo nombre'; // Por ejemplo
+    }
   }
+
+  updateItemListTangibles(tang:any){
+    this.tangible_edit = tang;
+        Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+        const index = this.accesstoTangibles.findIndex((item) => item.index === tang.index);
+        if (index !== -1) {
+          this.accesstoTangibles[index] = tang;
+          Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+        }
+
+  }
+
+  
 
   addSensory(){
     if (this.accesstoSensories) {
       this.accesstoSensories.push({
+        index: this.accesstoSensories.length + 1,
         preventive_strategies_s: this.preventive_strategies_s,
         replacement_skills_s: this.replacement_skills_s,
         manager_strategies_s: this.manager_strategies_s,
       })
     } else {
       this.accesstoSensories = [{
+        index: 1,
         preventive_strategies_s: this.preventive_strategies_s,
         replacement_skills_s: this.replacement_skills_s,
         manager_strategies_s: this.manager_strategies_s,
@@ -463,24 +583,30 @@ export class BipformComponent {
     this.manager_strategies_s = '';
   }
 
-  // addSensory(){
-  //   this.accesstoSensories.push({
-  //     preventive_strategies_s: this.preventive_strategies_s,
-  //     replacement_skills_s: this.replacement_skills_s,
-  //     manager_strategies_s: this.manager_strategies_s,
-  //   })
-  //   this.preventive_strategies_s = '';
-  //   this.replacement_skills_s = '';
-  //   this.manager_strategies_s = '';
-  // }
-
   deleteSensory(i:any){
     this.accesstoSensories.splice(i,1);
   }
 
-  updateItemListSensory(accsens:any){
-    this.sensory_edit = accsens;
+  updateItemListSensory(sensory:any){
+    this.sensory_edit = sensory;
         Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+        const index = this.accesstoSensories.findIndex((item) => item.index === sensory.index);
+        if (index !== -1) {
+          this.accesstoSensories[index] = sensory;
+          Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+        }
+    
+  }
+
+  seleccionarSensory(sensory:any){
+
+    const selectedSensory = this.accesstoSensories.find((item) => item.index === sensory.index);
+    if (selectedSensory) {
+      this.sensory_edit = selectedSensory;
+      // Ahora puedes editar el objeto selectedCaregiver
+      selectedSensory.nombre = 'Nuevo nombre'; // Por ejemplo
+    }
+        
     
   }
 
@@ -488,15 +614,17 @@ export class BipformComponent {
   addEscape(){
     if (this.accesstoEscape) {
       this.accesstoEscape.push({
+        index: this.accesstoEscape.length + 1,
         preventive_strategies_e: this.preventive_strategies_e,
       replacement_skills_e: this.replacement_skills_e,
       manager_strategies_e: this.manager_strategies_e,
       })
     } else {
       this.accesstoEscape = [{
+        index: 1,
         preventive_strategies_e: this.preventive_strategies_e,
-      replacement_skills_e: this.replacement_skills_e,
-      manager_strategies_e: this.manager_strategies_e,
+        replacement_skills_e: this.replacement_skills_e,
+        manager_strategies_e: this.manager_strategies_e,
       }]
     }
     this.preventive_strategies_e = '';
@@ -508,21 +636,39 @@ export class BipformComponent {
     this.accesstoEscape.splice(i,1);
   }
 
+  seleccionarEscape(escape:any){
+
+    const selectedEscape = this.accesstoAttention.find((item) => item.index === escape.index);
+    if (selectedEscape) {
+      this.escape_edit = selectedEscape;
+      // Ahora puedes editar el objeto selectedCaregiver
+      selectedEscape.nombre = 'Nuevo nombre'; // Por ejemplo
+    }
+        
+    
+  }
+
   updateItemListEscape(escape:any){
     this.escape_edit = escape;
         Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
-    
+        const index = this.accesstoAttention.findIndex((item) => item.index === escape.index);
+        if (index !== -1) {
+          this.accesstoAttention[index] = escape;
+          Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+        }
   }
 
   addAttention(){
     if (this.accesstoAttention) {
       this.accesstoAttention.push({
+        index: this.accesstoAttention.length + 1,
         preventive_strategies_a: this.preventive_strategies_a,
         replacement_skills_a: this.replacement_skills_a,
         manager_strategies_a: this.manager_strategies_a,
       })
     } else {
       this.accesstoAttention = [{
+        index: 1,
         preventive_strategies_a: this.preventive_strategies_a,
         replacement_skills_a: this.replacement_skills_a,
         manager_strategies_a: this.manager_strategies_a,
@@ -537,12 +683,26 @@ export class BipformComponent {
     this.accesstoAttention.splice(i,1);
   }
 
+  seleccionarAttenti(attent:any){
+
+    const selectedAttention = this.accesstoAttention.find((item) => item.index === attent.index);
+    if (selectedAttention) {
+      this.atention_edit = selectedAttention;
+      // Ahora puedes editar el objeto selectedCaregiver
+      selectedAttention.nombre = 'Nuevo nombre'; // Por ejemplo
+    }
+        
+    
+  }
+
   
   updateItemListAttention(attent:any){
-    this.maladaptive_edit = attent;
     
-        Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
-    
+    const index = this.accesstoAttention.findIndex((item) => item.index === attent.index);
+    if (index !== -1) {
+      this.accesstoAttention[index] = attent;
+      Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    }
   }
 
   //Access to Tangibles/Attention
@@ -554,20 +714,20 @@ export class BipformComponent {
     if (this.interventions) {
       this.interventions.push({
         index: this.interventions.length + 1,
-        title: this.title,
+        titleIntervention: this.titleIntervention,
         descriptionIntervention: this.descriptionIntervention,
       
       })
     } else {
       this.interventions = [{
         index: 1, // initial index
-        title: this.title,
+        titleIntervention: this.titleIntervention,
         descriptionIntervention: this.descriptionIntervention,
       
       }]
     }
     
-    this.title = '';
+    this.titleIntervention = '';
     this.descriptionIntervention = '';
   }
 
@@ -578,48 +738,31 @@ export class BipformComponent {
     });
   }
 
-  updateIntervention(item:any){
-    this.intervention_edit = item;
-        Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+  updateIntervention(intervention:any){
+    const index = this.interventions.findIndex((item) => item.index === intervention.index);
+    if (index !== -1) {
+      this.interventions[index] = intervention;
+      Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    }
     
   }
 
-  seleccionarParaEdit(item:any){
-    this.intervention_edit = item;
-    console.log(this.intervention_edit);
+  seleccionarParaEdit(intervention:any){
+
+    const selectedIntervention = this.interventions.find((item) => item.index === intervention.index);
+    if (selectedIntervention) {
+      this.intervention_edit = selectedIntervention;
+      // Ahora puedes editar el objeto selectedCaregiver
+      selectedIntervention.nombre = 'Nuevo nombre'; // Por ejemplo
+    }
         
     
   }
-
-  closeReload(){
-    this.intervention_edit = null;
-  }
+  
+ 
 
   
-  cambiarStatusSto(maladap:any){
-    this.maladaptive_edit = maladap;
-        Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
-    // console.log(this.maladaptive_edit);
-    
-    // let data ={
-      //   rbt_training_goals: this.training_goals,
-      // }
-    
-      // this.monitoringEvaluatingService.editMonitoringEvaluating(data, this.monitoringtid).subscribe(
-    //   resp =>{
-      //     // console.log(resp);
-      //     // this.getTableData();
-      //     Swal.fire('Updated', `Goal Updated successfully!`, 'success');
-    //     this.ngOnInit();
-    //   }
-    // )
-  }
-
-  updateItemList(maladap:any){
-    this.maladaptive_edit = maladap;
-        Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
-    
-  }
+ 
 
 //fin listados
 
@@ -627,7 +770,7 @@ export class BipformComponent {
 
 
 
-  save(){debugger
+  save(){
     this.text_validation = '';
     if(!this.type_of_assessment
       || !this.background_information 

@@ -107,6 +107,9 @@ export class SustitutionListComponent {
   goalSelectedId :any;
   newGoaladd :any;
 
+  golsto_edit:any = [];
+  gollto_edit:any = [];
+
   constructor(
     public bipService:BipService,
     public patientService:PatientMService,
@@ -242,32 +245,47 @@ export class SustitutionListComponent {
     this.getGoalsSonMaladaptives();
   }
   
-  deleteGoalSon(goalsto:any){
-    // this.goalSelectedSon.splice(i,1);
+  deleteGoalSon(goalsto:any, i:number){
+    this.goals.splice(i,1);
     this.goalSustitutionService.deleteGoalSustitution(goalsto.id).subscribe((resp:any)=>{
       // alert("Se elimino el objetivo");
       // this.getGoals();
     })
   }
+  
 
   //fin selectores
 
   //listas
   addSTOGoal(){
-    this.golstoSustiutions.push({
+    if (this.golstoSustiutions) {
+      this.golstoSustiutions.push({
+        index: this.golstoSustiutions.length + 1,
+        sustitution_sto: this.sustitution_sto,
+        target: this.target,
+        sustitution_status_sto: this.sustitution_status_sto,
+        sustitution_status_sto_edit: this.sustitution_status_sto,
+        sustitution_date_sto: this.sustitution_date_sto,
+        end_sustitution_date_sto: this.end_sustitution_date_sto,
+        sustitution_decription_sto: this.sustitution_decription_sto,
       
-      sustitution_sto: this.sustitution_sto,
-      target: this.target,
-      // initial_interesting: this.initial_interesting,
-      sustitution_status_sto: this.sustitution_status_sto,
-      sustitution_status_sto_edit: this.sustitution_status_sto,
-      sustitution_date_sto: this.sustitution_date_sto,
-      end_sustitution_date_sto: this.end_sustitution_date_sto,
-      sustitution_decription_sto: this.sustitution_decription_sto,
-    })
+      })
+    } else {
+      this.golstoSustiutions = [{
+        index: 1, // initial index
+        sustitution_sto: this.sustitution_sto,
+        target: this.target,
+        sustitution_status_sto: this.sustitution_status_sto,
+        sustitution_status_sto_edit: this.sustitution_status_sto,
+        sustitution_date_sto: this.sustitution_date_sto,
+        end_sustitution_date_sto: this.end_sustitution_date_sto,
+        sustitution_decription_sto: this.sustitution_decription_sto,
+      
+      }]
+    }
+
     this.sustitution_sto = '';
     this.target = '';
-    // this.initial_interesting = '';
     this.sustitution_status_sto = '';
     this.sustitution_status_sto_edit = '';
     this.sustitution_date_lto = null;
@@ -278,14 +296,53 @@ export class SustitutionListComponent {
   deleteSTOGoal(i:any){
     this.golstoSustiutions.splice(i,1);
   }
+
+  seleccionarParaEdit(goalst:any){debugger
+
+    const selectedGoalSto = this.golstoSustiutions.find((item) => item.index === goalst.index);
+    if (selectedGoalSto) {
+      this.golsto_edit = selectedGoalSto;
+      // Ahora puedes editar el objeto selectedCaregiver
+      selectedGoalSto.nombre = 'Nuevo nombre'; // Por ejemplo
+    }
+        
+    
+  }
+
+  updateGoalSto(goalst:any){
+    const index = this.golstoSustiutions.findIndex((item) => item.index === goalst.index);
+    if (index !== -1) {
+      this.golstoSustiutions[index] = goalst;
+      Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    }
+    
+  }
+
+
   addLTOGoal(){
-    this.golltoSustiution.push({
-      sustitution_lto: this.sustitution_lto,
-      sustitution_status_lto: this.sustitution_status_lto,
-      sustitution_date_lto: this.sustitution_date_lto,
-      end_sustitution_date_lto: this.end_sustitution_date_lto,
-      sustitution_decription_lto: this.sustitution_decription_lto,
-    })
+
+    if (this.golltoSustiution) {
+      this.golltoSustiution.push({
+        index: this.golltoSustiution.length + 1,
+        sustitution_lto: this.sustitution_lto,
+        sustitution_status_lto: this.sustitution_status_lto,
+        sustitution_date_lto: this.sustitution_date_lto,
+        end_sustitution_date_lto: this.end_sustitution_date_lto,
+        sustitution_decription_lto: this.sustitution_decription_lto,
+      
+      })
+    } else {
+      this.golltoSustiution = [{
+        index: 1, // initial index
+        sustitution_lto: this.sustitution_lto,
+        sustitution_status_lto: this.sustitution_status_lto,
+        sustitution_date_lto: this.sustitution_date_lto,
+        end_sustitution_date_lto: this.end_sustitution_date_lto,
+        sustitution_decription_lto: this.sustitution_decription_lto,
+      
+      }]
+    }
+    
     this.sustitution_lto = '';
     this.sustitution_status_lto = '';
     this.sustitution_date_lto = null;
@@ -297,44 +354,28 @@ export class SustitutionListComponent {
     this.golltoSustiution.splice(i,1);
   }
 
+  seleccionarParaEditLto(goall:any){
 
-  addCreateSTOGoal(){
-    this.golstocreated.push({
-      
-      createdgoal_sto: this.createdgoal_sto,
-      createdgoal_initial_interesting: this.createdgoal_initial_interesting,
-      createdgoal_status_sto: this.createdgoal_status_sto,
-      createdgoal_status_sto_edit: this.createdgoal_status_sto,
-      createdgoal_date_sto: this.createdgoal_date_sto,
-      createdgoal_decription_sto: this.createdgoal_decription_sto,
-    })
-    this.createdgoal_sto = '';
-    this.createdgoal_initial_interesting = '';
-    this.createdgoal_status_sto = '';
-    this.createdgoal_status_sto_edit = '';
-    this.createdgoal_date_sto = null;
-    this.createdgoal_decription_sto = '';
+    const selectedGoalLto = this.golltoSustiution.find((item) => item.index === goall.index);
+    if (selectedGoalLto) {
+      this.gollto_edit = selectedGoalLto;
+      // Ahora puedes editar el objeto selectedCaregiver
+      selectedGoalLto.nombre = 'Nuevo nombre'; // Por ejemplo
+    }
+        
+    
   }
 
-  deleteCreatedSTOGoal(i:any){
-    this.golstocreated.splice(i,1);
-  }
-  addCreateLTOGoal(){
-    this.golltoCreateds.push({
-      createdgoal_lto: this.createdgoal_lto,
-      createdgoal_status_lto: this.createdgoal_status_lto,
-      createdgoal_date_lto: this.createdgoal_date_lto,
-      createdgoal_decription_lto: this.createdgoal_decription_lto,
-    })
-    this.createdgoal_lto = '';
-    this.createdgoal_status_lto = '';
-    this.createdgoal_date_lto = null;
-    this.createdgoal_decription_lto = '';
+  updateGoalLto(goall:any){
+    const index = this.golltoSustiution.findIndex((item) => item.index === goall.index);
+    if (index !== -1) {
+      this.golltoSustiution[index] = goall;
+      Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    }
+    
   }
 
-  deleteCreatedLTOGoal(i:any){
-    this.golltoCreateds.splice(i,1);
-  }
+  
 
 
 
@@ -442,7 +483,7 @@ export class SustitutionListComponent {
     this.ngOnInit();
   }
 
-  saveGoal(){debugger
+  saveGoal(){
     this.text_validation = '';
     // if(!this.maladaptive || !this.current_sustitution || !this.golsto){
     //   this.text_validation = 'Is required this information ';

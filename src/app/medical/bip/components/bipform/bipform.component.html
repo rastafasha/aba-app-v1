@@ -29,29 +29,13 @@
                                     <div class="col-xs-12">
                                         <div class="row">
                                             
-                                            <!-- <div class="col-xs-6 col-sm-4">  
-                                                
-                                                <div class="form-group">
-                                                    <div _ngcontent-rhp-c92="" class="card-header d-flex justify-content-between align-items-center">
-                                                        <h5 _ngcontent-rhp-c92="" class="card-title">Document Title</h5>
-                                                        <div _ngcontent-rhp-c92="" class="status-toggle d-flex justify-content-between align-items-center">
-                                                            <input _ngcontent-rhp-c92="" type="checkbox" id="document_title" class="check" name="document_title" [ngModelOptions]="{standalone: true}" [(ngModel)]="document_title">
-                                                            <label _ngcontent-rhp-c92="" for="doctor_referal" class="checktoggle" value="true">checkbox</label>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-                                            </div> -->
+                                 
                                             <div class="col-xs-12 col-sm-6">  
                                                 <div class="form-group local-forms">
                                                     <label >Document Title<span class="login-danger">*</span></label>
                                                     <input class="form-control" name="document_title"  [(ngModel)]="document_title" type="text"  >
                                                 </div>
                                             </div>
-                                            
-
-                                            
-                                            
                                             <div class="col-12 mb-3 doctor-submit text-end">
                                                 <button class="btn btn-primary btn-sm" (click)="addDocument()">Update Document</button>
                                             </div>
@@ -144,52 +128,55 @@
                             <h4 class="card-title">Physical And Medical Status</h4>
                                     <div class="row align-items-center" >
                                         <div class="col-xs-12">
-                                            <div class="row">
-                                                <div class="col-xs-12">  
-                                                    <div class="form-group local-forms">
-                                                        <label >Phiysical And Medical Status<span class="login-danger">*</span></label>
-                                                        <textarea class="form-control" name="phiysical_and_medical" [(ngModel)]="phiysical_and_medical" rows="4" cols="30"></textarea>
+                                            <form action="">
+                                                <div class="row">
+                                                    <div class="col-xs-12">  
+                                                        <div class="form-group local-forms">
+                                                            <label >Phiysical And Medical Status<span class="login-danger">*</span></label>
+                                                            <textarea class="form-control" name="phiysical_and_medical" [(ngModel)]="phiysical_and_medical" rows="4" cols="30"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6 col-md-3">  
+                                                        <div class="form-group local-forms">
+                                                            <label >Medication<span class="login-danger">*</span></label>
+                                                            <input class="form-control" name="medication"  [(ngModel)]="medication" type="text"  >
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-sm-6 col-md-3">  
+                                                        <div class="form-group local-forms">
+                                                            <label >Dose<span class="login-danger">*</span></label>
+                                                            <input class="form-control" name="dose"  [(ngModel)]="dose" type="text"  >
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12 col-md-3">  
+                                                        <div class="form-group local-forms">
+                                                            <label >frecuency<span class="login-danger">*</span></label>
+                                                            <input class="form-control" name="frecuency"  [(ngModel)]="frecuency" type="text"  >
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="col-xs-12 col-md-3">  
+                                                        <div class="form-group local-forms">
+                                                            <label >Preescribing Physician<span class="login-danger">*</span></label>
+                                                            <input class="form-control" name="preescribing_physician"  [(ngModel)]="preescribing_physician" type="text"  >
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-12">  
+                                                        <div class="form-group local-forms">
+                                                            <label >Reason<span class="login-danger">*</span></label>
+                                                            <textarea class="form-control" name="reason" [(ngModel)]="reason" rows="4" cols="30"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    
+        
+                                                    
+                                                    
+                                                    <div class="col-12 mb-3 doctor-submit text-end">
+                                                        <button class="btn btn-primary btn-sm" (click)="addMedication()">Update Medication list</button>
                                                     </div>
                                                 </div>
-                                                <div class="col-xs-12 col-sm-6 col-md-3">  
-                                                    <div class="form-group local-forms">
-                                                        <label >Medication<span class="login-danger">*</span></label>
-                                                        <input class="form-control" name="medication"  [(ngModel)]="medication" type="text"  >
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-6 col-md-3">  
-                                                    <div class="form-group local-forms">
-                                                        <label >Dose<span class="login-danger">*</span></label>
-                                                        <input class="form-control" name="dose"  [(ngModel)]="dose" type="text"  >
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-12 col-md-3">  
-                                                    <div class="form-group local-forms">
-                                                        <label >frecuency<span class="login-danger">*</span></label>
-                                                        <input class="form-control" name="frecuency"  [(ngModel)]="frecuency" type="text"  >
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="col-xs-12 col-md-3">  
-                                                    <div class="form-group local-forms">
-                                                        <label >Preescribing Physician<span class="login-danger">*</span></label>
-                                                        <input class="form-control" name="preescribing_physician"  [(ngModel)]="preescribing_physician" type="text"  >
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-12">  
-                                                    <div class="form-group local-forms">
-                                                        <label >Reason<span class="login-danger">*</span></label>
-                                                        <textarea class="form-control" name="reason" [(ngModel)]="reason" rows="4" cols="30"></textarea>
-                                                    </div>
-                                                </div>
-                                                
-    
-                                                
-                                                
-                                                <div class="col-12 mb-3 doctor-submit text-end">
-                                                    <button class="btn btn-primary btn-sm" (click)="addMedication()">Update Medication list</button>
-                                                </div>
-                                            </div>
+
+                                            </form>
                                             
                                             <div class="col-xs-12 ">
                                                 <div class="table-responsive">
@@ -226,68 +213,71 @@
                                                                         
                                                                 </td>
                                                                 <td>
-                                                                    <button class="btn btn-outline-success btn-sm" (click)="seleccionarParaEdit(medication,i)" 
-                                                                    data-bs-toggle="modal" [attr.data-bs-target]="'#edit-family-'+medication.i"><i class="fa fa-pencil"></i> Edit</button>
+                                                                    <button class="btn btn-outline-success btn-sm" (click)="seleccionarParaEditM(medication)" 
+                                                                    data-bs-toggle="modal" [attr.data-bs-target]="'#edit-medic-'+medication.i"><i class="fa fa-pencil"></i> Edit</button>
                                                                     <button class="btn btn-outline-danger btn-sm" (click)="deleteMedication(i)">x Delete</button>
                                                                 </td>
 
-                                                                <!-- modal edit Maladaptive -->
+                                                                <!-- modal edit medication -->
            
-                                                        <div [id]="'edit-family-'+medication.i" class="modal  add-modal" role="dialog">
+                                                        <div [id]="'edit-medic-'+medication.i" class="modal  fade" role="dialog">
                                                             <div class="modal-dialog modal-dialog-centered modal-lg">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h5 class="modal-title" id="modalFamily">{{medication.maladaptive_behavior}}</h5>
-                                                                        <a href="javascript:void(0);" (click)="closeReload()" data-bs-dismiss="modal" aria-label="Close" class="btn btn-white me-1"
+                                                                        <h5 class="modal-title" id="modalFamily">{{medication_edit?.medication}}</h5>
+                                                                        <a href="javascript:void(0);"  data-bs-dismiss="modal" aria-label="Close" class="btn btn-white me-1"
                                                                             >Close</a>
                                                                     </div>
                                                                     <div class="modal-body text-center">
                                                                         <div class="col-xs-12 ">
-                                                                            <div class="row">
-                                            
-                                                                                <div class="col-xs-12 col-sm-6 col-md-3">  
-                                                                                    <div class="form-group local-forms">
-                                                                                        <label >Medication<span class="login-danger">*</span></label>
-                                                                                        <input class="form-control" name="medication"  [(ngModel)]="medication.medication" type="text"  >
+                                                                            <form action="">
+                                                                                <div class="row">
+                                                
+                                                                                    <div class="col-xs-12 col-sm-6 col-md-3">  
+                                                                                        <div class="form-group local-forms">
+                                                                                            <label >Medication<span class="login-danger">*</span></label>
+                                                                                            <input class="form-control" name="medication"  [(ngModel)]="medication_edit.medication" type="text"  >
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div class="col-xs-12 col-sm-6 col-md-3">  
-                                                                                    <div class="form-group local-forms">
-                                                                                        <label >Dose<span class="login-danger">*</span></label>
-                                                                                        <input class="form-control" name="dose"  [(ngModel)]="medication.dose" type="text"  >
+                                                                                    <div class="col-xs-12 col-sm-6 col-md-3">  
+                                                                                        <div class="form-group local-forms">
+                                                                                            <label >Dose<span class="login-danger">*</span></label>
+                                                                                            <input class="form-control" name="dose"  [(ngModel)]="medication_edit.dose" type="text"  >
+                                                                                        </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div class="col-xs-12 col-md-3">  
-                                                                                    <div class="form-group local-forms">
-                                                                                        <label >frecuency<span class="login-danger">*</span></label>
-                                                                                        <input class="form-control" name="frecuency"  [(ngModel)]="medication.frecuency" type="text"  >
+                                                                                    <div class="col-xs-12 col-md-3">  
+                                                                                        <div class="form-group local-forms">
+                                                                                            <label >frecuency<span class="login-danger">*</span></label>
+                                                                                            <input class="form-control" name="frecuency"  [(ngModel)]="medication_edit.frecuency" type="text"  >
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    
+                                                                                    <div class="col-xs-12 col-md-3">  
+                                                                                        <div class="form-group local-forms">
+                                                                                            <label >Preescribing Physician<span class="login-danger">*</span></label>
+                                                                                            <input class="form-control" name="preescribing_physician"  [(ngModel)]="medication_edit.preescribing_physician" type="text"  >
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-xs-12">  
+                                                                                        <div class="form-group local-forms">
+                                                                                            <label >Reason<span class="login-danger">*</span></label>
+                                                                                            <textarea class="form-control" name="reason" [(ngModel)]="medication_edit.reason" rows="4" cols="30"></textarea>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    
+                                                                                    <div class="col-12 mb-3 doctor-submit text-end">
+                                                                                        <button class="btn btn-primary btn-sm" (click)="updateItemListMedications(medication_edit)">Update Info</button>
                                                                                     </div>
                                                                                 </div>
                                                                                 
-                                                                                <div class="col-xs-12 col-md-3">  
-                                                                                    <div class="form-group local-forms">
-                                                                                        <label >Preescribing Physician<span class="login-danger">*</span></label>
-                                                                                        <input class="form-control" name="preescribing_physician"  [(ngModel)]="medication.preescribing_physician" type="text"  >
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-xs-12">  
-                                                                                    <div class="form-group local-forms">
-                                                                                        <label >Reason<span class="login-danger">*</span></label>
-                                                                                        <textarea class="form-control" name="reason" [(ngModel)]="medication.reason" rows="4" cols="30"></textarea>
-                                                                                    </div>
-                                                                                </div>
-                                                                                
-                                                                                <div class="col-12 mb-3 doctor-submit text-end">
-                                                                                    <button class="btn btn-primary btn-sm" (click)="updateItemListMedications(medication, i)">Update Info</button>
-                                                                                </div>
-                                                                            </div>
+                                                                            </form>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
 
-                                                        <!-- modal edit Maladaptive -->
+                                                        <!-- modal edit medication -->
                                                             </tr>
                                                             
                                                         </tbody>
@@ -414,101 +404,100 @@
                                                 </thead>
                                                 <tbody>
                                                     <tr *ngFor="let maladap of maladaptives; let i = index">
-                                                        <td>
-                                                            {{maladap.maladaptive_behavior}}
-                                                        </td>
-                                                        <td>
-                                                            {{maladap.topografical_definition}}
-                                                            
-                                                        </td>
-                                                        <td>
-                                                             {{maladap.baseline_level}}
-                                                             
-                                                        </td>
-                                                        <td>
-                                                             {{maladap.baseline_date| date}}
-                                                             
-                                                        </td>
-                                                        <td>
-                                                            {{maladap.initial_interesting}}
-                                                            
-                                                        </td>
-                                                        <td>
-                                                            {{maladap.current_intensity}}
-                                                            
-                                                        </td>
-                                                        <td>
-                                                            <button class="btn btn-outline-success btn-sm" (click)="seleccionarParaEdit(maladap,i)" 
-                                                            data-bs-toggle="modal" [attr.data-bs-target]="'#edit-family-'+maladap.i"><i class="fa fa-pencil"></i> Edit</button>
-                                                            <button class="btn btn-outline-danger btn-sm" (click)="deleteMaladaptive(i)">x Delete</button>
-                                                        </td>
+                                                        <tr *ngFor="let maladap of maladaptives; let i = index">
+                                                            <td>
+                                                                {{maladap.maladaptive_behavior}}
+                                                            </td>
+                                                            <td>
+                                                                {{maladap.topografical_definition}}
+                                                            </td>
+                                                            <td>
+                                                                 {{maladap.baseline_level}}
+                                                                
+                                                            </td>
+                                                            <td>
+                                                                 {{maladap.baseline_date| date}}
+                                                            </td>
+                                                            <td>
+                                                                {{maladap.initial_interesting}}
+                                                            </td>
+                                                            <td>
+                                                                {{maladap.current_intensity}}
+                                                            </td>
+                                                            <td>
+                                                                <button class="btn btn-outline-success btn-sm" (click)="seleccionarParaEditMal(maladap)" 
+                                                                data-bs-toggle="modal" [attr.data-bs-target]="'#edit-maladap-'+maladap.i"><i class="fa fa-pencil"></i> Edit</button>
+                                                                <!-- <button class="btn btn-outline-success btn-sm" (click)="updateMaladaptive(maladap, i)"><i class="fa fa-pencil"></i> Edit</button> -->
+                                                                <button class="btn btn-outline-danger btn-sm" (click)="deleteMaladaptive(i)">x Delete</button>
+                                                            </td>
 
-                                                        <!-- modal edit Maladaptive -->
+                                                             <!-- modal edit maladap-->
            
-                                                        <div [id]="'edit-family-'+maladap.i" class="modal  add-modal" role="dialog">
+                                                        <div [id]="'edit-maladap-'+maladap.i" class="modal  fade" role="dialog">
                                                             <div class="modal-dialog modal-dialog-centered modal-lg">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h5 class="modal-title" id="modalFamily">{{maladap.maladaptive_behavior}}</h5>
-                                                                        <a href="javascript:void(0);" (click)="closeReload()" data-bs-dismiss="modal" aria-label="Close" class="btn btn-white me-1"
+                                                                        <h5 class="modal-title" id="modalEscape">{{maladaptive_edit?.maladaptive_behavior}}</h5>
+                                                                        <a href="javascript:void(0);"  data-bs-dismiss="modal" aria-label="Close" class="btn btn-white me-1"
                                                                             >Close</a>
                                                                     </div>
                                                                     <div class="modal-body text-center">
                                                                         <div class="col-xs-12 ">
-                                                                            <div class="row">
+                                                                            <form action="">
+                                                                                <div class="row">
                                             
-                                                                                <div class="col-xs-12 col-sm-3">  
-                                                                                    <div class="form-group local-forms">
-                                                                                        <label >Maladaptives Behavior<span class="login-danger">*</span></label>
-                                                                                        <input class="form-control" name="maladaptive_behavior"  [(ngModel)]="maladap.maladaptive_behavior" type="text"  >
+                                                                                    <div class="col-xs-12 col-sm-3">  
+                                                                                        <div class="form-group local-forms">
+                                                                                            <label >Maladaptives Behavior<span class="login-danger">*</span></label>
+                                                                                            <input class="form-control" name="maladaptive_behavior"  disabled [(ngModel)]="maladaptive_edit.maladaptive_behavior" type="text"  >
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-xs-12 col-sm-3">  
+                                                                                        <div class="form-group local-forms">
+                                                                                            <label >Baseline Level<span class="login-danger">*</span></label>
+                                                                                            <input class="form-control" name="baseline_level"  [(ngModel)]="maladaptive_edit.baseline_level" type="text"  >
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    
+                                                                                    <div class="col-12 col-sm-3">
+                                                                                        <div class="form-group local-forms">
+                                                                                            <label >Baseline Date <span class="login-danger">*</span></label>
+                                                                                            <input class="form-control datetimepicker"  name="baseline_date" [(ngModel)]="maladaptive_edit.baseline_date" type="text" matInput [matDatepicker]="picker"  >
+                                                                                            <mat-datepicker #picker></mat-datepicker>
+                                                                                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-xs-12 col-sm-3">
+                                                                                        <div class="form-group local-forms">
+                                                                                            <label >Intensity Initial<span class="login-danger">*</span></label>
+                                                                                            <input class="form-control" name="baseline_level"  [(ngModel)]="maladaptive_edit.initial_interesting" type="number"  >
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-xs-12 col-sm-3">
+                                                                                        <div class="form-group local-forms">
+                                                                                            <label >Current Intensity<span class="login-danger">*</span></label>
+                                                                                            <input class="form-control" name="current_intensity"  [(ngModel)]="maladaptive_edit.current_intensity" type="number"  >
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-xs-12 ">
+                                                                                        <div class="form-group local-forms">
+                                                                                            <label >Topografical Definition<span class="login-danger">*</span></label>
+                                                                                            <textarea class="form-control" name="initial_interesting" [(ngModel)]="maladaptive_edit.topografical_definition" rows="3" cols="30"></textarea>
+                                                                                            
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-12 mb-3 doctor-submit text-end">
+                                                                                        <button class="btn btn-primary btn-sm" (click)="updateMaladaptive(maladaptive_edit)">Update Info</button>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="col-xs-12 col-sm-3">  
-                                                                                    <div class="form-group local-forms">
-                                                                                        <label >Baseline Level<span class="login-danger">*</span></label>
-                                                                                        <input class="form-control" name="baseline_level"  [(ngModel)]="maladap.baseline_level" type="text"  >
-                                                                                    </div>
-                                                                                </div>
-                                                                                
-                                                                                <div class="col-12 col-sm-3">
-                                                                                    <div class="form-group local-forms">
-                                                                                        <label >Baseline Date <span class="login-danger">*</span></label>
-                                                                                        <input class="form-control datetimepicker"  name="baseline_date" [(ngModel)]="maladap.baseline_date" type="text" matInput [matDatepicker]="picker"  >
-                                                                                        <mat-datepicker #picker></mat-datepicker>
-                                                                                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-xs-12 col-sm-3">
-                                                                                    <div class="form-group local-forms">
-                                                                                        <label >Intensity Initial<span class="login-danger">*</span></label>
-                                                                                        <input class="form-control" name="baseline_level"  [(ngModel)]="maladap.initial_interesting" type="number"  >
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-xs-12 col-sm-3">
-                                                                                    <div class="form-group local-forms">
-                                                                                        <label >Current Intensity<span class="login-danger">*</span></label>
-                                                                                        <input class="form-control" name="current_intensity"  [(ngModel)]="maladap.current_intensity" type="number"  >
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-xs-12 ">
-                                                                                    <div class="form-group local-forms">
-                                                                                        <label >Topografical Definition<span class="login-danger">*</span></label>
-                                                                                        <textarea class="form-control" name="initial_interesting" [(ngModel)]="maladap.topografical_definition" rows="3" cols="30"></textarea>
-                                                                                        
-                                                                                    </div>
-                                                                                </div>
-                                                                                
-                                                                                <div class="col-12 mb-3 doctor-submit text-end">
-                                                                                    <button class="btn btn-primary btn-sm" (click)="cambiarStatusSto(maladap, i)">Update Info</button>
-                                                                                </div>
-                                                                            </div>
+                                                                            </form>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
 
-                                                        <!-- modal edit Maladaptive -->
+                                                        <!-- modal edit maladap end-->
                                                     </tr>
                                                     
                                                 </tbody>
@@ -572,36 +561,39 @@
                         <h4 class="card-title">Evaluation Settings</h4>
                                 <div class="row align-items-center" >
                                     <div class="col-xs-12">
-                                        <div class="row">
-                                            <div class="col-xs-12 col-sm-6">  
-                                                <div class="form-group local-forms">
-                                                    <label >Tangible<span class="login-danger">*</span></label>
-                                                    <textarea class="form-control" name="tangible" [(ngModel)]="tangible" rows="4" cols="30"></textarea>
-                                                    <!-- <input class="form-control" name="assestment_title"  [(ngModel)]="assestment_title" type="text"  > -->
+                                        <form action="">
+                                            <div class="row">
+                                                <div class="col-xs-12 col-sm-6">  
+                                                    <div class="form-group local-forms">
+                                                        <label >Tangible<span class="login-danger">*</span></label>
+                                                        <textarea class="form-control" name="tangible" [(ngModel)]="tangible" rows="4" cols="30"></textarea>
+                                                        <!-- <input class="form-control" name="assestment_title"  [(ngModel)]="assestment_title" type="text"  > -->
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-6">  
+                                                    <div class="form-group local-forms">
+                                                        <label >Activities<span class="login-danger">*</span></label>
+                                                        <textarea class="form-control" name="activities" [(ngModel)]="activities" rows="4" cols="30"></textarea>
+                                                        <!-- <input class="form-control" name="assestment_title"  [(ngModel)]="assestment_title" type="text"  > -->
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12">  
+                                                    <div class="form-group local-forms">
+                                                        <label >Other<span class="login-danger">*</span></label>
+                                                        <textarea class="form-control" name="other" [(ngModel)]="other" rows="4" cols="30"></textarea>
+                                                        <!-- <input class="form-control" name="assestment_title"  [(ngModel)]="assestment_title" type="text"  > -->
+                                                    </div>
+                                                </div>
+                                                
+    
+                                                
+                                                
+                                                <div class="col-12 mb-3 doctor-submit text-end">
+                                                    <button class="btn btn-primary btn-sm" (click)="addEvaluationSettings()">Update Evaluation Settings</button>
                                                 </div>
                                             </div>
-                                            <div class="col-xs-12 col-sm-6">  
-                                                <div class="form-group local-forms">
-                                                    <label >Activities<span class="login-danger">*</span></label>
-                                                    <textarea class="form-control" name="activities" [(ngModel)]="activities" rows="4" cols="30"></textarea>
-                                                    <!-- <input class="form-control" name="assestment_title"  [(ngModel)]="assestment_title" type="text"  > -->
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-12">  
-                                                <div class="form-group local-forms">
-                                                    <label >Other<span class="login-danger">*</span></label>
-                                                    <textarea class="form-control" name="other" [(ngModel)]="other" rows="4" cols="30"></textarea>
-                                                    <!-- <input class="form-control" name="assestment_title"  [(ngModel)]="assestment_title" type="text"  > -->
-                                                </div>
-                                            </div>
-                                            
 
-                                            
-                                            
-                                            <div class="col-12 mb-3 doctor-submit text-end">
-                                                <button class="btn btn-primary btn-sm" (click)="addEvaluationSettings()">Update Evaluation Settings</button>
-                                            </div>
-                                        </div>
+                                        </form>
                                         
                                         <div class="col-xs-12 ">
                                             <div class="table-responsive">
@@ -617,21 +609,71 @@
                                                     <tbody>
                                                         <tr *ngFor="let evaluation of assestmentEvaluationSettings; let i = index">
                                                             <td>
-                                                                <!-- {{evaluation.tangible}} -->
-                                                                <textarea class="form-control" name="tangible" [ngModelOptions]="{standalone: true}" [(ngModel)]="evaluation.tangible" ></textarea>
+                                                                {{evaluation.tangible}}
+                                                                
                                                             </td>
                                                             <td>
-                                                                 <!-- {{evaluation.activities}} -->
-                                                                 <textarea class="form-control" name="activities" [ngModelOptions]="{standalone: true}" [(ngModel)]="evaluation.activities" ></textarea>
+                                                                 {{evaluation.activities}}
+                                                                 
                                                             </td>
                                                             <td>
-                                                                 <!-- {{evaluation.other}} -->
-                                                                 <textarea class="form-control" name="other" [ngModelOptions]="{standalone: true}" [(ngModel)]="evaluation.other" ></textarea>
+                                                                 {{evaluation.other}}
+                                                                 
                                                             </td>
                                                             <td>
-                                                                <button class="btn btn-outline-success btn-sm" (click)="updateItemListEvaluationSetting(evaluation, i)"><i class="fa fa-pencil"></i> Edit</button>
+                                                                <button class="btn btn-outline-success btn-sm" (click)="seleccionarParaEva(evaluation)" 
+                                                                data-bs-toggle="modal" [attr.data-bs-target]="'#edit-evaluation-'+evaluation.i"><i class="fa fa-pencil"></i> Edit</button>
+                                                                <!-- <button class="btn btn-outline-success btn-sm" (click)="updateItemListEvaluationSetting(evaluation, i)"><i class="fa fa-pencil"></i> Edit</button> -->
                                                                 <button class="btn btn-outline-danger btn-sm" (click)="deleteEvaluationSetting(i)">x Delete</button>
                                                             </td>
+
+                                                            <!-- modal edit evaluation-->
+           
+                                                        <div [id]="'edit-evaluation-'+evaluation.i" class="modal  fade" role="dialog">
+                                                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="modalEscape">{{evaluation_edit?.tangible}}</h5>
+                                                                        <a href="javascript:void(0);"  data-bs-dismiss="modal" aria-label="Close" class="btn btn-white me-1"
+                                                                            >Close</a>
+                                                                    </div>
+                                                                    <div class="modal-body text-center">
+                                                                        <div class="col-xs-12 ">
+                                                                            <form action="">
+                                                                                <div class="row">
+                                            
+                                                                                    <div class="col-xs-12 col-sm-6">  
+                                                                                        <div class="form-group local-forms">
+                                                                                            <label >Tangible<span class="login-danger">*</span></label>
+                                                                                            <textarea class="form-control" name="tangible" [(ngModel)]="evaluation_edit.tangible" rows="4" cols="30"></textarea>
+                                                                                            
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-xs-12 col-sm-6">  
+                                                                                        <div class="form-group local-forms">
+                                                                                            <label >Activities<span class="login-danger">*</span></label>
+                                                                                            <textarea class="form-control" name="activities" [(ngModel)]="evaluation_edit.activities" rows="4" cols="30"></textarea>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-xs-12">  
+                                                                                        <div class="form-group local-forms">
+                                                                                            <label >Other<span class="login-danger">*</span></label>
+                                                                                            <textarea class="form-control" name="other" [(ngModel)]="evaluation_edit.other" rows="4" cols="30"></textarea>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-12 mb-3 doctor-submit text-end">
+                                                                                        <button class="btn btn-primary btn-sm" (click)="updateItemListEvaluationSetting(evaluation_edit)">Update Info</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- modal edit evaluation end-->
+
                                                         </tr>
                                                         
                                                     </tbody>
@@ -699,6 +741,8 @@
                                                                 <!-- <button class="btn btn-outline-success btn-sm" (click)="updateItemListEvaluationSetting(assesstment, i)"><i class="fa fa-pencil"></i> Edit</button> -->
                                                                 <button class="btn btn-outline-danger btn-sm" (click)="deleteAssesstmentDocument(i)">x</button>
                                                             </td>
+
+                                                            
                                                         </tr>
                                                         
                                                     </tbody>
@@ -782,7 +826,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-12 mb-3 doctor-submit text-end">
-                                                <button class="btn btn-primary btn-sm" (click)="addAssesstment()">Add</button>
+                                                <button class="btn btn-primary btn-sm" (click)="addPrevalent()">Add</button>
                                             </div>
                                         </div>
                                     </div>
@@ -800,22 +844,72 @@
                                                 <tbody>
                                                     <tr *ngFor="let prevalent of prevalent_setting_event_and_atecedents; let i = index">
                                                         <td>
-                                                            <!-- {{prevalent.prevalent_setting_event_and_atecedent}} -->
-                                                            <textarea class="form-control" name="prevalent_setting_event_and_atecedent"[ngModelOptions]="{standalone: true}"  [(ngModel)]="prevalent.prevalent_setting_event_and_atecedent" ></textarea>
+                                                            {{prevalent.prevalent_setting_event_and_atecedent}}
                                                             
                                                         </td>
                                                         <td>
-                                                             <!-- {{prevalent.behavior}} -->
-                                                             <textarea class="form-control" name="behavior" [ngModelOptions]="{standalone: true}" [(ngModel)]="prevalent.behavior" ></textarea>
+                                                             {{prevalent.behavior}}
+                                                             
                                                         </td>
                                                         <td>
-                                                            <!-- {{prevalent.hypothesized_functions}} -->
-                                                            <textarea class="form-control" name="hypothesized_functions" [ngModelOptions]="{standalone: true}" [(ngModel)]="prevalent.hypothesized_functions" ></textarea>
+                                                            {{prevalent.hypothesized_functions}}
+                                                           
                                                         </td>
                                                         <td>
-                                                            <button class="btn btn-outline-success btn-sm" (click)="updateItemListPrevalent(prevalent, i)"><i class="fa fa-pencil"></i> Edit</button>
-                                                            <button class="btn btn-outline-danger btn-sm" (click)="deleteAssesstment(i)">x Delete</button>
+                                                            <button class="btn btn-outline-success btn-sm" (click)="seleccionarPrevalent(prevalent)" 
+                                                            data-bs-toggle="modal" [attr.data-bs-target]="'#edit-prevalent-'+prevalent.i"><i class="fa fa-pencil"></i> Edit</button>
+                                                            <!-- <button class="btn btn-outline-success btn-sm" (click)="updateItemListPrevalent(prevalent, i)"><i class="fa fa-pencil"></i> Edit</button> -->
+                                                            <button class="btn btn-outline-danger btn-sm" (click)="deletePrevalent(i)">x Delete</button>
                                                         </td>
+
+                                                        <!-- modal edit prevalent-->
+           
+                                                        <div [id]="'edit-prevalent-'+prevalent.i" class="modal  fade" role="dialog">
+                                                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="modalEscape">{{prevalent_edit?.prevalent_setting_event_and_atecedent}}</h5>
+                                                                        <a href="javascript:void(0);"  data-bs-dismiss="modal" aria-label="Close" class="btn btn-white me-1"
+                                                                            >Close</a>
+                                                                    </div>
+                                                                    <div class="modal-body text-center">
+                                                                        <div class="col-xs-12 ">
+                                                                            <form action="">
+                                                                                <div class="row">
+                                            
+                                                                                    <div class="col-xs-12">  
+                                                                                        <div class="form-group local-forms">
+                                                                                            <label >Prevalent Setting Events & Antecedents<span class="login-danger">*</span></label>
+                                                                                            <textarea class="form-control" name="prevalent_setting_event_and_atecedent" [(ngModel)]="prevalent_edit.prevalent_setting_event_and_atecedent" rows="3" cols="30"></textarea>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-xs-12">
+                                                                                        <div class="form-group local-forms">
+                                                                                            <label >Behavior<span class="login-danger">*</span></label>
+                                                                                            <textarea class="form-control" name="behavior" [(ngModel)]="prevalent_edit.behavior" rows="3" cols="30"></textarea>
+                                                                                            
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    
+                                                                                    <div class="col-xs-12">
+                                                                                        <div class="form-group local-forms">
+                                                                                            <label >Hypothesized Function(s)<span class="login-danger">*</span></label>
+                                                                                            <textarea class="form-control" name="hypothesized_functions" [(ngModel)]="prevalent_edit.hypothesized_functions" rows="3" cols="30"></textarea>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    
+                                                                                    <div class="col-12 mb-3 doctor-submit text-end">
+                                                                                        <button class="btn btn-primary btn-sm" (click)="updateItemListPrevalent(prevalent_edit)">Update Info</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- modal edit prevalent end-->
                                                     </tr>
                                                     
                                                 </tbody>
@@ -923,23 +1017,68 @@
                                                     <tbody>
                                                         <tr *ngFor="let tang of accesstoTangibles; let i = index">
                                                             <td>
-                                                                <!-- {{assesstment.preventive_strategies}} -->
-                                                                <textarea class="form-control" name="preventive_strategies" [ngModelOptions]="{standalone: true}" [(ngModel)]="tang.preventive_strategies" ></textarea>
+                                                                {{tang.preventive_strategies}}
                                                             </td>
                                                             <td>
-                                                                 <!-- {{assesstment.replacement_skills}} -->
-                                                                 <textarea class="form-control" name="replacement_skills" [ngModelOptions]="{standalone: true}" [(ngModel)]="tang.replacement_skills" ></textarea>
+                                                                 {{tang.replacement_skills}}
                                                             </td>
                                                             <td>
-                                                                 <!-- {{assesstment.manager_strategies}} -->
-                                                                 <textarea class="form-control" name="manager_strategies" [ngModelOptions]="{standalone: true}" [(ngModel)]="tang.manager_strategies" ></textarea>
+                                                                 {{tang.manager_strategies}}
                                                             </td>
                                                             <td>
-                                                                <button class="btn btn-outline-success btn-sm" (click)="updateItemListTangibles(tang, i)"><i class="fa fa-pencil"></i> Edit</button>
+                                                                <button class="btn btn-outline-success btn-sm" (click)="seleccionarTangible(tang)" 
+                                                                data-bs-toggle="modal" [attr.data-bs-target]="'#edit-tang-'+tang.i"><i class="fa fa-pencil"></i> Edit</button>
+                                                                <!-- <button class="btn btn-outline-success btn-sm" (click)="updateItemListTangibles(tang, i)"><i class="fa fa-pencil"></i> Edit</button> -->
                                                                 <button class="btn btn-outline-danger btn-sm" (click)="deleteTangible(i)">x Delete</button>
                                                             </td>
+                                                            <!-- modal edit tang-->
+           
+                                                         <div [id]="'edit-tang-'+tang.i" class="modal  fade" role="dialog">
+                                                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="modalEscape">{{tangible_edit?.preventive_strategies}}</h5>
+                                                                        <a href="javascript:void(0);"  data-bs-dismiss="modal" aria-label="Close" class="btn btn-white me-1"
+                                                                            >Close</a>
+                                                                    </div>
+                                                                    <div class="modal-body text-center">
+                                                                        <div class="col-xs-12 ">
+                                                                            <form action="">
+                                                                                <div class="row">
+                                            
+                                                                                    <div class="col-xs-12 col-sm-6">  
+                                                                                        <div class="form-group local-forms">
+                                                                                            <label >Preventtive Strategies (atecedent-based)<span class="login-danger">*</span></label>
+                                                                                            <textarea class="form-control" name="preventive_strategies" [(ngModel)]="tangible_edit.preventive_strategies" rows="4" cols="30"></textarea>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-xs-12 col-sm-6">  
+                                                                                        <div class="form-group local-forms">
+                                                                                            <label >Replacement Skills (relate to function)<span class="login-danger">*</span></label>
+                                                                                            <textarea class="form-control" name="replacement_skills" [(ngModel)]="tangible_edit.replacement_skills" rows="4" cols="30"></textarea>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-xs-12 ">  
+                                                                                        <div class="form-group local-forms">
+                                                                                            <label >Manager Strategies (consecuences Based)<span class="login-danger">*</span></label>
+                                                                                            <textarea class="form-control" name="manager_strategies" [(ngModel)]="tangible_edit.manager_strategies" rows="4" cols="30"></textarea>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    
+                                                                                    <div class="col-12 mb-3 doctor-submit text-end">
+                                                                                        <button class="btn btn-primary btn-sm" (click)="updateItemListTangibles(tangible_edit)">Update Info</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- modal edit tang end-->
                                                         </tr>
-                                                        
+                                                         
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -995,23 +1134,69 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr *ngFor="let accsens of accesstoSensories; let i = index">
+                                                        <tr *ngFor="let sensory of accesstoSensories; let i = index">
                                                             <td>
-                                                                <!-- {{assesstment.preventive_strategies}} -->
-                                                                <textarea class="form-control" name="preventive_strategies_s" [ngModelOptions]="{standalone: true}" [(ngModel)]="accsens.preventive_strategies_s" ></textarea>
+                                                                {{sensory.preventive_strategies_s}}
                                                             </td>
                                                             <td>
-                                                                 <!-- {{assesstment.replacement_skills}} -->
-                                                                 <textarea class="form-control" name="replacement_skills_s" [ngModelOptions]="{standalone: true}" [(ngModel)]="accsens.replacement_skills_s" ></textarea>
+                                                                 {{sensory.replacement_skills_s}}
                                                             </td>
                                                             <td>
-                                                                 <!-- {{assesstment.manager_strategies}} -->
-                                                                 <textarea class="form-control" name="manager_strategies_s" [ngModelOptions]="{standalone: true}" [(ngModel)]="accsens.manager_strategies_s" ></textarea>
+                                                                 {{sensory.manager_strategies_s}}
+                                                                
                                                             </td>
                                                             <td>
-                                                                <button class="btn btn-outline-success btn-sm" (click)="updateItemListSensory(accsens, i)"><i class="fa fa-pencil"></i> Edit</button>
+                                                                <button class="btn btn-outline-success btn-sm" (click)="seleccionarSensory(sensory)" 
+                                                                data-bs-toggle="modal" [attr.data-bs-target]="'#edit-sensory-'+sensory.i"><i class="fa fa-pencil"></i> Edit</button>
+                                                                <!-- <button class="btn btn-outline-success btn-sm" (click)="updateItemListSensory(sensory, i)"><i class="fa fa-pencil"></i> Edit</button> -->
                                                                 <button class="btn btn-outline-danger btn-sm" (click)="deleteSensory(i)">x Delete</button>
                                                             </td>
+                                                             <!-- modal edit sensory-->
+           
+                                                             <div [id]="'edit-sensory-'+sensory.i" class="modal  fade" role="dialog">
+                                                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="modalEscape">{{sensory_edit.preventive_strategies_s}}</h5>
+                                                                            <a href="javascript:void(0);"  data-bs-dismiss="modal" aria-label="Close" class="btn btn-white me-1"
+                                                                                >Close</a>
+                                                                        </div>
+                                                                        <div class="modal-body text-center">
+                                                                            <div class="col-xs-12 ">
+                                                                                <form action="">
+                                                                                    <div class="row">
+                                                
+                                                                                        <div class="col-xs-12 col-sm-6">  
+                                                                                            <div class="form-group local-forms">
+                                                                                                <label >Preventtive Strategies (atecedent-based)<span class="login-danger">*</span></label>
+                                                                                                <textarea class="form-control" name="preventive_strategies_s" [(ngModel)]="sensory_edit.preventive_strategies_s" rows="4" cols="30"></textarea>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-xs-12 col-sm-6">  
+                                                                                            <div class="form-group local-forms">
+                                                                                                <label >Replacement Skills (relate to function)<span class="login-danger">*</span></label>
+                                                                                                <textarea class="form-control" name="replacement_skills_s" [(ngModel)]="sensory_edit.replacement_skills_s" rows="4" cols="30"></textarea>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-xs-12 ">  
+                                                                                            <div class="form-group local-forms">
+                                                                                                <label >Manager Strategies (consecuences Based)<span class="login-danger">*</span></label>
+                                                                                                <textarea class="form-control" name="manager_strategies_s" [(ngModel)]="sensory_edit.manager_strategies_s" rows="4" cols="30"></textarea>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        
+                                                                                        <div class="col-12 mb-3 doctor-submit text-end">
+                                                                                            <button class="btn btn-primary btn-sm" (click)="updateItemListSensory(sensory_edit)">Update Info</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- modal edit sensory end-->
                                                         </tr>
                                                         
                                                     </tbody>
@@ -1075,21 +1260,70 @@
                                                     <tbody>
                                                         <tr *ngFor="let escape of accesstoEscape; let i = index">
                                                             <td>
-                                                                <!-- {{assesstment.preventive_strategies}} -->
-                                                                <textarea class="form-control" name="preventive_strategies_e" [ngModelOptions]="{standalone: true}" [(ngModel)]="escape.preventive_strategies_e" ></textarea>
+                                                                {{escape.preventive_strategies_e}}
                                                             </td>
                                                             <td>
-                                                                 <!-- {{assesstment.replacement_skills}} -->
-                                                                 <textarea class="form-control" name="replacement_skills_e" [ngModelOptions]="{standalone: true}" [(ngModel)]="escape.replacement_skills_e" ></textarea>
+                                                                 {{escape.replacement_skills_e}}
+
                                                             </td>
                                                             <td>
-                                                                 <!-- {{assesstment.manager_strategies}} -->
-                                                                 <textarea class="form-control" name="manager_strategies_e" [ngModelOptions]="{standalone: true}" [(ngModel)]="escape.manager_strategies_e" ></textarea>
+                                                                 {{escape.manager_strategies_e}}
                                                             </td>
                                                             <td>
-                                                                <button class="btn btn-outline-success btn-sm" (click)="updateItemListEscape(escape, i)"><i class="fa fa-pencil"></i> Edit</button>
+                                                                <button class="btn btn-outline-success btn-sm" (click)="seleccionarEscape(escape)" 
+                                                                data-bs-toggle="modal" [attr.data-bs-target]="'#edit-escape-'+escape.i"><i class="fa fa-pencil"></i> Edit</button>
+                                                                <!-- <button class="btn btn-outline-success btn-sm" (click)="seleccionarEscape(escape)" 
+                                                                data-bs-toggle="modal" [attr.data-bs-target]="'#edit-escape-'+escape.i"><i class="fa fa-pencil"></i> Edit</button> -->
+                                                                <!-- <button class="btn btn-outline-success btn-sm" (click)="updateItemListEscape(escape, i)"><i class="fa fa-pencil"></i> Edit</button> -->
                                                                 <button class="btn btn-outline-danger btn-sm" (click)="deleteEscape(i)">x Delete</button>
                                                             </td>
+
+                                                            <!-- modal edit escape-->
+           
+                                                            <div [id]="'edit-escape-'+escape.i" class="modal  fade" role="dialog">
+                                                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="modalEscape">{{escape_edit.preventive_strategies_e}}</h5>
+                                                                            <a href="javascript:void(0);"  data-bs-dismiss="modal" aria-label="Close" class="btn btn-white me-1"
+                                                                                >Close</a>
+                                                                        </div>
+                                                                        <div class="modal-body text-center">
+                                                                            <div class="col-xs-12 ">
+                                                                                <form action="">
+                                                                                    <div class="row">
+                                                
+                                                                                        <div class="col-xs-12 col-sm-6">  
+                                                                                            <div class="form-group local-forms">
+                                                                                                <label >Preventtive Strategies (atecedent-based)<span class="login-danger">*</span></label>
+                                                                                                <textarea class="form-control" name="preventive_strategies_e" [(ngModel)]="escape_edit.preventive_strategies_e" rows="4" cols="30"></textarea>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-xs-12 col-sm-6">  
+                                                                                            <div class="form-group local-forms">
+                                                                                                <label >Replacement Skills (relate to function)<span class="login-danger">*</span></label>
+                                                                                                <textarea class="form-control" name="replacement_skills_e" [(ngModel)]="escape_edit.replacement_skills_e" rows="4" cols="30"></textarea>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-xs-12 ">  
+                                                                                            <div class="form-group local-forms">
+                                                                                                <label >Manager Strategies (consecuences Based)<span class="login-danger">*</span></label>
+                                                                                                <textarea class="form-control" name="manager_strategies_e" [(ngModel)]="escape_edit.manager_strategies_e" rows="4" cols="30"></textarea>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        
+                                                                                        <div class="col-12 mb-3 doctor-submit text-end">
+                                                                                            <button class="btn btn-primary btn-sm" (click)="updateItemListEscape(escape)">Update Info</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- modal edit escape end-->
                                                         </tr>
                                                         
                                                     </tbody>
@@ -1153,21 +1387,70 @@
                                                     <tbody>
                                                         <tr *ngFor="let attent of accesstoAttention; let i = index">
                                                             <td>
-                                                                <!-- {{assesstment.preventive_strategies}} -->
-                                                                <textarea class="form-control" name="preventive_strategies_a" [ngModelOptions]="{standalone: true}" [(ngModel)]="attent.preventive_strategies_a" ></textarea>
+                                                                {{attent.preventive_strategies_a}}
+
                                                             </td>
                                                             <td>
-                                                                 <!-- {{assesstment.replacement_skills}} -->
-                                                                 <textarea class="form-control" name="replacement_skills_a" [ngModelOptions]="{standalone: true}" [(ngModel)]="attent.replacement_skills_a" ></textarea>
+                                                                 {{attent.replacement_skills_a}}
+                                                                
                                                             </td>
                                                             <td>
-                                                                 <!-- {{assesstment.manager_strategies}} -->
-                                                                 <textarea class="form-control" name="manager_strategies_a" [ngModelOptions]="{standalone: true}" [(ngModel)]="attent.manager_strategies_a" ></textarea>
+                                                                 {{attent.manager_strategies_a}}
+                                                                 
                                                             </td>
                                                             <td>
-                                                                <button class="btn btn-outline-success btn-sm" (click)="updateItemListAttention(attent, i)"><i class="fa fa-pencil"></i> Edit</button>
+                                                                <button class="btn btn-outline-success btn-sm"  (click)="seleccionarAttenti(attent)" 
+                                                                data-bs-toggle="modal" [attr.data-bs-target]="'#edit-attent-'+attent.i"><i class="fa fa-pencil"></i> Edit</button>
+                                                                <!-- <button class="btn btn-outline-success btn-sm" (click)="updateItemListAttention(attent, i)"><i class="fa fa-pencil"></i> Edit</button> -->
                                                                 <button class="btn btn-outline-danger btn-sm" (click)="deleteAttention(i)">x Delete</button>
                                                             </td>
+
+                                                            <!-- modal edit attent-->
+           
+                                                            <div [id]="'edit-attent-'+attent.i" class="modal  fade" role="dialog">
+                                                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="modalAttenttion">{{atention_edit.preventive_strategies_a}}</h5>
+                                                                            <a href="javascript:void(0);" data-bs-dismiss="modal" aria-label="Close" class="btn btn-white me-1"
+                                                                                >Close</a>
+                                                                        </div>
+                                                                        <div class="modal-body text-center">
+                                                                            <div class="col-xs-12 ">
+                                                                                <form action="">
+                                                                                    <div class="row">
+                                                
+                                                                                        <div class="col-xs-12 col-sm-6">  
+                                                                                            <div class="form-group local-forms">
+                                                                                                <label >Preventtive Strategies (atecedent-based)<span class="login-danger">*</span></label>
+                                                                                                <textarea class="form-control" name="preventive_strategies_a" [(ngModel)]="atention_edit.preventive_strategies_a" rows="4" cols="30"></textarea>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-xs-12 col-sm-6">  
+                                                                                            <div class="form-group local-forms">
+                                                                                                <label >Replacement Skills (relate to function)<span class="login-danger">*</span></label>
+                                                                                                <textarea class="form-control" name="replacement_skills_a" [(ngModel)]="atention_edit.replacement_skills_a" rows="4" cols="30"></textarea>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-xs-12 ">  
+                                                                                            <div class="form-group local-forms">
+                                                                                                <label >Manager Strategies (consecuences Based)<span class="login-danger">*</span></label>
+                                                                                                <textarea class="form-control" name="manager_strategies_a" [(ngModel)]="atention_edit.manager_strategies_a" rows="4" cols="30"></textarea>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        
+                                                                                        <div class="col-12 mb-3 doctor-submit text-end">
+                                                                                            <button class="btn btn-primary btn-sm" (click)="updateItemListAttention(atention_edit)">Update Info</button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- modal edit attent end-->
                                                         </tr>
                                                         
                                                     </tbody>
@@ -1294,7 +1577,7 @@
                                                         <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Intervention</button>
                                                     </div>
 
-                                                    <!-- modal edit -->
+                                                    <!-- modal crear -->
 
                                                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog">
@@ -1311,7 +1594,7 @@
                                                                             <div class="col-xs-12 ">  
                                                                                 <div class="form-group local-forms">
                                                                                     <label >Title<span class="login-danger">*</span></label>
-                                                                                    <input class="form-control" name="title"  [(ngModel)]="title" type="text"  >
+                                                                                    <input class="form-control" name="titleIntervention"  [(ngModel)]="titleIntervention" type="text"  >
                                                                                 </div>
                                                                             </div>
                                                                             <div class="col-xs-12">  
@@ -1342,50 +1625,52 @@
                                         
                      
                                         <div class="row">
-                                            <ng-container *ngFor="let item of interventions ; let i = index">
+                                            <ng-container *ngFor="let intervention of interventions ; let i = index">
                                                 <div class="col-xs-12 col-sm-6">
                                                     <div class="botone-right">
-                                                        <button class="btn btn-outline-success btn-sm" (click)="seleccionarParaEdit(item,i)" 
-                                                            data-bs-toggle="modal" [attr.data-bs-target]="'#edit-family-'+item.i"
+                                                        <button class="btn btn-outline-success btn-sm" (click)="seleccionarParaEdit(intervention)" 
+                                                            data-bs-toggle="modal" [attr.data-bs-target]="'#edit-intervention-'+intervention.i"
                                                             ><i class="fa fa-pencil"></i> </button>
                                                     <button class="btn btn-outline-danger btn-sm" (click)="deleteIntervention(i)"><i class="fa fa-trash"></i></button>
-                                                    </div>
-                                                    <h4>{{item.title}}</h4>
-                                            <p>{{item.descriptionIntervention}} </p>
+                                                </div>
+                                                <h4>{{intervention?.titleIntervention}}</h4>
+                                                    <p>{{intervention?.descriptionIntervention}}</p>
                                                 </div>
 
                                                 <!-- modal edit -->
            
-                                                <div [id]="'edit-family-'+item.i" class="modal  add-modal" role="dialog">
+                                                <div [id]="'edit-intervention-'+intervention.i" class="modal  fade" role="dialog">
                                                     <div class="modal-dialog modal-dialog-centered modal-lg">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title" id="modalFamily">{{item.title}}</h5>
-                                                                <a href="javascript:void(0);" (click)="closeReload()" data-bs-dismiss="modal" aria-label="Close" class="btn btn-white me-1"
+                                                                <h5 class="modal-title" id="modalIntervention">{{atention_edit.titleIntervention}}</h5>
+                                                                <a href="javascript:void(0);" data-bs-dismiss="modal" aria-label="Close" class="btn btn-white me-1"
                                                                     >Close</a>
                                                             </div>
                                                             <div class="modal-body text-center">
                                                                 <div class="col-xs-12 ">
-                                                                    <div class="row">
+                                                                    <form action="">
+                                                                        <div class="row">
                                     
-                                                                        <div class="col-12 ">
-                                                                            <div class="form-group local-forms">
-                                                                                <label>title <span class="login-danger">*</span></label>
-                                                                                <input class="form-control" name="title"  [(ngModel)]="item.title" type="text"  >
-                                                                                
+                                                                            <div class="col-12 ">
+                                                                                <div class="form-group local-forms">
+                                                                                    <label>title <span class="login-danger">*</span></label>
+                                                                                    <input class="form-control" name="titleIntervention"  [(ngModel)]="intervention_edit.titleIntervention" type="text"  >
+                                                                                    
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-12 ">
+                                                                                <div class="form-group local-forms">
+                                                                                    <label>Description <span class="login-danger">*</span></label>
+                                                                                    <textarea class="form-control" name="descriptionIntervention" [(ngModel)]="intervention_edit.descriptionIntervention" rows="4" cols="30"></textarea>
+                                                                                </div>
+                                                                            </div>
+                                                                            
+                                                                            <div class="col-12 mb-3 doctor-submit text-end">
+                                                                                <button class="btn btn-primary btn-sm" (click)="updateIntervention(intervention_edit)">Update Info</button>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="col-12 ">
-                                                                            <div class="form-group local-forms">
-                                                                                <label>Description <span class="login-danger">*</span></label>
-                                                                                <textarea class="form-control" name="descriptionIntervention" [(ngModel)]="item.descriptionIntervention" rows="4" cols="30"></textarea>
-                                                                            </div>
-                                                                        </div>
-                                                                        
-                                                                        <div class="col-12 mb-3 doctor-submit text-end">
-                                                                            <button class="btn btn-primary btn-sm" (click)="updateIntervention(item, i)">Update Info</button>
-                                                                        </div>
-                                                                    </div>
+                                                                    </form>
                                                                 </div>
                                                             </div>
                                                         </div>

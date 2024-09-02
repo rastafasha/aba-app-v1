@@ -46,6 +46,7 @@ export class MonitoringEvaluatingComponent {
   public monitorid: any;
   public lto_edit: any;
 
+  gollto_edit:any = [];
 
   public current_status: any;
 
@@ -127,13 +128,25 @@ export class MonitoringEvaluatingComponent {
   }
 
 
-  addDocument(){
-    this.training_goals.push({
-      lto: this.lto,
-      status: this.status,
-      date: this.date,
-      end_date: this.end_date,
-    })
+  addMonitor(){
+    if (this.training_goals) {
+      this.training_goals.push({
+        index: this.training_goals.length + 1,
+        lto: this.lto,
+        status: this.status,
+        date: this.date,
+        end_date: this.end_date,
+      })
+    } else {
+      this.training_goals = [{
+        index: 1, // initial index
+        lto: this.lto,
+        status: this.status,
+        date: this.date,
+        end_date: this.end_date,
+      }]
+    }
+    
     this.lto = '';
     this.status = '';
     this.date = null;
@@ -142,6 +155,27 @@ export class MonitoringEvaluatingComponent {
 
   deleteDocument(i:any){
     this.training_goals.splice(i,1);
+  }
+
+  seleccionarParaEdit(monito:any){
+
+    const selectedMonitor = this.training_goals.find((item) => item.index === monito.index);
+    if (selectedMonitor) {
+      this.gollto_edit = selectedMonitor;
+      // Ahora puedes editar el objeto selectedCaregiver
+      selectedMonitor.nombre = 'Nuevo nombre'; // Por ejemplo
+    }
+        
+    
+  }
+
+  updateMonitor(monito:any){
+    const index = this.training_goals.findIndex((item) => item.index === monito.index);
+    if (index !== -1) {
+      this.training_goals[index] = monito;
+      Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
+    }
+    
   }
 
   cambiarStatusSto(caregiver:any){
