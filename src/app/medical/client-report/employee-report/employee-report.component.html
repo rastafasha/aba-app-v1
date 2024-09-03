@@ -1,0 +1,488 @@
+<div class="page-wrapper">
+    <div class="content">
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <!-- <ul class="breadcrumb">
+                        <li class="breadcrumb-item active"><a routerLink="/">Dashboard </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active"><a routerLink="/patients/list">Client List  </a></li>
+                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+                        <li class="breadcrumb-item active">Log Report by Client</li>
+                    </ul> -->
+                    <div class=" doctor-submit text-start">
+                        <button class="btn btn-primary btn-sm " (click)="goBack() ">Back</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Page Header -->
+
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div class="card card-table show-entire">
+                    <div class="card-body">
+
+                        <!-- Table Header -->
+
+                        <!-- /Table Header -->
+
+                        <!-- paciente -->
+                        <div class="container">
+                            <div class="row align-items-center py-4">
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label>Patient Name <span class="login-danger">*</span></label>
+                                        <input class="form-control" name="patientName" disabled
+                                            [(ngModel)]="patientName" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label>Patient ID <span class="login-danger">*</span></label>
+                                        <input class="form-control" name="patientID" disabled [(ngModel)]="patientID"
+                                            type="text">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label>Insurer <span class="login-danger">*</span></label>
+                                        <input class="form-control" name="insurer_name" disabled
+                                            [(ngModel)]="insurer_name" type="text">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label>Insurer rate <span class="login-danger">*</span></label>
+                                        <input class="form-control" name="n_units" disabled [(ngModel)]="n_units"
+                                            type="text">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label>CPT <span class="login-danger">*</span></label>
+                                        <input class="form-control" name="cpt" disabled [(ngModel)]="cpt" type="text">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- paciente -->
+
+
+
+                        <!-- search -->
+                        <div class="staff-search-table">
+                            <form>
+                                <div class="row search5">
+
+                                    <div class="col-12 col-md-3">
+                                        <div class="form-group local-forms">
+                                            <label>From </label>
+                                            <input class="form-control datetimepicker" name="date_start"
+                                                [(ngModel)]="date_start" type="date">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <div class="form-group local-forms">
+                                            <label>To </label>
+                                            <input class="form-control datetimepicker" name="date_end"
+                                                [(ngModel)]="date_end" type="date">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-3">
+                                        <div class="form-group local-forms">
+                                            <label>Note type </label>
+                                            <mat-select [(ngModel)]="noteType" [ngModelOptions]="{standalone: true}"
+                                                class="form-control select" placeholder="Select Note Type">
+                                                <mat-option [value]="null">
+                                                    All
+                                                </mat-option>
+                                                <mat-option [value]="'rbt'">
+                                                    Rbt
+                                                </mat-option>
+                                                <mat-option [value]="'bcba'">
+                                                    Bcba
+                                                </mat-option>
+                                            </mat-select>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-2 ">
+                                        <div class="doctor-submit">
+                                            <button type="button" class="btn btn-primary submit-list-form me-2"
+                                                (click)="searchData(patientId)">Search</button>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-1">
+                                        <div class="doctor-submit">
+                                            <button type="button" class="btn btn-outline-primary submit-list-form me-2"
+                                                (click)="PageSize()"><img src="assets/img/icons/re-fresh.svg"
+                                                    alt=""></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!-- search -->
+
+
+                        <div class="table-responsive">
+                            <table matSort (matSortChange)="sortData($event)"
+                                class="table table-striped border-0 custom-table comman-table datatable mb-0">
+                                <thead>
+                                    <tr>
+
+                                        <th mat-sort-header="role">Type of Note</th>
+                                        <th mat-sort-header="date_note">Date of Note</th>
+                                        <th mat-sort-header="pos">POS</th>
+                                        <th mat-sort-header="time_in">Total Hours</th>
+                                        <th mat-sort-header="cpt">CPT</th>
+                                        <th mat-sort-header="md">Modifier </th>
+                                        <th mat-sort-header="md2">Modifier </th>
+                                        <th mat-sort-header="totalunits">Total Units</th>
+                                        <th mat-sort-header="units">Units Price</th>
+                                        <th mat-sort-header="charges">Charges</th>
+                                        <!-- <th mat-sort-header="total">Total</th> -->
+                                        <th mat-sort-header="sponsor_id">Provider</th>
+                                        <th mat-sort-header="pa_number">PA Number</th>
+                                        <th mat-sort-header="npi">Npi</th>
+                                        <th mat-sort-header="billed">Billed</th>
+                                        <th mat-sort-header="pay">Pay</th>
+                                        <th mat-sort-header="created">Created At</th>
+                                    </tr>
+                                </thead>
+                                <!-- *ngIf="billing_generals?.length > 0; else noData" -->
+                                <tbody>
+                                    <ng-container *ngFor="let data of combinedList , let i = index;">
+                                        <tr *ngIf="data.rbt">
+                                            <td><span class="badge badge-success">RBT</span></td>
+                                            <td>
+                                                <span *ngIf="data?.rbt">
+                                                    <a [routerLink]="['/note-rbt/view/', data.rbt.id]">
+                                                        {{ data.rbt?.session_date | date }}
+                                                    </a>
+
+                                                </span>
+                                            </td>
+                                            <td>
+                                                {{data.rbt?.meet_with_client_at ?? 'N/A'}}
+                                                <!-- <span *ngIf="data?.rbt">
+                                                {{data.rbt?.meet_with_client_at ?? 'N/A'}}
+                                            </span> -->
+                                            </td>
+                                            <td>
+                                                <!-- {{ data.total_hours ?? 'N/A' }} -->
+
+                                                <span *ngIf="data.rbt">{{ data.rbt?.total_hours ?? 'N/A' }}</span>
+
+                                            </td>
+
+                                            <td>
+                                                <!-- {{data.cpt_code}} -->
+                                                <span *ngIf="data.rbt">
+                                                    {{data.rbt?.cpt_code }}
+                                                    <!-- {{ getPrizeCptNoteRbt(data.rbt?.cpt_code) }} -->
+
+                                                </span>
+
+
+                                            </td>
+
+                                            <!-- modificadores  -->
+
+                                            <!-- modificadores Medicaid 1 -->
+                                            <td>
+                                                {{data.rbt.md}}
+
+                                            </td>
+                                            <!-- modificadores1 -->
+                                            <!-- modificadores Medicaid2 -->
+                                            <td>
+                                                {{data.rbt.md2}}
+                                            </td>
+                                            <!-- modificadores2 -->
+
+                                            <!-- fin modificadores -->
+
+
+                                            <td>
+                                                <!-- {{data.session_units_total}} -->
+                                                <span *ngIf="data?.rbt">
+                                                    {{data.rbt?.session_units_total}}
+                                                </span>
+
+                                            </td>
+                                            <td>{{unitPrize | currency }}</td>
+                                            <td>
+                                                {{(( data.rbt?.session_units_total * unitPrize | currency))}}
+                                                <span *ngIf="md == 'XE' || md2 == 'XE'">
+                                                    xe:{{(( data.rbt?.session_units_total * unitPrize * xe |
+                                                    currency))}}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <!-- {{data.tecnicoRbt?.name}} 
+                                            {{data.tecnicoRbt?.surname}} -->
+                                                <span *ngIf="data.rbt">
+                                                    {{data.rbt?.tecnicoRbt.name}}
+                                                    {{data.rbt?.tecnicoRbt.surname}}
+
+                                                </span>
+                                            </td>
+
+                                            <td>{{pa_number}}</td>
+                                            <td>
+                                                <!-- {{data.supervisor?.npi}}  -->
+                                                <span *ngIf="data?.rbt">
+                                                    {{data.rbt?.supervisor.npi}}
+                                                </span>
+
+                                            </td>
+
+
+                                            <td>
+
+                                               
+                                                <span class="badge bg-danger"
+                                                    *ngIf="data.rbt.billed === 0">Pending</span>
+                                                <span class="badge bg-success"
+                                                    *ngIf="data.rbt.billed === 1"><i class="fa fa-check"></i></span>
+
+                                            </td>
+                                            <td>
+                                                
+                                                <span class="badge bg-danger"
+                                                    *ngIf="data.rbt.pay === 0">Pending</span>
+                                                <span class="badge bg-success"
+                                                    *ngIf="data.rbt.pay === 1"><i class="fa fa-check"></i></span>
+                                            </td>
+
+                                            <td>{{data.rbt?.created_at | date }}</td>
+
+
+                                        </tr>
+
+
+                                        <!-- Notas BCBA -->
+                                        <tr *ngIf="data.bcba">
+                                            <td><span class="badge badge-primary">BCBA</span> </td>
+
+                                            <td>
+                                                <span *ngIf="data?.bcba">
+                                                    <a [routerLink]="['/note-bcba/view/', data.bcba?.id]">
+                                                        {{ data.bcba?.session_date | date }}
+                                                    </a>
+
+                                                </span>
+                                            </td>
+                                            <td>
+                                                {{data.bcba.meet_with_client_at ?? 'N/A'}}
+                                                <!-- <span *ngIf="data?.rbt">
+                                                {{data.bcba?.meet_with_client_at ?? 'N/A'}}
+                                            </span> -->
+                                            </td>
+
+                                            <td>
+                                                <!-- {{ data.total_hours ?? 'N/A' }} -->
+                                                <span *ngIf="data.bcba"> {{ data.bcba?.total_hours ?? 'N/A' }}</span>
+
+                                            </td>
+
+                                            <td>
+
+                                                <span *ngIf="data.bcba">
+                                                    {{data.bcba?.cpt_code }}
+                                                    <!-- {{ getPrizeCptNoteRbt(data.bcba?.cpt_code) }} -->
+                                                </span>
+
+                                            </td>
+                                            <!-- modificadores1 -->
+                                            <td>
+                                                {{data.bcba.mdbcba}}
+
+                                            </td>
+                                            <!-- modificadores1 -->
+                                            <!-- modificadores2 -->
+                                            <td>
+                                                {{data.bcba.md2bcba}}
+                                            </td>
+                                            <!-- modificadores2 -->
+
+                                            <td>
+                                                <!-- {{data.session_units_total}} -->
+
+                                                <span *ngIf="data?.bcba">
+                                                    {{data.bcba?.session_units_total}}
+                                                </span>
+
+                                            </td>
+                                            <td>{{unitPrize | currency}}</td>
+                                            <td>
+                                                {{(( data.bcba?.session_units_total * unitPrize | currency))}}
+                                                <span *ngIf="mdbcba == 'XE' || md2bcba == 'XE'">
+                                                    xe:{{(( data.bcba?.session_units_total * unitPrize * xe |
+                                                    currency))}}
+                                                </span>
+                                            </td>
+
+                                            <td>
+                                                <!-- {{data.tecnicoRbt?.name}} 
+                                            {{data.tecnicoRbt?.surname}} -->
+                                                <span *ngIf="data?.bcba">
+                                                    {{data.rbt?.tecnicoRbt.name}}
+                                                    {{data.rbt?.tecnicoRbt.surname}}
+
+                                                </span>
+                                            </td>
+
+                                            <td>{{pa_number}}</td>
+
+                                            <td>
+                                                <!-- {{data.supervisor?.npi}}  -->
+                                                <span *ngIf="data?.bcba">
+                                                    {{data.bcba?.supervisor.npi}}
+
+                                                </span>
+
+                                            </td>
+
+                                            <td>
+
+                                       
+                                                <span class="badge bg-danger"
+                                                    *ngIf="data.bcba.billedbcba === 0">Pending</span>
+                                                <span class="badge bg-success"
+                                                    *ngIf="data.bcba.billedbcba === 1"><i class="fa fa-check"></i></span>
+                                                
+
+                                            </td>
+                                            <td>
+                                                
+                                                <span class="badge bg-danger"
+                                                    *ngIf="data.bcba.paybcba === 0">Pending</span>
+                                                <span class="badge bg-success"
+                                                    *ngIf="data.bcba.paybcba === 1"><i class="fa fa-check"></i></span>
+                                            </td>
+
+                                            <td>{{data.bcba?.created_at | date }}</td>
+
+
+                                        </tr>
+
+                                    </ng-container>
+
+                                </tbody>
+                                <ng-template #noData>
+                                    <p>No data available.</p>
+                                </ng-template>
+                            </table>
+                            <div class="table_footer">
+                                <div class="col-sm-12 col-md-5">
+                                    <div class="dataTables_info">
+                                        Showing {{ serialNumberArray[0] }} to
+                                        {{ serialNumberArray[serialNumberArray.length - 1] }} of
+                                        {{ totalDataClientReport }} entries
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-7">
+                                    <div class="pagination_section">
+                                        <ul class="pagination">
+                                            <li class="page-item" [ngClass]="{
+                                          disabled: currentPage === 1
+                                        }">
+                                                <a (click)="getTableData(currentPage-1)" class="page-link"
+                                                    href="javascript:void(0);" tabindex="-1">Previous</a>
+                                            </li>
+
+                                            <!-- <li class="page-item" [class.active]="item === currentPage" [ngClass]="
+                                                    (pageNumberArray[currentPage - 2] > item &&
+                                                    item !== 1 &&
+                                                    pageNumberArray.length > 6) ||
+                                                    (pageNumberArray[currentPage] < item &&
+                                                    item !== 1 &&
+                                                    pageNumberArray.length > 6 &&
+                                                    pageNumberArray.length !== item)
+                                                    ? 'hide-page-no'
+                                                    : 'show-page-no'
+                                                ">
+                                                            <a (click)="moveToPage(item)" class="page-link"
+                                                                href="javascript:void(0);">
+                                                                {{ item }}
+                                                            </a>
+                                                        </li>
+                                                        <li class="page-item" *ngIf="
+                                                    i === 0 &&
+                                                    pageNumberArray.length > 6 &&
+                                                    currentPage > 2
+                                                " [hidden]="currentPage === 1" (click)="moveToPage(currentPage - 2)">
+                                                            <a class="page-link" href="javascript:void(0);">
+                                                        ...
+                                                    </a>
+                                                </li> -->
+                                            <li class="page-item" [class.active]="item === currentPage"
+                                                *ngFor="let item of pageNumberArray">
+                                                <a (click)="getTableData(item)" class="page-link"
+                                                    href="javascript:void(0);">
+                                                    {{item}}
+                                                </a>
+                                            </li>
+
+                                            <li class="page-item" [ngClass]="{
+                                                disabled:
+                                                    currentPage ===
+                                                    pageNumberArray[pageNumberArray.length - 1]
+                                                }">
+                                                <a (click)="getTableData(currentPage+1)" class="page-link"
+                                                    href="javascript:void(0);">Next
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- totales -->
+                        <div class="container">
+
+                            <div class="row">
+                                <!-- <div class="col-12 col-md-6 col-xl-4">
+                                <div class="form-group local-forms">
+                                    <label >Billing Total <span class="login-danger">*</span></label>
+                                    <input class="form-control"  name="billing_total"  disabled [(ngModel)]="billing_total" type="number"  >
+                                </div>
+                            </div> -->
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label>Week Total Hours<span class="login-danger">*</span></label>
+                                        <input class="form-control" name="week_total_hours" disabled
+                                            [(ngModel)]="week_total_hours" type="text">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-4">
+                                    <div class="form-group local-forms">
+                                        <label>Week Total Units<span class="login-danger">*</span></label>
+                                        <input class="form-control" name="week_total_units" disabled
+                                            [(ngModel)]="week_total_units" type="number">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- totales -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
