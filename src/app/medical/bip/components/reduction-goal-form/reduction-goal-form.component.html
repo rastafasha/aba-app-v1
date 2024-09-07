@@ -107,7 +107,7 @@
                                         <div class="col-12 col-md-3 col-xl-3">
                                             <div class="form-group local-forms">
                                                 <label >Initial Date<span class="login-danger">*</span></label>
-                                                <input class="form-control datetimepicker" name="initial_date_sto" [(ngModel)]="date_sto" type="text" matInput [matDatepicker]="pickerDateSTO"  >
+                                                <input class="form-control datetimepicker" name="initial_date_sto" [(ngModel)]="initial_date_sto" type="text" matInput [matDatepicker]="pickerDateSTO"  >
                                                 <mat-datepicker #pickerDateSTO></mat-datepicker>
                                                 <mat-datepicker-toggle matIconSuffix [for]="pickerDateSTO"></mat-datepicker-toggle>
                                             </div>
@@ -178,7 +178,7 @@
                                                             <span class="badge bg-warning" *ngIf="goalst.status_sto === 'maintenance'">Maintenance</span>
                                                         </td>
                                                         <td>
-                                                            {{goalst.date_sto | date}}
+                                                            {{goalst.initial_date_sto | date}}
                                                         </td>
                                                         <td>
                                                             {{goalst.end_date_sto | date}}

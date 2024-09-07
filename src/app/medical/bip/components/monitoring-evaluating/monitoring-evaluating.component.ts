@@ -153,8 +153,11 @@ export class MonitoringEvaluatingComponent {
     this.end_date = null;
   }
 
-  deleteDocument(i:any){
-    this.training_goals.splice(i,1);
+  deleteDocument(monito:any){
+    const index = this.training_goals.findIndex((element) => element.index === monito.index);
+    if (index !== -1) {
+      this.training_goals.splice(index, 1);
+    }
   }
 
   seleccionarParaEdit(monito:any){

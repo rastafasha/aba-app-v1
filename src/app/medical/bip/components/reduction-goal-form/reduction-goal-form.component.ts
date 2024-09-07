@@ -105,7 +105,7 @@ export class ReductionGoalFormComponent {
     this.ativatedRoute.params.subscribe((resp:any)=>{
       this.patient_id = resp.patient_id;// la respuesta se comienza a relacionar  en este momento con un cliente especifico
       this.getProfileBip(); // se solicita la info del perfil del usuario
-      console.log(this.patient_id);
+      // console.log(this.patient_id);
     })
     
     
@@ -277,7 +277,7 @@ export class ReductionGoalFormComponent {
 
 
   //listas
-  addSTOGoal(){
+  addSTOGoal(){debugger
     if (this.golsto) {
       this.golsto.push({
         index: this.golsto.length + 1,
@@ -312,8 +312,11 @@ export class ReductionGoalFormComponent {
     this.decription_sto = '';
   }
 
-  deleteSTOGoal(i:any){
-    this.golsto.splice(i,1);
+  deleteSTOGoal(goalst:any){
+    const index = this.golsto.findIndex((element) => element.index === goalst.index);
+    if (index !== -1) {
+      this.golsto.splice(index, 1);
+    }
   }
 
   seleccionarParaEdit(goalst:any){
@@ -371,8 +374,12 @@ export class ReductionGoalFormComponent {
     this.decription_lto = '';
   }
 
-  deleteLTOGoal(i:any){
-    this.gollto.splice(i,1);
+  deleteLTOGoal(goall:any){
+
+    const index = this.gollto.findIndex((element) => element.index === goall.index);
+    if (index !== -1) {
+      this.gollto.splice(index, 1);
+    }
   }
 
   seleccionarParaEditLto(goall:any){

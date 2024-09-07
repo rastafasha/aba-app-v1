@@ -157,8 +157,11 @@ export class FamilyInvolvementGoalFormComponent {
     this.current_status = '';
   }
 
-  deleteDocument(i:any){
-    this.caregivers.splice(i,1);
+  deleteDocument(caregiver:any){
+    const index = this.caregivers.findIndex((element) => element.index === caregiver.index);
+    if (index !== -1) {
+      this.caregivers.splice(index, 1);
+    }
   }
 
   seleccionarParaEdit(caregiver: any) {

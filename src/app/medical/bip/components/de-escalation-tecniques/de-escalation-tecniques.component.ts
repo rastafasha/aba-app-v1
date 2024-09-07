@@ -156,8 +156,11 @@ export class DeEscalationTecniquesComponent {
     this.location = '';
   }
 
-  deleteDocument(i:any){
-    this.deEscalationopts.splice(i,1);
+  deleteDocument(escalation:any){
+    const index = this.deEscalationopts.findIndex((element) => element.index === escalation.index);
+    if (index !== -1) {
+      this.deEscalationopts.splice(index, 1);
+    }
   }
 
   seleccionarParaEdit(escalation:any){debugger

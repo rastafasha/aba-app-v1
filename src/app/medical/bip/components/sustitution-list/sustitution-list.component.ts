@@ -129,7 +129,7 @@ export class SustitutionListComponent {
       this.patient_id = resp.patient_id;// la respuesta se comienza a relacionar  en este momento con un cliente especifico
       this.getProfileBip(); // se solicita la info del perfil del usuario
       // this.getGoalbyPatient(); // se solicita la info del perfil del usuario
-      console.log(this.patient_id);
+      // console.log(this.patient_id);
     })
     
     
@@ -178,7 +178,7 @@ export class SustitutionListComponent {
   //si existe enviamos el client_id_goal para actualizar el goal del paciente
   getPatientGoalSustitutions(patient_id){
     this.goalSustitutionService.getGoalSustitutionbyPatientId(patient_id).subscribe((resp:any)=>{
-      console.log('goals sustition by patientid',resp);
+      // console.log('goals sustition by patientid',resp);
       // this.goalSustitutions = resp.sustitutiongoalPatientIds.data[0] ==""?[] : resp.sustitutiongoalPatientIds.data ;
       // this.goalSustitutionId = resp.sustitutiongoalPatientIds.data[0].id || undefined;
       // this.client_id_goalSustitution = resp.sustitutiongoalPatientIds.data[0].client_id;
@@ -293,11 +293,14 @@ export class SustitutionListComponent {
     this.sustitution_decription_sto = '';
   }
 
-  deleteSTOGoal(i:any){
-    this.golstoSustiutions.splice(i,1);
+  deleteSTOGoal(goalst: any) {
+    const index = this.golstoSustiutions.findIndex((element) => element.index === goalst.index);
+    if (index !== -1) {
+      this.golstoSustiutions.splice(index, 1);
+    }
   }
 
-  seleccionarParaEdit(goalst:any){debugger
+  seleccionarParaEdit(goalst:any){
 
     const selectedGoalSto = this.golstoSustiutions.find((item) => item.index === goalst.index);
     if (selectedGoalSto) {
@@ -350,8 +353,12 @@ export class SustitutionListComponent {
     this.sustitution_decription_lto = '';
   }
 
-  deleteLTOGoal(i:any){
-    this.golltoSustiution.splice(i,1);
+  deleteLTOGoal(goall:any){
+    const index = this.golltoSustiution.findIndex((element) => element.index === goall.index);
+    if (index !== -1) {
+      this.golltoSustiution.splice(index, 1);
+    }
+    
   }
 
   seleccionarParaEditLto(goall:any){
@@ -547,7 +554,7 @@ export class SustitutionListComponent {
     }
 
     this.goalSustitutionService.createGoalSustitution(data).subscribe((resp:any)=>{
-      console.log(resp);
+      // console.log(resp);
       this.goalsustitid = resp.id;
       // this.text_success = 'Goal created successfully!'
       Swal.fire('Created', `Goal Sustitution Created successfully!`, 'success');
