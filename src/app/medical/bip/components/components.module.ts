@@ -16,6 +16,7 @@ import { DeEscalationTecniquesComponent } from './de-escalation-tecniques/de-esc
 import { ConsentTreatmentFormComponent } from './consent-treatment-form/consent-treatment-form.component';
 import { SustitutionListComponent } from './sustitution-list/sustitution-list.component';
 import { ChartReplacementComponent } from './charts/chart-replacement/chart-replacement.component';
+import { ReductionGoalEditComponent } from './reduction-goal-edit/reduction-goal-edit.component';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { ChartReplacementComponent } from './charts/chart-replacement/chart-repl
     SustitutionListComponent,
     ChartReductionComponent,
     ChartReplacementComponent,
+    ReductionGoalEditComponent,
   ],
   exports: [
     BipformComponent,
@@ -45,7 +47,8 @@ import { ChartReplacementComponent } from './charts/chart-replacement/chart-repl
     ConsentTreatmentFormComponent,
     SustitutionListComponent,
     ChartReductionComponent,
-    ChartReplacementComponent
+    ChartReplacementComponent,
+    ReductionGoalEditComponent,
   ],
   imports: [
     CommonModule,

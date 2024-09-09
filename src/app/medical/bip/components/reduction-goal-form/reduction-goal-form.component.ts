@@ -16,8 +16,6 @@ export class ReductionGoalFormComponent {
   // mercadocreativo@gmail.com
   // @malcolmcordova
 
-  @Output() cursoD: EventEmitter<any>  = new EventEmitter();// envia la data
-
   public routes = routes;
   valid_form_success: boolean = false;
   public text_validation:string = '';
@@ -151,7 +149,7 @@ export class ReductionGoalFormComponent {
   //si existe enviamos el client_id_goal para actualizar el goal del paciente
   getPatientGoals(patient_id){
     this.goalService.getGoalbyPatientId(patient_id).subscribe((resp:any)=>{
-      // console.log('goals by patientid',resp);
+      console.log('goals by patientid',resp);
       this.goalReductions = resp.goalReductionPatientIds.data[0] ==""?[] : resp.goalReductionPatientIds.data;
       this.goalReductionId = resp.goalReductionPatientIds.data[0].id || undefined;
       this.client_id_goal = resp.goalReductionPatientIds.data[0].client_id;
@@ -160,22 +158,7 @@ export class ReductionGoalFormComponent {
     })
   }
 
-  //obtenemos el goal del paciente por el id //revisar para que se usa
-  getGoalbyPatient(){
-    
-    this.goalService.getGoalbyPatientId(this.patient_id).subscribe((resp:any)=>{
-      
-      this.goalpatient_selected = resp;//convertimos la respuesta en un variable
-      this.goalid = resp.id; //convertimos la respuesta en un variable
-
-    })
-    
-    
-  }
-
   
-
-
   //obtenemos los goals por el id del bip //revisar
   getGoalsByBip(){
     this.goalService.getGoalbyBipId(this.bip_selectedId).subscribe((resp:any)=>{
@@ -194,10 +177,10 @@ export class ReductionGoalFormComponent {
   //obtenemos informacion de la seleccion
   selectedMaladaptive(maladap:any){
     this.maladaptiveSelected = maladap
-    // console.log(this.maladaptiveSelected);
+    console.log(this.maladaptiveSelected);
     //llamamos la funcion del  servicio para obtener la informacion adicional que se va a mostrar en la ventana
     
-    this.getGoalsMaladaptives();
+    // this.getGoalsMaladaptives();
     // setTimeout(() => {
     //   // this.router.navigate([routes.adminDashboard]);
     // }, 50);
@@ -205,241 +188,8 @@ export class ReductionGoalFormComponent {
     
   }
 
-  //obtenemos los goals del maladaptive por nombre
-  //obtenemos los maladaptives iniciales para poder relacionarlos con los goals
-  getGoalsMaladaptives(){
-    this.patient_id = this.patient_id;
-    this.goalService.listMaladaptivesGoals(this.maladaptiveSelected.maladaptive_behavior, this.patient_id).subscribe((resp:any)=>{
-    //  console.log(resp);
-    //  console.log('palabra maladaptive', resp.goalsmaladaptive.data[0].maladaptive);
-    if (resp && resp.goalsmaladaptive && resp.goalsmaladaptive.data && resp.goalsmaladaptive.data[0]) {
-      this.goalmaladaptive = resp.goalsmaladaptive.data[0];
-      this.goalmaladaptiveid = resp.goalsmaladaptive.data[0].id || null;
-      this.goalmaladaptive_clientId = resp.goalsmaladaptive.data[0].client_id || null;
-      
-      this.current_status = this.goalmaladaptive.current_status;
-      this.golsto = resp.goalsmaladaptive.data[0].goalstos;
-      this.gollto = resp.goalsmaladaptive.data[0].goalltos;
-      // ...
-    } else {
-      console.log('empty');
-      // Handle the error case, e.g., show an error message to the user
-    }
-      
-      //si el client_id guardado no es igual al que se esta viendo en este momento, 
-      //debe traer su informacion     
-      //comparamos si es igual al que tiene session activa, si no lo es 
-      if (this.client_id === this.goalmaladaptive_clientId  ) {
-        //si no existe no recibe nada..pero esta trayendo cosas de otras personas     
-        // console.log('son iguales');
-
-      }else{
-        console.log('No son iguales');
-
-      }
-      // aqui si no hay goalmaladaptive o es undefined no traigas nada para evitar el error en consola
-      if (this.goalmaladaptive == undefined && this.client_id === this.goalmaladaptive_clientId ) {
-        this.current_status = '';
-        this.golsto = '';
-        this.gollto = '';
-      }else{
-        // this.golsto = this.goalmaladaptive[0].goalstos;
-        // console.log(this.golsto);
-        // this.gollto = this.goalmaladaptive[0].goalltos;
-        // console.log(this.gollto);
-        
-      }
-
-
-      this.ngOnInit();
-    },);
-
-  }
-
-
-  //selectores seleccionamos el grafico del maladaptive de la lista
-  selectedMaladaptiveGraphic(maladap:any){
-    this.maladaptiveSelectedSon = maladap
-    // console.log(this.maladaptiveSelectedSon);
-    // this.getGoalsSonMaladaptives();
-  }
-
-  deleteMaladaptiveSon(goalsto:any){debugger
-    // this.maladaptiveSelectedSon.splice(i,1);
-    this.goalService.deleteGoal(goalsto.id).subscribe((resp:any)=>{
-      // alert("Se elimino el objetivo");
-      // this.getGoals();
-    })
-  }
-
-  //fin selectores
-
-
 
   //listas
-  addSTOGoal(){debugger
-    if (this.golsto) {
-      this.golsto.push({
-        index: this.golsto.length + 1,
-        maladaptive: this.maladaptiveSelected.maladaptive_behavior,
-      sto: this.sto,
-      status_sto: this.status_sto,
-      status_sto_edit: this.status_sto,
-      initial_date_sto: this.initial_date_sto,
-      end_date_sto: this.end_date_sto,
-      decription_sto: this.decription_sto,
-      
-      })
-    } else {
-      this.golsto = [{
-        index: 1, // initial index
-        maladaptive: this.maladaptiveSelected.maladaptive_behavior,
-        sto: this.sto,
-        status_sto: this.status_sto,
-        status_sto_edit: this.status_sto,
-        initial_date_sto: this.initial_date_sto,
-        end_date_sto: this.end_date_sto,
-        decription_sto: this.decription_sto,
-      
-      }]
-    }
-
-    this.sto = '';
-    this.status_sto = '';
-    this.status_sto_edit = '';
-    this.initial_date_sto = null;
-    this.end_date_sto = null;
-    this.decription_sto = '';
-  }
-
-  deleteSTOGoal(goalst:any){
-    const index = this.golsto.findIndex((element) => element.index === goalst.index);
-    if (index !== -1) {
-      this.golsto.splice(index, 1);
-    }
-  }
-
-  seleccionarParaEdit(goalst:any){
-
-    const selectedGoalSto = this.golsto.find((item) => item.index === goalst.index);
-    if (selectedGoalSto) {
-      this.golsto_edit = selectedGoalSto;
-      // Ahora puedes editar el objeto selectedCaregiver
-      selectedGoalSto.nombre = 'Nuevo nombre'; // Por ejemplo
-    }
-        
-    
-  }
-
-  updateGoalSto(goalst:any){
-    const index = this.golsto.findIndex((item) => item.index === goalst.index);
-    if (index !== -1) {
-      this.golsto[index] = goalst;
-      Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
-    }
-    
-  }
-
-  
-
-
-
-  addLTOGoal(){
-    if (this.gollto) {
-      this.gollto.push({
-        index: this.gollto.length + 1,
-        lto: this.lto,
-        status_lto: this.status_lto,
-        initial_date_lto: this.initial_date_lto,
-        end_date_lto: this.end_date_lto,
-        decription_lto: this.decription_lto,
-      
-      })
-    } else {
-      this.gollto = [{
-        index: 1, // initial index
-        lto: this.lto,
-        status_lto: this.status_lto,
-      initial_date_lto: this.initial_date_lto,
-      end_date_lto: this.end_date_lto,
-      decription_lto: this.decription_lto,
-      
-      }]
-    }
-    
-    this.lto = '';
-    this.status_lto = '';
-    this.initial_date_lto = null;
-    this.end_date_lto = null;
-    this.decription_lto = '';
-  }
-
-  deleteLTOGoal(goall:any){
-
-    const index = this.gollto.findIndex((element) => element.index === goall.index);
-    if (index !== -1) {
-      this.gollto.splice(index, 1);
-    }
-  }
-
-  seleccionarParaEditLto(goall:any){
-    const selectedGoalLto = this.gollto.find((item) => item.index === goall.index);
-    if (selectedGoalLto) {
-      this.gollto_edit = selectedGoalLto;
-      // Ahora puedes editar el objeto selectedCaregiver
-      selectedGoalLto.nombre = 'Nuevo nombre'; // Por ejemplo
-    }   
-  }
-
-  updateGoalLto(goall:any){
-    const index = this.gollto.findIndex((item) => item.index === goall.index);
-    if (index !== -1) {
-      this.gollto[index] = goall;
-      Swal.fire('Updated', `Updated item List successfully, if you finish the list, now press button save!`, 'success');
-    }
-    
-  }
-
-  cambiarStatus(goalsto:any){
-    this.status_sto_edit = goalsto;
-    // console.log(this.status_sto_edit.status_sto);
-
-    let data ={
-      goalstos: this.golsto,
-      goalltos: this.gollto,
-    }
-    
-    this.goalService.editGoal(data, this.goalmaladaptiveid).subscribe(
-      resp =>{
-        // console.log(resp);
-        // this.getTableData();
-        Swal.fire('Updated', `Goal Updated successfully!`, 'success');
-        this.ngOnInit();
-      }
-    )
-  }
-  cambiarStatusLto(goallto:any){
-    this.status_sto_edit = goallto;
-    // console.log(this.status_lto_edit.status_lto);
-
-    let data ={
-      goalstos: this.golsto,
-      goalltos: this.gollto,
-    }
-    
-    this.goalService.editGoal(data, this.goalmaladaptiveid).subscribe(
-      resp =>{
-        // console.log(resp);
-        // this.getTableData();
-        Swal.fire('Updated', `Goal Updated successfully!`, 'success');
-        this.ngOnInit();
-      }
-    )
-  }
-
-  //listas
-
-  
 
   back(){
     this.maladaptiveSelected = null;
@@ -448,52 +198,6 @@ export class ReductionGoalFormComponent {
     this.ngOnInit();
   }
 
-  saveGoal(){
-    this.text_validation = '';
-    // if(!this.maladaptive || !this.current_status || !this.golsto){
-    //   this.text_validation = 'Is required this information ';
-    //   return;
-    // }
-
-    let data ={
-      id:this.goalmaladaptiveid,
-      bip_id: this.bip_selectedIdd,
-      maladaptive: this.maladaptiveSelected.maladaptive_behavior,
-      patient_id: this.patient_id,
-      current_status: this.current_status,
-      goalstos: this.golsto,
-      goalltos: this.gollto,
-      client_id: this.client_id,
-    }
-
-    if(this.client_id_goal && this.goalmaladaptiveid){
-
-      this.goalService.editGoal(data, this.goalmaladaptiveid).subscribe((resp:any)=>{
-        // console.log(resp);
-        // this.text_success = 'Goal Updated'
-        Swal.fire('Updated', `Goal Reduction Updated successfully!`, 'success');
-        this.ngOnInit();
-      })
-      
-    }else{
-      
-      this.goalService.createGoal(data).subscribe((resp:any)=>{
-        console.log(resp);
-        this.goalid = resp.id;
-        // this.text_success = 'Goal created successfully!'
-        Swal.fire('Created', `Goal Reduction Created successfully!`, 'success');
-        this.ngOnInit();
-        // this.getGoalsMaladaptives();
-  
-        // this.maladaptive = '';
-        // this.goal_id = '';
-        // this.current_status = '';
-      })
-    }
-
-   
-
-  }
 
 
   //grafico

@@ -97,7 +97,7 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-12 col-md-3">
+                                    <div class="col-12 col-md-3" *ngif="user.roles[0] !== 'RBT'">
                                         <div class="form-group local-forms">
                                             <label>Note type </label>
                                             <mat-select [(ngModel)]="noteType" [ngModelOptions]="{standalone: true}"
