@@ -128,6 +128,10 @@ export class ChartReplacementComponent {
   porcentage_diario = null;
   sumatoria_porcentage_diario: any[];
   promedio_porcentual_semanal: any[];
+  stoName: any[];
+  stoStatus: any;
+  existgrfic: any;
+  public loading: boolean ;
   
   //datos reales
 
@@ -142,57 +146,6 @@ export class ChartReplacementComponent {
     this.carousel1 = this.data.carousel1;
     this.carousel2 = this.data.carousel2;
 
-    // this.chartOptionsOne = {
-    //   chart: {
-    //     height: 170,
-    //     type: 'line',
-    //     toolbar: {
-    //       show: false,
-    //     },
-    //   },
-    //   grid: {
-    //     show: true, 
-    //     xaxis: {
-    //       lines: {
-    //         show: false
-    //        }
-    //      },  
-    //     yaxis: {
-    //       lines: { 
-    //         show: true 
-    //        }
-    //      },   
-    //     },
-    //   dataLabels: {
-    //     enabled: false,
-    //   },
-    //   stroke: {
-    //     curve: 'smooth',
-    //   },
-    //   series: [
-    //     {
-    //       name: 'Number of Occurrences',
-    //       color: '#00D3C7',
-    //       data: [20, 40, 85, 25, 50, 30, 50, 20, 50, 40, 30, 20],
-    //     },
-    //   ],
-    //   xaxis: {
-    //     categories: [
-    //       'Jan',
-    //       'Feb',
-    //       'Mar',
-    //       'Apr',
-    //       'May',
-    //       'Jun',
-    //       'Jul',
-    //       'Aug',
-    //       'Sep',
-    //       'Oct',
-    //       'Nov',
-    //       'Dec',
-    //     ],
-    //   },
-    // };
 
   }
 
@@ -200,25 +153,18 @@ export class ChartReplacementComponent {
     
     this.goal;
     this.baseline_d;
-    // this.initial_interesting;
-    // console.log('baseline_date',this.baseline_d);
-    // console.log(this.goal);
-    
-
     this.activatedRoute.params.subscribe((resp:any)=>{
       this.patient_id = resp.patient_id; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
     
      })
      this.getProfileBip(); // se pide el perfil del paciente por el bip relacionado
      this.getBip(); // se pide el perfil del paciente por el bip relacionado
-    //  this.getGraphicPatientMonth();
+   
   }
 
   getBip(){
     this.bipService.getBipByUser(this.patient_id).subscribe((resp:any)=>{
-      // console.log(resp);
       this.created_at = resp.bip.created_at;
-      // console.log(this.created_at);
     });
 
   }
@@ -227,9 +173,6 @@ export class ChartReplacementComponent {
     this.bipService.showBipProfile(this.patient_id).subscribe((resp:any)=>{
       // console.log(resp);
       this.client_selected = resp;// asignamos el objeto a nuestra variable
-      // this.patient_id = resp.patient.patient_id;  
-      // console.log(this.patient_id);
-
       //traemos la info del usuario 
       if (this.client_selected.type !== null){// si hay o no informacion del paciente
         if (this.client_selected.eligibility == 'yes'){// si el status es positivo para proceder
@@ -247,6 +190,7 @@ export class ChartReplacementComponent {
   getGoalsReductions(){
     this.graphicReductionService.listReductionGraphics(this.goal, this.patient_id).subscribe((resp:any)=>{
      console.log(resp);
+     this.existgrfic = resp.replacementsCol;
     
      //funcion de pablo alcorta
       //se limpia y se extrae los datos de la coleccion json 
@@ -285,27 +229,12 @@ export class ChartReplacementComponent {
       array.forEach(element => {
         number_of_trials.push(element.total_trials)
       });
-      // console.log(number_of_correct_response);
-      // console.log(goal);
 
+      this.stoName = resp.nameSto;
+      this.stoStatus = resp.datosFiltrados[0];
 
-
-
-
-      //start
       this.replacementsExtractedGoal = this.replacements;
-      // for (var i = 0; i < this.replacementsExtractedGoal.length; i++) {
-        // console.log(this.replacementsExtractedGoal[i]); 
-        // solo quita  el /, duplica el resultado y devuelve la todos los arrays
-      // }
-      //end
-      //start
-      //  this.number_of_correct_response = this.replacements.filter(replacement => replacement.number_of_correct_response).map(replacement => replacement.number_of_correct_response);
-      //  console.log(this.number_of_correct_response);
-      //end
-      
-      
-      //start
+
       // traemos todas las fechas
       this.sessions_dates = resp.sessions_dates.session_date;
       this.number_of_correct_response = number_of_correct_response;
@@ -314,8 +243,7 @@ export class ChartReplacementComponent {
       //fecha inicial cuando se hizo el bip
       this.sessions_dates = resp.sessions_dates.map(item => item.session_date);
       this.sessions_dates.unshift(this.created_at); // con unshift lo unimos y colocamos de primero
-      // console.log(this.sessions_dates);
-      // this.sessions_dates?.shift()
+      
       this.number_of_correct_response.unshift(0)
       number_of_trials.unshift(0)
       //end
@@ -398,8 +326,6 @@ export class ChartReplacementComponent {
             name: '% Week',
             color: '#00D3C7',
             data: this.number_of_correct_response,
-            // data: [45, 60, 75, 51, 42, 42,45,],
-            // data: [this.initial_interesting, this.number_of_occurrences]
             
           },
         ],
@@ -419,68 +345,6 @@ export class ChartReplacementComponent {
 
   
   
-
-  // getGraphicPatientMonth(){
-  //   let data ={
-  //     month: this.selectedValue,
-  //   }
-  //   this.graphicReductionService.graphicPatientMonth(data).subscribe((resp:any)=>{
-  //     console.log(resp);
-      
-
-  //     //start
-  //     this.query_income_year = resp.query_income_year;
-  //     let data_income:any = [];
-  //     this.query_income_year.forEach((element:any) => {
-  //       data_income.push(element.income);
-  //     });
-
-  //     this.chartOptionsOne = {
-  //       chart: {
-  //         height: 200,
-  //         type: 'line',
-  //         toolbar: {
-  //           show: false,
-  //         },
-  //       },
-  //       grid: {
-  //         show: true, 
-  //         xaxis: {
-  //           lines: {
-  //             show: false
-  //            }
-  //          },  
-  //         yaxis: {
-  //           lines: { 
-  //             show: true 
-  //            }
-  //          },   
-  //         },
-  //       dataLabels: {
-  //         enabled: false,
-  //       },
-  //       stroke: {
-  //         curve: 'smooth',
-  //       },
-  //       series: [
-  //           {
-  //             name: 'Income',
-  //             color: '#2E37A4',
-  //             data: data_income,
-  //           },
-  //         ],
-  //       xaxis: {
-  //         categories: resp.months_name,
-  //       },
-  //     };
-      
-  //     //end
-  //   })
-  // }
-  // selectedMonth(){
-  //   // console.log(this.selectedValue);
-  //   // this.getGraphicPatientMonth();
-  // }
     
   selecedList: data[] = [
     {value: '01'},

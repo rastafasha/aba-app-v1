@@ -1,5 +1,8 @@
 <!-- *ngIf="patient_id" -->
-<div class="container" >
+ <div class="container" *ngIf="!existgrfic">
+    <h3 class="text-center">No Graphic data</h3>
+ </div>
+<div class="container" *ngIf="existgrfic" >
     <div class="row" >
         <!-- col-xl-7 -->
         <div class="col-12 col-md-12 col-lg-12 ">
@@ -62,7 +65,7 @@
                     <div class="chart-title patient-visit mb-0">
                         <p>{{goal}}</p>
                         <p><span class="cuadro-color" style="background-color: red"></span>Baseline</p>
-                        <p><span class="cuadro-color" style="background-color: goldenrod; border-radius: 100px; width: 10px;"></span>STO 1 mastered </p>
+                        <p><span class="cuadro-color" style="background-color: goldenrod; border-radius: 100px; width: 10px;"></span>STO: {{stoName}} Status: {{stoStatus}} </p>
                         <p><span class="cuadro-color"></span>Proyected path </p>
                         <!-- <p>{{created_at|date}}</p> -->
                         <div class="income-value">

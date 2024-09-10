@@ -201,6 +201,14 @@ export class ReductionGoalFormComponent {
 
 
   //grafico
+
+
+  //selectores seleccionamos el grafico del maladaptive de la lista
+  selectedMaladaptiveGraphic(maladap:any){
+    this.maladaptiveSelectedSon = maladap
+    // console.log(this.maladaptiveSelectedSon);
+    // this.getGoalsSonMaladaptives();
+  }
   //obtenemos los goals del maladaptive por nombre  para el grafico 
   getGoalsSonMaladaptives(){
     this.goalService.listMaladaptivesGoals(this.maladaptiveSelectedSon.maladaptive_behavior, this.patient_id).subscribe((resp:any)=>{

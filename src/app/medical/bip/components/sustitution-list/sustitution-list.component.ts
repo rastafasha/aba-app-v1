@@ -128,14 +128,11 @@ export class SustitutionListComponent {
     this.ativatedRoute.params.subscribe((resp:any)=>{
       this.patient_id = resp.patient_id;// la respuesta se comienza a relacionar  en este momento con un cliente especifico
       this.getProfileBip(); // se solicita la info del perfil del usuario
-      // this.getGoalbyPatient(); // se solicita la info del perfil del usuario
-      // console.log(this.patient_id);
+      
     })
     
     
     this.ativatedRoute.params.subscribe( ({id}) => this.getBip()); // se solicita la info del perfil del bip
-    // this.ativatedRoute.params.subscribe( ({id}) => this.getGoal(id)); // se solicita la info del perfil del bip
-    // this.ativatedRoute.params.subscribe( ({id}) => this.getGoal(id)); // se solicita la info del perfil del goal
     let USER = localStorage.getItem("user");// se solicita el usuario logueado
     this.user = JSON.parse(USER ? USER: '');//  si no hay un usuario en el localstorage retorna un objeto vacio
     this.doctor_id = this.user.id; //se asigna el doctor logueado a este campo para poderlo enviar en los
@@ -178,12 +175,7 @@ export class SustitutionListComponent {
   //si existe enviamos el client_id_goal para actualizar el goal del paciente
   getPatientGoalSustitutions(patient_id){
     this.goalSustitutionService.getGoalSustitutionbyPatientId(patient_id).subscribe((resp:any)=>{
-      // console.log('goals sustition by patientid',resp);
-      // this.goalSustitutions = resp.sustitutiongoalPatientIds.data[0] ==""?[] : resp.sustitutiongoalPatientIds.data ;
-      // this.goalSustitutionId = resp.sustitutiongoalPatientIds.data[0].id || undefined;
-      // this.client_id_goalSustitution = resp.sustitutiongoalPatientIds.data[0].client_id;
-      // this.goalSelected = resp.sustitutiongoalPatientIds.data[0].id;
-      // this.goal = resp.sustitutiongoalPatientIds.data[0].goal;
+      console.log('goals sustition by patientid',resp);
       this.goals = resp.sustitutiongoalPatientIds.data;
     })
   }
@@ -248,8 +240,7 @@ export class SustitutionListComponent {
   deleteGoalSon(goalsto:any, i:number){
     this.goals.splice(i,1);
     this.goalSustitutionService.deleteGoalSustitution(goalsto.id).subscribe((resp:any)=>{
-      // alert("Se elimino el objetivo");
-      // this.getGoals();
+      
     })
   }
   

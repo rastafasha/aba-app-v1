@@ -112,6 +112,8 @@ export class ChartReductionComponent {
   
   public maladaptiveBehaviors: any = [];
   public maladaptivess: any = [];
+  public existgrfic: any ;
+  public loading: boolean ;
 
 
   maladaptivesCol: any[];
@@ -145,57 +147,6 @@ export class ChartReductionComponent {
     this.carousel1 = this.data.carousel1;
     this.carousel2 = this.data.carousel2;
 
-    // this.chartOptionsOne = {
-    //   chart: {
-    //     height: 170,
-    //     type: 'line',
-    //     toolbar: {
-    //       show: false,
-    //     },
-    //   },
-    //   grid: {
-    //     show: true, 
-    //     xaxis: {
-    //       lines: {
-    //         show: false
-    //        }
-    //      },  
-    //     yaxis: {
-    //       lines: { 
-    //         show: true 
-    //        }
-    //      },   
-    //     },
-    //   dataLabels: {
-    //     enabled: false,
-    //   },
-    //   stroke: {
-    //     curve: 'smooth',
-    //   },
-    //   series: [
-    //     {
-    //       name: 'Number of Occurrences',
-    //       color: '#00D3C7',
-    //       data: [20, 40, 85, 25, 50, 30, 50, 20, 50, 40, 30, 20],
-    //     },
-    //   ],
-    //   xaxis: {
-    //     categories: [
-    //       'Jan',
-    //       'Feb',
-    //       'Mar',
-    //       'Apr',
-    //       'May',
-    //       'Jun',
-    //       'Jul',
-    //       'Aug',
-    //       'Sep',
-    //       'Oct',
-    //       'Nov',
-    //       'Dec',
-    //     ],
-    //   },
-    // };
 
   }
 
@@ -205,8 +156,6 @@ export class ChartReductionComponent {
     this.initial_interesting;
     this.baseline_date;
     this.baseline_level;
-    // console.log('baseline_level',this.baseline_level);
-    // console.log('baseline_date',this.baseline_date);
     
 
     this.activatedRoute.params.subscribe((resp:any)=>{
@@ -257,6 +206,8 @@ export class ChartReductionComponent {
     this.graphicReductionService.listMaladaptivesGraphics(this.maladaptive_behavior, this.patient_id).subscribe((resp:any)=>{
       
       // console.log(resp);
+
+      this.existgrfic= resp.maladaptivesCol;
       
       //funcion de pablo alcorta
       //se limpia y se extrae los datos de la coleccion json 

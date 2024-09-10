@@ -180,12 +180,6 @@ export class ReductionGoalEditComponent {
   }
 
 
-  //selectores seleccionamos el grafico del maladaptive de la lista
-  selectedMaladaptiveGraphic(maladap:any){
-    this.maladaptiveSelectedSon = maladap
-    // console.log(this.maladaptiveSelectedSon);
-    // this.getGoalsSonMaladaptives();
-  }
 
   deleteMaladaptiveSon(goalsto:any){debugger
     // this.maladaptiveSelectedSon.splice(i,1);
