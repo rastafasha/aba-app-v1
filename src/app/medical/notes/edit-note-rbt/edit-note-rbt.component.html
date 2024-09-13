@@ -1,6 +1,6 @@
 <div class="page-wrapper">
     <div class="content">
-    
+
         <!-- Page Header -->
         <div class="page-header">
             <div class="row">
@@ -24,7 +24,7 @@
                 <div class="card">
                     <div class="card-body">
                         <form autocomplete="false">
-                            
+
                             <!-- paciente -->
                             <div class="row align-items-center py-4" >
                                 <div class="col-12 py-4">
@@ -36,7 +36,7 @@
                                         <input class="form-control"  name="patient_id"  disabled [(ngModel)]="patient_id" type="text"  >
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6 col-xl-4">  
+                                <div class="col-12 col-md-6 col-xl-4">
                                     <div class="form-group local-forms">
                                         <label >First Name <span class="login-danger">*</span></label>
                                         <input class="form-control" name="first_name"  disabled [(ngModel)]="first_name" type="text"  >
@@ -48,14 +48,14 @@
                                         <input class="form-control" name="last_name"  disabled [(ngModel)]="last_name" type="text"  >
                                     </div>
                                 </div>
-                               
+
                                 <div class="col-12 col-md-6 col-xl-4">
                                     <div class="form-group local-forms">
                                         <label >Diagnosis Code <span class="login-danger">*</span></label>
                                         <input class="form-control" name="diagnosis_code"  disabled [(ngModel)]="diagnosis_code" type="text"  >
                                     </div>
                                 </div>
-                              
+
                                 <div class="col-12 col-md-6 col-xl-4">
                                     <div class="form-group local-forms">
                                         <label >Provider Name  <span class="login-danger">*</span></label>
@@ -92,7 +92,7 @@
                                 <div class="col-12 col-md-6 col-xl-4 ">
                                     <div class="form-group local-forms">
                                         <label >CPT <span class="login-danger">*</span></label>
-                                        <mat-select [(ngModel)]="selectedValueCode" name="cpt_code" [ngModelOptions]="{standalone: true}" 
+                                        <mat-select [(ngModel)]="selectedValueCode" name="cpt_code" [ngModelOptions]="{standalone: true}"
                                         class="form-control select"  placeholder="Select Code"
                                         (selectionChange)="selectCpt($event)"
                                         >
@@ -105,11 +105,11 @@
                                 <div class="col-12 col-md-6 col-xl-4">
                                     <div class="form-group local-forms">
                                         <label >Units Asigned <span class="login-danger">*</span></label>
-                                        <mat-select [(ngModel)]="selectedValueCode" name="n_units" disable 
-                                        [ngModelOptions]="{standalone: true}" class="form-control select"  
+                                        <mat-select [(ngModel)]="selectedValueCode" name="n_units" disable
+                                        [ngModelOptions]="{standalone: true}" class="form-control select"
                                         placeholder="Select Code">
                                             <mat-option *ngFor="let data of pa_assessmentsgroup" disable  [value]="data.cpt">
-                                            {{data.n_units}} 
+                                            {{data.n_units}}
                                             </mat-option>
                                         </mat-select>
                                     </div>
@@ -138,18 +138,18 @@
                                                             {{data.name}}
                                                         </mat-option>
                                                     </mat-select> -->
-                                                    <input [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly  
+                                                    <input [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly
                                                     [(ngModel)]="selectedValueTimeIn" name="time_in" [format]="24" [max]="'12:00'"  (onChange)="hourTimeInSelected($event)" [ngModelOptions]="{standalone: true}">
                                                     <ngx-material-timepicker-toggle [for]="toggleTimepicker"></ngx-material-timepicker-toggle>
                                                     <ngx-material-timepicker #toggleTimepicker></ngx-material-timepicker>
-                                                    
+
                                                 </div>
                                             </div>
                                             <!-- [max]="'12:00'" -->
                                             <div class="col-xs-12 col-sm-6">
                                                 <div class="form-group local-forms">
                                                     <label>Time Out <span class="login-danger">*</span></label>
-                                                    <input [ngxTimepicker]="toggleTimepicker2" [disableClick]="true" readonly  
+                                                    <input [ngxTimepicker]="toggleTimepicker2" [disableClick]="true" readonly
                                                     [(ngModel)]="selectedValueTimeOut" name="time_out" [format]="24"  (onChange)="hourTimeOutSelected($event)" [ngModelOptions]="{standalone: true}">
                                                     <ngx-material-timepicker-toggle [for]="toggleTimepicker2"></ngx-material-timepicker-toggle>
                                                     <ngx-material-timepicker #toggleTimepicker2></ngx-material-timepicker>
@@ -164,7 +164,7 @@
                                             <div class="col-xs-12 col-sm-6">
                                                 <div class="form-group local-forms">
                                                     <label >Time In <span class="login-danger">*</span></label>
-                                                    <input [ngxTimepicker]="toggleTimepicker3" [disableClick]="true" readonly  
+                                                    <input [ngxTimepicker]="toggleTimepicker3" [disableClick]="true" readonly
                                                     [(ngModel)]="selectedValueTimeIn2" name="time_in2" [format]="24"   (onChange)="hourTimeInSelected($event)" [ngModelOptions]="{standalone: true}">
                                                     <ngx-material-timepicker-toggle [for]="toggleTimepicker3"></ngx-material-timepicker-toggle>
                                                     <ngx-material-timepicker #toggleTimepicker3></ngx-material-timepicker>
@@ -174,14 +174,14 @@
                                             <div class="col-xs-12 col-sm-6">
                                                 <div class="form-group local-forms">
                                                     <label >Time Out <span class="login-danger">*</span></label>
-                                                    <input [ngxTimepicker]="toggleTimepicker4" [disableClick]="true" readonly  
+                                                    <input [ngxTimepicker]="toggleTimepicker4" [disableClick]="true" readonly
                                                     [(ngModel)]="selectedValueTimeOut2" name="time_out2" [format]="24"   (onChange)="hourTimeInSelected($event)" [ngModelOptions]="{standalone: true}">
                                                     <ngx-material-timepicker-toggle [for]="toggleTimepicker4"></ngx-material-timepicker-toggle>
                                                     <ngx-material-timepicker #toggleTimepicker4></ngx-material-timepicker>
                                                 </div>
                                             </div>
                                         </div>
-    
+
                                     </div>
 
                                 </div>
@@ -206,10 +206,10 @@
                             </div>
                             <!-- paciente -->
                         </form>
-                        
+
                     </div>
-                </div>	
-                	
+                </div>
+
             </div>
             <!-- fin paciente -->
 
@@ -246,8 +246,8 @@
                                 </ng-container>
                             </div>
                             </form>
-                                
-                                
+
+
                         </div>
                     </div>
                 </div>
@@ -280,7 +280,7 @@
                                                     <circle-progress class="circle-progress-bar" [percent]="replacemen.number_of_correct_response" [clockwise]="true"
                                                     innerStrokeColor=#dee2e6 outerStrokeColor=#2E37A4></circle-progress>
                                                     <h4 class="text-center">{{replacemen.number_of_correct_response}}</h4>
-                                                    
+
                                                 </div>
                                             </div>
                                         </div> -->
@@ -303,8 +303,8 @@
                                 </ng-container>
                             </div>
                             </form>
-                                
-                                
+
+
                         </div>
                     </div>
                 </div>
@@ -321,9 +321,9 @@
                         <div class="container">
                             <form autocomplete="false">
 
-                                <div class="col-xs-12">  
-                                    <div class="row">  
-                                        
+                                <div class="col-xs-12">
+                                    <div class="row">
+
                                         <div class="col-xs-12 col-sm-3">
 
                                             <div class="form-group ">
@@ -468,21 +468,21 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col-12 mb-3 doctor-submit text-end">
                                             <button class="btn btn-primary btn-sm" (click)="addInterventions()">Update Intervention</button>
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                                 <!-- Interventions -->
-                                
+
                             </form>
                         </div>
-                        
+
                     </div>
-                </div>	
-                	
+                </div>
+
             </div>
             <!-- fin interventions -->
 
@@ -491,7 +491,7 @@
                 <div class="card">
                     <div class="card-body">
                         <form autocomplete="false">
-                            
+
                             <!-- paciente -->
                             <div class="row align-items-center py-4" >
                                 <div class="col-12">
@@ -500,10 +500,10 @@
                                         <p>Client has been diagnosed with Autism Spectrum Disorder (ASD) according to the criteria outlined in the Diagnostic and Statistical Manual of Mental Disorders, Fifth Edition (DSM-5).</p>
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-4">  
+                                <div class="col-12 col-md-4">
                                     <div class="form-group local-forms">
                                         <label >Met with client at  <span class="login-danger">*</span></label>
-                                      
+
                                               <select
                                         class="form-control form-select-solid fw-bolder"
                                         name="meet_with_client_at" [(ngModel)]="meet_with_client_at" >
@@ -547,7 +547,7 @@
                                         </select>
                                     </div>
                                 </div>
-                               
+
                                 <div class="col-12 col-md-4">
                                     <div class="form-group local-forms">
                                         <label >as evidenced by  <span class="login-danger">*</span></label>
@@ -572,10 +572,14 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 ">
-                                    <div class="form-group local-forms">
-                                        <label >Client response to treatment this session <span class="login-danger">*</span></label>
-                                        <textarea class="form-control" name="client_response_to_treatment_this_session" [(ngModel)]="client_response_to_treatment_this_session" rows="4" cols="30"></textarea>
-                                    </div>
+                                  <div class="form-group local-forms">
+                                    <label>Client response to treatment this session <span class="login-danger">*</span></label>
+                                    <textarea class="form-control" name="client_response_to_treatment_this_session"
+                                      [(ngModel)]="client_response_to_treatment_this_session" rows="4" cols="30"></textarea>
+                                    <button class="btn btn-primary ml-2 btn-sm" (click)="generateAISummary()" [disabled]="isGeneratingSummary">
+                                      {{ isGeneratingSummary ? 'Generating...' : 'Generate AI Summary' }}
+                                    </button>
+                                  </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-7 ">
                                    <p>Responding this session could have been affected by environmental changes above</p>
@@ -606,7 +610,7 @@
                                 <div class="col-12">
                                     <p>the RBT will continue working with the goals as stated in behavior plan.</p>
                                 </div>
-                                
+
                                 <div class="col-12 col-md-4 col-xl-4">
                                     <div class="form-group local-forms">
                                         <label>Provider name RBT <span class="login-danger">*</span></label>
@@ -614,7 +618,7 @@
                                             [ngModelOptions]="{standalone: true}" class="form-control select"
                                             placeholder="Select Specialist"
                                             (selectionChange)="selectFirmaSpecialistRbt($event)" value="select">
-                                            <mat-option value="select">--Select-</mat-option> 
+                                            <mat-option value="select">--Select-</mat-option>
                                             <mat-option *ngFor="let data of roles_rbt" [value]="data.id">
                                                 {{data.name}} {{data.surname}}
                                             </mat-option>
@@ -625,12 +629,12 @@
                                     <div class="form-group local-top-form">
                                         <label class="local-top">Provider Signature <span class="login-danger">*</span></label>
                                         <!-- <div class="settings-btn upload-files-avator">
-                                            <input type="file" accept="image/*" name="provider_signature" id="file" 
+                                            <input type="file" accept="image/*" name="provider_signature" id="file"
                                             (change)="loadFile($event)" class="hide-input">
                                             <label for="file" class="upload">Choose File</label>
                                         </div> -->
                                     </div>
-            
+
                                     <!-- previsualizacion de la foto -->
                                     <div *ngIf="FILE_SIGNATURE_RBT">
                                         <img [src]="IMAGE_PREVISUALIZA_SIGNATURE__RBT" style="width: 250px;" alt="">
@@ -645,11 +649,11 @@
                                         <label class="local-top">Created At <span class="login-danger">*</span></label>
                                         <p style="padding: 10px;">{{note_selected.session_date|date}}</p>
                                     </div>
-            
+
                                 </div>
 
 
-                                
+
 
                                 <div class="col-12 col-md-4 col-xl-4">
                                     <div class="form-group local-forms">
@@ -659,7 +663,7 @@
                                             [ngModelOptions]="{standalone: true}" class="form-control select"
                                             placeholder="Select Specialist"
                                             (selectionChange)="selectFirmaSpecialistBcba($event)" value="select">
-                                            <mat-option value="select">--Select-</mat-option> 
+                                            <mat-option value="select">--Select-</mat-option>
                                             <mat-option *ngFor="let data of roles_bcba" [value]="data.id">
                                                 {{data.name}} {{data.surname}}
                                             </mat-option>
@@ -693,29 +697,28 @@
                                         <label class="local-top">Created At <span class="login-danger">*</span></label>
                                         <p style="padding: 10px;">{{note_selected.session_date|date}}</p>
                                     </div>
-            
+
                                 </div>
-                                
+
                             </div>
                             <!-- paciente -->
 
-                            
+
                             <div class="col-12">
                                 <div class="doctor-submit text-end">
                                     <button type="button" class="btn btn-primary submit-form me-2" (click)="save()">Save</button>
-                                    
+
                                 </div>
                             </div>
                         </form>
-                        
+
                     </div>
-                </div>	
-                	
+                </div>
+
             </div>
             <!-- fin paciente -->
-           
-            					
+
+
         </div>
     </div>
 </div>
- 

@@ -34,6 +34,7 @@ export class EditNoteRbtComponent {
   public selectedValueProviderName!: string;
   public selectedValueMaladaptive!: string;
   option_selected:number = 0;
+  isGeneratingSummary: boolean = false;
 
   client_id:any;
   patient_id:any;
@@ -43,11 +44,11 @@ export class EditNoteRbtComponent {
   note_selected:any;
   bip_id:any;
   user:any;
-  
+
   public first_name:string = '';
   public last_name:string = '';
   public diagnosis_code:string = '';
-  
+
   public provider_name_g:string = '';
   public provider_credential:string = '';
   public pos:string = '';
@@ -59,7 +60,7 @@ export class EditNoteRbtComponent {
   public session_length_total:string = '';
   public session_length_total2:string = '';
   public environmental_changes:string = '';
-  
+
   public sumary_note:string = '';
   public meet_with_client_at:string = '';
   public client_appeared:string = '';
@@ -81,8 +82,8 @@ export class EditNoteRbtComponent {
   public interventions:any;
   public provider_signature:any;
   public supervisor_signature:any;
-  
-  
+
+
   public pairing:any;
   public response_block:any;
   public DRA:any;
@@ -143,12 +144,12 @@ export class EditNoteRbtComponent {
   ){}
 
   ngOnInit(): void {
-    
+
     // window.scrollTo(0, 0);
     this.ativatedRoute.params.subscribe((resp:any)=>{
       this.note_id = resp.id;
      })
-     
+
     //  this.countValue();
 
     this.total_trials = 0;
@@ -160,14 +161,14 @@ export class EditNoteRbtComponent {
     this.doctor_id = this.user.id;
     this.getNote();
     this.getConfig();
-     
+
   }
 
   goBack() {
     this.location.back(); // <-- go back to previous location on cancel
   }
 
- 
+
   getConfig(){
     this.noteRbtService.listConfigNote().subscribe((resp:any)=>{
       // console.log(resp);
@@ -177,7 +178,7 @@ export class EditNoteRbtComponent {
       // this.hours_days = resp.hours;
 
       this.getNote();
-      
+
     })
   }
 
@@ -193,18 +194,18 @@ export class EditNoteRbtComponent {
       this.as_evidenced_by = this.note_selected.as_evidenced_by;
       this.client_appeared = this.note_selected.client_appeared;
       this.client_response_to_treatment_this_session = this.note_selected.client_response_to_treatment_this_session;
-      
+
       this.selectedValueCode = this.note_selected.cpt_code;
-      
+
       this.selectedValueProviderName = this.note_selected.provider_name_g ? this.note_selected.provider_name_g : null;
       this.selectedValueRBT = this.note_selected.provider_name;
       this.selectedValueBCBA = this.note_selected.supervisor_name;
-      
+
 
       this.interventions = resp.interventions;
       let jsonObj = JSON.parse(this.interventions) || '';
       this.interventionsgroup = jsonObj;
-      
+
 
       this.pairing = this.interventionsgroup[0].pairing;
       this.response_block = this.interventionsgroup[0].response_block;
@@ -219,7 +220,7 @@ export class EditNoteRbtComponent {
       this.extinction = this.interventionsgroup[0].extinction;
       this.natural_teaching = this.interventionsgroup[0].natural_teaching;
 
-      
+
       this.maladaptive = resp.maladaptives;
       let jsonObj1 = JSON.parse(this.maladaptive) || '';
       this.maladaptivegroup = jsonObj1;
@@ -229,29 +230,29 @@ export class EditNoteRbtComponent {
       let jsonObj2 = JSON.parse(this.replacement) || '';
       this.replacementgroup = jsonObj2;
       // console.log(this.replacementgroup);
-      
+
       // this.pos = this.note_selected.pos;
       this.environmental_changes = this.note_selected.environmental_changes;
       this.meet_with_client_at = this.note_selected.meet_with_client_at;
       this.progress_noted_this_session_compared_to_previous_session = this.note_selected.progress_noted_this_session_compared_to_previous_session;
-      
+
       this.rbt_modeled_and_demonstrated_to_caregiver = this.note_selected.rbt_modeled_and_demonstrated_to_caregiver;
       this.replacement = this.note_selected.replacement;
-      
+
       // this.session_date = this.note_selected.session_date;
       this.session_date = this.note_selected.session_date? new Date(this.note_selected.session_date).toISOString(): '';
       // this.next_session_is_scheduled_for = this.note_selected.next_session_is_scheduled_for;
       this.next_session_is_scheduled_for = this.note_selected.next_session_is_scheduled_for? new Date(this.note_selected.next_session_is_scheduled_for).toISOString(): '';
-      
+
       this.session_length_total = this.note_selected.session_length_total;
       this.session_length_total2 = this.note_selected.session_length_total2;
-      
+
       this.selectedValueTimeIn = this.note_selected.time_in;
       this.selectedValueTimeOut = this.note_selected.time_in2;
       this.selectedValueTimeIn2 = this.note_selected.time_out;
       this.selectedValueTimeOut2 = this.note_selected.time_out2;
 
-      
+
       this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED = this.note_selected.provider_signature;
       this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED = this.note_selected.supervisor_signature;
       console.log(this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED);
@@ -270,8 +271,8 @@ export class EditNoteRbtComponent {
 
       // this.pos = JSON.parse(resp.patient.pos_covered) ;
       this.pos = resp.patient.pos_covered ;
-      this.diagnosis_code = this.client_selected.patient.diagnosis_code; 
-      
+      this.diagnosis_code = this.client_selected.patient.diagnosis_code;
+
       this.pa_assessments = resp.patient.pa_assessments;
       let jsonObj = JSON.parse(this.pa_assessments) || '';
       this.pa_assessmentsgroup = jsonObj;
@@ -279,7 +280,7 @@ export class EditNoteRbtComponent {
       // this.unitsAsignated = this.pa_assessmentsgroup.n_units;
       // console.log(this.pa_assessments);
       console.log(this.pa_assessmentsgroup);
-      
+
     });
   }
 
@@ -288,9 +289,9 @@ export class EditNoteRbtComponent {
     event = this.selectedValueCode;
     // this.getCPtLißst(this.selectedValueCode);
     console.log(event);
-    
+
   }
-  
+
 
 
   specialistData(selectedValueInsurer){
@@ -305,9 +306,9 @@ export class EditNoteRbtComponent {
   selectSpecialist(event:any){
     event = this.selectedValueProviderName;
     this.specialistData(this.selectedValueProviderName);
-    
+
   }
- 
+
 
   hourTimeInSelected(value:number){
     this.selectedValueTimeIn = value;
@@ -353,7 +354,7 @@ export class EditNoteRbtComponent {
   selectFirmaSpecialistRbt(event:any){
     event = this.selectedValueRBT;
     this.speciaFirmaDataRbt(this.selectedValueRBT);
-    
+
   }
 
   speciaFirmaDataBcba(selectedValueBCBA){
@@ -367,29 +368,29 @@ export class EditNoteRbtComponent {
   selectFirmaSpecialistBcba(event:any){
     event = this.selectedValueBCBA;
     this.speciaFirmaDataBcba(this.selectedValueBCBA);
-    
+
   }
-  
+
 
 
   addMaladaptive(behavior:any, i){
     this.maladaptiveSelected = behavior;
     this.maladaptives[i]= behavior
-    
+
     if(this.maladaptives.length > 1){
       this.maladaptives.splice(this.maladaptives,1);
     }
     this.maladaptiveSelected = null;
     this.maladaptive_behavior = '';
     this.number_of_occurrences = null;
-    
-    
+
+
   }
 
 
 
   // addReplacement(replacemen, i){
-    
+
   //   this.replacementSelected = replacemen;
   //   this.replacementGoals[i] = replacemen;
   //   if(this.maladaptives.length > 1){
@@ -400,18 +401,18 @@ export class EditNoteRbtComponent {
   //   this.total_trials = null;
   //   this.number_of_correct_response = null;
 
-    
+
   // }
 
   addReplacement(replacemen){
-    
+
     this.replacementSelected = replacemen;
     this.replacementGoals.push({
       goal: this.replacementSelected.goal,
       total_trials: this.replacementSelected.total_trials,
       number_of_correct_response: this.replacementSelected.number_of_correct_response ,
       // number_of_correct_response: this.number_of_correct_response ? this.number_of_correct_response :0 ,
-      
+
     })
     if(this.replacementGoals.length > 1){
       this.replacementGoals.splice(this.replacementGoals,1);
@@ -421,10 +422,10 @@ export class EditNoteRbtComponent {
     this.total_trials = null;
     this.number_of_correct_response = null;
 
-    
+
   }
 
-  
+
 
   addInterventions(){
     this.interventionsgroup.push({
@@ -456,7 +457,7 @@ export class EditNoteRbtComponent {
   //   const countElement = document.querySelector('.count') as HTMLInputElement;
   //   // const countElement = behavior;
   //   countElement.disabled = false;
-  
+
   //   document.addEventListener('click', (event) => {
   //     const target = event.target as HTMLElement;
   //     if (target.classList.contains('plus')) {
@@ -478,7 +479,7 @@ export class EditNoteRbtComponent {
     const max = 10; // Maximum of 10
     const countElement = document.querySelector('.count') as HTMLInputElement;
     countElement.disabled = true;
-  
+
     document.addEventListener('click', (event) => {
       const target = event.target as HTMLElement;
       if (target.classList.contains('minus')) {
@@ -505,7 +506,7 @@ export class EditNoteRbtComponent {
     //   goalstos: this.golsto,
     //   goalltos: this.gollto,
     // }
-    
+
     // this.goalService.editGoal(data, this.goalmaladaptiveid).subscribe(
     //   resp =>{
     //     // console.log(resp);
@@ -516,7 +517,7 @@ export class EditNoteRbtComponent {
     // )
   }
 
-  
+
 
 
 
@@ -545,7 +546,7 @@ export class EditNoteRbtComponent {
     reader2.onloadend = ()=> this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED = reader2.result;
   }
 
-  
+
 
   save(){debugger
     this.text_validation = '';
@@ -558,7 +559,7 @@ export class EditNoteRbtComponent {
     //   this.text_validation = 'Las contraseña debe ser igual';
     //   return;
     // }
-    
+
 
 
     let formData = new FormData();
@@ -618,7 +619,7 @@ export class EditNoteRbtComponent {
     if(this.as_evidenced_by ){
       formData.append('as_evidenced_by', this.as_evidenced_by);
     }
-    
+
     if(this.client_appeared ){
       formData.append('client_appeared', this.client_appeared);
     }
@@ -628,8 +629,8 @@ export class EditNoteRbtComponent {
     if(this.next_session_is_scheduled_for ){
       formData.append('next_session_is_scheduled_for', this.next_session_is_scheduled_for);
     }
-    
-    
+
+
     // if(this.FILE_SIGNATURE_RBT ){
     //   formData.append('imagen', this.FILE_SIGNATURE_RBT);
     // }
@@ -658,7 +659,7 @@ export class EditNoteRbtComponent {
 
     this.noteRbtService.editNote(formData,this.note_selectedId ).subscribe((resp:any)=>{
       // console.log(resp);
-      
+
       if(resp.message == 403){
         this.text_validation = resp.message_text;
       }else{
@@ -693,4 +694,90 @@ export class EditNoteRbtComponent {
 //         return num1 * num2;
 //     }
 // }
+
+  generateAISummary() {
+    if (!this.checkDataSufficient()) {
+      Swal.fire('Warning', 'Please fill all the required fields', 'warning');
+      return;
+    }
+    this.isGeneratingSummary = true;
+        console.log(this.client_selected.patient, 'patient');
+        console.log(this.maladaptivegroup, 'maladaptives');
+        const data = {
+        diagnosis: this.diagnosis_code,
+        birthDate: this.client_selected.patient?.birth_date ? this.client_selected.patient.birth_date : null,
+        startTime: this.selectedValueTimeIn ? `${this.selectedValueTimeIn}`.trim() : null,
+        endTime: this.selectedValueTimeOut ? `${this.selectedValueTimeOut}`.trim() : null,
+        startTime2: this.selectedValueTimeIn2 ? `${this.selectedValueTimeIn2}`.trim() : null,
+        endTime2: this.selectedValueTimeOut2 ? `${this.selectedValueTimeOut2}`.trim() : null,
+        mood: this.client_appeared,
+        pos: this.getPos(this.meet_with_client_at),
+        maladaptives: this.maladaptivegroup.map(m => ({
+            behavior: m.maladaptive_behavior,
+            frequency: m.number_of_occurrences
+        })),
+        replacements: this.replacementgroup.map(r => ({
+            name: r.goal,
+            totalTrials: r.total_trials,
+            correctResponses: r.number_of_correct_response
+        })),
+        interventions: this.interventionsgroup.length > 0
+            ? Object.keys(this.interventionsgroup[0]).filter(key => this.interventionsgroup[0][key])
+            : []
+        };
+
+    this.noteRbtService.generateAISummary(data).subscribe(
+      (response: any) => {
+        this.client_response_to_treatment_this_session = response.summary;
+        this.isGeneratingSummary = false;
+      },
+      (error) => {
+        console.error('Error generating AI summary:', error);
+        Swal.fire('Error', 'Error generating AI summary. Please ensure you have filled all the required fields.', 'error');
+        this.isGeneratingSummary = false;
+      }
+    );
+  }
+
+  checkDataSufficient(): boolean {
+    if (!this.client_selected) return false;
+
+    const hasTime1 = this.selectedValueTimeIn && this.selectedValueTimeOut;
+    const hasTime2 = this.selectedValueTimeIn2 && this.selectedValueTimeOut2;
+    if (!hasTime1 && !hasTime2) return false;
+
+    if (!this.meet_with_client_at) return false;
+
+    if (!this.maladaptivegroup || this.maladaptivegroup.length === 0) return false;
+    const allMaladaptivesValid = this.maladaptivegroup.every(m =>
+      m.maladaptive_behavior && (m.number_of_occurrences !== undefined && m.number_of_occurrences !== null)
+    );
+    if (!allMaladaptivesValid) return false;
+
+    if (!this.replacementgroup || this.replacementgroup.length === 0) return false;
+    const allReplacementsValid = this.replacementgroup.every(r =>
+      r.total_trials !== undefined && r.total_trials !== null &&
+      r.number_of_correct_response !== undefined && r.number_of_correct_response !== null
+    );
+    if (!allReplacementsValid) return false;
+
+    if (!this.interventionsgroup || this.interventionsgroup.length === 0) return false;
+
+    return true;
+  }
+
+  getPos(posCode: string) {
+    switch (posCode) {
+      case '03':
+        return 'School';
+      case '12':
+        return 'Home';
+      case '02':
+        return 'Telehealth';
+      case '99':
+        return 'Other';
+      default:
+        return 'Unknown';
+    }
+  }
 }
