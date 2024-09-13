@@ -744,6 +744,7 @@ export class NoteRbtComponent {
             },
             (error) => {
                 console.error('Error generating AI summary:', error);
+                Swal.fire('Error', 'Error generating AI summary. Please ensure you have filled all the required fields.', 'error');
                 this.isGeneratingSummary = false;
             }
         );
