@@ -722,6 +722,7 @@ export class NoteRbtComponent {
             startTime2: this.selectedValueTimeIn2 ? this.selectedValueTimeIn2 : null,
             endTime2: this.selectedValueTimeOut2 ? this.selectedValueTimeOut2 : null,
             mood: this.client_appeared,
+            pos: this.getPos(this.meet_with_client_at),
             maladaptives: this.maladaptives.map(m => ({
                 behavior: m.maladaptive_behavior,
                 frequency: m.number_of_occurrences
@@ -755,6 +756,8 @@ export class NoteRbtComponent {
       const hasTime2 = this.selectedValueTimeIn2 && this.selectedValueTimeOut2;
       if (!hasTime1 && !hasTime2) return false;
 
+      if (!this.meet_with_client_at) return false;
+
       if (!this.maladaptives || this.maladaptives.length === 0) return false;
       const allMaladaptivesValid = this.maladaptives.every(m =>
         m.maladaptive_behavior && (m.number_of_occurrences !== undefined && m.number_of_occurrences !== null)
@@ -768,6 +771,23 @@ export class NoteRbtComponent {
       );
       if (!allReplacementsValid) return false;
 
+      if (!this.intervention_added || this.intervention_added.length === 0) return false;
+
       return true;
+    }
+
+    getPos(posCode: string) {
+        switch (posCode) {
+            case '03':
+                return 'School';
+            case '12':
+                return 'Home';
+            case '02':
+                return 'Telehealth';
+            case '99':
+                return 'Other';
+            default:
+                return 'Unknown';
+        }
     }
 }
