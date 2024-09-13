@@ -693,31 +693,17 @@
                                     <p>the RBT will continue working with the goals as stated in behavior plan.</p>
                                 </div>
 
-                                <div class="col-12 col-md-6 col-xl-4">
+                                <div class="col-12 col-md-6 col-xl-6">
                                     <div class="form-group local-forms">
-                                        <!-- <label> <span class="login-danger">*</span></label> -->
-                                        <h4>Provider name RBT</h4>
+                                        <label>Provider name RBT <span class="login-danger">*</span></label>
                                         <p style="padding:10px">{{doctor?.full_name}}</p>
-                                        <!-- <mat-select [(ngModel)]="selectedValueRBT" name="rbt"
-                                            [ngModelOptions]="{standalone: true}" class="form-control select"
-                                            placeholder="Select Specialist"
-                                            (selectionChange)="selectFirmaSpecialistRbt($event)" value="select">
-                                            <mat-option value="select">--Select-</mat-option>
-                                            <mat-option *ngFor="let data of roles_rbt" [value]="data.id">
-                                                {{data.name}} {{data.surname}}
-                                            </mat-option>
-                                        </mat-select> -->
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-xl-6">
                                     <div class="form-group local-top-form">
+                                        
                                         <label class="local-top">Provider Signature <span
                                                 class="login-danger">*</span></label>
-                                        <!-- <div class="settings-btn upload-files-avator">
-                                            <input type="file" accept="image/*" name="provider_signature" id="file"
-                                                (change)="loadFile($event)" class="hide-input">
-                                            <label for="file" class="upload">Choose File</label>
-                                        </div> -->
                                     </div>
 
                                     <!-- previsualizacion de la foto -->
@@ -731,10 +717,10 @@
                                     <!-- previsualizacion de la foto -->
                                 </div>
 
-                                <div class="col-12 col-md-6 col-xl-4">
+                                <div class="col-12 col-md-6 col-xl-6">
                                     <div class="form-group local-forms">
                                         <div class="form-group local-forms">
-                                            <label>Supervisor name BCBA <span class="login-danger">*</span></label>
+                                            <label style="width:110%">Supervisor name BCBA <span class="login-danger">*</span></label>
                                             <mat-select [(ngModel)]="selectedValueBCBA" name="bcba"
                                                 [ngModelOptions]="{standalone: true}" class="form-control select"
                                                 placeholder="Select Specialist"
