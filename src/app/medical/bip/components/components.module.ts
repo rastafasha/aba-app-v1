@@ -17,6 +17,7 @@ import { ConsentTreatmentFormComponent } from './consent-treatment-form/consent-
 import { SustitutionListComponent } from './sustitution-list/sustitution-list.component';
 import { ChartReplacementComponent } from './charts/chart-replacement/chart-replacement.component';
 import { ReductionGoalEditComponent } from './reduction-goal-edit/reduction-goal-edit.component';
+import { ReplacementGoalFormComponent } from './replacement-goal-form/replacement-goal-form.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { ReductionGoalEditComponent } from './reduction-goal-edit/reduction-goal
     ChartReductionComponent,
     ChartReplacementComponent,
     ReductionGoalEditComponent,
+    ReplacementGoalFormComponent,
   ],
   exports: [
     BipformComponent,

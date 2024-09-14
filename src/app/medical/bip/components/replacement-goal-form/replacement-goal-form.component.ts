@@ -7,11 +7,12 @@ import { BipService } from '../../service/bip.service';
 import { GoalSustitutionService } from '../../service/goal-sustitution.service';
 declare var $:any;  
 @Component({
-  selector: 'app-sustitution-list',
-  templateUrl: './sustitution-list.component.html',
-  styleUrls: ['./sustitution-list.component.scss']
+  selector: 'app-replacement-goal-form',
+  templateUrl: './replacement-goal-form.component.html',
+  styleUrls: ['./replacement-goal-form.component.scss']
 })
-export class SustitutionListComponent {
+export class ReplacementGoalFormComponent {
+
   public routes = routes;
   valid_form_success: boolean = false;
   public text_validation:string = '';
@@ -279,7 +280,7 @@ export class SustitutionListComponent {
     this.target = '';
     this.sustitution_status_sto = '';
     this.sustitution_status_sto_edit = '';
-    this.sustitution_date_lto = null;
+    this.sustitution_date_sto = null;
     this.end_sustitution_date_sto = null;
     this.sustitution_decription_sto = '';
   }
@@ -500,26 +501,28 @@ export class SustitutionListComponent {
       description: this.description,
     }
 
-    if(this.goalSelectedId  ){
+    this.goalSustitutionService.createGoalSustitution(data).subscribe((resp:any)=>{
+      // console.log(resp);
+      this.goalsustitid = resp.id;
+      // this.text_success = 'Goal created successfully!'
+      Swal.fire('Created', `Goal Sustitution Created successfully!`, 'success');
+      this.ngOnInit();
+      // this.getGoalsMaladaptives();
+    })
 
-      this.goalSustitutionService.editGoalSustitution(data, this.goalSelectedId).subscribe((resp:any)=>{
-        // console.log(resp);
-        // this.text_success = 'Goal Updated'
-        Swal.fire('Updated', `Goal Sustitution Updated successfully!`, 'success');
-        this.ngOnInit();
-      })
+    // if(this.goalSelectedId  ){
+
+    //   this.goalSustitutionService.editGoalSustitution(data, this.goalSelectedId).subscribe((resp:any)=>{
+    //     // console.log(resp);
+    //     // this.text_success = 'Goal Updated'
+    //     Swal.fire('Updated', `Goal Sustitution Updated successfully!`, 'success');
+    //     this.ngOnInit();
+    //   })
       
-    }else{
+    // }else{
       
-      this.goalSustitutionService.createGoalSustitution(data).subscribe((resp:any)=>{
-        // console.log(resp);
-        this.goalsustitid = resp.id;
-        // this.text_success = 'Goal created successfully!'
-        Swal.fire('Created', `Goal Sustitution Created successfully!`, 'success');
-        this.ngOnInit();
-        // this.getGoalsMaladaptives();
-      })
-    }
+      
+    // }
 
    
 
@@ -560,12 +563,20 @@ export class SustitutionListComponent {
   //grafico
   //obtenemos los goals del maladaptive por nombre  para el grafico 
   getGoalsSonMaladaptives(){
-    this.goalSustitutionService.listMaladaptivesGoalSustitutions(this.goalSelectedSon.maladaptive_behavior).subscribe(
-      (resp:any)=>{
-        this.goalmaladaptive_child = resp.goalsmaladaptive.data;
-        this.maladaptive_child = resp.goalsmaladaptive.data[0].maladaptive;
-        this.golsto_child = this.goalmaladaptive_child[0].goalstos;
-        this.gollto_child = this.goalmaladaptive_child[0].goalltos;
+    this.goalSustitutionService.listMaladaptivesGoalSustitutions(this.goalSelectedSon.maladaptive_behavior).subscribe((resp:any)=>{
+      // console.log( resp);
+      
+      this.goalmaladaptive_child = resp.goalsmaladaptive.data;
+
+      this.maladaptive_child = resp.goalsmaladaptive.data[0].maladaptive;
+      // console.log(this.maladaptive_child);
+
+      this.golsto_child = this.goalmaladaptive_child[0].goalstos;
+      // console.log(this.golsto_child);
+
+      this.gollto_child = this.goalmaladaptive_child[0].goalltos;
+      // console.log(this.gollto_child);
+      // this.ngOnInit();
     },);
 
   }
@@ -573,6 +584,8 @@ export class SustitutionListComponent {
 
   //selectores seleccionamos el grafico del maladaptive de la lista
   selectedReplacementGraphic(goal:any){
-    this.goalSelectedGraphic = goal;
+    this.goalSelectedGraphic = goal
+    // console.log(this.goalSelectedGraphic);
+    // this.getGoalsSonMaladaptives();
   }
 }
