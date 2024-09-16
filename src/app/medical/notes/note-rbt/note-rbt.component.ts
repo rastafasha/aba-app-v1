@@ -141,6 +141,7 @@ export class NoteRbtComponent {
   public stoGoalinProgress:any ;
   public target:any ;
   public provider:any ;
+  public stoInprogressGoal:any ;
 
   // session_date: Date;
   // next_session_is_scheduled_for: Date;
@@ -254,7 +255,7 @@ export class NoteRbtComponent {
   }
   getReplacementsByPatientId(){
     this.noteRbtService.showReplacementbyPatient(this.patient_id).subscribe((resp:any)=>{
-      // console.log(resp);
+      console.log(resp);
       this.replacementGoals = resp.replacementGoals;
       this.goal = resp.replacementGoals[0].goal;
       console.log(this.goal);
@@ -270,12 +271,36 @@ export class NoteRbtComponent {
       // this.services = resp.services;
     })
   }
-
+  // traer el target de todos los replacements
   getStoInprogressGoal(){
     this.goalService.getStobyGoalinProgress(this.goal).subscribe((resp:any)=>{
       console.log(resp);
-      this.stoGoalinProgress = resp.goalstos.in_progress[0].sustitution_status_sto;
-      this.target = resp.goalstos.in_progress[0].target;
+      this.stoInprogressGoal = resp.stoInprogressGoal;
+      this.stoInprogressGoal.forEach((element:any) => { 
+        this.stoInprogressGoal.push(element);
+        });
+        this.stoInprogressGoal.forEach((element:any) => {
+          this.stoInprogressGoal.push(element);
+          });
+          })
+          
+
+  }
+
+  getStoInprogressGoal1(){
+    this.goalService.getStobyGoalinProgress(this.goal).subscribe((resp:any)=>{
+      console.log(resp);
+      if (resp && resp.goalstos && resp.goalstos.in_progress) {
+        const inProgress = resp.goalstos.in_progress[this.replacementGoals.id];
+        if (inProgress) {
+          this.stoGoalinProgress = inProgress.sustitution_status_sto;
+          this.target = inProgress.target;
+        } else {
+          console.log(`in_progress[${this.replacementGoals.id}] is undefined`);
+        }
+      } else {
+        console.log('resp or resp.goalstos or resp.goalstos.in_progress is undefined');
+      }
     })
   }
 
