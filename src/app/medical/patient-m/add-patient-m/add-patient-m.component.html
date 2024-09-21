@@ -697,43 +697,7 @@
                                                 <div class="col-xs-12 ">
                                                     <div class="row">
 
-                                                        <div class="col-12 col-md-6 col-xl-4">
-                                                            <div class="form-group local-forms">
-                                                                <label>PA Assessment <span
-                                                                        class="login-danger">*</span></label>
-                                                                <input class="form-control" autocomplete="off"
-                                                                    name="pa_assessment" [(ngModel)]="pa_assessment"
-                                                                    type="text">
-                                                                
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-12 col-md-6 col-xl-4">
-                                                            <div class="form-group local-forms">
-                                                                <label>Patient Assesment Start Date<span
-                                                                        class="login-danger">*</span></label>
-                                                                <input class="form-control datetimepicker"
-                                                                    name="pa_assessment_start_date"
-                                                                    [(ngModel)]="pa_assessment_start_date" type="text"
-                                                                    matInput [matDatepicker]="picker3">
-                                                                <mat-datepicker #picker3></mat-datepicker>
-                                                                <mat-datepicker-toggle matIconSuffix
-                                                                    [for]="picker3"></mat-datepicker-toggle>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-12 col-md-6 col-xl-4">
-                                                            <div class="form-group local-forms">
-                                                                <label>Patient Assesment End Date<span
-                                                                        class="login-danger">*</span></label>
-                                                                <input class="form-control datetimepicker"
-                                                                    name="pa_assessment_end_date"
-                                                                    [(ngModel)]="pa_assessment_end_date" type="text"
-                                                                    matInput [matDatepicker]="picker4">
-                                                                <mat-datepicker #picker4></mat-datepicker>
-                                                                <mat-datepicker-toggle matIconSuffix
-                                                                    [for]="picker4"></mat-datepicker-toggle>
-                                                            </div>
-                                                        </div>
+                                                       
                                                         <div class="col-12 col-md-6 col-xl-4">
                                                             <div class="form-group local-forms">
                                                                 <label>PA Services <span
@@ -793,22 +757,6 @@
                                                                     name="n_units" [(ngModel)]="n_units" type="number">
                                                             </div>
                                                         </div>
-                                                        <!-- <div class="col-12 col-md-4">
-                                                            <div class="form-group local-forms">
-                                                                <label>Provider <span class="login-danger">*</span></label>
-                                                                <mat-select [(ngModel)]="provider" name="provider"
-                                                                    [ngModelOptions]="{standalone: true}"
-                                                                    class="form-control select"
-                                                                    placeholder="Select Code"
-                                                                    disabled>
-                                                                    <mat-option *ngFor="let data of services"
-                                                                        [value]="data.provider">
-                                                                        {{data.provider}}
-                                                                    </mat-option>
-                                                                </mat-select>
-                                                            </div>
-                                                        </div> -->
-
                                                         <div class="col-12 mb-3 doctor-submit text-end">
                                                             <button class="btn btn-primary btn-sm"
                                                                 (click)="addPAAssestment()">Add</button>
@@ -820,31 +768,18 @@
                                                         <table class="table mb-0">
                                                             <thead>
                                                                 <tr>
-                                                                    <th>PA Assessment</th>
-                                                                    <th>Patient Assesment Start Date</th>
-                                                                    <th>Patient Assesment End Date</th>
                                                                     <th>PA Services</th>
                                                                     <th>Patient Services Start Date</th>
                                                                     <th>Patient Services End Date</th>
                                                                     <th>CPT</th>
-                                                                    <!-- <th>Provider</th> -->
                                                                     <th>N. Units</th>
                                                                     <th>Options</th>
-                                                                    <!-- <th>Unit Prize</th> -->
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
                                                                 <tr
                                                                     *ngFor="let pa_asses of pa_assessments; let i = index">
-                                                                    <td>
-                                                                        {{pa_asses.pa_assessment}}
-                                                                    </td>
-                                                                    <td>
-                                                                        {{pa_asses.pa_assessment_start_date| date}}
-                                                                    </td>
-                                                                    <td>
-                                                                        {{pa_asses.pa_assessment_end_date| date}}
-                                                                    </td>
+                                                                    
                                                                     <td>
                                                                         {{pa_asses.pa_services}}
                                                                     </td>
@@ -860,9 +795,6 @@
                                                                     <td>
                                                                         {{pa_asses.n_units}}
                                                                     </td>
-                                                                    <!-- <td>
-                                                            {{pa_asses.unit_prize}}
-                                                        </td> -->
                                                                     <td>
                                                                         <button class="btn btn-outline-danger btn-sm"
                                                                             (click)="deletePAAssestment(i)">x</button>

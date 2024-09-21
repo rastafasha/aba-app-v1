@@ -329,9 +329,6 @@ export class AddPatientMComponent {
 
   addPAAssestment(){
     this.pa_assessments.push({
-      pa_assessment: this.pa_assessment,
-      pa_assessment_start_date: this.pa_assessment_start_date,
-      pa_assessment_end_date: this.pa_assessment_end_date,
       pa_services: this.pa_services,
       pa_services_start_date: this.pa_services_start_date,
       pa_services_end_date: this.pa_services_end_date,
@@ -339,9 +336,6 @@ export class AddPatientMComponent {
       n_units: this.n_units,
       provider: this.provider,
     })
-    this.pa_assessment = '';
-    this.pa_assessment_start_date = null;
-    this.pa_assessment_end_date = null;
     this.pa_services = '';
     this.pa_services_start_date = null;
     this.pa_services_end_date = null;

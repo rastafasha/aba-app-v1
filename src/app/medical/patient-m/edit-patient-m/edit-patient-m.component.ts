@@ -444,9 +444,6 @@ showUser(){
 
   addPAAssestment(){
     this.pa_assessmentgroup.push({
-      pa_assessment: this.pa_assessment,
-      pa_assessment_start_date: this.pa_assessment_start_date,
-      pa_assessment_end_date: this.pa_assessment_end_date,
       pa_services: this.pa_services,
       pa_services_start_date: this.pa_services_start_date,
       pa_services_end_date: this.pa_services_end_date,
@@ -456,10 +453,7 @@ showUser(){
       // debo extraer de selectedValueCode el cpt para traer el provider
       // provider: this.selectedValueCode ?
       provider: this.provider,
-    })
-    this.pa_assessment = '';
-    this.pa_assessment_start_date = null;
-    this.pa_assessment_end_date = null;
+    });
     this.pa_services = '';
     this.pa_services_start_date = null;
     this.pa_services_end_date = null;
