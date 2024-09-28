@@ -12,15 +12,15 @@ import { routes } from 'src/app/shared/routes/routes';
 export class LoginComponent implements OnInit {
   public routes = routes;
   public passwordClass = false;
- public ERROR = false;
- public user:any;
- public roles:any = [] ;
+  public ERROR = false;
+  public user: any;
+  public roles: any = [];
 
 
- email = new FormControl();
+  email = new FormControl();
   password = new FormControl();
   remember = new FormControl();
-  errors:any = null;
+  errors: any = null;
   loginForm: FormGroup;
 
   //testing
@@ -46,11 +46,11 @@ export class LoginComponent implements OnInit {
 
   constructor(
     public auth: AuthService,
-    public router:Router,
+    public router: Router,
     private fb: FormBuilder,
-    ) {
-     
-    }
+  ) {
+
+  }
 
   ngOnInit(): void {
     // if (localStorage.getItem('authenticated')) {
@@ -66,111 +66,111 @@ export class LoginComponent implements OnInit {
     //   email: [ localStorage.getItem('email') || '', [Validators.required, Validators.email] ],
     //   password: ['', Validators.required],
     //   remember: [false]
-  
+
     // });
     this.getLocalStorage();
   }
 
-  getLocalStorage(){
-    if(localStorage.getItem('token') && localStorage.getItem('user')){
-      let USER = localStorage.getItem('user');
-      this.user = JSON.parse(USER ? USER: '');
+  getLocalStorage() {
+    if (localStorage.getItem('token') && localStorage.getItem('user')) {
+      const USER = localStorage.getItem('user');
+      this.user = JSON.parse(USER ? USER : '');
       console.log(this.user);
       this.getuserRol();
       // this.getuserPermisos();
-    }else{
+    } else {
       this.user = null;
     }
- }
+  }
 
 
   loginFormSubmit() {
     if (this.form.valid) {
       this.ERROR = false;
-      this.auth.login(this.form.value.email ? this.form.value.email : '' ,this.form.value.password ? this.form.value.password: '')
-      .subscribe((resp:any) => {
-        // console.log(resp);
-        
-        if(resp === true){
-          // EL LOGIN ES EXITOSO
-          
-          setTimeout(() => {
-            this.getLocalStorage();
-            // this.router.navigate([routes.adminDashboard]);
-          }, 50);
-        }else{
-          // EL LOGIN NO ES EXITOSO
-          this.ERROR = true;
-        }
-      },error => {
-        console.log(error);
-      })
-      ;
+      this.auth.login(this.form.value.email ? this.form.value.email : '', this.form.value.password ? this.form.value.password : '')
+        .subscribe((resp: any) => {
+          // console.log(resp);
+
+          if (resp === true) {
+            // EL LOGIN ES EXITOSO
+
+            setTimeout(() => {
+              this.getLocalStorage();
+              // this.router.navigate([routes.adminDashboard]);
+            }, 50);
+          } else {
+            // EL LOGIN NO ES EXITOSO
+            this.ERROR = true;
+          }
+        }, error => {
+          console.log(error);
+        })
+        ;
     }
   }
 
-    getuserRol(){
-      
-      if(this.user.roles[0] == 'SUPERADMIN' ){
-        this.router.navigate([routes.adminDashboard]);
-      }
-      // solo tiene una locacion pero se comporta como superadmin
-      if(this.user.roles[0] == 'MANAGER' ){
-        // this.router.navigate([routes.adminDashboard]);
-        this.router.navigate(['location/view/', this.user.location_id]);
-      }
-      //roles secundarios son multilocation
-      if(this.user.roles[0] == 'BCBA' ){
-        this.router.navigate(['doctors/profile/', this.user.id]);
-      }
-      if(this.user.roles[0] == 'RBT' ){
-        this.router.navigate(['doctors/profile/', this.user.id]);
-      }
-   }
- 
-    getuserPermisos(){
-      if(this.user.permissions === 'admin_dashboard'){
-        this.router.navigate([routes.adminDashboard]);
-      }
-      if(this.user.permissions === "doctor_dashboard"){
-        this.router.navigate([routes.doctorDashboard]);
-      }if(this.user.permissions === 'patient_dashboard'){
-        this.router.navigate([routes.patientDashboard]);
-      }
-   }
- 
-  
+  getuserRol() {
+
+    if (this.user.roles[0] == 'SUPERADMIN') {
+      this.router.navigate([routes.adminDashboard]);
+    }
+    // solo tiene una locacion pero se comporta como superadmin
+    if (this.user.roles[0] == 'MANAGER') {
+      // this.router.navigate([routes.adminDashboard]);
+      this.router.navigate(['location/view/', this.user.location_id]);
+    }
+    //roles secundarios son multilocation
+    if (this.user.roles[0] == 'BCBA') {
+      this.router.navigate(['doctors/profile/', this.user.id]);
+    }
+    if (this.user.roles[0] == 'RBT') {
+      this.router.navigate(['doctors/profile/', this.user.id]);
+    }
+  }
+
+  getuserPermisos() {
+    if (this.user.permissions === 'admin_dashboard') {
+      this.router.navigate([routes.adminDashboard]);
+    }
+    if (this.user.permissions === "doctor_dashboard") {
+      this.router.navigate([routes.doctorDashboard]);
+    } if (this.user.permissions === 'patient_dashboard') {
+      this.router.navigate([routes.patientDashboard]);
+    }
+  }
+
+
   loginFormSubmit2() {
-    
-    this.auth.login(this.form.value.email ? this.form.value.email :'',
-        this.form.value.password ? this.form.value.password: '').subscribe(
-      (resp:any) =>{
-        this.user = resp;
-        console.log(this.user);
-        if(resp){
-          if(this.user.roles === 'DORCTOR'){
-            this.router.navigate([routes.doctorDashboard]);
-          }if(this.user.roles === 'SUPERADMIN'){
+
+    this.auth.login(this.form.value.email ? this.form.value.email : '',
+      this.form.value.password ? this.form.value.password : '').subscribe(
+        (resp: any) => {
+          this.user = resp;
+          console.log(this.user);
+          if (resp) {
+            if (this.user.roles === 'DORCTOR') {
+              this.router.navigate([routes.doctorDashboard]);
+            } if (this.user.roles === 'SUPERADMIN') {
+              this.router.navigate([routes.adminDashboard]);
+            }
+
+          } else {
+
             this.router.navigate([routes.adminDashboard]);
           }
-          
-        }else{
-
-          this.router.navigate([routes.adminDashboard]);
+          // if(this.loginForm.get('remember').value){
+          //   localStorage.setItem('email', this.loginForm.get('email').value);
+          // }else{
+          //   localStorage.removeItem('email');
+          // }
+          // this.router.navigateByUrl('/dashboard');
+        }, (error) => {
+          // Swal.fire('Error', error.error.msg, 'error');
+          this.errors = error.error;
         }
-        // if(this.loginForm.get('remember').value){
-        //   localStorage.setItem('email', this.loginForm.get('email').value);
-        // }else{
-        //   localStorage.removeItem('email');
-        // }
-        // this.router.navigateByUrl('/dashboard');
-      },(error) => {
-        // Swal.fire('Error', error.error.msg, 'error');
-        this.errors = error.error;
-      }
       )
-       
-    }
+
+  }
   togglePassword() {
     this.passwordClass = !this.passwordClass;
   }

@@ -8,7 +8,8 @@ import { NoteRbtService } from '../services/note-rbt.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { RolesService } from '../../roles/service/roles.service';
 import { Location } from '@angular/common';
-declare var $:any;  
+import { finalize } from 'rxjs';
+declare var $:any;
 @Component({
   selector: 'app-notes-by-client',
   templateUrl: './notes-by-client.component.html',
@@ -25,6 +26,7 @@ export class NotesByClientComponent {
   note_id:any;
   user:any;
 
+  public isLoading = true;
   public notesPatientList: any = [];
   public notespatient_generals:any = [];
   dataSource!: MatTableDataSource<any>;
@@ -45,7 +47,7 @@ export class NotesByClientComponent {
 
   public roles:any=[];
   public permissions:any=[];
-  
+
   constructor(
     public bipService:BipService,
     public patientService:PatientMService,
@@ -59,17 +61,17 @@ export class NotesByClientComponent {
   ){}
 
   ngOnInit(): void {
-    
+
     // window.scrollTo(0, 0);
     this.ativatedRoute.params.subscribe((resp:any)=>{
       this.patient_id = resp.id;
-      
+
       // this.patient_id= resp.patient_id;
       // console.log(this.client_id);
      })
      this.getNotesByPatient();
      this.getTableData();
-     
+
      this.doctorService.getUserRoles();
     // let USER = localStorage.getItem("user");
     // this.user = JSON.parse(USER ? USER: '');
@@ -97,20 +99,24 @@ goBack() {
     })
   }
 
-  
+
 
   private getTableData(): void {
+    this.isLoading = true;
     this.notesPatientList = [];
     this.serialNumberArray = [];
 
-    this.noteRbtService.showNotebyPatient(this.patient_id).subscribe((resp:any)=>{
-      
-      console.log(resp);
-
+    this.noteRbtService.showNotebyPatient(this.patient_id)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false; // Set loading to false when request completes
+        })
+      )
+      .subscribe((resp:any)=>{
       this.totalDataNotepatient = resp.note_rbts.data.length;
       this.notespatient_generals = resp.note_rbts.data;
       this.patient_id = resp.note_rbts.data.patient_id;
-     this.getTableDataGeneral();
+      this.getTableDataGeneral();
     })
 
   }
@@ -139,11 +145,11 @@ goBack() {
   getTableDataGeneral(){
     this.notesPatientList = [];
     this.serialNumberArray = [];
-    
+
     this.notespatient_generals.map((res: any, index: number) => {
       const serialNumber = index + 1;
       if (index >= this.skip && serialNumber <= this.limit) {
-       
+
         this.notesPatientList.push(res);
         this.serialNumberArray.push(serialNumber);
       }
@@ -227,14 +233,14 @@ goBack() {
       }
       }
 
-      
+
     })
   }
 
   cambiarStatus(data:any){
     let VALUE = data.status;
     console.log(VALUE);
-    
+
     this.noteRbtService.updateStatus(data, data.id).subscribe(
       resp =>{
         // console.log(resp);

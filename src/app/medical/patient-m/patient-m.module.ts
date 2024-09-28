@@ -15,6 +15,9 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
 
 import  {  PdfViewerModule  }  from  'ng2-pdf-viewer';
 import { ClientLogReportComponent } from './client-log-report/client-log-report.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+
 @NgModule({
   declarations: [
     PatientMComponent,
@@ -22,7 +25,7 @@ import { ClientLogReportComponent } from './client-log-report/client-log-report.
     ListPatientMComponent,
     EditPatientMComponent,
     ProfilePatientMComponent,
-    ClientLogReportComponent
+    ClientLogReportComponent,
   ],
   exports: [
     PatientMComponent,
@@ -41,7 +44,9 @@ import { ClientLogReportComponent } from './client-log-report/client-log-report.
     RouterModule,
     SharedModule,
     PipesModule,
-    PdfViewerModule
+    PdfViewerModule,
+    MatDialogModule,
+    MatButtonModule,
   ]
 })
 export class PatientMModule { }

@@ -11,17 +11,18 @@ import { environment } from '../environments/environment';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PermisionInterceptorInterceptor } from './http-interceptors/permision-interceptor.interceptor';
 import { PipesModule } from './pipes/pipes.module';
-import { RouterModule } from '@angular/router';
-import { routes } from './shared/routes/routes';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 @NgModule({
   declarations: [
     AppComponent,
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    NgxMaterialTimepickerModule,
     SharedModule,
     CoreModule,
     PipesModule,
@@ -31,13 +32,13 @@ import { routes } from './shared/routes/routes';
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
-    
+
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: PermisionInterceptorInterceptor,
-      multi : true
+      multi: true
     }
   ],
   bootstrap: [AppComponent]

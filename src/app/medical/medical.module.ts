@@ -8,7 +8,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ComponentsModule } from './bip/components/components.module';
 import { ClientReportComponent } from './client-report/client-report.component';
 
-
 @NgModule({
   declarations: [
     MedicalComponent,

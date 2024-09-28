@@ -9,14 +9,18 @@ import { RolesService } from '../../roles/service/roles.service';
 import { BipService } from '../../bip/service/bip.service';
 import { Location } from '@angular/common';
 import Swal from 'sweetalert2';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { ActionModalComponent } from 'src/app/shared/components/action-modal/action-modal.component';
 
-declare var $:any;  
+declare var $:any;
 @Component({
   selector: 'app-list-patient-m',
   templateUrl: './list-patient-m.component.html',
   styleUrls: ['./list-patient-m.component.scss']
 })
 export class ListPatientMComponent {
+  public isLoading = true;
   public routes = routes;
 
   public patientList: any = [];
@@ -58,6 +62,8 @@ export class ListPatientMComponent {
     public roleService: RolesService,
     public bipService: BipService,
     public location: Location,
+    private dialog: MatDialog,
+    private router: Router,
     ){
 
   }
@@ -70,15 +76,15 @@ export class ListPatientMComponent {
     this.user = JSON.parse(USER ? USER: '');
     this.roles = this.user.roles[0];
     this.location_id = this.user.location_id;
-    
+
     this.user = this.roleService.authService.user;
     this.getPatiensByDoctor();
-    
+
   }
 
   goBack() {
     this.location.back(); // <-- go back to previous location on cancel
-    
+
   }
 
   getPatiensByDoctor(){
@@ -112,21 +118,25 @@ export class ListPatientMComponent {
     }
     return false;
   }
- 
+
   private getTableData(): void {
+    this.isLoading = true;
     this.patientList = [];
     this.serialNumberArray = [];
 
     this.patientService.listPatients(this.search, this.status, this.location_id).subscribe((resp:any)=>{
-      
-      // console.log(resp);
 
       this.totalDatapatient = resp.patients.data.length;
       this.patient_generals = resp.patients.data;
       this.patientid = resp.patients.data.id;
       this.patient_id = resp.patients.data.patient_id;
-     this.getTableDataGeneral();
+      this.getTableDataGeneral();
+      this.isLoading = false;
     //  this.isMaladaptiveBip();
+    },
+    error => {
+      console.error('Error fetching data:', error);
+      this.isLoading = false;
     })
 
   }
@@ -134,11 +144,11 @@ export class ListPatientMComponent {
   getTableDataGeneral(){
     this.patientList = [];
     this.serialNumberArray = [];
-    
+
     this.patient_generals.map((res: any, index: number) => {
       const serialNumber = index + 1;
       if (index >= this.skip && serialNumber <= this.limit) {
-       
+
         this.patientList.push(res);
         this.serialNumberArray.push(serialNumber);
       }
@@ -171,7 +181,7 @@ export class ListPatientMComponent {
       }
       }
 
-      
+
     })
   }
 
@@ -362,12 +372,12 @@ export class ListPatientMComponent {
 
   }
 
-  
+
 
   cambiarStatus(data:any){
     let VALUE = data.status;
     // console.log(VALUE);
-    
+
     this.patientService.updateStatus(data, data.id).subscribe(
       resp =>{
         // console.log(resp);
@@ -376,4 +386,85 @@ export class ListPatientMComponent {
       }
     )
   }
+
+    openActionModal(patient: any) {
+      const actions = this.getActionsForPatient(patient);
+      console.log('Actions before opening modal:', actions);
+      this.dialog.open(ActionModalComponent, {
+        width: '300px',
+        data: { patient, actions }
+      });
+    }
+
+    getActionsForPatient(patient: any): any[] {
+        const allActions = [
+            {
+                title: 'BIP Create',
+                icon: 'fa fa-address-book',
+                buttonClass: 'btn-outline-success',
+                onClick: () => this.router.navigate(['/bip/attention/', patient.patient_id])
+            },
+            {
+                title: 'BIP View',
+                icon: 'fa fa-eye',
+                buttonClass: 'btn-outline-dark',
+                onClick: () => this.router.navigate(['/bip/profile/', patient.patient_id])
+            },
+            {
+                title: 'Create RBT Note',
+                icon: 'fa fa-id-card',
+                buttonClass: 'btn-outline-success',
+                onClick: () => this.router.navigate(['/note-rbt/', patient.patient_id])
+            },
+            {
+                title: 'RBT Note list',
+                icon: 'fa fa-bars',
+                buttonClass: 'btn-outline-primary',
+                onClick: () => this.router.navigate(['/note-rbt/listbyclient/', patient.patient_id])
+            },
+            {
+                title: 'Create BCBA Note',
+                icon: 'fa fa-id-badge',
+                buttonClass: 'btn-outline-secondary',
+                onClick: () => this.router.navigate(['/note-bcba/', patient.patient_id])
+            },
+            {
+                title: 'BCBA Note list',
+                icon: 'fa fa-bars',
+                buttonClass: 'btn-outline-primary',
+                onClick: () => this.router.navigate(['/note-bcba/listbyclient/', patient.patient_id])
+            },
+            {
+                title: 'Log Report',
+                icon: 'fa fa-check-circle',
+                buttonClass: 'btn-outline-warning',
+                onClick: () => this.router.navigate(['/client-report/byclient/', patient.patient_id])
+            }
+        ];
+        const filteredActions = allActions.filter(action => this.canShowAction(action, patient));
+        return filteredActions;
+    }
+
+    canShowAction(action: any, patient: any): boolean {
+      if (patient.status !== 'active') {
+        return false;
+      }
+
+      switch (action.title) {
+        case 'BIP Create':
+          return ['SUPERADMIN', 'MANAGER', 'LM', 'BCBA'].includes(this.roles);
+        case 'BIP View':
+          return this.isPermission('view_bip');
+        case 'Create RBT Note':
+        case 'RBT Note list':
+          return ['SUPERADMIN', 'MANAGER', 'LM', 'RBT'].includes(this.roles);
+        case 'Create BCBA Note':
+        case 'BCBA Note list':
+          return ['SUPERADMIN', 'MANAGER', 'LM', 'BCBA'].includes(this.roles);
+        case 'Log Report':
+          return ['SUPERADMIN', 'MANAGER'].includes(this.roles);
+        default:
+          return false;
+      }
+    }
 }

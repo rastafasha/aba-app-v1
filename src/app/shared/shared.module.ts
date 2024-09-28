@@ -17,12 +17,19 @@ import { RouterModule } from '@angular/router';
 import { HeaderComponent } from '../common-component/header/header.component';
 import { SidebarComponent } from '../common-component/sidebar/sidebar.component';
 import { NoInfoComponent } from './no-info/no-info.component';
+import { SkeletonLoaderComponent } from './components/skeleton-loader/skeleton-loader.component';
+import { ActionButtonComponent } from './components/action-button/action-button.component';
+import { ActionModalComponent } from './components/action-modal/action-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     SidebarComponent,
     NoInfoComponent,
+    SkeletonLoaderComponent,
+    ActionButtonComponent,
+    ActionModalComponent,
   ],
   imports: [
     CommonModule,
@@ -53,7 +60,8 @@ import { NoInfoComponent } from './no-info/no-info.component';
     FormsModule,
     ReactiveFormsModule,
     NgxMaterialTimepickerModule,
-    RouterModule
+    RouterModule,
+    MatDialogModule,
   ],
   exports: [
     CommonModule,
@@ -73,6 +81,9 @@ import { NoInfoComponent } from './no-info/no-info.component';
     RouterModule,
     HeaderComponent,
     SidebarComponent,
+    SkeletonLoaderComponent,
+    ActionButtonComponent,
+    ActionModalComponent,
   ],
   providers: [
     DataService,
