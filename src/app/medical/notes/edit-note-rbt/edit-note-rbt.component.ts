@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { routes } from 'src/app/shared/routes/routes';
 import { BipService } from '../../bip/service/bip.service';
@@ -14,27 +14,33 @@ import { Location } from '@angular/common';
   templateUrl: './edit-note-rbt.component.html',
   styleUrls: ['./edit-note-rbt.component.scss']
 })
-export class EditNoteRbtComponent {
+export class EditNoteRbtComponent implements OnInit {
   public routes = routes;
+  public target: number;
+  public interventionsList: any[] = [];
 
-  valid_form:boolean = false;
-  valid_form_success:boolean = false;
+  changeTime () {
+    this.selectedValueTimeIn = this.formatTime("11:00:00");
+  }
 
-  public text_success:string = '';
-  public text_validation:string = '';
+  valid_form = false;
+  valid_form_success = false;
+
+  public text_success = '';
+  public text_validation = '';
 
   public selectedValueProvider!: string;
   public selectedValueRBT!: string;
   public selectedValueBCBA!: string;
   public selectedValueCode!: string;
-  public selectedValueTimeIn!: number;
-  public selectedValueTimeOut!: number;
-  public selectedValueTimeIn2!: number;
-  public selectedValueTimeOut2!: number;
+  public selectedValueTimeIn = '';
+  public selectedValueTimeOut = '';
+  public selectedValueTimeIn2 = '';
+  public selectedValueTimeOut2 = '';
   public selectedValueProviderName!: string;
   public selectedValueMaladaptive!: string;
-  option_selected:number = 0;
-  isGeneratingSummary: boolean = false;
+  option_selected = 0;
+  isGeneratingSummary = false;
 
   client_id:any;
   patient_id:any;
@@ -45,40 +51,40 @@ export class EditNoteRbtComponent {
   bip_id:any;
   user:any;
 
-  public first_name:string = '';
-  public last_name:string = '';
-  public diagnosis_code:string = '';
+  public first_name = '';
+  public last_name = '';
+  public diagnosis_code = '';
 
-  public provider_name_g:string = '';
-  public provider_credential:string = '';
-  public pos:string = '';
-  public session_date:string = '';
-  public time_in:string = '';
-  public time_out:string = '';
-  public time_in2:string = '';
-  public time_out2:string = '';
-  public session_length_total:string = '';
-  public session_length_total2:string = '';
-  public environmental_changes:string = '';
+  public provider_name_g = '';
+  public provider_credential = '';
+  public pos = '';
+  public session_date = '';
+  public time_in = '';
+  public time_out = '';
+  public time_in2 = '';
+  public time_out2 = '';
+  public session_length_total = '';
+  public session_length_total2 = '';
+  public environmental_changes = '';
 
-  public sumary_note:string = '';
-  public meet_with_client_at:string = '';
-  public client_appeared:string = '';
-  public as_evidenced_by:string = '';
-  public rbt_modeled_and_demonstrated_to_caregiver:string = '';
-  public client_response_to_treatment_this_session:string = '';
-  public progress_noted_this_session_compared_to_previous_session:string = '';
-  public next_session_is_scheduled_for:string = '';
-  public provider_name:string = '';
-  public supervisor_name:string = '';
+  public sumary_note = '';
+  public meet_with_client_at = '';
+  public client_appeared = '';
+  public as_evidenced_by = '';
+  public rbt_modeled_and_demonstrated_to_caregiver = '';
+  public client_response_to_treatment_this_session = '';
+  public progress_noted_this_session_compared_to_previous_session = '';
+  public next_session_is_scheduled_for = '';
+  public provider_name = '';
+  public supervisor_name = '';
 
-  public number_of_occurrences:number = 0;
-  public number_of_correct_responses:number = 0;
-  public total_trials:number = 0;
-  public number_of_correct_response:number = 0;
-  public maladaptive:string = '';
-  public replacement:string = '';
-  public maladaptive_behavior:string = '';
+  public number_of_occurrences = 0;
+  public number_of_correct_responses = 0;
+  public total_trials = 0;
+  public number_of_correct_response = 0;
+  public maladaptive = '';
+  public replacement = '';
+  public maladaptive_behavior = '';
   public interventions:any;
   public provider_signature:any;
   public supervisor_signature:any;
@@ -156,7 +162,7 @@ export class EditNoteRbtComponent {
     this.number_of_occurrences = 0;
     this.number_of_correct_response = 0;
 
-    let USER = localStorage.getItem("user");
+    const USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER: '');
     this.doctor_id = this.user.id;
     this.getNote();
@@ -171,20 +177,44 @@ export class EditNoteRbtComponent {
 
   getConfig(){
     this.noteRbtService.listConfigNote().subscribe((resp:any)=>{
-      // console.log(resp);
-
       this.roles_rbt = resp.roles_rbt;
       this.roles_bcba = resp.roles_bcba;
-      // this.hours_days = resp.hours;
-
       this.getNote();
-
     })
+  }
+
+  private convertToInterventions(input: { [x: string]: boolean }) {
+    return [
+      { id: 'pairing', name: 'Pairing', value: input['pairing'] || false },
+      { id: 'response_block', name: 'Response Block', value: input['response_block'] || false },
+      { id: 'DRA', name: 'DRA', value: input['DRA'] || false },
+      { id: 'DRO', name: 'DRO', value: input['DRO'] || false },
+      { id: 'redirection', name: 'Redirection', value: input['redirection'] || false },
+      { id: 'errorless_teaching', name: 'Errorless Teaching', value: input['errorless_teaching'] || false },
+      { id: 'NCR', name: 'NCR', value: input['NCR'] || false },
+      { id: 'shaping', name: 'Shaping', value: input['shaping'] || false },
+      { id: 'chaining', name: 'Chaining', value: input['chaining'] || false },
+      { id: 'token_economy', name: 'Token Economy', value: input['token_economy'] || false },
+      { id: 'extinction', name: 'Extinction', value: input['extinction'] || false },
+      { id: 'natural_teaching', name: 'Natural Teaching', value: input['natural_teaching'] || false },
+    ]
+  }
+
+  private convertToInterventionsGroup(interventions: { id: string; name: string; value: boolean; }[]) {
+    const group = {};
+    for (const intervention of interventions) {
+      if (intervention.value) {
+        group[intervention.id] = true;
+      }
+    }
+    return group;
   }
 
   getNote(){
     this.noteRbtService.getNote(this.note_id).subscribe((resp:any)=>{
-      console.log(resp);
+      console.log('Response from getNote:', resp);
+
+      this.target = resp.target;
       this.note_selected = resp.noteRbt;
       this.note_selectedId = resp.noteRbt.id;
       this.patient_id = this.note_selected.patient_id;
@@ -203,31 +233,17 @@ export class EditNoteRbtComponent {
 
 
       this.interventions = resp.interventions;
-      let jsonObj = JSON.parse(this.interventions) || '';
-      this.interventionsgroup = jsonObj;
+      const jsonObj = JSON.parse(resp.interventions) || '';
+      this.interventionsgroup = [...jsonObj];
 
-
-      this.pairing = this.interventionsgroup[0].pairing;
-      this.response_block = this.interventionsgroup[0].response_block;
-      this.DRA = this.interventionsgroup[0].DRA;
-      this.DRO = this.interventionsgroup[0].DRO;
-      this.redirection = this.interventionsgroup[0].redirection;
-      this.errorless_teaching = this.interventionsgroup[0].errorless_teaching;
-      this.NCR = this.interventionsgroup[0].NCR;
-      this.shaping = this.interventionsgroup[0].shaping;
-      this.chaining = this.interventionsgroup[0].chaining;
-      this.token_economy = this.interventionsgroup[0].token_economy;
-      this.extinction = this.interventionsgroup[0].extinction;
-      this.natural_teaching = this.interventionsgroup[0].natural_teaching;
-
+      this.interventionsList = this.convertToInterventions(this.interventionsgroup[0]);
 
       this.maladaptive = resp.maladaptives;
-      let jsonObj1 = JSON.parse(this.maladaptive) || '';
-      this.maladaptivegroup = jsonObj1;
-      // console.log(this.maladaptivegroup);
+      const jsonObj1 = JSON.parse(this.maladaptive) || '';
+      this.maladaptivegroup = [...jsonObj1];
 
       this.replacement = resp.replacements;// ?
-      let jsonObj2 = JSON.parse(this.replacement) || '';
+      const jsonObj2 = JSON.parse(this.replacement) || '';
       this.replacementgroup = jsonObj2;
       // console.log(this.replacementgroup);
 
@@ -247,17 +263,25 @@ export class EditNoteRbtComponent {
       this.session_length_total = this.note_selected.session_length_total;
       this.session_length_total2 = this.note_selected.session_length_total2;
 
-      this.selectedValueTimeIn = this.note_selected.time_in;
-      this.selectedValueTimeOut = this.note_selected.time_in2;
-      this.selectedValueTimeIn2 = this.note_selected.time_out;
-      this.selectedValueTimeOut2 = this.note_selected.time_out2;
-
+      console.log('Setting:', this.formatTime(this.note_selected.time_in));
+      this.selectedValueTimeIn = this.formatTime(this.note_selected.time_in);
+      this.selectedValueTimeOut = this.formatTime(this.note_selected.time_out);
+      this.selectedValueTimeIn2 = this.formatTime(this.note_selected.time_in2);
+      this.selectedValueTimeOut2 = this.formatTime(this.note_selected.time_out2);
+      console.log('Times updated:', this.selectedValueTimeIn, this.selectedValueTimeOut, this.selectedValueTimeIn2, this.selectedValueTimeOut2);
 
       this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED = this.note_selected.provider_signature;
       this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED = this.note_selected.supervisor_signature;
       console.log(this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED);
       this.getProfileBip();
     })
+  }
+
+  private formatTime(timeString: string | null): string {
+    console.log('formatting time: ', timeString);
+    if (!timeString) return '';
+    const [hours, minutes] = timeString.replace(/ /g,'').split(':');
+    return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
   }
 
   getProfileBip(){
@@ -274,7 +298,7 @@ export class EditNoteRbtComponent {
       this.diagnosis_code = this.client_selected.patient.diagnosis_code;
 
       this.pa_assessments = resp.patient.pa_assessments;
-      let jsonObj = JSON.parse(this.pa_assessments) || '';
+      const jsonObj = JSON.parse(this.pa_assessments) || '';
       this.pa_assessmentsgroup = jsonObj;
       // this.n_un = this.pa_assessmentsgroup[0].n_units;
       // this.unitsAsignated = this.pa_assessmentsgroup.n_units;
@@ -309,16 +333,39 @@ export class EditNoteRbtComponent {
 
   }
 
+  onInterventionsChange(updatedInterventions: any[]) {
+    this.interventionsgroup = [this.convertToInterventionsGroup(this.interventionsList)];
+    console.log(this.interventionsgroup);
+  }
 
-  hourTimeInSelected(value:number){
+  hourTimeInSelected(value:string){
     this.selectedValueTimeIn = value;
-    console.log(value);
+    this.recalculateSessionLength();
   }
-  hourTimeOutSelected(value:number){
+  hourTimeIn2Selected(value:string){
+    this.selectedValueTimeIn2 = value;
+    this.recalculateSessionLength();
+  }
+  hourTimeOutSelected(value:string){
     this.selectedValueTimeOut = value;
-    console.log(value);
-
+    this.recalculateSessionLength();
   }
+  hourTimeOut2Selected(value:string){
+    this.selectedValueTimeOut2 = value;
+    this.recalculateSessionLength();
+  }
+
+  private recalculateSessionLength() {
+    this.session_length_total = this.selectedValueTimeIn && this.selectedValueTimeOut ? this.calculateSessionLength(this.selectedValueTimeIn, this.selectedValueTimeOut) : "00:00";
+    this.session_length_total2 = this.selectedValueTimeIn2 && this.selectedValueTimeOut2 ? this.calculateSessionLength(this.selectedValueTimeIn2, this.selectedValueTimeOut2) : "00:00";
+  }
+  private calculateSessionLength(timeIn: string, timeOut: string): string {
+    const [hoursIn, minutesIn] = timeIn.split(':').map(Number);
+    const [hoursOut, minutesOut] = timeOut.split(':').map(Number);
+    const totalMinutes = (hoursOut - hoursIn) * 60 + (minutesOut - minutesIn);
+    return `${(Math.floor(totalMinutes / 60)).toString().padStart(2, '0')}:${(totalMinutes % 60).toString().padStart(2, '0')}`;
+  }
+
 
   selectMaladaptive(behavior:any){
     this.maladaptiveSelected = behavior;
@@ -334,6 +381,14 @@ export class EditNoteRbtComponent {
     // this.replacement_added.push({
     //   replacement : replacemen
     // })
+  }
+
+  onMaladaptivesChange(updatedMaladaptives: any[]) {
+    this.maladaptivegroup = updatedMaladaptives;
+  }
+
+  onReplacementsChange(updatedReplacements: any[]) {
+    this.replacementGoals = updatedReplacements;
   }
 
   back(){
@@ -426,29 +481,6 @@ export class EditNoteRbtComponent {
   }
 
 
-
-  addInterventions(){
-    this.interventionsgroup.push({
-      pairing: this.pairing,
-      response_block: this.response_block,
-      DRA: this.DRA,
-      DRO: this.DRO,
-      redirection: this.redirection,
-      errorless_teaching: this.errorless_teaching,
-      NCR: this.NCR,
-      shaping: this.shaping,
-      chaining: this.chaining,
-      token_economy: this.token_economy,
-      extinction: this.extinction,
-      natural_teaching: this.natural_teaching,
-    })
-     //si existe un elemento actualiza ese elemento en la lista
-    if(this.interventionsgroup.length > 1){
-      this.interventionsgroup.splice(this.interventionsgroup,1);
-    }
-    Swal.fire('Updated', ` Interventions Updated`, 'success');
-  }
-
   deleteLTOGoal(i:any){
     this.replacementGoals.splice(i,1);
   }
@@ -529,7 +561,7 @@ export class EditNoteRbtComponent {
     }
     this.text_validation = '';
     this.FILE_SIGNATURE_RBT = $event.target.files[0];
-    let reader = new FileReader();
+    const reader = new FileReader();
     reader.readAsDataURL(this.FILE_SIGNATURE_RBT);
     reader.onloadend = ()=> this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED = reader.result;
   }
@@ -541,14 +573,14 @@ export class EditNoteRbtComponent {
     }
     this.text_validation = '';
     this.FILE_SIGNATURE_BCBA = $event.target.files[0];
-    let reader2 = new FileReader();
+    const reader2 = new FileReader();
     reader2.readAsDataURL(this.FILE_SIGNATURE_BCBA);
     reader2.onloadend = ()=> this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED = reader2.result;
   }
 
 
 
-  save(){debugger
+  save(){
     this.text_validation = '';
     // if(!this.name||!this.email ||!this.surname ){
     //   this.text_validation = 'Los campos con * son obligatorios';
@@ -562,7 +594,7 @@ export class EditNoteRbtComponent {
 
 
 
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append('patient_id', this.patient_id);
     formData.append('doctor_id', this.selectedValueProviderName);
     formData.append('bip_id', this.bip_id);
@@ -584,16 +616,16 @@ export class EditNoteRbtComponent {
       formData.append('provider_name_g', this.selectedValueProviderName);
     }
     if(this.selectedValueTimeIn ){
-      formData.append('time_in', this.selectedValueTimeIn+'' ? this.selectedValueTimeIn+'' : "0");
+      formData.append('time_in', this.selectedValueTimeIn+'' ? this.selectedValueTimeIn+'' : "");
     }
     if(this.selectedValueTimeOut ){
-      formData.append('time_out', this.selectedValueTimeOut+''? this.selectedValueTimeOut+'' : "0");
+      formData.append('time_out', this.selectedValueTimeOut+''? this.selectedValueTimeOut+'' : "");
     }
     if(this.selectedValueTimeIn2 ){
-      formData.append('time_in2', this.selectedValueTimeIn2+''? this.selectedValueTimeIn2+'' : "0");
+      formData.append('time_in2', this.selectedValueTimeIn2+''? this.selectedValueTimeIn2+'' : "");
     }
     if(this.selectedValueTimeOut2 ){
-      formData.append('time_out2', this.selectedValueTimeOut2+''? this.selectedValueTimeOut2+'' : "0");
+      formData.append('time_out2', this.selectedValueTimeOut2+''? this.selectedValueTimeOut2+'' : "");
     }
     if(this.environmental_changes ){
       formData.append('environmental_changes', this.environmental_changes);
@@ -657,20 +689,26 @@ export class EditNoteRbtComponent {
       formData.append('supervisor_signature', this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED);
     }
 
-    this.noteRbtService.editNote(formData,this.note_selectedId ).subscribe((resp:any)=>{
+    this.noteRbtService.editNote(formData, this.note_selectedId).subscribe((resp: any) => {
       // console.log(resp);
 
-      if(resp.message == 403){
+      if (resp.message == 403) {
         this.text_validation = resp.message_text;
-      }else{
-        // this.text_success = 'Employer created';
-        // this.ngOnInit();
-        Swal.fire('Updated', ` Note Rbt Updated`, 'success');
-        this.router.navigate(['/note-rbt/listbyclient/',this.patient_id]);
+        Swal.fire('Warning', this.text_validation, 'warning');
+      } else {
+        Swal.fire('Updated', 'Note RBT Updated', 'success');
+        this.router.navigate(['/note-rbt/listbyclient/', this.patient_id]);
       }
-    })
-
-
+    },
+      (error) => {
+        console.error('Error updating note:', error);
+        if (error.error && error.error.message && error.error.message.includes('Time conflict')) {
+          this.text_validation = 'There is a time conflict with an existing note. Please choose a different time.';
+        } else {
+          this.text_validation = 'An error occurred while updating the note. Please try again.';
+        }
+        Swal.fire('Error', this.text_validation, 'error');
+      });
   }
 
 

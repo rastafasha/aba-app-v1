@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { routes } from 'src/app/shared/routes/routes';
 import { BipService } from '../../bip/service/bip.service';
@@ -21,24 +21,24 @@ export interface POSModel{
   templateUrl: './note-rbt.component.html',
   styleUrls: ['./note-rbt.component.scss']
 })
-export class NoteRbtComponent {
+export class NoteRbtComponent implements OnInit {
   public routes = routes;
 
   public url_media:any;
-  valid_form:boolean = false;
-  valid_form_success:boolean = false;
+  valid_form = false;
+  valid_form_success = false;
 
-  public text_success:string = '';
-  public text_validation:string = '';
+  public text_success = '';
+  public text_validation = '';
 
   public selectedValueProvider!: string;
   public selectedValueRBT!: string;
   public selectedValueBCBA!: string;
   public selectedValueCode!: string;
-  public selectedValueTimeIn: number = 0;
-  public selectedValueTimeOut: number = 0;
-  public selectedValueTimeIn2: number = 0;
-  public selectedValueTimeOut2: number = 0;
+  public selectedValueTimeIn = "";
+  public selectedValueTimeOut = "";
+  public selectedValueTimeIn2 = "";
+  public selectedValueTimeOut2 = "";
   public selectedValueProviderName!: string;
   public selectedValueMaladaptive!: string;
   public selectedValueProviderCredential!: string;
@@ -124,7 +124,6 @@ export class NoteRbtComponent {
   public hours_days:any =[];
   public maladaptives:any =[];
   public replacementGoals:any =[];
-  public intervention_added:any =[];
   public replacements:any =[];
 
   public maladaptiveSelected:any =null;
@@ -143,6 +142,23 @@ export class NoteRbtComponent {
   public provider:any ;
   public stoInprogressGoal:any ;
 
+  public intervention_added:any =[];
+  public interventionsSelected = {};
+  interventionsList = [
+      { id: 'pairing', name: 'Pairing', value: false },
+      { id: 'response_block', name: 'Response Block', value: false },
+      { id: 'DRA', name: 'DRA', value: false },
+      { id: 'DRO', name: 'DRO', value: false },
+      { id: 'redirection', name: 'Redirection', value: false },
+      { id: 'errorless_teaching', name: 'Errorless Teaching', value: false },
+      { id: 'NCR', name: 'NCR', value: false },
+      { id: 'shaping', name: 'Shaping', value: false },
+      { id: 'chaining', name: 'Chaining', value: false },
+      { id: 'token_economy', name: 'Token Economy', value: false },
+      { id: 'extinction', name: 'Extinction', value: false },
+      { id: 'natural_teaching', name: 'Natural Teaching', value: false },
+    ];
+
   // session_date: Date;
   // next_session_is_scheduled_for: Date;
 
@@ -159,11 +175,9 @@ export class NoteRbtComponent {
 
   ngOnInit(): void {
 
-    // window.scrollTo(0, 0);
-    let USER = localStorage.getItem("user");
+    const USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER: '');
     this.doctor_id = this.user.id;
-    // console.log(this.doctor_id);
     this.getDoctor();
 
     this.ativatedRoute.params.subscribe((resp:any)=>{
@@ -171,11 +185,24 @@ export class NoteRbtComponent {
      })
      this.getConfig();
      this.getProfileBip();
-    //  this.countValue();
-
 
     this.specialistData();
 
+    this.updateInterventions();
+  }
+
+  updateInterventions() {
+      const interventionsObj = this.interventionsList
+          .filter(intervention => intervention.value)
+          .reduce((acc, intervention) => {
+              acc[intervention.id] = true;
+              return acc;
+          }, {});
+      this.intervention_added = [interventionsObj];
+  }
+
+  onInterventionsChange(updatedInterventions: any[]) {
+    this.intervention_added = updatedInterventions;
   }
 
   goBack() {
@@ -276,15 +303,13 @@ export class NoteRbtComponent {
     this.goalService.getStobyGoalinProgress(this.goal).subscribe((resp:any)=>{
       console.log(resp);
       this.stoInprogressGoal = resp.stoInprogressGoal;
-      this.stoInprogressGoal.forEach((element:any) => { 
+      this.stoInprogressGoal.forEach((element:any) => {
         this.stoInprogressGoal.push(element);
         });
         this.stoInprogressGoal.forEach((element:any) => {
           this.stoInprogressGoal.push(element);
           });
-          })
-          
-
+        })
   }
 
   getStoInprogressGoal1(){
@@ -349,14 +374,17 @@ export class NoteRbtComponent {
 
 
 
-  hourTimeInSelected(value:number){
+  hourTimeInSelected(value:string){
     this.selectedValueTimeIn = value;
-    // console.log(value);
   }
-  hourTimeOutSelected(value:number){
+  hourTimeOutSelected(value:string){
     this.selectedValueTimeOut = value;
-    // console.log(value);
-
+  }
+  hourTimeIn2Selected(value:string){
+    this.selectedValueTimeIn2 = value;
+  }
+  hourTimeOut2Selected(value:string){
+    this.selectedValueTimeOut2 = value;
   }
 
   selectMaladaptive(behavior:any){
@@ -505,45 +533,45 @@ export class NoteRbtComponent {
   //   }
   // }
 
-  addInterventions(){
-    if (this.intervention_added) {
-      this.intervention_added.push({
-        pairing: this.pairing,
-        response_block: this.response_block,
-        DRA: this.DRA,
-        DRO: this.DRO,
-        redirection: this.redirection,
-        errorless_teaching: this.errorless_teaching,
-        NCR: this.NCR,
-        shaping: this.shaping,
-        chaining: this.chaining,
-        token_economy: this.token_economy,
-        extinction: this.extinction,
-        natural_teaching: this.natural_teaching,
-      })
-    } else {
-      this.intervention_added = [{
-        pairing: this.pairing,
-        response_block: this.response_block,
-        DRA: this.DRA,
-        DRO: this.DRO,
-        redirection: this.redirection,
-        errorless_teaching: this.errorless_teaching,
-        NCR: this.NCR,
-        shaping: this.shaping,
-        chaining: this.chaining,
-        token_economy: this.token_economy,
-        extinction: this.extinction,
-        natural_teaching: this.natural_teaching,
-      }]
-    }
-    if(this.intervention_added.length > 1){
-      this.intervention_added.splice(this.intervention_added,1);
-      Swal.fire('Updated', ` Interventions Added`, 'success');
-    }else{
-      Swal.fire('Warning', `Must add less one`, 'warning');
-    }
-  }
+  // addInterventions(){
+  //   if (this.intervention_added) {
+  //     this.intervention_added.push({
+  //       pairing: this.pairing,
+  //       response_block: this.response_block,
+  //       DRA: this.DRA,
+  //       DRO: this.DRO,
+  //       redirection: this.redirection,
+  //       errorless_teaching: this.errorless_teaching,
+  //       NCR: this.NCR,
+  //       shaping: this.shaping,
+  //       chaining: this.chaining,
+  //       token_economy: this.token_economy,
+  //       extinction: this.extinction,
+  //       natural_teaching: this.natural_teaching,
+  //     })
+  //   } else {
+  //     this.intervention_added = [{
+  //       pairing: this.pairing,
+  //       response_block: this.response_block,
+  //       DRA: this.DRA,
+  //       DRO: this.DRO,
+  //       redirection: this.redirection,
+  //       errorless_teaching: this.errorless_teaching,
+  //       NCR: this.NCR,
+  //       shaping: this.shaping,
+  //       chaining: this.chaining,
+  //       token_economy: this.token_economy,
+  //       extinction: this.extinction,
+  //       natural_teaching: this.natural_teaching,
+  //     }]
+  //   }
+  //   if(this.intervention_added.length > 1){
+  //     this.intervention_added.splice(this.intervention_added,1);
+  //     Swal.fire('Updated', ` Interventions Added`, 'success');
+  //   }else{
+  //     Swal.fire('Warning', `Must add less one`, 'warning');
+  //   }
+  // }
 
   //funcion para la primera imagen.. funciona
   loadFile($event:any){
@@ -592,8 +620,27 @@ export class NoteRbtComponent {
     });
   }
 
+  validateMaladaptives(): boolean {
+        return this.maladaptives.every(behavior =>
+        behavior.number_of_occurrences !== undefined &&
+        behavior.number_of_occurrences >= 0
+        );
+    }
 
-  save(){debugger
+  isValidCorrectResponse(replacement: any): boolean {
+    return replacement.number_of_correct_response !== undefined &&
+           replacement.number_of_correct_response >= 0 &&
+           replacement.number_of_correct_response <= replacement.total_trials;
+  }
+
+  validateReplacements(): boolean {
+    return this.replacementGoals.every(replacement =>
+      replacement.total_trials > 0 &&
+      this.isValidCorrectResponse(replacement)
+    );
+  }
+
+  save(){
     this.text_validation = '';
     if(
       this.maladaptives[0].number_of_occurrences == undefined
@@ -606,10 +653,17 @@ export class NoteRbtComponent {
       return;
     }
 
+    if (!this.validateMaladaptives()) {
+        Swal.fire('Warning', 'Please ensure all maladaptive behaviors have valid values', 'warning');
+        return;
+    }
 
+    if (!this.validateReplacements()) {
+        Swal.fire('Warning', 'Please ensure all replacement goals have valid values', 'warning');
+        return;
+    }
 
-
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append('patient_id', this.patient_id);
     formData.append('doctor_id', this.doctor_id);
     formData.append('bip_id', this.bip_id);
@@ -619,50 +673,13 @@ export class NoteRbtComponent {
     formData.append('provider_credential', this.provider_credential);
     // formData.append('pos', this.pos);
     formData.append('session_date', this.session_date);
-
-
-
     // formData.append('provider_name_g', this.selectedValueProviderName);
     // formData.append('provider_name', this.selectedValueRBT);
     formData.append('provider_name_g', this.doctor_id);
     formData.append('provider_name', this.doctor_id);
     formData.append('supervisor_name', this.selectedValueBCBA);
-
     formData.append('cpt_code', this.selectedValueCode);
     // formData.append('provider', this.provider); // para el calculo de las unidades
-
-
-    if(this.selectedValueTimeIn ){
-      formData.append('time_in', this.selectedValueTimeIn+'' ? this.selectedValueTimeIn+'' : "0");
-    }
-    if(this.selectedValueTimeOut ){
-      formData.append('time_out', this.selectedValueTimeOut+''? this.selectedValueTimeOut+'' : "0");
-    }
-    if(this.selectedValueTimeIn2 ){
-      formData.append('time_in2', this.selectedValueTimeIn2+''? this.selectedValueTimeIn2+'' : "0");
-    }
-    if(this.selectedValueTimeOut2 ){
-      formData.append('time_out2', this.selectedValueTimeOut2+''? this.selectedValueTimeOut2+'' : "0");
-    }
-    formData.append('environmental_changes', this.environmental_changes);
-
-
-
-
-    formData.append('replacements', JSON.stringify(this.replacementGoals));
-    formData.append('maladaptives', JSON.stringify(this.maladaptives));
-    formData.append('interventions', JSON.stringify(this.intervention_added));
-
-    formData.append('meet_with_client_at', this.meet_with_client_at);
-    formData.append('client_appeared', this.client_appeared);
-    formData.append('as_evidenced_by', this.as_evidenced_by);
-    formData.append('client_response_to_treatment_this_session', this.client_response_to_treatment_this_session);
-    formData.append('rbt_modeled_and_demonstrated_to_caregiver', this.rbt_modeled_and_demonstrated_to_caregiver);
-    formData.append('progress_noted_this_session_compared_to_previous_session', this.progress_noted_this_session_compared_to_previous_session);
-
-    if(this.next_session_is_scheduled_for){
-      formData.append('next_session_is_scheduled_for', this.next_session_is_scheduled_for);
-    }
     // formData.append('next_session_is_scheduled_for', this.next_session_is_scheduled_for);
     // formData.append('porcentage_diario', this.number_of_correct_response * 100 / this.total_trials,);
 
@@ -671,35 +688,74 @@ export class NoteRbtComponent {
     // formData.append('imagenn', this.FILE_SIGNATURE_BCBA);
     // formData.append('imagenn', this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED);
 
-    if(this.FILE_SIGNATURE_RBT ){
-      formData.append('imagen', this.FILE_SIGNATURE_RBT);
-    }
     // if(this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED ){
-      //   formData.append('provider_signature', this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED);
-      // }
+    //   formData.append('provider_signature', this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED);
+    // }
+
+    if (this.selectedValueTimeIn) {
+      formData.append('time_in', this.selectedValueTimeIn);
+    }
+    if (this.selectedValueTimeOut) {
+      formData.append('time_out', this.selectedValueTimeOut);
+    }
+    if (this.selectedValueTimeIn2) {
+      formData.append('time_in2', this.selectedValueTimeIn2);
+    }
+    if (this.selectedValueTimeOut2) {
+      formData.append('time_out2', this.selectedValueTimeOut2);
+    }
+
+    formData.append('environmental_changes', this.environmental_changes);
+    formData.append('replacements', JSON.stringify(this.replacementGoals));
+    formData.append('maladaptives', JSON.stringify(this.maladaptives));
+    formData.append('interventions', JSON.stringify(this.intervention_added));
+    formData.append('meet_with_client_at', this.meet_with_client_at);
+    formData.append('client_appeared', this.client_appeared);
+    formData.append('as_evidenced_by', this.as_evidenced_by);
+    formData.append('client_response_to_treatment_this_session', this.client_response_to_treatment_this_session);
+    formData.append('rbt_modeled_and_demonstrated_to_caregiver', this.rbt_modeled_and_demonstrated_to_caregiver);
+    formData.append('progress_noted_this_session_compared_to_previous_session', this.progress_noted_this_session_compared_to_previous_session);
+
+    if (this.next_session_is_scheduled_for) {
+      formData.append('next_session_is_scheduled_for', this.next_session_is_scheduled_for);
+    }
+
     formData.append('provider_signature', this.doctor.electronic_signature);
 
-    if(this.FILE_SIGNATURE_RBT ){
-      formData.append('imagenn', this.FILE_SIGNATURE_RBT);
+    if (this.FILE_SIGNATURE_RBT) {
+      formData.append('imagen', this.FILE_SIGNATURE_RBT);
     }
-    if(this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED ){
+    if (this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED) {
       formData.append('supervisor_signature', this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED);
     }
 
-    this.noteRbtService.createNote(formData).subscribe((resp:any)=>{
-      // console.log(resp);
+    formData.forEach(
+        (value, key) => {
+            console.log(key + ': ' + value);
+        }
+    )
 
-      if(resp.message == 403){
-        this.text_validation = resp.message_text;
-        Swal.fire('Warning', resp.message_text, 'warning');
-      }else{
-        this.text_success = 'Employer created';
-        // this.ngOnInit();
-        Swal.fire('Created', ` Note Rbt Created`, 'success');
-        this.router.navigate(['/note-rbt/listbyclient/',this.patient_id]);
-      }
-    })
-
+    this.noteRbtService.createNote(formData).subscribe(
+        (resp: any) => {
+          if (resp.message == 403) {
+            this.text_validation = resp.message_text;
+            Swal.fire('Warning', resp.message_text, 'warning');
+          } else {
+            this.text_success = 'Note created';
+            Swal.fire('Created', 'Note RBT Created', 'success');
+            this.router.navigate(['/note-rbt/listbyclient/', this.patient_id]);
+          }
+        },
+        (error) => {
+          console.error('Error creating note:', error);
+          if (error.includes('Time conflict')) {
+            this.text_validation = 'There is a time conflict with an existing note. Please choose a different time.';
+          } else {
+            this.text_validation = 'An error occurred while creating the note. Please try again.';
+          }
+          Swal.fire('Error', this.text_validation, 'error');
+        }
+      );
 
   }
 
@@ -709,6 +765,14 @@ export class NoteRbtComponent {
     const nextDate = new Date(date);
     nextDate.setDate(nextDate.getDate() + 2);
     this.next_session_is_scheduled_for = nextDate.toISOString().split('T')[0];
+  }
+
+  onMaladaptivesChange(updatedMaladaptives: any[]) {
+    this.maladaptives = updatedMaladaptives;
+  }
+
+  onReplacementsChange(updatedReplacements: any[]) {
+    this.replacementGoals = updatedReplacements;
   }
 
 //   class Calculadora {

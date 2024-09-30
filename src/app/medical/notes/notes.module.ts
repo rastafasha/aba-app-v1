@@ -13,6 +13,9 @@ import { NotesByClientComponent } from './notes-by-client/notes-by-client.compon
 import { EditNoteRbtComponent } from './edit-note-rbt/edit-note-rbt.component';
 import { NoteRbtViewComponent } from './note-rbt-view/note-rbt-view.component';
 import { PipesModule } from 'src/app/pipes/pipes.module';
+import { MaladaptivesComponent } from './components/maladaptives/maladaptives.component';
+import { ReplacementsComponent } from './components/replacements/replacements.component';
+import { InterventionsComponent } from './components/interventions/interventions.component';
 
 
 @NgModule({
@@ -21,7 +24,10 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
     NoteRbtComponent,
     NotesByClientComponent,
     EditNoteRbtComponent,
-    NoteRbtViewComponent
+    NoteRbtViewComponent,
+    MaladaptivesComponent,
+    ReplacementsComponent,
+    InterventionsComponent,
   ],
   exports: [
     NotesComponent,

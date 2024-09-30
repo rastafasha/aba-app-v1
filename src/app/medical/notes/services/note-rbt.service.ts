@@ -1,6 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { url_servicios } from 'src/app/config/config';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 
@@ -30,10 +31,24 @@ export class NoteRbtService {
     return this.http.get(URL, {headers:headers});
   }
   createNote(data){
-    let headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token})
-    let URL = url_servicios+'/note_rbt/store';
-    return this.http.post(URL,data, {headers:headers});
+    const headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token})
+    const URL = url_servicios+'/note_rbt/store';
+      return this.http.post(URL, data, { headers: headers })
+          .pipe(catchError(this.handleError));
   }
+
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'An error occurred';
+    if (error.error instanceof ErrorEvent) {
+      // Client-side error
+      errorMessage = error.error.message;
+    } else {
+      // Server-side error
+      errorMessage = error.error.message || error.statusText;
+    }
+    return throwError(errorMessage);
+  }
+
   createReplacementNote(data){
     let headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token})
     let URL = url_servicios+'/note_rbt/storeReplacemts';
@@ -94,7 +109,6 @@ export class NoteRbtService {
     let URL = url_servicios + '/note_rbt/generate-summary';
     return this.http.post(URL, data, {headers:headers});
   }
-
 
 
 }
