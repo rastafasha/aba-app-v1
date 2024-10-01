@@ -4,11 +4,11 @@ import { NgxBootstrapModule } from './ngx-bootstrap/ngx-bootstrap.module';
 import { CountUpModule } from 'ngx-countup';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgCircleProgressModule } from 'ng-circle-progress';
-import { materialModule } from './material.module';
+import { MaterialModule } from './material.module';
 import { NgxEditorModule } from 'ngx-editor';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { DataService } from './data/data.service';
 import { MatSortModule } from '@angular/material/sort';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -22,6 +22,7 @@ import { ActionButtonComponent } from './components/action-button/action-button.
 import { ActionModalComponent } from './components/action-modal/action-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AuthService } from './auth/auth.service';
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,7 @@ import { AuthService } from './auth/auth.service';
       showBackground: false,
     }),
     SlickCarouselModule,
-    materialModule,
+    MaterialModule,
     NgxEditorModule,
     FullCalendarModule,
     HttpClientModule,
@@ -71,7 +72,7 @@ import { AuthService } from './auth/auth.service';
     NgApexchartsModule,
     NgCircleProgressModule,
     SlickCarouselModule,
-    materialModule,
+    MaterialModule,
     NgxEditorModule,
     FullCalendarModule,
     HttpClientModule,
@@ -86,6 +87,14 @@ import { AuthService } from './auth/auth.service';
     ActionButtonComponent,
     ActionModalComponent,
   ],
-  providers: [DataService, AuthService],
+  providers: [
+    DataService,
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
 })
 export class SharedModule {}

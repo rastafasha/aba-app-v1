@@ -5,452 +5,452 @@ export class AppRoutes {
     return this.Url;
   }
   public static get changePassword2(): string {
-    return this.baseUrl + '/change-password2';
+    return `${this.baseUrl}/change-password2`;
   }
   public static get forgotPassword(): string {
-    return this.baseUrl + '/forgot-password';
+    return `${this.baseUrl}/forgot-password`;
   }
   public static get lockScreen(): string {
-    return this.baseUrl + '/lock-screen';
+    return `${this.baseUrl}/lock-screen`;
   }
   public static get login(): string {
-    return this.baseUrl + '/login';
+    return `${this.baseUrl}/login`;
   }
   public static get register(): string {
-    return this.baseUrl + '/register';
+    return `${this.baseUrl}/register`;
   }
   public static get addPayment(): string {
-    return this.baseUrl + '/accounts/add-payment';
+    return `${this.baseUrl}/accounts/add-payment`;
   }
   public static get expenses(): string {
-    return this.baseUrl + '/accounts/expenses';
+    return `${this.baseUrl}/accounts/expenses`;
   }
   public static get addExpense(): string {
-    return this.baseUrl + '/accounts/add-expense';
+    return `${this.baseUrl}/accounts/add-expense`;
   }
   public static get editExpense(): string {
-    return this.baseUrl + '/accounts/edit-expense';
+    return `${this.baseUrl}/accounts/edit-expense`;
   }
   public static get invoices(): string {
-    return this.baseUrl + '/accounts/invoices';
+    return `${this.baseUrl}/accounts/invoices`;
   }
   public static get invoiceView(): string {
-    return this.baseUrl + '/accounts/invoice-view';
+    return `${this.baseUrl}/accounts/invoice-view`;
   }
   public static get payments(): string {
-    return this.baseUrl + '/accounts/payments';
+    return `${this.baseUrl}/accounts/payments`;
   }
   public static get editPayment(): string {
-    return this.baseUrl + '/accounts/edit-payment';
+    return `${this.baseUrl}/accounts/edit-payment`;
   }
   public static get providentFund(): string {
-    return this.baseUrl + '/accounts/provident-fund';
+    return `${this.baseUrl}/accounts/provident-fund`;
   }
   public static get addProvidentFund(): string {
-    return this.baseUrl + '/accounts/add-provident-fund';
+    return `${this.baseUrl}/accounts/add-provident-fund`;
   }
   public static get editProvidentFund(): string {
-    return this.baseUrl + '/accounts/edit-provident-fund';
+    return `${this.baseUrl}/accounts/edit-provident-fund`;
   }
   public static get taxes(): string {
-    return this.baseUrl + '/accounts/taxes';
+    return `${this.baseUrl}/accounts/taxes`;
   }
   public static get addTax(): string {
-    return this.baseUrl + '/accounts/add-tax';
+    return `${this.baseUrl}/accounts/add-tax`;
   }
   public static get editTax(): string {
-    return this.baseUrl + '/accounts/edit-tax';
+    return `${this.baseUrl}/accounts/edit-tax`;
   }
   public static get activities(): string {
-    return this.baseUrl + '/activities';
+    return `${this.baseUrl}/activities`;
   }
   // public static get addAppointment(): string {
-  //   return this.baseUrl + '/appointments/add-appointment';
+  // `  return ${this.baseUrl}/appointments/add-appointment`;
   // }
   public static get addAppointment(): string {
-    return this.baseUrl + '/appointments/add';
+    return `${this.baseUrl}/appointments/add`;
   }
   // public static get appointmentList(): string {
-  //   return this.baseUrl + '/appointments/appointment-list';
+  // `  return ${this.baseUrl}/appointments/appointment-list`;
   // }
   public static get appointmentList(): string {
-    return this.baseUrl + '/appointments/list';
+    return `${this.baseUrl}/appointments/list`;
   }
   // public static get editAppointment(): string {
-  //   return this.baseUrl + '/appointments/edit-appointment';
+  // `  return ${this.baseUrl}/appointments/edit-appointment`;
   // }
   public static get editAppointment(): string {
-    return this.baseUrl + '/appointments/edit';
+    return `${this.baseUrl}/appointments/edit`;
   }
   public static get addAsset(): string {
-    return this.baseUrl + '/assets/add-asset';
+    return `${this.baseUrl}/assets/add-asset`;
   }
   public static get assetsList(): string {
-    return this.baseUrl + '/assets/assets-list';
+    return `${this.baseUrl}/assets/assets-list`;
   }
   public static get editAsset(): string {
-    return this.baseUrl + '/assets/edit-asset';
+    return `${this.baseUrl}/assets/edit-asset`;
   }
   public static get blankPage(): string {
-    return this.baseUrl + '/blank-page';
+    return `${this.baseUrl}/blank-page`;
   }
   public static get addBlog(): string {
-    return this.baseUrl + '/blogs/add-blog';
+    return `${this.baseUrl}/blogs/add-blog`;
   }
   public static get blog(): string {
-    return this.baseUrl + '/blogs/blog';
+    return `${this.baseUrl}/blogs/blog`;
   }
   public static get blogDetails(): string {
-    return this.baseUrl + '/blogs/blog-details';
+    return `${this.baseUrl}/blogs/blog-details`;
   }
   public static get editBlog(): string {
-    return this.baseUrl + '/blogs/edit-blog';
+    return `${this.baseUrl}/blogs/edit-blog`;
   }
   // public static get calendar(): string {
-  //   return this.baseUrl + '/calendar';
+  // `  return ${this.baseUrl}/calendar`;
   // }
   public static get calendar(): string {
-    return this.baseUrl + '/appointment-calendar/show';
+    return `${this.baseUrl}/appointment-calendar/show`;
   }
   public static get incomingCall(): string {
-    return this.baseUrl + '/calls/incoming-call';
+    return `${this.baseUrl}/calls/incoming-call`;
   }
   public static get videoCall(): string {
-    return this.baseUrl + '/calls/video-call';
+    return `${this.baseUrl}/calls/video-call`;
   }
   public static get voiceCall(): string {
-    return this.baseUrl + '/calls/voice-call';
+    return `${this.baseUrl}/calls/voice-call`;
   }
   public static get chat(): string {
-    return this.baseUrl + '/chat';
+    return `${this.baseUrl}/chat`;
   }
   public static get tabs(): string {
-    return this.baseUrl + '/components/tabs';
+    return `${this.baseUrl}/components/tabs`;
   }
   public static get typography(): string {
-    return this.baseUrl + '/components/typography';
+    return `${this.baseUrl}/components/typography`;
   }
   public static get uikit(): string {
-    return this.baseUrl + '/components/uikit';
+    return `${this.baseUrl}/components/uikit`;
   }
   public static get adminDashboard(): string {
-    return this.baseUrl + '/dashboard/admin-dashboard';
+    return `${this.baseUrl}/dashboard/admin-dashboard`;
   }
   public static get doctorDashboard(): string {
-    return this.baseUrl + '/dashboard/doctor-dashboard';
+    return `${this.baseUrl}/dashboard/doctor-dashboard`;
   }
   public static get patientDashboard(): string {
-    return this.baseUrl + '/dashboard/patient-dashboard';
+    return `${this.baseUrl}/dashboard/patient-dashboard`;
   }
   // public static get addDepartment(): string {
-  //   return this.baseUrl + '/departments/add-department';
+  // `  return ${this.baseUrl}/departments/add-department`;
   // }
   public static get addDepartment(): string {
-    return this.baseUrl + '/specialities/register';
+    return `${this.baseUrl}/specialities/register`;
   }
   // public static get departmentList(): string {
-  //   return this.baseUrl + '/departments/department-list';
+  // `  return ${this.baseUrl}/departments/department-list`;
   // }
   public static get departmentList(): string {
-    return this.baseUrl + '/specialities/list';
+    return `${this.baseUrl}/specialities/list`;
   }
   public static get editDepartment(): string {
-    return this.baseUrl + '/departments/edit-department';
+    return `${this.baseUrl}/departments/edit-department`;
   }
   // public static get addDoctor(): string {
-  //   return this.baseUrl + '/doctor/add-doctor';
+  // `  return ${this.baseUrl}/doctor/add-doctor`;
   // }
   public static get addDoctor(): string {
-    return this.baseUrl + '/doctors/add';
+    return `${this.baseUrl}/doctors/add`;
   }
   public static get doctorProfile(): string {
-    return this.baseUrl + '/doctor/doctor-profile';
+    return `${this.baseUrl}/doctor/doctor-profile`;
   }
   // public static get doctorProfile(): string {
-  //   return this.baseUrl + '/doctor/doctor-profile';
+  // `  return ${this.baseUrl}/doctor/doctor-profile`;
   // }
   public static get doctorSetting(): string {
-    return this.baseUrl + '/doctor/doctor-setting';
+    return `${this.baseUrl}/doctor/doctor-setting`;
   }
   // public static get doctorsList(): string {
-  //   return this.baseUrl + '/doctor/doctors-list';
+  // `  return ${this.baseUrl}/doctor/doctors-list`;
   // }
   public static get doctorsList(): string {
-    return this.baseUrl + '/doctors/list';
+    return `${this.baseUrl}/doctors/list`;
   }
   public static get editDoctor(): string {
-    return this.baseUrl + '/doctor/edit-doctor';
+    return `${this.baseUrl}/doctor/edit-doctor`;
   }
   public static get addSchedule(): string {
-    return this.baseUrl + '/doctor-schedule/add-schedule';
+    return `${this.baseUrl}/doctor-schedule/add-schedule`;
   }
   public static get editSchedule(): string {
-    return this.baseUrl + '/doctor-schedule/edit-schedule';
+    return `${this.baseUrl}/doctor-schedule/edit-schedule`;
   }
   public static get schedule(): string {
-    return this.baseUrl + '/doctor-schedule/schedule';
+    return `${this.baseUrl}/doctor-schedule/schedule`;
   }
   public static get email(): string {
-    return this.baseUrl + '/email';
+    return `${this.baseUrl}/email`;
   }
   public static get compose(): string {
-    return this.baseUrl + '/email/compose';
+    return `${this.baseUrl}/email/compose`;
   }
   public static get confirmMail(): string {
-    return this.baseUrl + '/email/confirm-mail';
+    return `${this.baseUrl}/email/confirm-mail`;
   }
   public static get inbox(): string {
-    return this.baseUrl + '/email/inbox';
+    return `${this.baseUrl}/email/inbox`;
   }
   public static get mailView(): string {
-    return this.baseUrl + '/email/mail-view';
+    return `${this.baseUrl}/email/mail-view`;
   }
   public static get forms(): string {
-    return this.baseUrl + '/forms';
+    return `${this.baseUrl}/forms`;
   }
   public static get formBasicInputs(): string {
-    return this.baseUrl + '/forms/form-basic-inputs';
+    return `${this.baseUrl}/forms/form-basic-inputs`;
   }
   public static get formHorizontal(): string {
-    return this.baseUrl + '/forms/form-horizontal';
+    return `${this.baseUrl}/forms/form-horizontal`;
   }
   public static get formInputGroups(): string {
-    return this.baseUrl + '/forms/form-input-groups';
+    return `${this.baseUrl}/forms/form-input-groups`;
   }
   public static get formVertical(): string {
-    return this.baseUrl + '/forms/form-vertical';
+    return `${this.baseUrl}/forms/form-vertical`;
   }
   public static get gallery(): string {
-    return this.baseUrl + '/gallery';
+    return `${this.baseUrl}/gallery`;
   }
   public static get addInvoice(): string {
-    return this.baseUrl + '/invoice/add-invoice';
+    return `${this.baseUrl}/invoice/add-invoice`;
   }
   public static get createInvoice(): string {
-    return this.baseUrl + '/invoice/create-invoice';
+    return `${this.baseUrl}/invoice/create-invoice`;
   }
   public static get editInvoice(): string {
-    return this.baseUrl + '/invoice/edit-invoice';
+    return `${this.baseUrl}/invoice/edit-invoice`;
   }
   public static get editInvoices(): string {
-    return this.baseUrl + '/invoice/edit-invoices';
+    return `${this.baseUrl}/invoice/edit-invoices`;
   }
   public static get invoicesGrid(): string {
-    return this.baseUrl + '/invoice/invoices-grid';
+    return `${this.baseUrl}/invoice/invoices-grid`;
   }
   public static get allInvoice(): string {
-    return this.baseUrl + '/invoice/all-invoice';
+    return `${this.baseUrl}/invoice/all-invoice`;
   }
   public static get invoicesCancelled(): string {
-    return this.baseUrl + '/invoice/invoices-cancelled';
+    return `${this.baseUrl}/invoice/invoices-cancelled`;
   }
   public static get invoicesDraft(): string {
-    return this.baseUrl + '/invoice/invoices-draft';
+    return `${this.baseUrl}/invoice/invoices-draft`;
   }
   public static get invoicesOverdue(): string {
-    return this.baseUrl + '/invoice/invoices-overdue';
+    return `${this.baseUrl}/invoice/invoices-overdue`;
   }
   public static get invoicesPaid(): string {
-    return this.baseUrl + '/invoice/invoices-paid';
+    return `${this.baseUrl}/invoice/invoices-paid`;
   }
   public static get invoicesRecurring(): string {
-    return this.baseUrl + '/invoice/invoices-recurring';
+    return `${this.baseUrl}/invoice/invoices-recurring`;
   }
   public static get invoicesSettings(): string {
-    return this.baseUrl + '/invoice/invoices-settings';
+    return `${this.baseUrl}/invoice/invoices-settings`;
   }
   public static get taxSettings(): string {
-    return this.baseUrl + '/invoice/tax-settings';
+    return `${this.baseUrl}/invoice/tax-settings`;
   }
   public static get viewInvoice(): string {
-    return this.baseUrl + '/invoice/view-invoice';
+    return `${this.baseUrl}/invoice/view-invoice`;
   }
   // public static get addPatient(): string {
-  //   return this.baseUrl + '/patient/add-patient';
+  // `  return ${this.baseUrl}/patient/add-patient`;
   // }
   public static get addPatient(): string {
-    return this.baseUrl + '/patients/add';
+    return `${this.baseUrl}/patients/add`;
   }
   public static get editPatient(): string {
-    return this.baseUrl + '/patient/edit-patient';
+    return `${this.baseUrl}/patient/edit-patient`;
   }
   public static get patientProfile(): string {
-    return this.baseUrl + '/patient/patient-profile';
+    return `${this.baseUrl}/patient/patient-profile`;
   }
   public static get patientSetting(): string {
-    return this.baseUrl + '/patient/patient-setting';
+    return `${this.baseUrl}/patient/patient-setting`;
   }
   // public static get patientsList(): string {
-  //   return this.baseUrl + '/patient/patients-list';
+  // `  return ${this.baseUrl}/patient/patients-list`;
   // }
   public static get patientsList(): string {
-    return this.baseUrl + '/patients/list';
+    return `${this.baseUrl}/patients/list`;
   }
   public static get patientsLogReport(): string {
-    return this.baseUrl + '/patients/ws';
+    return `${this.baseUrl}/patients/ws`;
   }
   public static get addSalary(): string {
-    return this.baseUrl + '/payroll/add-salary';
+    return `${this.baseUrl}/payroll/add-salary`;
   }
   public static get editSalary(): string {
-    return this.baseUrl + '/payroll/edit-salary';
+    return `${this.baseUrl}/payroll/edit-salary`;
   }
   // public static get salary(): string {
-  //   return this.baseUrl + '/payroll/salary';
+  // `  return ${this.baseUrl}/payroll/salary`;
   // }
   public static get salary(): string {
-    return this.baseUrl + '/appointment-pay/list';
+    return `${this.baseUrl}/appointment-pay/list`;
   }
 
   public static get salaryView(): string {
-    return this.baseUrl + '/payroll/salary-view';
+    return `${this.baseUrl}/payroll/salary-view`;
   }
   public static get profile(): string {
-    return this.baseUrl + '/profile';
+    return `${this.baseUrl}/profile`;
   }
   public static get editProfile(): string {
-    return this.baseUrl + '/edit-profile';
+    return `${this.baseUrl}/edit-profile`;
   }
   public static get expenseReports(): string {
-    return this.baseUrl + '/reports/expense-reports';
+    return `${this.baseUrl}/reports/expense-reports`;
   }
   public static get invoiceReports(): string {
-    return this.baseUrl + '/reports/invoice-reports';
+    return `${this.baseUrl}/reports/invoice-reports`;
   }
   public static get setting(): string {
-    return this.baseUrl + '/setting';
+    return `${this.baseUrl}/setting`;
   }
   public static get settings(): string {
-    return this.baseUrl + '/settings/general-settings';
+    return `${this.baseUrl}/settings/general-settings`;
   }
   public static get bankSettings(): string {
-    return this.baseUrl + '/settings/bank-settings';
+    return `${this.baseUrl}/settings/bank-settings`;
   }
   public static get changePassword(): string {
-    return this.baseUrl + '/settings/change-password';
+    return `${this.baseUrl}/settings/change-password`;
   }
   public static get emailSettings(): string {
-    return this.baseUrl + '/settings/email-settings';
+    return `${this.baseUrl}/settings/email-settings`;
   }
   public static get localizationDetails(): string {
-    return this.baseUrl + '/settings/localization-details';
+    return `${this.baseUrl}/settings/localization-details`;
   }
   public static get othersSettings(): string {
-    return this.baseUrl + '/settings/others-settings';
+    return `${this.baseUrl}/settings/others-settings`;
   }
   public static get paymentSettings(): string {
-    return this.baseUrl + '/settings/payment-settings';
+    return `${this.baseUrl}/settings/payment-settings`;
   }
   public static get seoSettings(): string {
-    return this.baseUrl + '/settings/seo-settings';
+    return `${this.baseUrl}/settings/seo-settings`;
   }
   public static get socialLinks(): string {
-    return this.baseUrl + '/settings/social-links';
+    return `${this.baseUrl}/settings/social-links`;
   }
   public static get socialSettings(): string {
-    return this.baseUrl + '/settings/social-settings';
+    return `${this.baseUrl}/settings/social-settings`;
   }
   public static get themeSettings(): string {
-    return this.baseUrl + '/settings/theme-settings';
+    return `${this.baseUrl}/settings/theme-settings`;
   }
   public static get addLeave(): string {
-    return this.baseUrl + '/staff/add-leave';
+    return `${this.baseUrl}/staff/add-leave`;
   }
   // public static get addStaff(): string {
-  //   return this.baseUrl + '/staff/add-staff';
+  // `  return ${this.baseUrl}/staff/add-staff`;
   // }
   public static get addStaff(): string {
-    return this.baseUrl + '/staffs/add-staff';
+    return `${this.baseUrl}/staffs/add-staff`;
   }
   public static get editLeave(): string {
-    return this.baseUrl + '/staff/edit-leave';
+    return `${this.baseUrl}/staff/edit-leave`;
   }
   public static get editStaff(): string {
-    return this.baseUrl + '/staff/edit-staff';
+    return `${this.baseUrl}/staff/edit-staff`;
   }
   public static get staffAttendance(): string {
-    return this.baseUrl + '/staff/staff-attendance';
+    return `${this.baseUrl}/staff/staff-attendance`;
   }
   public static get staffHoliday(): string {
-    return this.baseUrl + '/staff/staff-holiday';
+    return `${this.baseUrl}/staff/staff-holiday`;
   }
   public static get staffLeave(): string {
-    return this.baseUrl + '/staff/staff-leave';
+    return `${this.baseUrl}/staff/staff-leave`;
   }
   // public static get staffList(): string {
-  //   return this.baseUrl + '/staff/staff-list';
+  // `  return ${this.baseUrl}/staff/staff-list`;
   // }
   public static get staffList(): string {
-    return this.baseUrl + '/staffs/list';
+    return `${this.baseUrl}/staffs/list`;
   }
   public static get staffProfile(): string {
-    return this.baseUrl + '/staff/staff-profile';
+    return `${this.baseUrl}/staff/staff-profile`;
   }
   public static get staffSetting(): string {
-    return this.baseUrl + '/staff/staff-setting';
+    return `${this.baseUrl}/staff/staff-setting`;
   }
   public static get tablesBasic(): string {
-    return this.baseUrl + '/tables/tables-basic';
+    return `${this.baseUrl}/tables/tables-basic`;
   }
   public static get tablesDataTables(): string {
-    return this.baseUrl + '/tables/tables-datatables';
+    return `${this.baseUrl}/tables/tables-datatables`;
   }
   public static get error404(): string {
-    return this.baseUrl + '/error/error404';
+    return `${this.baseUrl}/error/error404`;
   }
   public static get error500(): string {
-    return this.baseUrl + '/error/error500';
+    return `${this.baseUrl}/error/error500`;
   }
   //nuevas
   public static get registerRole(): string {
-    return this.baseUrl + '/roles/register';
+    return `${this.baseUrl}/roles/register`;
   }
   public static get listadoRole(): string {
-    return this.baseUrl + '/roles/list';
+    return `${this.baseUrl}/roles/list`;
   }
   public static get addInsurance(): string {
-    return this.baseUrl + '/insurance/register';
+    return `${this.baseUrl}/insurance/register`;
   }
   public static get insuranceList(): string {
-    return this.baseUrl + '/insurance/list';
+    return `${this.baseUrl}/insurance/list`;
   }
   public static get bip(): string {
-    return this.baseUrl + '/bip/';
+    return `${this.baseUrl}/bip/`;
   }
 
   public static get bipList(): string {
-    return this.baseUrl + '/bip/list';
+    return `${this.baseUrl}/bip/list`;
   }
   public static get registerBip(): string {
-    return this.baseUrl + '/bip/register';
+    return `${this.baseUrl}/bip/register`;
   }
   public static get editBip(): string {
-    return this.baseUrl + '/bip/edit';
+    return `${this.baseUrl}/bip/edit`;
   }
 
   public static get LocationList(): string {
-    return this.baseUrl + '/location/list';
+    return `${this.baseUrl}/location/list`;
   }
   public static get registerLocation(): string {
-    return this.baseUrl + '/location/register';
+    return `${this.baseUrl}/location/register`;
   }
   public static get editNoteRbt(): string {
-    return this.baseUrl + '/note-rbt/edit';
+    return `${this.baseUrl}/note-rbt/edit`;
   }
   public static get listNoteRbt(): string {
-    return this.baseUrl + '/note-rbt/listbyclient';
+    return `${this.baseUrl}/note-rbt/listbyclient`;
   }
   public static get goalAdd(): string {
-    return this.baseUrl + '/bip/goal/add';
+    return `${this.baseUrl}/bip/goal/add`;
   }
   public static get editNoteBcba(): string {
-    return this.baseUrl + '/note-bcba/edit';
+    return `${this.baseUrl}/note-bcba/edit`;
   }
   public static get listNoteBcba(): string {
-    return this.baseUrl + '/note-bcba/listbyclient';
+    return `${this.baseUrl}/note-bcba/listbyclient`;
   }
 
   // public static get BillingList(): string {
-  //   return this.baseUrl + '/billing/list';
+  // `  return ${this.baseUrl}/billing/list`;
   // }
 }

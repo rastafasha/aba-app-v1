@@ -1,24 +1,40 @@
-import { TestBed } from '@angular/core/testing';
-import { AuthService } from './auth.service';
-import { Router } from '@angular/router';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import { url_servicios } from 'src/app/config/config';
+import { TestBed } from '@angular/core/testing';
+import { StorageService } from '../storage/storage.service';
+import { Auth, AuthUser } from './auth.interface';
+import { AuthService } from './auth.service';
+import { AUTH_CONSTS, AUTH_URLS } from './auth.const';
+import { ErrorHandlerService } from '../error/error-handler.service';
 
 fdescribe('AuthService', () => {
   let service: AuthService;
   let httpMock: HttpTestingController;
-  const routerSpy = { navigate: jasmine.createSpy('navigate') };
+  let storageServiceMock: jasmine.SpyObj<StorageService>;
 
   beforeEach(() => {
+    const spy = jasmine.createSpyObj('StorageService', [
+      'get',
+      'set',
+      'remove',
+    ]);
+
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [AuthService, { provide: Router, useValue: routerSpy }],
+      providers: [
+        AuthService,
+        ErrorHandlerService,
+        { provide: StorageService, useValue: spy },
+      ],
     });
+
     service = TestBed.inject(AuthService);
     httpMock = TestBed.inject(HttpTestingController);
+    storageServiceMock = TestBed.inject(
+      StorageService
+    ) as jasmine.SpyObj<StorageService>;
   });
 
   afterEach(() => {
@@ -29,125 +45,125 @@ fdescribe('AuthService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('getLocalStorage', () => {
-    it('should get user and token from localStorage', () => {
-      spyOn(localStorage, 'getItem').and.callFake((key) => {
-        if (key === 'token') return 'mockToken';
-        if (key === 'user') return JSON.stringify({ id: 1, name: 'testUser' });
-        return null;
-      });
-      service.getLocalStorage();
-      expect(service.user).toEqual({ id: 1, name: 'testUser' });
-    });
+  describe('getUserFromStorage', () => {
+    it('should retrieve the user and token from storage', () => {
+      const token = 'dummy-token';
+      const user: AuthUser = {
+        id: 1,
+        name: 'John Doe',
+        email: 'john@example.com',
+      };
 
-    it('should set user to null if no user or token in localStorage', () => {
-      spyOn(localStorage, 'getItem').and.returnValue(null);
-      service.getLocalStorage();
-      expect(service.user).toBeNull();
+      storageServiceMock.get.and.callFake((key: string): any => {
+        switch (key) {
+          case AUTH_CONSTS.token:
+            return token;
+          case AUTH_CONSTS.user:
+            return user;
+          default:
+            return null;
+        }
+      });
+
+      service.getUserFromStorage();
+
+      expect(service.token).toBe(token);
+      expect(service.user).toEqual(user);
+      expect(storageServiceMock.get).toHaveBeenCalledWith(AUTH_CONSTS.token);
+      expect(storageServiceMock.get).toHaveBeenCalledWith(AUTH_CONSTS.user);
     });
   });
 
-  describe('saveLocalStorage', () => {
-    it('should save token and user in localStorage', () => {
-      const auth = {
-        access_token: { original: { access_token: 'mockAccessToken' } },
-        user: { id: 1, name: 'testUser' },
+  describe('setUserToStorage', () => {
+    it('should store the user and token in storage', () => {
+      const auth: Auth = {
+        access_token: {
+          original: { access_token: 'dummy-access-token' },
+        },
+        user: { id: 1, name: 'John Doe', email: 'john@example.com' },
       };
-      spyOn(localStorage, 'setItem');
-      const result = service.saveLocalStorage(auth);
-      expect(localStorage.setItem).toHaveBeenCalledWith(
-        'token',
-        'mockAccessToken'
+
+      const result = service.setUserToStorage(auth);
+
+      expect(result).toBeTrue();
+      expect(storageServiceMock.set).toHaveBeenCalledWith(
+        AUTH_CONSTS.token,
+        'dummy-access-token'
       );
-      expect(localStorage.setItem).toHaveBeenCalledWith(
-        'user',
-        JSON.stringify(auth.user)
+      expect(storageServiceMock.set).toHaveBeenCalledWith(
+        AUTH_CONSTS.user,
+        auth.user
       );
-      expect(localStorage.setItem).toHaveBeenCalledWith(
-        'authenticated',
+      expect(storageServiceMock.set).toHaveBeenCalledWith(
+        AUTH_CONSTS.auth,
         'true'
       );
-      expect(result).toBeTrue();
     });
 
-    it('should return false if auth or access_token is invalid', () => {
-      const auth = null;
-      const result = service.saveLocalStorage(auth);
+    it('should return false if auth is invalid', () => {
+      const result = service.setUserToStorage(null);
       expect(result).toBeFalse();
     });
   });
 
   describe('login', () => {
-    it('should perform a login and save data in localStorage', () => {
-      const mockResponse = {
-        access_token: { original: { access_token: 'mockToken' } },
-        user: { id: 1, name: 'testUser' },
+    it('should perform login and store user data on success', () => {
+      const auth: Auth = {
+        access_token: {
+          original: { access_token: 'dummy-access-token' },
+        },
+        user: { id: 1, name: 'John Doe', email: 'john@example.com' },
       };
-      spyOn(service, 'saveLocalStorage').and.returnValue(true);
 
-      service.login('test@test.com', 'password').subscribe((result) => {
+      service.login('john@example.com', 'password').subscribe((result) => {
         expect(result).toBeTrue();
+        expect(storageServiceMock.set).toHaveBeenCalledWith(
+          AUTH_CONSTS.token,
+          'dummy-access-token'
+        );
+        expect(storageServiceMock.set).toHaveBeenCalledWith(
+          AUTH_CONSTS.user,
+          auth.user
+        );
+        expect(storageServiceMock.set).toHaveBeenCalledWith(
+          AUTH_CONSTS.auth,
+          'true'
+        );
       });
 
-      const req = httpMock.expectOne(`${url_servicios}/login`);
+      const req = httpMock.expectOne(AUTH_URLS.login);
       expect(req.request.method).toBe('POST');
-      req.flush(mockResponse);
+      req.flush(auth);
     });
 
-    it('should handle login error and return undefined', () => {
-      service.login('test@test.com', 'password').subscribe((result) => {
+    it('should handle login failure and return undefined', () => {
+      service.login('john@example.com', 'password').subscribe((result) => {
         expect(result).toBeUndefined();
       });
 
-      const req = httpMock.expectOne(`${url_servicios}/login`);
-      req.flush(
-        { error: 'Invalid credentials' },
-        { status: 401, statusText: 'Unauthorized' }
-      );
-    });
-  });
-
-  describe('getUserRomoto', () => {
-    it('should make an HTTP POST request with headers', () => {
-      const mockData = { someData: 'test' };
-      const mockResponse = { id: 1, name: 'testUser' };
-      service.token = 'mockToken';
-
-      service.getUserRomoto(mockData).subscribe((response) => {
-        expect(response).toEqual(mockResponse);
-      });
-
-      const req = httpMock.expectOne(`${url_servicios}/me`);
+      const req = httpMock.expectOne(AUTH_URLS.login);
       expect(req.request.method).toBe('POST');
-      expect(req.request.headers.get('Authorization')).toBe('Bearer mockToken');
-      req.flush(mockResponse);
+      req.flush('Login failed', { status: 401, statusText: 'Unauthorized' });
     });
   });
 
   describe('logout', () => {
-    it('should clear localStorage and navigate to login', () => {
-      spyOn(localStorage, 'removeItem');
-
+    it('should remove user and token from storage', () => {
       service.logout();
-
-      expect(localStorage.removeItem).toHaveBeenCalledWith('token');
-      expect(localStorage.removeItem).toHaveBeenCalledWith('user');
-      expect(localStorage.removeItem).toHaveBeenCalledWith('authenticated');
-      expect(routerSpy.navigate).toHaveBeenCalled();
+      expect(storageServiceMock.remove).toHaveBeenCalledWith(AUTH_CONSTS.token);
+      expect(storageServiceMock.remove).toHaveBeenCalledWith(AUTH_CONSTS.user);
+      expect(storageServiceMock.remove).toHaveBeenCalledWith(AUTH_CONSTS.token);
     });
   });
 
-  describe('getLocalDarkMode', () => {
-    it('should apply dark mode if localStorage has darkmode enabled', (done) => {
-      spyOn(localStorage, 'getItem').and.returnValue('true');
-      const bodyClassSpy = spyOn(document.body.classList, 'add');
+  describe('getUserRomoto', () => {
+    it('should send a POST request with authorization headers', () => {
+      const data = { id: 1 };
 
-      service.getLocalDarkMode();
+      service.getUserRomoto(data).subscribe();
 
-      setTimeout(() => {
-        expect(bodyClassSpy).toHaveBeenCalledWith('darkmode');
-        done();
-      }, 500);
+      const req = httpMock.expectOne(AUTH_URLS.me);
+      expect(req.request.method).toBe('POST');
     });
   });
 });

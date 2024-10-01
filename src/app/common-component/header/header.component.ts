@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AppearanceService } from 'src/app/shared/appearance/appearance.service';
 import { AuthService } from 'src/app/shared/auth/auth.service';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { SideBarService } from 'src/app/shared/side-bar/side-bar.service';
@@ -28,7 +29,8 @@ export class HeaderComponent implements OnInit {
     public router: Router,
     private sideBar: SideBarService,
     public authService: AuthService,
-    public activatedRoute: ActivatedRoute
+    public activatedRoute: ActivatedRoute,
+    private appearanceService: AppearanceService
   ) {
     this.sideBar.toggleSideBar.subscribe((res: string) => {
       if (res == 'true') {
@@ -58,8 +60,8 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
-    this.authService.getLocalStorage();
-    this.authService.getLocalDarkMode();
+    this.authService.getUserFromStorage();
+    this.appearanceService.getLocalDarkMode();
     this.activatedRoute.params.subscribe((resp: any) => {
       // console.log(resp);
       this.user_id = resp.id;
@@ -98,6 +100,7 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.authService.logout();
+    this.router.navigate([AppRoutes.login]);
   }
 
   darkMode(dark: string) {

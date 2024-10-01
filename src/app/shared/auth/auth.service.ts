@@ -1,77 +1,79 @@
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-// import { BehaviorSubject } from 'rxjs';
-import { AppRoutes } from '../routes/routes';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map, catchError, of } from 'rxjs';
-import { url_servicios } from 'src/app/config/config';
+import { catchError, map, of } from 'rxjs';
+import { ErrorHandlerService } from '../error/error-handler.service';
+import { StorageService } from '../storage/storage.service';
+import { AUTH_CONSTS, AUTH_URLS } from './auth.const';
+import { Auth, AuthUser } from './auth.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  user: unknown;
+  user: AuthUser;
   token: string;
 
-  constructor(private router: Router, public http: HttpClient) {
-    this.getLocalStorage(); //devuelve el usuario logueado
+  constructor(
+    private http: HttpClient,
+    private storage: StorageService,
+    private errorHandler: ErrorHandlerService
+  ) {
+    this.initializeUserSession();
   }
-
-  getLocalStorage() {
-    if (localStorage.getItem('token') && localStorage.getItem('user')) {
-      const USER = localStorage.getItem('user');
-      this.user = JSON.parse(USER ? USER : '');
-    } else {
-      this.user = null;
+  initializeUserSession() {
+    this.getUserFromStorage();
+    if (!this.user) {
+      this.logout();
     }
   }
 
-  saveLocalStorage(auth: any) {
-    if (auth && auth.access_token) {
-      localStorage.setItem('token', auth.access_token.original.access_token);
-      localStorage.setItem('user', JSON.stringify(auth.user));
-      localStorage.setItem('authenticated', 'true');
-      return true;
+  getUserFromStorage() {
+    this.token = this.storage.get<string>(AUTH_CONSTS.token);
+    this.user = this.storage.get<AuthUser>(AUTH_CONSTS.user);
+  }
+
+  setUserToStorage(auth: Auth): boolean {
+    if (!auth?.access_token) {
+      return false;
     }
-    return false;
+    this.storage.set(
+      AUTH_CONSTS.token,
+      auth.access_token.original.access_token
+    );
+    this.storage.set(AUTH_CONSTS.user, auth.user);
+    this.storage.set(AUTH_CONSTS.auth, 'true');
+    return true;
   }
 
   login(email: string, password: string) {
-    const URL = url_servicios + '/login';
-    return this.http.post(URL, { email: email, password: password }).pipe(
-      map((auth: any) => {
-        console.log(auth);
-        const result = this.saveLocalStorage(auth);
-        return result;
+    return this.http.post<Auth>(AUTH_URLS.login, { email, password }).pipe(
+      map((auth) => {
+        return this.setUserToStorage(auth);
       }),
-      catchError((error: any) => {
-        console.log(error);
+      catchError((error: HttpErrorResponse) => {
+        try {
+          this.errorHandler.handleError(error);
+        } catch (error) {
+          //
+        }
         return of(undefined);
       })
     );
   }
 
-  getUserRomoto(data) {
-    const headers = new HttpHeaders({ Authorization: 'Bearer ' + this.token });
-    const URL = url_servicios + '/me';
-    return this.http.post(URL, data, { headers: headers });
-  }
-
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    localStorage.removeItem('authenticated');
-    localStorage.removeItem('auth_token');
-    this.router.navigate([AppRoutes.login]);
+    this.storage.remove(AUTH_CONSTS.token);
+    this.storage.remove(AUTH_CONSTS.user);
+    this.storage.remove(AUTH_CONSTS.auth);
+    // TODO: se usa?
+    this.storage.remove(AUTH_CONSTS.authToken);
   }
 
-  getLocalDarkMode() {
-    setTimeout(() => {
-      if (localStorage.getItem('darkmode')) {
-        const element = document.body;
-        element.classList.add('darkmode');
-      }
-    }, 500);
-    // console.log(this.user);
+  getUserRomoto<T>(data: unknown) {
+    return this.http.post<T>(AUTH_URLS.me, data);
+  }
+
+  isAuthenticated(): boolean {
+    return !!this.storage.get<string>(AUTH_CONSTS.token);
   }
 }
