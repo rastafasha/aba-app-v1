@@ -365,6 +365,15 @@ export class NoteBcbaComponent {
 
   }
 
+  hourTimeIn2Selected(value:number){
+    this.selectedValueTimeIn2 = value;
+    console.log(value);
+  }
+  hourTimeOut2Selected(value:number){
+    this.selectedValueTimeOut2 = value;
+    console.log(value);
+  }
+
   selectMaladaptive(behavior:any,i){
     this.maladaptiveSelected = behavior;
     this.caregivers_training_goals[i]= behavior
@@ -446,13 +455,14 @@ export class NoteBcbaComponent {
   }
 
   
-  save(){debugger
+  save(){
     this.text_validation = '';
     if(!this.rbt_training_goals 
       ||!this.caregivers_training_goals 
       ||!this.meet_with_client_at 
       ||!this.note_description 
       ||!this.selectedValueCode 
+      ||!this.selectedValueAba 
     ){
       this.text_validation = 'All Fields (*) are required';
       return;
@@ -500,6 +510,7 @@ export class NoteBcbaComponent {
     if(this.selectedValueTimeOut2 ){
       formData.append('time_out2', this.selectedValueTimeOut2+''? this.selectedValueTimeOut2+'' : "0");
     }
+
 
 
     // formData.append('imagen', this.FILE_SIGNATURE_RBT);

@@ -27,10 +27,10 @@ export class NoteBcbaEditComponent {
   public selectedValueProvider!: string;
   public selectedValueRBT!: string;
   public selectedValueBCBA!: string;
-  public selectedValueTimeIn!: number;
-  public selectedValueTimeOut!: number;
-  public selectedValueTimeIn2!: number;
-  public selectedValueTimeOut2!: number;
+  public selectedValueTimeIn = "";
+  public selectedValueTimeOut = "";
+  public selectedValueTimeIn2 = "";
+  public selectedValueTimeOut2 = "";
   public selectedValueProviderName!: string;
   public selectedValueMaladaptive!: string;
   public selectedValueRendering!: string;
@@ -318,14 +318,19 @@ export class NoteBcbaEditComponent {
   }
  
 
-  hourTimeInSelected(value:number){
+  hourTimeInSelected(value:string){
     this.selectedValueTimeIn = value;
-    // console.log(value);
   }
-  hourTimeOutSelected(value:number){
+  hourTimeOutSelected(value:string){
     this.selectedValueTimeOut = value;
-    // console.log(value);
 
+  }
+
+  hourTimeIn2Selected(value:string){
+    this.selectedValueTimeIn2 = value;
+  }
+  hourTimeOut2Selected(value:string){
+    this.selectedValueTimeOut2 = value;
   }
 
   selectMaladaptive(behavior:any,i){
