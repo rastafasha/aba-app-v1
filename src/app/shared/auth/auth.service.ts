@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 // import { BehaviorSubject } from 'rxjs';
-import { routes } from '../routes/routes';
+import { AppRoutes } from '../routes/app.routes';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, catchError, of } from 'rxjs';
 import { url_servicios } from 'src/app/config/config';
@@ -10,8 +10,8 @@ import { url_servicios } from 'src/app/config/config';
   providedIn: 'root',
 })
 export class AuthService {
-  user: any;
-  token: any;
+  user: unknown;
+  token: string;
 
   constructor(private router: Router, public http: HttpClient) {
     this.getLocalStorage(); //devuelve el usuario logueado
@@ -52,7 +52,7 @@ export class AuthService {
   }
 
   getUserRomoto(data) {
-    const headers = new HttpHeaders({ Authorization: 'Bearer' + this.token });
+    const headers = new HttpHeaders({ Authorization: 'Bearer ' + this.token });
     const URL = url_servicios + '/me';
     return this.http.post(URL, data, { headers: headers });
   }
@@ -62,7 +62,7 @@ export class AuthService {
     localStorage.removeItem('user');
     localStorage.removeItem('authenticated');
     localStorage.removeItem('auth_token');
-    this.router.navigate([routes.login]);
+    this.router.navigate([AppRoutes.login]);
   }
 
   getLocalDarkMode() {

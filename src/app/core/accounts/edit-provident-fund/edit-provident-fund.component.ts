@@ -1,29 +1,29 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { routes } from 'src/app/shared/routes/routes';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 
 interface data {
-  value: string ;
+  value: string;
 }
 @Component({
   selector: 'app-edit-provident-fund',
   templateUrl: './edit-provident-fund.component.html',
-  styleUrls: ['./edit-provident-fund.component.scss']
+  styleUrls: ['./edit-provident-fund.component.scss'],
 })
 export class EditProvidentFundComponent {
-  public routes = routes;
-  public selectedValue !: string  ;
+  public routes = AppRoutes;
+  public selectedValue!: string;
   date = new FormControl(new Date());
-  
+
   selectedList1: data[] = [
-    {value: 'Select Employee Name'},
-    {value: 'Bernardo James'},
-    {value: 'Galaviz Lalema'},
-    {value: 'Tarah Williams'},
+    { value: 'Select Employee Name' },
+    { value: 'Bernardo James' },
+    { value: 'Galaviz Lalema' },
+    { value: 'Tarah Williams' },
   ];
   selectedList2: data[] = [
-    {value: 'Select Provident Fund Type'},
-    {value: 'Basic Salary'},
-    {value: 'Month Salary'},
+    { value: 'Select Provident Fund Type' },
+    { value: 'Basic Salary' },
+    { value: 'Month Salary' },
   ];
 }

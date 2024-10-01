@@ -1,55 +1,54 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { routes } from 'src/app/shared/routes/routes';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PatientMService } from '../service/patient-m.service';
 import { InsuranceService } from '../../insurance/service/insurance.service';
 import Swal from 'sweetalert2';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Location } from '@angular/common';
 // declare function alertClose():any;
-declare var $:any;  
+declare var $: any;
 
+export interface ResponseBackend {
+  users: User[];
+  doctores: any[];
+  locations: any[];
+  location: any;
+  insurances: any[];
+}
+export interface User {
+  id: string;
+  full_name: string;
+  status: string;
+  roles: any[];
+  insurances: string;
+}
 
-export interface ResponseBackend{
-  users:User[];
-  doctores:any [];
-  locations:any[];
-  location:any;
-  insurances:any[];
- }
-export interface User{
-  id:string;
-  full_name:string;
-  status:string;
-  roles:any [];
-  insurances:string;
- }
-
- export interface Service {
+export interface Service {
   code: string;
   provider: string;
   // Add other service properties here
 }
 
- @Component({
+@Component({
   selector: 'app-edit-patient-m',
   templateUrl: './edit-patient-m.component.html',
-  styleUrls: ['./edit-patient-m.component.scss']
+  styleUrls: ['./edit-patient-m.component.scss'],
 })
 export class EditPatientMComponent {
-  public routes = routes;
+  public routes = AppRoutes;
   public selectedValue!: string;
   public selectedValueLocation!: string;
   public selectedValueInsurer!: string;
   public selectedValueCode!: any;
   public selectedValueCodeProvider!: string;
   public selectedValuePosCovered!: string;
-  
-  option_selected:number = 0;
+
+  option_selected: number = 0;
 
   public patient_id: any;
   public f: string = '';
-  
+
   public client_id: any;
   public first_name: string = '';
   public last_name: string = '';
@@ -90,37 +89,121 @@ export class EditPatientMComponent {
   public copayments: any;
   public oop: any;
   public eqhlid: any;
-  
 
   public pa_assessmentss: any = <any>[];
   public pa_assessments: any = <any>[];
   public pa_assessment: any;
-  public pa_assessment_start_date: Date ;
-  public pa_assessment_end_date: Date ;
+  public pa_assessment_start_date: Date;
+  public pa_assessment_end_date: Date;
   public pa_services: any;
-  public pa_services_start_date: Date ;
-  public pa_services_end_date: Date ;
+  public pa_services_start_date: Date;
+  public pa_services_end_date: Date;
   public cpt: any;
   public n_units: number = 0;
 
   public s_unit: any;
   public n_code: any;
-  
-  
-  public welcome: 'waiting' | 'reviewing' | 'psycho eval'| 'requested'| 'need new'| 'yes'|'no'|'2 insurance';
-  public consent: 'waiting' | 'reviewing' | 'psycho eval'| 'requested'| 'need new'| 'yes'|'no'|'2 insurance';
-  public insurance_card: 'waiting' | 'reviewing' | 'psycho eval'| 'requested'| 'need new'| 'yes'|'no'|'2 insurance';
-  public mnl: 'waiting' | 'reviewing' | 'psycho eval'| 'requested'| 'need new'| 'yes'|'no'|'2 insurance';
-  public referral: 'waiting' | 'reviewing' | 'psycho eval'| 'requested'| 'need new'| 'yes'|'no'|'2 insurance';
-  public ados: 'waiting' | 'reviewing' | 'psycho eval'| 'requested'| 'need new'| 'yes'|'no'|'2 insurance';
-  public iep: 'waiting' | 'reviewing' | 'psycho eval'| 'requested'| 'need new'| 'yes'|'no'|'2 insurance';
-  public asd_diagnosis: 'waiting' | 'reviewing' | 'psycho eval'| 'requested'| 'need new'| 'yes'|'no'|'2 insurance';
-  public cde: 'waiting' | 'reviewing' | 'psycho eval'| 'requested'| 'need new'| 'yes'|'no'|'2 insurance';
-  public submitted: 'waiting' | 'reviewing' | 'psycho eval'| 'requested'| 'need new'| 'yes'|'no'|'2 insurance';
-  public eligibility: 'waiting' | 'reviewing' | 'psycho eval'| 'requested'| 'need new'| 'yes'|'no'|'2 insurance';
-  public interview: 'pending'|'send' | 'receive' | 'no apply';
 
-  
+  public welcome:
+    | 'waiting'
+    | 'reviewing'
+    | 'psycho eval'
+    | 'requested'
+    | 'need new'
+    | 'yes'
+    | 'no'
+    | '2 insurance';
+  public consent:
+    | 'waiting'
+    | 'reviewing'
+    | 'psycho eval'
+    | 'requested'
+    | 'need new'
+    | 'yes'
+    | 'no'
+    | '2 insurance';
+  public insurance_card:
+    | 'waiting'
+    | 'reviewing'
+    | 'psycho eval'
+    | 'requested'
+    | 'need new'
+    | 'yes'
+    | 'no'
+    | '2 insurance';
+  public mnl:
+    | 'waiting'
+    | 'reviewing'
+    | 'psycho eval'
+    | 'requested'
+    | 'need new'
+    | 'yes'
+    | 'no'
+    | '2 insurance';
+  public referral:
+    | 'waiting'
+    | 'reviewing'
+    | 'psycho eval'
+    | 'requested'
+    | 'need new'
+    | 'yes'
+    | 'no'
+    | '2 insurance';
+  public ados:
+    | 'waiting'
+    | 'reviewing'
+    | 'psycho eval'
+    | 'requested'
+    | 'need new'
+    | 'yes'
+    | 'no'
+    | '2 insurance';
+  public iep:
+    | 'waiting'
+    | 'reviewing'
+    | 'psycho eval'
+    | 'requested'
+    | 'need new'
+    | 'yes'
+    | 'no'
+    | '2 insurance';
+  public asd_diagnosis:
+    | 'waiting'
+    | 'reviewing'
+    | 'psycho eval'
+    | 'requested'
+    | 'need new'
+    | 'yes'
+    | 'no'
+    | '2 insurance';
+  public cde:
+    | 'waiting'
+    | 'reviewing'
+    | 'psycho eval'
+    | 'requested'
+    | 'need new'
+    | 'yes'
+    | 'no'
+    | '2 insurance';
+  public submitted:
+    | 'waiting'
+    | 'reviewing'
+    | 'psycho eval'
+    | 'requested'
+    | 'need new'
+    | 'yes'
+    | 'no'
+    | '2 insurance';
+  public eligibility:
+    | 'waiting'
+    | 'reviewing'
+    | 'psycho eval'
+    | 'requested'
+    | 'need new'
+    | 'yes'
+    | 'no'
+    | '2 insurance';
+  public interview: 'pending' | 'send' | 'receive' | 'no apply';
 
   public selectedValue_rbt!: string;
   public selectedValue_rbt2!: string;
@@ -135,314 +218,325 @@ export class EditPatientMComponent {
   public bcba2_id: any;
   public clin_director_id: any;
 
-  public FILE_AVATAR:any;
-  public IMAGE_PREVISUALIZA:any = 'assets/img/user-06.jpg';
+  public FILE_AVATAR: any;
+  public IMAGE_PREVISUALIZA: any = 'assets/img/user-06.jpg';
 
-  
+  valid_form: boolean = false;
+  valid_form_success: boolean = false;
+  text_validation: any = null;
+  text_success: any = null;
 
-  valid_form:boolean = false;
-  valid_form_success:boolean = false;
-  text_validation:any = null;
-  text_success:any = null;
+  public patient_selected: any;
 
-  public patient_selected:any;
-
-  public specialists:any = [];
-  public locations:any = [];
-  public insurances:any = [];
-  public notes: any= [];
-  public insurer_name: any= [];
-  public assesstmentlists: any= [];
-  public services_code: any= [];
-  public services: any= [];
-  public pa_assessmentgroup: any= [];
-  public posGroup: any= [];
+  public specialists: any = [];
+  public locations: any = [];
+  public insurances: any = [];
+  public notes: any = [];
+  public insurer_name: any = [];
+  public assesstmentlists: any = [];
+  public services_code: any = [];
+  public services: any = [];
+  public pa_assessmentgroup: any = [];
+  public posGroup: any = [];
   public poscoveredList: any = [];
 
-  public roles_rbt:any = [];
-  public roles_bcba:any = [];
-  public roles_manager:any = [];
-  public role_localmanager:any = [];
-  public insurance_codes:any = [];
-  public insurance:any;
-  public insurances_name:any;
-  public code:any;
-  public insuranceiddd:any;
-  public telehealth:boolean;
-  public pay:boolean ;
-  
+  public roles_rbt: any = [];
+  public roles_bcba: any = [];
+  public roles_manager: any = [];
+  public role_localmanager: any = [];
+  public insurance_codes: any = [];
+  public insurance: any;
+  public insurances_name: any;
+  public code: any;
+  public insuranceiddd: any;
+  public telehealth: boolean;
+  public pay: boolean;
+
   // public insurance:any;
   // public insurer_name: any;
-  public insurance_id:any;
-  public id:any;
+  public insurance_id: any;
+  public id: any;
 
-  public user:any ;
-  public doctor_id:any ;
-  public location_id:any ;
-  public location:any ;
-  public provider:any ;
+  public user: any;
+  public doctor_id: any;
+  public location_id: any;
+  public location: any;
+  public provider: any;
 
-  FILES:any = [];
-  FilesAdded:any = [];
-  public file_selected:any;
-  public doc:any;
-  public FILE:any;
-  public datacode:any;
-  
+  FILES: any = [];
+  FilesAdded: any = [];
+  public file_selected: any;
+  public doc: any;
+  public FILE: any;
+  public datacode: any;
+
   constructor(
-    public patientService:PatientMService,
+    public patientService: PatientMService,
     public router: Router,
     public ativatedRoute: ActivatedRoute,
     public insuranceService: InsuranceService,
     private readonly sanitizer: DomSanitizer,
     private _sanitizer: DomSanitizer,
-    private locationBack: Location,
-
-  ){
-
+    private locationBack: Location
+  ) {
     this.selectedValueCodeProvider = this.selectedValueCode;
-
   }
 
   ngOnInit(): void {
     // window.scrollTo(0, 0);
-    this.ativatedRoute.params.subscribe((resp:any)=>{
+    this.ativatedRoute.params.subscribe((resp: any) => {
       this.client_id = resp.id;
-     })
-     
-     this.showUser();
-     this.getPoscoveredList();
+    });
+
+    this.showUser();
+    this.getPoscoveredList();
     //  setTimeout(()=>{
     //   alertClose();
     // }, 50)
-    let USER = localStorage.getItem("user");
-    this.user = JSON.parse(USER ? USER: '');
+    let USER = localStorage.getItem('user');
+    this.user = JSON.parse(USER ? USER : '');
     this.doctor_id = this.user.id;
     this.location_id = this.user.location_id;
 
-    if(this.user.roles[0] == 'MANAGER'){
+    if (this.user.roles[0] == 'MANAGER') {
       this.selectedValueLocation = this.user.location_id;
     }
-    
   }
 
   goBack() {
     this.locationBack.back(); // <-- go back to previous location on cancel
-    
   }
 
-  getPoscoveredList(){
-    this.patientService.getPosCovered().subscribe((res:any)=> {
-        console.log("pos covered list", res);
-        this.poscoveredList = res.data;
-        
+  getPoscoveredList() {
+    this.patientService.getPosCovered().subscribe((res: any) => {
+      console.log('pos covered list', res);
+      this.poscoveredList = res.data;
     });
   }
 
-  getInitConfig(){
-    this.patientService.listConfig(this.patient_selected.location_id).subscribe((resp:any)=>{
-      console.log(resp);
-      this.specialists = resp.users;
-      this.insurances = resp.insurances;
-      this.insurance_id = resp.insurances.length > 0 ? resp.insurances[0].id : '';
-      
-      this.location = resp.location;
-      this.locations = resp.locations;
-      this.roles_rbt = this.specialists.filter(user=> user.roles[0].name == 'RBT');
-      this.roles_bcba = this.specialists.filter(user=> user.roles[0].name == 'BCBA');
-     
-    })
+  getInitConfig() {
+    this.patientService
+      .listConfig(this.patient_selected.location_id)
+      .subscribe((resp: any) => {
+        console.log(resp);
+        this.specialists = resp.users;
+        this.insurances = resp.insurances;
+        this.insurance_id =
+          resp.insurances.length > 0 ? resp.insurances[0].id : '';
+
+        this.location = resp.location;
+        this.locations = resp.locations;
+        this.roles_rbt = this.specialists.filter(
+          (user) => user.roles[0].name == 'RBT'
+        );
+        this.roles_bcba = this.specialists.filter(
+          (user) => user.roles[0].name == 'BCBA'
+        );
+      });
   }
-  getConfig(){
-    this.patientService.listConfig(this.selectedValueLocation).subscribe((resp:any)=>{
-      console.log(resp);
-      this.specialists = resp.users;
-      this.insurances = resp.insurances;
-      this.insurance_id = resp.insurances.length > 0 ? resp.insurances[0].id : '';
-      
-      this.locations = resp.locations;
-      this.roles_rbt = this.specialists.filter(user=> user.roles[0].name == 'RBT');
-      this.roles_bcba = this.specialists.filter(user=> user.roles[0].name == 'BCBA');
-     
+  getConfig() {
+    this.patientService
+      .listConfig(this.selectedValueLocation)
+      .subscribe((resp: any) => {
+        console.log(resp);
+        this.specialists = resp.users;
+        this.insurances = resp.insurances;
+        this.insurance_id =
+          resp.insurances.length > 0 ? resp.insurances[0].id : '';
 
-      this.insuranceService.showInsurance(this.insurance_id).subscribe((resp:any)=>{
-        
-        this.insuranceiddd= resp.id;
-        this.insurer_name = resp.insurer_name;
-  
-        
-      })
-    })
+        this.locations = resp.locations;
+        this.roles_rbt = this.specialists.filter(
+          (user) => user.roles[0].name == 'RBT'
+        );
+        this.roles_bcba = this.specialists.filter(
+          (user) => user.roles[0].name == 'BCBA'
+        );
+
+        this.insuranceService
+          .showInsurance(this.insurance_id)
+          .subscribe((resp: any) => {
+            this.insuranceiddd = resp.id;
+            this.insurer_name = resp.insurer_name;
+          });
+      });
   }
 
-  
-
-  selectCategory(event: any){
+  selectCategory(event: any) {
     let VALUE = event;
     this.selectedValueLocation = VALUE;
     // console.log(this.selectedValueLocation);
     this.getConfig();
-   
   }
 
-  selectPOS(event: any){
+  selectPOS(event: any) {
     let VALUE = event;
     this.selectedValuePosCovered = VALUE;
     // console.log(this.selectedValuePosCovered);
     this.getConfig();
-   
   }
 
- 
-
-  
-  
-showUser(){
-    this.patientService.getPatient(this.client_id).subscribe((resp:any)=>{
+  showUser() {
+    this.patientService.getPatient(this.client_id).subscribe((resp: any) => {
       console.log(resp);
       this.patient_selected = resp.patient;
-      
-        //traemos el valor del id del insurer  y lo asignamos a la variable de clase para que sea global
-        this.selectedValueInsurer = this.patient_selected.insurer_id;
-        // console.log(this.selectedValueInsurer);
-      
-        //valore iniciales
-        this.first_name = this.patient_selected.first_name;
-        this.last_name = this.patient_selected.last_name;
-        this.parent_guardian_name = this.patient_selected.parent_guardian_name;
-        this.relationship = this.patient_selected.relationship;
-        this.language = this.patient_selected.language;
-        this.phone = this.patient_selected.phone;
-        this.home_phone = this.patient_selected.home_phone;
-        this.work_phone = this.patient_selected.work_phone;
-        this.zip = this.patient_selected.zip;
-        this.email = this.patient_selected.email;
-        this.education = this.patient_selected.education;
-        this.profession = this.patient_selected.profession;
-        this.school_name = this.patient_selected.school_name;
-        this.school_number = this.patient_selected.school_number;
-        this.age = this.patient_selected.age;
-        this.birth_date = new Date(this.patient_selected.birth_date).toISOString();    
-        // this.birth_date = this.patient_selected.birth_date ;       
-        this.gender = this.patient_selected.gender;
-        this.patient_id = this.patient_selected.patient_id;
-        this.address = this.patient_selected.address;
-        this.city = this.patient_selected.city;
-        this.state = this.patient_selected.state;
-        this.patient_control = this.patient_selected.patient_control;
-        this.special_note = this.patient_selected.special_note;
-        this.schedule = this.patient_selected.schedule;
-        this.summer_schedule = this.patient_selected.summer_schedule;
-        this.diagnosis_code = this.patient_selected.diagnosis_code;
 
-        //valores de los selectores
-        
+      //traemos el valor del id del insurer  y lo asignamos a la variable de clase para que sea global
+      this.selectedValueInsurer = this.patient_selected.insurer_id;
+      // console.log(this.selectedValueInsurer);
 
-        this.selectedValueLocation = this.patient_selected.location_id;
-          this.selectedValue_rbt = this.patient_selected.rbt_home_id ? this.patient_selected.rbt_home_id : null;
-          this.selectedValue_rbt2 = this.patient_selected.rbt2_school_id ? this.patient_selected.rbt2_school_id : null;
+      //valore iniciales
+      this.first_name = this.patient_selected.first_name;
+      this.last_name = this.patient_selected.last_name;
+      this.parent_guardian_name = this.patient_selected.parent_guardian_name;
+      this.relationship = this.patient_selected.relationship;
+      this.language = this.patient_selected.language;
+      this.phone = this.patient_selected.phone;
+      this.home_phone = this.patient_selected.home_phone;
+      this.work_phone = this.patient_selected.work_phone;
+      this.zip = this.patient_selected.zip;
+      this.email = this.patient_selected.email;
+      this.education = this.patient_selected.education;
+      this.profession = this.patient_selected.profession;
+      this.school_name = this.patient_selected.school_name;
+      this.school_number = this.patient_selected.school_number;
+      this.age = this.patient_selected.age;
+      this.birth_date = new Date(
+        this.patient_selected.birth_date
+      ).toISOString();
+      // this.birth_date = this.patient_selected.birth_date ;
+      this.gender = this.patient_selected.gender;
+      this.patient_id = this.patient_selected.patient_id;
+      this.address = this.patient_selected.address;
+      this.city = this.patient_selected.city;
+      this.state = this.patient_selected.state;
+      this.patient_control = this.patient_selected.patient_control;
+      this.special_note = this.patient_selected.special_note;
+      this.schedule = this.patient_selected.schedule;
+      this.summer_schedule = this.patient_selected.summer_schedule;
+      this.diagnosis_code = this.patient_selected.diagnosis_code;
 
-          this.selectedValue_bcba = this.patient_selected.bcba_home_id ? this.patient_selected.bcba_home_id: null;
-          this.selectedValue_bcba2 = this.patient_selected.bcba2_school_id ? this.patient_selected.bcba2_school_id : null;
+      //valores de los selectores
 
-          this.selectedValue_clind = this.patient_selected.clin_director_id ? this.patient_selected.clin_director_id: null;
-        
-        
-        //valores de isurance
-        this.insuranceId = this.patient_selected.insuranceId;
-        this.insurer_secundary = this.patient_selected.insurer_secundary;
-        this.insuranceId_secundary = this.patient_selected.insuranceId_secundary;
-        this.elegibility_date = this.patient_selected.elegibility_date? new Date(this.patient_selected.elegibility_date).toISOString(): '';   
-        // this.pos_covered = this.patient_selected.pos_covered;
-        this.deductible_individual_I_F = this.patient_selected.deductible_individual_I_F;
-        this.balance = this.patient_selected.balance;
-        this.coinsurance = this.patient_selected.coinsurance;
-        this.copayments = this.patient_selected.copayments;
-        this.oop = this.patient_selected.oop;
-        this.eqhlid = this.patient_selected.eqhlid;
-        this.telehealth = this.patient_selected.telehealth;
-        this.pay = this.patient_selected.pay;
+      this.selectedValueLocation = this.patient_selected.location_id;
+      this.selectedValue_rbt = this.patient_selected.rbt_home_id
+        ? this.patient_selected.rbt_home_id
+        : null;
+      this.selectedValue_rbt2 = this.patient_selected.rbt2_school_id
+        ? this.patient_selected.rbt2_school_id
+        : null;
 
-        //valores de welcome
-        this.welcome = this.patient_selected.welcome;
-        this.consent = this.patient_selected.consent;
-        this.insurance_card = this.patient_selected.insurance_card;
-        this.mnl = this.patient_selected.mnl;
-        this.referral = this.patient_selected.referral;
-        this.ados = this.patient_selected.ados;
-        this.iep = this.patient_selected.iep;
-        this.asd_diagnosis = this.patient_selected.asd_diagnosis;
-        this.cde = this.patient_selected.cde;
-        this.submitted = this.patient_selected.submitted;
-        this.eligibility = this.patient_selected.eligibility;
-        this.interview = this.patient_selected.interview;
+      this.selectedValue_bcba = this.patient_selected.bcba_home_id
+        ? this.patient_selected.bcba_home_id
+        : null;
+      this.selectedValue_bcba2 = this.patient_selected.bcba2_school_id
+        ? this.patient_selected.bcba2_school_id
+        : null;
 
-        //valores de la imagen y archivos
-        this.IMAGE_PREVISUALIZA = this.patient_selected.avatar;
-        //  console.log(this.IMAGE_PREVISUALIZA);;
+      this.selectedValue_clind = this.patient_selected.clin_director_id
+        ? this.patient_selected.clin_director_id
+        : null;
 
-        this.pa_assessmentss = resp.pa_assessments ? resp.pa_assessments : null;// ?
-        let jsonObj = JSON.parse(this.pa_assessmentss) || '';
-        this.pa_assessmentgroup = jsonObj;
+      //valores de isurance
+      this.insuranceId = this.patient_selected.insuranceId;
+      this.insurer_secundary = this.patient_selected.insurer_secundary;
+      this.insuranceId_secundary = this.patient_selected.insuranceId_secundary;
+      this.elegibility_date = this.patient_selected.elegibility_date
+        ? new Date(this.patient_selected.elegibility_date).toISOString()
+        : '';
+      // this.pos_covered = this.patient_selected.pos_covered;
+      this.deductible_individual_I_F =
+        this.patient_selected.deductible_individual_I_F;
+      this.balance = this.patient_selected.balance;
+      this.coinsurance = this.patient_selected.coinsurance;
+      this.copayments = this.patient_selected.copayments;
+      this.oop = this.patient_selected.oop;
+      this.eqhlid = this.patient_selected.eqhlid;
+      this.telehealth = this.patient_selected.telehealth;
+      this.pay = this.patient_selected.pay;
 
-        // this.selectedValuePosCovered = resp.pos_covered ? resp.pos_covered : null;
-        // let jsonObj2 = JSON.parse(this.selectedValuePosCovered) || '';
-        // this.posGroup= jsonObj2;
-        // console.log(this.posGroup);
+      //valores de welcome
+      this.welcome = this.patient_selected.welcome;
+      this.consent = this.patient_selected.consent;
+      this.insurance_card = this.patient_selected.insurance_card;
+      this.mnl = this.patient_selected.mnl;
+      this.referral = this.patient_selected.referral;
+      this.ados = this.patient_selected.ados;
+      this.iep = this.patient_selected.iep;
+      this.asd_diagnosis = this.patient_selected.asd_diagnosis;
+      this.cde = this.patient_selected.cde;
+      this.submitted = this.patient_selected.submitted;
+      this.eligibility = this.patient_selected.eligibility;
+      this.interview = this.patient_selected.interview;
 
-        this.selectedValuePosCovered = resp.pos_covered;
-        console.log(this.selectedValuePosCovered);
+      //valores de la imagen y archivos
+      this.IMAGE_PREVISUALIZA = this.patient_selected.avatar;
+      //  console.log(this.IMAGE_PREVISUALIZA);;
 
-        
-        // console.log(this.selectedValue_rbt);
+      this.pa_assessmentss = resp.pa_assessments ? resp.pa_assessments : null; // ?
+      let jsonObj = JSON.parse(this.pa_assessmentss) || '';
+      this.pa_assessmentgroup = jsonObj;
 
-        this.insuranceData(this.selectedValueInsurer);//pide el insurance guardado para el request de la lista inicial
+      // this.selectedValuePosCovered = resp.pos_covered ? resp.pos_covered : null;
+      // let jsonObj2 = JSON.parse(this.selectedValuePosCovered) || '';
+      // this.posGroup= jsonObj2;
+      // console.log(this.posGroup);
 
-        
-        this.patientService.getLaboratoryByPatient(this.patient_id).subscribe((resp:any)=>{
+      this.selectedValuePosCovered = resp.pos_covered;
+      console.log(this.selectedValuePosCovered);
+
+      // console.log(this.selectedValue_rbt);
+
+      this.insuranceData(this.selectedValueInsurer); //pide el insurance guardado para el request de la lista inicial
+
+      this.patientService
+        .getLaboratoryByPatient(this.patient_id)
+        .subscribe((resp: any) => {
           console.log(resp);
-          this.FilesAdded = resp.patientFiles.data ? resp.patientFiles.data : null;
-        })
+          this.FilesAdded = resp.patientFiles.data
+            ? resp.patientFiles.data
+            : null;
+        });
 
-        this.getInitConfig();
-    })
+      this.getInitConfig();
+    });
   }
 
-  
   // seleccionas otro si se quiere cambiar trayendo el event como id o como objeto y pasas el valor necesario
-  selectInsurance(event:any){
+  selectInsurance(event: any) {
     event = this.selectedValueInsurer;
-    this.insuranceData(this.selectedValueInsurer);// se envia el insurer para traer los codigos de los servicios
-    
+    this.insuranceData(this.selectedValueInsurer); // se envia el insurer para traer los codigos de los servicios
   }
-  //recibe el id y muestra la lista 
-  insuranceData(selectedValueInsurer){
-    this.insuranceService.showInsurance(selectedValueInsurer).subscribe((resp:any)=>{
-      console.log('desde el insurer seleccionado',resp);
-      this.services = resp.services;
-      this.code = resp.services.code;
-      this.provider = resp.services.provider;
-    })
+  //recibe el id y muestra la lista
+  insuranceData(selectedValueInsurer) {
+    this.insuranceService
+      .showInsurance(selectedValueInsurer)
+      .subscribe((resp: any) => {
+        console.log('desde el insurer seleccionado', resp);
+        this.services = resp.services;
+        this.code = resp.services.code;
+        this.provider = resp.services.provider;
+      });
   }
 
-  selectProviderCpt(event: any){debugger
+  selectProviderCpt(event: any) {
+    debugger;
     const selectedValue = event.target.value;
     console.log(selectedValue);
 
-    const cptservice = this.services.find((service: Service) => service.code === selectedValue);
+    const cptservice = this.services.find(
+      (service: Service) => service.code === selectedValue
+    );
     if (cptservice) {
       this.provider = cptservice.provider;
       console.log(this.provider);
     } else {
       console.log('No se encontró el proveedor');
     }
-
   }
 
   //listas
-  
 
-  addPAAssestment(){
+  addPAAssestment() {
     this.pa_assessmentgroup.push({
       pa_services: this.pa_services,
       pa_services_start_date: this.pa_services_start_date,
@@ -462,17 +556,15 @@ showUser(){
     this.n_units = 0;
   }
 
-  
-
-  deletePAAssestment(i:any){
-    this.pa_assessmentgroup.splice(i,1);
+  deletePAAssestment(i: any) {
+    this.pa_assessmentgroup.splice(i, 1);
   }
 
   //listas
   //files
 
-  loadFile($event:any){
-    if($event.target.files[0].type.indexOf("image")){
+  loadFile($event: any) {
+    if ($event.target.files[0].type.indexOf('image')) {
       this.text_validation = 'Solamente pueden ser archivos de tipo imagen';
       return;
     }
@@ -480,29 +572,27 @@ showUser(){
     this.FILE_AVATAR = $event.target.files[0];
     let reader = new FileReader();
     reader.readAsDataURL(this.FILE_AVATAR);
-    reader.onloadend = ()=> this.IMAGE_PREVISUALIZA = reader.result;
+    reader.onloadend = () => (this.IMAGE_PREVISUALIZA = reader.result);
   }
 
-  
-  processFile($event:any){
-    for (const file of $event.target.files){
+  processFile($event: any) {
+    for (const file of $event.target.files) {
       this.FILES.push(file);
     }
     // console.log(this.FILES);
-  
   }
 
-  deleteDocument(i:any){
-    this.FILES.splice(i,1);
+  deleteDocument(i: any) {
+    this.FILES.splice(i, 1);
   }
 
-  deleteFile(FILE:any){
-    this.FilesAdded.splice(FILE,1);
-    this.patientService.deleteLaboratory(FILE.id).subscribe((resp:any)=>{
+  deleteFile(FILE: any) {
+    this.FilesAdded.splice(FILE, 1);
+    this.patientService.deleteLaboratory(FILE.id).subscribe((resp: any) => {
       this.showUser();
-    })
+    });
   }
-  selectDoc(FILE:any){
+  selectDoc(FILE: any) {
     this.file_selected = FILE;
   }
 
@@ -510,77 +600,68 @@ showUser(){
     var document, results;
 
     if (url === null) {
-        return '';
+      return '';
     }
     results = url.match('[\\?&]v=([^&#]*)');
-    document   = (results === null) ? url : results[1];
+    document = results === null ? url : results[1];
 
     return this._sanitizer.bypassSecurityTrustResourceUrl(document);
-}
-
-closeModalDoc(){
-
-  $('#view-doc').hide();
-      $("#view-doc").removeClass("show");
-      $("#view-doc").css("display", "none !important");
-      $(".modal").css("display", "none !important");
-      $(".modal-backdrop").remove();
-      $("body").removeClass();
-      $("body").removeAttr("style");
-      this.file_selected = null;
-}
- 
-
-
-
-//files
-
-//update function
-
-
-saveFiles(){
-  this.text_validation = '';
-  if(!this.first_name ||!this.last_name || !this.client_id ){
-    this.text_validation = 'Los campos con * son obligatorios';
-    return;
   }
 
+  closeModalDoc() {
+    $('#view-doc').hide();
+    $('#view-doc').removeClass('show');
+    $('#view-doc').css('display', 'none !important');
+    $('.modal').css('display', 'none !important');
+    $('.modal-backdrop').remove();
+    $('body').removeClass();
+    $('body').removeAttr('style');
+    this.file_selected = null;
+  }
 
-  // this.valid_form = false;
-  let formData = new FormData();
+  //files
 
-  formData.append('patient_id', this.patient_id);
-  
-  this.FILES.forEach((file:any, index:number)=>{
-    formData.append("files["+index+"]", file);
-  });
+  //update function
 
-  this.valid_form_success = false;
-  this.text_validation = '';
-
-  this.patientService.storeLaboratory(formData).subscribe((resp:any)=>{
-    // console.log(resp);
-    if(resp.message == 403){
-      this.text_validation = resp.message_text;
-      // Swal.fire('Error al eliminar', `resp.message_text`, 'error');
-    }else{
-      // this.text_success = "Patient Has updated";
-      Swal.fire('Updated', ` Patient Has updated`, 'success');
-      this.ngOnInit();
-      // this.router.navigate(['/patients/list']);
+  saveFiles() {
+    this.text_validation = '';
+    if (!this.first_name || !this.last_name || !this.client_id) {
+      this.text_validation = 'Los campos con * son obligatorios';
+      return;
     }
-  })
 
+    // this.valid_form = false;
+    let formData = new FormData();
 
-}
+    formData.append('patient_id', this.patient_id);
 
-  save(){
+    this.FILES.forEach((file: any, index: number) => {
+      formData.append('files[' + index + ']', file);
+    });
+
+    this.valid_form_success = false;
+    this.text_validation = '';
+
+    this.patientService.storeLaboratory(formData).subscribe((resp: any) => {
+      // console.log(resp);
+      if (resp.message == 403) {
+        this.text_validation = resp.message_text;
+        // Swal.fire('Error al eliminar', `resp.message_text`, 'error');
+      } else {
+        // this.text_success = "Patient Has updated";
+        Swal.fire('Updated', ` Patient Has updated`, 'success');
+        this.ngOnInit();
+        // this.router.navigate(['/patients/list']);
+      }
+    });
+  }
+
+  save() {
     this.text_validation = '';
     // if(!this.first_name ||!this.last_name || !this.client_id ){
     //   this.text_validation = 'Los campos con * son obligatorios';
     //   return;
     // }
-
 
     // this.valid_form = false;
     let formData = new FormData();
@@ -590,10 +671,10 @@ saveFiles(){
     formData.append('phone', this.phone);
     formData.append('home_phone', this.home_phone);
     formData.append('work_phone', this.work_phone);
-    formData.append('gender', this.gender+'');
+    formData.append('gender', this.gender + '');
     formData.append('address', this.address);
     formData.append('zip', this.zip);
-    
+
     formData.append('city', this.city);
     formData.append('state', this.state);
     formData.append('education', this.education);
@@ -601,79 +682,71 @@ saveFiles(){
     formData.append('school_name', this.school_name);
     formData.append('school_number', this.school_number);
     formData.append('diagnosis_code', this.diagnosis_code);
-    formData.append('age', this.age+'');
+    formData.append('age', this.age + '');
     // formData.append('rbt_home_id', this.selectedValue_rbt);
     // formData.append('rbt2_school_id', this.selectedValue_rbt2);
     // formData.append('bcba_home_id', this.selectedValue_bcba);
     // formData.append('bcba2_school_id', this.selectedValue_bcba2);
     formData.append('clin_director_id', this.selectedValue_clind);
-    formData.append('pay', this.pay+'');
-    formData.append('telehealth', this.telehealth+'');
+    formData.append('pay', this.pay + '');
+    formData.append('telehealth', this.telehealth + '');
     // formData.append('insurer', this.selectedValueInsurer);
 
-
-    
-    if(this.selectedValue_rbt ){
+    if (this.selectedValue_rbt) {
       formData.append('rbt_home_id', this.selectedValue_rbt);
     }
-    if(this.selectedValue_rbt2 ){
+    if (this.selectedValue_rbt2) {
       formData.append('rbt2_school_id', this.selectedValue_rbt2);
     }
-    if(this.selectedValue_bcba ){
+    if (this.selectedValue_bcba) {
       formData.append('bcba_home_id', this.selectedValue_bcba);
     }
-    if(this.selectedValue_bcba2 ){
+    if (this.selectedValue_bcba2) {
       formData.append('bcba2_school_id', this.selectedValue_bcba2);
     }
-    
-    if(this.pa_assessmentgroup ){
-      formData.append('pa_assessments', JSON.stringify(this.pa_assessmentgroup));
+
+    if (this.pa_assessmentgroup) {
+      formData.append(
+        'pa_assessments',
+        JSON.stringify(this.pa_assessmentgroup)
+      );
     }
-    if(this.selectedValueLocation ){
+    if (this.selectedValueLocation) {
       formData.append('location_id', this.selectedValueLocation);
     }
-    
-    if(this.selectedValueInsurer){
 
+    if (this.selectedValueInsurer) {
       formData.append('insurer_id', this.selectedValueInsurer);
     }
 
-    if(this.patient_id){
-
+    if (this.patient_id) {
       formData.append('patient_id', this.patient_id);
     }
-    
-    if(this.diagnosis_code){
 
+    if (this.diagnosis_code) {
       formData.append('diagnosis_code', this.diagnosis_code);
     }
-    if(this.parent_guardian_name){
-
+    if (this.parent_guardian_name) {
       formData.append('parent_guardian_name', this.parent_guardian_name);
     }
-    if(this.relationship){
-
+    if (this.relationship) {
       formData.append('relationship', this.relationship);
     }
-    if(this.language){
-
+    if (this.language) {
       formData.append('language', this.language);
     }
-    if(this.patient_control){
-
+    if (this.patient_control) {
       formData.append('patient_control', this.patient_control);
     }
-    if(this.special_note){
+    if (this.special_note) {
       formData.append('special_note', this.special_note);
     }
-    
-    if(this.schedule){
 
+    if (this.schedule) {
       formData.append('schedule', this.schedule);
     }
-    
-    if(this.insuranceId){
 
+    if (this.insuranceId) {
       formData.append('insuranceId', this.insuranceId);
     }
     // if(this.insurer_secundary){
@@ -684,36 +757,35 @@ saveFiles(){
 
     //   formData.append('insuranceId_secundary', this.insuranceId_secundary);
     // }
-    
-    if(this.elegibility_date){
 
+    if (this.elegibility_date) {
       formData.append('elegibility_date', this.elegibility_date);
     }
-    
-    if(this.selectedValuePosCovered){
+
+    if (this.selectedValuePosCovered) {
       formData.append('pos_covered', this.selectedValuePosCovered);
-    
     }
-    if(this.eqhlid){
+    if (this.eqhlid) {
       formData.append('eqhlid', this.eqhlid);
-    
     }
-    
-    
-    if(this.deductible_individual_I_F){
-      formData.append('deductible_individual_I_F', this.deductible_individual_I_F);
+
+    if (this.deductible_individual_I_F) {
+      formData.append(
+        'deductible_individual_I_F',
+        this.deductible_individual_I_F
+      );
     }
-    if(this.balance){
+    if (this.balance) {
       formData.append('balance', this.balance);
     }
-    if(this.coinsurance){
+    if (this.coinsurance) {
       formData.append('coinsurance', this.coinsurance);
     }
-    if(this.copayments){
+    if (this.copayments) {
       formData.append('copayments', this.copayments);
     }
-    
-    if(this.oop){
+
+    if (this.oop) {
       formData.append('oop', this.oop);
     }
 
@@ -721,94 +793,89 @@ saveFiles(){
     //   formData.append('location_id', this.selectedValueLocation);
     // }
 
-    if(this.selectedValueLocation  || this.user.roles[0] == 'SUPERADMIN'){
+    if (this.selectedValueLocation || this.user.roles[0] == 'SUPERADMIN') {
       formData.append('location_id', this.selectedValueLocation);
     }
-    if(this.user.roles[0] == 'MANAGER'){
+    if (this.user.roles[0] == 'MANAGER') {
       formData.append('location_id', this.user.location_id);
     }
-    
 
-    if(this.welcome){
+    if (this.welcome) {
       formData.append('welcome', this.welcome);
     }
-    if(this.eligibility){
+    if (this.eligibility) {
       formData.append('eligibility', this.eligibility);
     }
-    if(this.consent){
+    if (this.consent) {
       formData.append('consent', this.consent);
     }
-    if(this.insurance_card){
+    if (this.insurance_card) {
       formData.append('insurance_card', this.insurance_card);
     }
-    if(this.mnl){
+    if (this.mnl) {
       formData.append('mnl', this.mnl);
     }
-    if(this.referral){
+    if (this.referral) {
       formData.append('referral', this.referral);
     }
-    if(this.ados){
+    if (this.ados) {
       formData.append('ados', this.ados);
     }
-    if(this.iep){
+    if (this.iep) {
       formData.append('iep', this.iep);
     }
-    if(this.asd_diagnosis){
+    if (this.asd_diagnosis) {
       formData.append('asd_diagnosis', this.asd_diagnosis);
     }
-    if(this.cde){
+    if (this.cde) {
       formData.append('cde', this.cde);
     }
-    if(this.submitted){
+    if (this.submitted) {
       formData.append('submitted', this.submitted);
     }
-    if(this.interview){
+    if (this.interview) {
       formData.append('interview', this.interview);
     }
-    if(this.birth_date){
+    if (this.birth_date) {
       formData.append('birth_date', this.birth_date);
     }
-    if(this.email){
+    if (this.email) {
       formData.append('email', this.email);
     }
 
-    
-    if(this.FILE_AVATAR){
+    if (this.FILE_AVATAR) {
       formData.append('imagen', this.FILE_AVATAR);
     }
-
-   
 
     this.valid_form_success = false;
     this.text_validation = '';
 
-    this.patientService.editPatient(formData, this.client_id).subscribe((resp:any)=>{
-      // console.log(resp);
-      if(resp.message == 403){
-        this.text_validation = resp.message_text;
-        // Swal.fire('Error al eliminar', `resp.message_text`, 'error');
-      }else{
-        Swal.fire('Updated', ` Patient Has updated`, 'success');
-        this.ngOnInit();
-      }
-    })
-
-
+    this.patientService
+      .editPatient(formData, this.client_id)
+      .subscribe((resp: any) => {
+        // console.log(resp);
+        if (resp.message == 403) {
+          this.text_validation = resp.message_text;
+          // Swal.fire('Error al eliminar', `resp.message_text`, 'error');
+        } else {
+          Swal.fire('Updated', ` Patient Has updated`, 'success');
+          this.ngOnInit();
+        }
+      });
   }
-//update function
+  //update function
 
+  // isCheckedTelehealth(){
+  //   this.telehealth = !this.telehealth;
+  //   console.log(this.telehealth);
+  //   // if ( event.target.checked ) {
+  //   // }
+  // }
 
-// isCheckedTelehealth(){
-//   this.telehealth = !this.telehealth;
-//   console.log(this.telehealth);
-//   // if ( event.target.checked ) {
-//   // }
-// }
-
-//   isCheckedPay(){
-//     this.pay = !this.pay;
-//     console.log(this.pay);
-//     // if ( event.target.checked ) {
-//     // }
-//   }
+  //   isCheckedPay(){
+  //     this.pay = !this.pay;
+  //     console.log(this.pay);
+  //     // if ( event.target.checked ) {
+  //     // }
+  //   }
 }

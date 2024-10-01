@@ -1,5 +1,4 @@
-export class routes {
-
+export class AppRoutes {
   private static Url = '';
 
   public static get baseUrl(): string {
@@ -302,7 +301,7 @@ export class routes {
   public static get salary(): string {
     return this.baseUrl + '/appointment-pay/list';
   }
-  
+
   public static get salaryView(): string {
     return this.baseUrl + '/payroll/salary-view';
   }
@@ -428,7 +427,7 @@ export class routes {
   public static get editBip(): string {
     return this.baseUrl + '/bip/edit';
   }
-  
+
   public static get LocationList(): string {
     return this.baseUrl + '/location/list';
   }
@@ -454,5 +453,4 @@ export class routes {
   // public static get BillingList(): string {
   //   return this.baseUrl + '/billing/list';
   // }
- 
 }

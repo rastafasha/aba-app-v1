@@ -1,7 +1,7 @@
-import { Component, OnInit, } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/auth/auth.service';
-import { routes } from 'src/app/shared/routes/routes';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 import { SideBarService } from 'src/app/shared/side-bar/side-bar.service';
 import { environment } from 'src/environments/environment';
 
@@ -10,17 +10,17 @@ import { environment } from 'src/environments/environment';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit{
-  public routes = routes;
+export class HeaderComponent implements OnInit {
+  public routes = AppRoutes;
   public openBox = false;
-  public miniSidebar  = false;
+  public miniSidebar = false;
   public addClass = false;
-  public user:any;
-  public usuario:any;
-  public user_id:any;
-  public avatar:any;
-  public locationId:any;
-  public roles:any = [];
+  public user: any;
+  public usuario: any;
+  public user_id: any;
+  public avatar: any;
+  public locationId: any;
+  public roles: any = [];
 
   imagenSerUrl = environment.url_media;
 
@@ -28,8 +28,8 @@ export class HeaderComponent implements OnInit{
     public router: Router,
     private sideBar: SideBarService,
     public authService: AuthService,
-    public activatedRoute: ActivatedRoute,
-    ) {
+    public activatedRoute: ActivatedRoute
+  ) {
     this.sideBar.toggleSideBar.subscribe((res: string) => {
       if (res == 'true') {
         this.miniSidebar = true;
@@ -38,8 +38,8 @@ export class HeaderComponent implements OnInit{
       }
     });
 
-    let USER = localStorage.getItem("user");
-    this.user = JSON.parse(USER ? USER: '');
+    let USER = localStorage.getItem('user');
+    this.user = JSON.parse(USER ? USER : '');
     this.roles = this.user.roles[0];
     this.locationId = this.user.location_id;
     // console.log(this.user);
@@ -60,73 +60,66 @@ export class HeaderComponent implements OnInit{
     window.scrollTo(0, 0);
     this.authService.getLocalStorage();
     this.authService.getLocalDarkMode();
-    this.activatedRoute.params.subscribe((resp:any)=>{
+    this.activatedRoute.params.subscribe((resp: any) => {
       // console.log(resp);
       this.user_id = resp.id;
     });
     this.getDoctor();
   }
 
-  getDoctor(){
-    this.authService.getUserRomoto(this.user_id).subscribe((resp:any)=>{
+  getDoctor() {
+    this.authService.getUserRomoto(this.user_id).subscribe((resp: any) => {
       // console.log(resp);
       this.usuario = resp;
-    })
+    });
   }
-
-  
 
   public toggleSideBar(): void {
     this.sideBar.switchSideMenuPosition();
   }
   public toggleMobileSideBar(): void {
     this.sideBar.switchMobileSideBarPosition();
-    
-      this.addClass = !this.addClass;
-      /* eslint no-var: off */
-      var root = document.getElementsByTagName( 'html' )[0];
-      /* eslint no-var: off */
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      var sidebar:any = document.getElementById('sidebar')
-  
-      if (this.addClass) {
-        root.classList.add('menu-opened');
-        sidebar.classList.add('opened');
-      }
-      else {
-        root.classList.remove('menu-opened');
-        sidebar.classList.remove('opened');
-      }
-    }
 
-    logout(){
-      this.authService.logout();
-    }
+    this.addClass = !this.addClass;
+    /* eslint no-var: off */
+    var root = document.getElementsByTagName('html')[0];
+    /* eslint no-var: off */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    var sidebar: any = document.getElementById('sidebar');
 
-
-    darkMode(dark:string){
-      var element = document.body;
-  
-      const classExists = document.getElementsByClassName(
-        'darkmode'
-       ).length > 0;
-  
-      var dayNight = document.getElementsByClassName("site");
-        for (var i = 0; i<dayNight.length; i++) {
-          // dayNight[i].classList.toggle("darkmode");
-          element.classList.toggle("darkmode");
-  
-        }
-        // localStorage.setItem('dark', dark);
-  
-        if (classExists) {
-          localStorage.removeItem('darkmode');
-          // console.log('✅ class exists on page, removido');
-        } else {
-          localStorage.setItem('darkmode', dark);
-          // console.log('⛔️ class does NOT exist on page, agregado');
-        }
-        // console.log('Pulsado');
-        // location.reload();
+    if (this.addClass) {
+      root.classList.add('menu-opened');
+      sidebar.classList.add('opened');
+    } else {
+      root.classList.remove('menu-opened');
+      sidebar.classList.remove('opened');
     }
   }
+
+  logout() {
+    this.authService.logout();
+  }
+
+  darkMode(dark: string) {
+    var element = document.body;
+
+    const classExists = document.getElementsByClassName('darkmode').length > 0;
+
+    var dayNight = document.getElementsByClassName('site');
+    for (var i = 0; i < dayNight.length; i++) {
+      // dayNight[i].classList.toggle("darkmode");
+      element.classList.toggle('darkmode');
+    }
+    // localStorage.setItem('dark', dark);
+
+    if (classExists) {
+      localStorage.removeItem('darkmode');
+      // console.log('✅ class exists on page, removido');
+    } else {
+      localStorage.setItem('darkmode', dark);
+      // console.log('⛔️ class does NOT exist on page, agregado');
+    }
+    // console.log('Pulsado');
+    // location.reload();
+  }
+}

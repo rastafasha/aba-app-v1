@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { routes } from 'src/app/shared/routes/routes';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { InsuranceService } from '../../insurance/service/insurance.service';
 import { PatientMService } from '../../patient-m/service/patient-m.service';
@@ -10,15 +10,14 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-location-add',
   templateUrl: './location-add.component.html',
-  styleUrls: ['./location-add.component.scss']
+  styleUrls: ['./location-add.component.scss'],
 })
 export class LocationAddComponent {
-
-  public routes = routes;
+  public routes = AppRoutes;
   public client_id: any;
   public doctor_id: any;
   public selectedValueLocation!: string;
-  
+
   public title: string = '';
   public phone1: string = '';
   public phone2: string = '';
@@ -29,25 +28,20 @@ export class LocationAddComponent {
   public city: any;
   public address: string = '';
 
-  
- 
-  public FILE_AVATAR:any;
-  public IMAGE_PREVISUALIZA:any = 'assets/img/user-06.jpg';
-  
-  
-  valid_form:boolean = false;
-  valid_form_success:boolean = false;
-  text_validation:any = null;
-  
-  constructor(
-    public locationService:LocationService,
-    public doctorService:DoctorService,
-    public insuranceService:InsuranceService,
-    public router: Router,
-    public location: Location,
-  ){
+  public FILE_AVATAR: any;
+  public IMAGE_PREVISUALIZA: any = 'assets/img/user-06.jpg';
 
-  }
+  valid_form: boolean = false;
+  valid_form_success: boolean = false;
+  text_validation: any = null;
+
+  constructor(
+    public locationService: LocationService,
+    public doctorService: DoctorService,
+    public insuranceService: InsuranceService,
+    public router: Router,
+    public location: Location
+  ) {}
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
@@ -59,15 +53,14 @@ export class LocationAddComponent {
     this.location.back(); // <-- go back to previous location on cancel
   }
 
-  getConfig(){
-    this.locationService.listConfig().subscribe((resp:any)=>{
+  getConfig() {
+    this.locationService.listConfig().subscribe((resp: any) => {
       console.log(resp);
-    })
+    });
   }
- 
 
-  loadFile($event:any){
-    if($event.target.files[0].type.indexOf("image")){
+  loadFile($event: any) {
+    if ($event.target.files[0].type.indexOf('image')) {
       this.text_validation = 'Solamente pueden ser archivos de tipo imagen';
       return;
     }
@@ -75,18 +68,15 @@ export class LocationAddComponent {
     this.FILE_AVATAR = $event.target.files[0];
     let reader = new FileReader();
     reader.readAsDataURL(this.FILE_AVATAR);
-    reader.onloadend = ()=> this.IMAGE_PREVISUALIZA = reader.result;
+    reader.onloadend = () => (this.IMAGE_PREVISUALIZA = reader.result);
   }
-  
- 
 
-  save(){
+  save() {
     this.text_validation = '';
-    if(!this.title ||!this.address  ){
+    if (!this.title || !this.address) {
       this.text_validation = 'Los campos con * son obligatorios';
       return;
     }
-    
 
     // this.valid_form = false;
     let formData = new FormData();
@@ -100,28 +90,25 @@ export class LocationAddComponent {
     formData.append('zip', this.zip);
     formData.append('address', this.address);
     formData.append('email', this.email);
-    
 
-    if(this.email){
+    if (this.email) {
       formData.append('email', this.email);
     }
-    if(this.FILE_AVATAR){
+    if (this.FILE_AVATAR) {
       formData.append('imagen', this.FILE_AVATAR);
     }
 
     this.valid_form_success = false;
     this.text_validation = '';
 
-    this.locationService.storeLocation(formData).subscribe((resp:any)=>{
+    this.locationService.storeLocation(formData).subscribe((resp: any) => {
       // console.log(resp);
-      if(resp.message == 403){
+      if (resp.message == 403) {
         this.text_validation = resp.message_text;
-      }else{
+      } else {
         this.router.navigate(['/location/list']);
         // this.ngOnInit();
       }
-    })
-
-
+    });
   }
 }

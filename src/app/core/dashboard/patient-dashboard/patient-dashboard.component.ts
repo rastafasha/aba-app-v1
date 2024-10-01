@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { routes } from 'src/app/shared/routes/routes';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 import {
   ChartComponent,
   ApexAxisChartSeries,
@@ -20,12 +20,16 @@ import {
 import { DataService } from 'src/app/shared/data/data.service';
 import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { pageSelection, apiResultFormat, patientDashboard } from 'src/app/shared/models/models';
+import {
+  pageSelection,
+  apiResultFormat,
+  patientDashboard,
+} from 'src/app/shared/models/models';
 import { DashboardService } from '../service/dashboard.service';
 import { ActivatedRoute } from '@angular/router';
 import { DoctorService } from 'src/app/medical/doctors/service/doctor.service';
 interface data {
-  value: string ;
+  value: string;
 }
 export type ChartOptions = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -66,7 +70,7 @@ export type ChartOptions = {
   styleUrls: ['./patient-dashboard.component.scss'],
 })
 export class PatientDashboardComponent implements OnInit {
-  public routes = routes;
+  public routes = AppRoutes;
   @ViewChild('chart') chart!: ChartComponent;
   public chartOptionsOne: Partial<ChartOptions>;
   public chartOptionsTwo: Partial<ChartOptions>;
@@ -78,13 +82,14 @@ export class PatientDashboardComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public carousel2: any = [];
   selected!: Date | null;
-  public selectedValue ! : string ;
-  slideConfig = { slidesToShow: 3, slidesToScroll: 3, centerMode: true, centerPadding: '30px'
+  public selectedValue!: string;
+  slideConfig = {
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    centerMode: true,
+    centerPadding: '30px',
   };
 
-
-
- 
   public patientDashboard: Array<patientDashboard> = [];
   dataSource!: MatTableDataSource<patientDashboard>;
 
@@ -102,48 +107,44 @@ export class PatientDashboardComponent implements OnInit {
   public pageSelection: Array<pageSelection> = [];
   public totalPages = 0;
 
-
-
   public patientProfile: any[];
-  option_selected:number = 1;
+  option_selected: number = 1;
   public patient_id: any;
 
-  public doctors:any = [];
-  public doctor_id:any;
+  public doctors: any = [];
+  public doctor_id: any;
 
+  public appointments: any = [];
+  public num_appointments_current: number = 0;
+  public num_appointments_before: number = 0;
+  public porcentaje_d: number = 0;
+  public num_appointments_attention_current: number = 0;
+  public num_appointments_attention_before: number = 0;
+  public porcentaje_da: number = 0;
+  public num_appointments_total_pay_current: number = 0;
+  public num_appointments_total_pay_before: number = 0;
+  public porcentaje_dtp: number = 0;
+  public num_appointments_total_pending_current: number = 0;
+  public num_appointments_total_pending_before: number = 0;
+  public porcentaje_dtpn: number = 0;
 
-  public appointments:any = []
-  public num_appointments_current:number = 0;
-  public num_appointments_before:number = 0;
-  public porcentaje_d:number = 0;
-  public num_appointments_attention_current:number = 0;
-  public num_appointments_attention_before:number = 0;
-  public porcentaje_da:number = 0;
-  public num_appointments_total_pay_current:number = 0;
-  public num_appointments_total_pay_before:number = 0;
-  public porcentaje_dtp:number = 0;
-  public num_appointments_total_pending_current:number = 0;
-  public num_appointments_total_pending_before:number = 0;
-  public porcentaje_dtpn:number = 0;
+  public query_income_year: any = [];
+  public query_patient_by_genders: any = [];
+  public query_n_appointment_year: any = [];
+  public query_n_appointment_year_before: any = [];
 
-  public query_income_year:any = [];
-  public query_patient_by_genders:any = [];
-  public query_n_appointment_year:any = [];
-  public query_n_appointment_year_before:any = [];
+  public user: any;
+  public patients: any = [];
 
-  public user:any;
-  public patients:any= [];
-
-
-  public text_success:string = '';
-  public text_validation:string = '';
+  public text_success: string = '';
+  public text_validation: string = '';
 
   constructor(
     private data: DataService,
-    public dashboardService:DashboardService,
+    public dashboardService: DashboardService,
     public activatedRoute: ActivatedRoute,
-    public doctorService: DoctorService,
-    ) {
+    public doctorService: DoctorService
+  ) {
     this.carousel1 = this.data.carousel1;
     this.carousel2 = this.data.carousel2;
 
@@ -156,18 +157,18 @@ export class PatientDashboardComponent implements OnInit {
         },
       },
       grid: {
-        show: true, 
+        show: true,
         xaxis: {
           lines: {
-            show: false
-           }
-         },  
-        yaxis: {
-          lines: { 
-            show: true 
-           }
-         },   
+            show: false,
+          },
         },
+        yaxis: {
+          lines: {
+            show: true,
+          },
+        },
+      },
       dataLabels: {
         enabled: false,
       },
@@ -207,18 +208,18 @@ export class PatientDashboardComponent implements OnInit {
         },
       },
       grid: {
-        show: true, 
+        show: true,
         xaxis: {
           lines: {
-            show: false
-           }
-         },  
-        yaxis: {
-          lines: { 
-            show: true 
-           }
-         },   
+            show: false,
+          },
         },
+        yaxis: {
+          lines: {
+            show: true,
+          },
+        },
+      },
       dataLabels: {
         enabled: false,
       },
@@ -246,18 +247,18 @@ export class PatientDashboardComponent implements OnInit {
         },
       },
       grid: {
-        show: true, 
+        show: true,
         xaxis: {
           lines: {
-            show: false
-           }
-         },  
-        yaxis: {
-          lines: { 
-            show: true 
-           }
-         },   
+            show: false,
+          },
         },
+        yaxis: {
+          lines: {
+            show: true,
+          },
+        },
+      },
       responsive: [
         {
           breakpoint: 480,
@@ -310,18 +311,18 @@ export class PatientDashboardComponent implements OnInit {
         },
       },
       grid: {
-        show: true, 
+        show: true,
         xaxis: {
           lines: {
-            show: false
-           }
-         },  
-        yaxis: {
-          lines: { 
-            show: true 
-           }
-         },   
+            show: false,
+          },
         },
+        yaxis: {
+          lines: {
+            show: true,
+          },
+        },
+      },
       plotOptions: {
         bar: {
           horizontal: false,
@@ -365,18 +366,18 @@ export class PatientDashboardComponent implements OnInit {
         },
       },
       grid: {
-        show: true, 
+        show: true,
         xaxis: {
           lines: {
-            show: false
-           }
-         },  
-        yaxis: {
-          lines: { 
-            show: true 
-           }
-         },   
+            show: false,
+          },
         },
+        yaxis: {
+          lines: {
+            show: true,
+          },
+        },
+      },
       dataLabels: {
         enabled: false,
       },
@@ -395,15 +396,15 @@ export class PatientDashboardComponent implements OnInit {
       },
     };
   }
-  
+
   ngOnInit() {
     this.doctorService.closeMenuSidebar();
     this.getTableData();
-    let USER = localStorage.getItem("user");
-    this.user = JSON.parse(USER ? USER: '');
+    let USER = localStorage.getItem('user');
+    this.user = JSON.parse(USER ? USER : '');
 
     window.scrollTo(0, 0);
-    this.activatedRoute.params.subscribe((resp:any)=>{
+    this.activatedRoute.params.subscribe((resp: any) => {
       // console.log(resp);
       this.patient_id = resp.id;
     });
@@ -411,63 +412,68 @@ export class PatientDashboardComponent implements OnInit {
     this.getPatients();
   }
 
-  selectPatient(){
-     
+  selectPatient() {
     this.getPatient();
   }
 
-  selectedYear(){
+  selectedYear() {
     this.dashboardDoctorYear();
   }
 
-  getPatients(){
-    this.dashboardService.getConfigDashboardPatient().subscribe((resp:any)=>{
+  getPatients() {
+    this.dashboardService.getConfigDashboardPatient().subscribe((resp: any) => {
       console.log(resp);
       this.patients = resp.patients;
-    })
+    });
   }
 
-  dashboardDoctor(){
-    let data ={
-      doctor_id:this.doctor_id
-    }
-    this.dashboardService.dashboardDoctor(data).subscribe((resp:any)=>{
+  dashboardDoctor() {
+    let data = {
+      doctor_id: this.doctor_id,
+    };
+    this.dashboardService.dashboardDoctor(data).subscribe((resp: any) => {
       // console.log(resp);
 
-      this.appointments= resp.appointments.data;
+      this.appointments = resp.appointments.data;
 
-      this.num_appointments_current= resp.num_appointments_current;
-      this.num_appointments_before= resp.num_appointments_before;
-      this.porcentaje_d= resp.porcentaje_d;
+      this.num_appointments_current = resp.num_appointments_current;
+      this.num_appointments_before = resp.num_appointments_before;
+      this.porcentaje_d = resp.porcentaje_d;
 
-      this.num_appointments_attention_current= resp.num_appointments_attention_current;
-      this.num_appointments_attention_before= resp.num_appointments_attention_before;
-      this.porcentaje_da= resp.porcentaje_da;
+      this.num_appointments_attention_current =
+        resp.num_appointments_attention_current;
+      this.num_appointments_attention_before =
+        resp.num_appointments_attention_before;
+      this.porcentaje_da = resp.porcentaje_da;
 
-      this.num_appointments_total_pay_current= resp.num_appointments_total_pay_current;
-      this.num_appointments_total_pay_before= resp.num_appointments_total_pay_before;
-      this.porcentaje_dtp= resp.porcentaje_dtp;
+      this.num_appointments_total_pay_current =
+        resp.num_appointments_total_pay_current;
+      this.num_appointments_total_pay_before =
+        resp.num_appointments_total_pay_before;
+      this.porcentaje_dtp = resp.porcentaje_dtp;
 
-      this.num_appointments_total_pending_current= resp.num_appointments_total_pending_current;
-      this.num_appointments_total_pending_before= resp.num_appointments_total_pending_before;
-      this.porcentaje_dtpn= resp.porcentaje_dtpn;
-    })
+      this.num_appointments_total_pending_current =
+        resp.num_appointments_total_pending_current;
+      this.num_appointments_total_pending_before =
+        resp.num_appointments_total_pending_before;
+      this.porcentaje_dtpn = resp.porcentaje_dtpn;
+    });
   }
-  dashboardDoctorYear(){
-    let data ={
+  dashboardDoctorYear() {
+    let data = {
       year: this.selectedValue,
-      doctor_id:this.doctor_id
-    }
+      doctor_id: this.doctor_id,
+    };
     this.query_income_year = null;
-    this.query_n_appointment_year= null;
-    this.query_n_appointment_year_before= null;
-    this.dashboardService.dashboardDoctorYear(data).subscribe((resp:any)=>{
+    this.query_n_appointment_year = null;
+    this.query_n_appointment_year_before = null;
+    this.dashboardService.dashboardDoctorYear(data).subscribe((resp: any) => {
       // console.log(resp);
 
       //start
       this.query_income_year = resp.query_income_year;
-      let data_income:any = [];
-      this.query_income_year.forEach((element:any) => {
+      let data_income: any = [];
+      this.query_income_year.forEach((element: any) => {
         data_income.push(element.income);
       });
 
@@ -480,18 +486,18 @@ export class PatientDashboardComponent implements OnInit {
           },
         },
         grid: {
-          show: true, 
+          show: true,
           xaxis: {
             lines: {
-              show: false
-             }
-           },  
-          yaxis: {
-            lines: { 
-              show: true 
-             }
-           },   
+              show: false,
+            },
           },
+          yaxis: {
+            lines: {
+              show: true,
+            },
+          },
+        },
         dataLabels: {
           enabled: false,
         },
@@ -499,17 +505,17 @@ export class PatientDashboardComponent implements OnInit {
           curve: 'smooth',
         },
         series: [
-            {
-              name: 'Income',
-              color: '#2E37A4',
-              data: data_income,
-            },
-          ],
+          {
+            name: 'Income',
+            color: '#2E37A4',
+            data: data_income,
+          },
+        ],
         xaxis: {
           categories: resp.months_name,
         },
       };
-      
+
       // this.chartOptionsOne.xaxis.categories = resp.months_name
       // this.chartOptionsOne.series = [
       //   {
@@ -519,12 +525,12 @@ export class PatientDashboardComponent implements OnInit {
       //   },
       // ]
       //end
-      
+
       //start
       this.query_patient_by_genders = resp.query_patients_by_gender;
-      let data_by_gender:any = [];
+      let data_by_gender: any = [];
 
-      this.query_patient_by_genders.forEach((item:any) => {
+      this.query_patient_by_genders.forEach((item: any) => {
         data_by_gender.push(parseInt(item.hombre));
         data_by_gender.push(parseInt(item.mujer));
       });
@@ -532,18 +538,19 @@ export class PatientDashboardComponent implements OnInit {
       this.chartOptionsTwo.series = data_by_gender;
       //end
       //start
-      this.query_n_appointment_year= resp.query_n_appointment_year;
-      this.query_n_appointment_year_before= resp.query_n_appointment_year_before;
-      
-      let n_appointment_year:any =[]
-      this.query_n_appointment_year.forEach((item:any)=>{
+      this.query_n_appointment_year = resp.query_n_appointment_year;
+      this.query_n_appointment_year_before =
+        resp.query_n_appointment_year_before;
+
+      let n_appointment_year: any = [];
+      this.query_n_appointment_year.forEach((item: any) => {
         n_appointment_year.push(item.count_appointments);
-      })
-      let n_appointment_year_before:any =[];
-      this.query_n_appointment_year_before.forEach((item:any)=>{
+      });
+      let n_appointment_year_before: any = [];
+      this.query_n_appointment_year_before.forEach((item: any) => {
         n_appointment_year_before.push(item.count_appointments);
-      })
-      
+      });
+
       this.chartOptionsThree = {
         chart: {
           height: 230,
@@ -554,18 +561,18 @@ export class PatientDashboardComponent implements OnInit {
           },
         },
         grid: {
-          show: true, 
+          show: true,
           xaxis: {
             lines: {
-              show: false
-             }
-           },  
-          yaxis: {
-            lines: { 
-              show: true 
-             }
-           },   
+              show: false,
+            },
           },
+          yaxis: {
+            lines: {
+              show: true,
+            },
+          },
+        },
         responsive: [
           {
             breakpoint: 480,
@@ -594,13 +601,13 @@ export class PatientDashboardComponent implements OnInit {
         },
         series: [
           {
-            name: (parseInt(this.selectedValue))+"",
+            name: parseInt(this.selectedValue) + '',
             color: '#2E37A4',
             data: n_appointment_year,
           },
           {
-            name: (parseInt(this.selectedValue) - 1)+"",
-            
+            name: parseInt(this.selectedValue) - 1 + '',
+
             color: '#D5D7ED',
             data: n_appointment_year_before,
           },
@@ -610,16 +617,15 @@ export class PatientDashboardComponent implements OnInit {
         },
       };
       //end
-    })
+    });
   }
 
-  getPatient(){
-    this.dashboardService.dashboardPatient(this.patient_id)
-    .subscribe((resp:any)=>{
-      console.log(resp);
-  
-  
-    })
+  getPatient() {
+    this.dashboardService
+      .dashboardPatient(this.patient_id)
+      .subscribe((resp: any) => {
+        console.log(resp);
+      });
   }
   private getTableData(): void {
     this.patientDashboard = [];
@@ -630,12 +636,13 @@ export class PatientDashboardComponent implements OnInit {
       data.data.map((res: patientDashboard, index: number) => {
         const serialNumber = index + 1;
         if (index >= this.skip && serialNumber <= this.limit) {
-          
           this.patientDashboard.push(res);
           this.serialNumberArray.push(serialNumber);
         }
       });
-      this.dataSource = new MatTableDataSource<patientDashboard>(this.patientDashboard);
+      this.dataSource = new MatTableDataSource<patientDashboard>(
+        this.patientDashboard
+      );
       this.calculateTotalPages(this.totalData, this.pageSize);
     });
   }
@@ -712,13 +719,10 @@ export class PatientDashboardComponent implements OnInit {
     }
   }
 
-
-
-  
-selecedList: data[] = [
-  {value: '2022'},
-  {value: '2021'},
-  {value: '2020'},
-  {value: '2019'},
-];
+  selecedList: data[] = [
+    { value: '2022' },
+    { value: '2021' },
+    { value: '2020' },
+    { value: '2019' },
+  ];
 }
