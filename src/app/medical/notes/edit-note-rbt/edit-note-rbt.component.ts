@@ -342,12 +342,13 @@ export class EditNoteRbtComponent implements OnInit {
     this.selectedValueTimeIn = value;
     this.recalculateSessionLength();
   }
-  hourTimeIn2Selected(value:string){
-    this.selectedValueTimeIn2 = value;
-    this.recalculateSessionLength();
-  }
   hourTimeOutSelected(value:string){
     this.selectedValueTimeOut = value;
+    this.recalculateSessionLength();
+  }
+
+  hourTimeIn2Selected(value:string){
+    this.selectedValueTimeIn2 = value;
     this.recalculateSessionLength();
   }
   hourTimeOut2Selected(value:string){
@@ -615,18 +616,20 @@ export class EditNoteRbtComponent implements OnInit {
     if(this.selectedValueProviderName ){
       formData.append('provider_name_g', this.selectedValueProviderName);
     }
+
     if(this.selectedValueTimeIn ){
-      formData.append('time_in', this.selectedValueTimeIn+'' ? this.selectedValueTimeIn+'' : "");
+      formData.append('time_in', this.selectedValueTimeIn+'' ? this.selectedValueTimeIn+'' : "0");
     }
     if(this.selectedValueTimeOut ){
-      formData.append('time_out', this.selectedValueTimeOut+''? this.selectedValueTimeOut+'' : "");
+      formData.append('time_out', this.selectedValueTimeOut+''? this.selectedValueTimeOut+'' : "0");
     }
     if(this.selectedValueTimeIn2 ){
-      formData.append('time_in2', this.selectedValueTimeIn2+''? this.selectedValueTimeIn2+'' : "");
+      formData.append('time_in2', this.selectedValueTimeIn2+''? this.selectedValueTimeIn2+'' : "0");
     }
     if(this.selectedValueTimeOut2 ){
-      formData.append('time_out2', this.selectedValueTimeOut2+''? this.selectedValueTimeOut2+'' : "");
+      formData.append('time_out2', this.selectedValueTimeOut2+''? this.selectedValueTimeOut2+'' : "0");
     }
+
     if(this.environmental_changes ){
       formData.append('environmental_changes', this.environmental_changes);
     }

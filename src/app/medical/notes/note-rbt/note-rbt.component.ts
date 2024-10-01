@@ -646,6 +646,7 @@ export class NoteRbtComponent implements OnInit {
       this.maladaptives[0].number_of_occurrences == undefined
       || this.replacementGoals[0].number_of_correct_response == undefined
       || this.intervention_added.length == 0
+      || !this.meet_with_client_at
       // || !this.supervisor_name
     ){
       this.text_validation = 'All Fields (*) are required';
@@ -671,38 +672,25 @@ export class NoteRbtComponent implements OnInit {
     formData.append('last_name', this.last_name);
     formData.append('diagnosis_code', this.diagnosis_code);
     formData.append('provider_credential', this.provider_credential);
-    // formData.append('pos', this.pos);
+    
     formData.append('session_date', this.session_date);
-    // formData.append('provider_name_g', this.selectedValueProviderName);
-    // formData.append('provider_name', this.selectedValueRBT);
+    
     formData.append('provider_name_g', this.doctor_id);
     formData.append('provider_name', this.doctor_id);
     formData.append('supervisor_name', this.selectedValueBCBA);
     formData.append('cpt_code', this.selectedValueCode);
-    // formData.append('provider', this.provider); // para el calculo de las unidades
-    // formData.append('next_session_is_scheduled_for', this.next_session_is_scheduled_for);
-    // formData.append('porcentage_diario', this.number_of_correct_response * 100 / this.total_trials,);
-
-    // formData.append('imagen', this.FILE_SIGNATURE_RBT  );
-    // formData.append('imagen', this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED);
-    // formData.append('imagenn', this.FILE_SIGNATURE_BCBA);
-    // formData.append('imagenn', this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED);
-
-    // if(this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED ){
-    //   formData.append('provider_signature', this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED);
-    // }
-
-    if (this.selectedValueTimeIn) {
-      formData.append('time_in', this.selectedValueTimeIn);
+   
+    if(this.selectedValueTimeIn ){
+      formData.append('time_in', this.selectedValueTimeIn+'' ? this.selectedValueTimeIn+'' : "0");
     }
-    if (this.selectedValueTimeOut) {
-      formData.append('time_out', this.selectedValueTimeOut);
+    if(this.selectedValueTimeOut ){
+      formData.append('time_out', this.selectedValueTimeOut+''? this.selectedValueTimeOut+'' : "0");
     }
-    if (this.selectedValueTimeIn2) {
-      formData.append('time_in2', this.selectedValueTimeIn2);
+    if(this.selectedValueTimeIn2 ){
+      formData.append('time_in2', this.selectedValueTimeIn2+''? this.selectedValueTimeIn2+'' : "0");
     }
-    if (this.selectedValueTimeOut2) {
-      formData.append('time_out2', this.selectedValueTimeOut2);
+    if(this.selectedValueTimeOut2 ){
+      formData.append('time_out2', this.selectedValueTimeOut2+''? this.selectedValueTimeOut2+'' : "0");
     }
 
     formData.append('environmental_changes', this.environmental_changes);

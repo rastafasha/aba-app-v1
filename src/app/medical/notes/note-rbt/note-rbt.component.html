@@ -142,7 +142,7 @@
                                                         </mat-option>
                                                     </mat-select> -->
                                                     <input [value]="selectedValueTimeIn" [ngxTimepicker]="toggleTimepicker" readonly
-                                                        [format]="24" max="12:00" class="form-control">
+                                                        [format]="24" max="12:00" class="form-control" name="time_in">
                                                     <ngx-material-timepicker (timeChanged)="hourTimeInSelected($event)" #toggleTimepicker></ngx-material-timepicker>
 
 
@@ -153,7 +153,7 @@
                                                 <div class="form-group local-forms">
                                                     <label>Time Out <span class="login-danger">*</span></label>
                                                     <input [ngxTimepicker]="toggleTimepicker2" readonly
-                                                        [value]="selectedValueTimeOut" [format]="24" class="form-control">
+                                                        [value]="selectedValueTimeOut" [format]="24" class="form-control" name="time_out">
                                                     <ngx-material-timepicker (timeChanged)="hourTimeOutSelected($event)" #toggleTimepicker2></ngx-material-timepicker>
                                                 </div>
                                             </div>
@@ -167,7 +167,7 @@
                                                 <div class="form-group local-forms">
                                                     <label >Time In <span class="login-danger">*</span></label>
                                                     <input [ngxTimepicker]="toggleTimepicker3" readonly
-                                                        [value]="selectedValueTimeIn2" [format]="24" class="form-control">
+                                                        [value]="selectedValueTimeIn2" [format]="24" class="form-control" name="time_in2" >
                                                     <ngx-material-timepicker (timeChanged)="hourTimeIn2Selected($event)" #toggleTimepicker3></ngx-material-timepicker>
                                                 </div>
                                             </div>
@@ -176,7 +176,7 @@
                                                 <div class="form-group local-forms">
                                                     <label >Time Out <span class="login-danger">*</span></label>
                                                     <input [ngxTimepicker]="toggleTimepicker4" readonly
-                                                        [value]="selectedValueTimeOut2" [format]="24" class="form-control">
+                                                        [value]="selectedValueTimeOut2" [format]="24" class="form-control" name="time_out2">
                                                     <ngx-material-timepicker (timeChanged)="hourTimeOut2Selected($event)" #toggleTimepicker4></ngx-material-timepicker>
                                                 </div>
                                             </div>
