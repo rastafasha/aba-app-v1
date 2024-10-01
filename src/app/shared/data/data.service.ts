@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AppRoutes } from '../routes/app.routes';
+import { AppRoutes } from '../routes/routes';
 import { map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { apiResultFormat } from '../models/models';

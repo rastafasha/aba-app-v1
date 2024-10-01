@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 // import { BehaviorSubject } from 'rxjs';
-import { AppRoutes } from '../routes/app.routes';
+import { AppRoutes } from '../routes/routes';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, catchError, of } from 'rxjs';
 import { url_servicios } from 'src/app/config/config';
