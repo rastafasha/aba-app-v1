@@ -10,17 +10,12 @@ import { url_servicios } from 'src/app/config/config';
   providedIn: 'root',
 })
 export class AuthService {
-
   user: any;
   token: any;
 
-  constructor(
-    private router: Router,
-    public http: HttpClient
-  ) {
-    this.getLocalStorage();//devuelve el usuario logueado
+  constructor(private router: Router, public http: HttpClient) {
+    this.getLocalStorage(); //devuelve el usuario logueado
   }
-
 
   getLocalStorage() {
     if (localStorage.getItem('token') && localStorage.getItem('user')) {
@@ -33,19 +28,16 @@ export class AuthService {
 
   saveLocalStorage(auth: any) {
     if (auth && auth.access_token) {
-      localStorage.setItem("token", auth.access_token.original.access_token);
-      localStorage.setItem("user", JSON.stringify(auth.user));
+      localStorage.setItem('token', auth.access_token.original.access_token);
+      localStorage.setItem('user', JSON.stringify(auth.user));
       localStorage.setItem('authenticated', 'true');
       return true;
     }
     return false;
   }
 
-
-
-
   login(email: string, password: string) {
-    const URL = url_servicios + "/login";
+    const URL = url_servicios + '/login';
     return this.http.post(URL, { email: email, password: password }).pipe(
       map((auth: any) => {
         console.log(auth);
@@ -59,16 +51,11 @@ export class AuthService {
     );
   }
 
-
-
   getUserRomoto(data) {
-    const headers = new HttpHeaders({ 'Authorization': 'Bearer' + this.token })
+    const headers = new HttpHeaders({ Authorization: 'Bearer' + this.token });
     const URL = url_servicios + '/me';
     return this.http.post(URL, data, { headers: headers });
   }
-
-
-
 
   logout() {
     localStorage.removeItem('token');
@@ -82,14 +69,9 @@ export class AuthService {
     setTimeout(() => {
       if (localStorage.getItem('darkmode')) {
         const element = document.body;
-        element.classList.add("darkmode");
-
+        element.classList.add('darkmode');
       }
-
-    }, 500)
+    }, 500);
     // console.log(this.user);
-
   }
-
-
 }
