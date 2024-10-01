@@ -449,7 +449,11 @@ export class NoteBcbaComponent {
   save(){debugger
     this.text_validation = '';
     if(!this.rbt_training_goals 
-      ||!this.caregivers_training_goals ){
+      ||!this.caregivers_training_goals 
+      ||!this.meet_with_client_at 
+      ||!this.note_description 
+      ||!this.selectedValueCode 
+    ){
       this.text_validation = 'All Fields (*) are required';
       return;
     }

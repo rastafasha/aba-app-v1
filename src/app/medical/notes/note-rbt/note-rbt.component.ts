@@ -647,6 +647,13 @@ export class NoteRbtComponent implements OnInit {
       || this.replacementGoals[0].number_of_correct_response == undefined
       || this.intervention_added.length == 0
       || !this.meet_with_client_at
+      || !this.environmental_changes
+      || !this.client_appeared
+      || !this.as_evidenced_by
+      || !this.rbt_modeled_and_demonstrated_to_caregiver
+      || !this.client_response_to_treatment_this_session
+      || !this.progress_noted_this_session_compared_to_previous_session
+      || !this.selectedValueCode
       // || !this.supervisor_name
     ){
       this.text_validation = 'All Fields (*) are required';
