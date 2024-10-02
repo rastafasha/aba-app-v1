@@ -3,11 +3,11 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { StorageService } from '../storage/storage.service';
+import { StorageService } from '../../shared/storage/storage.service';
 import { Auth, AuthUser } from './auth.interface';
 import { AuthService } from './auth.service';
 import { AUTH_CONSTS, AUTH_URLS } from './auth.const';
-import { ErrorHandlerService } from '../error/error-handler.service';
+import { ErrorHandlerService } from '../../shared/error/error-handler.service';
 
 fdescribe('AuthService', () => {
   let service: AuthService;

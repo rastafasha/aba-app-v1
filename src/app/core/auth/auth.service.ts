@@ -1,8 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, of } from 'rxjs';
-import { ErrorHandlerService } from '../error/error-handler.service';
-import { StorageService } from '../storage/storage.service';
+import { ErrorHandlerService } from '../../shared/error/error-handler.service';
+import { StorageService } from '../../shared/storage/storage.service';
 import { AUTH_CONSTS, AUTH_URLS } from './auth.const';
 import { Auth, AuthUser } from './auth.interface';
 

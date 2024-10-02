@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AppRoutes } from '../routes/routes';
+import { AppRoutes } from '../../shared/routes/routes';
 import { AuthService } from './auth.service';
 
 @Injectable({

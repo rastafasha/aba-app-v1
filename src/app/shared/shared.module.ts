@@ -21,8 +21,8 @@ import { SkeletonLoaderComponent } from './components/skeleton-loader/skeleton-l
 import { ActionButtonComponent } from './components/action-button/action-button.component';
 import { ActionModalComponent } from './components/action-modal/action-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { AuthService } from './auth/auth.service';
-import { AuthInterceptor } from './auth/auth.interceptor';
+import { AuthService } from '../core/auth/auth.service';
+import { AuthInterceptor } from '../core/auth/auth.interceptor';
 
 @NgModule({
   declarations: [

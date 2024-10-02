@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { AuthService } from 'src/app/shared/auth/auth.service';
+import { AuthService } from 'src/app/core/auth/auth.service';
 import { DataService } from 'src/app/shared/data/data.service';
 import { MenuItem, SideBarData } from 'src/app/shared/models/models';
 import { AppRoutes } from 'src/app/shared/routes/routes';
