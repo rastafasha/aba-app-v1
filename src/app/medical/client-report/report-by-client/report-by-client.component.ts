@@ -232,7 +232,7 @@ export class ReportByClientComponent {
     this.clientReportService.getAllClientReportByPatient(this.patientId, page, 
       this.date_start,this.date_end,this.noteType).subscribe((resp:any)=>{
       
-      console.log('todo',resp);
+      // console.log('todo',resp);
       const pa = resp.arrayPages
       // const pa = [1,2,3,4,5,6,7,8,9,10]
       this.pageNumberArray = [];
@@ -281,8 +281,8 @@ export class ReportByClientComponent {
 
       this.combinedList = [];
       clientReportList.forEach((item,index) => {
-        console.log(this.noteRbt[index])
-        console.log(this.noteBcba[index])
+        // console.log(this.noteRbt[index])
+        // console.log(this.noteBcba[index])
         if(this.noteRbt[index] && this.noteBcba[index])
           this.combinedList.push({rbt: this.noteRbt[index], bcba: this.noteBcba[index]})
         else if(this.noteRbt[index])
@@ -344,7 +344,7 @@ export class ReportByClientComponent {
   getInsurer(){
     //sacamos los detalles insurance seleccionado
     this.insuranceService.showInsurance(this.insurance_id).subscribe((resp:any)=>{
-      console.log('insurer', resp);
+      // console.log('insurer', resp);
       this.insuranceiddd= resp.id;
   
       this.insurer_name = resp.insurer_name;
@@ -409,7 +409,7 @@ export class ReportByClientComponent {
   //trae el nombre del doctor quien hizo la nota rbt
   getDoctorRBT(){
     this.doctorService.showDoctor(this.tecnicoRbts).subscribe((resp:any)=>{
-      console.log('doctor rbt y location',resp);
+      // console.log('doctor rbt y location',resp);
       this.doctor_selected = resp.user;
       this.full_name = resp.user.full_name;
     });
@@ -417,7 +417,7 @@ export class ReportByClientComponent {
   // supervisor del tecnico solo sacamos el npi
   getDoctorBcba(){
     this.doctorService.showDoctor(this.supervisor).subscribe((resp:any)=>{
-      console.log('bcba',resp);
+      // console.log('bcba',resp);
       this.npi = resp.user.npi;
     });
   }
@@ -443,7 +443,7 @@ export class ReportByClientComponent {
       }
       // this.week_total_hours = suma / Math.min(7, hours_group.length);// saca el promedio
       // this.week_total_hours = suma ; // saca la suma
-      console.log("total semanal "+ this.week_total_hours );
+      // console.log("total semanal "+ this.week_total_hours );
 
       // obtenemos el total de las unidades en un rango de 7 dias  atras
       var sumaunit=0;
@@ -452,7 +452,7 @@ export class ReportByClientComponent {
       }
       // this.week_total_units = sumaunit / Math.min(7, units_group.length);// saca el promedio
       this.week_total_units = sumaunit ; // saca la suma
-      console.log("total semanal "+ this.week_total_units );
+      // console.log("total semanal "+ this.week_total_units );
 
       // saco el valor de charges multiplicando el total de unidades por semana por el valor del cpt o n_units
       // this.getCharges();
@@ -512,7 +512,7 @@ export class ReportByClientComponent {
   }
 
   calculateUnitsAndHours() {
-    console.log('notas rbt',this.clientReportList)
+    // console.log('notas rbt',this.clientReportList)
     const totalUnits = this.clientReportList.reduce((total, objeto) => total + objeto.session_units_total, 0);
     let minutes = 0;
     this.clientReportList.forEach(element => {
@@ -522,7 +522,7 @@ export class ReportByClientComponent {
     const horasTotales = Math.floor(minutes / 60);
     const minutosTotales = minutes % 60;
     let stringMinutos: string;
-    console.log('horas totales - minutos totales',horasTotales, minutosTotales)
+    // console.log('horas totales - minutos totales',horasTotales, minutosTotales)
     if(minutosTotales === 0)
       stringMinutos = '00'
     else if(minutosTotales < 10)
@@ -610,52 +610,52 @@ export class ReportByClientComponent {
 
   addXe(value:any){
     this.xe = value;
-    console.log(this.xe);
+    // console.log(this.xe);
   }
 
   
   isSelectedModifier(value:string){
     this.md = value;
-    console.log(this.md);
+    // console.log(this.md);
   }
 
   isSelectedModifierBcba(value:string){
     this.mdbcba = value;
-    console.log(this.mdbcba);
+    // console.log(this.mdbcba);
   }
 
   isSelectedModifier2(value:string){
     this.md2 = value;
-    console.log(this.md2);
+    // console.log(this.md2);
   }
 
   isSelectedModifier2Bcba(value:string){
     this.md2bcba = value;
-    console.log(this.md2bcba);
+    // console.log(this.md2bcba);
   }
 
 
 
   isCheckedBilled(){
     this.billed = !this.billed;
-    console.log(this.billed);
+    // console.log(this.billed);
     // if ( event.target.checked ) {
     // }
   }
   isCheckedBilledBcba(){
     this.billedbcba = !this.billedbcba;
-    console.log(this.billedbcba);
+    // console.log(this.billedbcba);
   }
 
     isCheckedPay(){
       this.pay = !this.pay;
-      console.log(this.pay);
+      // console.log(this.pay);
       // if ( event.target.checked ) {
       // }
     }
     isCheckedPayBcba(){
       this.paybcba = !this.paybcba;
-      console.log(this.paybcba);
+      // console.log(this.paybcba);
     }
 
 
@@ -739,7 +739,7 @@ export class ReportByClientComponent {
     // if(this.md2.value === 'XE' ||this.md.value ==='XE')
     //   this.xe= data.total_units * this.unitPrize * this.xe,
     
-    console.log(VALUE);
+    // console.log(VALUE);
 
     let totalValue = [VALUE, VALUE2, VALUE3];
     
@@ -752,10 +752,10 @@ export class ReportByClientComponent {
         this.ngOnInit();
       })
       this.noteRbtService.noteUpdateModifier(VALUE2,data.rbt.id).subscribe((resp:any)=>{
-        console.log(resp);
+        // console.log(resp);
       })
       this.noteBCbaService.noteBCBAUpdateModifier(VALUE3,data.bcba.id).subscribe((resp:any)=>{
-        console.log(resp);
+        // console.log(resp);
       })
       
     }else{ 
@@ -764,20 +764,47 @@ export class ReportByClientComponent {
       this.clientReportService.create(VALUE).subscribe((resp:any)=>{
         // console.log(resp);
         // this.text_success = 'Se guardó la informacion de la cita médica'
-        Swal.fire('Created', `Created successfully!`, 'success');
+        Swal.fire('Updated', `Added successfully!`, 'success');
         this.ngOnInit();
       })
 
       this.noteRbtService.noteUpdateModifier(VALUE2,data.rbt.id ).subscribe((resp:any)=>{
-        console.log(resp);
+        // console.log(resp);
         
         
       })
       this.noteBCbaService.noteBCBAUpdateModifier(VALUE3,data.bcba.id ).subscribe((resp:any)=>{
-        console.log(resp);
+        // console.log(resp);
         
         
       })
     }
+  }
+
+
+  cambiarStatus(data:any){
+    let VALUE = data.status;
+    // console.log(VALUE);
+
+    this.noteRbtService.updateStatus(data, data.id).subscribe(
+      resp =>{
+        // console.log(resp);
+        // Swal.fire('Updated', `Added successfully!`, 'success');
+        this.ngOnInit();
+      }
+    )
+  }
+
+  cambiarStatusBcba(data:any){debugger
+    let VALUE = data.status;
+    console.log(VALUE);
+    
+    this.noteBCbaService.updateStatus(data, data.id).subscribe(
+      resp =>{
+        // console.log(resp);
+        // Swal.fire('Updated', `Added successfully!`, 'success');
+        this.ngOnInit();
+      }
+    )
   }
 }
