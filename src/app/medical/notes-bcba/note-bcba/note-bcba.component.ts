@@ -146,6 +146,7 @@ export class NoteBcbaComponent {
   full_name:any ;
   unitsAsignated:any ;
   n_un:number ;
+  location_id:number ;
 
   constructor(
     public bipService:BipService,
@@ -172,6 +173,7 @@ export class NoteBcbaComponent {
     this.user = JSON.parse(USER ? USER: '');
     this.roles = this.user.roles[0];
     this.doctor_id = this.user.id;
+    this.location_id = this.user.location_id;
     this.getDoctor();
     this.specialistData();
   }
@@ -483,6 +485,7 @@ export class NoteBcbaComponent {
     formData.append('diagnosis_code', this.diagnosis_code);
     formData.append('location', this.location);
     formData.append('birth_date', this.birth_date);
+    formData.append('location_id', this.location_id+'');
     
     
     formData.append('rendering_provider', this.doctor_id);

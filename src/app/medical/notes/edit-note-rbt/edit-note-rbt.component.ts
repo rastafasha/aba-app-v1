@@ -117,6 +117,7 @@ export class EditNoteRbtComponent implements OnInit {
   public note_id: any;
   public note_selectedId: any;
   public porcentage_diario: any;
+  public location_id: number;
 
   public roles_rbt:any = [];
   public roles_bcba:any = [];
@@ -165,6 +166,7 @@ export class EditNoteRbtComponent implements OnInit {
     const USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER: '');
     this.doctor_id = this.user.id;
+    this.location_id = this.user.location_id;
     this.getNote();
     this.getConfig();
 
@@ -609,6 +611,8 @@ export class EditNoteRbtComponent implements OnInit {
     // formData.append('provider', this.provider); // para el calculo de las unidades
 
     formData.append('session_date', this.session_date);
+
+    formData.append('location_id', this.location_id+'');
 
     if(this.meet_with_client_at ){
       formData.append('meet_with_client_at', this.meet_with_client_at);
