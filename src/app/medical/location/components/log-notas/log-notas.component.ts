@@ -12,6 +12,7 @@ import { NoteRbtService } from 'src/app/medical/notes/services/note-rbt.service'
 import { PatientMService } from 'src/app/medical/patient-m/service/patient-m.service';
 import { RolesService } from 'src/app/medical/roles/service/roles.service';
 import Swal from 'sweetalert2';
+import { LocationService } from '../../services/location.service';
 
 @Component({
   selector: 'app-log-notas',
@@ -135,6 +136,7 @@ export class LogNotasComponent {
   public selectedCpt: any;
   // public data: any;
   public noteType: string;
+  public patients: any;
 
   public providersSponsorsList:any;
   public factorPorcentual: number =  1.66666666666667
@@ -145,6 +147,10 @@ export class LogNotasComponent {
   unitPrizeCptRbt: any;
   bcbaCptCode: string;
   rbtCptCode: string;
+
+  public selectedValueInsurer!: string;
+  public selectedValuePatient!: string;
+  public location_selected: any;
 
   
 
@@ -159,6 +165,7 @@ export class LogNotasComponent {
     public patientService: PatientMService,
     public noteRbtService: NoteRbtService,
     public noteBCbaService: NoteBcbaService,
+    public locationService:LocationService,
   ){}
 
   ngOnInit(): void {
@@ -168,7 +175,7 @@ export class LogNotasComponent {
       console.log(resp);
       this.location_id = resp.id;
     });
-    
+    this.getLocation();
     // this.locationId;
      this.getTableData();
      this.getConfig();
@@ -202,6 +209,18 @@ export class LogNotasComponent {
       this.insurances = resp.insurances;
       this.sponsors = resp.doctors;
       
+    })
+  }
+
+  getLocation(){
+    this.locationService.getLocation(this.location_id).subscribe((resp:any)=>{
+      console.log(resp);
+      this.location_selected = resp.location;
+      this.patients = resp.patients;
+
+    
+
+
     })
   }
 
@@ -790,6 +809,33 @@ export class LogNotasComponent {
         this.ngOnInit();
       }
     )
+  }
+
+  selectInsurance(event:any){
+    event = this.selectedValueInsurer;
+    this.insuranceData(this.selectedValueInsurer);
+    
+  }
+
+  insuranceData(selectedValueInsurer){
+    this.insuranceService.showInsurance(selectedValueInsurer).subscribe((resp:any)=>{
+      console.log(resp);
+      this.insurer_name = resp.insurer_name;
+      // this.notes = resp.notes;
+      this.services = resp.services;
+      this.provider = resp.services[0].provider;
+    })
+  }
+  selectPatient(event:any){
+    event = this.selectedValueInsurer;
+    this.insuranceData(this.selectedValueInsurer);
+    
+  }
+
+  PatientData(selectedValuePatient){
+    this.patientService.getPatientByPatientid(selectedValuePatient).subscribe((resp:any)=>{
+      console.log(resp);
+    })
   }
 
 }
