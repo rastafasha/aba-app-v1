@@ -142,6 +142,7 @@ export class NoteRbtComponent implements OnInit {
   public provider:any ;
   public stoInprogressGoal:any ;
   public location_id:number ;
+  public patientLocation_id:number ;
 
   public intervention_added:any =[];
   public interventionsSelected = {};
@@ -179,7 +180,6 @@ export class NoteRbtComponent implements OnInit {
     const USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER: '');
     this.doctor_id = this.user.id;
-    this.location_id = this.user.location_id;
     this.getDoctor();
 
     this.ativatedRoute.params.subscribe((resp:any)=>{
@@ -240,6 +240,7 @@ export class NoteRbtComponent implements OnInit {
       this.first_name = this.client_selected.patient.first_name;
       this.last_name = this.client_selected.patient.last_name;
       this.patient_id = resp.patient.patient_id;
+      this.patientLocation_id = resp.patient.location_id;
       this.selectedValueProviderName = resp.patient.rbt_id;
       this.selectedValueRBT = resp.patient.rbt_id;
       this.selectedValueBCBA = resp.patient.bcba_id;
@@ -681,7 +682,7 @@ export class NoteRbtComponent implements OnInit {
     formData.append('last_name', this.last_name);
     formData.append('diagnosis_code', this.diagnosis_code);
     formData.append('provider_credential', this.provider_credential);
-    formData.append('location_id', this.location_id+'');
+    formData.append('location_id', this.patientLocation_id+'');
     
     formData.append('session_date', this.session_date);
     

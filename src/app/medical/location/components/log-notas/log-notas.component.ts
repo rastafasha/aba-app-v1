@@ -136,6 +136,7 @@ export class LogNotasComponent {
   public selectedCpt: any;
   // public data: any;
   public noteType: string;
+  public statusType: string;
   public patients: any;
 
   public providersSponsorsList:any;

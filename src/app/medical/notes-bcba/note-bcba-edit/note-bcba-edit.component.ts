@@ -46,7 +46,7 @@ export class NoteBcbaEditComponent {
   note_selected:any;
   bip_id:any;
   user:any;
-  location_id:number;
+  patientLocation_id:number;
   
   public first_name:string = '';
   public last_name:string = '';
@@ -178,7 +178,6 @@ export class NoteBcbaEditComponent {
     let USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER: '');
     this.doctor_id = this.user.id;
-    this.location_id = this.user.location_id;
 
     
   }
@@ -270,6 +269,7 @@ export class NoteBcbaEditComponent {
       this.first_name = this.client_selected.patient.first_name;
       this.last_name = this.client_selected.patient.last_name;
       this.patient_id = resp.patient.patient_id;
+      this.patientLocation_id = resp.patient.location_id;
       this.insurer_id = resp.patient.insurer_id;
       // this.pos = JSON.parse(resp.patient.pos_covered) ;
       this.pos = resp.patient.pos_covered ;
@@ -475,7 +475,7 @@ export class NoteBcbaEditComponent {
     formData.append('location', this.location);
     formData.append('birth_date', this.birth_date);
     formData.append('session_date', this.session_date);
-    formData.append('location_id', this.location_id+'');
+    formData.append('location_id', this.patientLocation_id+'');
 
     if(this.selectedValueTimeIn ){
       formData.append('time_in', this.selectedValueTimeIn+'' ? this.selectedValueTimeIn+'' : "0");

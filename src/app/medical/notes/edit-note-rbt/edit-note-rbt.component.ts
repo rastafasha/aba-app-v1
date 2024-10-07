@@ -118,6 +118,7 @@ export class EditNoteRbtComponent implements OnInit {
   public note_selectedId: any;
   public porcentage_diario: any;
   public location_id: number;
+  public patientLocation_id: any;
 
   public roles_rbt:any = [];
   public roles_bcba:any = [];
@@ -166,7 +167,6 @@ export class EditNoteRbtComponent implements OnInit {
     const USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER: '');
     this.doctor_id = this.user.id;
-    this.location_id = this.user.location_id;
     this.getNote();
     this.getConfig();
 
@@ -294,6 +294,7 @@ export class EditNoteRbtComponent implements OnInit {
       this.first_name = this.client_selected.patient.first_name;
       this.last_name = this.client_selected.patient.last_name;
       this.patient_id = resp.patient.patient_id;
+      this.patientLocation_id = resp.patient.location_id;
 
       // this.pos = JSON.parse(resp.patient.pos_covered) ;
       this.pos = resp.patient.pos_covered ;
@@ -583,7 +584,7 @@ export class EditNoteRbtComponent implements OnInit {
 
 
 
-  save(){
+  save(){debugger
     this.text_validation = '';
     // if(!this.name||!this.email ||!this.surname ){
     //   this.text_validation = 'Los campos con * son obligatorios';
@@ -612,7 +613,7 @@ export class EditNoteRbtComponent implements OnInit {
 
     formData.append('session_date', this.session_date);
 
-    formData.append('location_id', this.location_id+'');
+    formData.append('location_id', this.patientLocation_id);
 
     if(this.meet_with_client_at ){
       formData.append('meet_with_client_at', this.meet_with_client_at);
