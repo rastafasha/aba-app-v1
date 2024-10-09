@@ -154,8 +154,8 @@
                                                     <label>Time Out <span class="login-danger">*</span></label>
 
                                                     <input [ngxTimepicker]="toggleTimepicker2" [disableClick]="true" readonly
-                                 <input [ngxTimepicker]="toggleTimepicker2" [(ngModel)]="selectedValueTimeOut" readonly
-                                                        [value]="selectedValueTimeOut" [format]="24" class="form-control"  name="time_out">
+                                                    [(ngModel)]="selectedValueTimeOut" name="time_out" [format]="24"  [ngModelOptions]="{standalone: true}">
+                                                        
                                                     <ngx-material-timepicker (timeChanged)="hourTimeOutSelected($event)" #toggleTimepicker2></ngx-material-timepicker>
                                                 </div>
                                             </div>
@@ -168,8 +168,8 @@
                                                 <div class="form-group local-forms">
                                                     <label >Time In <span class="login-danger">*</span></label>
 
-                                                    <input [ngxTimepicker]="toggleTimepicker3" [disableClick]="true" readonly
-                                                    [(ngModel)]="selectedValueTimeIn2" name="time_in2" [format]="24"   (onChange)="hourTimeInSelected($event)" [ngModelOptions]="{standalone: true}">
+                                                    <!-- <input [ngxTimepicker]="toggleTimepicker3" [disableClick]="true" readonly
+                                                    [(ngModel)]="selectedValueTimeIn2" name="time_in2" [format]="24"   (onChange)="hourTimeInSelected($event)" [ngModelOptions]="{standalone: true}"> -->
 
                                                     <input [ngxTimepicker]="toggleTimepicker3" [(ngModel)]="selectedValueTimeIn2" readonly
                                                         [value]="selectedValueTimeIn2" [format]="24" class="form-control" name="time_in2" >
@@ -180,8 +180,8 @@
                                                 <div class="form-group local-forms">
                                                     <label >Time Out <span class="login-danger">*</span></label>
 
-                                                    <input [ngxTimepicker]="toggleTimepicker4" [disableClick]="true" readonly
-                                                    [(ngModel)]="selectedValueTimeOut2" name="time_out2" [format]="24"   (onChange)="hourTimeInSelected($event)" [ngModelOptions]="{standalone: true}">
+                                                    <!-- <input [ngxTimepicker]="toggleTimepicker4" [disableClick]="true" readonly
+                                                    [(ngModel)]="selectedValueTimeOut2" name="time_out2" [format]="24"   (onChange)="hourTimeOut2Selected($event)" [ngModelOptions]="{standalone: true}"> -->
                                     <input [ngxTimepicker]="toggleTimepicker4" [(ngModel)]="selectedValueTimeOut2" readonly
                                                         [value]="selectedValueTimeOut2"  [format]="24" class="form-control" name="time_out2">
                                                     <ngx-material-timepicker (timeChanged)="hourTimeOut2Selected($event)" #toggleTimepicker4></ngx-material-timepicker>

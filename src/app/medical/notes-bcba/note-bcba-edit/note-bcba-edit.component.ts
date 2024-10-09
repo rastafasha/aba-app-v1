@@ -41,8 +41,9 @@ export class NoteBcbaEditComponent {
   option_selected:number = 0;
 
   client_id:any;
-  patient_id:any;
   doctor_id:any;
+  patient_id:any;
+  patientLocation_id:any;
   patient_selected:any;
   client_selected:any;
   note_selected:any;
@@ -329,10 +330,17 @@ export class NoteBcbaEditComponent {
     this.selectedValueTimeOut = value;
 
   }
+  hourTimeIn2Selected(value:string){
+    this.selectedValueTimeIn2 = value;
+  }
+  hourTimeOut2Selected(value:string){
+    this.selectedValueTimeOut2 = value;
+
+  }
 
   updateCaregiverGoal(index: number) {
       console.log('Caregiver goal updated:', this.caregivers_training_goals[index]);
-
+  }
 
   updateRbtGoal(index: number) {
       console.log('RBT goal updated:', this.rbt_training_goals[index]);

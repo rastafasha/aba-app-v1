@@ -122,6 +122,7 @@
                 <th mat-sort-header="pos">POS</th>
                 <th mat-sort-header="time_in">Total Hours</th>
                 <th mat-sort-header="cpt">CPT</th>
+                <th mat-sort-header="insurance">Insurance</th>
                 <th mat-sort-header="md">Modifier </th>
                 <th mat-sort-header="md2">Modifier </th>
                 <th mat-sort-header="totalunits">Total Units</th>
@@ -180,6 +181,13 @@
                 <td>
                     <span *ngIf="data.rbt" >
                        {{data.rbt?.cpt_code }}
+                    </span>
+                    
+
+                </td>
+                <td>
+                    <span *ngIf="data.rbt" >
+                        Insurer Name
                     </span>
                     
 
@@ -363,6 +371,13 @@
                     
                     <span *ngIf="data.bcba"  >
                        {{data.bcba?.cpt_code }}
+                    </span>
+
+                </td>
+                <td>
+                    
+                    <span *ngIf="data.bcba"  >
+                       Insurer Name
                     </span>
 
                 </td>

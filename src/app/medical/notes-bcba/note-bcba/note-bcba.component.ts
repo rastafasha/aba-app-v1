@@ -372,7 +372,7 @@ export class NoteBcbaComponent {
 
   updateCaregiverGoal(index: number) {
       console.log('Caregiver goal updated:', this.caregivers_training_goals[index]);
-
+  }
 
   updateRbtGoal(index: number) {
       console.log('RBT goal updated:', this.rbt_training_goals[index]);
@@ -408,7 +408,11 @@ export class NoteBcbaComponent {
   save(){
     this.text_validation = '';
     if(!this.rbt_training_goals
-      ||!this.caregivers_training_goals ){
+      ||!this.caregivers_training_goals 
+      ||!this.meet_with_client_at 
+      ||!this.session_date 
+      ||!this.note_description 
+    ){
 
       this.text_validation = 'All Fields (*) are required';
       return;
