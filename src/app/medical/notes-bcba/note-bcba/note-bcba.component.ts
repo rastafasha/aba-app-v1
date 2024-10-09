@@ -148,6 +148,8 @@ export class NoteBcbaComponent {
   full_name:any ;
   unitsAsignated:any ;
   n_un:number ;
+  location_id:number ;
+  patientLocation_id:number ;
 
   constructor(
     public bipService:BipService,
@@ -215,6 +217,7 @@ export class NoteBcbaComponent {
       this.first_name = this.client_selected.first_name;
       this.last_name = this.client_selected.last_name;
       this.patient_id = this.client_selected.patient_id;
+      this.patientLocation_id = this.client_selected.location_id;
       this.pos = this.client_selected.pos_covered ;
       // this.pos = JSON.parse(resp.patient.pos_covered) ;
 
@@ -369,7 +372,7 @@ export class NoteBcbaComponent {
 
   updateCaregiverGoal(index: number) {
       console.log('Caregiver goal updated:', this.caregivers_training_goals[index]);
-  }
+
 
   updateRbtGoal(index: number) {
       console.log('RBT goal updated:', this.rbt_training_goals[index]);
@@ -406,6 +409,7 @@ export class NoteBcbaComponent {
     this.text_validation = '';
     if(!this.rbt_training_goals
       ||!this.caregivers_training_goals ){
+
       this.text_validation = 'All Fields (*) are required';
       return;
     }
@@ -432,7 +436,6 @@ export class NoteBcbaComponent {
     formData.append('location', this.location);
     formData.append('birth_date', this.birth_date);
 
-
     formData.append('rendering_provider', this.doctor_id);
     formData.append('aba_supervisor', this.selectedValueAba);
     formData.append('cpt_code', this.selectedValueCode);
@@ -458,6 +461,7 @@ export class NoteBcbaComponent {
     if(this.selectedValueTimeOut2 ){
       formData.append('time_out2', this.selectedValueTimeOut2+''? this.selectedValueTimeOut2+'' : "0");
     }
+
 
 
     // formData.append('imagen', this.FILE_SIGNATURE_RBT);

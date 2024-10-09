@@ -11,6 +11,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { LocationViewComponent } from './location-view/location-view.component';
+import { LogNotasComponent } from './components/log-notas/log-notas.component';
+import { CompModule } from './components/comp.module';
 
 
 @NgModule({
@@ -28,7 +30,8 @@ import { LocationViewComponent } from './location-view/location-view.component';
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
-    SharedModule
+    SharedModule,
+    CompModule
   ]
 })
 export class LocationModule { }

@@ -96,6 +96,8 @@ export class ClientReportService {
     return this.http.get(URL,{headers:headers});
   }
 
+ 
+
   getAllClientReportByPatient(
     patient_id:any='', 
     page:number=1, 
@@ -115,6 +117,33 @@ export class ClientReportService {
       if(noteType)
         LINK+=`&noteType=${noteType}`
     let URL = url_servicios+'/client_report/byprofile/'+patient_id+'/?page='+page+LINK;
+    return this.http.get(URL, {headers:headers});
+  }
+
+  showClientReportbyLocation(location_id:any){
+    let headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token});
+    let URL = url_servicios+"/client_report/bylocation/"+location_id;
+    return this.http.get(URL,{headers:headers});
+  }
+  getAllClientReportByLocation(
+    location_id:any='', 
+    page:number=1, 
+    date_start:string='', 
+    date_end:string='', 
+    noteType?: string 
+    ){
+    let headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token});
+    let LINK = "";
+    
+     if(date_start){
+      LINK+="&date_start="+date_start;
+      }
+      if(date_end){
+      LINK+="&date_end="+date_end;
+      }
+      if(noteType)
+        LINK+=`&noteType=${noteType}`
+    let URL = url_servicios+'/client_report/bylocation/'+location_id+'/?page='+page+LINK;
     return this.http.get(URL, {headers:headers});
   }
 

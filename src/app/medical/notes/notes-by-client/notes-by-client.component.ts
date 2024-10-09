@@ -18,6 +18,7 @@ declare var $:any;
 export class NotesByClientComponent {
 
   patient_id:any;
+  patientId:any;
   doctor_id:any;
   patient_selected:any;
   client_selected:any;
@@ -69,7 +70,7 @@ export class NotesByClientComponent {
       // this.patient_id= resp.patient_id;
       // console.log(this.client_id);
      })
-     this.getNotesByPatient();
+    //  this.getNotesByPatient();
      this.getTableData();
 
      this.doctorService.getUserRoles();
@@ -115,7 +116,8 @@ goBack() {
       .subscribe((resp:any)=>{
       this.totalDataNotepatient = resp.note_rbts.data.length;
       this.notespatient_generals = resp.note_rbts.data;
-      this.patient_id = resp.note_rbts.data.patient_id;
+      this.patientId = resp.note_rbts.data[0].patient_id;
+      console.log(this.patientId);
       this.getTableDataGeneral();
     })
 
@@ -237,16 +239,6 @@ goBack() {
     })
   }
 
-  cambiarStatus(data:any){
-    let VALUE = data.status;
-    console.log(VALUE);
-
-    this.noteRbtService.updateStatus(data, data.id).subscribe(
-      resp =>{
-        // console.log(resp);
-        this.ngOnInit();
-      }
-    )
-  }
+ 
 
 }

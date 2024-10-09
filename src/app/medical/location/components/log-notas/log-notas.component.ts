@@ -1,39 +1,27 @@
-import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { BipService } from '../../bip/service/bip.service';
-import { GoalService } from '../../bip/service/goal.service';
-import { DoctorService } from '../../doctors/service/doctor.service';
-import { PatientMService } from '../../patient-m/service/patient-m.service';
+import { Component, Input } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { RolesService } from '../../roles/service/roles.service';
-import { InsuranceService } from '../../insurance/service/insurance.service';
-import { ClientReportService } from '../client-report.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Observable, forkJoin, map, tap } from 'rxjs';
+import { ClientReportModel } from 'src/app/medical/client-report/client-report.model';
+import { ClientReportService } from 'src/app/medical/client-report/client-report.service';
+import { InsuranceCptPrizeResponse } from 'src/app/medical/client-report/report-by-client/report-by-client.component';
+import { DoctorService } from 'src/app/medical/doctors/service/doctor.service';
+import { InsuranceService } from 'src/app/medical/insurance/service/insurance.service';
+import { NoteBcbaService } from 'src/app/medical/notes-bcba/services/note-bcba.service';
+import { NoteRbtService } from 'src/app/medical/notes/services/note-rbt.service';
+import { PatientMService } from 'src/app/medical/patient-m/service/patient-m.service';
+import { RolesService } from 'src/app/medical/roles/service/roles.service';
 import Swal from 'sweetalert2';
-import { NoteRbtService } from '../../notes/services/note-rbt.service';
-import { Location } from '@angular/common';
-import { zip, map, forkJoin, Observable, tap } from 'rxjs';
-import { NoteBcbaService } from '../../notes-bcba/services/note-bcba.service';
-import { ClientReportModel } from '../client-report.model';
+import { LocationService } from '../../services/location.service';
 
-declare var $:any; 
-
-export interface InsuranceCptPrizeResponse {
-  unit_prize: number;
-}
-
-export interface NoteBcba {
-  cpt_code: string;
-}
-
-export interface NoteRbt {
-  cpt_code: string;
-}
 @Component({
-  selector: 'app-report-by-client',
-  templateUrl: './report-by-client.component.html',
-  styleUrls: ['./report-by-client.component.scss']
+  selector: 'app-log-notas',
+  templateUrl: './log-notas.component.html',
+  styleUrls: ['./log-notas.component.scss']
 })
-export class ReportByClientComponent {
+export class LogNotasComponent {
+
+  // @Input() locationId:any;
 
   public searchDataDoctor = '';
   public date_start:any;
@@ -43,6 +31,7 @@ export class ReportByClientComponent {
   billing_selected:any;
   sponsor_id:any;
   noterbt_id:any;
+  location_id:any;
   user:any;
 
   clientReport:ClientReportModel;
@@ -147,6 +136,8 @@ export class ReportByClientComponent {
   public selectedCpt: any;
   // public data: any;
   public noteType: string;
+  public statusType: string;
+  public patients: any;
 
   public providersSponsorsList:any;
   public factorPorcentual: number =  1.66666666666667
@@ -157,6 +148,10 @@ export class ReportByClientComponent {
   unitPrizeCptRbt: any;
   bcbaCptCode: string;
   rbtCptCode: string;
+
+  public selectedValueInsurer!: string;
+  public selectedValuePatient!: string;
+  public location_selected: any;
 
   
 
@@ -171,18 +166,19 @@ export class ReportByClientComponent {
     public patientService: PatientMService,
     public noteRbtService: NoteRbtService,
     public noteBCbaService: NoteBcbaService,
-    public location: Location,
+    public locationService:LocationService,
   ){}
 
   ngOnInit(): void {
     
     // window.scrollTo(0, 0);
     this.ativatedRoute.params.subscribe((resp:any)=>{
-      this.patient_id = resp.patient_id;
-      this.patientId = resp.patient_id;
-      console.log(this.patient_id);
-     });
-
+      console.log(resp);
+      this.location_id = resp.id;
+    });
+    this.getLocation();
+    // this.locationId;
+     this.getTableData();
      this.getConfig();
      this.billed = false;
      this.pay = false;
@@ -191,14 +187,11 @@ export class ReportByClientComponent {
      
      this.doctorService.getUserRoles();
     this.user = this.roleService.authService.user;
-     this.getTableData();
+
+     
     
   }
 
-  goBack() {
-    this.location.back(); // <-- go back to previous location on cancel
-  }
-  
 
   isPermission(permission:string){
     if(this.user.roles.includes('SUPERADMIN')){
@@ -220,6 +213,18 @@ export class ReportByClientComponent {
     })
   }
 
+  getLocation(){
+    this.locationService.getLocation(this.location_id).subscribe((resp:any)=>{
+      console.log(resp);
+      this.location_selected = resp.location;
+      this.patients = resp.patients;
+
+    
+
+
+    })
+  }
+
 
   public getTableData(page=1): void {
     this.clientReportList = [];
@@ -229,7 +234,7 @@ export class ReportByClientComponent {
     // this.patientId = patient_id
     // // this.patientId = 'cliente3243';
 
-    this.clientReportService.getAllClientReportByPatient(this.patientId, page, 
+    this.clientReportService.getAllClientReportByLocation(this.location_id, page, 
       this.date_start,this.date_end,this.noteType).subscribe((resp:any)=>{
       
       // console.log('todo',resp);
@@ -255,9 +260,8 @@ export class ReportByClientComponent {
         this.pageNumberArray = pa;
       }
       // traemos la info necesaria del paciente
-      this.patientName = resp.patient.full_name;
-      this.patientID = resp.patient.patient_id;
-      this.insurance_id = resp.patient.insurer_id;
+      // this.patient_id = resp.patient.patient_id;
+      // this.insurance_id = resp.patient.insurer_id;
       this.billed = resp.noteRbts;
       this.pay = resp.noteRbts;
       this.billedbcba = resp.noteBcbas;
@@ -480,7 +484,7 @@ export class ReportByClientComponent {
     }
   }
 
-  public searchData(patientId:any) {
+  public searchData(location_id:any) {
     // this.dataSource.filter = value.trim().toLowerCase();
     // this.patientList = this.dataSource.filteredData;
     this.combinedList = [];
@@ -488,7 +492,7 @@ export class ReportByClientComponent {
     this.limit = this.pageSize;
     this.skip = 0;
     this.currentPage = 1;
-    patientId;
+    location_id;
     this.getTableData();
   }
  
@@ -807,4 +811,32 @@ export class ReportByClientComponent {
       }
     )
   }
+
+  selectInsurance(event:any){
+    event = this.selectedValueInsurer;
+    this.insuranceData(this.selectedValueInsurer);
+    
+  }
+
+  insuranceData(selectedValueInsurer){
+    this.insuranceService.showInsurance(selectedValueInsurer).subscribe((resp:any)=>{
+      console.log(resp);
+      this.insurer_name = resp.insurer_name;
+      // this.notes = resp.notes;
+      this.services = resp.services;
+      this.provider = resp.services[0].provider;
+    })
+  }
+  selectPatient(event:any){
+    event = this.selectedValueInsurer;
+    this.insuranceData(this.selectedValueInsurer);
+    
+  }
+
+  PatientData(selectedValuePatient){
+    this.patientService.getPatientByPatientid(selectedValuePatient).subscribe((resp:any)=>{
+      console.log(resp);
+    })
+  }
+
 }

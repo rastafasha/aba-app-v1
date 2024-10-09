@@ -38,6 +38,8 @@ export class LocationViewComponent {
   public pageSelection: Array<any> = [];
   public totalPages = 0;
 
+  
+
   public title: string = '';
 
   public  URLMedia = `${url_media}`;
@@ -54,6 +56,7 @@ export class LocationViewComponent {
   public max_allowed: any;
 
   public location_id: any;
+  public location_iddd: any;
   public user: any;
   public roles:any = [];
   public location_selected: any;
@@ -90,17 +93,18 @@ export class LocationViewComponent {
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
+    this.activatedRoute.params.subscribe((resp:any)=>{
+      this.location_id = resp.id;
+      // console.log(resp);
+    });
+    this.getLocation();
+
     let USER = localStorage.getItem("user");
     this.user = JSON.parse(USER ? USER: '');
     this.roles = this.user.roles[0];
 
     this.doctorService.closeMenuSidebar();
-    this.activatedRoute.params.subscribe((resp:any)=>{
-      // console.log(resp);
-      this.location_id = resp.id;
-    });
-
-    this.getLocation();
+    
   }
 
   isPermission(permission:string){
@@ -116,6 +120,7 @@ export class LocationViewComponent {
 
   optionSelected(value:number){
     this.option_selected = value;
+    console.log(value);
   }
   
   getLocation(){
@@ -136,7 +141,7 @@ export class LocationViewComponent {
         this.patient_generals = resp.patients.data;
         this.patientid = resp.patients.data.id;
         this.patient_id = resp.patients.data.patient_id;
-       this.getTableDataGeneralPatient();
+      //  this.getTableDataGeneralPatient();
 
       })
 
@@ -147,140 +152,11 @@ export class LocationViewComponent {
         this.totalDatadoctor = resp.users.data.length;
         this.doctor_generals = resp.users.data;
         this.doctor_id = resp.users.id;
-        this.getTableDataGeneralSpecialist();
+        // this.getTableDataGeneralSpecialist();
       })
 
     })
   }
 
 
-  getTableDataGeneralPatient(){
-    this.patientList = [];
-    this.serialNumberArray = [];
-    
-    this.patients.map((res: any, index: number) => {
-      const serialNumber = index + 1;
-      if (index >= this.skip && serialNumber <= this.limit) {
-       
-        this.patientList.push(res);
-        this.serialNumberArray.push(serialNumber);
-      }
-    });
-    this.dataSource = new MatTableDataSource<any>(this.patientList);
-    this.calculateTotalPages(this.totalDatapatient, this.pageSize);
-  }
-  getTableDataGeneralSpecialist(){
-    this.specialistList = [];
-    this.serialNumberArray = [];
-    
-    this.doctor_generals.map((res: any, index: number) => {
-      const serialNumber = index + 1;
-      if (index >= this.skip && serialNumber <= this.limit) {
-       
-        this.specialistList.push(res);
-        this.serialNumberArray.push(serialNumber);
-      }
-    });
-    this.dataSource = new MatTableDataSource<any>(this.specialistList);
-    this.calculateTotalPages(this.totalDatadoctor, this.pageSize);
-  }
-
-
-  public getMoreData(event: string): void {
-    if (event == 'next') {
-      this.currentPage++;
-      this.pageIndex = this.currentPage - 1;
-      this.limit += this.pageSize;
-      this.skip = this.pageSize * this.pageIndex;
-      this.getTableDataGeneralSpecialist();
-      this.getTableDataGeneralPatient();
-    } else if (event == 'previous') {
-      this.currentPage--;
-      this.pageIndex = this.currentPage - 1;
-      this.limit -= this.pageSize;
-      this.skip = this.pageSize * this.pageIndex;
-      this.getTableDataGeneralSpecialist();
-      this.getTableDataGeneralPatient();
-    }
-  }
-
-  public moveToPage(pageNumber: number): void {
-    this.currentPage = pageNumber;
-    this.skip = this.pageSelection[pageNumber - 1].skip;
-    this.limit = this.pageSelection[pageNumber - 1].limit;
-    if (pageNumber > this.currentPage) {
-      this.pageIndex = pageNumber - 1;
-    } else if (pageNumber < this.currentPage) {
-      this.pageIndex = pageNumber + 1;
-    }
-    this.getTableDataGeneralPatient();
-    this.getTableDataGeneralSpecialist();
-  }
-
-  public PageSize(): void {
-    this.pageSelection = [];
-    this.limit = this.pageSize;
-    this.skip = 0;
-    this.currentPage = 1;
-    this.getTableDataGeneralSpecialist();
-    this.getTableDataGeneralPatient();
-    this.searchDataValue = '';
-  }
-
-  private calculateTotalPages(totalDatapatient: number, pageSize: number): void {
-    this.pageNumberArray = [];
-    this.totalPages = totalDatapatient / pageSize;
-    if (this.totalPages % 1 != 0) {
-      this.totalPages = Math.trunc(this.totalPages + 1);
-    }
-    /* eslint no-var: off */
-    for (var i = 1; i <= this.totalPages; i++) {
-      const limit = pageSize * i;
-      const skip = limit - pageSize;
-      this.pageNumberArray.push(i);
-      this.pageSelection.push({ skip: skip, limit: limit });
-    }
-  }
-
-
-
-  goBack() {
-    this.location.back(); // <-- go back to previous location on cancel
-  }
-
-  public searchData(value: any): void {debugger
-    this.dataSource.filter = value.trim().toLowerCase();
-    this.patientList = this.dataSource.filteredData;
-  }
-
-  public searchDataDoct(value: any): void {debugger
-    this.dataSource.filter = value.trim().toLowerCase();
-    this.specialistList = this.dataSource.filteredData;
-  }
-
-  cambiarStatusCliente(patient:any){
-    let VALUE = patient.status;
-    // console.log(VALUE);
-    
-    this.patientService.updateStatus(patient, patient.id).subscribe(
-      resp =>{
-        // console.log(resp);
-        Swal.fire('Updated', `Client Status Updated successfully!`, 'success');
-        this.getLocation();
-      }
-    )
-  }
-
-  cambiarStatusDoctor(specialist:any){
-    let VALUE = specialist.status;
-    console.log(VALUE);
-    
-    this.doctorService.updateStatus(specialist, specialist.id).subscribe(
-      resp =>{
-        // console.log(resp);
-        Swal.fire('Updated', `Employee Status Updated successfully!`, 'success');
-        this.getLocation();
-      }
-    )
-  }
 }

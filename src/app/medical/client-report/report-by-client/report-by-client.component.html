@@ -183,6 +183,7 @@
 
                                         <th mat-sort-header="role">Type of Note</th>
                                         <th mat-sort-header="date_note">Date of Note</th>
+                                        <th mat-sort-header="date_note">Status</th>
                                         <th mat-sort-header="pos">POS</th>
                                         <th mat-sort-header="time_in">Total Hours</th>
                                         <th mat-sort-header="cpt">CPT</th>
@@ -193,8 +194,8 @@
                                         <th mat-sort-header="charges">Charges</th>
                                         <!-- <th mat-sort-header="total">Total</th> -->
                                         <th mat-sort-header="sponsor_id">Provider</th>
-                                        <th mat-sort-header="pa_number">PA Number</th>
-                                        <th mat-sort-header="npi">Npi</th>
+                                        <!-- <th mat-sort-header="pa_number">PA Number</th>
+                                        <th mat-sort-header="npi">Npi</th> -->
                                         <th mat-sort-header="billed">Billed</th>
                                         <th mat-sort-header="pay">Pay</th>
                                         <th mat-sort-header="created">Created At</th>
@@ -205,34 +206,49 @@
                                 <tbody>
                                     <ng-container  *ngFor="let data of combinedList , let i = index;">
                                         <tr *ngIf="data.rbt" >
-                                            <td ><span class="badge badge-success">RBT</span></td>
-                                            <td >
+                                        <td ><span class="badge badge-success">RBT</span></td>
+                                        <td >
                                             <span *ngIf="data?.rbt">
                                                 <a [routerLink]="['/note-rbt/view/', data.rbt.id]">
                                                     {{ data.rbt?.session_date | date }}
                                                 </a>
-
                                             </span>
+                                            <i class="fa  bg-primary indicador " 
+                                            *ngIf="data.rbt.status  === 'pending'"
+                                              [tooltip]="data.rbt.status "></i>
+                                            <i class="fa  bg-success indicador" 
+                                            *ngIf="data.rbt.status  === 'ok'"
+                                              [tooltip]="data.rbt.status "></i>
+                                            <i class="fa  bg-danger indicador" 
+                                            *ngIf="data.rbt.status  === 'no'"
+                                              [tooltip]="data.rbt.status "></i>
+                                            
                                         </td>
+                                        <td >
+                                            <select
+                                            class="form-control form-select-solid fw-bolder"
+      
+                                            name="status" [(ngModel)]="data.rbt.status"
+                                            [ngModelOptions]="{standalone: true}"
+                                            (change)="cambiarStatus(data.rbt)"
+                                            placeholder="status">
+                                            <option>-- Select --</option>
+                                                <option value="pending">Pending</option>
+                                                <option value="ok">Ok</option>
+                                                <option value="no">No</option>
+                                              </select>
+                                          </td>
                                         <td>
                                             {{data.rbt?.meet_with_client_at ?? 'N/A'}}
-                                            <!-- <span *ngIf="data?.rbt">
-                                                {{data.rbt?.meet_with_client_at ?? 'N/A'}}
-                                            </span> -->
                                         </td>
                                         <td>
-                                            <!-- {{ data.total_hours ?? 'N/A' }} -->
-                                            
                                             <span *ngIf="data.rbt">{{ data.rbt?.total_hours ?? 'N/A' }}</span>
              
                                         </td>
 
                                         <td>
-                                            <!-- {{data.cpt_code}} -->
                                             <span *ngIf="data.rbt" >
                                                {{data.rbt?.cpt_code }}
-                                               <!-- {{ getPrizeCptNoteRbt(data.rbt?.cpt_code) }} -->
-                                               
                                             </span>
                                             
 
@@ -338,19 +354,17 @@
                                             </span>
                                         </td>
 
-                                        <td>{{pa_number}}</td>
+                                        <!-- <td>{{pa_number}}</td>
                                         <td>
-                                            <!-- {{data.supervisor?.npi}}  -->
+                                            {{data.supervisor?.npi}} 
                                             <span *ngIf="data?.rbt">
                                                  {{data.rbt?.supervisor.npi}} 
                                                 </span>
-
                                         </td>
-                                        
+                                         -->
 
-                                        <td >
-                                            
-                                            <div  class="note-checkit">
+                                        <td>
+                                             <div  class="note-checkit">
                                                 <label class="custom_check">
                                                     <input type="checkbox"  name="billed" [(ngModel)]="data.rbt.billed"  (change)="isCheckedBilled()"    >
                                                     <span class="checkmark" value="false"></span>  
@@ -389,7 +403,32 @@
                                                 </a>
 
                                             </span>
+
+                                            <i class="fa  bg-primary indicador " 
+                                            *ngIf="data.bcba?.status  === 'pending'"
+                                              [tooltip]="data.bcba?.status "></i>
+                                            <i class="fa  bg-success indicador" 
+                                            *ngIf="data.bcba?.status  === 'ok'"
+                                              [tooltip]="data.bcba?.status "></i>
+                                            <i class="fa  bg-danger indicador" 
+                                            *ngIf="data.bcba?.status  === 'no'"
+                                              [tooltip]="data.bcba?.status "></i>
+
                                         </td>
+                                        <td >
+                                            <select
+                                            class="form-control form-select-solid fw-bolder"
+      
+                                            name="statusbcba" [(ngModel)]="data.bcba.status" 
+                                            [ngModelOptions]="{standalone: true}"
+                                            (change)="cambiarStatusBcba(data.bcba)"
+                                            placeholder="status">
+                                            <option>-- Select --</option>
+                                            <option value="pending">Pending</option>
+                                              <option value="ok">Ok</option>
+                                              <option value="no">No</option>
+                                              </select>
+                                          </td>
                                         <td>
                                             {{data.bcba.meet_with_client_at ?? 'N/A'}}
                                             <!-- <span *ngIf="data?.rbt">
@@ -508,19 +547,18 @@
                                             </span>
                                         </td>
 
-                                        <td>{{pa_number}}</td>
+                                        <!-- <td>{{pa_number}}</td>
                                     
                                         <td>
-                                            <!-- {{data.supervisor?.npi}}  -->
+                                            {{data.supervisor?.npi}} 
                                             <span *ngIf="data?.bcba">
                                                 {{data.bcba?.supervisor.npi}} 
 
                                             </span>
 
-                                        </td>
+                                        </td> -->
 
                                         <td >
-                                            
                                             <div  class="note-checkit">
                                                 <label class="custom_check">
                                                     <input type="checkbox"  name="billedbcba" [(ngModel)]="data.bcba.billedbcba"  (change)="isCheckedBilledBcba()"    >

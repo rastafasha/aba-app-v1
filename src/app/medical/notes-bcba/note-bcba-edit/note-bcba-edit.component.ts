@@ -29,10 +29,10 @@ export class NoteBcbaEditComponent {
   public selectedValueProvider!: string;
   public selectedValueRBT!: string;
   public selectedValueBCBA!: string;
-  public selectedValueTimeIn!: number;
-  public selectedValueTimeOut!: number;
-  public selectedValueTimeIn2!: number;
-  public selectedValueTimeOut2!: number;
+  public selectedValueTimeIn = "";
+  public selectedValueTimeOut = "";
+  public selectedValueTimeIn2 = "";
+  public selectedValueTimeOut2 = "";
   public selectedValueProviderName!: string;
   public selectedValueMaladaptive!: string;
   public selectedValueRendering!: string;
@@ -48,7 +48,6 @@ export class NoteBcbaEditComponent {
   note_selected:any;
   bip_id:any;
   user:any;
-
   public first_name:string = '';
   public last_name:string = '';
   public diagnosis_code:string = '';
@@ -272,6 +271,7 @@ export class NoteBcbaEditComponent {
       this.first_name = this.client_selected.patient.first_name;
       this.last_name = this.client_selected.patient.last_name;
       this.patient_id = resp.patient.patient_id;
+      this.patientLocation_id = resp.patient.location_id;
       this.insurer_id = resp.patient.insurer_id;
       // this.pos = JSON.parse(resp.patient.pos_covered) ;
       this.pos = resp.patient.pos_covered ;
@@ -322,19 +322,17 @@ export class NoteBcbaEditComponent {
   }
 
 
-  hourTimeInSelected(value:number){
+  hourTimeInSelected(value:string){
     this.selectedValueTimeIn = value;
-    // console.log(value);
   }
-  hourTimeOutSelected(value:number){
+  hourTimeOutSelected(value:string){
     this.selectedValueTimeOut = value;
-    // console.log(value);
 
   }
 
   updateCaregiverGoal(index: number) {
       console.log('Caregiver goal updated:', this.caregivers_training_goals[index]);
-  }
+
 
   updateRbtGoal(index: number) {
       console.log('RBT goal updated:', this.rbt_training_goals[index]);
@@ -422,6 +420,7 @@ export class NoteBcbaEditComponent {
     formData.append('location', this.location);
     formData.append('birth_date', this.birth_date);
     formData.append('session_date', this.session_date);
+    formData.append('location_id', this.patientLocation_id+'');
 
     if (this.summary_note) {
       formData.append('summary_note', this.summary_note);
