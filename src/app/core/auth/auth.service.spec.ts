@@ -9,7 +9,7 @@ import { AuthService } from './auth.service';
 import { AUTH_CONSTS, AUTH_URLS } from './auth.const';
 import { ErrorHandlerService } from '../../shared/error/error-handler.service';
 
-fdescribe('AuthService', () => {
+describe('AuthService', () => {
   let service: AuthService;
   let httpMock: HttpTestingController;
   let storageServiceMock: jasmine.SpyObj<StorageService>;
@@ -54,6 +54,7 @@ fdescribe('AuthService', () => {
         email: 'john@example.com',
       };
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       storageServiceMock.get.and.callFake((key: string): any => {
         switch (key) {
           case AUTH_CONSTS.token:

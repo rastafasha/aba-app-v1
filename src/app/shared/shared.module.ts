@@ -23,6 +23,7 @@ import { ActionModalComponent } from './components/action-modal/action-modal.com
 import { MatDialogModule } from '@angular/material/dialog';
 import { AuthService } from '../core/auth/auth.service';
 import { AuthInterceptor } from '../core/auth/auth.interceptor';
+import { PipesModule } from './pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import { AuthInterceptor } from '../core/auth/auth.interceptor';
     SkeletonLoaderComponent,
     ActionButtonComponent,
     ActionModalComponent,
+    PipesModule,
   ],
   providers: [
     DataService,

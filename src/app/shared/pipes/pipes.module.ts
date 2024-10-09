@@ -6,8 +6,6 @@ import { RoleFilterPipe } from './roles-filter.pipe';
 import { LocationFilterPipe } from './location-filter.pipe';
 import { GetPrizeCptNotePipe } from './prize-cpt.pipe';
 
-
-
 @NgModule({
   declarations: [
     SecureResourceUrlPipe,
@@ -23,8 +21,6 @@ import { GetPrizeCptNotePipe } from './prize-cpt.pipe';
     LocationFilterPipe,
     GetPrizeCptNotePipe,
   ],
-  imports: [
-    CommonModule
-  ]
+  imports: [CommonModule],
 })
-export class PipesModule { }
+export class PipesModule {}
