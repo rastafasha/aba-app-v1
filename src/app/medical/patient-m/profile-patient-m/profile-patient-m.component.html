@@ -844,27 +844,17 @@
                                                     <table class="table mb-0">
                                                         <thead>
                                                             <tr>
-                                                                <th><h2 style="font-size: 12px;font-weight: 500;">PA Assessment</h2></th>
-                                                                <th><h2 style="font-size: 12px;font-weight: 500;">Patient Assesment Start Date</h2></th>
-                                                                <th><h2 style="font-size: 12px;font-weight: 500;">Patient Assesment End Date</h2></th>
+                                                                
                                                                 <th><h2 style="font-size: 12px;font-weight: 500;">PA Services</h2></th>
-                                                                <th><h2 style="font-size: 12px;font-weight: 500;">Patient Services Start Date</h2></th>
-                                                                <th><h2 style="font-size: 12px;font-weight: 500;">Patient Services End Date</h2></th>
-                                                                <th><h2 style="font-size: 12px;font-weight: 500;">cpt</h2></th>
-                                                                <th><h2 style="font-size: 12px;font-weight: 500;">n units</h2></th>
+                                                                <th><h2 style="font-size: 12px;font-weight: 500;">PA Services Start Date</h2></th>
+                                                                <th><h2 style="font-size: 12px;font-weight: 500;">PA Services End Date</h2></th>
+                                                                <th><h2 style="font-size: 12px;font-weight: 500;">CPT</h2></th>
+                                                                <th><h2 style="font-size: 12px;font-weight: 500;">n Units Asigned</h2></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             <tr *ngFor="let pa_asses of pa_assessmentgroup; let i = index">
-                                                                <td>
-                                                                    <h3 style="font-size: 12px;color:rgba(51, 53, 72, 0.5);font-weight: 500;">{{pa_asses.pa_assessment}}</h3>
-                                                                </td>
-                                                                <td>
-                                                                     <h3 style="font-size: 12px;color:rgba(51, 53, 72, 0.5);font-weight: 500;">{{pa_asses.pa_assessment_start_date | date}}</h3>
-                                                                </td>
-                                                                <td>
-                                                                    <h3 style="font-size: 12px;color:rgba(51, 53, 72, 0.5);font-weight: 500;">{{pa_asses.pa_assessment_end_date | date}}</h3>
-                                                                </td>
+                                                                
                                                                 <td>
                                                                     <h3 style="font-size: 12px;color:rgba(51, 53, 72, 0.5);font-weight: 500;">{{pa_asses.pa_services}}</h3>
                                                                 </td>
