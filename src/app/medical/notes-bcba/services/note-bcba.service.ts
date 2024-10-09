@@ -96,4 +96,12 @@ export class NoteBcbaService {
     let URL = url_servicios + '/note_bcba/update/modifier/' + client_id;
     return this.http.put(URL, data, { headers: headers });
   }
+
+  generateAISummary(data: any) {
+    const headers = new HttpHeaders({
+      Authorization: 'Bearer' + this.authService.token,
+    });
+    const URL = url_servicios + '/note_bcba/generate-summary';
+    return this.http.post(URL, data, { headers: headers });
+  }
 }

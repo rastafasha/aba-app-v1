@@ -1,6 +1,6 @@
 <div class="page-wrapper">
     <div class="content">
-    
+
         <!-- Page Header -->
         <div class="page-header">
             <div class="row">
@@ -24,7 +24,7 @@
                 <div class="card">
                     <div class="card-body">
                         <form autocomplete="false">
-                            
+
                             <!-- paciente -->
                             <div class="row align-items-center py-4" >
                                 <div class="col-12 py-4">
@@ -61,8 +61,8 @@
                                 <div class="col-12 col-md-6 col-xl-4">
                                     <div class="form-group local-forms">
                                         <label >Rendering Provider <span class="login-danger">*</span></label>
-                                        <mat-select [(ngModel)]="selectedValueRendering" name="rendering_provider" 
-                                        [ngModelOptions]="{standalone: true}" class="form-control select" 
+                                        <mat-select [(ngModel)]="selectedValueRendering" name="rendering_provider"
+                                        [ngModelOptions]="{standalone: true}" class="form-control select"
                                         (selectionChange)="selectSpecialist($event)"  placeholder="Select Specialist">
                                             <mat-option *ngFor="let data of roles_bcba" [value]="data.id">
                                             {{data.name}} {{data.surname}}
@@ -97,7 +97,7 @@
                                         <label >Units Allowed <span class="login-danger">*</span></label>
                                         <mat-select [(ngModel)]="selectedValueCode" name="n_units" disable [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select Code">
                                             <mat-option *ngFor="let data of pa_assessmentsgroup" disable  [value]="data.cpt">
-                                            {{data.n_units}} 
+                                            {{data.n_units}}
                                             </mat-option>
                                         </mat-select>
                                     </div>
@@ -115,7 +115,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-12 col-md-3">
                                     <div class="form-group local-forms">
                                         <label >Date <span class="login-danger">*</span></label>
@@ -132,6 +132,7 @@
                                             <div class="col-xs-12 col-sm-6">
                                                 <div class="form-group local-forms">
                                                     <label>Time In <span class="login-danger">*</span></label>
+
                                                     <!-- <mat-select [(ngModel)]="selectedValueTimeIn" name="time_in"
                                                         [ngModelOptions]="{standalone: true}"
                                                         (onChange)="hourTimeInSelected($event)" class="form-control select"
@@ -140,20 +141,24 @@
                                                             {{data.name}}
                                                         </mat-option>
                                                     </mat-select> -->
-                                                    <input [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly  
+                                                    <!-- <input [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly
                                                     [(ngModel)]="selectedValueTimeIn" name="time_in" [format]="24"   [max]="'12:00'" (onChange)="hourTimeInSelected($event)" [ngModelOptions]="{standalone: true}">
                                                     <ngx-material-timepicker-toggle [for]="toggleTimepicker"></ngx-material-timepicker-toggle>
-                                                    <ngx-material-timepicker #toggleTimepicker></ngx-material-timepicker>
-                                                    
+                                                    <ngx-material-timepicker #toggleTimepicker></ngx-material-timepicker> -->
+
+                                                    <input [ngxTimepicker]="toggleTimepicker" [(ngModel)]="selectedValueTimeIn" readonly
+                                                        [value]="selectedValueTimeIn" [format]="24"  [max]="'12:00'" class="form-control" name="time_in" >
+                                                    <ngx-material-timepicker (timeChanged)="hourTimeInSelected($event)" #toggleTimepicker></ngx-material-timepicker>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-6">
                                                 <div class="form-group local-forms">
                                                     <label>Time Out <span class="login-danger">*</span></label>
-                                                    <input [ngxTimepicker]="toggleTimepicker2" [disableClick]="true" readonly  
-                                                    [(ngModel)]="selectedValueTimeOut" name="time_out" [format]="24"   (onChange)="hourTimeOutSelected($event)" [ngModelOptions]="{standalone: true}">
-                                                    <ngx-material-timepicker-toggle [for]="toggleTimepicker2"></ngx-material-timepicker-toggle>
-                                                    <ngx-material-timepicker #toggleTimepicker2></ngx-material-timepicker>
+
+                          
+                                                    <input [ngxTimepicker]="toggleTimepicker2" [(ngModel)]="selectedValueTimeOut" readonly
+                                                    [value]="selectedValueTimeOut"  [format]="24" class="form-control" name="time_out2">
+                                                <ngx-material-timepicker (timeChanged)="hourTimeOutSelected($event)" #toggleTimepicker2></ngx-material-timepicker>
                                                 </div>
                                             </div>
                                         </div>
@@ -164,23 +169,28 @@
                                             <div class="col-xs-12 col-sm-6">
                                                 <div class="form-group local-forms">
                                                     <label >Time In <span class="login-danger">*</span></label>
-                                                    <input [ngxTimepicker]="toggleTimepicker3" [disableClick]="true" readonly  
-                                                    [(ngModel)]="selectedValueTimeIn2" name="time_in2" [format]="24"   (onChange)="hourTimeInSelected($event)" [ngModelOptions]="{standalone: true}">
-                                                    <ngx-material-timepicker-toggle [for]="toggleTimepicker3"></ngx-material-timepicker-toggle>
-                                                    <ngx-material-timepicker #toggleTimepicker3></ngx-material-timepicker>
+
+                                                    <!-- <input [ngxTimepicker]="toggleTimepicker3" [disableClick]="true" readonly
+                                                    [(ngModel)]="selectedValueTimeIn2" name="time_in2" [format]="24"   (onChange)="hourTimeInSelected($event)" [ngModelOptions]="{standalone: true}"> -->
+
+                                                    <input [ngxTimepicker]="toggleTimepicker3" [(ngModel)]="selectedValueTimeIn2" readonly
+                                                        [value]="selectedValueTimeIn2" [format]="24" class="form-control" name="time_in2" >
+                                                    <ngx-material-timepicker (timeChanged)="hourTimeIn2Selected($event)" #toggleTimepicker3></ngx-material-timepicker>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-6">
                                                 <div class="form-group local-forms">
                                                     <label >Time Out <span class="login-danger">*</span></label>
-                                                    <input [ngxTimepicker]="toggleTimepicker4" [disableClick]="true" readonly  
-                                                    [(ngModel)]="selectedValueTimeOut2" name="time_out2" [format]="24"   (onChange)="hourTimeInSelected($event)" [ngModelOptions]="{standalone: true}">
-                                                    <ngx-material-timepicker-toggle [for]="toggleTimepicker4"></ngx-material-timepicker-toggle>
-                                                    <ngx-material-timepicker #toggleTimepicker4></ngx-material-timepicker>
+
+                                                    <!-- <input [ngxTimepicker]="toggleTimepicker4" [disableClick]="true" readonly
+                                                    [(ngModel)]="selectedValueTimeOut2" name="time_out2" [format]="24"   (onChange)="hourTimeOut2Selected($event)" [ngModelOptions]="{standalone: true}"> -->
+                                    <input [ngxTimepicker]="toggleTimepicker4" [(ngModel)]="selectedValueTimeOut2" readonly
+                                                        [value]="selectedValueTimeOut2"  [format]="24" class="form-control" name="time_out2">
+                                                    <ngx-material-timepicker (timeChanged)="hourTimeOut2Selected($event)" #toggleTimepicker4></ngx-material-timepicker>
                                                 </div>
                                             </div>
                                         </div>
-    
+
                                     </div>
 
                                 </div>
@@ -206,14 +216,14 @@
                             </div>
                             <!-- paciente -->
                         </form>
-                        
+
                     </div>
-                </div>	
-                	
+                </div>
+
             </div>
             <!-- fin paciente -->
 
-            
+
 
             <!-- Maladaptives -->
             <div class="col-xs-12 col-sm-6">
@@ -221,63 +231,30 @@
                     <div class="card-body">
                         <div class="col-12">
                             <h4>Caregiver Goal</h4>
-                            <p class="text-danger">Note: Please fill out all fields and save each Goal, if you didn't have any reaction, enter "0"</p>
+                            <p class="text-danger">Note: Please fill out all fields. If you didn't have any reaction, enter "0"</p>
                         </div>
-                        <div class="container">
-                            <form autocomplete="false">
-                                <!-- maladaptives -->
-                                <div class="table-responsive">
-                                    <table class="table mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th>Caregiver Goal  </th>
-                                                <th>% of  Occurrences   </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody *ngIf="!maladaptiveSelected">
-                                            
-                                            <tr *ngFor="let behavior of caregivers_training_goals; let i = index">
-                                                <td>
-                                                    {{behavior.caregiver_goal}}
-                                                </td>
-                                                <td>
-                                                    {{behavior.porcent_of_correct_response}}
-                                                </td>
-                                                <td>
-                                                    <button class="btn btn-outline-success btn-sm" (click)="selectMaladaptive(behavior,i)"><i class="fa fa-edit"></i></button>
-                                                </td>
-                                            </tr>
-                                            
-                                        </tbody>
-                                        <tbody *ngIf="maladaptiveSelected">
-                                            
-                                            <tr >
-                                                <td>
-                                                    {{maladaptiveSelected.caregiver_goal}}
-                                                </td>
-                                                <td>
-                                                    <input class="form-control" name="porcent_of_correct_response " 
-                                                    [ngModelOptions]="{standalone: true}"    
-                                                    [(ngModel)]="maladaptiveSelected.porcent_of_correct_response" type="number"  >
-                                                </td>
-                                                <td>
-                                                    <button class="btn btn-outline-success btn-sm" (click)="back()">Back</button>
-                                                    <button class="btn btn-outline-success btn-sm" (click)="addMaladaptive(maladaptiveSelected,i)">Save</button>
-                                                
-                                                </td>
-                                            </tr>
-                                            
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!-- maladaptives -->
-                                
-                            </form>
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Caregiver Goal</th>
+                                        <th>% of Occurrences</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let goal of caregivers_training_goals; let i = index">
+                                        <td>{{goal.caregiver_goal}}</td>
+                                        <td>
+                                            <input class="form-control" type="number"
+                                                   [(ngModel)]="goal.porcent_of_correct_response"
+                                                   (ngModelChange)="updateCaregiverGoal(i)">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        
                     </div>
-                </div>	
-                	
+                </div>
             </div>
             <!-- fin Maladaptives -->
             <!-- replacements -->
@@ -286,63 +263,30 @@
                     <div class="card-body">
                         <div class="col-12">
                             <h4>RBT Training goals</h4>
-                            <p class="text-danger">Note: Please fill out all fields and save each RBT Training Goal, if you didn't have any reaction, enter "0"</p>
+                            <p class="text-danger">Note: Please fill out all fields. If you didn't have any reaction, enter "0"</p>
                         </div>
-                        <div class="container">
-                            <form autocomplete="false">
-                                <!-- Replacements -->
-                                <div class="table-responsive" >
-                                    <table class="table mb-0">
-                                        <thead>
-                                            <tr>
-                                                <th>Caregiver Goal  </th>
-                                                <th>% of correct responses</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody *ngIf="!replacementSelected">
-                                            <tr *ngFor="let replacemen of rbt_training_goals; let i = index">
-                                                <td >
-                                                    {{replacemen.lto}}
-                                                </td>
-                                                <td >
-                                                    {{replacemen.porcent_of_correct_response}}
-                                                </td>
-                                                <td>
-                                                    <button class="btn btn-outline-success btn-sm" (click)="selectReplacement(replacemen,i)"><i class="fa fa-edit"></i></button>
-                                                </td>
-                                                
-                                            </tr>
-                                            
-                                        </tbody>
-                                        <tbody *ngIf="replacementSelected">
-                                            <!--  -->
-                                            <tr>
-                                                <td>
-                                                    {{replacementSelected.lto}}
-                                                </td>
-                                                <td>
-                                                    <input class="form-control" name="porcent_of_correct_response " 
-                                                    [ngModelOptions]="{standalone: true}"  
-                                                     [(ngModel)]="replacementSelected.porcent_of_correct_response" type="number"  >
-                                                </td>
-                                                <td>
-                                                    <button class="btn btn-outline-success btn-sm" (click)="back()">Back</button>
-                                                    <button class="btn btn-outline-success btn-sm" (click)="addReplacement(replacementSelected,i)">Save</button>
-                                                </td>
-                                                
-                                            </tr>
-                                            
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!-- Replacements -->
-                                
-                            </form>
+                        <div class="table-responsive">
+                            <table class="table mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>RBT Training Goal</th>
+                                        <th>% of correct responses</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let goal of rbt_training_goals; let i = index">
+                                        <td>{{goal.lto}}</td>
+                                        <td>
+                                            <input class="form-control" type="number"
+                                                   [(ngModel)]="goal.porcent_of_correct_response"
+                                                   (ngModelChange)="updateRbtGoal(i)">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        
                     </div>
-                </div>	
-                	
+                </div>
             </div>
             <!-- fin replacements -->
 
@@ -351,15 +295,24 @@
                 <div class="card">
                     <div class="card-body">
                         <form autocomplete="false">
-                            
+
                             <!-- paciente -->
                             <div class="row align-items-center py-4" >
+                              <div class="col-12">
+                                  <div class="form-group local-forms">
+                                      <label>Summary Note<span class="login-danger">*</span></label>
+                                      <textarea class="form-control" name="summary_note" [(ngModel)]="summary_note" rows="4" cols="30"></textarea>
+                                      <button class="btn btn-primary ml-2 btn-sm" (click)="generateAISummary()" [disabled]="isGeneratingSummary">
+                                          {{ isGeneratingSummary ? 'Generating...' : 'Generate AI Summary' }}
+                                      </button>
+                                  </div>
+                              </div>
                                 <div class="col-12 col-md-6 col-xl-4">
                                     <div class="form-group local-forms">
                                         <label >Provider name BCBA <span class="login-danger">*</span></label>
-                                        <mat-select [(ngModel)]="selectedValueRBT" name="rbt" 
-                                        [ngModelOptions]="{standalone: true}" 
-                                        class="form-control select"  
+                                        <mat-select [(ngModel)]="selectedValueRBT" name="rbt"
+                                        [ngModelOptions]="{standalone: true}"
+                                        class="form-control select"
                                         (selectionChange)="selectFirmaSpecialistRbt($event)"
                                         placeholder="Select Specialist">
                                             <mat-option *ngFor="let data of roles_bcba" [value]="data.id">
@@ -376,7 +329,7 @@
                                             <label for="file" class="upload">Choose File</label>
                                         </div> -->
                                     </div>
-            
+
                                     <!-- previsualizacion de la foto -->
                                     <div *ngIf="FILE_SIGNATURE_RBT">
                                         <img [src]="IMAGE_PREVISUALIZA_SIGNATURE__RBT" style="width: 250px;" alt="">
@@ -386,7 +339,7 @@
                                     </div>
                                     <!-- previsualizacion de la foto -->
                                 </div>
-                                
+
 
                                 <div class="col-12 col-md-6 col-xl-4">
                                     <div class="form-group local-forms">
@@ -409,7 +362,7 @@
                                             <label for="file1" class="upload">Choose File</label>
                                         </div> -->
                                     </div>
-            
+
                                     <!-- previsualizacion de la foto -->
                                     <div *ngIf="FILE_SIGNATURE_BCBA">
                                         <img [src]="IMAGE_PREVISUALIZA_SIGNATURE_BCBA" style="width: 250px;" alt="">
@@ -419,27 +372,26 @@
                                     </div>
                                     <!-- previsualizacion de la foto -->
                                 </div>
-                                
+
                             </div>
                             <!-- paciente -->
 
-                            
+
                             <div class="col-12">
                                 <div class="doctor-submit text-end">
                                     <button type="button" class="btn btn-primary submit-form me-2" (click)="save()">Save</button>
-                                    
+
                                 </div>
                             </div>
                         </form>
-                        
+
                     </div>
-                </div>	
-                	
+                </div>
+
             </div>
             <!-- fin paciente -->
-           
-            					
+
+
         </div>
     </div>
 </div>
- 

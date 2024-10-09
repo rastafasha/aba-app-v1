@@ -106,6 +106,7 @@ export class NoteRbtViewComponent {
   public goal: any;
   public note_id: any;
   public note_selectedId: any;
+  public statusNote: any;
 
   public roles_rbt: any = [];
   public roles_bcba: any = [];
@@ -166,6 +167,7 @@ export class NoteRbtViewComponent {
       this.note_selectedId = resp.noteRbt.id;
       this.patient_id = this.note_selected.patient_id;
       this.bip_id = this.note_selected.bip_id;
+      this.statusNote = this.note_selected.status;
 
       this.provider_credential = this.note_selected.provider_credential;
       this.as_evidenced_by = this.note_selected.as_evidenced_by;

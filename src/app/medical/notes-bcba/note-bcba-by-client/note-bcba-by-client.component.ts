@@ -16,6 +16,7 @@ declare var $:any;
 })
 export class NoteBcbaByClientComponent {
   patient_id:any;
+  patientId:any;
   doctor_id:any;
   patient_selected:any;
   client_selected:any;
@@ -106,7 +107,7 @@ export class NoteBcbaByClientComponent {
 
       this.totalDataNotepatient = resp.noteBcbas.data.length;
       this.notespatient_generals = resp.noteBcbas.data;
-      this.patient_id = resp.noteBcbas.data.patient_id;
+      this.patientId = resp.noteBcbas.data[0].patient_id;
      this.getTableDataGeneral();
     })
 
@@ -228,16 +229,5 @@ export class NoteBcbaByClientComponent {
     })
   }
 
-  cambiarStatus(data:any){
-    let VALUE = data.status;
-    console.log(VALUE);
-    
-    this.noteBcbaService.updateStatus(data, data.id).subscribe(
-      resp =>{
-        // console.log(resp);
-        this.ngOnInit();
-      }
-    )
-  }
 
 }

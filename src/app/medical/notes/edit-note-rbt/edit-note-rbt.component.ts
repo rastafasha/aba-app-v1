@@ -117,6 +117,8 @@ export class EditNoteRbtComponent implements OnInit {
   public note_id: any;
   public note_selectedId: any;
   public porcentage_diario: any;
+  public location_id: number;
+  public patientLocation_id: any;
 
   public roles_rbt: any = [];
   public roles_bcba: any = [];
@@ -340,6 +342,7 @@ export class EditNoteRbtComponent implements OnInit {
         this.first_name = this.client_selected.patient.first_name;
         this.last_name = this.client_selected.patient.last_name;
         this.patient_id = resp.patient.patient_id;
+        this.patientLocation_id = resp.patient.location_id;
 
         // this.pos = JSON.parse(resp.patient.pos_covered) ;
         this.pos = resp.patient.pos_covered;
@@ -388,12 +391,13 @@ export class EditNoteRbtComponent implements OnInit {
     this.selectedValueTimeIn = value;
     this.recalculateSessionLength();
   }
-  hourTimeIn2Selected(value: string) {
-    this.selectedValueTimeIn2 = value;
-    this.recalculateSessionLength();
-  }
   hourTimeOutSelected(value: string) {
     this.selectedValueTimeOut = value;
+    this.recalculateSessionLength();
+  }
+
+  hourTimeIn2Selected(value: string) {
+    this.selectedValueTimeIn2 = value;
     this.recalculateSessionLength();
   }
   hourTimeOut2Selected(value: string) {
@@ -639,6 +643,7 @@ export class EditNoteRbtComponent implements OnInit {
   }
 
   save() {
+    debugger;
     this.text_validation = '';
     // if(!this.name||!this.email ||!this.surname ){
     //   this.text_validation = 'Los campos con * son obligatorios';
@@ -665,36 +670,40 @@ export class EditNoteRbtComponent implements OnInit {
 
     formData.append('session_date', this.session_date);
 
+    formData.append('location_id', this.patientLocation_id);
+
     if (this.meet_with_client_at) {
       formData.append('meet_with_client_at', this.meet_with_client_at);
     }
     if (this.selectedValueProviderName) {
       formData.append('provider_name_g', this.selectedValueProviderName);
     }
+
     if (this.selectedValueTimeIn) {
       formData.append(
         'time_in',
-        this.selectedValueTimeIn + '' ? this.selectedValueTimeIn + '' : ''
+        this.selectedValueTimeIn + '' ? this.selectedValueTimeIn + '' : '0'
       );
     }
     if (this.selectedValueTimeOut) {
       formData.append(
         'time_out',
-        this.selectedValueTimeOut + '' ? this.selectedValueTimeOut + '' : ''
+        this.selectedValueTimeOut + '' ? this.selectedValueTimeOut + '' : '0'
       );
     }
     if (this.selectedValueTimeIn2) {
       formData.append(
         'time_in2',
-        this.selectedValueTimeIn2 + '' ? this.selectedValueTimeIn2 + '' : ''
+        this.selectedValueTimeIn2 + '' ? this.selectedValueTimeIn2 + '' : '0'
       );
     }
     if (this.selectedValueTimeOut2) {
       formData.append(
         'time_out2',
-        this.selectedValueTimeOut2 + '' ? this.selectedValueTimeOut2 + '' : ''
+        this.selectedValueTimeOut2 + '' ? this.selectedValueTimeOut2 + '' : '0'
       );
     }
+
     if (this.environmental_changes) {
       formData.append('environmental_changes', this.environmental_changes);
     }

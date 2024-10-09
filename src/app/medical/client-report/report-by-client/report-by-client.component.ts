@@ -46,102 +46,104 @@ export class ReportByClientComponent {
   clientReportList: any[] = [];
   clientReport_generals: any = {};
   dataSource!: MatTableDataSource<any>;
-  showFilter = false;
-  searchDataValue = '';
-  lastIndex = 0;
-  pageSize = 7;
-  totalDataClientReport = 0;
-  skip = 0;
-  limit = this.pageSize;
-  pageIndex = 0;
-  serialNumberArray: Array<number> = [];
-  currentPage = 1;
-  pageNumberArray: Array<number> = [];
-  pageSelection: Array<any> = [];
-  totalPages = 0;
-  text_validation: any;
+  public showFilter = false;
+  public searchDataValue = '';
+  public lastIndex = 0;
+  public pageSize = 50;
+  public totalDataClientReport = 0;
+  public skip = 0;
+  public limit: number = this.pageSize;
+  public pageIndex = 0;
+  public serialNumberArray: Array<number> = [];
+  public currentPage = 1;
+  public pageNumberArray: Array<number> = [];
+  public pageSelection: Array<any> = [];
+  public totalPages = 0;
+  public text_validation: any;
 
   roles: any = [];
   permissions: any = [];
   patientID: any;
   patientId: any;
 
-  pa_assessments: any = [];
-  pa_assessmentsgroup: any = [];
-  cpt: any;
-  n_units: any;
-  pa_number: any;
-  insurances: any = [];
-  insurance_id: any;
-  insuranceiddd: any;
-  insurer_name: any;
-  sponsors: any = [];
-  modifiers: any = [];
-  noteRbt: any = [];
-  pos_covered: any = [];
-  pa_assessmentgroup: any = [];
-  noteBcba: any = [];
-  patient: any;
+  public pa_assessments: any = [];
+  public pa_assessmentsgroup: any = [];
+  public cpt: any;
+  public n_units: any;
+  public pa_number: any;
+  public insurances: any = [];
+  public insurance_id: any;
+  public insuranceiddd: any;
+  public insurer_name: any;
+  public sponsors: any = [];
+  public modifiers: any = [];
+  public noteRbt: any = [];
+  public pos_covered: any = [];
+  public pa_assessmentgroup: any = [];
+  public noteBcba: any = [];
+  public patient: any;
 
-  patientName: any;
-  doctor_selected_full_name: any;
-  billing_total = 0;
-  week_total_hours: string;
-  week_total_units = 0;
-  total_hours = 0;
-  total_units = 0;
-  charges = 0;
-  unitPrize = 0;
-  unitPrizeCpt = 0;
-  xe = 0;
-  is_xe: boolean;
+  public patientName: any;
+  public doctor_selected_full_name: any;
+  public billing_total: number = 0;
+  public week_total_hours: string;
+  public week_total_units: number = 0;
+  public total_hours: number = 0;
+  public total_units: number = 0;
+  public charges: number = 0;
+  public unitPrize: number = 0;
+  public unitPrizeCpt: number = 0;
+  public xe: number;
+  public xp: number = 0;
+  public is_xe: boolean;
+  public is_xp: boolean;
 
-  session_date: any;
-  time_in: any;
-  time_out: any;
-  time_in2: any;
-  time_out2: any;
-  pos: any;
-  billed: boolean;
-  pay: boolean;
-  billedbcba: boolean;
-  paybcba: boolean;
-  md: any;
-  md2: any;
-  mdbcba: any;
-  md2bcba: any;
-  pay_selected: any;
-  billed_selected: any;
-  total: any;
-  totalPorPagar: any;
-  resultconFactor: any;
-  unidades: any;
-  porPagar: any;
-  horaTrabajada: any;
-  factHoras: any;
-  totalHoras: any;
-  totalUnidades: any;
-  units: any;
-  hoursPerUnit: any;
-  timePerUnit: any;
+  public session_date: any;
+  public time_in: any;
+  public time_out: any;
+  public time_in2: any;
+  public time_out2: any;
+  public pos: any;
+  public billed: boolean;
+  public pay: boolean;
+  public billedbcba: boolean;
+  public paybcba: boolean;
+  public md: any;
+  public md2: any;
+  public mdbcba: any;
+  public md2bcba: any;
+  public pay_selected: any;
+  public billed_selected: any;
+  public total: any;
+  public totalPorPagar: any;
+  public resultconFactor: any;
+  public unidades: any;
+  public porPagar: any;
+  public horaTrabajada: any;
+  public factHoras: any;
+  public totalHoras: any;
+  public totalUnidades: any;
+  public units: any;
+  public hoursPerUnit: any;
+  public timePerUnit: any;
 
-  tecnicoRbts: any;
-  supervisor: any;
-  npi: any;
-  rbt_id: any;
-  rbt2_id: any;
-  bcba_id: any;
-  bcba2_id: any;
-  doctor_selected_bcba: any;
-  full_name: any;
-  doctors: any;
-  tecnicoDoctorNames: any;
+  public tecnicoRbts: any;
+  public supervisor: any;
+  public npi: any;
+  public rbt_id: any;
+  public rbt2_id: any;
+  public bcba_id: any;
+  public bcba2_id: any;
+  public doctor_selected_bcba: any;
+  public full_name: any;
+  public doctors: any;
+  public tecnicoDoctorNames: any;
 
-  services: any;
-  provider: any;
-  selectedCpt: any;
-  //  data: any;
-  noteType: string;
+  public services: any;
+  public provider: any;
+  public selectedCpt: any;
+  // public data: any;
+  public noteType: string;
 
   providersSponsorsList: any;
   factorPorcentual = 1.66666666666667;
@@ -224,7 +226,7 @@ export class ReportByClientComponent {
         this.noteType
       )
       .subscribe((resp: any) => {
-        console.log('todo', resp);
+        // console.log('todo',resp);
         const pa = resp.arrayPages;
         // const pa = [1,2,3,4,5,6,7,8,9,10]
         this.pageNumberArray = [];
@@ -279,8 +281,8 @@ export class ReportByClientComponent {
 
         this.combinedList = [];
         clientReportList.forEach((item, index) => {
-          console.log(this.noteRbt[index]);
-          console.log(this.noteBcba[index]);
+          // console.log(this.noteRbt[index])
+          // console.log(this.noteBcba[index])
           if (this.noteRbt[index] && this.noteBcba[index])
             this.combinedList.push({
               rbt: this.noteRbt[index],
@@ -341,7 +343,7 @@ export class ReportByClientComponent {
     //sacamos los detalles insurance seleccionado
     this.insuranceService.showInsurance(this.insurance_id).subscribe(
       (resp: any) => {
-        console.log('insurer', resp);
+        // console.log('insurer', resp);
         this.insuranceiddd = resp.id;
 
         this.insurer_name = resp.insurer_name;
@@ -443,7 +445,7 @@ export class ReportByClientComponent {
   //trae el nombre del doctor quien hizo la nota rbt
   getDoctorRBT() {
     this.doctorService.showDoctor(this.tecnicoRbts).subscribe((resp: any) => {
-      console.log('doctor rbt y location', resp);
+      // console.log('doctor rbt y location',resp);
       this.doctor_selected = resp.user;
       this.full_name = resp.user.full_name;
     });
@@ -451,7 +453,7 @@ export class ReportByClientComponent {
   // supervisor del tecnico solo sacamos el npi
   getDoctorBcba() {
     this.doctorService.showDoctor(this.supervisor).subscribe((resp: any) => {
-      console.log('bcba', resp);
+      // console.log('bcba',resp);
       this.npi = resp.user.npi;
     });
   }
@@ -462,7 +464,7 @@ export class ReportByClientComponent {
     const units_group: string[] = [];
     const extractedData = this.clientReport_generals;
 
-    const array = this.clientReport_generals;
+    let array = this.clientReport_generals;
     for (this.clientReport_generals of array) {
       hours_group.push(this.clientReport_generals.total_hours);
       units_group.push(this.clientReport_generals.total_units);
@@ -480,7 +482,7 @@ export class ReportByClientComponent {
     }
     // this.week_total_hours = suma / Math.min(7, hours_group.length);// saca el promedio
     // this.week_total_hours = suma ; // saca la suma
-    console.log('total semanal ' + this.week_total_hours);
+    // console.log("total semanal "+ this.week_total_hours );
 
     // obtenemos el total de las unidades en un rango de 7 dias  atras
     var sumaunit = 0;
@@ -493,7 +495,7 @@ export class ReportByClientComponent {
     }
     // this.week_total_units = sumaunit / Math.min(7, units_group.length);// saca el promedio
     this.week_total_units = sumaunit; // saca la suma
-    console.log('total semanal ' + this.week_total_units);
+    // console.log("total semanal "+ this.week_total_units );
 
     // saco el valor de charges multiplicando el total de unidades por semana por el valor del cpt o n_units
     // this.getCharges();
@@ -546,7 +548,7 @@ export class ReportByClientComponent {
   }
 
   calculateUnitsAndHours() {
-    console.log('notas rbt', this.clientReportList);
+    // console.log('notas rbt',this.clientReportList)
     const totalUnits = this.clientReportList.reduce(
       (total, objeto) => total + objeto.session_units_total,
       0
@@ -559,11 +561,7 @@ export class ReportByClientComponent {
     const horasTotales = Math.floor(minutes / 60);
     const minutosTotales = minutes % 60;
     let stringMinutos: string;
-    console.log(
-      'horas totales - minutos totales',
-      horasTotales,
-      minutosTotales
-    );
+    // console.log('horas totales - minutos totales',horasTotales, minutosTotales)
     if (minutosTotales === 0) stringMinutos = '00';
     else if (minutosTotales < 10) stringMinutos = `0${minutosTotales}`;
     else stringMinutos = minutosTotales.toString();
@@ -650,50 +648,50 @@ export class ReportByClientComponent {
   }
 
   addXe(value: any) {
-    this.xe = value;
-    console.log(this.xe);
+    this.xp = value;
+    // console.log(this.xe);
   }
 
   isSelectedModifier(value: string) {
     this.md = value;
-    console.log(this.md);
+    // console.log(this.md);
   }
 
   isSelectedModifierBcba(value: string) {
     this.mdbcba = value;
-    console.log(this.mdbcba);
+    // console.log(this.mdbcba);
   }
 
   isSelectedModifier2(value: string) {
     this.md2 = value;
-    console.log(this.md2);
+    // console.log(this.md2);
   }
 
   isSelectedModifier2Bcba(value: string) {
     this.md2bcba = value;
-    console.log(this.md2bcba);
+    // console.log(this.md2bcba);
   }
 
   isCheckedBilled() {
     this.billed = !this.billed;
-    console.log(this.billed);
+    // console.log(this.billed);
     // if ( event.target.checked ) {
     // }
   }
   isCheckedBilledBcba() {
     this.billedbcba = !this.billedbcba;
-    console.log(this.billedbcba);
+    // console.log(this.billedbcba);
   }
 
   isCheckedPay() {
     this.pay = !this.pay;
-    console.log(this.pay);
+    // console.log(this.pay);
     // if ( event.target.checked ) {
     // }
   }
   isCheckedPayBcba() {
     this.paybcba = !this.paybcba;
-    console.log(this.paybcba);
+    // console.log(this.paybcba);
   }
 
   save(data: any) {
@@ -717,7 +715,7 @@ export class ReportByClientComponent {
       md2: this.md2,
       mdbcba: this.mdbcba,
       md2bcba: this.md2bcba,
-      xe: this.xe,
+      xe: this.xp,
 
       // charges: data.session_units_total * this.unitPrize,
       chargesrbt: data.rbt.session_units_total * this.unitPrize,
@@ -772,7 +770,7 @@ export class ReportByClientComponent {
     // if(this.md2.value === 'XE' ||this.md.value ==='XE')
     //   this.xe= data.total_units * this.unitPrize * this.xe,
 
-    console.log(VALUE);
+    // console.log(VALUE);
 
     const totalValue = [VALUE, VALUE2, VALUE3];
 
@@ -790,32 +788,78 @@ export class ReportByClientComponent {
       this.noteRbtService
         .noteUpdateModifier(VALUE2, data.rbt.id)
         .subscribe((resp: any) => {
-          console.log(resp);
+          // console.log(resp);
         });
       this.noteBCbaService
         .noteBCBAUpdateModifier(VALUE3, data.bcba.id)
         .subscribe((resp: any) => {
-          console.log(resp);
+          // console.log(resp);
         });
     } else {
       //crear
       this.clientReportService.create(VALUE).subscribe((resp: any) => {
         // console.log(resp);
         // this.text_success = 'Se guardó la informacion de la cita médica'
-        Swal.fire('Created', `Created successfully!`, 'success');
+        Swal.fire('Updated', `Added successfully!`, 'success');
         this.ngOnInit();
       });
 
       this.noteRbtService
         .noteUpdateModifier(VALUE2, data.rbt.id)
         .subscribe((resp: any) => {
-          console.log(resp);
+          // console.log(resp);
         });
       this.noteBCbaService
         .noteBCBAUpdateModifier(VALUE3, data.bcba.id)
         .subscribe((resp: any) => {
-          console.log(resp);
+          // console.log(resp);
         });
     }
+  }
+
+  cambiarStatus(data: any) {
+    let VALUE = data.status;
+    // console.log(VALUE);
+
+    this.noteRbtService.updateStatus(data, data.id).subscribe((resp) => {
+      // console.log(resp);
+      // Swal.fire('Updated', `Added successfully!`, 'success');
+      this.ngOnInit();
+    });
+  }
+
+  cambiarStatusBcba(data: any) {
+    debugger;
+    let VALUE = data.status;
+    console.log(VALUE);
+
+    this.noteBCbaService.updateStatus(data, data.id).subscribe((resp) => {
+      // console.log(resp);
+      // Swal.fire('Updated', `Added successfully!`, 'success');
+      this.ngOnInit();
+    });
+  }
+
+  cambiarStatus(data: any) {
+    let VALUE = data.status;
+    // console.log(VALUE);
+
+    this.noteRbtService.updateStatus(data, data.id).subscribe((resp) => {
+      // console.log(resp);
+      // Swal.fire('Updated', `Added successfully!`, 'success');
+      this.ngOnInit();
+    });
+  }
+
+  cambiarStatusBcba(data: any) {
+    debugger;
+    let VALUE = data.status;
+    console.log(VALUE);
+
+    this.noteBCbaService.updateStatus(data, data.id).subscribe((resp) => {
+      // console.log(resp);
+      // Swal.fire('Updated', `Added successfully!`, 'success');
+      this.ngOnInit();
+    });
   }
 }

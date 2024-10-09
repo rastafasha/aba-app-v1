@@ -16,7 +16,9 @@ import { Location } from '@angular/common';
   styleUrls: ['./note-bcba-edit.component.scss'],
 })
 export class NoteBcbaEditComponent {
-  public routes = AppRoutes;
+  public routes = routes;
+  public summary_note: string = '';
+  public isGeneratingSummary = false;
 
   valid_form: boolean = false;
   valid_form_success: boolean = false;
@@ -27,10 +29,10 @@ export class NoteBcbaEditComponent {
   public selectedValueProvider!: string;
   public selectedValueRBT!: string;
   public selectedValueBCBA!: string;
-  public selectedValueTimeIn!: number;
-  public selectedValueTimeOut!: number;
-  public selectedValueTimeIn2!: number;
-  public selectedValueTimeOut2!: number;
+  public selectedValueTimeIn = '';
+  public selectedValueTimeOut = '';
+  public selectedValueTimeIn2 = '';
+  public selectedValueTimeOut2 = '';
   public selectedValueProviderName!: string;
   public selectedValueMaladaptive!: string;
   public selectedValueRendering!: string;
@@ -39,14 +41,14 @@ export class NoteBcbaEditComponent {
   option_selected: number = 0;
 
   client_id: any;
-  patient_id: any;
   doctor_id: any;
+  patient_id: any;
+  patientLocation_id: any;
   patient_selected: any;
   client_selected: any;
   note_selected: any;
   bip_id: any;
   user: any;
-
   public first_name: string = '';
   public last_name: string = '';
   public diagnosis_code: string = '';
@@ -194,7 +196,7 @@ export class NoteBcbaEditComponent {
 
   getNote() {
     this.noteBcbaService.getNote(this.note_id).subscribe((resp: any) => {
-      console.log(resp);
+      console.log('respuesta de getNote', resp);
       this.note_selected = resp.noteBcba;
       this.note_selectedId = resp.noteBcba.id;
       this.patient_id = this.note_selected.patient_id;
@@ -204,6 +206,8 @@ export class NoteBcbaEditComponent {
       this.birth_date = this.note_selected.birth_date
         ? new Date(this.note_selected.birth_date).toISOString()
         : '';
+
+      this.summary_note = resp.noteBcba.summary_note || '';
 
       this.provider_credential = this.note_selected.provider_credential;
       this.as_evidenced_by = this.note_selected.as_evidenced_by;
@@ -265,6 +269,7 @@ export class NoteBcbaEditComponent {
         this.first_name = this.client_selected.patient.first_name;
         this.last_name = this.client_selected.patient.last_name;
         this.patient_id = resp.patient.patient_id;
+        this.patientLocation_id = resp.patient.location_id;
         this.insurer_id = resp.patient.insurer_id;
         // this.pos = JSON.parse(resp.patient.pos_covered) ;
         this.pos = resp.patient.pos_covered;
@@ -317,67 +322,28 @@ export class NoteBcbaEditComponent {
     this.specialistData(this.selectedValueProviderName);
   }
 
-  hourTimeInSelected(value: number) {
+  hourTimeInSelected(value: string) {
     this.selectedValueTimeIn = value;
-    // console.log(value);
   }
-  hourTimeOutSelected(value: number) {
+  hourTimeOutSelected(value: string) {
     this.selectedValueTimeOut = value;
-    // console.log(value);
+  }
+  hourTimeIn2Selected(value: string) {
+    this.selectedValueTimeIn2 = value;
+  }
+  hourTimeOut2Selected(value: string) {
+    this.selectedValueTimeOut2 = value;
   }
 
-  selectMaladaptive(behavior: any, i) {
-    this.maladaptiveSelected = behavior;
-    this.caregivers_training_goals[i] = behavior;
+  updateCaregiverGoal(index: number) {
+    console.log(
+      'Caregiver goal updated:',
+      this.caregivers_training_goals[index]
+    );
   }
 
-  addMaladaptive(maladaptiveSelected: any, i) {
-    this.maladaptiveSelected = maladaptiveSelected;
-    this.caregivers_training_goals[i] = maladaptiveSelected;
-
-    // this.caregivers_training_goals.push({
-    //   caregiver_goal: this.maladaptiveSelected.caregiver_goal,
-    //   porcent_of_correct_response: this.porcent_of_correct_response,
-    // })
-
-    //si existe un elemento actualiza ese elemento en la lista
-    if (this.caregivers_training_goals.length > 1) {
-      this.caregivers_training_goals.splice(this.caregivers_training_goals, 1);
-    }
-
-    this.maladaptiveSelected = null;
-    this.caregiver_goal = '';
-    this.porcent_of_correct_response = null;
-  }
-
-  selectReplacement(replacemen: any, i) {
-    this.replacementSelected = replacemen;
-    this.rbt_training_goals[i] = replacemen;
-  }
-
-  addReplacement(replacementSelected: any, i) {
-    this.replacementSelected = replacementSelected;
-    this.rbt_training_goals[i] = replacementSelected;
-
-    // this.rbt_training_goals.push({
-    //   lto: this.replacementSelected.lto,
-    //   porcent_of_correct_response: this.porcent_of_correct_response,
-    // })
-
-    //si existe un elemento actualiza ese elemento en la lista
-    if (this.rbt_training_goals.length > 1) {
-      this.rbt_training_goals.splice(this.rbt_training_goals, 1);
-    }
-    this.replacementSelected = null;
-    this.lto = '';
-    this.porcent_of_correct_response = null;
-  }
-
-  back() {
-    this.replacementSelected = null;
-    this.maladaptiveSelected = null;
-    this.porcent_of_occurrences = null;
-    this.porcent_of_correct_response = null;
+  updateRbtGoal(index: number) {
+    console.log('RBT goal updated:', this.rbt_training_goals[index]);
   }
 
   //funcion para la primera imagen.. funciona
@@ -445,7 +411,6 @@ export class NoteBcbaEditComponent {
   }
 
   save() {
-    debugger;
     this.text_validation = '';
     // if(!this.name||!this.email ||!this.surname ){
     //   this.text_validation = 'Los campos con * son obligatorios';
@@ -465,6 +430,11 @@ export class NoteBcbaEditComponent {
     formData.append('location', this.location);
     formData.append('birth_date', this.birth_date);
     formData.append('session_date', this.session_date);
+    formData.append('location_id', this.patientLocation_id + '');
+
+    if (this.summary_note) {
+      formData.append('summary_note', this.summary_note);
+    }
 
     if (this.selectedValueTimeIn) {
       formData.append(
@@ -577,4 +547,97 @@ export class NoteBcbaEditComponent {
   //         return num1 * num2;
   //     }
   // }
+  //
+  generateAISummary() {
+    if (!this.checkDataSufficient()) {
+      Swal.fire('Warning', 'Please fill all the required fields', 'warning');
+      return;
+    }
+    this.isGeneratingSummary = true;
+    const data = {
+      diagnosis: this.diagnosis_code,
+      birthDate: this.birth_date,
+      startTime: this.selectedValueTimeIn ? this.selectedValueTimeIn : null,
+      endTime: this.selectedValueTimeOut ? this.selectedValueTimeOut : null,
+      startTime2: this.selectedValueTimeIn2 ? this.selectedValueTimeIn2 : null,
+      endTime2: this.selectedValueTimeOut2 ? this.selectedValueTimeOut2 : null,
+      pos: this.getPos(this.meet_with_client_at),
+      caregiverGoals: this.caregivers_training_goals.map((g) => ({
+        goal: g.caregiver_goal,
+        percentCorrect: g.porcent_of_correct_response,
+      })),
+      rbtTrainingGoals: this.rbt_training_goals.map((g) => ({
+        goal: g.lto,
+        percentCorrect: g.porcent_of_correct_response,
+      })),
+      noteDescription: this.note_description,
+    };
+
+    this.noteBcbaService.generateAISummary(data).subscribe(
+      (response: any) => {
+        this.summary_note = response.summary;
+        this.isGeneratingSummary = false;
+      },
+      (error) => {
+        console.error('Error generating AI summary:', error);
+        Swal.fire(
+          'Error',
+          'Error generating AI summary. Please try again.',
+          'error'
+        );
+        this.isGeneratingSummary = false;
+      }
+    );
+  }
+
+  checkDataSufficient(): boolean {
+    if (!this.note_selected) return false;
+
+    const hasTime = this.selectedValueTimeIn && this.selectedValueTimeOut;
+    if (!hasTime) return false;
+
+    if (!this.meet_with_client_at) return false;
+
+    if (
+      !this.caregivers_training_goals ||
+      this.caregivers_training_goals.length === 0
+    )
+      return false;
+    const allCaregiverGoalsValid = this.caregivers_training_goals.every(
+      (g) =>
+        g.caregiver_goal &&
+        g.porcent_of_correct_response !== undefined &&
+        g.porcent_of_correct_response !== null
+    );
+    if (!allCaregiverGoalsValid) return false;
+
+    if (!this.rbt_training_goals || this.rbt_training_goals.length === 0)
+      return false;
+    const allRbtGoalsValid = this.rbt_training_goals.every(
+      (g) =>
+        g.lto &&
+        g.porcent_of_correct_response !== undefined &&
+        g.porcent_of_correct_response !== null
+    );
+    if (!allRbtGoalsValid) return false;
+
+    if (!this.note_description) return false;
+
+    return true;
+  }
+
+  getPos(posCode: string) {
+    switch (posCode) {
+      case '03':
+        return 'School';
+      case '12':
+        return 'Home';
+      case '02':
+        return 'Telehealth';
+      case '99':
+        return 'Other';
+      default:
+        return 'Unknown';
+    }
+  }
 }
