@@ -369,6 +369,13 @@ export class NoteBcbaComponent {
     this.selectedValueTimeOut = value;
 
   }
+  hourTimeIn2Selected(value:number){
+    this.selectedValueTimeIn2 = value;
+  }
+  hourTimeOut2Selected(value:number){
+    this.selectedValueTimeOut2 = value;
+
+  }
 
   updateCaregiverGoal(index: number) {
       console.log('Caregiver goal updated:', this.caregivers_training_goals[index]);

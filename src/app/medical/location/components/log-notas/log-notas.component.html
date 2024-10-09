@@ -131,7 +131,7 @@
                 <th mat-sort-header="sponsor_id">Provider</th>
                 <th mat-sort-header="billed">Billed</th>
                 <th mat-sort-header="pay">Pay</th>
-                <th mat-sort-header="created">Created At</th>
+                <!-- <th mat-sort-header="created">Created At</th> -->
                 <th></th> <!--acciones -->
             </tr>
         </thead>
@@ -151,9 +151,6 @@
                     <i class="fa  bg-success indicador" 
                     *ngIf="data.rbt.status  === 'ok'"
                       [tooltip]="data.rbt.status "></i>
-                    <i class="fa  bg-danger indicador" 
-                    *ngIf="data.rbt.status  === 'no'"
-                      [tooltip]="data.rbt.status "></i>
                     
                 </td>
                 <td >
@@ -167,7 +164,6 @@
                     <option>-- Select --</option>
                         <option value="pending">Pending</option>
                         <option value="ok">Ok</option>
-                        <option value="no">No</option>
                       </select>
                   </td>
                 <td>
@@ -197,7 +193,8 @@
 
                 <!-- modificadores Medicaid 1 -->
                 <td>
-                    <span *ngIf="insurer_name == 'Medicaid'">
+                    <!-- *ngIf="insurer_name == 'Medicaid'" -->
+                    <span >
                         <div class="form-group local-forms">
                             <select
                                 class="form-control form-select-solid fw-bolder"
@@ -205,6 +202,7 @@
                                 <option>-- Select --</option>
                                 <option value="HM">HM | RBT</option>
                                 <option value="XE">XE | 2 sessions same day, same provider, different POS</option>
+                                <option value="XP">XP | RBT overlap Not reimbursed</option>
                                 <option value="HO">HO | BCBA</option>
                                 <option value="GT">GT | Telehealth</option>
                                 <option value="TS">TS | Reassessment</option>
@@ -213,27 +211,13 @@
                             
                         </div>
                     </span>
-                    <span *ngIf="insurer_name !== 'Medicaid'">
-                        <div class="form-group local-forms">
-                            <select
-                                class="form-control form-select-solid fw-bolder"
-                                name="md" style="position: relative;top: 11px;" [(ngModel)]="data.rbt.md" (change)="isSelectedModifier($event.target.value)"  >
-                                <option>-- Select --</option>
-                                <option value="HM">HM | RBT</option>
-                                <option value="XE">XE | 2 sessions same day, same provider, different POS</option>
-                                <option value="HO">HO | BCBA</option>
-                                <option value="GT">GT | Telehealth</option>
-                                <option value="TS">TS | Reassessment</option>
-                                <option value="TS">95 | Telehealth (only AETNA) </option>
-                            </select>
-                        </div>
-                    </span>
                     
                 </td>
                 <!-- modificadores1 -->
                 <!-- modificadores Medicaid2 -->
                 <td>
-                    <span *ngIf="insurer_name == 'Medicaid'">
+                    <!-- *ngIf="insurer_name == 'Medicaid'" -->
+                    <span >
                         <div class="form-group local-forms">
                             <select
                                 class="form-control form-select-solid fw-bolder"
@@ -241,21 +225,7 @@
                                 <option>-- Select --</option>
                                 <option value="HM">HM | RBT</option>
                                 <option value="XE">XE | 2 sessions same day, same provider, different POS</option>
-                                <option value="HO">HO | BCBA</option>
-                                <option value="GT">GT | Telehealth</option>
-                                <option value="TS">TS | Reassessment</option>
-                                <option value="TS">95 | Telehealth (only AETNA) </option>
-                            </select>
-                        </div>
-                    </span>
-                    <span *ngIf="insurer_name !== 'Medicaid'">
-                        <div class="form-group local-forms">
-                            <select
-                                class="form-control form-select-solid fw-bolder"
-                                name="md2" style="position: relative;top: 11px;"  [(ngModel)]="data.rbt.md2"  (change)="isSelectedModifier2($event.target.value)"  >
-                                <option>-- Select --</option>
-                                <option value="HM">HM | RBT</option>
-                                <option value="XE">XE | 2 sessions same day, same provider, different POS</option>
+                                <option value="XP">XP | RBT overlap Not reimbursed</option>
                                 <option value="HO">HO | BCBA</option>
                                 <option value="GT">GT | Telehealth</option>
                                 <option value="TS">TS | Reassessment</option>
@@ -278,8 +248,8 @@
                 <td>{{unitPrize | currency }}</td>
                 <td>
                     {{(( data.rbt?.session_units_total * unitPrize  | currency))}}
-                    <span *ngIf="md == 'XE' || md2 == 'XE'">
-                       xe:{{(( data.rbt?.session_units_total * unitPrize * xe | currency))}}
+                    <span *ngIf="md == 'XP' || md2 == 'XP'">
+                        XP:{{(( data.rbt?.session_units_total * unitPrize * xp | currency))}}
                     </span>
                 </td>
                 <td>
@@ -309,7 +279,7 @@
                     </div>
                 </td>
 
-                <td>{{data.rbt?.created_at | date }}</td>
+                <!-- <td>{{data.rbt?.created_at | date }}</td> -->
 
                 <td class="text-end">
                     <div class="doctor-submit text-end">
@@ -338,9 +308,6 @@
                     <i class="fa  bg-success indicador" 
                     *ngIf="data.bcba?.status  === 'ok'"
                       [tooltip]="data.bcba?.status "></i>
-                    <i class="fa  bg-danger indicador" 
-                    *ngIf="data.bcba?.status  === 'no'"
-                      [tooltip]="data.bcba?.status "></i>
 
                 </td>
                 <td >
@@ -354,7 +321,6 @@
                     <option>-- Select --</option>
                     <option value="pending">Pending</option>
                       <option value="ok">Ok</option>
-                      <option value="no">No</option>
                       </select>
                   </td>
                 <td>
@@ -383,7 +349,8 @@
                 </td>
                 <!-- modificadores1 -->
                 <td>
-                    <span *ngIf="insurer_name == 'Medicaid'">
+                    <!-- *ngIf="insurer_name == 'Medicaid'" -->
+                    <span >
                         <div class="form-group local-forms">
                             <select
                                 class="form-control form-select-solid fw-bolder"
@@ -391,6 +358,7 @@
                                 <option>-- Select --</option>
                                 <option value="HM">HM | RBT</option>
                                 <option value="XE">XE | 2 sessions same day, same provider, different POS</option>
+                                <option value="XP">XP | RBT overlap Not reimbursed</option>
                                 <option value="HO">HO | BCBA</option>
                                 <option value="GT">GT | Telehealth</option>
                                 <option value="TS">TS | Reassessment</option>
@@ -399,27 +367,13 @@
                             
                         </div>
                     </span>
-                    <span *ngIf="insurer_name !== 'Medicaid'">
-                        <div class="form-group local-forms">
-                            <select
-                                class="form-control form-select-solid fw-bolder"
-                                name="mdbcba" style="position: relative;top: 11px;"  [(ngModel)]="data.bcba.mdbcba" (change)="isSelectedModifierBcba($event.target.value)"  >
-                                <option>-- Select --</option>
-                                <option value="HM">HM | RBT</option>
-                                <option value="XE">XE | 2 sessions same day, same provider, different POS</option>
-                                <option value="HO">HO | BCBA</option>
-                                <option value="GT">GT | BCBA</option>
-                                <option value="TS">TS | Reassessment</option>
-                                <option value="TS">95 | Telehealth </option>
-                            </select>
-                        </div>
-                    </span>
                     
                 </td>
                 <!-- modificadores1 -->
                 <!-- modificadores2 -->
                 <td>
-                    <span *ngIf="insurer_name == 'Medicaid'">
+                    <!-- *ngIf="insurer_name == 'Medicaid'" -->
+                    <span >
                         <div class="form-group local-forms">
                             <select
                                 class="form-control form-select-solid fw-bolder"
@@ -427,21 +381,7 @@
                                 <option>-- Select --</option>
                                 <option value="HM">HM | RBT</option>
                                 <option value="XE">XE | 2 sessions same day, same provider, different POS</option>
-                                <option value="HO">HO | BCBA</option>
-                                <option value="GT">GT | Telehealth</option>
-                                <option value="TS">TS | Reassessment</option>
-                                <option value="TS">95 | Telehealth (only AETNA) </option>
-                            </select>
-                        </div>
-                    </span>
-                    <span *ngIf="insurer_name !== 'Medicaid'">
-                        <div class="form-group local-forms">
-                            <select
-                                class="form-control form-select-solid fw-bolder"
-                                name="md2bcba" style="position: relative;top: 11px;"  [(ngModel)]="data.bcba.md2bcba"  (change)="isSelectedModifier2Bcba($event.target.value)"  >
-                                <option>-- Select --</option>
-                                <option value="HM">HM | RBT</option>
-                                <option value="XE">XE | 2 sessions same day, same provider, different POS</option>
+                                <option value="XP">XP | RBT overlap Not reimbursed</option>
                                 <option value="HO">HO | BCBA</option>
                                 <option value="GT">GT | Telehealth</option>
                                 <option value="TS">TS | Reassessment</option>
@@ -461,8 +401,8 @@
                 <td>{{unitPrize | currency}}</td>
                 <td>
                     {{(( data.bcba?.session_units_total * unitPrize  | currency))}}
-                    <span *ngIf="mdbcba == 'XE' || md2bcba == 'XE'">
-                       xe:{{(( data.bcba?.session_units_total * unitPrize * xe | currency))}}
+                    <span *ngIf="mdbcba == 'XP' || md2bcba == 'XP'">
+                        XP:{{(( data.bcba?.session_units_total * unitPrize * xp | currency))}}
                     </span>
                 </td>
                
@@ -493,7 +433,7 @@
                     </div>
                 </td>
 
-                <td>{{data.bcba?.created_at | date }}</td>
+                <!-- <td>{{data.bcba?.created_at | date }}</td> -->
 
                 <td class="text-end">
                     <div class="doctor-submit text-end">

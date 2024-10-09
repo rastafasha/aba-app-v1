@@ -141,22 +141,24 @@
                                                             {{data.name}}
                                                         </mat-option>
                                                     </mat-select> -->
-                                                    <input [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly
+                                                    <!-- <input [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly
                                                     [(ngModel)]="selectedValueTimeIn" name="time_in" [format]="24"   [max]="'12:00'" (onChange)="hourTimeInSelected($event)" [ngModelOptions]="{standalone: true}">
                                                     <ngx-material-timepicker-toggle [for]="toggleTimepicker"></ngx-material-timepicker-toggle>
-                                                    <ngx-material-timepicker #toggleTimepicker></ngx-material-timepicker>
+                                                    <ngx-material-timepicker #toggleTimepicker></ngx-material-timepicker> -->
 
-
+                                                    <input [ngxTimepicker]="toggleTimepicker" [(ngModel)]="selectedValueTimeIn" readonly
+                                                        [value]="selectedValueTimeIn" [format]="24"  [max]="'12:00'" class="form-control" name="time_in" >
+                                                    <ngx-material-timepicker (timeChanged)="hourTimeInSelected($event)" #toggleTimepicker></ngx-material-timepicker>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-6">
                                                 <div class="form-group local-forms">
                                                     <label>Time Out <span class="login-danger">*</span></label>
 
-                                                    <input [ngxTimepicker]="toggleTimepicker2" [disableClick]="true" readonly
-                                                    [(ngModel)]="selectedValueTimeOut" name="time_out" [format]="24"  [ngModelOptions]="{standalone: true}">
-                                                        
-                                                    <ngx-material-timepicker (timeChanged)="hourTimeOutSelected($event)" #toggleTimepicker2></ngx-material-timepicker>
+                          
+                                                    <input [ngxTimepicker]="toggleTimepicker2" [(ngModel)]="selectedValueTimeOut" readonly
+                                                    [value]="selectedValueTimeOut"  [format]="24" class="form-control" name="time_out2">
+                                                <ngx-material-timepicker (timeChanged)="hourTimeOutSelected($event)" #toggleTimepicker2></ngx-material-timepicker>
                                                 </div>
                                             </div>
                                         </div>

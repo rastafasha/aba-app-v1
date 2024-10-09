@@ -43,7 +43,7 @@ export class LogNotasComponent {
   public showFilter = false;
   public searchDataValue = '';
   public lastIndex = 0;
-  public pageSize = 7;
+  public pageSize = 50;
   public totalDataClientReport = 0;
   public skip = 0;
   public limit: number = this.pageSize;
@@ -88,7 +88,9 @@ export class LogNotasComponent {
   public unitPrize:number = 0;
   public unitPrizeCpt:number = 0;
   public xe:number = 0;
+  public xp:number = 0;
   public is_xe:boolean;
+  public is_xp:boolean;
   
   public session_date:any;
   public time_in:any;
@@ -612,9 +614,9 @@ export class LogNotasComponent {
     this.billing_selected = biilling;
   }
 
-  addXe(value:any){
-    this.xe = value;
-    // console.log(this.xe);
+  addXp(value:any){
+    this.xp = value;
+    // console.log(this.xp);
   }
 
   
@@ -686,7 +688,7 @@ export class LogNotasComponent {
       md2: this.md2,
       mdbcba: this.mdbcba,
       md2bcba: this.md2bcba,
-      xe: this.xe,
+      xe: this.xp,
       
       // charges: data.session_units_total * this.unitPrize,
       chargesrbt: data.rbt.session_units_total * this.unitPrize,
