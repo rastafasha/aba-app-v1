@@ -14,7 +14,7 @@ export class NoteBcbaService {
     public authService:AuthService
   ) { }
 
-  
+
 
 
   listNotes(){
@@ -23,7 +23,7 @@ export class NoteBcbaService {
     return this.http.get(URL, {headers:headers});
   }
 
-  
+
   getNote(client_id:any){
     let headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token})
     let URL = url_servicios+'/note_bcba/show/'+client_id;
@@ -34,7 +34,7 @@ export class NoteBcbaService {
     let URL = url_servicios+'/note_bcba/store';
     return this.http.post(URL,data, {headers:headers});
   }
-  
+
   editNote( data:any, client_id:any,){
     let headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token})
     let URL = url_servicios+'/note_bcba/update/'+client_id;
@@ -69,7 +69,7 @@ export class NoteBcbaService {
       map((resp: any) => resp)
     );
 
-    
+
   }
 
   updateStatus(data:any, client_id:any){
@@ -82,6 +82,12 @@ export class NoteBcbaService {
     let headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token});
     let URL = url_servicios+"/note_bcba/update/modifier/"+client_id;
     return this.http.put(URL,data,{headers:headers});
+  }
+
+  generateAISummary(data: any) {
+      const headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token});
+      const URL = url_servicios + '/note_bcba/generate-summary';
+      return this.http.post(URL, data, {headers:headers});
   }
 
 }
