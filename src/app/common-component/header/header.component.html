@@ -1,31 +1,56 @@
 <div class="header">
-    <div class="header-left">
-        <span  *ngIf="roles === 'SUPERADMIN' ">
-            <a [routerLink]="routes.adminDashboard" class="logo">
-                <img src="assets/webp/aba-logo-new.webp" width="35" height="27" alt=""> <span><b>ABA</b> Therapy</span>
-            </a>
-        </span>
-        <span  *ngIf="roles === 'RBT' || roles === 'BCBA'">
-            <a [routerLink]="['/doctors/profile/', user.id]" class="logo">
-                <img src="assets/webp/aba-logo-new.webp" width="35" height="27" alt=""> <span><b>ABA</b> Therapy</span>
-            </a>
-        </span>
-        <span  *ngIf="roles === 'MANAGER' ">
-            <a [routerLink]="['/location/view/', user.location_id]" class="logo">
-                <img src="assets/webp/aba-logo-new.webp" width="35" height="27" alt=""> <span><b>ABA</b> Therapy</span>
-            </a>
-        </span>
-    </div>
-    <a (click)="toggleSideBar()" id="toggle_btn" href="javascript:void(0);"><img src="assets/img/icons/bar-icon.svg"  alt=""></a>
-    <a (click)="toggleMobileSideBar()" id="mobile_btn" class="mobile_btn float-start" ><img src="assets/img/icons/bar-icon.svg"  alt=""></a>
-    <!-- <div class="top-nav-search mob-view">
+  <div class="header-left">
+    <span *ngIf="roles === 'SUPERADMIN'">
+      <a [routerLink]="routes.adminDashboard" class="logo">
+        <img
+          src="assets/webp/aba-logo-new.webp"
+          width="35"
+          height="27"
+          alt=""
+        />
+        <span><b>ABA</b> Therapy</span>
+      </a>
+    </span>
+    <span *ngIf="roles === 'RBT' || roles === 'BCBA'">
+      <a [routerLink]="['/doctors/profile/', user.id]" class="logo">
+        <img
+          src="assets/webp/aba-logo-new.webp"
+          width="35"
+          height="27"
+          alt=""
+        />
+        <span><b>ABA</b> Therapy</span>
+      </a>
+    </span>
+    <span *ngIf="roles === 'MANAGER'">
+      <a [routerLink]="['/location/view/', user.location_id]" class="logo">
+        <img
+          src="assets/webp/aba-logo-new.webp"
+          width="35"
+          height="27"
+          alt=""
+        />
+        <span><b>ABA</b> Therapy</span>
+      </a>
+    </span>
+  </div>
+  <a (click)="toggleSideBar()" id="toggle_btn" href="javascript:void(0);"
+    ><img src="assets/img/icons/bar-icon.svg" alt=""
+  /></a>
+  <a
+    (click)="toggleMobileSideBar()"
+    id="mobile_btn"
+    class="mobile_btn float-start"
+    ><img src="assets/img/icons/bar-icon.svg" alt=""
+  /></a>
+  <!-- <div class="top-nav-search mob-view">
         <form>
             <input type="text" class="form-control" placeholder="Search here">
             <a class="btn" ><img src="assets/img/icons/search-normal.svg" alt=""></a>
         </form>
     </div> -->
-    <ul class="nav user-menu float-end">
-        <!-- <li class="nav-item dropdown d-none d-sm-block">
+  <ul class="nav user-menu float-end">
+    <!-- <li class="nav-item dropdown d-none d-sm-block">
             <a href="javascript:void(0);" class="dropdown-toggle nav-link" data-bs-toggle="dropdown"><img src="assets/img/icons/note-icon-02.svg" alt=""><span class="pulse"></span> </a>
             <div class="dropdown-menu notifications">
                 <div class="topnav-dropdown-header">
@@ -100,46 +125,106 @@
         <li class="nav-item dropdown d-none d-sm-block">
             <a (click)="openBoxFunc()"  id="open_msg_box" class="hasnotifications nav-link"><img src="assets/img/icons/note-icon-01.svg" alt=""><span class="pulse"></span> </a>
         </li> -->
-        <li class="nav-item dropdown d-none d-sm-block">
-            <img class="globowhite"  (click)="darkMode('dark')" src="./assets/svg/luna.svg" alt="">
-            <img class="globoblack"  (click)="darkMode('dark')" src="./assets/svg/sol.svg" alt="">
-        </li> 
-        <li class="nav-item dropdown has-arrow user-profile-list">
-            <a href="javascript:void(0);" class="dropdown-toggle nav-link user-link" data-bs-toggle="dropdown">
-                <div class="user-names">
-                    <h5>{{user.name}} </h5>
-                    <span>{{user.roles}}</span>
-                </div>
-                <span class="user-img">
-                    <div *ngIf="user">
-                        <div *ngIf="!user.avatar">
-                            <img  src="assets/img/user-06.jpg" >
-                        </div>
-                        <div *ngIf="user.avatar">
-                            <img  src="{{imagenSerUrl}}{{user.avatar}}">
-                            <!-- <img  src="{{user.avatar}}"> -->
-                        </div>
-                    </div>
-                </span>
-            </a>
-            <div class="dropdown-menu">
-                <a *ngIf="user.roles =='SUPERADMIN'" class="dropdown-item" [routerLink]="['/doctors/profile/', user.id]">Mi Perfil</a>
-                <a *ngIf="user.roles =='MANAGER'" class="dropdown-item" [routerLink]="['/doctors/profile/', user.id]">Mi Perfil</a>
-                <a *ngIf="user.roles =='DOCTOR'" class="dropdown-item" [routerLink]="['/doctors/profile/', user.id]">Mi Perfil</a>
-                <a *ngIf="user.roles =='LM'" class="dropdown-item" [routerLink]="['/doctors/profile/', user.id]">Mi Perfil</a>
-                <a *ngIf="user.roles =='BCBA'" class="dropdown-item" [routerLink]="['/doctors/profile/', user.id]">Mi Perfil</a>
-                <a *ngIf="user.roles =='RBT'" class="dropdown-item" [routerLink]="['/doctors/profile/', user.id]">Mi Perfil</a>
-                
-                <a *ngIf="user.roles =='SUPERADMIN'" class="dropdown-item" [routerLink]="['/doctors/list/edit/', user.id]">Editar Perfil</a>
-                <a *ngIf="user.roles =='MANAGER'" class="dropdown-item" [routerLink]="['/doctors/list/edit/', user.id]">Editar Perfil</a>
-                <a *ngIf="user.roles =='DOCTOR'" class="dropdown-item" [routerLink]="['/doctors/list/edit/', user.id]">Editar Perfil</a>
-                <!-- <a *ngIf="user.roles =='LM'" class="dropdown-item" [routerLink]="['/doctors/list/edit/', user.id]">Editar Perfil</a> -->
-                <!-- <a *ngIf="user.roles =='BCBA'" class="dropdown-item" [routerLink]="['/doctors/list/edit/', user.id]">Editar Perfil</a> -->
-                <!-- <a *ngIf="user.roles =='RBT'" class="dropdown-item" [routerLink]="['/doctors/list/edit/', user.id]">Editar Perfil</a> -->
-                
-                <a class="dropdown-item" style="cursor: pointer;"(click)="logout()">Salir</a>
+    <li class="nav-item dropdown d-none d-sm-block">
+      <img
+        class="globowhite"
+        (click)="darkMode('dark')"
+        src="./assets/svg/luna.svg"
+        alt=""
+      />
+      <img
+        class="globoblack"
+        (click)="darkMode('dark')"
+        src="./assets/svg/sol.svg"
+        alt=""
+      />
+    </li>
+    <li *ngIf="user" class="nav-item dropdown has-arrow user-profile-list">
+      <a
+        href="javascript:void(0);"
+        class="dropdown-toggle nav-link user-link"
+        data-bs-toggle="dropdown"
+      >
+        <div class="user-names">
+          <h5>{{ user.name }}</h5>
+          <span>{{ user.roles }}</span>
+        </div>
+        <span class="user-img">
+          <div *ngIf="user">
+            <div *ngIf="!user.avatar">
+              <img src="assets/img/user-06.jpg" />
             </div>
-        </li>
-    </ul>
-    
+            <div *ngIf="user.avatar">
+              <img src="{{ imagenSerUrl }}{{ user.avatar }}" />
+              <!-- <img  src="{{user.avatar}}"> -->
+            </div>
+          </div>
+        </span>
+      </a>
+      <div class="dropdown-menu">
+        <a
+          *ngIf="roles === 'SUPERADMIN'"
+          class="dropdown-item"
+          [routerLink]="['/doctors/profile/', user.id]"
+          >Mi Perfil</a
+        >
+        <a
+          *ngIf="roles === 'MANAGER'"
+          class="dropdown-item"
+          [routerLink]="['/doctors/profile/', user.id]"
+          >Mi Perfil</a
+        >
+        <a
+          *ngIf="roles === 'DOCTOR'"
+          class="dropdown-item"
+          [routerLink]="['/doctors/profile/', user.id]"
+          >Mi Perfil</a
+        >
+        <a
+          *ngIf="roles === 'LM'"
+          class="dropdown-item"
+          [routerLink]="['/doctors/profile/', user.id]"
+          >Mi Perfil</a
+        >
+        <a
+          *ngIf="roles === 'BCBA'"
+          class="dropdown-item"
+          [routerLink]="['/doctors/profile/', user.id]"
+          >Mi Perfil</a
+        >
+        <a
+          *ngIf="roles === 'RBT'"
+          class="dropdown-item"
+          [routerLink]="['/doctors/profile/', user.id]"
+          >Mi Perfil</a
+        >
+
+        <a
+          *ngIf="roles === 'SUPERADMIN'"
+          class="dropdown-item"
+          [routerLink]="['/doctors/list/edit/', user.id]"
+          >Editar Perfil</a
+        >
+        <a
+          *ngIf="roles === 'MANAGER'"
+          class="dropdown-item"
+          [routerLink]="['/doctors/list/edit/', user.id]"
+          >Editar Perfil</a
+        >
+        <a
+          *ngIf="roles === 'DOCTOR'"
+          class="dropdown-item"
+          [routerLink]="['/doctors/list/edit/', user.id]"
+          >Editar Perfil</a
+        >
+        <!-- <a *ngIf="roles === 'LM'" class="dropdown-item" [routerLink]="['/doctors/list/edit/', user.id]">Editar Perfil</a> -->
+        <!-- <a *ngIf="roles === 'BCBA'" class="dropdown-item" [routerLink]="['/doctors/list/edit/', user.id]">Editar Perfil</a> -->
+        <!-- <a *ngIf="roles === 'RBT'" class="dropdown-item" [routerLink]="['/doctors/list/edit/', user.id]">Editar Perfil</a> -->
+
+        <a class="dropdown-item" style="cursor: pointer" (click)="logout()"
+          >Salir</a
+        >
+      </div>
+    </li>
+  </ul>
 </div>

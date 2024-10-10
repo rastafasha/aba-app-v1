@@ -1,17 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { routes } from 'src/app/shared/routes/routes';
-import { MatTableDataSource } from "@angular/material/table";
-import { pageSelection, apiResultFormat, patientsList } from 'src/app/shared/models/models';
+import { AppRoutes } from 'src/app/shared/routes/routes';
+import { MatTableDataSource } from '@angular/material/table';
+import {
+  pageSelection,
+  apiResultFormat,
+  patientsList,
+} from 'src/app/shared/models/models';
 import { Sort } from '@angular/material/sort';
 import { DataService } from 'src/app/shared/data/data.service';
 
 @Component({
   selector: 'app-patients-list',
   templateUrl: './patients-list.component.html',
-  styleUrls: ['./patients-list.component.scss']
+  styleUrls: ['./patients-list.component.scss'],
 })
 export class PatientsListComponent implements OnInit {
-  public routes = routes;
+  public routes = AppRoutes;
   public patientsList: Array<patientsList> = [];
   dataSource!: MatTableDataSource<patientsList>;
 
@@ -29,9 +33,7 @@ export class PatientsListComponent implements OnInit {
   public pageSelection: Array<pageSelection> = [];
   public totalPages = 0;
 
-  constructor(public data : DataService){
-
-  }
+  constructor(public data: DataService) {}
   ngOnInit() {
     this.getTableData();
   }
@@ -44,7 +46,6 @@ export class PatientsListComponent implements OnInit {
       data.data.map((res: patientsList, index: number) => {
         const serialNumber = index + 1;
         if (index >= this.skip && serialNumber <= this.limit) {
-          
           this.patientsList.push(res);
           this.serialNumberArray.push(serialNumber);
         }
@@ -66,9 +67,9 @@ export class PatientsListComponent implements OnInit {
       this.patientsList = data;
     } else {
       this.patientsList = data.sort((a, b) => {
-         // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const aValue = (a as any)[sort.active];
-         // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const bValue = (b as any)[sort.active];
         return (aValue < bValue ? -1 : 1) * (sort.direction === 'asc' ? 1 : -1);
       });

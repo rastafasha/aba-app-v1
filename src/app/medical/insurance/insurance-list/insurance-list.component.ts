@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { FileSaverService } from 'ngx-filesaver';
-import { routes } from 'src/app/shared/routes/routes';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import * as XLSX from 'xlsx';
 import { InsuranceService } from '../service/insurance.service';
 import { Location } from '@angular/common';
-declare var $:any; 
+declare var $: any;
 
 @Component({
   selector: 'app-insurance-list',
   templateUrl: './insurance-list.component.html',
-  styleUrls: ['./insurance-list.component.scss']
+  styleUrls: ['./insurance-list.component.scss'],
 })
 export class InsuranceListComponent {
-  public routes = routes;
+  public routes = AppRoutes;
 
   public insuranceList: any = [];
   dataSource!: MatTableDataSource<any>;
@@ -33,19 +33,17 @@ export class InsuranceListComponent {
   public pageSelection: Array<any> = [];
   public totalPages = 0;
 
-  public insurance_generals:any = [];
-  public insurance_id:any;
-  public insurance_selected:any;
-  public text_validation:any;
+  public insurance_generals: any = [];
+  public insurance_id: any;
+  public insurance_selected: any;
+  public text_validation: any;
 
   constructor(
     public doctorService: DoctorService,
     private fileSaver: FileSaverService,
-    public insuranceService:InsuranceService,
-    public location:Location,
-    ){
-
-  }
+    public insuranceService: InsuranceService,
+    public location: Location
+  ) {}
   ngOnInit() {
     window.scrollTo(0, 0);
     this.doctorService.closeMenuSidebar();
@@ -59,26 +57,23 @@ export class InsuranceListComponent {
     this.insuranceList = [];
     this.serialNumberArray = [];
 
-    this.insuranceService.listInsurances().subscribe((resp:any)=>{
-      
+    this.insuranceService.listInsurances().subscribe((resp: any) => {
       console.log(resp);
 
       this.totalDataInsurance = resp.insurances.data.length;
       this.insurance_generals = resp.insurances.data;
       this.insurance_id = resp.insurances.id;
-     this.getTableDataGeneral();
-    })
-
+      this.getTableDataGeneral();
+    });
   }
 
-  getTableDataGeneral(){
+  getTableDataGeneral() {
     this.insuranceList = [];
     this.serialNumberArray = [];
-    
+
     this.insurance_generals.map((res: any, index: number) => {
       const serialNumber = index + 1;
       if (index >= this.skip && serialNumber <= this.limit) {
-       
         this.insuranceList.push(res);
         this.serialNumberArray.push(serialNumber);
       }
@@ -86,33 +81,33 @@ export class InsuranceListComponent {
     this.dataSource = new MatTableDataSource<any>(this.insuranceList);
     this.calculateTotalPages(this.totalDataInsurance, this.pageSize);
   }
-  selectInsurance(insurance:any){
+  selectInsurance(insurance: any) {
     this.insurance_selected = insurance;
   }
-  deleteInsurance(){
+  deleteInsurance() {
+    this.insuranceService
+      .deleteInsurance(this.insurance_selected.id)
+      .subscribe((resp: any) => {
+        // console.log(resp);
 
-    this.insuranceService.deleteInsurance(this.insurance_selected.id).subscribe((resp:any)=>{
-      // console.log(resp);
+        if (resp.message == 403) {
+          this.text_validation = resp.message_text;
+        } else {
+          let INDEX = this.insuranceList.findIndex(
+            (item: any) => item.id == this.insurance_selected.id
+          );
+          if (INDEX != -1) {
+            this.insuranceList.splice(INDEX, 1);
 
-      if(resp.message == 403){
-        this.text_validation = resp.message_text;
-      }else{
-
-        let INDEX = this.insuranceList.findIndex((item:any)=> item.id == this.insurance_selected.id);
-      if(INDEX !=-1){
-        this.insuranceList.splice(INDEX,1);
-
-        $('#delete_insurance').hide();
-        $("#delete_insurance").removeClass("show");
-        $(".modal-backdrop").remove();
-        $("body").removeClass();
-        $("body").removeAttr("style");
-        this.insurance_selected = null;
-      }
-      }
-
-      
-    })
+            $('#delete_insurance').hide();
+            $('#delete_insurance').removeClass('show');
+            $('.modal-backdrop').remove();
+            $('body').removeClass();
+            $('body').removeAttr('style');
+            this.insurance_selected = null;
+          }
+        }
+      });
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -189,31 +184,33 @@ export class InsuranceListComponent {
     }
   }
 
-  excelExport(){
-    const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8';
+  excelExport() {
+    const EXCEL_TYPE =
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8';
     const EXCLE_EXTENSION = '.xlsx';
 
     this.getTableDataGeneral();
-
 
     //custom code
     const worksheet = XLSX.utils.json_to_sheet(this.insurance_generals);
 
     const workbook = {
-      Sheets:{
-        'testingSheet': worksheet
+      Sheets: {
+        testingSheet: worksheet,
       },
-      SheetNames:['testingSheet']
-    }
+      SheetNames: ['testingSheet'],
+    };
 
-    const excelBuffer = XLSX.write(workbook, {bookType:'xlsx', type: 'array'});
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
 
-    const blobData = new Blob([excelBuffer],{type: EXCEL_TYPE});
+    const blobData = new Blob([excelBuffer], { type: EXCEL_TYPE });
 
-    this.fileSaver.save(blobData, "insurance_db_aba_therapy",)
-
+    this.fileSaver.save(blobData, 'insurance_db_aba_therapy');
   }
-  csvExport(){
+  csvExport() {
     const CSV_TYPE = 'csv/csv';
     const CSV_EXTENSION = '.csv';
 
@@ -223,63 +220,65 @@ export class InsuranceListComponent {
     const worksheet = XLSX.utils.json_to_sheet(this.insurance_generals);
 
     const workbook = {
-      Sheets:{
-        'testingSheet': worksheet
+      Sheets: {
+        testingSheet: worksheet,
       },
-      SheetNames:['testingSheet']
-    }
+      SheetNames: ['testingSheet'],
+    };
 
-    const excelBuffer = XLSX.write(workbook, {bookType:'csv', type: 'array'});
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'csv',
+      type: 'array',
+    });
 
-    const blobData = new Blob([excelBuffer],{type: CSV_TYPE});
+    const blobData = new Blob([excelBuffer], { type: CSV_TYPE });
 
-    this.fileSaver.save(blobData, "insurance_db_aba_therapy_csv", CSV_EXTENSION)
-
+    this.fileSaver.save(
+      blobData,
+      'insurance_db_aba_therapy_csv',
+      CSV_EXTENSION
+    );
   }
 
-  txtExport(){
+  txtExport() {
     const TXT_TYPE = 'text/txt';
     const TXT_EXTENSION = '.txt';
 
     this.getTableDataGeneral();
 
-
     //custom code
     const worksheet = XLSX.utils.json_to_sheet(this.insurance_generals);
 
     const workbook = {
-      Sheets:{
-        'testingSheet': worksheet
+      Sheets: {
+        testingSheet: worksheet,
       },
-      SheetNames:['testingSheet']
-    }
+      SheetNames: ['testingSheet'],
+    };
 
-    const excelBuffer = XLSX.write(workbook, {bookType:'xlsx', type: 'array'});
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
 
-    const blobData = new Blob([excelBuffer],{type: TXT_TYPE});
+    const blobData = new Blob([excelBuffer], { type: TXT_TYPE });
 
-    this.fileSaver.save(blobData, "insurance_db_aba_therapy", TXT_EXTENSION)
-
+    this.fileSaver.save(blobData, 'insurance_db_aba_therapy', TXT_EXTENSION);
   }
 
-  pdfExport(){
-    // var doc = new jspdf(); 
-    
+  pdfExport() {
+    // var doc = new jspdf();
     // const worksheet = XLSX.utils.json_to_sheet(this.insurance_generals);
-
     // const workbook = {
     //   Sheets:{
     //     'testingSheet': worksheet
     //   },
     //   SheetNames:['testingSheet']
     // }
-
     // doc.html(document.body, {
     //   callback: function (doc) {
     //     doc.save('doctors_db_aba_project.pdf');
     //   }
     // });
-
   }
-
 }

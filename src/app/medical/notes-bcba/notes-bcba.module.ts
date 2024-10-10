@@ -12,8 +12,7 @@ import { NoteBcbaViewComponent } from './note-bcba-view/note-bcba-view.component
 import { NotesBcbaRoutingModule } from './notes-bcba-routing.module';
 import { NotesBcbaComponent } from './notes-bcba.component';
 import { NoteBcbaComponent } from './note-bcba/note-bcba.component';
-import { PipesModule } from 'src/app/pipes/pipes.module';
-
+import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -21,13 +20,13 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
     NoteBcbaViewComponent,
     NoteBcbaByClientComponent,
     NoteBcbaEditComponent,
-    NoteBcbaComponent
+    NoteBcbaComponent,
   ],
   exports: [
     NotesBcbaComponent,
     NoteBcbaViewComponent,
     NoteBcbaByClientComponent,
-    NoteBcbaEditComponent
+    NoteBcbaEditComponent,
   ],
   imports: [
     CommonModule,
@@ -38,7 +37,7 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
     RouterModule,
     SharedModule,
     ComponentsModule,
-    PipesModule
-  ]
+    PipesModule,
+  ],
 })
-export class NotesBcbaModule { }
+export class NotesBcbaModule {}

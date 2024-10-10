@@ -1,37 +1,37 @@
 import { Component } from '@angular/core';
-import { routes } from 'src/app/shared/routes/routes';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 interface data {
-  value: string ;
+  value: string;
 }
 @Component({
   selector: 'app-general-settings',
   templateUrl: './general-settings.component.html',
-  styleUrls: ['./general-settings.component.scss']
+  styleUrls: ['./general-settings.component.scss'],
 })
 export class GeneralSettingsComponent {
-  public routes = routes;
+  public routes = AppRoutes;
   public deleteIcon1 = true;
-  public deleteIcon2  = true;
-  public selectedValue! : string ;
+  public deleteIcon2 = true;
+  public selectedValue!: string;
 
-  deleteIconFunc1(){
-    this.deleteIcon1 = !this.deleteIcon1
+  deleteIconFunc1() {
+    this.deleteIcon1 = !this.deleteIcon1;
   }
-  deleteIconFunc2(){
-    this.deleteIcon2 = !this.deleteIcon2
+  deleteIconFunc2() {
+    this.deleteIcon2 = !this.deleteIcon2;
   }
-  
-selectedList1: data[] = [
-  {value: 'Select'},
-  {value: 'California'},
-  {value: 'Tasmania'},
-  {value: 'Auckland'},
-  {value: 'Marlborough'},
-];
-selectedList2: data[] = [
-  {value: 'India'},
-  {value: 'London'},
-  {value: 'France'},
-  {value: 'USA'},
-];
+
+  selectedList1: data[] = [
+    { value: 'Select' },
+    { value: 'California' },
+    { value: 'Tasmania' },
+    { value: 'Auckland' },
+    { value: 'Marlborough' },
+  ];
+  selectedList2: data[] = [
+    { value: 'India' },
+    { value: 'London' },
+    { value: 'France' },
+    { value: 'USA' },
+  ];
 }

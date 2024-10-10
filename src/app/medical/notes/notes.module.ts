@@ -12,11 +12,10 @@ import { NotesComponent } from './notes.component';
 import { NotesByClientComponent } from './notes-by-client/notes-by-client.component';
 import { EditNoteRbtComponent } from './edit-note-rbt/edit-note-rbt.component';
 import { NoteRbtViewComponent } from './note-rbt-view/note-rbt-view.component';
-import { PipesModule } from 'src/app/pipes/pipes.module';
+import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 import { MaladaptivesComponent } from './components/maladaptives/maladaptives.component';
 import { ReplacementsComponent } from './components/replacements/replacements.component';
 import { InterventionsComponent } from './components/interventions/interventions.component';
-
 
 @NgModule({
   declarations: [
@@ -29,11 +28,7 @@ import { InterventionsComponent } from './components/interventions/interventions
     ReplacementsComponent,
     InterventionsComponent,
   ],
-  exports: [
-    NotesComponent,
-    NoteRbtComponent,
-    NotesByClientComponent
-  ],
+  exports: [NotesComponent, NoteRbtComponent, NotesByClientComponent],
   imports: [
     CommonModule,
     NotesRoutingModule,
@@ -43,7 +38,7 @@ import { InterventionsComponent } from './components/interventions/interventions
     RouterModule,
     SharedModule,
     ComponentsModule,
-    PipesModule
-  ]
+    PipesModule,
+  ],
 })
-export class NotesModule { }
+export class NotesModule {}

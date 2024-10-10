@@ -1,24 +1,22 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { routes } from 'src/app/shared/routes/routes';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 
 @Component({
   selector: 'app-lock-screen',
   templateUrl: './lock-screen.component.html',
-  styleUrls: ['./lock-screen.component.scss']
+  styleUrls: ['./lock-screen.component.scss'],
 })
 export class LockScreenComponent {
-  public routes = routes;
-  public passwordClass  = false;
+  public routes = AppRoutes;
+  public passwordClass = false;
 
-  constructor(public router : Router){
+  constructor(public router: Router) {}
 
+  direction() {
+    this.router.navigate([AppRoutes.login]);
   }
-  
-  direction(){
-    this.router.navigate([routes.login])
-  }
-  togglePassword(){
-    this.passwordClass = !this.passwordClass
+  togglePassword() {
+    this.passwordClass = !this.passwordClass;
   }
 }

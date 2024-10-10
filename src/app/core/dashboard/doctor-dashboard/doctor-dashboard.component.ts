@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { routes } from 'src/app/shared/routes/routes';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 import {
   ChartComponent,
   ApexAxisChartSeries,
@@ -20,7 +20,7 @@ import {
 import { DashboardService } from '../service/dashboard.service';
 import { DoctorService } from 'src/app/medical/doctors/service/doctor.service';
 interface data {
-  value: string ;
+  value: string;
 }
 export type ChartOptions = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -62,41 +62,40 @@ export type ChartOptions = {
   styleUrls: ['./doctor-dashboard.component.scss'],
 })
 export class DoctorDashboardComponent {
-  public routes = routes;
+  public routes = AppRoutes;
   @ViewChild('chart') chart!: ChartComponent;
   public chartOptionsOne: Partial<ChartOptions>;
   public chartOptionsTwo: Partial<ChartOptions>;
   public chartOptionsThree: Partial<ChartOptions>;
-  public selectedValue: string = "2023"  ;
+  public selectedValue: string = '2023';
 
-  public doctors:any = [];
-  public doctor_id:any;
+  public doctors: any = [];
+  public doctor_id: any;
 
+  public appointments: any = [];
+  public num_appointments_current: number = 0;
+  public num_appointments_before: number = 0;
+  public porcentaje_d: number = 0;
+  public num_appointments_attention_current: number = 0;
+  public num_appointments_attention_before: number = 0;
+  public porcentaje_da: number = 0;
+  public num_appointments_total_pay_current: number = 0;
+  public num_appointments_total_pay_before: number = 0;
+  public porcentaje_dtp: number = 0;
+  public num_appointments_total_pending_current: number = 0;
+  public num_appointments_total_pending_before: number = 0;
+  public porcentaje_dtpn: number = 0;
 
-  public appointments:any = []
-  public num_appointments_current:number = 0;
-  public num_appointments_before:number = 0;
-  public porcentaje_d:number = 0;
-  public num_appointments_attention_current:number = 0;
-  public num_appointments_attention_before:number = 0;
-  public porcentaje_da:number = 0;
-  public num_appointments_total_pay_current:number = 0;
-  public num_appointments_total_pay_before:number = 0;
-  public porcentaje_dtp:number = 0;
-  public num_appointments_total_pending_current:number = 0;
-  public num_appointments_total_pending_before:number = 0;
-  public porcentaje_dtpn:number = 0;
+  public query_income_year: any = [];
+  public query_patient_by_genders: any = [];
+  public query_n_appointment_year: any = [];
+  public query_n_appointment_year_before: any = [];
 
-  public query_income_year:any = [];
-  public query_patient_by_genders:any = [];
-  public query_n_appointment_year:any = [];
-  public query_n_appointment_year_before:any = [];
-
-  public user:any;
+  public user: any;
 
   constructor(
-    public dashboardService:DashboardService,
-    public doctorService:DoctorService,
+    public dashboardService: DashboardService,
+    public doctorService: DoctorService
   ) {
     this.chartOptionsOne = {
       chart: {
@@ -107,18 +106,18 @@ export class DoctorDashboardComponent {
         },
       },
       grid: {
-        show: true, 
+        show: true,
         xaxis: {
           lines: {
-            show: false
-           }
-         },  
-        yaxis: {
-          lines: { 
-            show: true 
-           }
-         },   
+            show: false,
+          },
         },
+        yaxis: {
+          lines: {
+            show: true,
+          },
+        },
+      },
       dataLabels: {
         enabled: false,
       },
@@ -127,7 +126,7 @@ export class DoctorDashboardComponent {
       },
       series: [],
       xaxis: {
-        categories: []//['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+        categories: [], //['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
       },
     };
     this.chartOptionsTwo = {
@@ -178,18 +177,18 @@ export class DoctorDashboardComponent {
         },
       },
       grid: {
-        show: true, 
+        show: true,
         xaxis: {
           lines: {
-            show: false
-           }
-         },  
-        yaxis: {
-          lines: { 
-            show: true 
-           }
-         },   
+            show: false,
+          },
         },
+        yaxis: {
+          lines: {
+            show: true,
+          },
+        },
+      },
       responsive: [
         {
           breakpoint: 480,
@@ -251,58 +250,64 @@ export class DoctorDashboardComponent {
     this.doctorService.closeMenuSidebar();
     window.scrollTo(0, 0);
     this.getDoctors();
-    let USER = localStorage.getItem("user");
-    this.user = JSON.parse(USER ? USER: '');
+    const USER = localStorage.getItem('user');
+    this.user = JSON.parse(USER ? USER : '');
   }
 
-  getDoctors(){
-    this.dashboardService.getConfigDashboard().subscribe((resp:any)=>{
+  getDoctors() {
+    this.dashboardService.getConfigDashboard().subscribe((resp: any) => {
       // console.log(resp);
       this.doctors = resp.doctors;
-    })
+    });
   }
 
-  dashboardDoctor(){
-    let data ={
-      doctor_id:this.doctor_id
-    }
-    this.dashboardService.dashboardDoctor(data).subscribe((resp:any)=>{
+  dashboardDoctor() {
+    let data = {
+      doctor_id: this.doctor_id,
+    };
+    this.dashboardService.dashboardDoctor(data).subscribe((resp: any) => {
       // console.log(resp);
 
-      this.appointments= resp.appointments.data;
+      this.appointments = resp.appointments.data;
 
-      this.num_appointments_current= resp.num_appointments_current;
-      this.num_appointments_before= resp.num_appointments_before;
-      this.porcentaje_d= resp.porcentaje_d;
+      this.num_appointments_current = resp.num_appointments_current;
+      this.num_appointments_before = resp.num_appointments_before;
+      this.porcentaje_d = resp.porcentaje_d;
 
-      this.num_appointments_attention_current= resp.num_appointments_attention_current;
-      this.num_appointments_attention_before= resp.num_appointments_attention_before;
-      this.porcentaje_da= resp.porcentaje_da;
+      this.num_appointments_attention_current =
+        resp.num_appointments_attention_current;
+      this.num_appointments_attention_before =
+        resp.num_appointments_attention_before;
+      this.porcentaje_da = resp.porcentaje_da;
 
-      this.num_appointments_total_pay_current= resp.num_appointments_total_pay_current;
-      this.num_appointments_total_pay_before= resp.num_appointments_total_pay_before;
-      this.porcentaje_dtp= resp.porcentaje_dtp;
+      this.num_appointments_total_pay_current =
+        resp.num_appointments_total_pay_current;
+      this.num_appointments_total_pay_before =
+        resp.num_appointments_total_pay_before;
+      this.porcentaje_dtp = resp.porcentaje_dtp;
 
-      this.num_appointments_total_pending_current= resp.num_appointments_total_pending_current;
-      this.num_appointments_total_pending_before= resp.num_appointments_total_pending_before;
-      this.porcentaje_dtpn= resp.porcentaje_dtpn;
-    })
+      this.num_appointments_total_pending_current =
+        resp.num_appointments_total_pending_current;
+      this.num_appointments_total_pending_before =
+        resp.num_appointments_total_pending_before;
+      this.porcentaje_dtpn = resp.porcentaje_dtpn;
+    });
   }
-  dashboardDoctorYear(){
-    let data ={
+  dashboardDoctorYear() {
+    let data = {
       year: this.selectedValue,
-      doctor_id:this.doctor_id
-    }
+      doctor_id: this.doctor_id,
+    };
     this.query_income_year = null;
-    this.query_n_appointment_year= null;
-    this.query_n_appointment_year_before= null;
-    this.dashboardService.dashboardDoctorYear(data).subscribe((resp:any)=>{
+    this.query_n_appointment_year = null;
+    this.query_n_appointment_year_before = null;
+    this.dashboardService.dashboardDoctorYear(data).subscribe((resp: any) => {
       // console.log(resp);
 
       //start
       this.query_income_year = resp.query_income_year;
-      let data_income:any = [];
-      this.query_income_year.forEach((element:any) => {
+      let data_income: any = [];
+      this.query_income_year.forEach((element: any) => {
         data_income.push(element.income);
       });
 
@@ -315,18 +320,18 @@ export class DoctorDashboardComponent {
           },
         },
         grid: {
-          show: true, 
+          show: true,
           xaxis: {
             lines: {
-              show: false
-             }
-           },  
-          yaxis: {
-            lines: { 
-              show: true 
-             }
-           },   
+              show: false,
+            },
           },
+          yaxis: {
+            lines: {
+              show: true,
+            },
+          },
+        },
         dataLabels: {
           enabled: false,
         },
@@ -334,17 +339,17 @@ export class DoctorDashboardComponent {
           curve: 'smooth',
         },
         series: [
-            {
-              name: 'Income',
-              color: '#2E37A4',
-              data: data_income,
-            },
-          ],
+          {
+            name: 'Income',
+            color: '#2E37A4',
+            data: data_income,
+          },
+        ],
         xaxis: {
           categories: resp.months_name,
         },
       };
-      
+
       // this.chartOptionsOne.xaxis.categories = resp.months_name
       // this.chartOptionsOne.series = [
       //   {
@@ -354,12 +359,12 @@ export class DoctorDashboardComponent {
       //   },
       // ]
       //end
-      
+
       //start
       this.query_patient_by_genders = resp.query_patients_by_gender;
-      let data_by_gender:any = [];
+      let data_by_gender: any = [];
 
-      this.query_patient_by_genders.forEach((item:any) => {
+      this.query_patient_by_genders.forEach((item: any) => {
         data_by_gender.push(parseInt(item.hombre));
         data_by_gender.push(parseInt(item.mujer));
       });
@@ -367,18 +372,19 @@ export class DoctorDashboardComponent {
       this.chartOptionsTwo.series = data_by_gender;
       //end
       //start
-      this.query_n_appointment_year= resp.query_n_appointment_year;
-      this.query_n_appointment_year_before= resp.query_n_appointment_year_before;
-      
-      let n_appointment_year:any =[]
-      this.query_n_appointment_year.forEach((item:any)=>{
+      this.query_n_appointment_year = resp.query_n_appointment_year;
+      this.query_n_appointment_year_before =
+        resp.query_n_appointment_year_before;
+
+      let n_appointment_year: any = [];
+      this.query_n_appointment_year.forEach((item: any) => {
         n_appointment_year.push(item.count_appointments);
-      })
-      let n_appointment_year_before:any =[];
-      this.query_n_appointment_year_before.forEach((item:any)=>{
+      });
+      let n_appointment_year_before: any = [];
+      this.query_n_appointment_year_before.forEach((item: any) => {
         n_appointment_year_before.push(item.count_appointments);
-      })
-      
+      });
+
       this.chartOptionsThree = {
         chart: {
           height: 230,
@@ -389,18 +395,18 @@ export class DoctorDashboardComponent {
           },
         },
         grid: {
-          show: true, 
+          show: true,
           xaxis: {
             lines: {
-              show: false
-             }
-           },  
-          yaxis: {
-            lines: { 
-              show: true 
-             }
-           },   
+              show: false,
+            },
           },
+          yaxis: {
+            lines: {
+              show: true,
+            },
+          },
+        },
         responsive: [
           {
             breakpoint: 480,
@@ -429,13 +435,13 @@ export class DoctorDashboardComponent {
         },
         series: [
           {
-            name: (parseInt(this.selectedValue))+"",
+            name: parseInt(this.selectedValue) + '',
             color: '#2E37A4',
             data: n_appointment_year,
           },
           {
-            name: (parseInt(this.selectedValue) - 1)+"",
-            
+            name: parseInt(this.selectedValue) - 1 + '',
+
             color: '#D5D7ED',
             data: n_appointment_year_before,
           },
@@ -445,31 +451,29 @@ export class DoctorDashboardComponent {
         },
       };
       //end
-    })
+    });
   }
 
-  selectDoctor(){
-     
+  selectDoctor() {
     this.dashboardDoctor();
     this.dashboardDoctorYear();
   }
 
-  selectedYear(){
+  selectedYear() {
     this.dashboardDoctorYear();
   }
 
   selecedList: data[] = [
-    {value: '2022'},
-    {value: '2023'},
-    {value: '2024'},
-    {value: '2025'},
-    {value: '2026'},
-    
+    { value: '2022' },
+    { value: '2023' },
+    { value: '2024' },
+    { value: '2025' },
+    { value: '2026' },
   ];
   selecedLists: data[] = [
-    {value: 'This Week'},
-    {value: 'Last Week'},
-    {value: 'This Month'},
-    {value: 'Last Month'},
+    { value: 'This Week' },
+    { value: 'Last Week' },
+    { value: 'This Month' },
+    { value: 'Last Month' },
   ];
 }

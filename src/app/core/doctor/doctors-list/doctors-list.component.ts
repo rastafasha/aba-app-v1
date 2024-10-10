@@ -1,17 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/shared/data/data.service';
-import { routes } from 'src/app/shared/routes/routes';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 import { Sort } from '@angular/material/sort';
-import { MatTableDataSource } from "@angular/material/table";
-import { pageSelection, apiResultFormat, doctorlist } from 'src/app/shared/models/models';
+import { MatTableDataSource } from '@angular/material/table';
+import {
+  pageSelection,
+  apiResultFormat,
+  doctorlist,
+} from 'src/app/shared/models/models';
 
 @Component({
   selector: 'app-doctors-list',
   templateUrl: './doctors-list.component.html',
-  styleUrls: ['./doctors-list.component.scss']
+  styleUrls: ['./doctors-list.component.scss'],
 })
-export class DoctorsListComponent implements OnInit{
-  public routes = routes;
+export class DoctorsListComponent implements OnInit {
+  public routes = AppRoutes;
   public doctorsList: Array<doctorlist> = [];
   dataSource!: MatTableDataSource<doctorlist>;
 
@@ -29,9 +33,7 @@ export class DoctorsListComponent implements OnInit{
   public pageSelection: Array<pageSelection> = [];
   public totalPages = 0;
 
-  constructor(public data : DataService){
-
-  }
+  constructor(public data: DataService) {}
   ngOnInit() {
     this.getTableData();
   }
@@ -44,7 +46,6 @@ export class DoctorsListComponent implements OnInit{
       data.data.map((res: doctorlist, index: number) => {
         const serialNumber = index + 1;
         if (index >= this.skip && serialNumber <= this.limit) {
-         
           this.doctorsList.push(res);
           this.serialNumberArray.push(serialNumber);
         }

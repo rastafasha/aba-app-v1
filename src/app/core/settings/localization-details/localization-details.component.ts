@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { routes } from 'src/app/shared/routes/routes';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 
 interface data {
-  value: string ;
+  value: string;
 }
 @Component({
   selector: 'app-localization-details',
@@ -10,8 +10,8 @@ interface data {
   styleUrls: ['./localization-details.component.scss'],
 })
 export class LocalizationDetailsComponent {
-  public routes = routes;
-  public selectedValue !: string ;
+  public routes = AppRoutes;
+  public selectedValue!: string;
 
   selectedList1: data[] = [
     { value: '(UTC +5:30) Antarctica/Palmer' },

@@ -1,27 +1,27 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { routes } from 'src/app/shared/routes/routes';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 interface data {
-  value: string ;
+  value: string;
 }
 @Component({
   selector: 'app-edit-appointment',
   templateUrl: './edit-appointment.component.html',
-  styleUrls: ['./edit-appointment.component.scss']
+  styleUrls: ['./edit-appointment.component.scss'],
 })
 export class EditAppointmentComponent {
-public routes = routes;
-public deleteIcon  = true;
-public selectedValue! : string ;
-date = new FormControl(new Date());
+  public routes = AppRoutes;
+  public deleteIcon = true;
+  public selectedValue!: string;
+  date = new FormControl(new Date());
 
-deleteIconFunc(){
-  this.deleteIcon = !this.deleteIcon
-}
-selectedList: data[] = [
-  {value: 'Select Doctor'},
-  {value: 'Dr.Bernardo James'},
-  {value: 'Dr.Andrea Lalema'},
-  {value: 'Dr.William Stephin'},
-];
+  deleteIconFunc() {
+    this.deleteIcon = !this.deleteIcon;
+  }
+  selectedList: data[] = [
+    { value: 'Select Doctor' },
+    { value: 'Dr.Bernardo James' },
+    { value: 'Dr.Andrea Lalema' },
+    { value: 'Dr.William Stephin' },
+  ];
 }

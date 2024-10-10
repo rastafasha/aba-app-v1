@@ -1,15 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { routes } from 'src/app/shared/routes/routes';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 import { Validators, Editor, Toolbar } from 'ngx-editor';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-compose',
   templateUrl: './compose.component.html',
-  styleUrls: ['./compose.component.scss']
+  styleUrls: ['./compose.component.scss'],
 })
-export class ComposeComponent implements OnInit , OnDestroy{
-  public routes = routes;
+export class ComposeComponent implements OnInit, OnDestroy {
+  public routes = AppRoutes;
   editor!: Editor;
   toolbar: Toolbar = [
     ['bold', 'italic'],

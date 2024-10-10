@@ -11,8 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProfileDoctorComponent } from './profile-doctor/profile-doctor.component';
-import { PipesModule } from 'src/app/pipes/pipes.module';
-
+import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 
 @NgModule({
   declarations: [
@@ -20,14 +19,14 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
     AddDoctorComponent,
     EditDoctorComponent,
     ListDoctorComponent,
-    ProfileDoctorComponent
+    ProfileDoctorComponent,
   ],
   exports: [
     DoctorsComponent,
     AddDoctorComponent,
     EditDoctorComponent,
     ListDoctorComponent,
-    ProfileDoctorComponent
+    ProfileDoctorComponent,
   ],
   imports: [
     CommonModule,
@@ -37,7 +36,7 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
     HttpClientModule,
     RouterModule,
     SharedModule,
-    PipesModule
-  ]
+    PipesModule,
+  ],
 })
-export class DoctorsModule { }
+export class DoctorsModule {}

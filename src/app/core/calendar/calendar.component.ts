@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { routes } from 'src/app/shared/routes/routes';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -12,7 +12,7 @@ import { DataService } from 'src/app/shared/data/data.service';
   styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent {
-  public routes = routes;
+  public routes = AppRoutes;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   options: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -37,9 +37,7 @@ export class CalendarComponent {
       selectable: true,
       selectMirror: true,
       dayMaxEvents: true,
-      events: [
-        { title: 'Meeting', start: new Date() }
-      ]
+      events: [{ title: 'Meeting', start: new Date() }],
     };
   }
 }

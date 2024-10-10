@@ -8,15 +8,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ComponentsModule } from '../bip/components/components.module';
-import { PipesModule } from 'src/app/pipes/pipes.module';
+import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 import { EmployeeReportComponent } from './employee-report/employee-report.component';
 
-
 @NgModule({
-  declarations: [
-    ReportByClientComponent,
-    EmployeeReportComponent,
-  ],
+  declarations: [ReportByClientComponent, EmployeeReportComponent],
   imports: [
     CommonModule,
     ClientReportRoutingModule,
@@ -26,7 +22,7 @@ import { EmployeeReportComponent } from './employee-report/employee-report.compo
     RouterModule,
     SharedModule,
     ComponentsModule,
-    PipesModule
-  ]
+    PipesModule,
+  ],
 })
-export class ClientReportModule { }
+export class ClientReportModule {}

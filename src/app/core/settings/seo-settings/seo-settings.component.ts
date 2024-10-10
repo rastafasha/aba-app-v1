@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { routes } from 'src/app/shared/routes/routes';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 
 @Component({
   selector: 'app-seo-settings',
   templateUrl: './seo-settings.component.html',
-  styleUrls: ['./seo-settings.component.scss']
+  styleUrls: ['./seo-settings.component.scss'],
 })
 export class SeoSettingsComponent {
-  public routes = routes;
+  public routes = AppRoutes;
 }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { routes } from 'src/app/shared/routes/routes';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 import { FileSaverService } from 'ngx-filesaver';
 import * as XLSX from 'xlsx';
 import * as jsPDF from 'jspdf';
@@ -9,14 +9,14 @@ import { DoctorService } from '../../doctors/service/doctor.service';
 import { BillingService } from '../billing.service';
 import { Location } from '@angular/common';
 
-declare var $:any; 
+declare var $: any;
 @Component({
   selector: 'app-billing-list',
   templateUrl: './billing-list.component.html',
-  styleUrls: ['./billing-list.component.scss']
+  styleUrls: ['./billing-list.component.scss'],
 })
 export class BillingListComponent {
-  public routes = routes;
+  public routes = AppRoutes;
 
   public billingList: any = [];
   dataSource!: MatTableDataSource<any>;
@@ -35,21 +35,19 @@ export class BillingListComponent {
   public pageSelection: Array<any> = [];
   public totalPages = 0;
 
-  public billing_generals:any = [];
-  public billing_id:any;
-  public billing_selected:any;
-  public text_validation:any;
-  public user:any;
+  public billing_generals: any = [];
+  public billing_id: any;
+  public billing_selected: any;
+  public text_validation: any;
+  public user: any;
 
   constructor(
     public billingService: BillingService,
     public doctorService: DoctorService,
     private fileSaver: FileSaverService,
     public roleService: RolesService,
-    public location: Location,
-    ){
-
-  }
+    public location: Location
+  ) {}
   ngOnInit() {
     window.scrollTo(0, 0);
     this.doctorService.closeMenuSidebar();
@@ -61,11 +59,11 @@ export class BillingListComponent {
     this.location.back(); // <-- go back to previous location on cancel
   }
 
-  isPermission(permission:string){
-    if(this.user.roles.includes('SUPERADMIN')){
+  isPermission(permission: string) {
+    if (this.user.roles.includes('SUPERADMIN')) {
       return true;
     }
-    if(this.user.permissions.includes(permission)){
+    if (this.user.permissions.includes(permission)) {
       return true;
     }
     return false;
@@ -75,26 +73,23 @@ export class BillingListComponent {
     this.billingList = [];
     this.serialNumberArray = [];
 
-    this.billingService.listBillings().subscribe((resp:any)=>{
-      
+    this.billingService.listBillings().subscribe((resp: any) => {
       // console.log(resp);
 
       this.totalBilling = resp.billings.data.length;
       this.billing_generals = resp.billings.data;
       this.billing_id = resp.billings.id;
-     this.getTableDataGeneral();
-    })
-
+      this.getTableDataGeneral();
+    });
   }
 
-  getTableDataGeneral(){
+  getTableDataGeneral() {
     this.billingList = [];
     this.serialNumberArray = [];
-    
+
     this.billing_generals.map((res: any, index: number) => {
       const serialNumber = index + 1;
       if (index >= this.skip && serialNumber <= this.limit) {
-       
         this.billingList.push(res);
         this.serialNumberArray.push(serialNumber);
       }
@@ -102,7 +97,6 @@ export class BillingListComponent {
     this.dataSource = new MatTableDataSource<any>(this.billingList);
     this.calculateTotalPages(this.totalBilling, this.pageSize);
   }
-  
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public searchData(value: any): void {
@@ -178,31 +172,33 @@ export class BillingListComponent {
     }
   }
 
-  excelExport(){
-    const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8';
+  excelExport() {
+    const EXCEL_TYPE =
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8';
     const EXCLE_EXTENSION = '.xlsx';
 
     this.getTableDataGeneral();
-
 
     //custom code
     const worksheet = XLSX.utils.json_to_sheet(this.billing_generals);
 
     const workbook = {
-      Sheets:{
-        'testingSheet': worksheet
+      Sheets: {
+        testingSheet: worksheet,
       },
-      SheetNames:['testingSheet']
-    }
+      SheetNames: ['testingSheet'],
+    };
 
-    const excelBuffer = XLSX.write(workbook, {bookType:'xlsx', type: 'array'});
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
 
-    const blobData = new Blob([excelBuffer],{type: EXCEL_TYPE});
+    const blobData = new Blob([excelBuffer], { type: EXCEL_TYPE });
 
-    this.fileSaver.save(blobData, "billing_db_aba_therapy",)
-
+    this.fileSaver.save(blobData, 'billing_db_aba_therapy');
   }
-  csvExport(){
+  csvExport() {
     const CSV_TYPE = 'text/csv';
     const CSV_EXTENSION = '.csv';
 
@@ -212,63 +208,64 @@ export class BillingListComponent {
     const worksheet = XLSX.utils.json_to_sheet(this.billing_generals);
 
     const workbook = {
-      Sheets:{
-        'testingSheet': worksheet
+      Sheets: {
+        testingSheet: worksheet,
       },
-      SheetNames:['testingSheet']
-    }
+      SheetNames: ['testingSheet'],
+    };
 
-    const excelBuffer = XLSX.write(workbook, {bookType:'csv', type: 'array'});
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'csv',
+      type: 'array',
+    });
 
-    const blobData = new Blob([excelBuffer],{type: CSV_TYPE});
+    const blobData = new Blob([excelBuffer], { type: CSV_TYPE });
 
-    this.fileSaver.save(blobData, "billing_db_aba_therapy_csv", CSV_EXTENSION)
-
+    this.fileSaver.save(blobData, 'billing_db_aba_therapy_csv', CSV_EXTENSION);
   }
 
-  txtExport(){
+  txtExport() {
     const TXT_TYPE = 'text/txt';
     const TXT_EXTENSION = '.txt';
 
     this.getTableDataGeneral();
 
-
     //custom code
     const worksheet = XLSX.utils.json_to_sheet(this.billing_generals);
 
     const workbook = {
-      Sheets:{
-        'testingSheet': worksheet
+      Sheets: {
+        testingSheet: worksheet,
       },
-      SheetNames:['testingSheet']
-    }
+      SheetNames: ['testingSheet'],
+    };
 
-    const excelBuffer = XLSX.write(workbook, {bookType:'xlsx', type: 'array'});
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
 
-    const blobData = new Blob([excelBuffer],{type: TXT_TYPE});
+    const blobData = new Blob([excelBuffer], { type: TXT_TYPE });
 
-    this.fileSaver.save(blobData, "billing_db_aba_therapy", TXT_EXTENSION)
-
+    this.fileSaver.save(blobData, 'billing_db_aba_therapy', TXT_EXTENSION);
   }
 
-  pdfExport(){
-    var doc = new jsPDF.jsPDF(); 
-    
+  pdfExport() {
+    var doc = new jsPDF.jsPDF();
+
     const worksheet = XLSX.utils.json_to_sheet(this.billing_generals);
 
     const workbook = {
-      Sheets:{
-        'testingSheet': worksheet
+      Sheets: {
+        testingSheet: worksheet,
       },
-      SheetNames:['testingSheet']
-    }
+      SheetNames: ['testingSheet'],
+    };
 
     doc.html(document.body, {
       callback: function (doc) {
         doc.save('billing_db_aba_project.pdf');
-      }
+      },
     });
-
   }
-
 }
