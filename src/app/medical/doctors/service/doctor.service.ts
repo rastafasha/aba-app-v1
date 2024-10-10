@@ -15,79 +15,79 @@ export class DoctorService {
   constructor(public http: HttpClient, public authService: AuthService) {}
 
   listDoctors() {
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       Authorization: 'Bearer' + this.authService.token,
     });
-    let URL = url_servicios + '/doctors';
+    const URL = url_servicios + '/doctors';
     return this.http.get(URL, { headers: headers });
   }
 
   listConfig() {
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       Authorization: 'Bearer' + this.authService.token,
     });
-    let URL = url_servicios + '/doctors/config';
+    const URL = url_servicios + '/doctors/config';
     return this.http.get(URL, { headers: headers });
   }
   listConfigLocation(location_id: any) {
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       Authorization: 'Bearer' + this.authService.token,
     });
-    let URL = url_servicios + '/doctors/configlocation/' + location_id;
+    const URL = url_servicios + '/doctors/configlocation/' + location_id;
     return this.http.get(URL, { headers: headers });
   }
   storeDoctor(data: any) {
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       Authorization: 'Bearer' + this.authService.token,
     });
-    let URL = url_servicios + '/doctors/store';
+    const URL = url_servicios + '/doctors/store';
     return this.http.post(URL, data, { headers: headers });
   }
   showDoctor(doctor_id: any) {
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       Authorization: 'Bearer' + this.authService.token,
     });
-    let URL = url_servicios + '/doctors/show/' + doctor_id;
+    const URL = url_servicios + '/doctors/show/' + doctor_id;
     return this.http.get(URL, { headers: headers });
   }
 
   editDoctor(data: any, doctor_id: any) {
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       Authorization: 'Bearer' + this.authService.token,
     });
-    let URL = url_servicios + '/doctors/update/' + doctor_id;
+    const URL = url_servicios + '/doctors/update/' + doctor_id;
     return this.http.post(URL, data, { headers: headers });
   }
 
   showDoctorProfile(doctor_id: any) {
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       Authorization: 'Bearer' + this.authService.token,
     });
-    let URL = url_servicios + '/doctors/profile/' + doctor_id;
+    const URL = url_servicios + '/doctors/profile/' + doctor_id;
     return this.http.get(URL, { headers: headers });
   }
   editDoctorProfile(data: any, doctor_id: any) {
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       Authorization: 'Bearer' + this.authService.token,
     });
-    let URL = url_servicios + '/doctors/update/' + doctor_id;
+    const URL = url_servicios + '/doctors/update/' + doctor_id;
     return this.http.post(URL, data, { headers: headers });
   }
 
   yo(user: any) {
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       Authorization: 'Bearer' + this.authService.token,
     });
-    // let headers = this.headers;
-    let URL = url_servicios + '/me';
+    // const headers = this.headers;
+    const URL = url_servicios + '/me';
     return this.http.post(URL, user, { headers: headers });
   }
 
   deleteDoctor(doctor_id: any) {
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       Authorization: 'Bearer' + this.authService.token,
     });
-    let URL = url_servicios + '/doctors/destroy/' + doctor_id;
+    const URL = url_servicios + '/doctors/destroy/' + doctor_id;
     return this.http.delete(URL, { headers: headers });
   }
 
@@ -96,25 +96,25 @@ export class DoctorService {
     $('.menu-opened').remove('menu-opened');
   }
   getUserRoles() {
-    let USER = localStorage.getItem('user');
+    const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
     this.roles = this.user.roles[0];
     this.permissions = this.user.permissions;
   }
 
   updateStatus(data: any, doctor_id: any) {
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       Authorization: 'Bearer' + this.authService.token,
     });
-    let URL = url_servicios + '/doctors/update/status/' + doctor_id;
+    const URL = url_servicios + '/doctors/update/status/' + doctor_id;
     return this.http.put(URL, data, { headers: headers });
   }
 
   getEmployeesByLocation(location_id: any) {
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       Authorization: 'Bearer' + this.authService.token,
     });
-    let URL = url_servicios + '/doctors/employeesbylocation/' + location_id;
+    const URL = url_servicios + '/doctors/employeesbylocation/' + location_id;
     return this.http.get(URL, { headers: headers });
   }
 }

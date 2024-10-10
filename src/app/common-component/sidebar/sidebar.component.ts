@@ -30,7 +30,7 @@ export class SidebarComponent {
     public authService: AuthService
   ) {
     // this.user = this.authService.user;
-    let USER = localStorage.getItem('user');
+    const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
     //inicio
     if (this.user.roles.includes('SUPERADMIN')) {

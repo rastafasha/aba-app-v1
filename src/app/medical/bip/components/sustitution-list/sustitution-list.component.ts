@@ -127,7 +127,7 @@ export class SustitutionListComponent {
     });
 
     this.ativatedRoute.params.subscribe(({ id }) => this.getBip()); // se solicita la info del perfil del bip
-    let USER = localStorage.getItem('user'); // se solicita el usuario logueado
+    const USER = localStorage.getItem('user'); // se solicita el usuario logueado
     this.user = JSON.parse(USER ? USER : ''); //  si no hay un usuario en el localstorage retorna un objeto vacio
     this.doctor_id = this.user.id; //se asigna el doctor logueado a este campo para poderlo enviar en los
   }

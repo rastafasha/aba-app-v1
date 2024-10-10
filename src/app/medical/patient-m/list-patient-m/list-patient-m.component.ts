@@ -70,7 +70,7 @@ export class ListPatientMComponent {
     this.doctorService.closeMenuSidebar();
     this.getTableData();
 
-    let USER = localStorage.getItem('user');
+    const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
     this.roles = this.user.roles[0];
     this.location_id = this.user.location_id;
@@ -384,7 +384,7 @@ export class ListPatientMComponent {
   }
 
   cambiarStatus(data: any) {
-    let VALUE = data.status;
+    const VALUE = data.status;
     // console.log(VALUE);
 
     this.patientService.updateStatus(data, data.id).subscribe((resp) => {

@@ -273,7 +273,7 @@ export class AddPatientMComponent {
 
     this.getPoscoveredList();
     // this.insuranceData();
-    let USER = localStorage.getItem('user');
+    const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
     this.doctor_id = this.user.id;
     this.locationId = this.user.location_id;
@@ -332,7 +332,7 @@ export class AddPatientMComponent {
   }
 
   selectCategory(event: any) {
-    let VALUE = event;
+    const VALUE = event;
     this.selectedValueLocation = VALUE;
     console.log(this.selectedValueLocation);
     this.getConfig();
@@ -376,7 +376,6 @@ export class AddPatientMComponent {
   }
 
   selectProviderCpt(event: any) {
-    debugger;
     const selectedValue = event.target.value;
     console.log(selectedValue);
 

@@ -16,18 +16,18 @@ export class NoteRbtService {
   constructor(public http: HttpClient, public authService: AuthService) {}
 
   listNotes() {
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       Authorization: 'Bearer' + this.authService.token,
     });
-    let URL = url_servicios + '/note_rbt';
+    const URL = url_servicios + '/note_rbt';
     return this.http.get(URL, { headers: headers });
   }
 
   getNote(client_id: any) {
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       Authorization: 'Bearer' + this.authService.token,
     });
-    let URL = url_servicios + '/note_rbt/show/' + client_id;
+    const URL = url_servicios + '/note_rbt/show/' + client_id;
     return this.http.get(URL, { headers: headers });
   }
   createNote(data) {
@@ -53,82 +53,82 @@ export class NoteRbtService {
   }
 
   createReplacementNote(data) {
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       Authorization: 'Bearer' + this.authService.token,
     });
-    let URL = url_servicios + '/note_rbt/storeReplacemts';
+    const URL = url_servicios + '/note_rbt/storeReplacemts';
     return this.http.post(URL, data, { headers: headers });
   }
   editNote(data: any, client_id: any) {
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       Authorization: 'Bearer' + this.authService.token,
     });
-    let URL = url_servicios + '/note_rbt/update/' + client_id;
+    const URL = url_servicios + '/note_rbt/update/' + client_id;
     return this.http.post(URL, data, { headers: headers });
   }
 
   noteUpdateModifier(data: any, client_id: any) {
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       Authorization: 'Bearer' + this.authService.token,
     });
-    let URL = url_servicios + '/note_rbt/update/modifier/' + client_id;
+    const URL = url_servicios + '/note_rbt/update/modifier/' + client_id;
     return this.http.put(URL, data, { headers: headers });
   }
 
   deleteNote(patient_id: any) {
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       Authorization: 'Bearer' + this.authService.token,
     });
-    let URL = url_servicios + '/note_rbt/destroy/' + patient_id;
+    const URL = url_servicios + '/note_rbt/destroy/' + patient_id;
     return this.http.delete(URL, { headers: headers });
   }
 
   showNotebyPatient(patient_id: any) {
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       Authorization: 'Bearer' + this.authService.token,
     });
-    let URL = url_servicios + '/note_rbt/byprofile/' + patient_id;
+    const URL = url_servicios + '/note_rbt/byprofile/' + patient_id;
     return this.http.get(URL, { headers: headers });
   }
   showReplacementbyPatient(patient_id: any) {
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       Authorization: 'Bearer' + this.authService.token,
     });
-    let URL =
+    const URL =
       url_servicios + '/note_rbt/showReplacementBypatient/' + patient_id;
     return this.http.get(URL, { headers: headers });
   }
   showNotebyClient(client_id: any) {
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       Authorization: 'Bearer' + this.authService.token,
     });
-    let URL = url_servicios + '/note_rbt/byclient/' + client_id;
+    const URL = url_servicios + '/note_rbt/byclient/' + client_id;
     return this.http.get(URL, { headers: headers });
   }
 
   listConfigNote(): Observable<any[]> {
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       Authorization: 'Bearer' + this.authService.token,
     });
-    let URL = url_servicios + '/note_rbt/config';
+    const URL = url_servicios + '/note_rbt/config';
     return this.http
       .get<any[]>(URL, { headers: headers })
       .pipe(map((resp: any) => resp));
   }
 
   updateStatus(data: any, client_id: any) {
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       Authorization: 'Bearer' + this.authService.token,
     });
-    let URL = url_servicios + '/note_rbt/update/status/' + client_id;
+    const URL = url_servicios + '/note_rbt/update/status/' + client_id;
     return this.http.put(URL, data, { headers: headers });
   }
 
   generateAISummary(data: any) {
-    let headers = new HttpHeaders({
+    const headers = new HttpHeaders({
       Authorization: 'Bearer' + this.authService.token,
     });
-    let URL = url_servicios + '/note_rbt/generate-summary';
+    const URL = url_servicios + '/note_rbt/generate-summary';
     return this.http.post(URL, data, { headers: headers });
   }
 }

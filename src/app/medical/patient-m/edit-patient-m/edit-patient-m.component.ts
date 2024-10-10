@@ -293,7 +293,7 @@ export class EditPatientMComponent {
     //  setTimeout(()=>{
     //   alertClose();
     // }, 50)
-    let USER = localStorage.getItem('user');
+    const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
     this.doctor_id = this.user.id;
     this.location_id = this.user.location_id;
@@ -362,14 +362,14 @@ export class EditPatientMComponent {
   }
 
   selectCategory(event: any) {
-    let VALUE = event;
+    const VALUE = event;
     this.selectedValueLocation = VALUE;
     // console.log(this.selectedValueLocation);
     this.getConfig();
   }
 
   selectPOS(event: any) {
-    let VALUE = event;
+    const VALUE = event;
     this.selectedValuePosCovered = VALUE;
     // console.log(this.selectedValuePosCovered);
     this.getConfig();
@@ -519,7 +519,6 @@ export class EditPatientMComponent {
   }
 
   selectProviderCpt(event: any) {
-    debugger;
     const selectedValue = event.target.value;
     console.log(selectedValue);
 

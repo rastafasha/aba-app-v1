@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
     // if (localStorage.getItem('authenticated')) {
     //   localStorage.removeItem('authenticated');
     // }
-    // let USER = localStorage.getItem("user");
+    // const USER = localStorage.getItem("user");
     // if(localStorage.getItem("user")){
     //   this.user = JSON.parse(USER ? USER: '');
     // }

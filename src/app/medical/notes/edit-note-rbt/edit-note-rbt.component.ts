@@ -643,7 +643,6 @@ export class EditNoteRbtComponent implements OnInit {
   }
 
   save() {
-    debugger;
     this.text_validation = '';
     // if(!this.name||!this.email ||!this.surname ){
     //   this.text_validation = 'Los campos con * son obligatorios';

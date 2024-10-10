@@ -16,15 +16,15 @@ import { Location } from '@angular/common';
   styleUrls: ['./note-bcba-edit.component.scss'],
 })
 export class NoteBcbaEditComponent {
-  public routes = routes;
-  public summary_note: string = '';
+  public routes = AppRoutes;
+  public summary_note = '';
   public isGeneratingSummary = false;
 
-  valid_form: boolean = false;
-  valid_form_success: boolean = false;
+  valid_form = false;
+  valid_form_success = false;
 
-  public text_success: string = '';
-  public text_validation: string = '';
+  public text_success = '';
+  public text_validation = '';
 
   public selectedValueProvider!: string;
   public selectedValueRBT!: string;
@@ -38,7 +38,7 @@ export class NoteBcbaEditComponent {
   public selectedValueRendering!: string;
   public selectedValueAba!: string;
   public selectedValueCode!: string;
-  option_selected: number = 0;
+  option_selected = 0;
 
   client_id: any;
   doctor_id: any;
@@ -49,40 +49,40 @@ export class NoteBcbaEditComponent {
   note_selected: any;
   bip_id: any;
   user: any;
-  public first_name: string = '';
-  public last_name: string = '';
-  public diagnosis_code: string = '';
+  public first_name = '';
+  public last_name = '';
+  public diagnosis_code = '';
 
-  public provider_name_g: string = '';
-  public provider_credential: string = '';
-  public pos: string = '';
-  public session_date: string = '';
-  public time_in: string = '';
-  public time_out: string = '';
-  public time_in2: string = '';
-  public time_out2: string = '';
-  public session_length_total: string = '';
-  public session_length_total2: string = '';
-  public environmental_changes: string = '';
+  public provider_name_g = '';
+  public provider_credential = '';
+  public pos = '';
+  public session_date = '';
+  public time_in = '';
+  public time_out = '';
+  public time_in2 = '';
+  public time_out2 = '';
+  public session_length_total = '';
+  public session_length_total2 = '';
+  public environmental_changes = '';
 
-  public sumary_note: string = '';
-  public meet_with_client_at: string = '';
-  public client_appeared: string = '';
-  public as_evidenced_by: string = '';
-  public rbt_modeled_and_demonstrated_to_caregiver: string = '';
-  public client_response_to_treatment_this_session: string = '';
-  public progress_noted_this_session_compared_to_previous_session: string = '';
-  public next_session_is_scheduled_for: string = '';
-  public provider_name: string = '';
-  public supervisor_name: string = '';
+  public sumary_note = '';
+  public meet_with_client_at = '';
+  public client_appeared = '';
+  public as_evidenced_by = '';
+  public rbt_modeled_and_demonstrated_to_caregiver = '';
+  public client_response_to_treatment_this_session = '';
+  public progress_noted_this_session_compared_to_previous_session = '';
+  public next_session_is_scheduled_for = '';
+  public provider_name = '';
+  public supervisor_name = '';
 
-  public number_of_occurrences: number = 0;
-  public number_of_correct_responses: number = 0;
-  public total_trials: number = 0;
-  public number_of_correct_response: number = 0;
-  public maladaptive: string = '';
-  public replacement: string = '';
-  public maladaptive_behavior: string = '';
+  public number_of_occurrences = 0;
+  public number_of_correct_responses = 0;
+  public total_trials = 0;
+  public number_of_correct_response = 0;
+  public maladaptive = '';
+  public replacement = '';
+  public maladaptive_behavior = '';
   public interventions: any;
   public provider_signature: any;
   public supervisor_signature: any;
@@ -144,8 +144,8 @@ export class NoteBcbaEditComponent {
   n_un: any = [];
 
   public location: any;
-  public porcent_of_occurrences: number = 0;
-  public porcent_of_correct_response: number = 0;
+  public porcent_of_occurrences = 0;
+  public porcent_of_correct_response = 0;
   lto: any = null;
   caregiver_goal: any = null;
   cpt_code: any = null;
@@ -174,7 +174,7 @@ export class NoteBcbaEditComponent {
     this.getConfig();
     this.getNote();
 
-    let USER = localStorage.getItem('user');
+    const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
     this.doctor_id = this.user.id;
   }
@@ -221,12 +221,12 @@ export class NoteBcbaEditComponent {
       this.pos = this.note_selected.pos;
 
       this.caregivers_training_goalsgroup = resp.caregiver_goals;
-      let jsonObj = JSON.parse(this.caregivers_training_goalsgroup) || '';
+      const jsonObj = JSON.parse(this.caregivers_training_goalsgroup) || '';
       this.caregivers_training_goals = jsonObj;
       // console.log(this.caregivers_training_goals);
 
       this.rbt_training_goalsgroup = resp.rbt_training_goals;
-      let jsonObj1 = JSON.parse(this.rbt_training_goalsgroup) || '';
+      const jsonObj1 = JSON.parse(this.rbt_training_goalsgroup) || '';
       this.rbt_training_goals = jsonObj1;
       // console.log(this.rbt_training_goals);
 
@@ -284,7 +284,7 @@ export class NoteBcbaEditComponent {
       .subscribe((resp: any) => {
         console.log(resp);
         this.pa_assessments = resp.pa_assessments;
-        let jsonObj = JSON.parse(this.pa_assessments) || '';
+        const jsonObj = JSON.parse(this.pa_assessments) || '';
         this.pa_assessmentsgroup = jsonObj;
         this.n_un = this.pa_assessmentsgroup[0].n_units;
         // this.unitsAsignated = this.pa_assessmentsgroup.n_units;
@@ -317,7 +317,6 @@ export class NoteBcbaEditComponent {
   }
 
   selectSpecialist(event: any) {
-    debugger;
     event = this.selectedValueProviderName;
     this.specialistData(this.selectedValueProviderName);
   }
@@ -354,7 +353,7 @@ export class NoteBcbaEditComponent {
     }
     this.text_validation = '';
     this.FILE_SIGNATURE_RBT = $event.target.files[0];
-    let reader = new FileReader();
+    const reader = new FileReader();
     reader.readAsDataURL(this.FILE_SIGNATURE_RBT);
     reader.onloadend = () =>
       (this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED = reader.result);
@@ -367,7 +366,7 @@ export class NoteBcbaEditComponent {
     }
     this.text_validation = '';
     this.FILE_SIGNATURE_BCBA = $event.target.files[0];
-    let reader2 = new FileReader();
+    const reader2 = new FileReader();
     reader2.readAsDataURL(this.FILE_SIGNATURE_BCBA);
     reader2.onloadend = () =>
       (this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED = reader2.result);
@@ -422,7 +421,7 @@ export class NoteBcbaEditComponent {
     //   return;
     // }
 
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append('patient_id', this.patient_id);
     formData.append('doctor_id', this.selectedValueRendering);
     formData.append('bip_id', this.bip_id);

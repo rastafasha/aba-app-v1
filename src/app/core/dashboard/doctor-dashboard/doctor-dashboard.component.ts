@@ -250,7 +250,7 @@ export class DoctorDashboardComponent {
     this.doctorService.closeMenuSidebar();
     window.scrollTo(0, 0);
     this.getDoctors();
-    let USER = localStorage.getItem('user');
+    const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
   }
 

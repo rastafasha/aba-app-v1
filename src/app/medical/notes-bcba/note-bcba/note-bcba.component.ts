@@ -17,29 +17,29 @@ import { Location } from '@angular/common';
   styleUrls: ['./note-bcba.component.scss'],
 })
 export class NoteBcbaComponent {
-  public routes = routes;
-  public summary_note = '';
-  public isGeneratingSummary = false;
+  routes = AppRoutes;
+  summary_note = '';
+  isGeneratingSummary = false;
 
-  valid_form: boolean = false;
-  valid_form_success: boolean = false;
+  valid_form = false;
+  valid_form_success = false;
 
-  public text_success: string = '';
-  public text_validation: string = '';
+  text_success = '';
+  text_validation = '';
 
-  public selectedValueProvider!: string;
-  public selectedValueRBT!: string;
-  public selectedValueBCBA!: string;
-  public selectedValueTimeIn: number = 0;
-  public selectedValueTimeOut: number = 0;
-  public selectedValueTimeIn2: number = 0;
-  public selectedValueTimeOut2: number = 0;
-  public selectedValueProviderName!: string;
-  public selectedValueMaladaptive!: string;
-  public selectedValueRendering!: string;
-  public selectedValueAba!: string;
-  public selectedValueCode!: string;
-  option_selected: number = 0;
+  selectedValueProvider!: string;
+  selectedValueRBT!: string;
+  selectedValueBCBA!: string;
+  selectedValueTimeIn = 0;
+  selectedValueTimeOut = 0;
+  selectedValueTimeIn2 = 0;
+  selectedValueTimeOut2 = 0;
+  selectedValueProviderName!: string;
+  selectedValueMaladaptive!: string;
+  selectedValueRendering!: string;
+  selectedValueAba!: string;
+  selectedValueCode!: string;
+  option_selected = 0;
 
   client_id: any;
   patient_id: any;
@@ -49,81 +49,79 @@ export class NoteBcbaComponent {
   bip_id: any;
   user: any;
 
-  public first_name: string = '';
-  public last_name: string = '';
-  public diagnosis_code: string = '';
+  first_name = '';
+  last_name = '';
+  diagnosis_code = '';
 
-  public provider_name_g: string = '';
-  public provider_credential: string = '';
-  public pos: string = '';
-  public session_date: string = '';
-  public time_in: string = '';
-  public time_out: string = '';
-  public time_in2: string = '';
-  public time_out2: string = '';
-  public session_length_total: string = '';
-  public session_length_total2: string = '';
-  public environmental_changes: string = '';
+  provider_name_g = '';
+  provider_credential = '';
+  pos = '';
+  session_date = '';
+  time_in = '';
+  time_out = '';
+  time_in2 = '';
+  time_out2 = '';
+  session_length_total = '';
+  session_length_total2 = '';
+  environmental_changes = '';
 
-  public sumary_note: string = '';
-  public meet_with_client_at: string = '';
-  public client_appeared: string = '';
-  public as_evidenced_by: string = '';
-  public rbt_modeled_and_demonstrated_to_caregiver: string = '';
-  public client_response_to_treatment_this_session: string = '';
-  public progress_noted_this_session_compared_to_previous_session: string = '';
-  public next_session_is_scheduled_for: string = '';
-  public provider_name: string = '';
-  public supervisor_name: string = '';
+  sumary_note = '';
+  meet_with_client_at = '';
+  client_appeared = '';
+  as_evidenced_by = '';
+  rbt_modeled_and_demonstrated_to_caregiver = '';
+  client_response_to_treatment_this_session = '';
+  progress_noted_this_session_compared_to_previous_session = '';
+  next_session_is_scheduled_for = '';
+  provider_name = '';
+  supervisor_name = '';
 
-  public porcent_of_occurrences: number = 0;
-  public porcent_of_correct_response: number = 0;
-  public maladaptive: string = '';
-  public replacement: string = '';
-  public interventions: any;
-  public provider_signature: any;
-  public supervisor_signature: any;
+  porcent_of_occurrences = 0;
+  porcent_of_correct_response = 0;
+  maladaptive = '';
+  replacement = '';
+  interventions: any;
+  provider_signature: any;
+  supervisor_signature: any;
 
-  public pairing: any;
-  public response_block: any;
-  public DRA: any;
-  public DRO: any;
-  public redirection: any;
-  public errorless_teaching: any;
-  public NCR: any;
-  public shaping: any;
-  public chaining: any;
-  public token_economy: any;
-  public extinction: any;
-  public natural_teaching: any;
+  pairing: any;
+  response_block: any;
+  DRA: any;
+  DRO: any;
+  redirection: any;
+  errorless_teaching: any;
+  NCR: any;
+  shaping: any;
+  chaining: any;
+  token_economy: any;
+  extinction: any;
+  natural_teaching: any;
 
-  public FILE_SIGNATURE_RBT: any;
-  public IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED: any =
-    'assets/img/user-06.jpg';
-  public FILE_SIGNATURE_BCBA: any;
-  public IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED: any =
-    'assets/img/user-06.jpg';
+  FILE_SIGNATURE_RBT: any;
+  IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED: any = 'assets/img/user-06.jpg';
+  FILE_SIGNATURE_BCBA: any;
+  IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED: any = 'assets/img/user-06.jpg';
 
-  public rbt_id: any;
-  public bcba_id: any;
-  public maladaptivename: any;
-  public replacementName: any;
-  public note_rbt_id: any;
-  public goal: any;
-  public note_id: any;
-  public location: any;
-  public birth_date: string = '';
-  public rendering_provider: any;
+  rbt_id: any;
+  bcba_id: any;
+  maladaptivename: any;
+  replacementName: any;
+  note_rbt_id: any;
+  goal: any;
+  note_id: any;
+  location: any;
+  birth_date = '';
+  rendering_provider: any;
 
-  public roles_rbt: any = [];
-  public roles_bcba: any = [];
+  roles_rbt: any = [];
+  roles_bcba: any = [];
 
-  public hours_days: any = [];
-  public specialists: any = [];
-  public maladaptives: any = [];
-  public replacementGoals: any = [];
-  public intervention_added: any = [];
-  public replacements: any = [];
+  hours_days: any = [];
+  specialists: any = [];
+  maladaptives: any = [];
+  replacementGoals: any = [];
+  intervention_added: any = [];
+  replacements: any = [];
 
   maladaptiveSelected: any = null;
   replacementSelected: any = null;
@@ -143,7 +141,7 @@ export class NoteBcbaComponent {
   services: any;
   insurer_id: any;
   cpt: any;
-  public roles: any = [];
+  roles: any = [];
   electronic_signature: any;
   doctor: any;
   full_name: any;
@@ -172,7 +170,7 @@ export class NoteBcbaComponent {
     this.getConfig();
     this.getProfileBip();
 
-    let USER = localStorage.getItem('user');
+    const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
     this.roles = this.user.roles[0];
     this.doctor_id = this.user.id;
@@ -266,7 +264,7 @@ export class NoteBcbaComponent {
           resp.monitoringEvaluatingPatientIds.data[0].rbt_training_goals;
 
         this.pa_assessments = resp.pa_assessments;
-        let jsonObj = JSON.parse(this.pa_assessments) || '';
+        const jsonObj = JSON.parse(this.pa_assessments) || '';
         this.pa_assessmentsgroup = jsonObj;
         this.n_un = this.pa_assessmentsgroup[0].n_units;
         // this.unitsAsignated = this.pa_assessmentsgroup.n_units;
@@ -403,7 +401,7 @@ export class NoteBcbaComponent {
     }
     this.text_validation = '';
     this.FILE_SIGNATURE_RBT = $event.target.files[0];
-    let reader = new FileReader();
+    const reader = new FileReader();
     reader.readAsDataURL(this.FILE_SIGNATURE_RBT);
     reader.onloadend = () =>
       (this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED = reader.result);
@@ -416,7 +414,7 @@ export class NoteBcbaComponent {
     }
     this.text_validation = '';
     this.FILE_SIGNATURE_BCBA = $event.target.files[0];
-    let reader2 = new FileReader();
+    const reader2 = new FileReader();
     reader2.readAsDataURL(this.FILE_SIGNATURE_BCBA);
     reader2.onloadend = () =>
       (this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED = reader2.result);
@@ -444,7 +442,7 @@ export class NoteBcbaComponent {
     //   return;
     // }
 
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append('summary_note', this.summary_note);
 
     formData.append('patient_id', this.patient_id);

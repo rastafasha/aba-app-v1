@@ -98,7 +98,7 @@ export class ProfilePatientMComponent {
     this.getConfig();
     this.user = this.roleService.authService.user;
 
-    let USER = localStorage.getItem('user');
+    const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
     this.doctor_id = this.user.id;
     this.location_id = this.user.location_id;

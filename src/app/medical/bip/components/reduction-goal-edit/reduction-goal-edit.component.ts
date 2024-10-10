@@ -100,7 +100,7 @@ export class ReductionGoalEditComponent {
     });
 
     this.ativatedRoute.params.subscribe(({ id }) => this.getBip()); // se solicita la info del perfil del bip
-    let USER = localStorage.getItem('user'); // se solicita el usuario logueado
+    const USER = localStorage.getItem('user'); // se solicita el usuario logueado
     this.user = JSON.parse(USER ? USER : ''); //  si no hay un usuario en el localstorage retorna un objeto vacio
     this.doctor_id = this.user.id; //se asigna el doctor logueado a este campo para poderlo enviar en los
     this.getGoalsMaladaptives();
@@ -174,7 +174,6 @@ export class ReductionGoalEditComponent {
   }
 
   deleteMaladaptiveSon(goalsto: any) {
-    debugger;
     // this.maladaptiveSelectedSon.splice(i,1);
     this.goalService.deleteGoal(goalsto.id).subscribe((resp: any) => {
       // alert("Se elimino el objetivo");
@@ -361,7 +360,6 @@ export class ReductionGoalEditComponent {
   }
 
   saveGoal() {
-    debugger;
     this.text_validation = '';
     // if(!this.maladaptive || !this.current_status || !this.golsto){
     //   this.text_validation = 'Is required this information ';

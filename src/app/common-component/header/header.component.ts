@@ -40,7 +40,7 @@ export class HeaderComponent implements OnInit {
       }
     });
 
-    let USER = localStorage.getItem('user');
+    const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
     this.roles = this.user.roles[0];
     this.locationId = this.user.location_id;

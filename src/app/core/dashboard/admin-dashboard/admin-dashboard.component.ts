@@ -115,10 +115,8 @@ export class AdminDashboardComponent {
   constructor(
     public data: DataService,
     public dashboardService: DashboardService,
-    public doctorService: DoctorService
-  ) // public appointmentService : AppointmentService,
-
-  {
+    public doctorService: DoctorService // public appointmentService : AppointmentService,
+  ) {
     this.chartOptionsOne = {
       chart: {
         height: 230,
@@ -279,7 +277,7 @@ export class AdminDashboardComponent {
     this.getDashboardAdmin();
     this.getDashboardAdminYear();
     // this.getAppointmentPending();
-    let USER = localStorage.getItem('user');
+    const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
   }
 

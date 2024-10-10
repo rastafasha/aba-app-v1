@@ -293,7 +293,7 @@ export class LocationListComponent {
   }
 
   cambiarStatus(data: any) {
-    // let VALUE = data.eligibility;
+    // const VALUE = data.eligibility;
     // console.log(VALUE);
     // this.locationService.(data, data.id).subscribe(
     //   resp =>{

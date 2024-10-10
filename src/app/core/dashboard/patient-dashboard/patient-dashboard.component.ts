@@ -400,7 +400,7 @@ export class PatientDashboardComponent implements OnInit {
   ngOnInit() {
     this.doctorService.closeMenuSidebar();
     this.getTableData();
-    let USER = localStorage.getItem('user');
+    const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
 
     window.scrollTo(0, 0);
