@@ -18,9 +18,6 @@ export class LocationService {
     name_doctor: string = '',
     email_doctor: string = ''
   ) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     let LINK = '';
     if (client_id) {
       LINK += '&client_id=' + client_id;
@@ -41,22 +38,15 @@ export class LocationService {
       LINK += '&email_doctor=' + email_doctor;
     }
     const URL = url_servicios + '/appointmentpay?page=' + page + LINK;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   getLocations() {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/location';
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   listLocationPatients(search: any, status: any, location_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
-
     let LINK = '?T=';
     if (search) {
       LINK += '&search=' + search;
@@ -69,45 +59,30 @@ export class LocationService {
     }
 
     const URL = url_servicios + '/patients' + LINK;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
     // return this.http.get(URL, {headers: headers}).pipe(
     //   finalize(()=> this.isLoadingSubject.next(false))
     // )
   }
   listConfig() {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/location/config';
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
   storeLocation(data: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/location/store';
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data);
   }
   getLocation(location_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/location/show/' + location_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
   editLocation(data: any, location_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/location/update/' + location_id;
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data);
   }
 
   deleteLocation(location_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/roles/destroy/' + location_id;
-    return this.http.delete(URL, { headers: headers });
+    return this.http.delete(URL);
   }
 }

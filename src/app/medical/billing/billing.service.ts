@@ -11,56 +11,35 @@ export class BillingService {
   constructor(public http: HttpClient, public authService: AuthService) {}
 
   listBillings() {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/billing';
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
   config() {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/billing/config';
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   getBilling(id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/billing/show/' + id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   editBilling(data: any, client_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/billing/update/' + client_id;
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data);
   }
   deleteBilling(patient_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/billing/destroy/' + patient_id;
-    return this.http.delete(URL, { headers: headers });
+    return this.http.delete(URL);
   }
 
   showBillingbyPatient(patient_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/billing/byprofile/' + patient_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   showBillingProfile(patient_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/billing/profile/' + patient_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 }

@@ -10,38 +10,26 @@ export class InsuranceService {
   constructor(public http: HttpClient, public authService: AuthService) {}
 
   listInsurances(page: number = 1, insurer_name: string = '') {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     let LINK = '';
     if (insurer_name) {
       LINK += '&insurer_name=' + insurer_name;
     }
 
     const URL = url_servicios + '/insurance?page=' + page + LINK;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   storeInsurance(data: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/insurance/store';
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data);
   }
 
   showInsurance(insurance_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/insurance/show/' + insurance_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   showInsuranceCptPrize(insurer_name: any, code: any, provider: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL =
       url_servicios +
       '/insurance/showInsuranceCpt/' +
@@ -50,53 +38,35 @@ export class InsuranceService {
       code +
       '/' +
       provider;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   editInsurance(data: any, insurance_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/insurance/update/' + insurance_id;
-    return this.http.put(URL, data, { headers: headers });
+    return this.http.put(URL, data);
   }
 
   deleteInsurance(insurance_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/insurance/destroy/' + insurance_id;
-    return this.http.delete(URL, { headers: headers });
+    return this.http.delete(URL);
   }
 
   storeInsuranceService(data: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/insurance/store/service';
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data);
   }
 
   getServices() {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/insurance/service';
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
   getServicebyInsurance(insurance_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/insurance/servicebyInsurance/' + insurance_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   deleteInsuranceService(service_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/insurance/destroy/service/' + service_id;
-    return this.http.delete(URL, { headers: headers });
+    return this.http.delete(URL);
   }
 }

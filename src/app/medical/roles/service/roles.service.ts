@@ -10,39 +10,24 @@ export class RolesService {
   constructor(public http: HttpClient, public authService: AuthService) {}
 
   listRoles() {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/roles';
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
   storeRole(data: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/roles/store';
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data);
   }
   getRole(role_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/roles/show/' + role_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
   editRole(data: any, role_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/roles/update/' + role_id;
-    return this.http.put(URL, data, { headers: headers });
+    return this.http.put(URL, data);
   }
 
   deleteRole(role_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/roles/destroy/' + role_id;
-    return this.http.delete(URL, { headers: headers });
+    return this.http.delete(URL);
   }
 }

@@ -10,56 +10,35 @@ export class BehaviorAsistantService {
   constructor(public http: HttpClient, public authService: AuthService) {}
 
   listBehaviorAsistats() {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/behaviorasistant';
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   getBehaviorAsistat(user_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/behaviorasistant/show/' + user_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   getBehaviorAsistatbyPatientId(patient_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL =
       url_servicios + '/behaviorasistant/showgbyPatientId/' + patient_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
   createBehaviorAsistat(data) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/behaviorasistant/store';
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data);
   }
   editBehaviorAsistat(data: any, user_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/behaviorasistant/update/' + user_id;
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data);
   }
   deleteBehaviorAsistat(user_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/behaviorasistant/destroy/' + user_id;
-    return this.http.delete(URL, { headers: headers });
+    return this.http.delete(URL);
   }
 
   showBehaviorAsistatProfile(user_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/behaviorasistant/profile/' + user_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 }

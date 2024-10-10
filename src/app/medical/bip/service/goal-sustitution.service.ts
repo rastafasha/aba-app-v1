@@ -10,19 +10,13 @@ export class GoalSustitutionService {
   constructor(public http: HttpClient, public authService: AuthService) {}
 
   listGoalSustitutions() {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/sustitutiongoal';
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
   listMaladaptivesGoalSustitutions(maladaptive: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL =
       url_servicios + '/sustitutiongoal/show/goalsmaladaptives/' + maladaptive;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
   // listMaladaptivesGoals(maladaptive:any, patient_id:any){
   //   const headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token})
@@ -31,72 +25,45 @@ export class GoalSustitutionService {
   // }
 
   getGoalSustitution(user_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/sustitutiongoal/show/' + user_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   getGoalSustitutionbyPatientId(patient_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL =
       url_servicios + '/sustitutiongoal/showgbyPatientId/' + patient_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
   getGoalSustitutionbyBipId(bip_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/sustitutiongoal/showBipId/' + bip_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
   createGoalSustitution(data) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/sustitutiongoal/store';
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data);
   }
   editGoalSustitution(data: any, user_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/sustitutiongoal/update/' + user_id;
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data);
   }
   deleteGoalSustitution(user_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/sustitutiongoal/destroy/' + user_id;
-    return this.http.delete(URL, { headers: headers });
+    return this.http.delete(URL);
   }
 
   showGoalSustitutionProfile(user_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/sustitutiongoal/profile/' + user_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   listConfigSustitution() {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/sustitutiongoal/config';
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   updateStoSustitutionSto(data: any, goalmaladaptiveid: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL =
       url_servicios + '/sustitutiongoal/update/sto/' + goalmaladaptiveid;
-    return this.http.put(URL, data, { headers: headers });
+    return this.http.put(URL, data);
   }
 }

@@ -10,67 +10,46 @@ export class GraphicReductionService {
   constructor(public http: HttpClient, public authService: AuthService) {}
 
   listGraphics() {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/graphic_reduction';
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   getGraphic(user_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/graphic_reduction/show/' + user_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   listMaladaptivesGraphics(maladaptive: any, patient_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL =
       url_servicios +
       '/graphic_reduction/showbyMaladaptive/' +
       maladaptive +
       '/' +
       patient_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
   listReductionGraphics(replacement: any, patient_id: any): Observable<any> {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL =
       url_servicios +
       '/graphic_reduction/showbyReplacement/' +
       replacement +
       '/' +
       patient_id;
-    return this.http.get<any>(URL, { headers: headers });
+    return this.http.get<any>(URL);
   }
 
   listConfig() {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/graphic_reduction/config';
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   getPatient(patient_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/graphic_reduction/showpatient/' + patient_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   graphicPatientMonth(data) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/graphic_reduction/patient-month';
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data);
   }
 }

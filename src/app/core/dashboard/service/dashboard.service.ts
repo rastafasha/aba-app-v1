@@ -10,60 +10,36 @@ export class DashboardService {
   constructor(public http: HttpClient, public authService: AuthService) {}
 
   dashboardAdmin(data) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/dashboard/admin';
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data);
   }
   dashboardAdminYear(data) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/dashboard/admin-year';
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data);
   }
 
   getConfigDashboard() {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/dashboard/config';
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
   dashboardDoctor(data) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/dashboard/doctor';
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data);
   }
   dashboardDoctorYear(data) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/dashboard/doctor-year';
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data);
   }
   getConfigDashboardPatient() {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/dashboard/config/patients';
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
   dashboardPatient(data) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/dashboard/patient';
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data);
   }
   dashboardPatientYear(data) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/dashboard/patient-year';
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data);
   }
 }

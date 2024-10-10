@@ -10,57 +10,36 @@ export class ConsentToTreatmentService {
   constructor(public http: HttpClient, public authService: AuthService) {}
 
   listConsentToTreatments() {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/consenttotreatment';
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   getConsentToTreatment(user_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/consenttotreatment/show/' + user_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   getConsentToTreatmentbyPatientId(patient_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL =
       url_servicios + '/consenttotreatment/showgbyPatientId/' + patient_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   createConsentToTreatment(data) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/consenttotreatment/store';
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data);
   }
   editConsentToTreatment(data: any, user_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/consenttotreatment/update/' + user_id;
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data);
   }
   deleteConsentToTreatment(user_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/consenttotreatment/destroy/' + user_id;
-    return this.http.delete(URL, { headers: headers });
+    return this.http.delete(URL);
   }
 
   showConsentToTreatmentProfile(user_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/consenttotreatment/profile/' + user_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 }
