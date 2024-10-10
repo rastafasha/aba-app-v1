@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/core/auth/auth.service';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { SideBarService } from 'src/app/shared/side-bar/side-bar.service';
 import { environment } from 'src/environments/environment';
+import { AppUser } from 'src/app/shared/models/users.models';
 
 @Component({
   selector: 'app-header',
@@ -12,16 +13,16 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  public routes = AppRoutes;
-  public openBox = false;
-  public miniSidebar = false;
-  public addClass = false;
-  public user: any;
-  public usuario: any;
-  public user_id: any;
-  public avatar: any;
-  public locationId: any;
-  public roles: any = [];
+  routes = AppRoutes;
+  openBox = false;
+  miniSidebar = false;
+  addClass = false;
+  user: AppUser;
+  usuario: AppUser;
+  user_id: number;
+  avatar: string;
+  locationId: number;
+  roles = '';
 
   imagenSerUrl = environment.url_media;
 
@@ -39,12 +40,6 @@ export class HeaderComponent implements OnInit {
         this.miniSidebar = false;
       }
     });
-
-    const USER = localStorage.getItem('user');
-    this.user = JSON.parse(USER ? USER : '');
-    this.roles = this.user.roles[0];
-    this.locationId = this.user.location_id;
-    // console.log(this.user);
   }
 
   openBoxFunc() {
@@ -59,6 +54,10 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.user = this.authService.user as AppUser;
+    this.roles = this.user?.roles?.[0];
+    this.locationId = this.user?.location_id;
+
     window.scrollTo(0, 0);
     this.authService.getUserFromStorage();
     this.appearanceService.getLocalDarkMode();

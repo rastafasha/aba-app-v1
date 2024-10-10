@@ -130,8 +130,7 @@ export class LoginComponent implements OnInit {
           this.user = resp;
           console.log(this.user);
           if (resp) {
-            //TODO: FIXME esta bien?
-            if (this.user.roles[0] === 'DORCTOR') {
+            if (this.user.roles[0] === 'DOCTOR') {
               this.router.navigate([AppRoutes.doctorDashboard]);
             }
             if (this.user.roles[0] === 'SUPERADMIN') {
