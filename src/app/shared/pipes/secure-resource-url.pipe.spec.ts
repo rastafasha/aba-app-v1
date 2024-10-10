@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SecureResourceUrlPipe } from './secure-resource-url.pipe';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 fdescribe('SecureResourceUrlPipe', () => {
   let pipe: SecureResourceUrlPipe;
@@ -10,7 +11,17 @@ fdescribe('SecureResourceUrlPipe', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [HttpClient, DomSanitizer, SecureResourceUrlPipe],
+      imports: [HttpClientTestingModule],
+      providers: [
+        {
+          provide: DomSanitizer,
+          useValue: {
+            sanitize: () => 'safeString',
+            bypassSecurityTrustHtml: () => 'safeString',
+          },
+        },
+        SecureResourceUrlPipe,
+      ],
     });
   });
 
