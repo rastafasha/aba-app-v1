@@ -10,57 +10,36 @@ export class MonitoringEvaluatingService {
   constructor(public http: HttpClient, public authService: AuthService) {}
 
   listMonitoringEvaluatings() {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/monitoringevaluating';
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   getMonitoringEvaluating(user_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/monitoringevaluating/show/' + user_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   getMonitoringEvaluatingbyPatientId(patient_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL =
       url_servicios + '/monitoringevaluating/showgbyPatientId/' + patient_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   createMonitoringEvaluating(data) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/monitoringevaluating/store';
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data);
   }
   editMonitoringEvaluating(data: any, user_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/monitoringevaluating/update/' + user_id;
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data);
   }
   deleteMonitoringEvaluating(user_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/monitoringevaluating/destroy/' + user_id;
-    return this.http.delete(URL, { headers: headers });
+    return this.http.delete(URL);
   }
 
   showMonitoringEvaluatingProfile(user_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/monitoringevaluating/profile/' + user_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 }

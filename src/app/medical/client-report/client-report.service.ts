@@ -10,11 +10,8 @@ export class ClientReportService {
   constructor(public http: HttpClient, public authService: AuthService) {}
 
   listClientReports() {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/client_report';
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   // listClientReportsSearch(page:number=1, search:string='', provider_name_g:number=0,session_date:string= ''){
@@ -42,9 +39,6 @@ export class ClientReportService {
     date_end = '',
     patient_id: any = null
   ) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     let LINK = '';
     if (search_doctor) {
       LINK += '&search_doctor=' + search_doctor;
@@ -63,45 +57,30 @@ export class ClientReportService {
     }
     const URL =
       url_servicios + '/client_report/byprofile/?page=' + page + LINK + '/';
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   config() {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/client_report/config';
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
   getClientReport(id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/client_report/show/' + id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   editClientReport(data: any, client_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/client_report/update/' + client_id;
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data);
   }
   deleteClientReport(patient_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/client_report/destroy/' + patient_id;
-    return this.http.delete(URL, { headers: headers });
+    return this.http.delete(URL);
   }
 
   showClientReportbyPatient(patient_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/client_report/byprofile/' + patient_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   getAllClientReportByPatient(
@@ -111,9 +90,6 @@ export class ClientReportService {
     date_end = '',
     noteType?: string
   ) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     let LINK = '';
 
     if (date_start) {
@@ -130,7 +106,7 @@ export class ClientReportService {
       '/?page=' +
       page +
       LINK;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   getAllClientReportByLocation(
@@ -140,9 +116,6 @@ export class ClientReportService {
     date_end = '',
     noteType?: string
   ) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     let LINK = '';
 
     if (date_start) {
@@ -159,7 +132,7 @@ export class ClientReportService {
       '/?page=' +
       page +
       LINK;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   getAllClientReportEmployeeByPatient(
@@ -170,9 +143,6 @@ export class ClientReportService {
     date_end = '',
     noteType?: string
   ) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     let LINK = '';
 
     if (date_start) {
@@ -191,29 +161,20 @@ export class ClientReportService {
       '/?page=' +
       page +
       LINK;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   showClientReportProfile(patient_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/client_report/profile/' + patient_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   create(data) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/client_report/store';
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data);
   }
   udpate(data: any, client_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/client_report/update/' + client_id;
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data);
   }
 }

@@ -1,16 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LockScreenComponent } from './lock-screen.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
-describe('LockScreenComponent', () => {
+fdescribe('LockScreenComponent', () => {
   let component: LockScreenComponent;
   let fixture: ComponentFixture<LockScreenComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LockScreenComponent ]
-    })
-    .compileComponents();
+      declarations: [LockScreenComponent],
+      imports: [RouterTestingModule],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LockScreenComponent);
     component = fixture.componentInstance;

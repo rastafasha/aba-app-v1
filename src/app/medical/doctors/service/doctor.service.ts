@@ -15,80 +15,50 @@ export class DoctorService {
   constructor(public http: HttpClient, public authService: AuthService) {}
 
   listDoctors() {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/doctors';
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   listConfig() {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/doctors/config';
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
   listConfigLocation(location_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/doctors/configlocation/' + location_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
   storeDoctor(data: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/doctors/store';
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data);
   }
   showDoctor(doctor_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/doctors/show/' + doctor_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 
   editDoctor(data: any, doctor_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/doctors/update/' + doctor_id;
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data);
   }
 
   showDoctorProfile(doctor_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/doctors/profile/' + doctor_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
   editDoctorProfile(data: any, doctor_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/doctors/update/' + doctor_id;
-    return this.http.post(URL, data, { headers: headers });
+    return this.http.post(URL, data);
   }
 
   yo(user: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     // const headers = this.headers;
     const URL = url_servicios + '/me';
-    return this.http.post(URL, user, { headers: headers });
+    return this.http.post(URL, user);
   }
 
   deleteDoctor(doctor_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/doctors/destroy/' + doctor_id;
-    return this.http.delete(URL, { headers: headers });
+    return this.http.delete(URL);
   }
 
   closeMenuSidebar() {
@@ -103,18 +73,12 @@ export class DoctorService {
   }
 
   updateStatus(data: any, doctor_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/doctors/update/status/' + doctor_id;
-    return this.http.put(URL, data, { headers: headers });
+    return this.http.put(URL, data);
   }
 
   getEmployeesByLocation(location_id: any) {
-    const headers = new HttpHeaders({
-      Authorization: 'Bearer' + this.authService.token,
-    });
     const URL = url_servicios + '/doctors/employeesbylocation/' + location_id;
-    return this.http.get(URL, { headers: headers });
+    return this.http.get(URL);
   }
 }
