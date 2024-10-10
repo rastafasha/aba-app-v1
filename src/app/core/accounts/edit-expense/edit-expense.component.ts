@@ -1,40 +1,40 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { routes } from 'src/app/shared/routes/routes';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 interface data {
-  value: string ;
+  value: string;
 }
 
 @Component({
   selector: 'app-edit-expense',
   templateUrl: './edit-expense.component.html',
-  styleUrls: ['./edit-expense.component.scss']
+  styleUrls: ['./edit-expense.component.scss'],
 })
 export class EditExpenseComponent {
-  public routes = routes;
-  public deleteIcon  = true;
-  public selectedValue ! : string  ;
+  public routes = AppRoutes;
+  public deleteIcon = true;
+  public selectedValue!: string;
   date = new FormControl(new Date());
-  deleteIconFunc(){
-    this.deleteIcon = !this.deleteIcon
+  deleteIconFunc() {
+    this.deleteIcon = !this.deleteIcon;
   }
 
   selectedList1: data[] = [
-    {value: 'Select Purchase by'},
-    {value: 'Bernardo James'},
-    {value: 'Galaviz Lalema'},
-    {value: 'Tarah Williams'},
+    { value: 'Select Purchase by' },
+    { value: 'Bernardo James' },
+    { value: 'Galaviz Lalema' },
+    { value: 'Tarah Williams' },
   ];
   selectedList2: data[] = [
-    {value: 'Select Paid by'},
-    {value: 'Paypal'},
-    {value: 'Cheque'},
-    {value: 'Debit Card'},
+    { value: 'Select Paid by' },
+    { value: 'Paypal' },
+    { value: 'Cheque' },
+    { value: 'Debit Card' },
   ];
   selectedList3: data[] = [
-    {value: 'Select Payment Status'},
-    {value: 'Approved'},
-    {value: 'Rejected'},
-    {value: 'Pending'},
+    { value: 'Select Payment Status' },
+    { value: 'Approved' },
+    { value: 'Rejected' },
+    { value: 'Pending' },
   ];
 }

@@ -1,23 +1,23 @@
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { routes } from 'src/app/shared/routes/routes';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 interface data {
-  value: string ;
+  value: string;
 }
 @Component({
   selector: 'app-edit-schedule',
   templateUrl: './edit-schedule.component.html',
-  styleUrls: ['./edit-schedule.component.scss']
+  styleUrls: ['./edit-schedule.component.scss'],
 })
 export class EditScheduleComponent {
-  public routes = routes;
-  public selectedValue !: string  ;
+  public routes = AppRoutes;
+  public selectedValue!: string;
   date = new FormControl(new Date());
-  
+
   selectedList: data[] = [
-    {value: 'Choose Department'},
-    {value: 'Cardiology'},
-    {value: 'Urology'},
-    {value: 'Radiology'},
+    { value: 'Choose Department' },
+    { value: 'Cardiology' },
+    { value: 'Urology' },
+    { value: 'Radiology' },
   ];
 }

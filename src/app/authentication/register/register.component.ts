@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/shared/auth/auth.service';
-import { routes } from 'src/app/shared/routes/routes';
+import { AuthService } from 'src/app/core/auth/auth.service';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
-  public routes = routes;
-  public CustomControler!: number | string | boolean ;
-  public passwordClass  = false;
-  public confirmPasswordClass  = false
+  public routes = AppRoutes;
+  public CustomControler!: number | string | boolean;
+  public passwordClass = false;
+  public confirmPasswordClass = false;
   public isValidConfirmPassword = false;
 
   form = new FormGroup({
@@ -27,9 +27,8 @@ export class RegisterComponent {
     return this.form.controls;
   }
 
-  constructor(private router:Router,private auth: AuthService) { }
+  constructor(private router: Router, private auth: AuthService) {}
 
-  
   submit() {
     if (this.form.value.password != this.form.value.confirmPassword) {
       this.isValidConfirmPassword = true;
@@ -38,10 +37,10 @@ export class RegisterComponent {
       // this.auth.login();
     }
   }
-  passwordFunc(){
-    this.passwordClass = !this.passwordClass
+  passwordFunc() {
+    this.passwordClass = !this.passwordClass;
   }
-  confirmPasswordFunc(){
-    this.confirmPasswordClass = !this.confirmPasswordClass
+  confirmPasswordFunc() {
+    this.confirmPasswordClass = !this.confirmPasswordClass;
   }
 }

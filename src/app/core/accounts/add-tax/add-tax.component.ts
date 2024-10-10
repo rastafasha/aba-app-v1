@@ -1,22 +1,21 @@
 import { Component } from '@angular/core';
-import { routes } from 'src/app/shared/routes/routes';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 interface data {
-  value: string ;
+  value: string;
 }
 @Component({
   selector: 'app-add-tax',
   templateUrl: './add-tax.component.html',
-  styleUrls: ['./add-tax.component.scss']
+  styleUrls: ['./add-tax.component.scss'],
 })
 export class AddTaxComponent {
-  public routes = routes;
-  public selectedValue ! : string  ;
+  public routes = AppRoutes;
+  public selectedValue!: string;
 
   selectedList: data[] = [
-    {value: 'Select Tax Method'},
-    {value: 'Active'},
-    {value: 'In Active'},
-    {value: '2019'},
+    { value: 'Select Tax Method' },
+    { value: 'Active' },
+    { value: 'In Active' },
+    { value: '2019' },
   ];
-
 }

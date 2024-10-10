@@ -10,13 +10,11 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PermisionInterceptorInterceptor } from './http-interceptors/permision-interceptor.interceptor';
-import { PipesModule } from './pipes/pipes.module';
+import { PipesModule } from './shared/pipes/pipes.module';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
@@ -30,17 +28,16 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
       enabled: environment.production,
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
+      registrationStrategy: 'registerWhenStable:30000',
     }),
-
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: PermisionInterceptorInterceptor,
-      multi: true
-    }
+      multi: true,
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

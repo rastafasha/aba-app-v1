@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from '../shared/gaurd/auth.guard';
+import { AuthGuard } from './auth/auth.guard';
 import { CoreComponent } from './core.component';
 
 const routes: Routes = [
@@ -75,13 +75,13 @@ const routes: Routes = [
         loadChildren: () =>
           import('./email/email.module').then((m) => m.EmailModule),
       },
-      
+
       {
         path: 'assets',
         loadChildren: () =>
           import('./assets/assets.module').then((m) => m.AssetsModule),
       },
-      
+
       {
         path: 'reports',
         loadChildren: () =>
@@ -104,7 +104,6 @@ const routes: Routes = [
             (m) => m.ComponentsModule
           ),
       },
-      
       {
         path: 'tables',
         loadChildren: () =>

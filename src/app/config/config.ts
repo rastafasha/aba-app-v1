@@ -1,4 +1,4 @@
-import { environment } from "src/environments/environment";
+import { environment } from 'src/environments/environment';
 
 export const url_backend = environment.url_backend;
 export const url_servicios = environment.url_servicios;

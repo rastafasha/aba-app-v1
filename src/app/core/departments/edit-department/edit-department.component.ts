@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { routes } from 'src/app/shared/routes/routes';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 
 @Component({
   selector: 'app-edit-department',
   templateUrl: './edit-department.component.html',
-  styleUrls: ['./edit-department.component.scss']
+  styleUrls: ['./edit-department.component.scss'],
 })
 export class EditDepartmentComponent {
-  public routes = routes;
+  public routes = AppRoutes;
 }

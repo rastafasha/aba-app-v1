@@ -8,25 +8,25 @@ import { MatTableDataSource } from '@angular/material/table';
 import { NoteBcbaService } from '../services/note-bcba.service';
 import { RolesService } from '../../roles/service/roles.service';
 import { Location } from '@angular/common';
-declare var $:any;  
+declare var $: any;
 @Component({
   selector: 'app-note-bcba-by-client',
   templateUrl: './note-bcba-by-client.component.html',
-  styleUrls: ['./note-bcba-by-client.component.scss']
+  styleUrls: ['./note-bcba-by-client.component.scss'],
 })
 export class NoteBcbaByClientComponent {
-  patient_id:any;
-  patientId:any;
-  doctor_id:any;
-  patient_selected:any;
-  client_selected:any;
-  note_selected:any;
-  bip_id:any;
-  note_id:any;
-  user:any;
+  patient_id: any;
+  patientId: any;
+  doctor_id: any;
+  patient_selected: any;
+  client_selected: any;
+  note_selected: any;
+  bip_id: any;
+  note_id: any;
+  user: any;
 
   public notesPatientList: any = [];
-  public notespatient_generals:any = [];
+  public notespatient_generals: any = [];
   dataSource!: MatTableDataSource<any>;
   public showFilter = false;
   public searchDataValue = '';
@@ -41,35 +41,33 @@ export class NoteBcbaByClientComponent {
   public pageNumberArray: Array<number> = [];
   public pageSelection: Array<any> = [];
   public totalPages = 0;
-  public text_validation:any;
-  
+  public text_validation: any;
+
   constructor(
-    public bipService:BipService,
-    public patientService:PatientMService,
-    public goalService:GoalService,
+    public bipService: BipService,
+    public patientService: PatientMService,
+    public goalService: GoalService,
     public router: Router,
     public ativatedRoute: ActivatedRoute,
     public noteBcbaService: NoteBcbaService,
     public doctorService: DoctorService,
     public roleService: RolesService,
-    public locations: Location,
-  ){}
+    public locations: Location
+  ) {}
 
   ngOnInit(): void {
-    
     // window.scrollTo(0, 0);
-    this.ativatedRoute.params.subscribe((resp:any)=>{
+    this.ativatedRoute.params.subscribe((resp: any) => {
       this.patient_id = resp.id;
-      
+
       // this.patient_id= resp.patient_id;
       // console.log(this.client_id);
-     })
-     this.getNotesByPatient();
-     this.getTableData();
-     
+    });
+    this.getNotesByPatient();
+    this.getTableData();
 
-    let USER = localStorage.getItem("user");
-    this.user = JSON.parse(USER ? USER: '');
+    const USER = localStorage.getItem('user');
+    this.user = JSON.parse(USER ? USER : '');
     this.doctor_id = this.user.id;
     this.user = this.roleService.authService.user;
   }
@@ -78,39 +76,38 @@ export class NoteBcbaByClientComponent {
     this.locations.back(); // <-- go back to previous location on cancel
   }
 
-  isPermission(permission:string){
-    if(this.user.roles.includes('SUPERADMIN')){
+  isPermission(permission: string) {
+    if (this.user.roles.includes('SUPERADMIN')) {
       return true;
     }
-    if(this.user.permissions.includes(permission)){
+    if (this.user.permissions.includes(permission)) {
       return true;
     }
     return false;
   }
 
-
-  getNotesByPatient(){
-    this.noteBcbaService.showNotebyPatient(this.patient_id).subscribe((resp:any)=>{
-      console.log(resp);
-    })
+  getNotesByPatient() {
+    this.noteBcbaService
+      .showNotebyPatient(this.patient_id)
+      .subscribe((resp: any) => {
+        console.log(resp);
+      });
   }
-
-  
 
   private getTableData(): void {
     this.notesPatientList = [];
     this.serialNumberArray = [];
 
-    this.noteBcbaService.showNotebyPatient(this.patient_id).subscribe((resp:any)=>{
-      
-      console.log(resp);
+    this.noteBcbaService
+      .showNotebyPatient(this.patient_id)
+      .subscribe((resp: any) => {
+        console.log(resp);
 
-      this.totalDataNotepatient = resp.noteBcbas.data.length;
-      this.notespatient_generals = resp.noteBcbas.data;
-      this.patientId = resp.noteBcbas.data[0].patient_id;
-     this.getTableDataGeneral();
-    })
-
+        this.totalDataNotepatient = resp.noteBcbas.data.length;
+        this.notespatient_generals = resp.noteBcbas.data;
+        this.patientId = resp.noteBcbas.data[0].patient_id;
+        this.getTableDataGeneral();
+      });
   }
 
   public sortData(sort: any) {
@@ -134,14 +131,13 @@ export class NoteBcbaByClientComponent {
     this.notesPatientList = this.dataSource.filteredData;
   }
 
-  getTableDataGeneral(){
+  getTableDataGeneral() {
     this.notesPatientList = [];
     this.serialNumberArray = [];
-    
+
     this.notespatient_generals.map((res: any, index: number) => {
       const serialNumber = index + 1;
       if (index >= this.skip && serialNumber <= this.limit) {
-       
         this.notesPatientList.push(res);
         this.serialNumberArray.push(serialNumber);
       }
@@ -187,7 +183,10 @@ export class NoteBcbaByClientComponent {
     this.searchDataValue = '';
   }
 
-  private calculateTotalPages(totalDatapatient: number, pageSize: number): void {
+  private calculateTotalPages(
+    totalDatapatient: number,
+    pageSize: number
+  ): void {
     this.pageNumberArray = [];
     this.totalPages = totalDatapatient / pageSize;
     if (this.totalPages % 1 != 0) {
@@ -201,33 +200,32 @@ export class NoteBcbaByClientComponent {
       this.pageSelection.push({ skip: skip, limit: limit });
     }
   }
-  selectUser(note:any){
+  selectUser(note: any) {
     this.note_selected = note;
   }
-  deleteRol(){
-    this.noteBcbaService.deleteNote(this.note_selected.id).subscribe((resp:any)=>{
-      // console.log(resp);
+  deleteRol() {
+    this.noteBcbaService
+      .deleteNote(this.note_selected.id)
+      .subscribe((resp: any) => {
+        // console.log(resp);
 
-      if(resp.message == 403){
-        this.text_validation = resp.message_text;
-      }else{
+        if (resp.message == 403) {
+          this.text_validation = resp.message_text;
+        } else {
+          let INDEX = this.notesPatientList.findIndex(
+            (item: any) => item.id == this.note_selected.id
+          );
+          if (INDEX != -1) {
+            this.notesPatientList.splice(INDEX, 1);
 
-        let INDEX = this.notesPatientList.findIndex((item:any)=> item.id == this.note_selected.id);
-      if(INDEX !=-1){
-        this.notesPatientList.splice(INDEX,1);
-
-        $('#delete_patient').hide();
-        $("#delete_patient").removeClass("show");
-        $(".modal-backdrop").remove();
-        $("body").removeClass();
-        $("body").removeAttr("style");
-        this.note_selected = null;
-      }
-      }
-
-      
-    })
+            $('#delete_patient').hide();
+            $('#delete_patient').removeClass('show');
+            $('.modal-backdrop').remove();
+            $('body').removeClass();
+            $('body').removeAttr('style');
+            this.note_selected = null;
+          }
+        }
+      });
   }
-
-
 }

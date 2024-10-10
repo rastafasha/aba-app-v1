@@ -1,26 +1,26 @@
 import { Component } from '@angular/core';
 import { DataService } from 'src/app/shared/data/data.service';
 import { invoicesGrid } from 'src/app/shared/models/models';
-import { routes } from 'src/app/shared/routes/routes';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 
 @Component({
   selector: 'app-invoices-grid',
   templateUrl: './invoices-grid.component.html',
-  styleUrls: ['./invoices-grid.component.scss']
+  styleUrls: ['./invoices-grid.component.scss'],
 })
 export class InvoicesGridComponent {
-  public routes = routes;
+  public routes = AppRoutes;
   public checkboxes: string[] = [];
-  public invoicesGrid : Array<invoicesGrid>;
+  public invoicesGrid: Array<invoicesGrid>;
 
-  public openCheckBoxes(val: string){
+  public openCheckBoxes(val: string) {
     if (this.checkboxes[0] != val) {
       this.checkboxes[0] = val;
     } else {
       this.checkboxes = [];
     }
   }
-  constructor(public data:DataService){
-    this.invoicesGrid = this.data.invoicesGrid
+  constructor(public data: DataService) {
+    this.invoicesGrid = this.data.invoicesGrid;
   }
 }

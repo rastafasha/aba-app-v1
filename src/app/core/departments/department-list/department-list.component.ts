@@ -2,16 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DataService } from 'src/app/shared/data/data.service';
-import { pageSelection, apiResultFormat, departmentList } from 'src/app/shared/models/models';
-import { routes } from 'src/app/shared/routes/routes';
+import {
+  pageSelection,
+  apiResultFormat,
+  departmentList,
+} from 'src/app/shared/models/models';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 
 @Component({
   selector: 'app-department-list',
   templateUrl: './department-list.component.html',
-  styleUrls: ['./department-list.component.scss']
+  styleUrls: ['./department-list.component.scss'],
 })
-export class DepartmentListComponent implements OnInit{
-  public routes = routes;
+export class DepartmentListComponent implements OnInit {
+  public routes = AppRoutes;
 
   public departmentList: Array<departmentList> = [];
   dataSource!: MatTableDataSource<departmentList>;
@@ -30,9 +34,7 @@ export class DepartmentListComponent implements OnInit{
   public pageSelection: Array<pageSelection> = [];
   public totalPages = 0;
 
-  constructor(public data : DataService){
-
-  }
+  constructor(public data: DataService) {}
   ngOnInit() {
     this.getTableData();
   }
@@ -45,12 +47,13 @@ export class DepartmentListComponent implements OnInit{
       data.data.map((res: departmentList, index: number) => {
         const serialNumber = index + 1;
         if (index >= this.skip && serialNumber <= this.limit) {
-        
           this.departmentList.push(res);
           this.serialNumberArray.push(serialNumber);
         }
       });
-      this.dataSource = new MatTableDataSource<departmentList>(this.departmentList);
+      this.dataSource = new MatTableDataSource<departmentList>(
+        this.departmentList
+      );
       this.calculateTotalPages(this.totalData, this.pageSize);
     });
   }
