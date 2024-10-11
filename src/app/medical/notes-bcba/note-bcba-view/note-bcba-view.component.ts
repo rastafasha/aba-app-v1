@@ -93,10 +93,10 @@ export class NoteBcbaViewComponent {
   public natural_teaching: any;
 
   public FILE_SIGNATURE_RBT: any;
-  public IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED: any =
+  public IMAGE_PREVISUALIZA_SIGNATURE__BCBA_CREATED: any =
     'assets/img/user-06.jpg';
   public FILE_SIGNATURE_BCBA: any;
-  public IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED: any =
+  public IMAGE_PREVISUALIZA_SIGNATURE_SUPERVISOR_CREATED: any =
     'assets/img/user-06.jpg';
 
   public rbt_id: any;
@@ -141,7 +141,7 @@ export class NoteBcbaViewComponent {
   doctor_selected: any = null;
   doctor_selected_full_name: any = null;
   doctor_selected_rbt: any = null;
-  doctor_selected_full_name_rbt: any = null;
+  doctor_selected_full_name_supervisor: any = null;
   doctor_selected_bcba: any = null;
   doctor_selected_full_name_bcba: any = null;
   pa_assessments: any = [];
@@ -224,9 +224,9 @@ export class NoteBcbaViewComponent {
       this.selectedValueRBT = this.note_selected.provider_name;
       this.selectedValueBCBA = this.note_selected.supervisor_name;
 
-      this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED =
+      this.IMAGE_PREVISUALIZA_SIGNATURE__BCBA_CREATED =
         this.note_selected.provider_signature;
-      this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED =
+      this.IMAGE_PREVISUALIZA_SIGNATURE_SUPERVISOR_CREATED =
         this.note_selected.supervisor_signature;
 
       this.getProfileBip();
@@ -252,7 +252,7 @@ export class NoteBcbaViewComponent {
       .subscribe((resp: any) => {
         console.log(resp);
         this.doctor_selected_rbt = resp.user;
-        this.doctor_selected_full_name_rbt = resp.user.full_name;
+        this.doctor_selected_full_name_supervisor = resp.user.full_name;
       });
   }
   getDoctorBcba() {
