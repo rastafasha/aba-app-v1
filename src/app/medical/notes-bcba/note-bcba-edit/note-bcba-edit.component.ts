@@ -244,11 +244,18 @@ export class NoteBcbaEditComponent {
       this.session_length_total = this.note_selected.session_length_total;
       this.session_length_total2 = this.note_selected.session_length_total2;
 
-      this.selectedValueTimeIn = this.note_selected.time_in;
+      
+      // this.selectedValueTimeIn = this.note_selected.time_in;
+      // this.selectedValueTimeOut = this.note_selected.time_out;
+      // this.selectedValueTimeIn2 = this.note_selected.time_in2;
+      // this.selectedValueTimeOut2 = this.note_selected.time_out2;
 
-      this.selectedValueTimeOut = this.note_selected.time_in2;
-      this.selectedValueTimeIn2 = this.note_selected.time_out;
-      this.selectedValueTimeOut2 = this.note_selected.time_out2;
+      this.selectedValueTimeIn = this.formatTime(this.note_selected.time_in);
+      this.selectedValueTimeOut = this.formatTime(this.note_selected.time_out);
+      this.selectedValueTimeIn2 = this.formatTime(this.note_selected.time_in2);
+      this.selectedValueTimeOut2 = this.formatTime(
+        this.note_selected.time_out2
+      );
 
       this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED =
         this.note_selected.provider_signature;
@@ -257,6 +264,13 @@ export class NoteBcbaEditComponent {
 
       this.getProfileBip();
     });
+  }
+
+  private formatTime(timeString: string | null): string {
+    console.log('formatting time: ', timeString);
+    if (!timeString) return '';
+    const [hours, minutes] = timeString.replace(/ /g, '').split(':');
+    return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
   }
 
   getProfileBip() {
