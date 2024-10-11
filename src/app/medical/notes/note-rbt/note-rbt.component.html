@@ -149,7 +149,7 @@
                                                 <div class="form-group local-forms">
                                                     <label >Time In <span class="login-danger">*</span></label>
                                                     <input [ngxTimepicker]="toggleTimepicker3" readonly
-                                                        [value]="selectedValueTimeIn2" [format]="24" class="form-control" name="time_in2" >
+                                                        [value]="selectedValueTimeIn2" [format]="24" class="form-control" name="time_in2" [(ngModel)]="selectedValueTimeIn2" >
                                                     <ngx-material-timepicker (timeChanged)="hourTimeIn2Selected($event)" #toggleTimepicker3></ngx-material-timepicker>
                                                 </div>
                                             </div>

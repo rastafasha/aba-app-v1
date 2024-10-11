@@ -143,7 +143,7 @@ export class NoteRbtComponent implements OnInit {
   public provider: any;
   public stoInprogressGoal: any;
   public location_id: number;
-  public patientLocation_id: number;
+  public patientLocation_id: any;
 
   public intervention_added: any = [];
   public interventionsSelected = {};
@@ -309,8 +309,8 @@ export class NoteRbtComponent implements OnInit {
     this.goalService
       .getStobyGoalinProgress(this.goal)
       .subscribe((resp: any) => {
-        console.log(resp);
-        this.stoInprogressGoal = resp.stoInprogressGoal;
+        console.log('getStoInprogressGoal', resp);
+        this.stoInprogressGoal = resp.goalstos.in_progress;
         this.stoInprogressGoal.forEach((element: any) => {
           this.stoInprogressGoal.push(element);
         });
@@ -472,112 +472,11 @@ export class NoteRbtComponent implements OnInit {
     }
   }
 
-  // addReplacement(replacemen:any){
-
-  //   if(this.replacementSelected !== null ){
-  //     this.total_trials = 0;
-  //   this.number_of_correct_response = 0;
-  //   this.replacementGoals.push({
-  //     goal: this.replacementSelected.goal,
-  //     total_trials: this.total_trials ? this.total_trials  : "0",
-  //     number_of_correct_response: this.number_of_correct_response ? this.number_of_correct_response : '0' ,
-
-  //   })
-  //   if(this.replacementGoals.length > 1){
-  //     this.replacementGoals.splice(this.replacementGoals,1);
-  //   }
-  //   this.replacementSelected = replacemen.goal;
-  //   this.goal = '';
-  //   this.total_trials = 0;
-  //   this.number_of_correct_response = 0;
-  //   }else{
-  //     // alert("if you didn't have any reaction, enter :0");
-  //     this.goal = replacemen.goal;
-  //     this.total_trials = 0;
-  //     this.number_of_correct_response = 0;
-
-  //     this.replacementGoals.push({
-  //       goal: replacemen.goal,
-  //       total_trials:  "0",
-  //       number_of_correct_response:  '0' ,
-
-  //     })
-  //     if(this.replacementGoals.length > 1){
-  //       this.replacementGoals.splice(this.replacementGoals,1);
-  //     }
-  //     }
-
-  // }
 
   deleteMaladaptive(i: any) {
     this.replacementGoals.splice(i, 1);
   }
 
-  // addInterventions(){
-
-  //   this.intervention_added.push({
-  //     pairing: this.pairing,
-  //     response_block: this.response_block,
-  //     DRA: this.DRA,
-  //     DRO: this.DRO,
-  //     redirection: this.redirection,
-  //     errorless_teaching: this.errorless_teaching,
-  //     NCR: this.NCR,
-  //     shaping: this.shaping,
-  //     chaining: this.chaining,
-  //     token_economy: this.token_economy,
-  //     extinction: this.extinction,
-  //     natural_teaching: this.natural_teaching,
-  //   })
-  //    //si existe un elemento actualiza ese elemento en la lista
-  //   //  this.intervention_added.splice(this.intervention_added,1);
-  //   if(this.intervention_added.length > 1){
-  //     this.intervention_added.splice(this.intervention_added,1);
-  //     Swal.fire('Updated', ` Interventions Added`, 'success');
-  //   }else{
-  //     Swal.fire('Warning', `Must add less one`, 'warning');
-  //   }
-  // }
-
-  // addInterventions(){
-  //   if (this.intervention_added) {
-  //     this.intervention_added.push({
-  //       pairing: this.pairing,
-  //       response_block: this.response_block,
-  //       DRA: this.DRA,
-  //       DRO: this.DRO,
-  //       redirection: this.redirection,
-  //       errorless_teaching: this.errorless_teaching,
-  //       NCR: this.NCR,
-  //       shaping: this.shaping,
-  //       chaining: this.chaining,
-  //       token_economy: this.token_economy,
-  //       extinction: this.extinction,
-  //       natural_teaching: this.natural_teaching,
-  //     })
-  //   } else {
-  //     this.intervention_added = [{
-  //       pairing: this.pairing,
-  //       response_block: this.response_block,
-  //       DRA: this.DRA,
-  //       DRO: this.DRO,
-  //       redirection: this.redirection,
-  //       errorless_teaching: this.errorless_teaching,
-  //       NCR: this.NCR,
-  //       shaping: this.shaping,
-  //       chaining: this.chaining,
-  //       token_economy: this.token_economy,
-  //       extinction: this.extinction,
-  //       natural_teaching: this.natural_teaching,
-  //     }]
-  //   }
-  //   if(this.intervention_added.length > 1){
-  //     this.intervention_added.splice(this.intervention_added,1);
-  //     Swal.fire('Updated', ` Interventions Added`, 'success');
-  //   }else{
-  //     Swal.fire('Warning', `Must add less one`, 'warning');
-  //   }
-  // }
 
   //funcion para la primera imagen.. funciona
   loadFile($event: any) {
@@ -696,7 +595,7 @@ export class NoteRbtComponent implements OnInit {
     formData.append('last_name', this.last_name);
     formData.append('diagnosis_code', this.diagnosis_code);
     formData.append('provider_credential', this.provider_credential);
-    formData.append('location_id', this.patientLocation_id + '');
+    formData.append('location_id', this.patientLocation_id );
 
     formData.append('session_date', this.session_date);
 
