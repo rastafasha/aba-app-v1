@@ -12,7 +12,7 @@ import { DataService } from 'src/app/shared/data/data.service';
   styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent {
-  public routes = AppRoutes;
+  routes = AppRoutes;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   options: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

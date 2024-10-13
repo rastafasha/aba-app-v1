@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { map, Observable, of } from 'rxjs';
-import { ReportByClientComponent } from '../../medical/client-report/report-by-client/report-by-client.component';
+import { ReportByClientComponent } from 'src/app/pages/medical/client-report/report-by-client/report-by-client.component';
 
 @Pipe({
   name: 'getPrizeCptNote',

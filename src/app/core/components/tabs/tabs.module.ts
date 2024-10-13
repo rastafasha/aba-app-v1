@@ -1,17 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { TabsRoutingModule } from './tabs-routing.module';
+import { TabsRoutingModule } from './tabs.routing';
 import { TabsComponent } from './tabs.component';
 
-
 @NgModule({
-  declarations: [
-    TabsComponent
-  ],
-  imports: [
-    CommonModule,
-    TabsRoutingModule
-  ]
+  declarations: [TabsComponent],
+  imports: [CommonModule, TabsRoutingModule],
 })
-export class TabsModule { }
+export class TabsModule {}

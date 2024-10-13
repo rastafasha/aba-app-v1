@@ -7,5 +7,5 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
   styleUrls: ['./typography.component.scss'],
 })
 export class TypographyComponent {
-  public routes = AppRoutes;
+  routes = AppRoutes;
 }

@@ -11,20 +11,23 @@ interface Route {
 @Component({
   selector: 'app-core',
   templateUrl: './core.component.html',
-  styleUrls: ['./core.component.scss']
+  styleUrls: ['./core.component.scss'],
 })
 export class CoreComponent {
-  public miniSidebar = 'false';
-  public expandMenu = 'false';
-  public mobileSidebar = 'false';
-  public sideBarActivePath = false;
-  public headerActivePath = false;
+  miniSidebar = 'false';
+  expandMenu = 'false';
+  mobileSidebar = 'false';
+  sideBarActivePath = false;
+  headerActivePath = false;
   base = '';
   page = '';
   currentUrl = '';
 
-  constructor(private sideBar: SideBarService,public router: Router,private data: DataService,) 
-  {
+  constructor(
+    private sideBar: SideBarService,
+    public router: Router,
+    private data: DataService
+  ) {
     this.sideBar.toggleSideBar.subscribe((res: string) => {
       if (res == 'true') {
         this.miniSidebar = 'true';
@@ -65,13 +68,11 @@ export class CoreComponent {
     });
     this.getRoutes(this.router);
   }
-  public toggleMobileSideBar(): void {
+  toggleMobileSideBar(): void {
     this.sideBar.switchMobileSideBarPosition();
   }
   private getRoutes(route: Route): void {
-    if (
-      route.url.split('/')[2] === 'confirm-mail'
-    ) {
+    if (route.url.split('/')[2] === 'confirm-mail') {
       this.sideBarActivePath = false;
       this.headerActivePath = false;
     } else {

@@ -66,7 +66,7 @@ export class AuthService {
     this.storage.remove(AUTH_CONSTS.user);
     this.storage.remove(AUTH_CONSTS.auth);
     // TODO: se usa?
-    this.storage.remove(AUTH_CONSTS.authToken);
+    this.storage.remove(AUTH_CONSTS.token);
   }
 
   getUserRomoto<T>(data: unknown) {

@@ -7,5 +7,5 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
   styleUrls: ['./tabs.component.scss'],
 })
 export class TabsComponent {
-  public routes = AppRoutes;
+  routes = AppRoutes;
 }

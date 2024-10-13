@@ -10,7 +10,7 @@ import lgThumbnail from 'lightgallery/plugins/thumbnail';
   styleUrls: ['./gallery.component.scss'],
 })
 export class GalleryComponent {
-  public routes = AppRoutes;
+  routes = AppRoutes;
   settings = {
     counter: false,
     plugins: [lgZoom, lgThumbnail],

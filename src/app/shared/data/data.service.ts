@@ -10,28 +10,28 @@ import { apiResultFormat } from '../models/models';
 export class DataService {
   constructor(private http: HttpClient) {}
 
-  public getDoctorsList(): Observable<apiResultFormat> {
+  getDoctorsList(): Observable<apiResultFormat> {
     return this.http.get<apiResultFormat>('assets/json/doctors-list.json').pipe(
       map((res: apiResultFormat) => {
         return res;
       })
     );
   }
-  public getPatientsList(): Observable<apiResultFormat> {
+  getPatientsList(): Observable<apiResultFormat> {
     return this.http.get<apiResultFormat>('assets/json/doctors-list.json').pipe(
       map((res: apiResultFormat) => {
         return res;
       })
     );
   }
-  public getStaffList(): Observable<apiResultFormat> {
+  getStaffList(): Observable<apiResultFormat> {
     return this.http.get<apiResultFormat>('assets/json/staff-list.json').pipe(
       map((res: apiResultFormat) => {
         return res;
       })
     );
   }
-  public getAppointmentList(): Observable<apiResultFormat> {
+  getAppointmentList(): Observable<apiResultFormat> {
     return this.http
       .get<apiResultFormat>('assets/json/appointment-list.json')
       .pipe(
@@ -40,7 +40,7 @@ export class DataService {
         })
       );
   }
-  public getStaffHoliday(): Observable<apiResultFormat> {
+  getStaffHoliday(): Observable<apiResultFormat> {
     return this.http
       .get<apiResultFormat>('assets/json/staff-holiday.json')
       .pipe(
@@ -49,42 +49,42 @@ export class DataService {
         })
       );
   }
-  public getSchedule(): Observable<apiResultFormat> {
+  getSchedule(): Observable<apiResultFormat> {
     return this.http.get<apiResultFormat>('assets/json/schedule.json').pipe(
       map((res: apiResultFormat) => {
         return res;
       })
     );
   }
-  public getInvoices(): Observable<apiResultFormat> {
+  getInvoices(): Observable<apiResultFormat> {
     return this.http.get<apiResultFormat>('assets/json/invoices.json').pipe(
       map((res: apiResultFormat) => {
         return res;
       })
     );
   }
-  public getPayments(): Observable<apiResultFormat> {
+  getPayments(): Observable<apiResultFormat> {
     return this.http.get<apiResultFormat>('assets/json/payments.json').pipe(
       map((res: apiResultFormat) => {
         return res;
       })
     );
   }
-  public getExpenses(): Observable<apiResultFormat> {
+  getExpenses(): Observable<apiResultFormat> {
     return this.http.get<apiResultFormat>('assets/json/expenses.json').pipe(
       map((res: apiResultFormat) => {
         return res;
       })
     );
   }
-  public getTaxes(): Observable<apiResultFormat> {
+  getTaxes(): Observable<apiResultFormat> {
     return this.http.get<apiResultFormat>('assets/json/taxes.json').pipe(
       map((res: apiResultFormat) => {
         return res;
       })
     );
   }
-  public getProvidentFund(): Observable<apiResultFormat> {
+  getProvidentFund(): Observable<apiResultFormat> {
     return this.http
       .get<apiResultFormat>('assets/json/provident-fund.json')
       .pipe(
@@ -93,7 +93,7 @@ export class DataService {
         })
       );
   }
-  public getDepartmentList(): Observable<apiResultFormat> {
+  getDepartmentList(): Observable<apiResultFormat> {
     return this.http
       .get<apiResultFormat>('assets/json/department-list.json')
       .pipe(
@@ -102,21 +102,21 @@ export class DataService {
         })
       );
   }
-  public getSalary(): Observable<apiResultFormat> {
+  getSalary(): Observable<apiResultFormat> {
     return this.http.get<apiResultFormat>('assets/json/salary.json').pipe(
       map((res: apiResultFormat) => {
         return res;
       })
     );
   }
-  public getAssetsList(): Observable<apiResultFormat> {
+  getAssetsList(): Observable<apiResultFormat> {
     return this.http.get<apiResultFormat>('assets/json/assets-list.json').pipe(
       map((res: apiResultFormat) => {
         return res;
       })
     );
   }
-  public getExpenseReports(): Observable<apiResultFormat> {
+  getExpenseReports(): Observable<apiResultFormat> {
     return this.http
       .get<apiResultFormat>('assets/json/expense-reports.json')
       .pipe(
@@ -125,7 +125,7 @@ export class DataService {
         })
       );
   }
-  public getInvoiceReports(): Observable<apiResultFormat> {
+  getInvoiceReports(): Observable<apiResultFormat> {
     return this.http
       .get<apiResultFormat>('assets/json/invoice-reports.json')
       .pipe(
@@ -134,14 +134,14 @@ export class DataService {
         })
       );
   }
-  public getAllInvoice(): Observable<apiResultFormat> {
+  getAllInvoice(): Observable<apiResultFormat> {
     return this.http.get<apiResultFormat>('assets/json/all-invoice.json').pipe(
       map((res: apiResultFormat) => {
         return res;
       })
     );
   }
-  public getPatientDashboard(): Observable<apiResultFormat> {
+  getPatientDashboard(): Observable<apiResultFormat> {
     return this.http
       .get<apiResultFormat>('assets/json/patient-dashboard.json')
       .pipe(
@@ -150,7 +150,7 @@ export class DataService {
         })
       );
   }
-  public getInvoicesPaid(): Observable<apiResultFormat> {
+  getInvoicesPaid(): Observable<apiResultFormat> {
     return this.http
       .get<apiResultFormat>('assets/json/invoices-paid.json')
       .pipe(
@@ -159,7 +159,7 @@ export class DataService {
         })
       );
   }
-  public getInvoicesOverdue(): Observable<apiResultFormat> {
+  getInvoicesOverdue(): Observable<apiResultFormat> {
     return this.http
       .get<apiResultFormat>('assets/json/invoices-overdue.json')
       .pipe(
@@ -168,7 +168,7 @@ export class DataService {
         })
       );
   }
-  public getInvoicesDraft(): Observable<apiResultFormat> {
+  getInvoicesDraft(): Observable<apiResultFormat> {
     return this.http
       .get<apiResultFormat>('assets/json/invoices-draft.json')
       .pipe(
@@ -177,7 +177,7 @@ export class DataService {
         })
       );
   }
-  public getInvoicesCancelled(): Observable<apiResultFormat> {
+  getInvoicesCancelled(): Observable<apiResultFormat> {
     return this.http
       .get<apiResultFormat>('assets/json/invoices-cancelled.json')
       .pipe(
@@ -186,7 +186,7 @@ export class DataService {
         })
       );
   }
-  public getInvoicesRecurring(): Observable<apiResultFormat> {
+  getInvoicesRecurring(): Observable<apiResultFormat> {
     return this.http
       .get<apiResultFormat>('assets/json/invoices-recurring.json')
       .pipe(
@@ -195,14 +195,14 @@ export class DataService {
         })
       );
   }
-  public getStaffLeave(): Observable<apiResultFormat> {
+  getStaffLeave(): Observable<apiResultFormat> {
     return this.http.get<apiResultFormat>('assets/json/staff-leave.json').pipe(
       map((res: apiResultFormat) => {
         return res;
       })
     );
   }
-  public getEvents() {
+  getEvents() {
     return this.http
       .get<apiResultFormat>('assets/json/scheduleevents.json')
       .pipe(
@@ -211,14 +211,14 @@ export class DataService {
         })
       );
   }
-  public getDataTables() {
+  getDataTables() {
     return this.http.get<apiResultFormat>('assets/json/data-tables.json').pipe(
       map((res: apiResultFormat) => {
         return res;
       })
     );
   }
-  public sideBar = [
+  sideBar = [
     {
       tittle: 'Main',
       showAsTab: false,
@@ -919,7 +919,7 @@ export class DataService {
       ],
     },
   ];
-  public carousel1 = [
+  carousel1 = [
     {
       quantity: '68',
       units: 'kg',
@@ -941,7 +941,7 @@ export class DataService {
       units: 'kg',
     },
   ];
-  public carousel2 = [
+  carousel2 = [
     {
       quantity: '160',
       units: 'cm',
@@ -963,7 +963,7 @@ export class DataService {
       units: 'cm',
     },
   ];
-  public socialLinks = [
+  socialLinks = [
     {
       icon: 'facebook',
       placeholder: 'https://www.facebook.com',
@@ -981,7 +981,7 @@ export class DataService {
       placeholder: 'https://www.linkedin.com',
     },
   ];
-  public upcomingAppointments = [
+  upcomingAppointments = [
     {
       no: 'R00001',
       patientName: 'Andrea Lalema',
@@ -1028,7 +1028,7 @@ export class DataService {
       img: 'assets/img/profiles/avatar-02.jpg',
     },
   ];
-  public recentPatients = [
+  recentPatients = [
     {
       no: 'R00001',
       patientName: 'Andrea Lalema',
@@ -1070,7 +1070,7 @@ export class DataService {
       triage: 'Urgent',
     },
   ];
-  public patientProfile = [
+  patientProfile = [
     {
       date: '29/09/2022',
       doctor: 'Dr.Jenny Smith',
@@ -1090,7 +1090,7 @@ export class DataService {
       charges: '$ 30',
     },
   ];
-  public blogs = [
+  blogs = [
     {
       img1: 'assets/img/blog/blog-1.jpg',
       img2: 'assets/img/profiles/avatar-01.jpg',
@@ -1177,7 +1177,7 @@ export class DataService {
       msg: 'Read more in 10 Minutes',
     },
   ];
-  public invoicesGrid = [
+  invoicesGrid = [
     {
       invoiceNumber: 'IN093439#@09',
       name: 'Barbara Moore',

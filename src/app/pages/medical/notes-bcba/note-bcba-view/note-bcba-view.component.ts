@@ -1,0 +1,352 @@
+import { Location } from '@angular/common';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import html2canvas from 'html2canvas';
+import * as jspdf from 'jspdf';
+import { AppRoutes } from 'src/app/shared/routes/routes';
+import { BipService } from '../../bip/service/bip.service';
+import { DoctorService } from '../../doctors/service/doctor.service';
+import { NoteBcbaService } from '../services/note-bcba.service';
+
+@Component({
+  selector: 'app-note-bcba-view',
+  templateUrl: './note-bcba-view.component.html',
+  styleUrls: ['./note-bcba-view.component.scss'],
+})
+export class NoteBcbaViewComponent {
+  routes = AppRoutes;
+  @ViewChild('contentToConvert') contentToConvert!: ElementRef;
+  patientProfile: any[];
+  option_selected: number = 1;
+  patient_id: any;
+  // option_selected:number = 0;
+
+  selectedValueProvider!: string;
+  selectedValueRBT!: string;
+  selectedValueBCBA!: string;
+  selectedValueTimeIn!: number;
+  selectedValueTimeOut!: number;
+  selectedValueTimeIn2!: number;
+  selectedValueTimeOut2!: number;
+  selectedValueProviderName!: string;
+  selectedValueMaladaptive!: string;
+  selectedValueAba!: string;
+  selectedValueRendering!: string;
+
+  client_id: any;
+  doctor_id: any;
+  patient_selected: any;
+  client_selected: any;
+  note_selected: any;
+  bip_id: any;
+  user: any;
+
+  first_name: string = '';
+  last_name: string = '';
+  diagnosis_code: string = '';
+
+  provider_name_g: string = '';
+  provider_credential: string = '';
+  pos: string = '';
+  session_date: string = '';
+  time_in: string = '';
+  time_out: string = '';
+  time_in2: string = '';
+  time_out2: string = '';
+  session_length_total: string = '';
+  session_length_total2: string = '';
+  environmental_changes: string = '';
+
+  sumary_note: string = '';
+  meet_with_client_at: string = '';
+  client_appeared: string = '';
+  as_evidenced_by: string = '';
+  rbt_modeled_and_demonstrated_to_caregiver: string = '';
+  client_response_to_treatment_this_session: string = '';
+  progress_noted_this_session_compared_to_previous_session: string = '';
+  next_session_is_scheduled_for: string = '';
+  provider_name: string = '';
+  supervisor_name: string = '';
+
+  number_of_occurrences: number = 0;
+  number_of_correct_responses: number = 0;
+  total_trials: number = 0;
+  number_of_correct_response: number = 0;
+  maladaptive: string = '';
+  replacement: string = '';
+  maladaptive_behavior: string = '';
+  interventions: any;
+  provider_signature: any;
+  supervisor_signature: any;
+
+  pairing: any;
+  response_block: any;
+  DRA: any;
+  DRO: any;
+  redirection: any;
+  errorless_teaching: any;
+  NCR: any;
+  shaping: any;
+  chaining: any;
+  token_economy: any;
+  extinction: any;
+  natural_teaching: any;
+
+  FILE_SIGNATURE_RBT: any;
+  IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED: any = 'assets/img/user-06.jpg';
+  FILE_SIGNATURE_BCBA: any;
+  IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED: any = 'assets/img/user-06.jpg';
+
+  rbt_id: any;
+  bcba_id: any;
+  maladaptivename: any;
+  replacementName: any;
+  note_rbt_id: any;
+  goal: any;
+  note_id: any;
+  note_selectedId: any;
+
+  roles_rbt: any[] = [];
+  roles_bcba: any[] = [];
+
+  hours_days: any[] = [];
+  maladaptives: any[] = [];
+  replacementGoals: any[] = [];
+  intervention_added: any[] = [];
+  replacements: any[] = [];
+  interventionsgroup: any[] = [];
+
+  maladaptivegroup: any[] = [];
+  replacementgroup: any[] = [];
+
+  maladaptiveSelected: any = null;
+  replacementSelected: any = null;
+
+  note_description: any;
+  caregivers_training_goals: any[] = [];
+  rbt_training_goals: any[] = [];
+  rbt_training_goalsgroup: any;
+  caregivers_training_goalsgroup: any;
+  aba_supervisor: any[] = [];
+
+  location: any;
+  birth_date: any;
+  porcent_of_occurrences: number = 0;
+  porcent_of_correct_response: number = 0;
+  lto: any = null;
+  caregiver_goal: any = null;
+  cpt_code: any = null;
+  doctor_selected: any = null;
+  doctor_selected_full_name: any = null;
+  doctor_selected_rbt: any = null;
+  doctor_selected_full_name_rbt: any = null;
+  doctor_selected_bcba: any = null;
+  doctor_selected_full_name_bcba: any = null;
+  pa_assessments: string;
+  pa_assessmentsgroup: any[] = [];
+
+  constructor(
+    private noteBcbaService: NoteBcbaService,
+    private activatedRoute: ActivatedRoute,
+    private doctorService: DoctorService,
+    private bipService: BipService,
+    private locations: Location
+  ) {}
+
+  ngOnInit(): void {
+    window.scrollTo(0, 0);
+    this.doctorService.closeMenuSidebar();
+    this.activatedRoute.params.subscribe((resp: any) => {
+      // console.log(resp);
+      this.note_id = resp.id;
+    });
+    this.getConfig();
+    this.getNote();
+  }
+
+  goBack() {
+    this.locations.back(); // <-- go back to previous location on cancel
+  }
+
+  getConfig() {
+    this.noteBcbaService.listConfigNote().subscribe((resp: any) => {
+      console.log(resp);
+    });
+  }
+
+  getNote() {
+    this.noteBcbaService.getNote(this.note_id).subscribe((resp: any) => {
+      console.log(resp);
+      this.note_selected = resp.noteBcba;
+      this.note_selectedId = resp.noteBcba.id;
+      this.patient_id = this.note_selected.patient_id;
+      this.bip_id = this.note_selected.bip_id;
+      this.location = this.note_selected.location;
+      // this.birth_date = this.note_selected.birth_date;
+      this.birth_date = this.note_selected.birth_date
+        ? new Date(this.note_selected.birth_date).toISOString()
+        : '';
+
+      this.provider_credential = this.note_selected.provider_credential;
+      this.as_evidenced_by = this.note_selected.as_evidenced_by;
+      this.client_appeared = this.note_selected.client_appeared;
+      this.diagnosis_code = this.note_selected.diagnosis_code;
+      this.cpt_code = this.note_selected.cpt_code;
+      this.note_description = this.note_selected.note_description;
+      this.client_response_to_treatment_this_session =
+        this.note_selected.client_response_to_treatment_this_session;
+      this.pos = this.note_selected.pos;
+
+      this.session_length_total = this.note_selected.session_length_total;
+      this.session_length_total2 = this.note_selected.session_length_total2;
+
+      this.selectedValueTimeIn = this.note_selected.time_in;
+      this.selectedValueTimeOut = this.note_selected.time_in2;
+      this.selectedValueTimeIn2 = this.note_selected.time_out;
+      this.selectedValueTimeOut2 = this.note_selected.time_out2;
+
+      this.caregivers_training_goalsgroup = resp.caregiver_goals;
+      let jsonObj = JSON.parse(this.caregivers_training_goalsgroup) || '';
+      this.caregivers_training_goals = jsonObj;
+      console.log(this.caregivers_training_goals);
+
+      this.rbt_training_goalsgroup = resp.rbt_training_goals;
+      let jsonObj1 = JSON.parse(this.rbt_training_goalsgroup) || '';
+      this.rbt_training_goals = jsonObj1;
+      console.log(this.rbt_training_goals);
+
+      this.aba_supervisor = resp.noteBcba.aba_supervisor;
+      this.selectedValueRendering = resp.noteBcba.rendering_provider;
+
+      this.selectedValueProviderName = this.note_selected.provider_name_g;
+      this.selectedValueRBT = this.note_selected.provider_name;
+      this.selectedValueBCBA = this.note_selected.supervisor_name;
+
+      this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED =
+        this.note_selected.provider_signature;
+      this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED =
+        this.note_selected.supervisor_signature;
+
+      this.getProfileBip();
+      this.getDoctor();
+      this.getDoctorRbt();
+      this.getDoctorBcba();
+    });
+  }
+
+  getDoctor() {
+    this.doctorService
+      .showDoctor(this.selectedValueRendering)
+      .subscribe((resp: any) => {
+        console.log(resp);
+        this.doctor_selected = resp.user;
+        this.doctor_selected_full_name = resp.user.full_name;
+      });
+  }
+
+  getDoctorRbt() {
+    this.doctorService
+      .showDoctor(this.aba_supervisor)
+      .subscribe((resp: any) => {
+        console.log(resp);
+        this.doctor_selected_rbt = resp.user;
+        this.doctor_selected_full_name_rbt = resp.user.full_name;
+      });
+  }
+  getDoctorBcba() {
+    this.doctorService
+      .showDoctor(this.selectedValueBCBA)
+      .subscribe((resp: any) => {
+        console.log(resp);
+        this.doctor_selected_bcba = resp.user;
+        this.doctor_selected_full_name_bcba = resp.user.full_name;
+      });
+  }
+
+  getProfileBip() {
+    this.bipService
+      .getBipProfilePatient_id(this.patient_id)
+      .subscribe((resp: any) => {
+        console.log(resp);
+        this.patient_selected = resp.patient;
+
+        this.first_name = this.patient_selected.first_name;
+        this.last_name = this.patient_selected.last_name;
+        this.patient_id = resp.patient.patient_id;
+        // console.log(this.patient_id);
+        this.diagnosis_code = this.patient_selected.diagnosis_code;
+
+        // this.pa_assessments = resp.patient.pa_assessments;
+        //   let jsonObj = JSON.parse(this.pa_assessments) || '';
+        //   this.pa_assessmentsgroup = jsonObj;
+      });
+  }
+
+  optionSelected(value: number) {
+    this.option_selected = value;
+  }
+
+  convertToPdf(): void {
+    const data = this.contentToConvert.nativeElement;
+
+    html2canvas(data).then((canvas) => {
+      // Few necessary setting options
+      const imgWidth = 210;
+      const pageHeight = 295;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      var heightLeft = imgHeight;
+
+      // Create a new PDF document
+      const pdf = new jspdf.jsPDF('p', 'mm');
+      var position = 0;
+
+      pdf.addImage(
+        canvas.toDataURL('image/png'),
+        'PNG',
+        0,
+        position,
+        imgWidth,
+        imgHeight
+      );
+      heightLeft -= pageHeight;
+
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(
+          canvas.toDataURL('image/png'),
+          'PNG',
+          0,
+          position,
+          imgWidth,
+          imgHeight
+        );
+        heightLeft -= pageHeight;
+      }
+
+      // Save the PDF
+      pdf.save('note_bcba_client_' + this.patient_selected.patient_id + '.pdf');
+      // pdf.save('note_rbt_client_'+this.patient_selected.patient_id+'_'+this.patient_selected.last_name+".pdf");
+    });
+  }
+  // convertToPdf(): void {
+  //   const data = this.contentToConvert.nativeElement;
+  //   html2canvas(data).then(canvas => {
+  //     // Few necessary setting options
+  //     const imgWidth = 208;
+  //     const pageHeight = 695;
+  //     const imgHeight = canvas.height * imgWidth / canvas.width;
+  //     const heightLeft = imgHeight;
+
+  //     // Create a new PDF document
+  //     const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
+
+  //     // Add an image of the canvas to the PDF
+  //     pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, imgWidth, imgHeight);
+
+  //     // Save the PDF
+  //     pdf.save('note_rbt_client_'+this.patient_selected.patient_id+".pdf");
+  //     // pdf.save('note_rbt_client_'+this.patient_selected.patient_id+'_'+this.patient_selected.last_name+".pdf");
+  //   });
+  // }
+}

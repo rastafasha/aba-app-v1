@@ -1,7 +1,7 @@
-import { ReportByClientComponent } from '../../medical/client-report/report-by-client/report-by-client.component';
 import { of } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
 import { GetPrizeCptNotePipe } from './prize-cpt.pipe';
+import { ReportByClientComponent } from 'src/app/pages/medical/client-report/report-by-client/report-by-client.component';
 
 fdescribe('GetPrizeCptNotePipe', () => {
   let pipe: GetPrizeCptNotePipe;

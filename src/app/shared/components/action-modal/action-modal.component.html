@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>
+  <strong
+    >Actions for {{ data.patient["last_name"] }}
+    {{ data.patient["last_name"] }}</strong
+  >
+</h2>
+<mat-dialog-content>
+  <div class="button-container">
+    <ng-container *ngFor="let action of data.actions">
+      <app-action-button
+        [title]="action.title"
+        [icon]="action.icon"
+        [buttonClass]="action.buttonClass"
+        (clicked)="onActionClick(action)"
+      >
+      </app-action-button>
+    </ng-container>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>
