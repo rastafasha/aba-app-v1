@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthenticationComponent } from './authentication.component';
-import { AuthenticationPaths } from './authentication.const';
+import { AppRoutes, lastRoutes } from 'src/app/shared/routes/routes';
+import { AuthGuard } from 'src/app/core/auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -10,35 +11,36 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: AuthenticationPaths.login,
+        redirectTo: AppRoutes.auth.login,
         pathMatch: 'full',
       },
       {
-        path: AuthenticationPaths.login,
+        path: lastRoutes(AppRoutes.auth.login),
         loadChildren: () =>
           import('./login/login.module').then((m) => m.LoginModule),
       },
       {
-        path: AuthenticationPaths.forgotPassword,
+        path: lastRoutes(AppRoutes.auth.forgotPassword),
         loadChildren: () =>
           import('./forgot-password/forgot-password.module').then(
             (m) => m.ForgotPasswordModule
           ),
       },
       {
-        path: AuthenticationPaths.register,
+        path: lastRoutes(AppRoutes.auth.register),
         loadChildren: () =>
           import('./register/register.module').then((m) => m.RegisterModule),
       },
       {
-        path: AuthenticationPaths.changePassword2,
+        path: lastRoutes(AppRoutes.auth.changePassword),
+        canActivate: [AuthGuard],
         loadChildren: () =>
           import('./change-password/change-password.module').then(
             (m) => m.ChangePasswordModule
           ),
       },
       {
-        path: AuthenticationPaths.lockScreen,
+        path: lastRoutes(AppRoutes.auth.lockScreen),
         loadChildren: () =>
           import('./lock-screen/lock-screen.module').then(
             (m) => m.LockScreenModule

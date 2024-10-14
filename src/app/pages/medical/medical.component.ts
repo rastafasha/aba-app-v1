@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataService } from '../../shared/data/data.service';
+import { DataService } from 'src/app/shared/data/data.service';
 import { SideBarData, MenuItem } from '../../shared/models/models';
 import { SideBarService } from '../../shared/side-bar/side-bar.service';
 interface Route {
@@ -46,14 +46,14 @@ export class MedicalComponent {
     this.sideBar.expandSideBar.subscribe((res: string) => {
       this.expandMenu = res;
       if (res == 'false' && this.miniSidebar == 'true') {
-        this.data.sideBar.map((mainMenus: SideBarData) => {
+        this.data.sidebar.map((mainMenus: SideBarData) => {
           mainMenus.menu.map((resMenu: MenuItem) => {
             resMenu.showSubRoute = false;
           });
         });
       }
       if (res == 'true' && this.miniSidebar == 'true') {
-        this.data.sideBar.map((mainMenus: SideBarData) => {
+        this.data.sidebar.map((mainMenus: SideBarData) => {
           mainMenus.menu.map((resMenu: MenuItem) => {
             const menuValue = sessionStorage.getItem('menuValue');
             if (menuValue && menuValue == resMenu.menuValue) {

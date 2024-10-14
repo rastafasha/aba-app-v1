@@ -19,7 +19,7 @@
             <div class="login-right">
               <div class="login-right-wrap">
                 <div class="account-logo">
-                  <a [routerLink]="routes.adminDashboard"
+                  <a [routerLink]="routes.dashboard.admin"
                     ><img src="assets/img/login-logo.png" alt=""
                   /></a>
                 </div>
@@ -75,7 +75,9 @@
                       >
                         Email is required.
                       </div>
-                      <div *ngIf="f['email'].errors && f['email'].errors['email']">
+                      <div
+                        *ngIf="f['email'].errors && f['email'].errors['email']"
+                      >
                         Please, enter valid email address.
                       </div>
                     </div>
@@ -107,7 +109,13 @@
                         Password is required.
                       </div>
                     </div>
-                    <span (click)="passwordFunc()" [ngClass] = "passwordClass ? 'feather icon-eye' : 'feather icon-eye-off'"
+                    <span
+                      (click)="passwordFunc()"
+                      [ngClass]="
+                        passwordClass
+                          ? 'feather icon-eye'
+                          : 'feather icon-eye-off'
+                      "
                       class="profile-views toggle-password"
                     ></span>
                   </div>
@@ -148,7 +156,13 @@
                     >
                       Password not matching
                     </div>
-                    <span (click)="confirmPasswordFunc()" [ngClass] = "confirmPasswordClass ? 'feather icon-eye' : 'feather icon-eye-off'"
+                    <span
+                      (click)="confirmPasswordFunc()"
+                      [ngClass]="
+                        confirmPasswordClass
+                          ? 'feather icon-eye'
+                          : 'feather icon-eye-off'
+                      "
                       class="profile-views confirm-password"
                     ></span>
                   </div>
@@ -181,7 +195,7 @@
                 <div class="next-sign">
                   <p class="account-subtitle">
                     Already have account?
-                    <a [routerLink]="routes.login">Login</a>
+                    <a [routerLink]="routes.auth.login">Login</a>
                   </p>
 
                   <!-- Social Login -->

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/auth/auth.guard';
+import { LoginComponent } from './pages/authentication/login/login.component';
 // import { AuthGuard } from './shared/gaurd/auth.guard';
 
 const routes: Routes = [
@@ -9,25 +10,20 @@ const routes: Routes = [
     pathMatch: 'full',
     redirectTo: 'login',
   },
+  // Guess Users
   {
     path: '',
-    children: [
-      // Guess Users
-      {
-        path: '',
-        loadChildren: () =>
-          import('./pages/authentication/authentication.module').then(
-            (m) => m.AuthenticationModule
-          ),
-      },
-      // Auth Users
-      {
-        path: '',
-        canActivate: [AuthGuard],
-        loadChildren: () =>
-          import('./pages/pages.module').then((m) => m.PagesModule),
-      },
-    ],
+    loadChildren: () =>
+      import('./pages/authentication/authentication.module').then(
+        (m) => m.AuthenticationModule
+      ),
+  },
+  // Auth Users
+  {
+    path: '',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./pages/pages.module').then((m) => m.PagesModule),
   },
   {
     path: 'error',

@@ -347,7 +347,7 @@ export class AddDoctorComponent {
           // this.text_success = 'Employer created';
           // this.ngOnInit();
           Swal.fire('Created', `Employee Created successfully!`, 'success');
-          this.router.navigate(['/doctors/list']);
+          this.router.navigate([AppRoutes.doctors.list]);
           // this.ngOnInit();
           // window.scrollTo(0, 0);
         }
@@ -366,7 +366,10 @@ export class AddDoctorComponent {
           Swal.fire('Warning', resp.message_text, 'warning');
         } else {
           Swal.fire('Created', `Employee Created successfully!`, 'success');
-          this.router.navigate(['/location/view/', this.user.location_id]);
+          this.router.navigate([
+            AppRoutes.location.view,
+            this.user.location_id,
+          ]);
         }
       });
     }

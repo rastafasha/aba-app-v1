@@ -51,7 +51,7 @@ describe('AuthService', () => {
       const user: AuthUser = {
         id: 1,
         name: 'John Doe',
-        email: 'john@example.com',
+        email: 'john&#64;example.com',
       };
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -81,7 +81,7 @@ describe('AuthService', () => {
         access_token: {
           original: { access_token: 'dummy-access-token' },
         },
-        user: { id: 1, name: 'John Doe', email: 'john@example.com' },
+        user: { id: 1, name: 'John Doe', email: 'john&#64;example.com' },
       };
 
       const result = service.setUserToStorage(auth);
@@ -113,10 +113,10 @@ describe('AuthService', () => {
         access_token: {
           original: { access_token: 'dummy-access-token' },
         },
-        user: { id: 1, name: 'John Doe', email: 'john@example.com' },
+        user: { id: 1, name: 'John Doe', email: 'john&#64;example.com' },
       };
 
-      service.login('john@example.com', 'password').subscribe((result) => {
+      service.login('john&#64;example.com', 'password').subscribe((result) => {
         expect(result).toBeTrue();
         expect(storageServiceMock.set).toHaveBeenCalledWith(
           AUTH_CONSTS.token,
@@ -138,7 +138,7 @@ describe('AuthService', () => {
     });
 
     it('should handle login failure and return undefined', () => {
-      service.login('john@example.com', 'password').subscribe((result) => {
+      service.login('john&#64;example.com', 'password').subscribe((result) => {
         expect(result).toBeUndefined();
       });
 

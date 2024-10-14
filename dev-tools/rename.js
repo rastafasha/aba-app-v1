@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const directoryPath = path.join(__dirname, "../src/app"); // Cambia la ruta si es necesario
+const directoryPath = path.join(__dirname, "../src/app/shared/routes"); // Cambia la ruta si es necesario
 
 function renameRoutingFiles(dir) {
   fs.readdir(dir, (err, files) => {
@@ -20,8 +20,10 @@ function renameRoutingFiles(dir) {
         if (stat.isDirectory()) {
           // Llamar recursivamente si es un directorio
           renameRoutingFiles(filePath);
-        } else if (file.endsWith("-routing.module.ts")) {
-          const newFileName = file.replace("-routing.module.ts", ".routing.ts");
+        } else if (file.endsWith(".routing.ts")) {
+          const newFileName = file
+            .replace(".routing.ts", ".routes.ts")
+            .toLocaleLowerCase();
           const newFilePath = path.join(dir, newFileName);
 
           fs.rename(filePath, newFilePath, (err) => {

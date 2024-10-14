@@ -43,13 +43,13 @@ export class SidebarComponent implements OnInit {
     this.user = this.authService.user as AppUser;
     //inicio
     if (this.user?.roles.includes('SUPERADMIN')) {
-      this.sidebarData = this.data.sideBar;
+      this.sidebarData = this.data.sidebar;
     } else {
       //vamos a filtrar y validar que opciones puede ver el rol
       const permissions = this.user?.permissions;
       const SIDE_BAR_G: any[] = [];
 
-      this.data.sideBar.forEach((side: any) => {
+      this.data.sidebar.forEach((side: any) => {
         const SIDE_B: any[] = [];
         side.menu.forEach((menu_s: any) => {
           const SUB_MENUS = menu_s.subMenus.filter(
@@ -107,7 +107,8 @@ export class SidebarComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout();
-    this.router.navigate([AppRoutes.login]);
+    this.authService.logout().subscribe(() => {
+      this.router.navigate([AppRoutes.auth.login]);
+    });
   }
 }

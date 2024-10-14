@@ -607,7 +607,7 @@ export class AddPatientMComponent {
           this.text_validation = resp.message_text;
         } else {
           Swal.fire('Created', `Client Created successfully!`, 'success');
-          this.router.navigate(['/patients/list']);
+          this.router.navigate([AppRoutes.patients.list]);
         }
       });
     }
@@ -617,7 +617,10 @@ export class AddPatientMComponent {
           this.text_validation = resp.message_text;
         } else {
           Swal.fire('Created', `Client Created successfully!`, 'success');
-          this.router.navigate(['/location/view/', this.user.location_id]);
+          this.router.navigate([
+            AppRoutes.location.view,
+            this.user.location_id,
+          ]);
         }
       });
     }

@@ -4,25 +4,31 @@ import { AddRoleUserComponent } from './add-role-user/add-role-user.component';
 import { RolesComponent } from './roles.component';
 import { ListRoleUserComponent } from './list-role-user/list-role-user.component';
 import { EditRoleUserComponent } from './edit-role-user/edit-role-user.component';
+import { AppRoutes, lastRoutes } from 'src/app/shared/routes/routes';
 
 const routes: Routes = [
-  {path:'', component:RolesComponent,
-  children:[
-    {
-      path: 'register', component: AddRoleUserComponent
-    },
-    {
-      path: 'list', component: ListRoleUserComponent
-    },
-    {
-      path: 'list/edit/:id', component: EditRoleUserComponent
-    },
-  ]  
-}
+  {
+    path: '',
+    component: RolesComponent,
+    children: [
+      {
+        path: lastRoutes(AppRoutes.roles.register),
+        component: AddRoleUserComponent,
+      },
+      {
+        path: lastRoutes(AppRoutes.roles.list),
+        component: ListRoleUserComponent,
+      },
+      {
+        path: lastRoutes(AppRoutes.roles.edit, 2, '/:id'),
+        component: EditRoleUserComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class RolesRoutingModule { }
+export class RolesRoutingModule {}

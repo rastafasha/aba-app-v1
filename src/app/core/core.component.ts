@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { DataService } from '../shared/data/data.service';
 import { SideBarService } from '../shared/side-bar/side-bar.service';
 import { MenuItem, SideBarData } from '../shared/models/models';
+import { DataService } from '../shared/data/data.service';
 interface Route {
   url: string;
   // Add other properties if necessary
@@ -47,14 +47,14 @@ export class CoreComponent {
     this.sideBar.expandSideBar.subscribe((res: string) => {
       this.expandMenu = res;
       if (res == 'false' && this.miniSidebar == 'true') {
-        this.data.sideBar.map((mainMenus: SideBarData) => {
+        this.data.sidebar.map((mainMenus: SideBarData) => {
           mainMenus.menu.map((resMenu: MenuItem) => {
             resMenu.showSubRoute = false;
           });
         });
       }
       if (res == 'true' && this.miniSidebar == 'true') {
-        this.data.sideBar.map((mainMenus: SideBarData) => {
+        this.data.sidebar.map((mainMenus: SideBarData) => {
           mainMenus.menu.map((resMenu: MenuItem) => {
             const menuValue = sessionStorage.getItem('menuValue');
             if (menuValue && menuValue == resMenu.menuValue) {

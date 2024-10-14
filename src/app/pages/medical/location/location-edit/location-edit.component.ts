@@ -157,7 +157,7 @@ export class LocationEditComponent {
         } else {
           // this.text_success = "El location se ha actualizado";
           Swal.fire('Updated', ` Location Has updated`, 'success');
-          this.router.navigate(['/location/list']);
+          this.router.navigate([AppRoutes.location.list]);
         }
       });
   }

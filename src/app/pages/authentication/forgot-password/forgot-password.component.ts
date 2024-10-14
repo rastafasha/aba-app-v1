@@ -12,6 +12,6 @@ export class ForgotPasswordComponent {
 
   constructor(public router: Router) {}
   direction() {
-    this.router.navigate([AppRoutes.login]);
+    this.router.navigate([AppRoutes.auth.login]);
   }
 }

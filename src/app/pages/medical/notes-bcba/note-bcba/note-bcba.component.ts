@@ -526,7 +526,7 @@ export class NoteBcbaComponent {
         this.text_success = 'Note BCBA created';
         // this.ngOnInit();
         Swal.fire('Created', ` Note BCBA Created`, 'success');
-        this.router.navigate(['/note-bcba/listbyclient/', this.patient_id]);
+        this.router.navigate([AppRoutes.noteBcba.list, this.patient_id]);
       }
     });
   }

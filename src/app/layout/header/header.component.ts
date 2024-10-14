@@ -56,6 +56,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.authService.user as AppUser;
     this.roles = this.user?.roles?.[0];
+    console.log(this.roles);
     this.locationId = this.user?.location_id;
 
     window.scrollTo(0, 0);
@@ -98,8 +99,9 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.authService.logout();
-    this.router.navigate([AppRoutes.login]);
+    this.authService.logout().subscribe(() => {
+      this.router.navigate([AppRoutes.auth.login]);
+    });
   }
 
   darkMode(dark: string) {

@@ -675,7 +675,7 @@ export class NoteRbtComponent implements OnInit {
         } else {
           this.text_success = 'Note created';
           Swal.fire('Created', 'Note RBT Created', 'success');
-          this.router.navigate(['/note-rbt/listbyclient/', this.patient_id]);
+          this.router.navigate([AppRoutes.noteRbt.list, this.patient_id]);
         }
       },
       (error) => {

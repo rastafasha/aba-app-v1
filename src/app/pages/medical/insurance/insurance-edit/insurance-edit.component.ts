@@ -154,7 +154,7 @@ export class InsuranceEditComponent {
         } else {
           // this.text_success = 'El insurance ha sido registrado correctamente';
           Swal.fire('Updated', ` Insurance Has updated`, 'success');
-          this.router.navigate(['/insurance/list']);
+          this.router.navigate([AppRoutes.insurance.list]);
         }
       });
   }

@@ -1,7 +1,7 @@
 <div class="header">
   <div class="header-left">
     <span *ngIf="roles === 'SUPERADMIN'">
-      <a [routerLink]="routes.adminDashboard" class="logo">
+      <a [routerLink]="routes.dashboard.admin" class="logo">
         <img
           src="assets/webp/aba-logo-new.webp"
           width="35"
@@ -12,7 +12,7 @@
       </a>
     </span>
     <span *ngIf="roles === 'RBT' || roles === 'BCBA'">
-      <a [routerLink]="['/doctors/profile/', user.id]" class="logo">
+      <a [routerLink]="[routes.doctor.profile, user.id]" class="logo">
         <img
           src="assets/webp/aba-logo-new.webp"
           width="35"
@@ -23,7 +23,7 @@
       </a>
     </span>
     <span *ngIf="roles === 'MANAGER'">
-      <a [routerLink]="['/location/view/', user.location_id]" class="logo">
+      <a [routerLink]="[routes.location.view, user.location_id]" class="logo">
         <img
           src="assets/webp/aba-logo-new.webp"
           width="35"
@@ -165,61 +165,61 @@
         <a
           *ngIf="roles === 'SUPERADMIN'"
           class="dropdown-item"
-          [routerLink]="['/doctors/profile/', user.id]"
+          [routerLink]="[routes.doctors.profile, user.id]"
           >Mi Perfil</a
         >
         <a
           *ngIf="roles === 'MANAGER'"
           class="dropdown-item"
-          [routerLink]="['/doctors/profile/', user.id]"
+          [routerLink]="[routes.doctors.profile, user.id]"
           >Mi Perfil</a
         >
         <a
           *ngIf="roles === 'DOCTOR'"
           class="dropdown-item"
-          [routerLink]="['/doctors/profile/', user.id]"
+          [routerLink]="[routes.doctors.profile, user.id]"
           >Mi Perfil</a
         >
         <a
           *ngIf="roles === 'LM'"
           class="dropdown-item"
-          [routerLink]="['/doctors/profile/', user.id]"
+          [routerLink]="[routes.doctors.profile, user.id]"
           >Mi Perfil</a
         >
         <a
           *ngIf="roles === 'BCBA'"
           class="dropdown-item"
-          [routerLink]="['/doctors/profile/', user.id]"
+          [routerLink]="[routes.doctors.profile, user.id]"
           >Mi Perfil</a
         >
         <a
           *ngIf="roles === 'RBT'"
           class="dropdown-item"
-          [routerLink]="['/doctors/profile/', user.id]"
+          [routerLink]="[routes.doctors.profile, user.id]"
           >Mi Perfil</a
         >
 
         <a
           *ngIf="roles === 'SUPERADMIN'"
           class="dropdown-item"
-          [routerLink]="['/doctors/list/edit/', user.id]"
+          [routerLink]="[routes.doctors.listEdit, user.id]"
           >Editar Perfil</a
         >
         <a
           *ngIf="roles === 'MANAGER'"
           class="dropdown-item"
-          [routerLink]="['/doctors/list/edit/', user.id]"
+          [routerLink]="[routes.doctors.listEdit, user.id]"
           >Editar Perfil</a
         >
         <a
           *ngIf="roles === 'DOCTOR'"
           class="dropdown-item"
-          [routerLink]="['/doctors/list/edit/', user.id]"
+          [routerLink]="[routes.doctors.listEdit, user.id]"
           >Editar Perfil</a
         >
-        <!-- <a *ngIf="roles === 'LM'" class="dropdown-item" [routerLink]="['/doctors/list/edit/', user.id]">Editar Perfil</a> -->
-        <!-- <a *ngIf="roles === 'BCBA'" class="dropdown-item" [routerLink]="['/doctors/list/edit/', user.id]">Editar Perfil</a> -->
-        <!-- <a *ngIf="roles === 'RBT'" class="dropdown-item" [routerLink]="['/doctors/list/edit/', user.id]">Editar Perfil</a> -->
+        <!-- <a *ngIf="roles === 'LM'" class="dropdown-item" [routerLink]="[routes.doctors.listEdit, user.id]">Editar Perfil</a> -->
+        <!-- <a *ngIf="roles === 'BCBA'" class="dropdown-item" [routerLink]="[routes.doctors.listEdit, user.id]">Editar Perfil</a> -->
+        <!-- <a *ngIf="roles === 'RBT'" class="dropdown-item" [routerLink]="[routes.doctors.listEdit, user.id]">Editar Perfil</a> -->
 
         <a class="dropdown-item" style="cursor: pointer" (click)="logout()"
           >Salir</a

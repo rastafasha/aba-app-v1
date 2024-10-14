@@ -2,6 +2,7 @@ import { IEnvironment } from './environment.interface';
 
 export const environment: IEnvironment = {
   production: false,
+  mock: true,
   //local
   // url_backend: 'http://127.0.0.1:8000/',
   // url_servicios: 'http://127.0.0.1:8000/api',
@@ -15,5 +16,4 @@ export const environment: IEnvironment = {
   url_frontend: 'https://abatherapy.malcolmcordova.com/',
   url_media:
     'https://abatherapy.malcolmcordova.com/backend-api-aba/public/storage/',
-  loginUrl: '/login',
 };

@@ -126,7 +126,7 @@ export class InsuranceViewComponent {
         } else {
           this.text_success = 'El insurance ha sido registrado correctamente';
 
-          this.router.navigate(['/insurance/list']);
+          this.router.navigate([AppRoutes.insurance.list]);
         }
       });
   }

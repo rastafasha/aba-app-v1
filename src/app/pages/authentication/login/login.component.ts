@@ -1,6 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { AppUser } from 'src/app/shared/models/users.models';
@@ -14,71 +19,67 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 export class LoginComponent implements OnInit {
   routes = AppRoutes;
   passwordClass = false;
-  ERROR = false;
+  error = false;
   user: AppUser;
+
   roles: string[] = [];
-
-  email = new FormControl();
-  password = new FormControl();
-  remember = new FormControl();
   errors: any = null;
-  loginForm: FormGroup;
 
-  form = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required]),
-    remember: new FormControl(false, [Validators.required]),
-  });
+  form: FormGroup;
 
-  get f() {
-    return this.form.controls;
+  get email() {
+    return this.form.controls['email'];
+  }
+  get password() {
+    return this.form.controls['password'];
+  }
+  get remember() {
+    return this.form.controls['remember'];
   }
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private fb: FormBuilder
+  ) {
+    this.form = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
+      remember: [false, [Validators.required]],
+    });
+  }
 
   ngOnInit(): void {
-    this.getLocalStorage();
+    this.getUser();
   }
 
-  getLocalStorage() {
+  getUser() {
     if (!this.auth.user) {
       this.user = null;
       return;
     }
     this.user = this.auth.user as AppUser;
     this.getUserRol();
-    // this.getuserPermisos();
   }
 
-  loginFormSubmit() {
-    if (this.form.valid) {
-      this.ERROR = false;
-      this.auth
-        .login(
-          this.form.value.email ? this.form.value.email : '',
-          this.form.value.password ? this.form.value.password : ''
-        )
-        .subscribe(
-          (resp: any) => {
-            // console.log(resp);
+  togglePassword() {
+    this.passwordClass = !this.passwordClass;
+  }
 
-            if (resp === true) {
-              // EL LOGIN ES EXITOSO
-
-              setTimeout(() => {
-                this.getLocalStorage();
-                // this.router.navigate([routes.adminDashboard]);
-              }, 50);
-            } else {
-              // EL LOGIN NO ES EXITOSO
-              this.ERROR = true;
-            }
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-    }
+  submit() {
+    if (!this.form.valid) return;
+    this.error = false;
+    const { email, password } = this.form.value;
+    this.auth.login(email ?? '', password ?? '').subscribe({
+      next: (resp) => {
+        if (resp) {
+          this.getUser();
+        } else {
+          this.error = true;
+        }
+      },
+      error: (error) => console.log(error),
+    });
   }
 
   getUserRol() {
@@ -89,71 +90,22 @@ export class LoginComponent implements OnInit {
 
     switch (mainRole) {
       case 'SUPERADMIN':
-        this.router.navigate([AppRoutes.adminDashboard]);
+        this.router.navigate([AppRoutes.dashboard.admin]);
         break;
       // solo tiene una locacion pero se comporta como superadmin
       case 'MANAGER':
-        // this.router.navigate([routes.adminDashboard]);
-        this.router.navigate(['location/view/', this.user.location_id]);
+        // this.router.navigate([AppRoutes.dashboard.admin]);
+        this.router.navigate([AppRoutes.location.view, this.user.location_id]);
         break;
       //roles secundarios son multilocation
       case 'BCBA':
-        this.router.navigate(['doctors/profile/', this.user.id]);
+        this.router.navigate([AppRoutes.doctors.profile, this.user.id]);
         break;
       case 'RBT':
-        this.router.navigate(['doctors/profile/', this.user.id]);
+        this.router.navigate([AppRoutes.doctors.profile, this.user.id]);
         break;
       default:
         break;
     }
-  }
-
-  getUserPermisos() {
-    if (this.user.permissions[0] === 'admin_dashboard') {
-      this.router.navigate([AppRoutes.adminDashboard]);
-    }
-    if (this.user.permissions[0] === 'doctor_dashboard') {
-      this.router.navigate([AppRoutes.doctorDashboard]);
-    }
-    if (this.user.permissions[0] === 'patient_dashboard') {
-      this.router.navigate([AppRoutes.patientDashboard]);
-    }
-  }
-
-  loginFormSubmit2() {
-    this.auth
-      .login(
-        this.form.value.email ? this.form.value.email : '',
-        this.form.value.password ? this.form.value.password : ''
-      )
-      .subscribe(
-        (resp: any) => {
-          this.user = resp;
-          if (resp) {
-            if (this.user.roles[0] === 'DOCTOR') {
-              this.router.navigate([AppRoutes.doctorDashboard]);
-            }
-            if (this.user.roles[0] === 'SUPERADMIN') {
-              this.router.navigate([AppRoutes.adminDashboard]);
-            }
-          } else {
-            this.router.navigate([AppRoutes.adminDashboard]);
-          }
-          // if(this.loginForm.get('remember').value){
-          //   localStorage.setItem('email', this.loginForm.get('email').value);
-          // }else{
-          //   localStorage.removeItem('email');
-          // }
-          // this.router.navigateByUrl('/dashboard');
-        },
-        (error: HttpErrorResponse) => {
-          // Swal.fire('Error', error.error.msg, 'error');
-          this.errors = error.error;
-        }
-      );
-  }
-
-  togglePassword() {
-    this.passwordClass = !this.passwordClass;
   }
 }

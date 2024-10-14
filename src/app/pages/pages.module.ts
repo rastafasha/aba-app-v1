@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CoreModule } from '../core/core.module';
+import { LayoutModule } from '../layout/layout.module';
 import { PagesRoutingModule } from './pages.routing';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, PagesRoutingModule],
+  imports: [PagesRoutingModule, CoreModule, LayoutModule],
   exports: [],
   providers: [],
 })

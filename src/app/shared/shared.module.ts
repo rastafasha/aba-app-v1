@@ -1,34 +1,29 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgxBootstrapModule } from './ngx-bootstrap/ngx-bootstrap.module';
-import { CountUpModule } from 'ngx-countup';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSortModule } from '@angular/material/sort';
+import { RouterModule } from '@angular/router';
+import { FullCalendarModule } from '@fullcalendar/angular';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgCircleProgressModule } from 'ng-circle-progress';
-import { MaterialModule } from './material.module';
+import { CountUpModule } from 'ngx-countup';
 import { NgxEditorModule } from 'ngx-editor';
-import { SlickCarouselModule } from 'ngx-slick-carousel';
-import { FullCalendarModule } from '@fullcalendar/angular';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { DataService } from './data/data.service';
-import { MatSortModule } from '@angular/material/sort';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
-import { RouterModule } from '@angular/router';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { HeaderComponent } from '../layout/header/header.component';
 import { SidebarComponent } from '../layout/sidebar/sidebar.component';
-import { NoInfoComponent } from './no-info/no-info.component';
-import { SkeletonLoaderComponent } from './components/skeleton-loader/skeleton-loader.component';
 import { ActionButtonComponent } from './components/action-button/action-button.component';
 import { ActionModalComponent } from './components/action-modal/action-modal.component';
-import { MatDialogModule } from '@angular/material/dialog';
-import { AuthService } from '../core/auth/auth.service';
-import { AuthInterceptor } from '../core/auth/auth.interceptor';
-import { PipesModule } from './pipes/pipes.module';
+import { SkeletonLoaderComponent } from './components/skeleton-loader/skeleton-loader.component';
+import { DataService } from './data/data.service';
+import { MaterialModule } from './material.module';
+import { NgxBootstrapModule } from './ngx-bootstrap/ngx-bootstrap.module';
+import { NoInfoComponent } from './no-info/no-info.component';
 
 @NgModule({
   declarations: [
-    HeaderComponent,
-    SidebarComponent,
     NoInfoComponent,
     SkeletonLoaderComponent,
     ActionButtonComponent,
@@ -82,21 +77,10 @@ import { PipesModule } from './pipes/pipes.module';
     ReactiveFormsModule,
     NgxMaterialTimepickerModule,
     RouterModule,
-    HeaderComponent,
-    SidebarComponent,
     SkeletonLoaderComponent,
     ActionButtonComponent,
     ActionModalComponent,
-    PipesModule,
   ],
-  providers: [
-    DataService,
-    AuthService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true,
-    },
-  ],
+  providers: [DataService],
 })
 export class SharedModule {}

@@ -106,7 +106,7 @@ export class LocationAddComponent {
       if (resp.message == 403) {
         this.text_validation = resp.message_text;
       } else {
-        this.router.navigate(['/location/list']);
+        this.router.navigate([AppRoutes.location.list]);
         // this.ngOnInit();
       }
     });

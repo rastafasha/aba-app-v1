@@ -1,20 +1,16 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 //
-import { CoreRoutingModule } from './core.routing';
-import { CoreComponent } from './core.component';
-import { HeaderComponent } from '../layout/header/header.component';
-import { SidebarComponent } from '../layout/sidebar/sidebar.component';
+import { LayoutModule } from '../layout/layout.module';
 import { SharedModule } from '../shared/shared.module';
+import { AuthService } from './auth/auth.service';
+import { CoreComponent } from './core.component';
 import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
-  declarations: [
-    CoreComponent,
-    // HeaderComponent,
-    // SidebarComponent,
-    ModalComponent,
-  ],
-  imports: [CommonModule, CoreRoutingModule, SharedModule],
+  declarations: [CoreComponent, ModalComponent],
+  imports: [CommonModule, SharedModule, LayoutModule],
+  exports: [CoreComponent, ModalComponent],
+  providers: [AuthService],
 })
 export class CoreModule {}

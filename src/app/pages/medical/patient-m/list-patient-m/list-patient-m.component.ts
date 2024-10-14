@@ -411,44 +411,45 @@ export class ListPatientMComponent {
         icon: 'fa fa-address-book',
         buttonClass: 'btn-outline-success',
         onClick: () =>
-          this.router.navigate(['/bip/attention/', patient.patient_id]),
+          this.router.navigate([AppRoutes.bip.attention, patient.patient_id]),
       },
       {
         title: 'BIP View',
         icon: 'fa fa-eye',
         buttonClass: 'btn-outline-dark',
         onClick: () =>
-          this.router.navigate(['/bip/profile/', patient.patient_id]),
+          this.router.navigate([AppRoutes.bip.profile, patient.patient_id]),
       },
       {
         title: 'Create RBT Note',
         icon: 'fa fa-id-card',
         buttonClass: 'btn-outline-success',
-        onClick: () => this.router.navigate(['/note-rbt/', patient.patient_id]),
+        onClick: () =>
+          this.router.navigate([AppRoutes.noteRbt.noteRbt, patient.patient_id]),
       },
       {
         title: 'RBT Note list',
         icon: 'fa fa-bars',
         buttonClass: 'btn-outline-primary',
         onClick: () =>
-          this.router.navigate(['/note-rbt/listbyclient/', patient.patient_id]),
+          this.router.navigate([AppRoutes.noteRbt.list, patient.patient_id]),
       },
       {
         title: 'Create BCBA Note',
         icon: 'fa fa-id-badge',
         buttonClass: 'btn-outline-secondary',
         onClick: () =>
-          this.router.navigate(['/note-bcba/', patient.patient_id]),
+          this.router.navigate([
+            AppRoutes.noteBcba.noteBcba,
+            patient.patient_id,
+          ]),
       },
       {
         title: 'BCBA Note list',
         icon: 'fa fa-bars',
         buttonClass: 'btn-outline-primary',
         onClick: () =>
-          this.router.navigate([
-            '/note-bcba/listbyclient/',
-            patient.patient_id,
-          ]),
+          this.router.navigate([AppRoutes.noteBcba.list, patient.patient_id]),
       },
       {
         title: 'Log Report',
@@ -456,7 +457,7 @@ export class ListPatientMComponent {
         buttonClass: 'btn-outline-warning',
         onClick: () =>
           this.router.navigate([
-            '/client-report/byclient/',
+            AppRoutes.clientReport.byClient,
             patient.patient_id,
           ]),
       },

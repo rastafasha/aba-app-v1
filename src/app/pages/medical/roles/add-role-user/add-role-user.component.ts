@@ -31,7 +31,7 @@ export class AddRoleUserComponent {
   ngOnInit(): void {
     window.scrollTo(0, 0);
     this.doctorService.closeMenuSidebar();
-    this.sideBar = this.dataService.sideBar[0].menu;
+    this.sideBar = this.dataService.sidebar[0].menu;
   }
   goBack() {
     this.location.back(); // <-- go back to previous location on cancel
@@ -80,7 +80,7 @@ export class AddRoleUserComponent {
           this.sideBar = SIDE_BAR;
         }, 50);
         //limpia los checks
-        this.router.navigate(['/roles/list']);
+        this.router.navigate([AppRoutes.roles.list]);
       }
     });
   }

@@ -520,7 +520,7 @@ export class NoteBcbaEditComponent {
           // this.text_success = 'Employer created';
           // this.ngOnInit();
           Swal.fire('Updated', ` Note Rbt Updated`, 'success');
-          this.router.navigate(['/note-bcba/listbyclient/', this.patient_id]);
+          this.router.navigate([AppRoutes.noteBcba.list, this.patient_id]);
         }
       });
   }

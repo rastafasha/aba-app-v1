@@ -14,7 +14,7 @@ export class LockScreenComponent {
   constructor(public router: Router) {}
 
   direction() {
-    this.router.navigate([AppRoutes.login]);
+    this.router.navigate([AppRoutes.auth.login]);
   }
   togglePassword() {
     this.passwordClass = !this.passwordClass;

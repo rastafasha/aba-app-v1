@@ -782,7 +782,7 @@ export class EditNoteRbtComponent implements OnInit {
           Swal.fire('Warning', this.text_validation, 'warning');
         } else {
           Swal.fire('Updated', 'Note RBT Updated', 'success');
-          this.router.navigate(['/note-rbt/listbyclient/', this.patient_id]);
+          this.router.navigate([AppRoutes.noteRbt.list, this.patient_id]);
         }
       },
       (error) => {
