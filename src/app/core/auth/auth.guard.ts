@@ -14,7 +14,6 @@ export class AuthGuard {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    return true;
     const authenticated = this.auth.isAuthenticated();
     if (!authenticated)
       return this.router.navigate([AppRoutes.auth.login]).then(() => false);
