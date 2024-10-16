@@ -73,9 +73,6 @@
                             </div>
                         </div>
                         <!-- paciente -->
-                        
-                        
-
                         <div class="container">
                             <div class="table-responsive">
                                 <table class="table mb-0">
@@ -192,10 +189,7 @@
                                         <th mat-sort-header="totalunits">Total Units</th>
                                         <th mat-sort-header="units">Units Price</th>
                                         <th mat-sort-header="charges">Charges</th>
-                                        <!-- <th mat-sort-header="total">Total</th> -->
                                         <th mat-sort-header="sponsor_id">Provider</th>
-                                        <!-- <th mat-sort-header="pa_number">PA Number</th>
-                                        <th mat-sort-header="npi">Npi</th> -->
                                         <th mat-sort-header="billed">Billed</th>
                                         <th mat-sort-header="pay">Pay</th>
                                         <th mat-sort-header="created">Created At</th>
@@ -219,9 +213,6 @@
                                             <i class="fa  bg-success indicador" 
                                             *ngIf="data.rbt.status  === 'ok'"
                                               [tooltip]="data.rbt.status "></i>
-                                            <i class="fa  bg-danger indicador" 
-                                            *ngIf="data.rbt.status  === 'no'"
-                                              [tooltip]="data.rbt.status "></i>
                                             
                                         </td>
                                         <td >
@@ -235,7 +226,6 @@
                                             <option>-- Select --</option>
                                                 <option value="pending">Pending</option>
                                                 <option value="ok">Ok</option>
-                                                <option value="no">No</option>
                                               </select>
                                           </td>
                                         <td>
@@ -258,7 +248,7 @@
 
                                         <!-- modificadores Medicaid 1 -->
                                         <td>
-                                            <span *ngIf="insurer_name == 'Medicaid'">
+                                            <span >
                                                 <div class="form-group local-forms">
                                                     <select
                                                         class="form-control form-select-solid fw-bolder"
@@ -266,6 +256,7 @@
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM | RBT</option>
                                                         <option value="XE">XE | 2 sessions same day, same provider, different POS</option>
+                                                        <option value="XP">XP | RBT overlap Not reimbursed</option>
                                                         <option value="HO">HO | BCBA</option>
                                                         <option value="GT">GT | Telehealth</option>
                                                         <option value="TS">TS | Reassessment</option>
@@ -274,27 +265,12 @@
                                                     
                                                 </div>
                                             </span>
-                                            <span *ngIf="insurer_name !== 'Medicaid'">
-                                                <div class="form-group local-forms">
-                                                    <select
-                                                        class="form-control form-select-solid fw-bolder"
-                                                        name="md" style="position: relative;top: 11px;" [(ngModel)]="data.rbt.md" (change)="isSelectedModifier($event.target.value)"  >
-                                                        <option>-- Select --</option>
-                                                        <option value="HM">HM | RBT</option>
-                                                        <option value="XE">XE | 2 sessions same day, same provider, different POS</option>
-                                                        <option value="HO">HO | BCBA</option>
-                                                        <option value="GT">GT | Telehealth</option>
-                                                        <option value="TS">TS | Reassessment</option>
-                                                        <option value="TS">95 | Telehealth (only AETNA) </option>
-                                                    </select>
-                                                </div>
-                                            </span>
                                             
                                         </td>
                                         <!-- modificadores1 -->
                                         <!-- modificadores Medicaid2 -->
                                         <td>
-                                            <span *ngIf="insurer_name == 'Medicaid'">
+                                            <span >
                                                 <div class="form-group local-forms">
                                                     <select
                                                         class="form-control form-select-solid fw-bolder"
@@ -302,6 +278,7 @@
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM | RBT</option>
                                                         <option value="XE">XE | 2 sessions same day, same provider, different POS</option>
+                                                        <option value="XP">XP | RBT overlap Not reimbursed</option>
                                                         <option value="HO">HO | BCBA</option>
                                                         <option value="GT">GT | Telehealth</option>
                                                         <option value="TS">TS | Reassessment</option>
@@ -309,21 +286,7 @@
                                                     </select>
                                                 </div>
                                             </span>
-                                            <span *ngIf="insurer_name !== 'Medicaid'">
-                                                <div class="form-group local-forms">
-                                                    <select
-                                                        class="form-control form-select-solid fw-bolder"
-                                                        name="md2" style="position: relative;top: 11px;"  [(ngModel)]="data.rbt.md2"  (change)="isSelectedModifier2($event.target.value)"  >
-                                                        <option>-- Select --</option>
-                                                        <option value="HM">HM | RBT</option>
-                                                        <option value="XE">XE | 2 sessions same day, same provider, different POS</option>
-                                                        <option value="HO">HO | BCBA</option>
-                                                        <option value="GT">GT | Telehealth</option>
-                                                        <option value="TS">TS | Reassessment</option>
-                                                        <option value="TS">95 | Telehealth (only AETNA) </option>
-                                                    </select>
-                                                </div>
-                                            </span>
+                                           
                                         </td>
                                         <!-- modificadores2 -->
 
@@ -340,8 +303,8 @@
                                         <td>{{unitPrize | currency }}</td>
                                         <td>
                                             {{(( data.rbt?.session_units_total * unitPrize  | currency))}}
-                                            <span *ngIf="md == 'XE' || md2 == 'XE'">
-                                               xe:{{(( data.rbt?.session_units_total * unitPrize * xe | currency))}}
+                                            <span *ngIf="md == 'XP' || md2 == 'XP'">
+                                                XP:{{(( data.rbt?.session_units_total * unitPrize * xp | currency))}}
                                             </span>
                                         </td>
                                         <td>
@@ -410,9 +373,6 @@
                                             <i class="fa  bg-success indicador" 
                                             *ngIf="data.bcba?.status  === 'ok'"
                                               [tooltip]="data.bcba?.status "></i>
-                                            <i class="fa  bg-danger indicador" 
-                                            *ngIf="data.bcba?.status  === 'no'"
-                                              [tooltip]="data.bcba?.status "></i>
 
                                         </td>
                                         <td >
@@ -426,7 +386,6 @@
                                             <option>-- Select --</option>
                                             <option value="pending">Pending</option>
                                               <option value="ok">Ok</option>
-                                              <option value="no">No</option>
                                               </select>
                                           </td>
                                         <td>
@@ -452,7 +411,8 @@
                                         </td>
                                         <!-- modificadores1 -->
                                         <td>
-                                            <span *ngIf="insurer_name == 'Medicaid'">
+                                            <!-- *ngIf="insurer_name == 'Medicaid'" -->
+                                            <span >
                                                 <div class="form-group local-forms">
                                                     <select
                                                         class="form-control form-select-solid fw-bolder"
@@ -460,6 +420,7 @@
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM | RBT</option>
                                                         <option value="XE">XE | 2 sessions same day, same provider, different POS</option>
+                                                        <option value="XP">XP | RBT overlap Not reimbursed</option>
                                                         <option value="HO">HO | BCBA</option>
                                                         <option value="GT">GT | Telehealth</option>
                                                         <option value="TS">TS | Reassessment</option>
@@ -468,27 +429,13 @@
                                                     
                                                 </div>
                                             </span>
-                                            <span *ngIf="insurer_name !== 'Medicaid'">
-                                                <div class="form-group local-forms">
-                                                    <select
-                                                        class="form-control form-select-solid fw-bolder"
-                                                        name="mdbcba" style="position: relative;top: 11px;"  [(ngModel)]="data.bcba.mdbcba" (change)="isSelectedModifierBcba($event.target.value)"  >
-                                                        <option>-- Select --</option>
-                                                        <option value="HM">HM | RBT</option>
-                                                        <option value="XE">XE | 2 sessions same day, same provider, different POS</option>
-                                                        <option value="HO">HO | BCBA</option>
-                                                        <option value="GT">GT | BCBA</option>
-                                                        <option value="TS">TS | Reassessment</option>
-                                                        <option value="TS">95 | Telehealth </option>
-                                                    </select>
-                                                </div>
-                                            </span>
                                             
                                         </td>
                                         <!-- modificadores1 -->
                                         <!-- modificadores2 -->
                                         <td>
-                                            <span *ngIf="insurer_name == 'Medicaid'">
+                                            <!-- *ngIf="insurer_name == 'Medicaid'" -->
+                                            <span >
                                                 <div class="form-group local-forms">
                                                     <select
                                                         class="form-control form-select-solid fw-bolder"
@@ -496,21 +443,7 @@
                                                         <option>-- Select --</option>
                                                         <option value="HM">HM | RBT</option>
                                                         <option value="XE">XE | 2 sessions same day, same provider, different POS</option>
-                                                        <option value="HO">HO | BCBA</option>
-                                                        <option value="GT">GT | Telehealth</option>
-                                                        <option value="TS">TS | Reassessment</option>
-                                                        <option value="TS">95 | Telehealth (only AETNA) </option>
-                                                    </select>
-                                                </div>
-                                            </span>
-                                            <span *ngIf="insurer_name !== 'Medicaid'">
-                                                <div class="form-group local-forms">
-                                                    <select
-                                                        class="form-control form-select-solid fw-bolder"
-                                                        name="md2bcba" style="position: relative;top: 11px;"  [(ngModel)]="data.bcba.md2bcba"  (change)="isSelectedModifier2Bcba($event.target.value)"  >
-                                                        <option>-- Select --</option>
-                                                        <option value="HM">HM | RBT</option>
-                                                        <option value="XE">XE | 2 sessions same day, same provider, different POS</option>
+                                                        <option value="XP">XP | RBT overlap Not reimbursed</option>
                                                         <option value="HO">HO | BCBA</option>
                                                         <option value="GT">GT | Telehealth</option>
                                                         <option value="TS">TS | Reassessment</option>
@@ -532,8 +465,8 @@
                                         <td>{{unitPrize | currency}}</td>
                                         <td>
                                             {{(( data.bcba?.session_units_total * unitPrize  | currency))}}
-                                            <span *ngIf="mdbcba == 'XE' || md2bcba == 'XE'">
-                                               xe:{{(( data.bcba?.session_units_total * unitPrize * xe | currency))}}
+                                            <span *ngIf="mdbcba == 'XP' || md2bcba == 'XP'">
+                                                XP:{{(( data.bcba?.session_units_total * unitPrize * xp | currency))}}
                                             </span>
                                         </td>
                                        
@@ -587,395 +520,7 @@
                                     </tr>
                     
                                 </ng-container>
-                                    <!-- tr>
-                                         Notas RBT -->
-                                        
-                                        <!-- <td >
-                                            <span *ngIf="data?.rbt">
-                                                <a [routerLink]="['/note-rbt/view/', data.rbt.id]">
-                                                    {{ data.rbt?.session_date | date }}
-                                                   RBT: {{ data.rbt.session_date | date }}
-                                                </a>
-
-                                            </span>
-                                        </td>
-                                        <td >
-                                            <span *ngIf="data?.bcba">
-                                                <a [routerLink]="['/note-bcba/view/', data.bcba?.id]">
-                                                   BCBA: {{ data.bcba?.session_date | date  }}
-                                                </a>
-
-                                            </span>
-                                        </td>
-                                        <td>
-                                            {{data.meet_with_client_at ?? 'N/A'}}
-                                            <span *ngIf="data?.rbt">
-                                                {{data.rbt?.meet_with_client_at ?? 'N/A'}}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            {{ data.total_hours ?? 'N/A' }}
-                                            
-                                            <span *ngIf="data.rbt">RBT: {{ data.rbt?.total_hours ?? 'N/A' }}</span>
-             
-                                        </td>
-                                        <td>
-                                            {{ data.total_hours ?? 'N/A' }}
-                                            <span *ngIf="data.bcba">BCBA: {{ data.bcba?.total_hours ?? 'N/A' }}</span>
-
-                                        </td>
-
-                                        <td>
-                                            {{data.cpt_code}}
-                                            <span *ngIf="data.rbt">
-                                               RBT: {{data.rbt?.cpt_code}}
-                                            </span>
-                                            
-
-                                        </td>
-                                        <td>
-                                            
-                                            <span *ngIf="data.bcba">
-                                               BCBA: {{data.bcba?.cpt_code}}
-                                            </span>
-
-                                        </td>
-                                        modificadores1
-                                        <td>
-                                            <span *ngIf="insurer_name == 'Medicaid'">
-                                                <div class="form-group local-forms">
-                                                    <select
-                                                        class="form-control form-select-solid fw-bolder"
-                                                        name="md" #md [(ngModel)]="md" (change)="isSelectedModifier(md.value)"   >
-                                                        <option>-- Select --</option>
-                                                        <option value="HM">HM</option>
-                                                        <option value="XE">XE</option>
-                                                        <option value="HO">HO</option>
-                                                    </select>
-                                                    
-                                                </div>
-                                            </span>
-                                            <span *ngIf="insurer_name !== 'Medicaid'">
-                                                <div class="form-group local-forms">
-                                                    <select
-                                                        class="form-control form-select-solid fw-bolder"
-                                                        name="md" #md  [(ngModel)]="md" (change)="isSelectedModifier(md.value)"  >
-                                                        <option>-- Select --</option>
-                                                        <option value="HM">HM</option>
-                                                        <option value="HO">HO</option>
-                                                    </select>
-                                                </div>
-                                            </span>
-                                            
-                                        </td>
-                                        modificadores1
-                                        modificadores2
-                                        <td>
-                                            <span *ngIf="insurer_name == 'Medicaid'">
-                                                <div class="form-group local-forms">
-                                                    <select
-                                                        class="form-control form-select-solid fw-bolder"
-                                                        name="md2" #md2 [(ngModel)]="md2"  (change)="isSelectedModifier2(md2.value)"  >
-                                                        <option>-- Select --</option>
-                                                        <option value="HM">HM</option>
-                                                        <option value="XE">XE</option>
-                                                        <option value="HO">HO</option>
-                                                    </select>
-                                                </div>
-                                            </span>
-                                            <span *ngIf="insurer_name !== 'Medicaid'">
-                                                <div class="form-group local-forms">
-                                                    <select
-                                                        class="form-control form-select-solid fw-bolder"
-                                                        name="md2" #md2 [(ngModel)]="md2"  (change)="isSelectedModifier2(md2.value)"  >
-                                                        <option>-- Select --</option>
-                                                        <option value="HM">HM</option>
-                                                        <option value="HO">HO</option>
-                                                    </select>
-                                                </div>
-                                            </span>
-                                        </td>
-                                        modificadores2
-                                        <td>
-                                            {{data.session_units_total}}
-                                            <span *ngIf="data?.rbt">
-                                               RBT: {{data.rbt?.session_units_total}}
-                                            </span>
-
-                                        </td>
-                                        <td>
-                                            {{data.session_units_total}}
-                                            
-                                            <span *ngIf="data?.bcba">
-                                                BCBA: {{data.rbt?.session_units_total}}
-                                            </span>
-
-                                        </td>
-                                        <td>{{unitPrizeCpt | currency}}</td>
-                                        <td>
-                                            {{(( data.session_units_total * unitPrizeCpt  | currency))}}
-                                            <span *ngIf="md == 'XE' || md2 == 'XE'">
-                                               xe:{{(( data.session_units_total * unitPrizeCpt * xe | currency))}}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            {{data.tecnicoRbt?.name}} 
-                                            {{data.tecnicoRbt?.surname}}
-                                            <span *ngIf="data.rbt">
-                                                {{data.rbt?.tecnicoRbt.name}} 
-                                                {{data.rbt?.tecnicoRbt.surname}}
-
-                                            </span>
-                                        </td>
-                                        <td>
-                                            {{data.tecnicoRbt?.name}} 
-                                            {{data.tecnicoRbt?.surname}}
-                                            <span *ngIf="data?.bcba">
-                                                {{data.rbt?.tecnicoRbt.name}} 
-                                                {{data.rbt?.tecnicoRbt.surname}}
-
-                                            </span>
-                                        </td>
-
-                                        <td>{{pa_number}}</td>
-                                        <td>
-                                            {{data.supervisor?.npi}} 
-                                            <span *ngIf="data?.rbt">
-                                                RBT: {{data.rbt?.supervisor.npi}} 
-                                                </span>
-
-                                        </td>
-                                        <td>
-                                            {{data.supervisor?.npi}} 
-                                            <span *ngIf="data?.bcba">
-                                                BCBA: {{data.bcba?.supervisor.npi}} 
-
-                                            </span>
-
-                                        </td>
-
-                                        <td style="display: inline-flex;">
-                                            
-                                            <div  class="note-checkit">
-                                                <label class="custom_check">
-                                                    <input type="checkbox"  name="billed" [(ngModel)]="billed"  (change)="isCheckedBilled()"    >
-                                                    <span class="checkmark" value="false"></span>  
-                                                </label>
-                                            </div>
-
-                                        </td>
-                                        <td style="display: inline-flex;">
-                                            <div  class="note-checkit">
-                                                <label class="custom_check">
-                                                    <input type="checkbox"  name="pay" [(ngModel)]="pay" (change)="isCheckedPay()"    >
-                                                    <span class="checkmark" value="false"></span> 
-                                                </label>
-                                            </div>
-                                        </td>
-
-                                        <td>{{report.created_at | date }}</td>
-
-                                        <td class="text-end">
-                                            <div class="doctor-submit text-end">
-                                                <button type="button" class="btn btn-primary submit-form me-2" (click)="save(data)">Save</button>
-                                                
-                                            </div>
-                                        </td> 
-                                    </tr-->
-                                    <!-- *ngFor="let data of clientReportList | keyvalue, let i = index;" -->
-                                    <!-- <tr *ngFor="let data of combinedList , let i = index;">
-                                        <td >
-                                            <span *ngIf="data?.rbt">
-                                                <a [routerLink]="['/note-rbt/view/', data.rbt.id]">
-                                                    {{ data.rbt?.session_date | date }}
-                                                   RBT: {{ data.rbt.session_date | date }}
-                                                </a>
-
-                                            </span>
-                                        </td>
-                                        <td >
-                                            <span *ngIf="data?.bcba">
-                                                <a [routerLink]="['/note-bcba/view/', data.bcba?.id]">
-                                                   BCBA: {{ data.bcba?.session_date | date  }}
-                                                </a>
-
-                                            </span>
-                                        </td>
-                                        <td>
-                                            {{data.meet_with_client_at ?? 'N/A'}}
-                                            <span *ngIf="data?.rbt">
-                                                {{data.rbt?.meet_with_client_at ?? 'N/A'}}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            {{ data.total_hours ?? 'N/A' }}
-                                            
-                                            <span *ngIf="data.rbt">RBT: {{ data.rbt?.total_hours ?? 'N/A' }}</span>
-             
-                                        </td>
-                                        <td>
-                                            {{ data.total_hours ?? 'N/A' }}
-                                            <span *ngIf="data.bcba">BCBA: {{ data.bcba?.total_hours ?? 'N/A' }}</span>
-
-                                        </td>
-
-                                        <td>
-                                            {{data.cpt_code}}
-                                            <span *ngIf="data.rbt">
-                                               RBT: {{data.rbt?.cpt_code}}
-                                            </span>
-                                            
-
-                                        </td>
-                                        <td>
-                                            
-                                            <span *ngIf="data.bcba">
-                                               BCBA: {{data.bcba?.cpt_code}}
-                                            </span>
-
-                                        </td>
-                                        modificadores1
-                                        <td>
-                                            <span *ngIf="insurer_name == 'Medicaid'">
-                                                <div class="form-group local-forms">
-                                                    <select
-                                                        class="form-control form-select-solid fw-bolder"
-                                                        name="md" #md [(ngModel)]="md" (change)="isSelectedModifier(md.value)"   >
-                                                        <option>-- Select --</option>
-                                                        <option value="HM">HM</option>
-                                                        <option value="XE">XE</option>
-                                                        <option value="HO">HO</option>
-                                                    </select>
-                                                    
-                                                </div>
-                                            </span>
-                                            <span *ngIf="insurer_name !== 'Medicaid'">
-                                                <div class="form-group local-forms">
-                                                    <select
-                                                        class="form-control form-select-solid fw-bolder"
-                                                        name="md" #md  [(ngModel)]="md" (change)="isSelectedModifier(md.value)"  >
-                                                        <option>-- Select --</option>
-                                                        <option value="HM">HM</option>
-                                                        <option value="HO">HO</option>
-                                                    </select>
-                                                </div>
-                                            </span>
-                                            
-                                        </td>
-                                        modificadores1
-                                        modificadores2
-                                        <td>
-                                            <span *ngIf="insurer_name == 'Medicaid'">
-                                                <div class="form-group local-forms">
-                                                    <select
-                                                        class="form-control form-select-solid fw-bolder"
-                                                        name="md2" #md2 [(ngModel)]="md2"  (change)="isSelectedModifier2(md2.value)"  >
-                                                        <option>-- Select --</option>
-                                                        <option value="HM">HM</option>
-                                                        <option value="XE">XE</option>
-                                                        <option value="HO">HO</option>
-                                                    </select>
-                                                </div>
-                                            </span>
-                                            <span *ngIf="insurer_name !== 'Medicaid'">
-                                                <div class="form-group local-forms">
-                                                    <select
-                                                        class="form-control form-select-solid fw-bolder"
-                                                        name="md2" #md2 [(ngModel)]="md2"  (change)="isSelectedModifier2(md2.value)"  >
-                                                        <option>-- Select --</option>
-                                                        <option value="HM">HM</option>
-                                                        <option value="HO">HO</option>
-                                                    </select>
-                                                </div>
-                                            </span>
-                                        </td>
-                                        modificadores2
-                                        <td>
-                                            {{data.session_units_total}}
-                                            <span *ngIf="data?.rbt">
-                                               RBT: {{data.rbt?.session_units_total}}
-                                            </span>
-
-                                        </td>
-                                        <td>
-                                            {{data.session_units_total}}
-                                            
-                                            <span *ngIf="data?.bcba">
-                                                BCBA: {{data.rbt?.session_units_total}}
-                                            </span>
-
-                                        </td>
-                                        <td>{{unitPrizeCpt | currency}}</td>
-                                        <td>
-                                            {{(( data.session_units_total * unitPrizeCpt  | currency))}}
-                                            <span *ngIf="md == 'XE' || md2 == 'XE'">
-                                               xe:{{(( data.session_units_total * unitPrizeCpt * xe | currency))}}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            {{data.tecnicoRbt?.name}} 
-                                            {{data.tecnicoRbt?.surname}} 
-                                            <span *ngIf="data.rbt">
-                                                {{data.rbt?.tecnicoRbt.name}} 
-                                                {{data.rbt?.tecnicoRbt.surname}}
-
-                                            </span>
-                                        </td>
-                                        <td>
-                                            {{data.tecnicoRbt?.name}} 
-                                            {{data.tecnicoRbt?.surname}}
-                                            <span *ngIf="data?.bcba">
-                                                {{data.rbt?.tecnicoRbt.name}} 
-                                                {{data.rbt?.tecnicoRbt.surname}}
-
-                                            </span>
-                                        </td>
-
-                                        <td>{{pa_number}}</td>
-                                        <td>
-                                            {{data.supervisor?.npi}} 
-                                            <span *ngIf="data?.rbt">
-                                                RBT: {{data.rbt?.supervisor.npi}} 
-                                                </span>
-
-                                        </td>
-                                        <td>
-                                            {{data.supervisor?.npi}} 
-                                            <span *ngIf="data?.bcba">
-                                                BCBA: {{data.bcba?.supervisor.npi}} 
-
-                                            </span>
-
-                                        </td>
-
-                                        <td style="display: inline-flex;">
-                                            
-                                            <div  class="note-checkit">
-                                                <label class="custom_check">
-                                                    <input type="checkbox"  name="billed" [(ngModel)]="billed"  (change)="isCheckedBilled()"    >
-                                                    <span class="checkmark" value="false"></span>  
-                                                </label>
-                                            </div>
-
-                                        </td>
-                                        <td style="display: inline-flex;">
-                                            <div  class="note-checkit">
-                                                <label class="custom_check">
-                                                    <input type="checkbox"  name="pay" [(ngModel)]="pay" (change)="isCheckedPay()"    >
-                                                    <span class="checkmark" value="false"></span> 
-                                                </label>
-                                            </div>
-                                        </td>
-
-                                        <td>{{report.created_at | date }}</td>
-
-                                        <td class="text-end">
-                                            <div class="doctor-submit text-end">
-                                                <button type="button" class="btn btn-primary submit-form me-2" (click)="save(data)">Save</button>
-                                                
-                                            </div>
-                                        </td>
-                                    </tr> -->
+                                   
                                 </tbody>
                                 <ng-template #noData>
                                     <p>No data available.</p>

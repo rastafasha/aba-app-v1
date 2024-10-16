@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { routes } from 'src/app/shared/routes/routes';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 
 @Component({
   selector: 'app-invoices-list',
   templateUrl: './invoices-list.component.html',
-  styleUrls: ['./invoices-list.component.scss']
+  styleUrls: ['./invoices-list.component.scss'],
 })
 export class InvoicesListComponent {
-  public routes = routes;
+  public routes = AppRoutes;
   public checkboxes: string[] = [];
 
   public openCheckBoxes(val: string) {

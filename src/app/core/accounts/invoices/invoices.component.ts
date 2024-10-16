@@ -2,20 +2,24 @@ import { Component, OnInit } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DataService } from 'src/app/shared/data/data.service';
-import { pageSelection, apiResultFormat, invoices } from 'src/app/shared/models/models';
-import { routes } from 'src/app/shared/routes/routes';
+import {
+  pageSelection,
+  apiResultFormat,
+  invoices,
+} from 'src/app/shared/models/models';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 
 interface data {
-  value: string ;
+  value: string;
 }
 @Component({
   selector: 'app-invoices',
   templateUrl: './invoices.component.html',
-  styleUrls: ['./invoices.component.scss']
+  styleUrls: ['./invoices.component.scss'],
 })
-export class InvoicesComponent  implements OnInit{
-  public routes = routes;
-  public selectedValue !: string  ;
+export class InvoicesComponent implements OnInit {
+  public routes = AppRoutes;
+  public selectedValue!: string;
   public invoices: Array<invoices> = [];
   dataSource!: MatTableDataSource<invoices>;
 
@@ -33,9 +37,7 @@ export class InvoicesComponent  implements OnInit{
   public pageSelection: Array<pageSelection> = [];
   public totalPages = 0;
 
-  constructor(public data : DataService){
-
-  }
+  constructor(public data: DataService) {}
   ngOnInit() {
     this.getTableData();
   }
@@ -48,7 +50,6 @@ export class InvoicesComponent  implements OnInit{
       data.data.map((res: invoices, index: number) => {
         const serialNumber = index + 1;
         if (index >= this.skip && serialNumber <= this.limit) {
-         
           this.invoices.push(res);
           this.serialNumberArray.push(serialNumber);
         }
@@ -57,7 +58,7 @@ export class InvoicesComponent  implements OnInit{
       this.calculateTotalPages(this.totalData, this.pageSize);
     });
   }
- // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public searchData(value: any): void {
     this.dataSource.filter = value.trim().toLowerCase();
     this.invoices = this.dataSource.filteredData;
@@ -130,9 +131,9 @@ export class InvoicesComponent  implements OnInit{
     }
   }
   selectedList: data[] = [
-    {value: 'Select Payment Status'},
-    {value: 'Paid'},
-    {value: 'Un Paid'},
-    {value: 'Partially Paid'},
+    { value: 'Select Payment Status' },
+    { value: 'Paid' },
+    { value: 'Un Paid' },
+    { value: 'Partially Paid' },
   ];
 }

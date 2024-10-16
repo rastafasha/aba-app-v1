@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { routes } from 'src/app/shared/routes/routes';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 import { RolesService } from '../service/roles.service';
 
 import { FileSaverService } from 'ngx-filesaver';
 import * as XLSX from 'xlsx';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { Location } from '@angular/common';
-declare var $:any;    
+declare var $: any;
 @Component({
   selector: 'app-list-role-user',
   templateUrl: './list-role-user.component.html',
-  styleUrls: ['./list-role-user.component.scss']
+  styleUrls: ['./list-role-user.component.scss'],
 })
 export class ListRoleUserComponent {
-  public routes = routes;
+  public routes = AppRoutes;
 
   public rolesList: any = [];
   dataSource!: MatTableDataSource<any>;
@@ -33,19 +33,17 @@ export class ListRoleUserComponent {
   public pageSelection: Array<any> = [];
   public totalPages = 0;
 
-  public role_generals:any = [];
-  public role_id:any;
-  public role_selected:any;
-  public text_validation:any;
+  public role_generals: any = [];
+  public role_id: any;
+  public role_selected: any;
+  public text_validation: any;
 
   constructor(
     public rolesService: RolesService,
     public doctorService: DoctorService,
     private fileSaver: FileSaverService,
-    private location: Location,
-    ){
-
-  }
+    private location: Location
+  ) {}
   ngOnInit() {
     window.scrollTo(0, 0);
     this.doctorService.closeMenuSidebar();
@@ -59,26 +57,23 @@ export class ListRoleUserComponent {
     this.rolesList = [];
     this.serialNumberArray = [];
 
-    this.rolesService.listRoles().subscribe((resp:any)=>{
-      
+    this.rolesService.listRoles().subscribe((resp: any) => {
       // console.log(resp);
 
       this.totalData = resp.roles.length;
       this.role_generals = resp.roles;
       this.role_id = resp.roles.id;
-     this.getTableDataGeneral();
-    })
-
+      this.getTableDataGeneral();
+    });
   }
 
-  getTableDataGeneral(){
+  getTableDataGeneral() {
     this.rolesList = [];
     this.serialNumberArray = [];
-    
+
     this.role_generals.map((res: any, index: number) => {
       const serialNumber = index + 1;
       if (index >= this.skip && serialNumber <= this.limit) {
-       
         this.rolesList.push(res);
         this.serialNumberArray.push(serialNumber);
       }
@@ -86,35 +81,33 @@ export class ListRoleUserComponent {
     this.dataSource = new MatTableDataSource<any>(this.rolesList);
     this.calculateTotalPages(this.totalData, this.pageSize);
   }
-  selectRol(rol:any){
+  selectRol(rol: any) {
     this.role_selected = rol;
   }
-  deleteRol(){
+  deleteRol() {
+    this.rolesService
+      .deleteRole(this.role_selected.id)
+      .subscribe((resp: any) => {
+        // console.log(resp);
 
-    
+        if (resp.message == 403) {
+          this.text_validation = resp.message_text;
+        } else {
+          let INDEX = this.rolesList.findIndex(
+            (item: any) => item.id == this.role_selected.id
+          );
+          if (INDEX != -1) {
+            this.rolesList.splice(INDEX, 1);
 
-    this.rolesService.deleteRole(this.role_selected.id).subscribe((resp:any)=>{
-      // console.log(resp);
-
-      if(resp.message == 403){
-        this.text_validation = resp.message_text;
-      }else{
-
-        let INDEX = this.rolesList.findIndex((item:any)=> item.id == this.role_selected.id);
-      if(INDEX !=-1){
-        this.rolesList.splice(INDEX,1);
-
-        $('#delete_patient').hide();
-        $("#delete_patient").removeClass("show");
-        $(".modal-backdrop").remove();
-        $("body").removeClass();
-        $("body").removeAttr("style");
-        this.role_selected = null;
-      }
-      }
-
-      
-    })
+            $('#delete_patient').hide();
+            $('#delete_patient').removeClass('show');
+            $('.modal-backdrop').remove();
+            $('body').removeClass();
+            $('body').removeAttr('style');
+            this.role_selected = null;
+          }
+        }
+      });
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -191,33 +184,33 @@ export class ListRoleUserComponent {
     }
   }
 
-
-  
-  excelExport(){
-    const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8';
+  excelExport() {
+    const EXCEL_TYPE =
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8';
     const EXCLE_EXTENSION = '.xlsx';
 
     this.getTableDataGeneral();
-
 
     //custom code
     const worksheet = XLSX.utils.json_to_sheet(this.role_generals);
 
     const workbook = {
-      Sheets:{
-        'testingSheet': worksheet
+      Sheets: {
+        testingSheet: worksheet,
       },
-      SheetNames:['testingSheet']
-    }
+      SheetNames: ['testingSheet'],
+    };
 
-    const excelBuffer = XLSX.write(workbook, {bookType:'xlsx', type: 'array'});
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
 
-    const blobData = new Blob([excelBuffer],{type: EXCEL_TYPE});
+    const blobData = new Blob([excelBuffer], { type: EXCEL_TYPE });
 
-    this.fileSaver.save(blobData, "roles_db_aba_therapy",)
-
+    this.fileSaver.save(blobData, 'roles_db_aba_therapy');
   }
-  csvExport(){
+  csvExport() {
     const CSV_TYPE = 'text/csv';
     const CSV_EXTENSION = '.csv';
 
@@ -227,63 +220,61 @@ export class ListRoleUserComponent {
     const worksheet = XLSX.utils.json_to_sheet(this.role_generals);
 
     const workbook = {
-      Sheets:{
-        'testingSheet': worksheet
+      Sheets: {
+        testingSheet: worksheet,
       },
-      SheetNames:['testingSheet']
-    }
+      SheetNames: ['testingSheet'],
+    };
 
-    const excelBuffer = XLSX.write(workbook, {bookType:'csv', type: 'array'});
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'csv',
+      type: 'array',
+    });
 
-    const blobData = new Blob([excelBuffer],{type: CSV_TYPE});
+    const blobData = new Blob([excelBuffer], { type: CSV_TYPE });
 
-    this.fileSaver.save(blobData, "roles_db_aba_therapy_csv",CSV_EXTENSION )
-
+    this.fileSaver.save(blobData, 'roles_db_aba_therapy_csv', CSV_EXTENSION);
   }
 
-  txtExport(){
+  txtExport() {
     const TXT_TYPE = 'text/txt';
     const TXT_EXTENSION = '.txt';
 
     this.getTableDataGeneral();
 
-
     //custom code
     const worksheet = XLSX.utils.json_to_sheet(this.role_generals);
 
     const workbook = {
-      Sheets:{
-        'testingSheet': worksheet
+      Sheets: {
+        testingSheet: worksheet,
       },
-      SheetNames:['testingSheet']
-    }
+      SheetNames: ['testingSheet'],
+    };
 
-    const excelBuffer = XLSX.write(workbook, {bookType:'xlsx', type: 'array'});
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
 
-    const blobData = new Blob([excelBuffer],{type: TXT_TYPE});
+    const blobData = new Blob([excelBuffer], { type: TXT_TYPE });
 
-    this.fileSaver.save(blobData, "roles_db_aba_therapy", TXT_EXTENSION)
-
+    this.fileSaver.save(blobData, 'roles_db_aba_therapy', TXT_EXTENSION);
   }
 
-  pdfExport(){
-    // var doc = new jspdf(); 
-    
+  pdfExport() {
+    // var doc = new jspdf();
     // const worksheet = XLSX.utils.json_to_sheet(this.role_generals);
-
     // const workbook = {
     //   Sheets:{
     //     'testingSheet': worksheet
     //   },
     //   SheetNames:['testingSheet']
     // }
-
     // doc.html(document.body, {
     //   callback: function (doc) {
     //     doc.save('roles_db_aba_therapy_csv.pdf');
     //   }
     // });
-
   }
-  
 }

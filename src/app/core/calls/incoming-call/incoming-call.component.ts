@@ -1,16 +1,14 @@
 import { Component } from '@angular/core';
-import { routes } from 'src/app/shared/routes/routes';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 
 @Component({
   selector: 'app-incoming-call',
   templateUrl: './incoming-call.component.html',
-  styleUrls: ['./incoming-call.component.scss']
+  styleUrls: ['./incoming-call.component.scss'],
 })
 export class IncomingCallComponent {
-  public routes = routes;
+  public routes = AppRoutes;
   public closeModal = false;
-
-  
 
   public closeModalFunc() {
     this.closeModal = !this.closeModal;

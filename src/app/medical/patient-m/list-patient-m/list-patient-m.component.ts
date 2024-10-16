@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { routes } from 'src/app/shared/routes/routes';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PatientMService } from '../service/patient-m.service';
 import { FileSaverService } from 'ngx-filesaver';
 import { DoctorService } from '../../doctors/service/doctor.service';
@@ -13,15 +13,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ActionModalComponent } from 'src/app/shared/components/action-modal/action-modal.component';
 
-declare var $:any;
+declare var $: any;
 @Component({
   selector: 'app-list-patient-m',
   templateUrl: './list-patient-m.component.html',
-  styleUrls: ['./list-patient-m.component.scss']
+  styleUrls: ['./list-patient-m.component.scss'],
 })
 export class ListPatientMComponent {
   public isLoading = true;
-  public routes = routes;
+  public routes = AppRoutes;
 
   public patientList: any = [];
   dataSource!: MatTableDataSource<any>;
@@ -40,20 +40,20 @@ export class ListPatientMComponent {
   public pageSelection: Array<any> = [];
   public totalPages = 0;
 
-  public patient_generals:any = [];
-  public patient_id:any;
-  public patientid:any;
-  public patient_selected:any;
-  public text_validation:any;
-  public user:any;
-  public roles:any = [];
-  public permissions:any = [];
-  public maladaptives:any = [];
-  public doctorPatientList:any = [];
-  public locationPatientList:any = [];
-  search:any= null;
-  status:any= null;
-  location_id:any;
+  public patient_generals: any = [];
+  public patient_id: any;
+  public patientid: any;
+  public patient_selected: any;
+  public text_validation: any;
+  public user: any;
+  public roles: any = [];
+  public permissions: any = [];
+  public maladaptives: any = [];
+  public doctorPatientList: any = [];
+  public locationPatientList: any = [];
+  search: any = null;
+  status: any = null;
+  location_id: any;
 
   constructor(
     public doctorService: DoctorService,
@@ -63,57 +63,58 @@ export class ListPatientMComponent {
     public bipService: BipService,
     public location: Location,
     private dialog: MatDialog,
-    private router: Router,
-    ){
-
-  }
+    private router: Router
+  ) {}
   ngOnInit() {
     window.scrollTo(0, 0);
     this.doctorService.closeMenuSidebar();
     this.getTableData();
 
-    let USER = localStorage.getItem("user");
-    this.user = JSON.parse(USER ? USER: '');
+    const USER = localStorage.getItem('user');
+    this.user = JSON.parse(USER ? USER : '');
     this.roles = this.user.roles[0];
     this.location_id = this.user.location_id;
 
     this.user = this.roleService.authService.user;
     this.getPatiensByDoctor();
-
   }
 
   goBack() {
     this.location.back(); // <-- go back to previous location on cancel
-
   }
 
-  getPatiensByDoctor(){
-    this.patientService.getPatientsByDoctor(this.user.id).subscribe((resp:any)=>{
-      // console.log(resp);
-      this.doctorPatientList = resp.patients.data;
-    })
+  getPatiensByDoctor() {
+    this.patientService
+      .getPatientsByDoctor(this.user.id)
+      .subscribe((resp: any) => {
+        // console.log(resp);
+        this.doctorPatientList = resp.patients.data;
+      });
     this.getPatiensByLocation();
   }
-  getPatiensByLocation(){
-    this.patientService.getPatientByLocations(this.location_id).subscribe((resp:any)=>{
-      // console.log(resp);
-      this.locationPatientList = resp.patients.data;
-    })
+  getPatiensByLocation() {
+    this.patientService
+      .getPatientByLocations(this.location_id)
+      .subscribe((resp: any) => {
+        // console.log(resp);
+        this.locationPatientList = resp.patients.data;
+      });
   }
 
-  isMaladaptiveBip(){
-    this.bipService.getBipByPatient_id(this.patient_id).subscribe((resp:any)=>{
-      console.log(resp);
-      this.maladaptives = resp.maladaptives;
-    })
+  isMaladaptiveBip() {
+    this.bipService
+      .getBipByPatient_id(this.patient_id)
+      .subscribe((resp: any) => {
+        console.log(resp);
+        this.maladaptives = resp.maladaptives;
+      });
   }
 
-
-  isPermission(permission:string){
-    if(this.user.roles.includes('SUPERADMIN')){
+  isPermission(permission: string) {
+    if (this.user.roles.includes('SUPERADMIN')) {
       return true;
     }
-    if(this.user.permissions.includes(permission)){
+    if (this.user.permissions.includes(permission)) {
       return true;
     }
     return false;
@@ -124,31 +125,32 @@ export class ListPatientMComponent {
     this.patientList = [];
     this.serialNumberArray = [];
 
-    this.patientService.listPatients(this.search, this.status, this.location_id).subscribe((resp:any)=>{
-
-      this.totalDatapatient = resp.patients.data.length;
-      this.patient_generals = resp.patients.data;
-      this.patientid = resp.patients.data.id;
-      this.patient_id = resp.patients.data.patient_id;
-      this.getTableDataGeneral();
-      this.isLoading = false;
-    //  this.isMaladaptiveBip();
-    },
-    error => {
-      console.error('Error fetching data:', error);
-      this.isLoading = false;
-    })
-
+    this.patientService
+      .listPatients(this.search, this.status, this.location_id)
+      .subscribe(
+        (resp: any) => {
+          this.totalDatapatient = resp.patients.data.length;
+          this.patient_generals = resp.patients.data;
+          this.patientid = resp.patients.data.id;
+          this.patient_id = resp.patients.data.patient_id;
+          this.getTableDataGeneral();
+          this.isLoading = false;
+          //  this.isMaladaptiveBip();
+        },
+        (error) => {
+          console.error('Error fetching data:', error);
+          this.isLoading = false;
+        }
+      );
   }
 
-  getTableDataGeneral(){
+  getTableDataGeneral() {
     this.patientList = [];
     this.serialNumberArray = [];
 
     this.patient_generals.map((res: any, index: number) => {
       const serialNumber = index + 1;
       if (index >= this.skip && serialNumber <= this.limit) {
-
         this.patientList.push(res);
         this.serialNumberArray.push(serialNumber);
       }
@@ -156,33 +158,33 @@ export class ListPatientMComponent {
     this.dataSource = new MatTableDataSource<any>(this.patientList);
     this.calculateTotalPages(this.totalDatapatient, this.pageSize);
   }
-  selectUser(patient:any){
+  selectUser(patient: any) {
     this.patient_selected = patient;
   }
-  deleteRol(){
+  deleteRol() {
+    this.patientService
+      .deletePatient(this.patient_selected.id)
+      .subscribe((resp: any) => {
+        // console.log(resp);
 
-    this.patientService.deletePatient(this.patient_selected.id).subscribe((resp:any)=>{
-      // console.log(resp);
+        if (resp.message == 403) {
+          this.text_validation = resp.message_text;
+        } else {
+          let INDEX = this.patientList.findIndex(
+            (item: any) => item.id == this.patient_selected.id
+          );
+          if (INDEX != -1) {
+            this.patientList.splice(INDEX, 1);
 
-      if(resp.message == 403){
-        this.text_validation = resp.message_text;
-      }else{
-
-        let INDEX = this.patientList.findIndex((item:any)=> item.id == this.patient_selected.id);
-      if(INDEX !=-1){
-        this.patientList.splice(INDEX,1);
-
-        $('#delete_patient').hide();
-        $("#delete_patient").removeClass("show");
-        $(".modal-backdrop").remove();
-        $("body").removeClass();
-        $("body").removeAttr("style");
-        this.patient_selected = null;
-      }
-      }
-
-
-    })
+            $('#delete_patient').hide();
+            $('#delete_patient').removeClass('show');
+            $('.modal-backdrop').remove();
+            $('body').removeClass();
+            $('body').removeAttr('style');
+            this.patient_selected = null;
+          }
+        }
+      });
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -286,7 +288,10 @@ export class ListPatientMComponent {
     this.searchDataValue = '';
   }
 
-  private calculateTotalPages(totalDatapatient: number, pageSize: number): void {
+  private calculateTotalPages(
+    totalDatapatient: number,
+    pageSize: number
+  ): void {
     this.pageNumberArray = [];
     this.totalPages = totalDatapatient / pageSize;
     if (this.totalPages % 1 != 0) {
@@ -301,8 +306,9 @@ export class ListPatientMComponent {
     }
   }
 
-  excelExport(){
-    const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8';
+  excelExport() {
+    const EXCEL_TYPE =
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8';
     const EXCLE_EXTENSION = '.xlsx';
 
     this.getTableDataGeneral();
@@ -310,20 +316,22 @@ export class ListPatientMComponent {
     const worksheet = XLSX.utils.json_to_sheet(this.patient_generals);
 
     const workbook = {
-      Sheets:{
-        'testingSheet': worksheet
+      Sheets: {
+        testingSheet: worksheet,
       },
-      SheetNames:['testingSheet']
-    }
+      SheetNames: ['testingSheet'],
+    };
 
-    const excelBuffer = XLSX.write(workbook, {bookType:'xlsx', type: 'array'});
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
 
-    const blobData = new Blob([excelBuffer],{type: EXCEL_TYPE});
+    const blobData = new Blob([excelBuffer], { type: EXCEL_TYPE });
 
-    this.fileSaver.save(blobData, "clients_db_aba_therapy",)
-
+    this.fileSaver.save(blobData, 'clients_db_aba_therapy');
   }
-  csvExport(){
+  csvExport() {
     const CSV_TYPE = 'text/csv';
     const CSV_EXTENSION = '.csv';
 
@@ -333,138 +341,151 @@ export class ListPatientMComponent {
     const worksheet = XLSX.utils.json_to_sheet(this.patient_generals);
 
     const workbook = {
-      Sheets:{
-        'testingSheet': worksheet
+      Sheets: {
+        testingSheet: worksheet,
       },
-      SheetNames:['testingSheet']
-    }
+      SheetNames: ['testingSheet'],
+    };
 
-    const excelBuffer = XLSX.write(workbook, {bookType:'csv', type: 'array'});
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'csv',
+      type: 'array',
+    });
 
-    const blobData = new Blob([excelBuffer],{type: CSV_TYPE});
+    const blobData = new Blob([excelBuffer], { type: CSV_TYPE });
 
-    this.fileSaver.save(blobData, "clients_db_aba_therapy_csv", CSV_EXTENSION)
-
+    this.fileSaver.save(blobData, 'clients_db_aba_therapy_csv', CSV_EXTENSION);
   }
 
-  txtExport(){
+  txtExport() {
     const TXT_TYPE = 'text/txt';
     const TXT_EXTENSION = '.txt';
 
     this.getTableDataGeneral();
 
-
     //custom code
     const worksheet = XLSX.utils.json_to_sheet(this.patient_generals);
 
     const workbook = {
-      Sheets:{
-        'testingSheet': worksheet
+      Sheets: {
+        testingSheet: worksheet,
       },
-      SheetNames:['testingSheet']
-    }
+      SheetNames: ['testingSheet'],
+    };
 
-    const excelBuffer = XLSX.write(workbook, {bookType:'xlsx', type: 'array'});
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array',
+    });
 
-    const blobData = new Blob([excelBuffer],{type: TXT_TYPE});
+    const blobData = new Blob([excelBuffer], { type: TXT_TYPE });
 
-    this.fileSaver.save(blobData, "clients_db_aba_therapy", TXT_EXTENSION)
-
+    this.fileSaver.save(blobData, 'clients_db_aba_therapy', TXT_EXTENSION);
   }
 
-
-
-  cambiarStatus(data:any){
-    let VALUE = data.status;
+  cambiarStatus(data: any) {
+    const VALUE = data.status;
     // console.log(VALUE);
 
-    this.patientService.updateStatus(data, data.id).subscribe(
-      resp =>{
-        // console.log(resp);
-        Swal.fire('Updated', `Client Status Updated successfully!`, 'success');
-        this.getTableData();
-      }
-    )
+    this.patientService.updateStatus(data, data.id).subscribe((resp) => {
+      // console.log(resp);
+      Swal.fire('Updated', `Client Status Updated successfully!`, 'success');
+      this.getTableData();
+    });
   }
 
-    openActionModal(patient: any) {
-      const actions = this.getActionsForPatient(patient);
-      console.log('Actions before opening modal:', actions);
-      this.dialog.open(ActionModalComponent, {
-        width: '300px',
-        data: { patient, actions }
-      });
+  openActionModal(patient: any) {
+    const actions = this.getActionsForPatient(patient);
+    console.log('Actions before opening modal:', actions);
+    this.dialog.open(ActionModalComponent, {
+      width: '300px',
+      data: { patient, actions },
+    });
+  }
+
+  getActionsForPatient(patient: any): any[] {
+    const allActions = [
+      {
+        title: 'BIP Create',
+        icon: 'fa fa-address-book',
+        buttonClass: 'btn-outline-success',
+        onClick: () =>
+          this.router.navigate(['/bip/attention/', patient.patient_id]),
+      },
+      {
+        title: 'BIP View',
+        icon: 'fa fa-eye',
+        buttonClass: 'btn-outline-dark',
+        onClick: () =>
+          this.router.navigate(['/bip/profile/', patient.patient_id]),
+      },
+      {
+        title: 'Create RBT Note',
+        icon: 'fa fa-id-card',
+        buttonClass: 'btn-outline-success',
+        onClick: () => this.router.navigate(['/note-rbt/', patient.patient_id]),
+      },
+      {
+        title: 'RBT Note list',
+        icon: 'fa fa-bars',
+        buttonClass: 'btn-outline-primary',
+        onClick: () =>
+          this.router.navigate(['/note-rbt/listbyclient/', patient.patient_id]),
+      },
+      {
+        title: 'Create BCBA Note',
+        icon: 'fa fa-id-badge',
+        buttonClass: 'btn-outline-secondary',
+        onClick: () =>
+          this.router.navigate(['/note-bcba/', patient.patient_id]),
+      },
+      {
+        title: 'BCBA Note list',
+        icon: 'fa fa-bars',
+        buttonClass: 'btn-outline-primary',
+        onClick: () =>
+          this.router.navigate([
+            '/note-bcba/listbyclient/',
+            patient.patient_id,
+          ]),
+      },
+      {
+        title: 'Log Report',
+        icon: 'fa fa-check-circle',
+        buttonClass: 'btn-outline-warning',
+        onClick: () =>
+          this.router.navigate([
+            '/client-report/byclient/',
+            patient.patient_id,
+          ]),
+      },
+    ];
+    const filteredActions = allActions.filter((action) =>
+      this.canShowAction(action, patient)
+    );
+    return filteredActions;
+  }
+
+  canShowAction(action: any, patient: any): boolean {
+    if (patient.status !== 'active') {
+      return false;
     }
 
-    getActionsForPatient(patient: any): any[] {
-        const allActions = [
-            {
-                title: 'BIP Create',
-                icon: 'fa fa-address-book',
-                buttonClass: 'btn-outline-success',
-                onClick: () => this.router.navigate(['/bip/attention/', patient.patient_id])
-            },
-            {
-                title: 'BIP View',
-                icon: 'fa fa-eye',
-                buttonClass: 'btn-outline-dark',
-                onClick: () => this.router.navigate(['/bip/profile/', patient.patient_id])
-            },
-            {
-                title: 'Create RBT Note',
-                icon: 'fa fa-id-card',
-                buttonClass: 'btn-outline-success',
-                onClick: () => this.router.navigate(['/note-rbt/', patient.patient_id])
-            },
-            {
-                title: 'RBT Note list',
-                icon: 'fa fa-bars',
-                buttonClass: 'btn-outline-primary',
-                onClick: () => this.router.navigate(['/note-rbt/listbyclient/', patient.patient_id])
-            },
-            {
-                title: 'Create BCBA Note',
-                icon: 'fa fa-id-badge',
-                buttonClass: 'btn-outline-secondary',
-                onClick: () => this.router.navigate(['/note-bcba/', patient.patient_id])
-            },
-            {
-                title: 'BCBA Note list',
-                icon: 'fa fa-bars',
-                buttonClass: 'btn-outline-primary',
-                onClick: () => this.router.navigate(['/note-bcba/listbyclient/', patient.patient_id])
-            },
-            {
-                title: 'Log Report',
-                icon: 'fa fa-check-circle',
-                buttonClass: 'btn-outline-warning',
-                onClick: () => this.router.navigate(['/client-report/byclient/', patient.patient_id])
-            }
-        ];
-        const filteredActions = allActions.filter(action => this.canShowAction(action, patient));
-        return filteredActions;
-    }
-
-    canShowAction(action: any, patient: any): boolean {
-      if (patient.status !== 'active') {
+    switch (action.title) {
+      case 'BIP Create':
+        return ['SUPERADMIN', 'MANAGER', 'LM', 'BCBA'].includes(this.roles);
+      case 'BIP View':
+        return this.isPermission('view_bip');
+      case 'Create RBT Note':
+      case 'RBT Note list':
+        return ['SUPERADMIN', 'MANAGER', 'LM', 'RBT'].includes(this.roles);
+      case 'Create BCBA Note':
+      case 'BCBA Note list':
+        return ['SUPERADMIN', 'MANAGER', 'LM', 'BCBA'].includes(this.roles);
+      case 'Log Report':
+        return ['SUPERADMIN', 'MANAGER'].includes(this.roles);
+      default:
         return false;
-      }
-
-      switch (action.title) {
-        case 'BIP Create':
-          return ['SUPERADMIN', 'MANAGER', 'LM', 'BCBA'].includes(this.roles);
-        case 'BIP View':
-          return this.isPermission('view_bip');
-        case 'Create RBT Note':
-        case 'RBT Note list':
-          return ['SUPERADMIN', 'MANAGER', 'LM', 'RBT'].includes(this.roles);
-        case 'Create BCBA Note':
-        case 'BCBA Note list':
-          return ['SUPERADMIN', 'MANAGER', 'LM', 'BCBA'].includes(this.roles);
-        case 'Log Report':
-          return ['SUPERADMIN', 'MANAGER'].includes(this.roles);
-        default:
-          return false;
-      }
     }
+  }
 }

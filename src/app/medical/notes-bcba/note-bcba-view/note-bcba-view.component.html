@@ -140,26 +140,25 @@
                                                         <h3>{{note_selected.meet_with_client_at}}</h3>
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-3 col-md-6 col-xl-3">
+                                                <div class="col-xl-3 col-xs-6 ">
                                                     <div class="detail-personal">
                                                         <h2>Modifier</h2>
                                                         <h3>{{note_selected.mdbcba}}</h3>
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-3 col-md-6 col-xl-3">
+                                                <div class="col-xl-3 col-xs-6 ">
                                                     <div class="detail-personal">
                                                         <h2>Modifier 2 (optional)</h2>
                                                         <h3>{{note_selected.md2bcba}}</h3>
                                                     </div>
                                                 </div>
-                                                <div class="clear"></div>
-                                                <div class="col-xl-3 col-md-6 col-xl-4">
+                                                <div class="col-xl-3 col-xs-6">
                                                     <div class="detail-personal">
                                                         <h2>Date Session</h2>
                                                         <h3>{{note_selected.session_date|date}}</h3>
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-3 col-md-6 col-xl-4">
+                                                <!-- <div class="col-xl-3 col-xs-6 col-xl-4">
                                                     <div class="detail-personal">
                                                         <h2>Create At</h2>
                                                         <h3>{{note_selected.created_at|date}}</h3>
@@ -170,9 +169,10 @@
                                                         <h2>Updated At</h2>
                                                         <h3>{{note_selected.updated_at|date}}</h3>
                                                     </div>
-                                                </div>
+                                                </div> -->
+                                                <h5 class="mb-3">Morning Session</h5>
                                                 <div class="col-xl-3 col-md-6 col-xl-4">
-                                                    <h5 class="mb-3">Morning Session</h5>
+                                                    
                                                     <div class="detail-personal">
                                                         <h2>Time In</h2>
                                                         <h3>{{note_selected.time_in | transformToDate }}</h3>
@@ -192,8 +192,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="clear"></div>
+                                                <h5 class="mb-3">Afternoon Session</h5>
                                                 <div class="col-xl-3 col-md-6 col-xl-4">
-                                                    <h5 class="mb-3">Afternoon Session</h5>
                                                     <div class="detail-personal">
                                                         <h2>Time In </h2>
                                                         <h3>{{note_selected.time_in2 | transformToDate }}</h3>
@@ -310,37 +310,41 @@
                                 <div class="card-body p-0 ">
                                     <div class="personal-list-out">
                                         <div class="container">
-                                            <div class="row">
+                                            <div class="col-xl-12">
                                                 
-                                                
-                                                <div class="col-xl-3 col-md-6">
-                                                    <div class="detail-personal">
-                                                        <h2>Provider Signature</h2>
-                                                        <!-- <h3>{{note_selected.provider_signature}}</h3> -->
-                                                        <img  src="{{note_selected.provider_signature}}" style="width: 100%;"  >
+                                                <div class="detail-personal">
+                                                    <h2>Summary Note</h2>
+                                                    <h3>{{note_selected.summary_note}}</h3>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-5">
+                                                <div class="col-xs-12 d-flex align-items-center justify-content-center">
+                                                    <div class="col-xl-4 col-md-6">
+                                                        <div class="detail-personal">
+                                                            <h2>Provider Signature</h2>
+                                                            <!-- <h3>{{note_selected.provider_signature}}</h3> -->
+                                                            <!-- <img  src="{{note_selected.provider_signature}}" style="width: 100%;"  > -->
+                                                            <img  src="{{IMAGE_PREVISUALIZA_SIGNATURE__BCBA_CREATED}}" style="width: 100%;"  >
+                                                        </div>
+                                                        <div class="detail-personal">
+                                                            <h2>Provider name BCBA</h2>
+                                                            <h3>{{doctor_selected_full_name_bcba}}</h3>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-4 col-md-6">
+                                                        <div class="detail-personal">
+                                                            <h2>Supervisor Signature</h2>
+                                                            <!-- <h3>{{note_selected.supervisor_signature}}</h3> -->
+                                                            <!-- {{imagenSerUrl}} -->
+                                                            <!-- <img  src="{{note_selected.supervisor_signature}}" style="width: 100%;"  > -->
+                                                            <img  src="{{IMAGE_PREVISUALIZA_SIGNATURE_SUPERVISOR_CREATED}}" style="width: 100%;"  >
+                                                            <div class="detail-personal">
+                                                                <h2>Supervisor name </h2>
+                                                                <h3>{{doctor_selected_full_name_supervisor}}</h3>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-3 col-md-6">
-                                                    <div class="detail-personal">
-                                                        <h2>Provider name RBT</h2>
-                                                        <h3>{{doctor_selected_full_name}}</h3>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-md-6">
-                                                    <div class="detail-personal">
-                                                        <h2>Supervisor Signature</h2>
-                                                        <!-- <h3>{{note_selected.supervisor_signature}}</h3> -->
-                                                        <!-- {{imagenSerUrl}} -->
-                                                        <img  src="{{note_selected.supervisor_signature}}" style="width: 100%;"  >
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-md-6">
-                                                    <div class="detail-personal">
-                                                        <h2>Supervisor name BCBA</h2>
-                                                        <h3>{{doctor_selected_full_name_rbt}}</h3>
-                                                    </div>
-                                                </div>
-                                                
                                             </div>
                                         </div>
                                     </div>

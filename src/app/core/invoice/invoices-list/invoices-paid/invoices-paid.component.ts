@@ -2,18 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DataService } from 'src/app/shared/data/data.service';
-import { pageSelection, apiResultFormat, invoicespaid } from 'src/app/shared/models/models';
-import { routes } from 'src/app/shared/routes/routes';
+import {
+  pageSelection,
+  apiResultFormat,
+  invoicespaid,
+} from 'src/app/shared/models/models';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 
 @Component({
   selector: 'app-invoices-paid',
   templateUrl: './invoices-paid.component.html',
-  styleUrls: ['./invoices-paid.component.scss']
+  styleUrls: ['./invoices-paid.component.scss'],
 })
-export class InvoicesPaidComponent implements OnInit{
-  public routes = routes;
+export class InvoicesPaidComponent implements OnInit {
+  public routes = AppRoutes;
   public checkboxes: string[] = [];
-
 
   public invoicesPaid: Array<invoicespaid> = [];
   dataSource!: MatTableDataSource<invoicespaid>;
@@ -32,9 +35,7 @@ export class InvoicesPaidComponent implements OnInit{
   public pageSelection: Array<pageSelection> = [];
   public totalPages = 0;
 
-  constructor(public data : DataService){
-
-  }
+  constructor(public data: DataService) {}
   ngOnInit() {
     this.getTableData();
   }
@@ -47,7 +48,6 @@ export class InvoicesPaidComponent implements OnInit{
       data.data.map((res: invoicespaid, index: number) => {
         const serialNumber = index + 1;
         if (index >= this.skip && serialNumber <= this.limit) {
-         
           this.invoicesPaid.push(res);
           this.serialNumberArray.push(serialNumber);
         }
@@ -128,8 +128,8 @@ export class InvoicesPaidComponent implements OnInit{
       this.pageSelection.push({ skip: skip, limit: limit });
     }
   }
-  
-  public openCheckBoxes(val: string){
+
+  public openCheckBoxes(val: string) {
     if (this.checkboxes[0] != val) {
       this.checkboxes[0] = val;
     } else {

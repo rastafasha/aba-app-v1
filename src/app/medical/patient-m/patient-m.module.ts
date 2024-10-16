@@ -11,9 +11,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProfilePatientMComponent } from './profile-patient-m/profile-patient-m.component';
-import { PipesModule } from 'src/app/pipes/pipes.module';
+import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 
-import  {  PdfViewerModule  }  from  'ng2-pdf-viewer';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ClientLogReportComponent } from './client-log-report/client-log-report.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -33,7 +33,7 @@ import { MatButtonModule } from '@angular/material/button';
     ListPatientMComponent,
     EditPatientMComponent,
     ProfilePatientMComponent,
-    ClientLogReportComponent
+    ClientLogReportComponent,
   ],
   imports: [
     CommonModule,
@@ -47,6 +47,6 @@ import { MatButtonModule } from '@angular/material/button';
     PdfViewerModule,
     MatDialogModule,
     MatButtonModule,
-  ]
+  ],
 })
-export class PatientMModule { }
+export class PatientMModule {}

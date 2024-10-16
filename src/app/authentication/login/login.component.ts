@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/shared/auth/auth.service';
-import { routes } from 'src/app/shared/routes/routes';
+import { AuthService } from 'src/app/core/auth/auth.service';
+import { AppUser } from 'src/app/shared/models/users.models';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 
 @Component({
   selector: 'app-login',
@@ -10,12 +11,11 @@ import { routes } from 'src/app/shared/routes/routes';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  public routes = routes;
-  public passwordClass = false;
-  public ERROR = false;
-  public user: any;
-  public roles: any = [];
-
+  routes = AppRoutes;
+  passwordClass = false;
+  ERROR = false;
+  user: AppUser;
+  roles: string[] = [];
 
   email = new FormControl();
   password = new FormControl();
@@ -23,19 +23,8 @@ export class LoginComponent implements OnInit {
   errors: any = null;
   loginForm: FormGroup;
 
-  //testing
-  // form = new FormGroup({
-  //   email: new FormControl('superadmin@superadmin.com', [
-  //     Validators.required,
-  //     Validators.email,
-  //   ]),
-  //   password: new FormControl('password', [Validators.required]),
-  // });
   form = new FormGroup({
-    email: new FormControl('', [
-      Validators.required,
-      Validators.email,
-    ]),
+    email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
     remember: new FormControl(false, [Validators.required]),
   });
@@ -44,119 +33,111 @@ export class LoginComponent implements OnInit {
     return this.form.controls;
   }
 
-  constructor(
-    public auth: AuthService,
-    public router: Router,
-    private fb: FormBuilder,
-  ) {
-
-  }
+  constructor(public auth: AuthService, public router: Router) {}
 
   ngOnInit(): void {
-    // if (localStorage.getItem('authenticated')) {
-    //   localStorage.removeItem('authenticated');
-    // }
-    // let USER = localStorage.getItem("user");
-    // if(localStorage.getItem("user")){
-    //   this.user = JSON.parse(USER ? USER: '');
-    // }
-    // // console.log(this.user);
-
-    // this.loginForm = this.fb.group({
-    //   email: [ localStorage.getItem('email') || '', [Validators.required, Validators.email] ],
-    //   password: ['', Validators.required],
-    //   remember: [false]
-
-    // });
     this.getLocalStorage();
   }
 
   getLocalStorage() {
-    if (localStorage.getItem('token') && localStorage.getItem('user')) {
-      const USER = localStorage.getItem('user');
-      this.user = JSON.parse(USER ? USER : '');
-      console.log(this.user);
-      this.getuserRol();
-      // this.getuserPermisos();
-    } else {
+    if (!this.auth.user) {
       this.user = null;
+      return;
     }
+    this.user = this.auth.user as AppUser;
+    this.getUserRol();
+    // this.getuserPermisos();
   }
-
 
   loginFormSubmit() {
     if (this.form.valid) {
       this.ERROR = false;
-      this.auth.login(this.form.value.email ? this.form.value.email : '', this.form.value.password ? this.form.value.password : '')
-        .subscribe((resp: any) => {
-          // console.log(resp);
+      this.auth
+        .login(
+          this.form.value.email ? this.form.value.email : '',
+          this.form.value.password ? this.form.value.password : ''
+        )
+        .subscribe(
+          (resp: any) => {
+            // console.log(resp);
 
-          if (resp === true) {
-            // EL LOGIN ES EXITOSO
+            if (resp === true) {
+              // EL LOGIN ES EXITOSO
 
-            setTimeout(() => {
-              this.getLocalStorage();
-              // this.router.navigate([routes.adminDashboard]);
-            }, 50);
-          } else {
-            // EL LOGIN NO ES EXITOSO
-            this.ERROR = true;
+              setTimeout(() => {
+                this.getLocalStorage();
+                // this.router.navigate([routes.adminDashboard]);
+              }, 50);
+            } else {
+              // EL LOGIN NO ES EXITOSO
+              this.ERROR = true;
+            }
+          },
+          (error) => {
+            console.log(error);
           }
-        }, error => {
-          console.log(error);
-        })
-        ;
+        );
     }
   }
 
-  getuserRol() {
+  getUserRol() {
+    const mainRole = this.user?.roles?.[0];
+    if (!mainRole) {
+      return;
+    }
 
-    if (this.user.roles[0] == 'SUPERADMIN') {
-      this.router.navigate([routes.adminDashboard]);
-    }
-    // solo tiene una locacion pero se comporta como superadmin
-    if (this.user.roles[0] == 'MANAGER') {
-      // this.router.navigate([routes.adminDashboard]);
-      this.router.navigate(['location/view/', this.user.location_id]);
-    }
-    //roles secundarios son multilocation
-    if (this.user.roles[0] == 'BCBA') {
-      this.router.navigate(['doctors/profile/', this.user.id]);
-    }
-    if (this.user.roles[0] == 'RBT') {
-      this.router.navigate(['doctors/profile/', this.user.id]);
+    switch (mainRole) {
+      case 'SUPERADMIN':
+        this.router.navigate([AppRoutes.adminDashboard]);
+        break;
+      // solo tiene una locacion pero se comporta como superadmin
+      case 'MANAGER':
+        // this.router.navigate([routes.adminDashboard]);
+        this.router.navigate(['location/view/', this.user.location_id]);
+        break;
+      //roles secundarios son multilocation
+      case 'BCBA':
+        this.router.navigate(['doctors/profile/', this.user.id]);
+        break;
+      case 'RBT':
+        this.router.navigate(['doctors/profile/', this.user.id]);
+        break;
+      default:
+        break;
     }
   }
 
-  getuserPermisos() {
-    if (this.user.permissions === 'admin_dashboard') {
-      this.router.navigate([routes.adminDashboard]);
+  getUserPermisos() {
+    if (this.user.permissions[0] === 'admin_dashboard') {
+      this.router.navigate([AppRoutes.adminDashboard]);
     }
-    if (this.user.permissions === "doctor_dashboard") {
-      this.router.navigate([routes.doctorDashboard]);
-    } if (this.user.permissions === 'patient_dashboard') {
-      this.router.navigate([routes.patientDashboard]);
+    if (this.user.permissions[0] === 'doctor_dashboard') {
+      this.router.navigate([AppRoutes.doctorDashboard]);
+    }
+    if (this.user.permissions[0] === 'patient_dashboard') {
+      this.router.navigate([AppRoutes.patientDashboard]);
     }
   }
-
 
   loginFormSubmit2() {
-
-    this.auth.login(this.form.value.email ? this.form.value.email : '',
-      this.form.value.password ? this.form.value.password : '').subscribe(
+    this.auth
+      .login(
+        this.form.value.email ? this.form.value.email : '',
+        this.form.value.password ? this.form.value.password : ''
+      )
+      .subscribe(
         (resp: any) => {
           this.user = resp;
           console.log(this.user);
           if (resp) {
-            if (this.user.roles === 'DORCTOR') {
-              this.router.navigate([routes.doctorDashboard]);
-            } if (this.user.roles === 'SUPERADMIN') {
-              this.router.navigate([routes.adminDashboard]);
+            if (this.user.roles[0] === 'DOCTOR') {
+              this.router.navigate([AppRoutes.doctorDashboard]);
             }
-
+            if (this.user.roles[0] === 'SUPERADMIN') {
+              this.router.navigate([AppRoutes.adminDashboard]);
+            }
           } else {
-
-            this.router.navigate([routes.adminDashboard]);
+            this.router.navigate([AppRoutes.adminDashboard]);
           }
           // if(this.loginForm.get('remember').value){
           //   localStorage.setItem('email', this.loginForm.get('email').value);
@@ -164,13 +145,14 @@ export class LoginComponent implements OnInit {
           //   localStorage.removeItem('email');
           // }
           // this.router.navigateByUrl('/dashboard');
-        }, (error) => {
+        },
+        (error) => {
           // Swal.fire('Error', error.error.msg, 'error');
           this.errors = error.error;
         }
-      )
-
+      );
   }
+
   togglePassword() {
     this.passwordClass = !this.passwordClass;
   }

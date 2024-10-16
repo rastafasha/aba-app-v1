@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { routes } from 'src/app/shared/routes/routes';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 import { Location } from '@angular/common';
 import { url_media } from 'src/app/config/config';
 import { MatTableDataSource } from '@angular/material/table';
@@ -12,154 +12,142 @@ import { LocationService } from '../../services/location.service';
 @Component({
   selector: 'app-specialist-location',
   templateUrl: './specialist-location.component.html',
-  styleUrls: ['./specialist-location.component.scss']
+  styleUrls: ['./specialist-location.component.scss'],
 })
 export class SpecialistLocationComponent {
+  @Input() locationId: any;
 
-  @Input() locationId:any;
-  
-  public routes = routes;
-  public selectedValue!: string;
-  option_selected:number = 1;
-  
+  routes = AppRoutes;
+  selectedValue!: string;
+  option_selected = 1;
+
   dataSource!: MatTableDataSource<any>;
 
-  public showFilter = false;
-  public searchDataValue = '';
-  public lastIndex = 0;
-  public pageSize = 10;
-  public totalDatapatient = 0;
-  public totalDatadoctor = 0;
-  public skip = 0;
-  public limit: number = this.pageSize;
-  public pageIndex = 0;
-  public serialNumberArray: Array<number> = [];
-  public currentPage = 1;
-  public pageNumberArray: Array<number> = [];
-  public pageSelection: Array<any> = [];
-  public totalPages = 0;
+  showFilter = false;
+  searchDataValue = '';
+  lastIndex = 0;
+  pageSize = 10;
+  totalDatapatient = 0;
+  totalDatadoctor = 0;
+  skip = 0;
+  limit = this.pageSize;
+  pageIndex = 0;
+  serialNumberArray: Array<number> = [];
+  currentPage = 1;
+  pageNumberArray: Array<number> = [];
+  pageSelection: Array<any> = [];
+  totalPages = 0;
 
-  public title: string = '';
+  title = '';
 
-  public  URLMedia = `${url_media}`;
-  public services:any = [];
-  public patients:any = [];
-  public specialists:any = [];
-  public location_info: any;
+  URLMedia = `${url_media}`;
+  services: any = [];
+  patients: any = [];
+  specialists: any = [];
+  location_info: any;
 
-  public code: any;
-  public provider: any;
-  public description: any;
-  public unit_prize: any;
-  public hourly_fee: any;
-  public max_allowed: any;
+  code: any;
+  provider: any;
+  description: any;
+  unit_prize: any;
+  hourly_fee: any;
+  max_allowed: any;
 
-  public location_id: any;
-  public location_iddd: any;
-  public user: any;
-  public roles:any = [];
-  public location_selected: any;
-  
-  public patient_generals:any = [];
+  location_id: any;
+  location_iddd: any;
+  user: any;
+  roles: any = [];
+  location_selected: any;
 
-  valid_form:boolean = false;
-  valid_form_success:boolean = false;
+  patient_generals: any = [];
 
-  public text_success:string = '';
-  public text_validation:string = '';
+  valid_form = false;
+  valid_form_success = false;
 
-  public patientList: any = [];
-  public specialistList: any = [];
-  public patientid: any ;
-  public patient_id: any ;
-  public doctor_generals: any ;
-  public doctor_id: any ;
-  search:any= null;
-  status:any= null;
+  text_success = '';
+  text_validation = '';
 
-  
+  patientList: any = [];
+  specialistList: any = [];
+  patientid: any;
+  patient_id: any;
+  doctor_generals: any;
+  doctor_id: any;
+  search: any = null;
+  status: any = null;
+
   constructor(
-    public doctorService:DoctorService,
-    public locationService:LocationService,
+    public doctorService: DoctorService,
+    public locationService: LocationService,
     public router: Router,
     public activatedRoute: ActivatedRoute,
     private location: Location,
-    public patientService: PatientMService,
-    
-  ){
-
-  }
+    public patientService: PatientMService
+  ) {}
 
   ngOnInit(): void {
     this.locationId;
     window.scrollTo(0, 0);
-    let USER = localStorage.getItem("user");
-    this.user = JSON.parse(USER ? USER: '');
+    const USER = localStorage.getItem('user');
+    this.user = JSON.parse(USER ? USER : '');
     this.roles = this.user.roles[0];
 
     this.doctorService.closeMenuSidebar();
 
-    this.activatedRoute.params.subscribe((resp:any)=>{
+    this.activatedRoute.params.subscribe((resp: any) => {
       this.location_id = resp.id;
       console.log(resp);
     });
 
-
     this.getLocation();
   }
 
-  isPermission(permission:string){
-    if(this.user.roles.includes('SUPERADMIN')){
+  isPermission(permission: string) {
+    if (this.user.roles.includes('SUPERADMIN')) {
       return true;
     }
-    if(this.user.permissions.includes(permission)){
+    if (this.user.permissions.includes(permission)) {
       return true;
     }
     return false;
   }
 
-
-  optionSelected(value:number){
+  optionSelected(value: number) {
     this.option_selected = value;
   }
-  
-  getLocation(){
-    this.locationService.getLocation(this.location_id).subscribe((resp:any)=>{
-      console.log(resp);
-      this.location_selected = resp.location;
 
-      this.location_info= this.location_selected.location;
-      // this.title= this.location_selected.location.title;
-      this.patients = resp.patients;
-      this.specialists = resp.specialists;
+  getLocation() {
+    this.locationService
+      .getLocation(this.location_id)
+      .subscribe((resp: any) => {
+        console.log(resp);
+        this.location_selected = resp.location;
 
-      this.totalDatapatient = resp.specialists.length;
+        this.location_info = this.location_selected.location;
+        // this.title= this.location_selected.location.title;
+        this.patients = resp.patients;
+        this.specialists = resp.specialists;
 
-      
+        this.totalDatapatient = resp.specialists.length;
 
-      this.doctorService.listDoctors().subscribe((resp:any)=>{
-      
-        // console.log(resp);
-  
-        this.totalDatadoctor = resp.users.data.length;
-        this.doctor_generals = resp.users.data;
-        this.doctor_id = resp.users.id;
-        this.getTableDataGeneralSpecialist();
-      })
+        this.doctorService.listDoctors().subscribe((resp: any) => {
+          // console.log(resp);
 
-    })
+          this.totalDatadoctor = resp.users.data.length;
+          this.doctor_generals = resp.users.data;
+          this.doctor_id = resp.users.id;
+          this.getTableDataGeneralSpecialist();
+        });
+      });
   }
 
-
-  
-  getTableDataGeneralSpecialist(){
+  getTableDataGeneralSpecialist() {
     this.specialistList = [];
     this.serialNumberArray = [];
-    
+
     this.doctor_generals.map((res: any, index: number) => {
       const serialNumber = index + 1;
       if (index >= this.skip && serialNumber <= this.limit) {
-       
         this.specialistList.push(res);
         this.serialNumberArray.push(serialNumber);
       }
@@ -167,7 +155,6 @@ export class SpecialistLocationComponent {
     this.dataSource = new MatTableDataSource<any>(this.specialistList);
     this.calculateTotalPages(this.totalDatadoctor, this.pageSize);
   }
-
 
   public getMoreData(event: string): void {
     if (event == 'next') {
@@ -206,7 +193,10 @@ export class SpecialistLocationComponent {
     this.searchDataValue = '';
   }
 
-  private calculateTotalPages(totalDatapatient: number, pageSize: number): void {
+  private calculateTotalPages(
+    totalDatapatient: number,
+    pageSize: number
+  ): void {
     this.pageNumberArray = [];
     this.totalPages = totalDatapatient / pageSize;
     if (this.totalPages % 1 != 0) {
@@ -221,27 +211,29 @@ export class SpecialistLocationComponent {
     }
   }
 
-
-
   goBack() {
     this.location.back(); // <-- go back to previous location on cancel
   }
 
-  public searchDataDoct(value: any): void {debugger
+  public searchDataDoct(value: any): void {
     this.dataSource.filter = value.trim().toLowerCase();
     this.specialistList = this.dataSource.filteredData;
   }
 
-  cambiarStatusDoctor(specialist:any){
-    let VALUE = specialist.status;
+  cambiarStatusDoctor(specialist: any) {
+    const VALUE = specialist.status;
     console.log(VALUE);
-    
-    this.doctorService.updateStatus(specialist, specialist.id).subscribe(
-      resp =>{
+
+    this.doctorService
+      .updateStatus(specialist, specialist.id)
+      .subscribe((resp) => {
         // console.log(resp);
-        Swal.fire('Updated', `Employee Status Updated successfully!`, 'success');
+        Swal.fire(
+          'Updated',
+          `Employee Status Updated successfully!`,
+          'success'
+        );
         this.getLocation();
-      }
-    )
+      });
   }
 }
