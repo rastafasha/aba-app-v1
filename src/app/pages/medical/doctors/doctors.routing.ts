@@ -21,11 +21,11 @@ const routes: Routes = [
         component: ListDoctorComponent,
       },
       {
-        path: lastRoutes(AppRoutes.doctors.list, 2, '/:id'),
+        path: lastRoutes(AppRoutes.doctors.listEdit, 2, '/:id'),
         component: EditDoctorComponent,
       },
       {
-        path: lastRoutes(AppRoutes.doctors.profile, 2, '/:id'),
+        path: lastRoutes(AppRoutes.doctors.profile, 1, '/:id'),
         component: ProfileDoctorComponent,
       },
     ],

@@ -11,6 +11,7 @@ import { NoteBcbaService } from '../../notes-bcba/services/note-bcba.service';
 import { NoteRbtService } from '../../notes/services/note-rbt.service';
 import { ClientReportModel } from '../client-report.model';
 import { ClientReportService } from '../client-report.service';
+import { AppUser } from 'src/app/shared/models/users.models';
 
 export interface InsuranceCptPrizeResponse {
   unit_prize: number;
@@ -38,11 +39,11 @@ export class ReportByClientComponent {
   billing_selected: any;
   sponsor_id: any;
   noterbt_id: any;
-  user: any;
+  user: AppUser;
 
   clientReport: ClientReportModel;
 
-  clientReportList: any[] = [];
+  clientReportList = [];
   clientReport_generals: any = {};
   dataSource!: MatTableDataSource<any>;
   showFilter = false;
@@ -56,29 +57,29 @@ export class ReportByClientComponent {
   serialNumberArray: number[] = [];
   currentPage = 1;
   pageNumberArray: number[] = [];
-  pageSelection: any[] = [];
+  pageSelection = [];
   totalPages = 0;
   text_validation: any;
 
-  roles: any[] = [];
-  permissions: any[] = [];
+  roles = [];
+  permissions = [];
   patientID: any;
   patientId: any;
 
   pa_assessments: any = null;
-  pa_assessmentsgroup: any[] = [];
+  pa_assessmentsgroup = [];
   cpt: any;
   n_units: any;
   pa_number: any;
-  insurances: any[] = [];
+  insurances = [];
   insurance_id: any;
   insuranceiddd: any;
   insurer_name: any;
-  sponsors: any[] = [];
-  modifiers: any[] = [];
+  sponsors = [];
+  modifiers = [];
   noteRbt: any = null;
-  pos_covered: any[] = [];
-  pa_assessmentgroup: any[] = [];
+  pos_covered = [];
+  pa_assessmentgroup = [];
   noteBcba: any = null;
   patient: any;
 
@@ -166,7 +167,7 @@ export class ReportByClientComponent {
   ) {}
 
   ngOnInit(): void {
-    // window.scrollTo(0, 0);
+    //
     this.ativatedRoute.params.subscribe((resp: any) => {
       this.patient_id = resp.patient_id;
       this.patientId = resp.patient_id;
@@ -180,7 +181,7 @@ export class ReportByClientComponent {
     this.paybcba = false;
 
     this.doctorService.getUserRoles();
-    this.user = this.authService.user;
+    this.user = this.authService.user as AppUser;
     this.getTableData();
   }
 
@@ -584,13 +585,13 @@ export class ReportByClientComponent {
   }
 
   getMoreData(event: string): void {
-    if (event == 'next') {
+    if (event === 'next') {
       this.currentPage++;
       this.pageIndex = this.currentPage - 1;
       this.limit += this.pageSize;
       this.skip = this.pageSize * this.pageIndex;
       this.getTableDataGeneral();
-    } else if (event == 'previous') {
+    } else if (event === 'previous') {
       this.currentPage--;
       this.pageIndex = this.currentPage - 1;
       this.limit -= this.pageSize;
@@ -628,7 +629,7 @@ export class ReportByClientComponent {
   ): void {
     // this.pageNumberArray = [];
     this.totalPages = totalDatapatient / pageSize;
-    if (this.totalPages % 1 != 0) {
+    if (this.totalPages % 1 !== 0) {
       this.totalPages = Math.trunc(this.totalPages + 1);
     }
     /* eslint no-var: off */

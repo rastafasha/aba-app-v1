@@ -96,12 +96,12 @@ const routes: Routes = [
           import('./settings/settings.module').then((m) => m.SettingsModule),
       },
       {
-        path: lastRoutes(AppRoutes.profile),
+        path: lastRoutes(AppRoutes.profile.profile),
         loadChildren: () =>
           import('./profile/profile.module').then((m) => m.ProfileModule),
       },
       {
-        path: lastRoutes(AppRoutes.editProfile),
+        path: lastRoutes(AppRoutes.profile.edit),
         loadChildren: () =>
           import('./edit-profile/edit-profile.module').then(
             (m) => m.EditProfileModule

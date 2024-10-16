@@ -8,6 +8,8 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 import { environment } from 'src/environments/environment';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { BipService } from '../service/bip.service';
+import { AppUser } from 'src/app/shared/models/users.models';
+import { PageService } from 'src/app/shared/services/pages.service';
 
 @Component({
   selector: 'app-bip-profile',
@@ -18,37 +20,37 @@ export class BipProfileComponent {
   routes = AppRoutes;
   @ViewChild('contentToConvert') contentToConvert!: ElementRef;
   patientProfile: any[];
-  option_selected: number = 1;
+  option_selected = 1;
   patient_id: any;
 
-  num_appointment: number = 0;
-  money_of_appointments: number = 0;
-  num_appointment_pendings: number = 0;
-  appointment_pendings: any[] = [];
-  appointments: any[] = [];
+  num_appointment = 0;
+  money_of_appointments = 0;
+  num_appointment_pendings = 0;
+  appointment_pendings = [];
+  appointments = [];
   pa_assessments: string;
 
-  type_of_assessment: any[] = [];
-  background_information: any[] = [];
-  previus_treatment_and_result: any[] = [];
-  current_treatment_and_progress: any[] = [];
-  education_status: any[] = [];
-  phisical_and_medical_status: any[] = [];
-  assestment_conducted: any[] = [];
-  documents: any[] = [];
-  maladaptives: any[] = [];
-  maladaptive_behavior: any[] = [];
-  assesstments: any[] = [];
-  assesstmentsDocuments: any[] = [];
-  prevalent_setting_event_and_atecedents: any[] = [];
+  type_of_assessment = [];
+  background_information = [];
+  previus_treatment_and_result = [];
+  current_treatment_and_progress = [];
+  education_status = [];
+  phisical_and_medical_status = [];
+  assestment_conducted = [];
+  documents = [];
+  maladaptives = [];
+  maladaptive_behavior = [];
+  assesstments = [];
+  assesstmentsDocuments = [];
+  prevalent_setting_event_and_atecedents = [];
   interventions: any;
 
   bip_selected: any = {};
   patient_selected: any = {};
-  reduction_goals: any[] = [];
-  reduction_goals_goalltos: any[] = [];
+  reduction_goals = [];
+  reduction_goals_goalltos = [];
   reduction_goals_goalstos: string;
-  sustitution_goal: any[] = [];
+  sustitution_goal = [];
   sustitution_goal_ltos: string;
   sustitution_goal_stos: string;
   family_envolment: string;
@@ -58,16 +60,16 @@ export class BipProfileComponent {
   transition_fading_plans: string;
   de_escalation_techniques: string;
   analyst_signature: any = '';
-  analyst_signature_date: string = '';
+  analyst_signature_date = '';
   parent_guardian_signature: any = '';
-  parent_guardian_signature_date: string = '';
+  parent_guardian_signature_date = '';
 
-  caregiver_requirements_for_prevention_of_crisis: string = '';
-  crisis_description: string = '';
-  crisis_note: string = '';
+  caregiver_requirements_for_prevention_of_crisis = '';
+  crisis_description = '';
+  crisis_note = '';
 
-  text_success: string = '';
-  text_validation: string = '';
+  text_success = '';
+  text_validation = '';
 
   crisis_plan: string;
   risk_added: string;
@@ -102,40 +104,39 @@ export class BipProfileComponent {
   plan_homicidality: any;
   means_homicidality: any;
   prior_attempt_homicidality: any;
-  user: any;
+  user: AppUser;
   patientId: any;
-  roles: any[] = [];
-  permissions: any[] = [];
+  roles = [];
+  permissions = [];
   preescribing_physician: any;
   phiysical_and_medical: any;
-  phiysical_and_medical_status: any[] = [];
-  hypothesis_based_intervention: any[] = [];
-  assestmentEvaluationSettings: any[] = [];
+  phiysical_and_medical_status = [];
+  hypothesis_based_intervention = [];
+  assestmentEvaluationSettings = [];
 
-  accesstoTangibles: any[] = [];
-  accesstoAttention: any[] = [];
-  accesstoEscape: any[] = [];
-  accesstoSensory: any[] = [];
+  accesstoTangibles = [];
+  accesstoAttention = [];
+  accesstoEscape = [];
+  accesstoSensory = [];
 
   imagenSerUrl = environment.url_media;
 
   constructor(
     private bipService: BipService,
     private activatedRoute: ActivatedRoute,
-    private doctorService: DoctorService,
+    private pageService: PageService,
     private authService: AuthService,
     private location: Location
   ) {}
   ngOnInit(): void {
-    window.scrollTo(0, 0);
-    this.doctorService.closeMenuSidebar();
+    this.pageService.onInitPage();
     // this.doctorService.getUserRoles();
     this.activatedRoute.params.subscribe((resp: any) => {
       this.patient_id = resp.patient_id;
       console.log(this.patient_id);
       this.getPatient();
     });
-    this.user = this.authService.user;
+    this.user = this.authService.user as AppUser;
   }
 
   goBack() {
@@ -260,35 +261,35 @@ export class BipProfileComponent {
         this.crisis_plan = this.bip_selected.crisis_plan[0];
         this.risk_factors = this.bip_selected.crisis_plan[0].risk_factors;
 
-        let jsonObj = JSON.parse(this.reduction_goals_goalstos) || '';
+        const jsonObj = JSON.parse(this.reduction_goals_goalstos) || '';
         this.reduction_goals_goalstos = jsonObj;
         // console.log(this.reduction_goals_goalstos);
 
-        let jsonObj1 = JSON.parse(this.sustitution_goal_stos) || '';
+        const jsonObj1 = JSON.parse(this.sustitution_goal_stos) || '';
         this.sustitution_goal_stos = jsonObj1;
         // console.log(this.sustitution_goal_stos);
 
-        let jsonObj2 = JSON.parse(this.sustitution_goal_ltos) || '';
+        const jsonObj2 = JSON.parse(this.sustitution_goal_ltos) || '';
         this.sustitution_goal_ltos = jsonObj2;
         // console.log(this.sustitution_goal_ltos);
 
-        let jsonObj3 = JSON.parse(this.family_envolment) || '';
+        const jsonObj3 = JSON.parse(this.family_envolment) || '';
         this.family_envolment = jsonObj3;
         // console.log(this.family_envolment);
 
-        let jsonObj4 = JSON.parse(this.monitoring_evalutating_goals) || '';
+        const jsonObj4 = JSON.parse(this.monitoring_evalutating_goals) || '';
         this.monitoring_evalutating_goals = jsonObj4;
         // console.log(this.monitoring_evalutating_goals);
 
-        let jsonObj5 = JSON.parse(this.transition_fading_plans) || '';
+        const jsonObj5 = JSON.parse(this.transition_fading_plans) || '';
         this.transition_fading_plans = jsonObj5;
         // console.log(this.transition_fading_plans);
 
-        let jsonObj6 = JSON.parse(this.de_escalation_techniques) || '';
+        const jsonObj6 = JSON.parse(this.de_escalation_techniques) || '';
         this.de_escalation_techniques = jsonObj6;
         // console.log(this.transition_fading_plans);
 
-        let jsonObj7 = JSON.parse(this.risk_factors) || '';
+        const jsonObj7 = JSON.parse(this.risk_factors) || '';
         this.risk_factors = jsonObj7;
         // console.log(this.risk_factors);
 
@@ -319,7 +320,7 @@ export class BipProfileComponent {
           this.risk_factors[0].prior_psychiatric_inpatient_admission;
 
         this.suicidality_added = resp.bip.crisis_plan[0].suicidalities;
-        let jsonObj8 = JSON.parse(this.suicidality_added) || '';
+        const jsonObj8 = JSON.parse(this.suicidality_added) || '';
         this.suicidality_added = jsonObj8;
         // console.log(this.suicidality_added);
 
@@ -330,7 +331,7 @@ export class BipProfileComponent {
         this.prior_attempt = this.suicidality_added[0].prior_attempt;
 
         this.homicidality_added = resp.bip.crisis_plan[0].homicidalities;
-        let jsonObj9 = JSON.parse(this.homicidality_added) || '';
+        const jsonObj9 = JSON.parse(this.homicidality_added) || '';
         this.homicidality_added = jsonObj9;
         // console.log(this.homicidality_added);
 

@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
 import { GoalFamilyEnvolmentService } from '../../service/goal-family-envolment.service';
 import { DeEscalationTechniqueService } from '../../service/de-escalation-technique.service';
+import { AppUser } from 'src/app/shared/models/users.models';
 
 @Component({
   selector: 'app-de-escalation-tecniques',
@@ -12,8 +13,8 @@ import { DeEscalationTechniqueService } from '../../service/de-escalation-techni
 })
 export class DeEscalationTecniquesComponent {
   valid_form_success = false;
-  text_validation: string = '';
-  text_success: string = '';
+  text_validation = '';
+  text_success = '';
 
   description: any;
   service_recomendation: any;
@@ -24,12 +25,12 @@ export class DeEscalationTecniquesComponent {
   breakdown_per_week: any;
   location: any;
 
-  caregivers_training_goals: any[] = [];
-  deEscalationopts: any[] = [];
-  escalation_edit: any[] = [];
+  caregivers_training_goals = [];
+  deEscalationopts = [];
+  escalation_edit = [];
 
   client_id: any;
-  user: any;
+  user: AppUser;
   doctor_id: any;
   client_selected: any;
   patient_id: any;
@@ -52,7 +53,7 @@ export class DeEscalationTecniquesComponent {
   ) {}
 
   ngOnInit(): void {
-    // window.scrollTo(0, 0);//inicia la vista siempre desde arriba
+    // //inicia la vista siempre desde arriba
 
     //me subcribo al id recibido por el parametro de la url
     this.ativatedRoute.params.subscribe((resp: any) => {
@@ -191,7 +192,7 @@ export class DeEscalationTecniquesComponent {
       return;
     }
 
-    let data = {
+    const data = {
       id: this.deEscalalationsTechid,
       bip_id: this.bip_selectedIdd,
       patient_id: this.patient_id,
@@ -235,7 +236,7 @@ export class DeEscalationTecniquesComponent {
     this.location_edit = escalation;
     // console.log(this.location_edit.location);
 
-    let data = {
+    const data = {
       recomendation_lists: this.deEscalationopts,
     };
 

@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
 import { GoalFamilyEnvolmentService } from '../../service/goal-family-envolment.service';
+import { AppUser } from 'src/app/shared/models/users.models';
 
 @Component({
   selector: 'app-family-involvement-goal-form',
@@ -11,8 +12,8 @@ import { GoalFamilyEnvolmentService } from '../../service/goal-family-envolment.
 })
 export class FamilyInvolvementGoalFormComponent {
   valid_form_success = false;
-  text_validation: string = '';
-  text_success: string = '';
+  text_validation = '';
+  text_success = '';
 
   caregiver_goal: any;
   outcome_measure: any;
@@ -20,12 +21,12 @@ export class FamilyInvolvementGoalFormComponent {
   initiation: Date;
   end_date: Date;
   current_status: any;
-  caregivers_training_goals: any[] = [];
-  caregivers: any[] = [];
-  family_edit: any[] = [];
+  caregivers_training_goals = [];
+  caregivers = [];
+  family_edit = [];
 
   client_id: any;
-  user: any;
+  user: AppUser;
   doctor_id: any;
   client_selected: any;
   patient_id: any;
@@ -34,13 +35,13 @@ export class FamilyInvolvementGoalFormComponent {
   bip_selectedIdd: any;
   maladaptives: any;
 
-  maladaptive_edit: any[] = [];
+  maladaptive_edit = [];
 
   goalFamilyEnvolments: any;
   client_id_goalFamilyEnvolments: any;
   goalFamilyEnvolmentid: any;
   goalFamilyid: any;
-  selectedCaregiver: any[] = [];
+  selectedCaregiver = [];
 
   constructor(
     private bipService: BipService,
@@ -49,7 +50,7 @@ export class FamilyInvolvementGoalFormComponent {
   ) {}
 
   ngOnInit(): void {
-    // window.scrollTo(0, 0);//inicia la vista siempre desde arriba
+    // //inicia la vista siempre desde arriba
 
     //me subcribo al id recibido por el parametro de la url
     this.ativatedRoute.params.subscribe((resp: any) => {
@@ -204,7 +205,7 @@ export class FamilyInvolvementGoalFormComponent {
     //   return;
     // }
 
-    let data = {
+    const data = {
       id: this.goalFamilyEnvolmentid,
       bip_id: this.bip_selectedIdd,
       patient_id: this.patient_id,

@@ -2,68 +2,22 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import {
-  ApexAxisChartSeries,
-  ApexChart,
-  ApexDataLabels,
-  ApexFill,
-  ApexGrid,
-  ApexLegend,
-  ApexMarkers,
-  ApexPlotOptions,
-  ApexResponsive,
-  ApexStroke,
-  ApexTitleSubtitle,
-  ApexTooltip,
-  ApexXAxis,
-  ApexYAxis,
-  ChartComponent,
-} from 'ng-apexcharts';
+import { ChartComponent } from 'ng-apexcharts';
 import { DataService } from 'src/app/shared/data/data.service';
 import {
-  apiResultFormat,
-  pageSelection,
-  patientDashboard,
+  ChartData,
+  ChartOptions,
+} from 'src/app/shared/models/chart-options.model';
+import {
+  ApiResultFormat,
+  PageSelection,
+  PatientDashboard,
 } from 'src/app/shared/models/models';
+import { AppUser } from 'src/app/shared/models/users.models';
 import { AppRoutes } from 'src/app/shared/routes/routes';
-import { DoctorService } from '../../medical/doctors/service/doctor.service';
+import { PageService } from 'src/app/shared/services/pages.service';
 import { DashboardService } from '../service/dashboard.service';
-interface data {
-  value: string;
-}
-export type ChartOptions = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  series: ApexAxisChartSeries | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  chart: ApexChart | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  xaxis: ApexXAxis | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  dataLabels: ApexDataLabels | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  grid: ApexGrid | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  fill: ApexFill | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  markers: ApexMarkers | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  yaxis: ApexYAxis | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  stroke: ApexStroke | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  title: ApexTitleSubtitle | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  labels: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  responsive: ApexResponsive[] | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  plotOptions: ApexPlotOptions | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  tooltip: ApexTooltip | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  legend: ApexLegend | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-};
+
 @Component({
   selector: 'app-patient-dashboard',
   templateUrl: './patient-dashboard.component.html',
@@ -78,9 +32,9 @@ export class PatientDashboardComponent implements OnInit {
   chartOptionsFour: Partial<ChartOptions>;
   chartOptionsFive: Partial<ChartOptions>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  carousel1: any[] = [];
+  carousel1 = [];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  carousel2: any[] = [];
+  carousel2 = [];
   selected!: Date | null;
   selectedValue!: string;
   slideConfig = {
@@ -90,8 +44,8 @@ export class PatientDashboardComponent implements OnInit {
     centerPadding: '30px',
   };
 
-  patientDashboard: Array<patientDashboard> = [];
-  dataSource!: MatTableDataSource<patientDashboard>;
+  patientDashboard: PatientDashboard[] = [];
+  dataSource!: MatTableDataSource<PatientDashboard>;
 
   showFilter = false;
   searchDataValue = '';
@@ -99,51 +53,51 @@ export class PatientDashboardComponent implements OnInit {
   pageSize = 10;
   totalData = 0;
   skip = 0;
-  limit: number = this.pageSize;
+  limit = this.pageSize;
   pageIndex = 0;
-  serialNumberArray: Array<number> = [];
+  serialNumberArray: number[] = [];
   currentPage = 1;
-  pageNumberArray: Array<number> = [];
-  pageSelection: Array<pageSelection> = [];
+  pageNumberArray: number[] = [];
+  pageSelection: PageSelection[] = [];
   totalPages = 0;
 
   patientProfile: any[];
-  option_selected: number = 1;
+  option_selected = 1;
   patient_id: any;
 
-  doctors: any[] = [];
+  doctors = [];
   doctor_id: any;
 
-  appointments: any[] = [];
-  num_appointments_current: number = 0;
-  num_appointments_before: number = 0;
-  porcentaje_d: number = 0;
-  num_appointments_attention_current: number = 0;
-  num_appointments_attention_before: number = 0;
-  porcentaje_da: number = 0;
-  num_appointments_total_pay_current: number = 0;
-  num_appointments_total_pay_before: number = 0;
-  porcentaje_dtp: number = 0;
-  num_appointments_total_pending_current: number = 0;
-  num_appointments_total_pending_before: number = 0;
-  porcentaje_dtpn: number = 0;
+  appointments = [];
+  num_appointments_current = 0;
+  num_appointments_before = 0;
+  porcentaje_d = 0;
+  num_appointments_attention_current = 0;
+  num_appointments_attention_before = 0;
+  porcentaje_da = 0;
+  num_appointments_total_pay_current = 0;
+  num_appointments_total_pay_before = 0;
+  porcentaje_dtp = 0;
+  num_appointments_total_pending_current = 0;
+  num_appointments_total_pending_before = 0;
+  porcentaje_dtpn = 0;
 
-  query_income_year: any[] = [];
-  query_patient_by_genders: any[] = [];
-  query_n_appointment_year: any[] = [];
-  query_n_appointment_year_before: any[] = [];
+  query_income_year = [];
+  query_patient_by_genders = [];
+  query_n_appointment_year = [];
+  query_n_appointment_year_before = [];
 
-  user: any;
-  patients: any[] = [];
+  user: AppUser;
+  patients = [];
 
-  text_success: string = '';
-  text_validation: string = '';
+  text_success = '';
+  text_validation = '';
 
   constructor(
     private data: DataService,
     private dashboardService: DashboardService,
     private activatedRoute: ActivatedRoute,
-    private doctorService: DoctorService
+    private pageService: PageService
   ) {
     this.carousel1 = this.data.carousel1;
     this.carousel2 = this.data.carousel2;
@@ -398,15 +352,14 @@ export class PatientDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.doctorService.closeMenuSidebar();
+    this.pageService.onInitPage();
     this.getTableData();
     const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
 
-    window.scrollTo(0, 0);
-    this.activatedRoute.params.subscribe((resp: any) => {
+    this.activatedRoute.params.subscribe((resp) => {
       // console.log(resp);
-      this.patient_id = resp.id;
+      this.patient_id = resp['id'];
     });
     // this.getPatient();
     this.getPatients();
@@ -421,17 +374,17 @@ export class PatientDashboardComponent implements OnInit {
   }
 
   getPatients() {
-    this.dashboardService.getConfigDashboardPatient().subscribe((resp: any) => {
+    this.dashboardService.getConfigDashboardPatient().subscribe((resp) => {
       console.log(resp);
       this.patients = resp.patients;
     });
   }
 
   dashboardDoctor() {
-    let data = {
+    const data = {
       doctor_id: this.doctor_id,
     };
-    this.dashboardService.dashboardDoctor(data).subscribe((resp: any) => {
+    this.dashboardService.dashboardDoctor(data).subscribe((resp) => {
       // console.log(resp);
 
       this.appointments = resp.appointments.data;
@@ -460,20 +413,20 @@ export class PatientDashboardComponent implements OnInit {
     });
   }
   dashboardDoctorYear() {
-    let data = {
+    const data = {
       year: this.selectedValue,
       doctor_id: this.doctor_id,
     };
     this.query_income_year = null;
     this.query_n_appointment_year = null;
     this.query_n_appointment_year_before = null;
-    this.dashboardService.dashboardDoctorYear(data).subscribe((resp: any) => {
+    this.dashboardService.dashboardDoctorYear(data).subscribe((resp) => {
       // console.log(resp);
 
       //start
       this.query_income_year = resp.query_income_year;
-      let data_income: any[] = [];
-      this.query_income_year.forEach((element: any) => {
+      const data_income = [];
+      this.query_income_year.forEach((element) => {
         data_income.push(element.income);
       });
 
@@ -528,9 +481,9 @@ export class PatientDashboardComponent implements OnInit {
 
       //start
       this.query_patient_by_genders = resp.query_patients_by_gender;
-      let data_by_gender: any[] = [];
+      const data_by_gender = [];
 
-      this.query_patient_by_genders.forEach((item: any) => {
+      this.query_patient_by_genders.forEach((item) => {
         data_by_gender.push(parseInt(item.hombre));
         data_by_gender.push(parseInt(item.mujer));
       });
@@ -542,11 +495,11 @@ export class PatientDashboardComponent implements OnInit {
       this.query_n_appointment_year_before =
         resp.query_n_appointment_year_before;
 
-      let n_appointment_year: any[] = [];
+      const n_appointment_year = [];
       this.query_n_appointment_year.forEach((item: any) => {
         n_appointment_year.push(item.count_appointments);
       });
-      let n_appointment_year_before: any[] = [];
+      const n_appointment_year_before = [];
       this.query_n_appointment_year_before.forEach((item: any) => {
         n_appointment_year_before.push(item.count_appointments);
       });
@@ -631,16 +584,16 @@ export class PatientDashboardComponent implements OnInit {
     this.patientDashboard = [];
     this.serialNumberArray = [];
 
-    this.data.getPatientDashboard().subscribe((data: apiResultFormat) => {
+    this.data.getPatientDashboard().subscribe((data: ApiResultFormat) => {
       this.totalData = data.totalData;
-      data.data.map((res: patientDashboard, index: number) => {
+      data.data.map((res: PatientDashboard, index: number) => {
         const serialNumber = index + 1;
         if (index >= this.skip && serialNumber <= this.limit) {
           this.patientDashboard.push(res);
           this.serialNumberArray.push(serialNumber);
         }
       });
-      this.dataSource = new MatTableDataSource<patientDashboard>(
+      this.dataSource = new MatTableDataSource<PatientDashboard>(
         this.patientDashboard
       );
       this.calculateTotalPages(this.totalData, this.pageSize);
@@ -669,13 +622,13 @@ export class PatientDashboardComponent implements OnInit {
   }
 
   getMoreData(event: string): void {
-    if (event == 'next') {
+    if (event === 'next') {
       this.currentPage++;
       this.pageIndex = this.currentPage - 1;
       this.limit += this.pageSize;
       this.skip = this.pageSize * this.pageIndex;
       this.getTableData();
-    } else if (event == 'previous') {
+    } else if (event === 'previous') {
       this.currentPage--;
       this.pageIndex = this.currentPage - 1;
       this.limit -= this.pageSize;
@@ -707,7 +660,7 @@ export class PatientDashboardComponent implements OnInit {
   private calculateTotalPages(totalData: number, pageSize: number): void {
     this.pageNumberArray = [];
     this.totalPages = totalData / pageSize;
-    if (this.totalPages % 1 != 0) {
+    if (this.totalPages % 1 !== 0) {
       this.totalPages = Math.trunc(this.totalPages + 1);
     }
     /* eslint no-var: off */
@@ -719,7 +672,10 @@ export class PatientDashboardComponent implements OnInit {
     }
   }
 
-  selecedList: data[] = [
+  selecedList: ChartData[] = [
+    { value: '2025' },
+    { value: '2024' },
+    { value: '2023' },
     { value: '2022' },
     { value: '2021' },
     { value: '2020' },

@@ -8,6 +8,8 @@ import * as XLSX from 'xlsx';
 import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { PatientMService } from '../service/patient-m.service';
+import { PageService } from 'src/app/shared/services/pages.service';
+import { AppUser } from 'src/app/shared/models/users.models';
 
 declare var $: any;
 @Component({
@@ -18,7 +20,7 @@ declare var $: any;
 export class ClientLogReportComponent {
   routes = AppRoutes;
 
-  patientList: any[] = [];
+  patientList = [];
   dataSource!: MatTableDataSource<any>;
 
   showFilter = false;
@@ -32,33 +34,33 @@ export class ClientLogReportComponent {
   serialNumberArray: number[] = [];
   currentPage = 1;
   pageNumberArray: number[] = [];
-  pageSelection: any[] = [];
+  pageSelection = [];
   totalPages = 0;
 
-  patient_generals: any[] = [];
+  patient_generals = [];
   patient_id: any;
   patientid: any;
   patient_selected: any;
   text_validation: any;
-  user: any;
+  user: AppUser;
   insurer_id: any;
-  roles: any[] = [];
-  permissions: any[] = [];
-  maladaptives: any[] = [];
-  doctorPatientList: any[] = [];
-  pa_assessmentgroup: any[] = [];
+  roles: string;
+  permissions = [];
+  maladaptives = [];
+  doctorPatientList = [];
+  pa_assessmentgroup = [];
   paAssestment: any;
-  paAssestments: any[] = [];
-  paAssestmentsinter: any[] = [];
-  insurances: any[] = [];
+  paAssestments = [];
+  paAssestmentsinter = [];
+  insurances = [];
 
-  graphData: any[] = [];
+  graphData = [];
 
   search: any = null;
   status: any = null;
 
   constructor(
-    private doctorService: DoctorService,
+    private pageService: PageService,
     private patientService: PatientMService,
     private fileSaver: FileSaverService,
     private bipService: BipService,
@@ -66,15 +68,14 @@ export class ClientLogReportComponent {
     private authService: AuthService
   ) {}
   ngOnInit() {
-    window.scrollTo(0, 0);
-    this.doctorService.closeMenuSidebar();
+    this.pageService.onInitPage();
     this.getTableData();
 
     const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
     this.roles = this.user.roles[0];
 
-    this.user = this.authService.user;
+    this.user = this.authService.user as AppUser;
     // this.getPatiensByDoctor();
   }
 
@@ -176,13 +177,13 @@ export class ClientLogReportComponent {
       .subscribe((resp: any) => {
         // console.log(resp);
 
-        if (resp.message == 403) {
+        if (resp.message === 403) {
           this.text_validation = resp.message_text;
         } else {
           const INDEX = this.patientList.findIndex(
-            (item: any) => item.id == this.patient_selected.id
+            (item: any) => item.id === this.patient_selected.id
           );
-          if (INDEX != -1) {
+          if (INDEX !== -1) {
             this.patientList.splice(INDEX, 1);
 
             $('#delete_patient').hide();
@@ -240,13 +241,13 @@ export class ClientLogReportComponent {
   }
 
   getMoreData(event: string): void {
-    if (event == 'next') {
+    if (event === 'next') {
       this.currentPage++;
       this.pageIndex = this.currentPage - 1;
       this.limit += this.pageSize;
       this.skip = this.pageSize * this.pageIndex;
       this.getTableDataGeneral();
-    } else if (event == 'previous') {
+    } else if (event === 'previous') {
       this.currentPage--;
       this.pageIndex = this.currentPage - 1;
       this.limit -= this.pageSize;
@@ -282,7 +283,7 @@ export class ClientLogReportComponent {
   ): void {
     this.pageNumberArray = [];
     this.totalPages = totalDatapatient / pageSize;
-    if (this.totalPages % 1 != 0) {
+    if (this.totalPages % 1 !== 0) {
       this.totalPages = Math.trunc(this.totalPages + 1);
     }
     /* eslint no-var: off */

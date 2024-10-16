@@ -3,8 +3,8 @@ import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DataService } from 'src/app/shared/data/data.service';
 import {
-  apiResultFormat,
-  pageSelection,
+  ApiResultFormat,
+  PageSelection,
   staffList,
 } from 'src/app/shared/models/models';
 import { AppRoutes } from 'src/app/shared/routes/routes';
@@ -30,7 +30,7 @@ export class StaffListComponent implements OnInit {
   serialNumberArray: number[] = [];
   currentPage = 1;
   pageNumberArray: number[] = [];
-  pageSelection: Array<pageSelection> = [];
+  pageSelection: PageSelection[] = [];
   totalPages = 0;
 
   constructor(public data: DataService) {}
@@ -41,7 +41,7 @@ export class StaffListComponent implements OnInit {
     this.staffList = [];
     this.serialNumberArray = [];
 
-    this.data.getStaffList().subscribe((data: apiResultFormat) => {
+    this.data.getStaffList().subscribe((data: ApiResultFormat) => {
       this.totalData = data.totalData;
       data.data.map((res: staffList, index: number) => {
         const serialNumber = index + 1;
@@ -77,13 +77,13 @@ export class StaffListComponent implements OnInit {
   }
 
   getMoreData(event: string): void {
-    if (event == 'next') {
+    if (event === 'next') {
       this.currentPage++;
       this.pageIndex = this.currentPage - 1;
       this.limit += this.pageSize;
       this.skip = this.pageSize * this.pageIndex;
       this.getTableData();
-    } else if (event == 'previous') {
+    } else if (event === 'previous') {
       this.currentPage--;
       this.pageIndex = this.currentPage - 1;
       this.limit -= this.pageSize;
@@ -115,7 +115,7 @@ export class StaffListComponent implements OnInit {
   private calculateTotalPages(totalData: number, pageSize: number): void {
     this.pageNumberArray = [];
     this.totalPages = totalData / pageSize;
-    if (this.totalPages % 1 != 0) {
+    if (this.totalPages % 1 !== 0) {
       this.totalPages = Math.trunc(this.totalPages + 1);
     }
     /* eslint no-var: off */

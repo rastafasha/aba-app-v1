@@ -8,6 +8,8 @@ import Swal from 'sweetalert2';
 import { LocationService } from '../../services/location.service';
 import { DoctorService } from '../../../doctors/service/doctor.service';
 import { PatientMService } from '../../../patient-m/service/patient-m.service';
+import { AppUser } from 'src/app/shared/models/users.models';
+import { PageService } from 'src/app/shared/services/pages.service';
 
 @Component({
   selector: 'app-specialist-location',
@@ -35,15 +37,15 @@ export class SpecialistLocationComponent {
   serialNumberArray: number[] = [];
   currentPage = 1;
   pageNumberArray: number[] = [];
-  pageSelection: any[] = [];
+  pageSelection = [];
   totalPages = 0;
 
   title = '';
 
   URLMedia = `${url_media}`;
-  services: any[] = [];
-  patients: any[] = [];
-  specialists: any[] = [];
+  services = [];
+  patients = [];
+  specialists = [];
   location_info: any;
 
   code: any;
@@ -55,11 +57,11 @@ export class SpecialistLocationComponent {
 
   location_id: any;
   location_iddd: any;
-  user: any;
-  roles: any[] = [];
+  user: AppUser;
+  roles = [];
   location_selected: any;
 
-  patient_generals: any[] = [];
+  patient_generals = [];
 
   valid_form = false;
   valid_form_success = false;
@@ -67,8 +69,8 @@ export class SpecialistLocationComponent {
   text_success = '';
   text_validation = '';
 
-  patientList: any[] = [];
-  specialistList: any[] = [];
+  patientList = [];
+  specialistList = [];
   patientid: any;
   patient_id: any;
   doctor_generals: any;
@@ -79,20 +81,19 @@ export class SpecialistLocationComponent {
   constructor(
     private doctorService: DoctorService,
     private locationService: LocationService,
-    private router: Router,
     private activatedRoute: ActivatedRoute,
     private location: Location,
-    private patientService: PatientMService
+    private pageService: PageService
   ) {}
 
   ngOnInit(): void {
     this.locationId;
-    window.scrollTo(0, 0);
+
     const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
-    this.roles = this.user.roles[0];
+    this.roles = this.user.roles;
 
-    this.doctorService.closeMenuSidebar();
+    this.pageService.onInitPage();
 
     this.activatedRoute.params.subscribe((resp: any) => {
       this.location_id = resp.id;
@@ -157,13 +158,13 @@ export class SpecialistLocationComponent {
   }
 
   getMoreData(event: string): void {
-    if (event == 'next') {
+    if (event === 'next') {
       this.currentPage++;
       this.pageIndex = this.currentPage - 1;
       this.limit += this.pageSize;
       this.skip = this.pageSize * this.pageIndex;
       this.getTableDataGeneralSpecialist();
-    } else if (event == 'previous') {
+    } else if (event === 'previous') {
       this.currentPage--;
       this.pageIndex = this.currentPage - 1;
       this.limit -= this.pageSize;
@@ -199,7 +200,7 @@ export class SpecialistLocationComponent {
   ): void {
     this.pageNumberArray = [];
     this.totalPages = totalDatapatient / pageSize;
-    if (this.totalPages % 1 != 0) {
+    if (this.totalPages % 1 !== 0) {
       this.totalPages = Math.trunc(this.totalPages + 1);
     }
     /* eslint no-var: off */

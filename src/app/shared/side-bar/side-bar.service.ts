@@ -32,7 +32,7 @@ export class SideBarService {
       this.data.sidebar.map((mainMenus: MainMenu) => {
         mainMenus.menu.map((resMenu: MenuItem) => {
           const menuValue = sessionStorage.getItem('menuValue');
-          if (menuValue && menuValue == resMenu.menuValue) {
+          if (menuValue && menuValue === resMenu.menuValue) {
             resMenu.showSubRoute = true;
           }
         });

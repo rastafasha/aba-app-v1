@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { MatTableDataSource } from '@angular/material/table';
 import {
-  pageSelection,
-  apiResultFormat,
+  PageSelection,
+  ApiResultFormat,
   patientsList,
 } from 'src/app/shared/models/models';
 import { Sort } from '@angular/material/sort';
@@ -30,7 +30,7 @@ export class PatientsListComponent implements OnInit {
   serialNumberArray: number[] = [];
   currentPage = 1;
   pageNumberArray: number[] = [];
-  pageSelection: Array<pageSelection> = [];
+  pageSelection: PageSelection[] = [];
   totalPages = 0;
 
   constructor(public data: DataService) {}
@@ -41,7 +41,7 @@ export class PatientsListComponent implements OnInit {
     this.patientsList = [];
     this.serialNumberArray = [];
 
-    this.data.getPatientsList().subscribe((data: apiResultFormat) => {
+    this.data.getPatientsList().subscribe((data: ApiResultFormat) => {
       this.totalData = data.totalData;
       data.data.map((res: patientsList, index: number) => {
         const serialNumber = index + 1;
@@ -77,13 +77,13 @@ export class PatientsListComponent implements OnInit {
   }
 
   getMoreData(event: string): void {
-    if (event == 'next') {
+    if (event === 'next') {
       this.currentPage++;
       this.pageIndex = this.currentPage - 1;
       this.limit += this.pageSize;
       this.skip = this.pageSize * this.pageIndex;
       this.getTableData();
-    } else if (event == 'previous') {
+    } else if (event === 'previous') {
       this.currentPage--;
       this.pageIndex = this.currentPage - 1;
       this.limit -= this.pageSize;
@@ -104,7 +104,7 @@ export class PatientsListComponent implements OnInit {
     this.getTableData();
   }
 
-  PageSize(): void {
+  pageSizer(): void {
     this.pageSelection = [];
     this.limit = this.pageSize;
     this.skip = 0;
@@ -115,7 +115,7 @@ export class PatientsListComponent implements OnInit {
   private calculateTotalPages(totalData: number, pageSize: number): void {
     this.pageNumberArray = [];
     this.totalPages = totalData / pageSize;
-    if (this.totalPages % 1 != 0) {
+    if (this.totalPages % 1 !== 0) {
       this.totalPages = Math.trunc(this.totalPages + 1);
     }
     /* eslint no-var: off */

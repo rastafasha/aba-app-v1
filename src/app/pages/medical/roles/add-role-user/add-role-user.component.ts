@@ -5,6 +5,10 @@ import { RolesService } from '../service/roles.service';
 import { Router } from '@angular/router';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { Location } from '@angular/common';
+import { PageService } from 'src/app/shared/services/pages.service';
+// eslint-disable-next-line no-var
+declare var $: any;
+
 @Component({
   selector: 'app-add-role-user',
   templateUrl: './add-role-user.component.html',
@@ -13,9 +17,9 @@ import { Location } from '@angular/common';
 export class AddRoleUserComponent {
   routes = AppRoutes;
 
-  sideBar: any[] = [];
-  name: string = '';
-  permissions: any[] = [];
+  sideBar = [];
+  name = '';
+  permissions = [];
   valid_form = false;
   valid_form_success = false;
   text_validation: any = null;
@@ -23,14 +27,13 @@ export class AddRoleUserComponent {
   constructor(
     private dataService: DataService,
     private roleService: RolesService,
-    private doctorService: DoctorService,
+    private pageService: PageService,
     private router: Router,
     private location: Location
   ) {}
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
-    this.doctorService.closeMenuSidebar();
+    this.pageService.onInitPage();
     this.sideBar = this.dataService.sidebar[0].menu;
   }
   goBack() {
@@ -40,9 +43,9 @@ export class AddRoleUserComponent {
   addPermission(subMenu: any) {
     if (subMenu.permision) {
       const INDEX = this.permissions.findIndex(
-        (item: any) => item == subMenu.permision
+        (item: any) => item === subMenu.permision
       );
-      if (INDEX != -1) {
+      if (INDEX !== -1) {
         this.permissions.splice(INDEX, 1);
       } else {
         this.permissions.push(subMenu.permision);
@@ -54,11 +57,11 @@ export class AddRoleUserComponent {
   save() {
     this.valid_form = false;
 
-    if (!this.name || this.permissions.length == 0) {
+    if (!this.name || this.permissions.length === 0) {
       this.valid_form = true;
       return;
     }
-    let data = {
+    const data = {
       name: this.name,
       permissions: this.permissions,
     };
@@ -67,14 +70,14 @@ export class AddRoleUserComponent {
 
     this.roleService.storeRole(data).subscribe((resp: any) => {
       // console.log(resp);
-      if (resp.message == 403) {
+      if (resp.message === 403) {
         this.text_validation = resp.message_text;
       } else {
         this.name = '';
         this.permissions = [];
         this.valid_form_success = true;
         //limpia los checks
-        let SIDE_BAR = this.sideBar;
+        const SIDE_BAR = this.sideBar;
         this.sideBar = [];
         setTimeout(() => {
           this.sideBar = SIDE_BAR;
@@ -83,5 +86,10 @@ export class AddRoleUserComponent {
         this.router.navigate([AppRoutes.roles.list]);
       }
     });
+  }
+
+  closeMenuSidebar() {
+    $('.sidebar').addClass('cerrar');
+    $('.menu-opened').remove('menu-opened');
   }
 }

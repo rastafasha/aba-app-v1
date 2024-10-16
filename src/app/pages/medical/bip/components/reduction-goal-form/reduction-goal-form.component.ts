@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { BipService } from '../../service/bip.service';
 import { GoalService } from '../../service/goal.service';
+import { AppUser } from 'src/app/shared/models/users.models';
 @Component({
   selector: 'app-reduction-goal-form',
   templateUrl: './reduction-goal-form.component.html',
@@ -15,11 +16,11 @@ export class ReductionGoalFormComponent {
 
   routes = AppRoutes;
   valid_form_success = false;
-  text_validation: string = '';
-  text_success: string = '';
+  text_validation = '';
+  text_success = '';
 
   client_id: any;
-  user: any;
+  user: AppUser;
   doctor_id: any;
   patient_id: any;
   client_selected: any;
@@ -28,17 +29,17 @@ export class ReductionGoalFormComponent {
   bip_selected: any;
   bip_selectedId: any;
   bip_selectedIdd: any;
-  maladaptives: any[] = [];
+  maladaptives = [];
 
-  goalSustitutions: any[] = [];
+  goalSustitutions = [];
   client_id_goalSustitution: any;
 
   //goals
   maladaptiveSelected: any;
   maladaptiveSelectedSon: any;
-  goalmaladaptive: any[] = [];
-  goalmaladaptive_child: any[] = [];
-  goalReductionPatientIds: any[] = [];
+  goalmaladaptive = [];
+  goalmaladaptive_child = [];
+  goalReductionPatientIds = [];
 
   goalmaladaptiveid: any;
   current_status!: any;
@@ -74,11 +75,11 @@ export class ReductionGoalFormComponent {
   goalpatient_selected: any;
   goal_selected: any;
   goalsbybipid: any;
-  goals: any[] = [];
-  goalReductions: any[] = [];
+  goals = [];
+  goalReductions = [];
 
-  golsto_edit: any[] = [];
-  gollto_edit: any[] = [];
+  golsto_edit = [];
+  gollto_edit = [];
 
   goalmaladaptive_clientId: any;
   goalReductionId: any;

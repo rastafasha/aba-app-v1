@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
   user_id: number;
   avatar: string;
   locationId: number;
-  roles = '';
+  role = '';
 
   imagenSerUrl = environment.url_media;
 
@@ -55,24 +55,22 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.authService.user as AppUser;
-    this.roles = this.user?.roles?.[0];
-    console.log(this.roles);
+    this.role = this.user?.roles?.[0];
     this.locationId = this.user?.location_id;
 
-    window.scrollTo(0, 0);
     this.authService.getUserFromStorage();
     this.appearanceService.getLocalDarkMode();
-    this.activatedRoute.params.subscribe((resp: any) => {
+    this.activatedRoute.params.subscribe((resp) => {
       // console.log(resp);
-      this.user_id = resp.id;
+      this.user_id = resp['id'];
     });
     this.getDoctor();
   }
 
   getDoctor() {
-    this.authService.getUserRomoto(this.user_id).subscribe((resp: any) => {
+    this.authService.getUserRomoto(this.user_id).subscribe((resp) => {
       // console.log(resp);
-      this.usuario = resp;
+      this.usuario = resp as AppUser;
     });
   }
 
@@ -83,11 +81,8 @@ export class HeaderComponent implements OnInit {
     this.sideBar.switchMobileSideBarPosition();
 
     this.addClass = !this.addClass;
-    /* eslint no-var: off */
-    var root = document.getElementsByTagName('html')[0];
-    /* eslint no-var: off */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    var sidebar: any = document.getElementById('sidebar');
+    const root = document.getElementsByTagName('html')[0];
+    const sidebar = document.getElementById('sidebar');
 
     if (this.addClass) {
       root.classList.add('menu-opened');
@@ -105,7 +100,7 @@ export class HeaderComponent implements OnInit {
   }
 
   darkMode(dark: string) {
-    var element = document.body;
+    const element = document.body;
 
     const classExists = document.getElementsByClassName('darkmode').length > 0;
 

@@ -4,4 +4,5 @@ export interface AppUser extends AuthUser {
   roles: string[];
   permissions: string[];
   location_id: number;
+  avatar?: string;
 }

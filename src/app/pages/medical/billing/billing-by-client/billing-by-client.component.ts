@@ -7,6 +7,7 @@ import { DoctorService } from '../../doctors/service/doctor.service';
 import { InsuranceService } from '../../insurance/service/insurance.service';
 import { PatientMService } from '../../patient-m/service/patient-m.service';
 import { BillingService } from '../billing.service';
+import { AppUser } from 'src/app/shared/models/users.models';
 declare var $: any;
 
 @Component({
@@ -25,9 +26,9 @@ export class BillingByClientComponent {
   client_selected: any;
   billing_selected: any;
   sponsor_id: any;
-  user: any;
+  user: AppUser;
 
-  billingList: any[] = [];
+  billingList = [];
   billing_generals: any;
   dataSource!: MatTableDataSource<any>;
   showFilter = false;
@@ -41,30 +42,30 @@ export class BillingByClientComponent {
   serialNumberArray: number[] = [];
   currentPage = 1;
   pageNumberArray: number[] = [];
-  pageSelection: any[] = [];
+  pageSelection = [];
   totalPages = 0;
   text_validation: any;
 
-  roles: any[] = [];
-  permissions: any[] = [];
+  roles = [];
+  permissions = [];
   pa_assessments: string;
-  pa_assessmentsgroup: any[] = [];
+  pa_assessmentsgroup = [];
   cpt: any;
   n_units: any;
-  insurances: any[] = [];
+  insurances = [];
   insurance_id: any;
   insuranceiddd: any;
   insurer_name: any;
-  sponsors: any[] = [];
+  sponsors = [];
   patient: any;
   patientID: any;
   doctor_selected: any;
   doctor_selected_full_name: any;
-  billing_total: number = 0;
-  week_total_hours: number = 0;
-  week_total_units: number = 0;
-  total_hours: number = 0;
-  total_units: number = 0;
+  billing_total = 0;
+  week_total_hours = 0;
+  week_total_units = 0;
+  total_hours = 0;
+  total_units = 0;
 
   constructor(
     private ativatedRoute: ActivatedRoute,
@@ -77,7 +78,7 @@ export class BillingByClientComponent {
   ) {}
 
   ngOnInit(): void {
-    // window.scrollTo(0, 0);
+    //
     this.ativatedRoute.params.subscribe((resp: any) => {
       this.patient_id = resp.id;
 
@@ -94,7 +95,7 @@ export class BillingByClientComponent {
     // const USER = localStorage.getItem("user");
     // this.user = JSON.parse(USER ? USER: '');
     // this.doctor_id = this.user.id;
-    this.user = this.authService.user;
+    this.user = this.authService.user as AppUser;
   }
   goBack() {
     this.location.back(); // <-- go back to previous location on cancel
@@ -134,7 +135,7 @@ export class BillingByClientComponent {
         this.client_selected = resp.patient;
         //convierto la data de la coleccion json para extraer los datos
         this.pa_assessments = resp.pa_assessments;
-        let jsonObj = JSON.parse(this.pa_assessments) || '';
+        const jsonObj = JSON.parse(this.pa_assessments) || '';
         this.pa_assessmentsgroup = jsonObj;
         // console.log(this.pa_assessmentsgroup);
         this.cpt = this.pa_assessmentsgroup[0].cpt;
@@ -191,11 +192,11 @@ export class BillingByClientComponent {
 
   extractDataHours() {
     // recorrer el array de billing_general para extraer la data
-    let hours_group: string[] = [];
-    let units_group: string[] = [];
+    const hours_group: string[] = [];
+    const units_group: string[] = [];
     const extractedData = this.billing_generals;
 
-    let array = this.billing_generals;
+    const array = this.billing_generals;
     for (this.billing_generals of array) {
       hours_group.push(this.billing_generals.total_hours);
       units_group.push(this.billing_generals.total_units);
@@ -299,7 +300,7 @@ export class BillingByClientComponent {
     } else {
       // Extract the array if the response is not an array.
       if (Array.isArray(this.billing_generals)) {
-        this.billing_generals = this.billing_generals;
+        this.billing_generals = [...this.billing_generals];
         // this.getTableDataGeneral();
         console.log(this.billing_generals);
       }
@@ -323,13 +324,13 @@ export class BillingByClientComponent {
   }
 
   getMoreData(event: string): void {
-    if (event == 'next') {
+    if (event === 'next') {
       this.currentPage++;
       this.pageIndex = this.currentPage - 1;
       this.limit += this.pageSize;
       this.skip = this.pageSize * this.pageIndex;
       this.getTableDataGeneral();
-    } else if (event == 'previous') {
+    } else if (event === 'previous') {
       this.currentPage--;
       this.pageIndex = this.currentPage - 1;
       this.limit -= this.pageSize;
@@ -359,7 +360,7 @@ export class BillingByClientComponent {
     // this.getPageTotal();
     this.searchDataValue = '';
     //traer la suma del total de lo que se ve...
-    let tableDataVisible = this.billing_generals.slice(
+    const tableDataVisible = this.billing_generals.slice(
       this.skip,
       this.skip + this.limit
     );
@@ -375,7 +376,7 @@ export class BillingByClientComponent {
   ): void {
     this.pageNumberArray = [];
     this.totalPages = totalDatapatient / pageSize;
-    if (this.totalPages % 1 != 0) {
+    if (this.totalPages % 1 !== 0) {
       this.totalPages = Math.trunc(this.totalPages + 1);
     }
     /* eslint no-var: off */
@@ -395,13 +396,13 @@ export class BillingByClientComponent {
       .subscribe((resp: any) => {
         // console.log(resp);
 
-        if (resp.message == 403) {
+        if (resp.message === 403) {
           this.text_validation = resp.message_text;
         } else {
           const INDEX = this.billingList.findIndex(
             (item: any) => item.id == this.billing_selected.id
           );
-          if (INDEX != -1) {
+          if (INDEX !== -1) {
             this.billingList.splice(INDEX, 1);
 
             $('#delete_patient').hide();

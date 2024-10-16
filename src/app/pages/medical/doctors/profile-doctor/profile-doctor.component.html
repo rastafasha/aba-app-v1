@@ -1,16 +1,15 @@
-<div class="page-wrapper" >
-    <div class="content">
-    
-        <!-- Page Header -->
-        <div class="page-header">
-            <div class="row">
-                <div class="col-sm-12">
-                    <!-- <ul class="breadcrumb">
+<div class="page-wrapper">
+  <div class="content">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <!-- <ul class="breadcrumb">
                         <span  *ngIf="roles === 'SUPERADMIN' || roles === 'LM' || roles === 'MANAGER'">
                             <li class="breadcrumb-item"><a routerLink="/dashboard">Dashboard</a></li>
                         </span>
                         <span  *ngIf="roles === 'RBT' || roles === 'BCBA'">
-                            <li class="breadcrumb-item"><a [routerLink]="['/doctors/profile/', user.id]">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a [routerLink]="[routes.doctors.profile, user.id]">Dashboard</a></li>
                             <li class="breadcrumb-item" ><i class="feather icon-chevron-right"></i></li>
                         </span>
                         <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
@@ -18,546 +17,952 @@
                         <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
                         <li class="breadcrumb-item active">Employeer Profile</li>
                     </ul> -->
-                    <div class=" doctor-submit text-start">
-                        <button class="btn btn-primary btn-sm " (click)="goBack() ">Back</button>
-                    </div>
-                </div>
-            </div>
+          <div class="doctor-submit text-start">
+            <button class="btn btn-primary btn-sm" (click)="goBack()">
+              Back
+            </button>
+          </div>
         </div>
-        <!-- /Page Header -->
-        <div class="row" id="contentToConvert" #contentToConvert>
-            <div class="col-sm-12" *ngIf="doctor_selected">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="about-info">
-                                    <h4>Employeer Profile  </h4>
-                                </div>
-                                <div class="doctor-profile-head">
-                                    <!-- <div class="profile-bg-img">
+      </div>
+    </div>
+    <!-- /Page Header -->
+    <div class="row" id="contentToConvert" #contentToConvert>
+      <div class="col-sm-12" *ngIf="doctor_selected">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="about-info">
+                  <h4>Employeer Profile</h4>
+                </div>
+                <div class="doctor-profile-head">
+                  <!-- <div class="profile-bg-img">
                                         <img  src="assets/img/profile-bg.jpg"  alt="Profile">
                                     </div> -->
-                                    <div class="row">
-                                        <div class="col-lg-4 col-md-4">
-                                            <div class="profile-user-box">
-                                                <div class="profile-user-img">
-                                                    <div *ngIf="!doctor_selected.avatar">
-                                                        <img src="./assets/img/no-image.jpg" class="shadow"  >
-                                                    </div>
-                                                    <div *ngIf="doctor_selected.avatar">
-                                                        <img  [src]="doctor_selected.avatar" class="shadow"  [alt]="doctor_selected.name">
-                                                    </div>
-                                                    
-                                                </div>
-                                                <div class="names-profiles">
-                                                    <h4>{{doctor_selected.full_name}}</h4>
-                                                    <span class="badge bg-danger"
-                                                        *ngIf="doctor_selected.status === 'inactive'">Inactive</span>
-                                                    <span class="badge bg-success"
-                                                        *ngIf="doctor_selected.status === 'active'">Active</span>
-                                                    <span class="badge bg-primary"
-                                                        *ngIf="doctor_selected.status === 'incoming'">Incoming</span>
-                                                    <span class="badge bg-dark"
-                                                        *ngIf="doctor_selected.status === 'black list'">Black list</span>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-md-4 d-flex align-items-center">
-                                            <div class="follow-group">
-                                                <div class="doctor-follows" *ngIf="roles === 'SUPERADMIN'|| roles === 'LM' || roles === 'BCBA'">
-                                                    <h5>Bips</h5>
-                                                    <h4>{{total_notes_bips}}</h4>
-                                                </div>
-                                                <div class="doctor-follows" *ngIf="roles === 'SUPERADMIN' || roles === 'LM' || roles === 'BCBA'">
-                                                    <h5>Notes BCBA</h5>
-                                                    <h4>{{total_notes_bcbas}}</h4>
-                                                </div>
-                                                <div class="doctor-follows" *ngIf="roles === 'SUPERADMIN' || roles === 'LM' || roles === 'RBT'">
-                                                    <h5>Notes RBT</h5>
-                                                    <h4>{{total_notes_rbts}}</h4>
-                                                </div>
-                                                <div class="doctor-follows">
-                                                    <h5>Salary</h5>
-                                                    <h4 >{{doctor_selected.salary|currency}}</h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4 col-md-4 d-flex align-items-center">
-                                            <div class="follow-btn-group">
-                                                <a [routerLink]="['/doctors/list/edit/', doctor_id]" *ngIf="isPermission('edit_employer')" class="btn btn-info follow-btns">Edit</a>
-                                                <button class="btn btn-info follow-btns" (click)="convertToPdf()">Save PDF</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>								
+                  <div class="row">
+                    <div class="col-lg-4 col-md-4">
+                      <div class="profile-user-box">
+                        <div class="profile-user-img">
+                          <div *ngIf="!doctor_selected.avatar">
+                            <img
+                              src="./assets/img/no-image.jpg"
+                              class="shadow"
+                            />
+                          </div>
+                          <div *ngIf="doctor_selected.avatar">
+                            <img
+                              [src]="doctor_selected.avatar"
+                              class="shadow"
+                              [alt]="doctor_selected.name"
+                            />
+                          </div>
                         </div>
+                        <div class="names-profiles">
+                          <h4>{{ doctor_selected.full_name }}</h4>
+                          <span
+                            class="badge bg-danger"
+                            *ngIf="doctor_selected.status === 'inactive'"
+                            >Inactive</span
+                          >
+                          <span
+                            class="badge bg-success"
+                            *ngIf="doctor_selected.status === 'active'"
+                            >Active</span
+                          >
+                          <span
+                            class="badge bg-primary"
+                            *ngIf="doctor_selected.status === 'incoming'"
+                            >Incoming</span
+                          >
+                          <span
+                            class="badge bg-dark"
+                            *ngIf="doctor_selected.status === 'black list'"
+                            >Black list</span
+                          >
+                        </div>
+                      </div>
                     </div>
+                    <div class="col-lg-4 col-md-4 d-flex align-items-center">
+                      <div class="follow-group">
+                        <div
+                          class="doctor-follows"
+                          *ngIf="
+                            roles === 'SUPERADMIN' ||
+                            roles === 'LM' ||
+                            roles === 'BCBA'
+                          "
+                        >
+                          <h5>Bips</h5>
+                          <h4>{{ total_notes_bips }}</h4>
+                        </div>
+                        <div
+                          class="doctor-follows"
+                          *ngIf="
+                            roles === 'SUPERADMIN' ||
+                            roles === 'LM' ||
+                            roles === 'BCBA'
+                          "
+                        >
+                          <h5>Notes BCBA</h5>
+                          <h4>{{ total_notes_bcbas }}</h4>
+                        </div>
+                        <div
+                          class="doctor-follows"
+                          *ngIf="
+                            roles === 'SUPERADMIN' ||
+                            roles === 'LM' ||
+                            roles === 'RBT'
+                          "
+                        >
+                          <h5>Notes RBT</h5>
+                          <h4>{{ total_notes_rbts }}</h4>
+                        </div>
+                        <div class="doctor-follows">
+                          <h5>Salary</h5>
+                          <h4>{{ doctor_selected.salary | currency }}</h4>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 d-flex align-items-center">
+                      <div class="follow-btn-group">
+                        <a
+                          [routerLink]="[routes.doctors.listEdit, doctor_id]"
+                          *ngIf="isPermission('edit_employer')"
+                          class="btn btn-info follow-btns"
+                          >Edit</a
+                        >
+                        <button
+                          class="btn btn-info follow-btns"
+                          (click)="convertToPdf()"
+                        >
+                          Save PDF
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-8">
-                        <div class="doctor-personals-grp">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4 class="card-title ">Clients Asigned</h4>
-                                </div>
-                                <div class="card-body p-0 table-dash">
-                                    <div class="table-responsive scrooldiv2">
-                                        <table matSort  class="table mb-0 border-0 datatable custom-table patient-profile-table">
-                                            <thead>
-                                                <tr>
-                                                    
-                                                    <th mat-sort-header="date">Name</th>
-                                                    <th mat-sort-header="doctor">Patient Id</th>
-                                                    <th mat-sort-header="status">Status</th>
-                                                    <th mat-sort-header="viewall"><a [routerLink]="['/patients/list'] ">View All</a></th>
-                                                    <!-- <th mat-sort-header="statuspayment">Status Payment</th> -->
-                                                    <!-- <th mat-sort-header="charges">Monto ($)</th> -->
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr *ngFor="let data of patients">
-                                                    
-                                                    <td >{{data.first_name}} {{data.last_name}}</td>
-                                                    <td >{{data.patient_id}}</td>
-                                                    <td>
-                                                        <button [ngClass]="{'status-green' : data.status === 'active', 'status-pink' : data.status === 'inactive'}" class="custom-badge">{{data.status == 'inactive' ? 'Inactivo' : 'Activo'}}</button>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <div class="dropdown dropdown-action">
-                                                            <a href="javascript:void(0);" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item" [routerLink]="['/client-report/employee_reportbyclient/', data.patient_id]"><i class="fa-solid fa-pen-to-square m-r-5"></i> Employee Report</a>
-                                                                <a class="dropdown-item" *ngIf="roles ==='SUPERADMIN' || roles ==='BCBA'" [routerLink]="['/bip/attention/', data.patient_id]"><i class="fa-solid fa-pen-to-square m-r-5"></i> Bip Access</a>
-                                                                <a class="dropdown-item" *ngIf="isPermission('view_bip')" [routerLink]="['/bip/profile/', data.patient_id]"><i class="fa-solid fa-pen-to-square m-r-5"></i> View Bip</a>
-                                                                <a class="dropdown-item" *ngIf="roles ==='SUPERADMIN' ||  roles ==='RBT'" [routerLink]="['/note-rbt/', data.patient_id]"><i class="fa-solid fa-pen-to-square m-r-5"></i> Create Note RBT</a>
-                                                                <a class="dropdown-item" *ngIf="roles ==='SUPERADMIN' ||  roles ==='RBT'" [routerLink]="['/note-rbt/listbyclient/', data.patient_id]"><i class="fa-solid fa-pen-to-square m-r-5"></i> List Note RBT</a>
-                                                                <a class="dropdown-item" *ngIf="roles ==='SUPERADMIN' || roles ==='BCBA'" [routerLink]="['/note-bcba/', data.patient_id]"><i class="fa-solid fa-pen-to-square m-r-5"></i> Create Note BCBA</a>
-                                                                <a class="dropdown-item" *ngIf="roles ==='SUPERADMIN' ||  roles ==='BCBA'" [routerLink]="['/note-bcba/listbyclient/', data.patient_id]"><i class="fa-solid fa-pen-to-square m-r-5"></i> List Note BCBA</a>
-                                                                <!-- <a class="dropdown-item" *ngIf="roles ==='SUPERADMIN'" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#delete_appointment"><i class="fa fa-trash-alt m-r-5"></i> Delete</a> -->
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="doctor-personals-grp">
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-title">Clients Asigned</h4>
+                </div>
+                <div class="card-body p-0 table-dash">
+                  <div class="table-responsive scrooldiv2">
+                    <table
+                      matSort
+                      class="table mb-0 border-0 datatable custom-table patient-profile-table"
+                    >
+                      <thead>
+                        <tr>
+                          <th mat-sort-header="date">Name</th>
+                          <th mat-sort-header="doctor">Patient Id</th>
+                          <th mat-sort-header="status">Status</th>
+                          <th mat-sort-header="viewall">
+                            <a [routerLink]="['/patients/list']">View All</a>
+                          </th>
+                          <!-- <th mat-sort-header="statuspayment">Status Payment</th> -->
+                          <!-- <th mat-sort-header="charges">Monto ($)</th> -->
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let data of patients">
+                          <td>{{ data.first_name }} {{ data.last_name }}</td>
+                          <td>{{ data.patient_id }}</td>
+                          <td>
+                            <button
+                              [ngClass]="{
+                                'status-green': data.status === 'active',
+                                'status-pink': data.status === 'inactive'
+                              }"
+                              class="custom-badge"
+                            >
+                              {{
+                                data.status === "inactive"
+                                  ? "Inactivo"
+                                  : "Activo"
+                              }}
+                            </button>
+                          </td>
+                          <td class="text-end">
+                            <div class="dropdown dropdown-action">
+                              <a
+                                href="javascript:void(0);"
+                                class="action-icon dropdown-toggle"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                                ><i class="fa fa-ellipsis-v"></i
+                              ></a>
+                              <div class="dropdown-menu dropdown-menu-end">
+                                <a
+                                  class="dropdown-item"
+                                  [routerLink]="[
+                                    '/client-report/employee_reportbyclient/',
+                                    data.patient_id
+                                  ]"
+                                  ><i
+                                    class="fa-solid fa-pen-to-square m-r-5"
+                                  ></i>
+                                  Employee Report</a
+                                >
+                                <a
+                                  class="dropdown-item"
+                                  *ngIf="
+                                    roles === 'SUPERADMIN' || roles === 'BCBA'
+                                  "
+                                  [routerLink]="[
+                                    '/bip/attention/',
+                                    data.patient_id
+                                  ]"
+                                  ><i
+                                    class="fa-solid fa-pen-to-square m-r-5"
+                                  ></i>
+                                  Bip Access</a
+                                >
+                                <a
+                                  class="dropdown-item"
+                                  *ngIf="isPermission('view_bip')"
+                                  [routerLink]="[
+                                    '/bip/profile/',
+                                    data.patient_id
+                                  ]"
+                                  ><i
+                                    class="fa-solid fa-pen-to-square m-r-5"
+                                  ></i>
+                                  View Bip</a
+                                >
+                                <a
+                                  class="dropdown-item"
+                                  *ngIf="
+                                    roles === 'SUPERADMIN' || roles === 'RBT'
+                                  "
+                                  [routerLink]="['/note-rbt/', data.patient_id]"
+                                  ><i
+                                    class="fa-solid fa-pen-to-square m-r-5"
+                                  ></i>
+                                  Create Note RBT</a
+                                >
+                                <a
+                                  class="dropdown-item"
+                                  *ngIf="
+                                    roles === 'SUPERADMIN' || roles === 'RBT'
+                                  "
+                                  [routerLink]="[
+                                    '/note-rbt/listbyclient/',
+                                    data.patient_id
+                                  ]"
+                                  ><i
+                                    class="fa-solid fa-pen-to-square m-r-5"
+                                  ></i>
+                                  List Note RBT</a
+                                >
+                                <a
+                                  class="dropdown-item"
+                                  *ngIf="
+                                    roles === 'SUPERADMIN' || roles === 'BCBA'
+                                  "
+                                  [routerLink]="[
+                                    '/note-bcba/',
+                                    data.patient_id
+                                  ]"
+                                  ><i
+                                    class="fa-solid fa-pen-to-square m-r-5"
+                                  ></i>
+                                  Create Note BCBA</a
+                                >
+                                <a
+                                  class="dropdown-item"
+                                  *ngIf="
+                                    roles === 'SUPERADMIN' || roles === 'BCBA'
+                                  "
+                                  [routerLink]="[
+                                    '/note-bcba/listbyclient/',
+                                    data.patient_id
+                                  ]"
+                                  ><i
+                                    class="fa-solid fa-pen-to-square m-r-5"
+                                  ></i>
+                                  List Note BCBA</a
+                                >
+                                <!-- <a class="dropdown-item" *ngIf="roles ==='SUPERADMIN'" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#delete_appointment"><i class="fa fa-trash-alt m-r-5"></i> Delete</a> -->
+                              </div>
                             </div>
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="tab-content-set">
-                                        <ul class="nav">
-                                            <li>
-                                                <a href="#" onclick="return false;" [ngClass]="{'active': option_selected == 1}" (click)="optionSelected(1)"><span class="set-about-icon me-2"><img src="assets/img/icons/menu-icon-02.svg" alt=""></span>About me</a>
-                                            </li>
-                                            
-                                            <li *ngIf="roles === 'SUPERADMIN'|| roles === 'LM' || roles === 'RBT'">
-                                                <a href="#" onclick="return false;" [ngClass]="{'active': option_selected == 2}" (click)="optionSelected(2)"><span class="set-about-icon me-2" ><img src="assets/img/icons/menu-icon-02.svg" alt=""></span>Rbt Notes </a>
-                                            </li>
-                                            <li *ngIf="roles === 'SUPERADMIN'|| roles === 'LM' || roles === 'BCBA'">
-                                                <a href="#" onclick="return false;" [ngClass]="{'active': option_selected == 3}" (click)="optionSelected(3)"><span class="set-about-icon me-2" ><img src="assets/img/icons/menu-icon-02.svg" alt=""></span>BCBA Notes </a>
-                                            </li>
-                                            <!-- <li>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-body">
+                  <div class="tab-content-set">
+                    <ul class="nav">
+                      <li>
+                        <a
+                          href="#"
+                          onclick="return false;"
+                          [ngClass]="{ active: option_selected == 1 }"
+                          (click)="optionSelected(1)"
+                          ><span class="set-about-icon me-2"
+                            ><img
+                              src="assets/img/icons/menu-icon-02.svg"
+                              alt="" /></span
+                          >About me</a
+                        >
+                      </li>
+
+                      <li
+                        *ngIf="
+                          roles === 'SUPERADMIN' ||
+                          roles === 'LM' ||
+                          roles === 'RBT'
+                        "
+                      >
+                        <a
+                          href="#"
+                          onclick="return false;"
+                          [ngClass]="{ active: option_selected == 2 }"
+                          (click)="optionSelected(2)"
+                          ><span class="set-about-icon me-2"
+                            ><img
+                              src="assets/img/icons/menu-icon-02.svg"
+                              alt="" /></span
+                          >Rbt Notes
+                        </a>
+                      </li>
+                      <li
+                        *ngIf="
+                          roles === 'SUPERADMIN' ||
+                          roles === 'LM' ||
+                          roles === 'BCBA'
+                        "
+                      >
+                        <a
+                          href="#"
+                          onclick="return false;"
+                          [ngClass]="{ active: option_selected == 3 }"
+                          (click)="optionSelected(3)"
+                          ><span class="set-about-icon me-2"
+                            ><img
+                              src="assets/img/icons/menu-icon-02.svg"
+                              alt="" /></span
+                          >BCBA Notes
+                        </a>
+                      </li>
+                      <!-- <li>
                                                 <a href="#" onclick="return false;" [ngClass]="{'active': option_selected == 4}" (click)="optionSelected(4)"><span class="set-about-icon me-2"><img src="assets/img/icons/menu-icon-16.svg" alt=""></span>Settings</a>
                                             </li> -->
-                                        </ul>
-                                    </div>
-                                    <ng-container *ngIf="option_selected == 1">
-                                        <div class="card">
-                                            
-                                            <div class="card-body p-0 ">
-                                                <div class="personal-list-out">
-                                                    <div class="row">
-                                                        <div class="col-xl-3 col-md-6">
-                                                            <div class="detail-personal">
-                                                                <h2>Full Name</h2>
-                                                                <h3>{{doctor_selected.full_name}}</h3>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-3 col-md-6">
-                                                            <div class="detail-personal">
-                                                                <h2>Mobile </h2>
-                                                                <h3>{{doctor_selected.phone}}</h3>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-3 col-md-6">
-                                                            <div class="detail-personal">
-                                                                <h2>Email</h2>
-                                                                <h3>{{doctor_selected.email}}</h3>
-                                                            </div>
-                                                        </div>
-                                                        
-                                                    </div>
-        
-                                                    <div class="row">
-                                                        <div class="col-xl-3 col-md-6">
-                                                            
-                                                            <div class="detail-personal">
-                                                                <h2>languages</h2>
-                                                                <h3>{{doctor_selected.languages}}</h3>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-3 col-md-6">
-                                                            <div class="detail-personal">
-                                                                <h2>contract</h2>
-                                                                <h3>{{doctor_selected.contract}}</h3>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xl-3 col-md-6">
-                                                            <div class="detail-personal">
-                                                                <h2>contract_type</h2>
-                                                                <h3>{{doctor_selected.contract_type}}</h3>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="hello-park">
-                                                    <p><b>Address:</b> {{doctor_selected.address}}</p>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-                                        
-
-                                        <div class="card">
-                                            <div class="card-header">
-                                                <h4 class="card-title ">Professional data</h4>
-                                            </div>
-                                            <div class="card-body p-0 ">
-                                                <div class="personal-list-out">
-                                                    <div class="container">
-                                                        <div class="row">
-                                                            
-                                                            <div class="col-xl-3 col-md-6">
-                                                                <div class="detail-personal">
-                                                                    <h2>Currently Pay Throught Company  </h2>
-                                                                    <h3>{{doctor_selected.currently_pay_through_company}}</h3>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-3 col-md-6">
-                                                                <div class="detail-personal">
-                                                                    <h2>LLC </h2>
-                                                                    <h3>{{doctor_selected.llc}}</h3>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-3 col-md-6">
-                                                                <div class="detail-personal">
-                                                                    <h2>IEN</h2>
-                                                                    <h3>{{doctor_selected.ien}}</h3>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-3 col-md-6">
-                                                                <div class="detail-personal">
-                                                                    <h2>WC</h2>
-                                                                    <h3>{{doctor_selected.wc}}</h3>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-3 col-md-6">
-                                                                <div class="detail-personal">
-                                                                    <h2>Electronic Signature</h2>
-                                                                    <div *ngIf="!doctor_selected.electronic_signature">
-                                                                        <img src="./assets/img/no-image.jpg" class="shadow"  >
-                                                                    </div>
-                                                                    <div *ngIf="doctor_selected.electronic_signature">
-                                                                        <img  [src]="doctor_selected.electronic_signature" class="shadow " style="width:100%; height:70px"  [alt]="doctor_selected.name">
-                                                                    </div>
-                                                                    <!-- <h3>{{doctor_selected.electronic_signature}}</h3> -->
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-3 col-md-6">
-                                                                <div class="detail-personal">
-                                                                    <h2>Agency / Location</h2>
-                                                                    <h3>{{doctor_selected.agency_location}}</h3>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-3 col-md-6">
-                                                                <div class="detail-personal">
-                                                                    <h2>City</h2>
-                                                                    <h3>{{doctor_selected.city}}</h3>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-3 col-md-6">
-                                                                <div class="detail-personal">
-                                                                    <h2>DOB</h2>
-                                                                    <h3>{{doctor_selected.birth_date}}</h3>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-3 col-md-6">
-                                                                <div class="detail-personal">
-                                                                    <h2>SS Number</h2>
-                                                                    <h3>{{doctor_selected.ss_number}}</h3>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-3 col-md-6">
-                                                                <div class="detail-personal">
-                                                                    <h2>Date of Hire</h2>
-                                                                    <h3>{{doctor_selected.date_of_hire}}</h3>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-3 col-md-6">
-                                                                <div class="detail-personal">
-                                                                    <h2>Start Pay</h2>
-                                                                    <h3>{{doctor_selected.start_pay }}</h3>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-3 col-md-6">
-                                                                <div class="detail-personal">
-                                                                    <h2>Driver License Expiration</h2>
-                                                                    <h3>{{doctor_selected.driver_license_expiration}}</h3>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-3 col-md-6">
-                                                                <div class="detail-personal">
-                                                                    <h2>CPR (every 2 years)</h2>
-                                                                    <h3>{{doctor_selected.cpr_every_2_years}}</h3>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-3 col-md-6">
-                                                                <div class="detail-personal">
-                                                                    <h2>Background (every 5 years)</h2>
-                                                                    <h3>{{doctor_selected.background_every_5_years}}</h3>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-3 col-md-6">
-                                                                <div class="detail-personal">
-                                                                    <h2>E Verify</h2>
-                                                                    <h3>{{doctor_selected.e_verify}}</h3>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-3 col-md-6">
-                                                                <div class="detail-personal">
-                                                                    <h2>National Sex Offender Registry</h2>
-                                                                    <h3>{{doctor_selected.national_sex_offender_registry}}</h3>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-3 col-md-6">
-                                                                <div class="detail-personal">
-                                                                    <h2>Certificate Number</h2>
-                                                                    <h3>{{doctor_selected.certificate_number}}</h3>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-3 col-md-6">
-                                                                <div class="detail-personal">
-                                                                    <h2>BACB License Expiration</h2>
-                                                                    <h3>{{doctor_selected.bacb_license_expiration}}</h3>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-3 col-md-6">
-                                                                <div class="detail-personal">
-                                                                    <h2>Liability Insurance Annually</h2>
-                                                                    <h3>{{doctor_selected.liability_insurance_annually}}</h3>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-3 col-md-6">
-                                                                <div class="detail-personal">
-                                                                    <h2>Local Police Rec(every 5 years)</h2>
-                                                                    <h3>{{doctor_selected.local_police_rec_every_5_years}}</h3>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-3 col-md-6">
-                                                                <div class="detail-personal">
-                                                                    <h2>NPI</h2>
-                                                                    <h3>{{doctor_selected.npi}}</h3>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-xl-3 col-md-6">
-                                                                <div class="detail-personal">
-                                                                    <h2>Medica Id Provider</h2>
-                                                                    <h3>{{doctor_selected.medicaid_provider}}</h3>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
-                                    </ng-container>
-                                    <ng-container *ngIf="option_selected == 2">
-                                        <div class="activity scrooldiv">
-                                            <div class="activity-box">
-                                                <ul class="activity-list">
-                                                    <ng-container *ngFor="let notes_rbt of notes_rbts">
-                                                        <li>
-                                                            <div class="activity-user">
-                                                                <a [attr.title]="notes_rbt.patient_id" data-bs-toggle="tooltip" >
-                                                                    <img src="assets/webp/aba-logo-new.webp" width="35" height="27" alt="" class="img-fluid rounded-circle">
-                                                                    <!-- <img [attr.alt]="appointment.patient_id" [src]="notes_bcba.patient.avatar" class="img-fluid rounded-circle"> -->
-                                                                </a>
-                                                            </div>
-                                                            <div class="activity-content timeline-group-blk">
-                                                                <div class="timeline-group flex-shrink-0">
-                                                                    <h4>{{notes_rbt.session_date | date}}</h4>
-                                                                    <span class="time">{{notes_rbt.time_in +' - '+notes_rbt.time_out }}</span>
-                                                                    <span class="time">{{notes_rbt.time_in2 +' - '+notes_rbt.time_out2 }}</span>
-                                                                    <span class="badge bg-danger" *ngIf="notes_rbt.billed === 0">Pending</span>
-                                                                    <span class="badge bg-success" *ngIf="notes_rbt.billed === 1">Billed</span>
-                                                                    <span class="badge bg-danger" *ngIf="notes_rbt.pay === 0">Pending</span>
-                                                                    <span class="badge bg-success" *ngIf="notes_rbt.pay === 1">Pay</span><br>
-                                                                    <span class="badge bg-warning" *ngIf="notes_rbt.md ">{{notes_rbt.md}}</span>
-                                                                    <span class="badge bg-warning" *ngIf="notes_rbt.md2 ">{{notes_rbt.md2}}</span>
-                                                                </div>
-                                                                <div class="comman-activitys flex-grow-1">
-                                                                    <h3>{{notes_rbt.patient_id}} <span> <br>
-                                                                        Next Session: {{notes_rbt.next_session_is_scheduled_for | date}}  </span></h3>
-                                                                    <p>Supervisor Name: {{notes_rbt.supervisor.name}} {{notes_rbt.supervisor.surname}}</p>
-                                                                    <p>meet with client at: {{notes_rbt.meet_with_client_at}}</p>
-                                                                    
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </ng-container>
-                                                    
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </ng-container>
-                                    <ng-container *ngIf="option_selected == 3">
-                                        <div class="activity scrooldiv">
-                                            <div class="activity-box">
-                                                <ul class="activity-list">
-                                                    <ng-container *ngFor="let notes_bcba of notes_bcbas">
-                                                        <li>
-                                                            <div class="activity-user">
-                                                                <a [attr.title]="notes_bcba.patient_id" data-bs-toggle="tooltip" >
-                                                                    <img src="assets/webp/aba-logo-new.webp" width="35" height="27" alt="" class="img-fluid rounded-circle">
-                                                                    <!-- <img [attr.alt]="appointment.patient_id" [src]="notes_bcba.patient.avatar" class="img-fluid rounded-circle"> -->
-                                                                </a>
-                                                            </div>
-                                                            <div class="activity-content timeline-group-blk">
-                                                                <div class="timeline-group flex-shrink-0">
-                                                                    <h4>{{notes_bcba.created_at | date}}</h4>
-                                                                    <span class="badge bg-danger" *ngIf="notes_bcba.billedbcba === 0">Pending</span>
-                                                                    <span class="badge bg-success" *ngIf="notes_bcba.billedbcba === 1">Billed</span>
-                                                                    <span class="badge bg-danger" *ngIf="notes_bcba.paybcba === 0">Pending</span>
-                                                                    <span class="badge bg-success" *ngIf="notes_bcba.paybcba === 1">Pay</span><br>
-                                                                    <span class="badge bg-warning" *ngIf="notes_bcba.mdbcba ">{{notes_bcba.mdbcba}}</span>
-                                                                    <span class="badge bg-warning" *ngIf="notes_bcba.md2bcba ">{{notes_bcba.md2bcba}}</span>
-                                                                </div>
-                                                                <div class="comman-activitys flex-grow-1">
-                                                                    <h3>PatientId:{{notes_bcba.patient_id}} </h3>
-                                                                    <p><b>Bip id:</b> {{notes_bcba.bip_id}} </p>
-                                                                    <p><b>location:</b> {{notes_bcba.location}} </p>
-                                                                    <p><b>provider name:</b> {{notes_bcba.provider_name.name}} {{notes_bcba.provider_name.surname}} </p>
-                                                                    <p><b>provider npi:</b> {{notes_bcba.provider_name.npi}}  </p>
-                                                                    <p><b>Supervisor name:</b> {{notes_bcba.aba_supervisor.name}} {{notes_bcba.aba_supervisor.surname}} </p>
-                                                                    <p><b>Supervisor npi:</b> {{notes_bcba.aba_supervisor.npi}}  </p>
-                                                                    <p *ngIf="notes_bcba.note_description"><b>note description:</b> {{notes_bcba.note_description}}</p>
-                                                                    <ng-container *ngIf="!notes_bcba.note_description">
-                                                                        <button class="custom-badge status-pink">note description: Pendiente</button>
-                                                                    </ng-container>
-                                                                    
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </ng-container>
-                                                    
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </ng-container>
-                                    <ng-container *ngIf="option_selected == 4">
-                                        <div class="setting-form-blk">
-                                            <form>
-                                                <div class="row">
-                                                    <div class="col-12">
-                                                        <div class="form-heading">
-                                                            <h4>Account Setting</h4>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 col-sm-12">  
-                                                        <div class="form-group local-forms">
-                                                            <label >First Name </label>
-                                                            <input class="form-control" type="text" name="name" [(ngModel)]="name" >
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 col-sm-12">  
-                                                        <div class="form-group local-forms">
-                                                            <label >Last Name </label>
-                                                            <input class="form-control" type="text" name="surname" [(ngModel)]="surname" >
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 col-sm-12">  
-                                                        <div class="form-group local-forms">
-                                                            <label >Phone </label>
-                                                            <input class="form-control" type="text" name="phone" [(ngModel)]="phone" >
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 col-sm-12">
-                                                        <div class="form-group local-forms">
-                                                            <label >Email </label>
-                                                            <input class="form-control" disabled type="email" name="email" [(ngModel)]="email" >
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 col-sm-12">
-                                                        <div class="form-group local-forms">
-                                                            <label>Address  <span class="login-danger">*</span></label>
-                                                            <textarea class="form-control" rows="3" cols="30" [(ngModel)]="address" name="address"></textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="form-heading">
-                                                        <h4>Security Setting</h4>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-sm-12">
-                                                    <div class="form-group local-forms">
-                                                        <label >New Password </label>
-                                                        <input class="form-control" type="password" name="password" [(ngModel)]="password" >
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-sm-12">
-                                                    <div class="form-group local-forms">
-                                                        <label >Confirm Password </label>
-                                                        <input class="form-control" type="password"  name="password_repeat" [(ngModel)]="password_repeat" >
-                                                    </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <!-- validaciones -->
-                                                    <div class="form-group row" *ngIf="text_success">
-                                                        <div class="col-12">
-                                                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                                                <strong>Exito!</strong>{{text_success}}.
-                                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                                                                    <span aria-hidden="true"> </span>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                            
-                                                    <div class="form-group row" *ngIf="text_validation">
-                                                        <div class="col-12">
-                                                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                                                <strong>!</strong> {{ text_validation }}.
-                                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                                                                    <span aria-hidden="true"> </span>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- validaciones -->
-                                                    <div class="doctor-submit">
-                                                        <button type="button" (click)="update()" class="btn btn-primary submit-form me-2">Edit</button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                            </div>
-                                    </ng-container>
-                                    
-                                    
-                                </div>
+                    </ul>
+                  </div>
+                  <ng-container *ngIf="option_selected == 1">
+                    <div class="card">
+                      <div class="card-body p-0">
+                        <div class="personal-list-out">
+                          <div class="row">
+                            <div class="col-xl-3 col-md-6">
+                              <div class="detail-personal">
+                                <h2>Full Name</h2>
+                                <h3>{{ doctor_selected.full_name }}</h3>
+                              </div>
                             </div>
-                            
+                            <div class="col-xl-3 col-md-6">
+                              <div class="detail-personal">
+                                <h2>Mobile</h2>
+                                <h3>{{ doctor_selected.phone }}</h3>
+                              </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                              <div class="detail-personal">
+                                <h2>Email</h2>
+                                <h3>{{ doctor_selected.email }}</h3>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-xl-3 col-md-6">
+                              <div class="detail-personal">
+                                <h2>languages</h2>
+                                <h3>{{ doctor_selected.languages }}</h3>
+                              </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                              <div class="detail-personal">
+                                <h2>contract</h2>
+                                <h3>{{ doctor_selected.contract }}</h3>
+                              </div>
+                            </div>
+                            <div class="col-xl-3 col-md-6">
+                              <div class="detail-personal">
+                                <h2>contract_type</h2>
+                                <h3>{{ doctor_selected.contract_type }}</h3>
+                              </div>
+                            </div>
+                          </div>
                         </div>
+                        <div class="hello-park">
+                          <p><b>Address:</b> {{ doctor_selected.address }}</p>
+                        </div>
+                      </div>
                     </div>
-                    <div class="col-lg-4">
-                        <!-- <div class="doctor-personals-grp">
+
+                    <div class="card">
+                      <div class="card-header">
+                        <h4 class="card-title">Professional data</h4>
+                      </div>
+                      <div class="card-body p-0">
+                        <div class="personal-list-out">
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>Currently Pay Throught Company</h2>
+                                  <h3>
+                                    {{
+                                      doctor_selected.currently_pay_through_company
+                                    }}
+                                  </h3>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>LLC</h2>
+                                  <h3>{{ doctor_selected.llc }}</h3>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>IEN</h2>
+                                  <h3>{{ doctor_selected.ien }}</h3>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>WC</h2>
+                                  <h3>{{ doctor_selected.wc }}</h3>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>Electronic Signature</h2>
+                                  <div
+                                    *ngIf="
+                                      !doctor_selected.electronic_signature
+                                    "
+                                  >
+                                    <img
+                                      src="./assets/img/no-image.jpg"
+                                      class="shadow"
+                                    />
+                                  </div>
+                                  <div
+                                    *ngIf="doctor_selected.electronic_signature"
+                                  >
+                                    <img
+                                      [src]="
+                                        doctor_selected.electronic_signature
+                                      "
+                                      class="shadow"
+                                      style="width: 100%; height: 70px"
+                                      [alt]="doctor_selected.name"
+                                    />
+                                  </div>
+                                  <!-- <h3>{{doctor_selected.electronic_signature}}</h3> -->
+                                </div>
+                              </div>
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>Agency / Location</h2>
+                                  <h3>{{ doctor_selected.agency_location }}</h3>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>City</h2>
+                                  <h3>{{ doctor_selected.city }}</h3>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>DOB</h2>
+                                  <h3>{{ doctor_selected.birth_date }}</h3>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>SS Number</h2>
+                                  <h3>{{ doctor_selected.ss_number }}</h3>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>Date of Hire</h2>
+                                  <h3>{{ doctor_selected.date_of_hire }}</h3>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>Start Pay</h2>
+                                  <h3>{{ doctor_selected.start_pay }}</h3>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>Driver License Expiration</h2>
+                                  <h3>
+                                    {{
+                                      doctor_selected.driver_license_expiration
+                                    }}
+                                  </h3>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>CPR (every 2 years)</h2>
+                                  <h3>
+                                    {{ doctor_selected.cpr_every_2_years }}
+                                  </h3>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>Background (every 5 years)</h2>
+                                  <h3>
+                                    {{
+                                      doctor_selected.background_every_5_years
+                                    }}
+                                  </h3>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>E Verify</h2>
+                                  <h3>{{ doctor_selected.e_verify }}</h3>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>National Sex Offender Registry</h2>
+                                  <h3>
+                                    {{
+                                      doctor_selected.national_sex_offender_registry
+                                    }}
+                                  </h3>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>Certificate Number</h2>
+                                  <h3>
+                                    {{ doctor_selected.certificate_number }}
+                                  </h3>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>BACB License Expiration</h2>
+                                  <h3>
+                                    {{
+                                      doctor_selected.bacb_license_expiration
+                                    }}
+                                  </h3>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>Liability Insurance Annually</h2>
+                                  <h3>
+                                    {{
+                                      doctor_selected.liability_insurance_annually
+                                    }}
+                                  </h3>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>Local Police Rec(every 5 years)</h2>
+                                  <h3>
+                                    {{
+                                      doctor_selected.local_police_rec_every_5_years
+                                    }}
+                                  </h3>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>NPI</h2>
+                                  <h3>{{ doctor_selected.npi }}</h3>
+                                </div>
+                              </div>
+                              <div class="col-xl-3 col-md-6">
+                                <div class="detail-personal">
+                                  <h2>Medica Id Provider</h2>
+                                  <h3>
+                                    {{ doctor_selected.medicaid_provider }}
+                                  </h3>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="option_selected == 2">
+                    <div class="activity scrooldiv">
+                      <div class="activity-box">
+                        <ul class="activity-list">
+                          <ng-container *ngFor="let notes_rbt of notes_rbts">
+                            <li>
+                              <div class="activity-user">
+                                <a
+                                  [attr.title]="notes_rbt.patient_id"
+                                  data-bs-toggle="tooltip"
+                                >
+                                  <img
+                                    src="assets/webp/aba-logo-new.webp"
+                                    width="35"
+                                    height="27"
+                                    alt=""
+                                    class="img-fluid rounded-circle"
+                                  />
+                                  <!-- <img [attr.alt]="appointment.patient_id" [src]="notes_bcba.patient.avatar" class="img-fluid rounded-circle"> -->
+                                </a>
+                              </div>
+                              <div class="activity-content timeline-group-blk">
+                                <div class="timeline-group flex-shrink-0">
+                                  <h4>{{ notes_rbt.session_date | date }}</h4>
+                                  <span class="time">{{
+                                    notes_rbt.time_in +
+                                      " - " +
+                                      notes_rbt.time_out
+                                  }}</span>
+                                  <span class="time">{{
+                                    notes_rbt.time_in2 +
+                                      " - " +
+                                      notes_rbt.time_out2
+                                  }}</span>
+                                  <span
+                                    class="badge bg-danger"
+                                    *ngIf="notes_rbt.billed === 0"
+                                    >Pending</span
+                                  >
+                                  <span
+                                    class="badge bg-success"
+                                    *ngIf="notes_rbt.billed === 1"
+                                    >Billed</span
+                                  >
+                                  <span
+                                    class="badge bg-danger"
+                                    *ngIf="notes_rbt.pay === 0"
+                                    >Pending</span
+                                  >
+                                  <span
+                                    class="badge bg-success"
+                                    *ngIf="notes_rbt.pay === 1"
+                                    >Pay</span
+                                  ><br />
+                                  <span
+                                    class="badge bg-warning"
+                                    *ngIf="notes_rbt.md"
+                                    >{{ notes_rbt.md }}</span
+                                  >
+                                  <span
+                                    class="badge bg-warning"
+                                    *ngIf="notes_rbt.md2"
+                                    >{{ notes_rbt.md2 }}</span
+                                  >
+                                </div>
+                                <div class="comman-activitys flex-grow-1">
+                                  <h3>
+                                    {{ notes_rbt.patient_id }}
+                                    <span>
+                                      <br />
+                                      Next Session:
+                                      {{
+                                        notes_rbt.next_session_is_scheduled_for
+                                          | date
+                                      }}
+                                    </span>
+                                  </h3>
+                                  <p>
+                                    Supervisor Name:
+                                    {{ notes_rbt.supervisor.name }}
+                                    {{ notes_rbt.supervisor.surname }}
+                                  </p>
+                                  <p>
+                                    meet with client at:
+                                    {{ notes_rbt.meet_with_client_at }}
+                                  </p>
+                                </div>
+                              </div>
+                            </li>
+                          </ng-container>
+                        </ul>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="option_selected == 3">
+                    <div class="activity scrooldiv">
+                      <div class="activity-box">
+                        <ul class="activity-list">
+                          <ng-container *ngFor="let notes_bcba of notes_bcbas">
+                            <li>
+                              <div class="activity-user">
+                                <a
+                                  [attr.title]="notes_bcba.patient_id"
+                                  data-bs-toggle="tooltip"
+                                >
+                                  <img
+                                    src="assets/webp/aba-logo-new.webp"
+                                    width="35"
+                                    height="27"
+                                    alt=""
+                                    class="img-fluid rounded-circle"
+                                  />
+                                  <!-- <img [attr.alt]="appointment.patient_id" [src]="notes_bcba.patient.avatar" class="img-fluid rounded-circle"> -->
+                                </a>
+                              </div>
+                              <div class="activity-content timeline-group-blk">
+                                <div class="timeline-group flex-shrink-0">
+                                  <h4>{{ notes_bcba.created_at | date }}</h4>
+                                  <span
+                                    class="badge bg-danger"
+                                    *ngIf="notes_bcba.billedbcba === 0"
+                                    >Pending</span
+                                  >
+                                  <span
+                                    class="badge bg-success"
+                                    *ngIf="notes_bcba.billedbcba === 1"
+                                    >Billed</span
+                                  >
+                                  <span
+                                    class="badge bg-danger"
+                                    *ngIf="notes_bcba.paybcba === 0"
+                                    >Pending</span
+                                  >
+                                  <span
+                                    class="badge bg-success"
+                                    *ngIf="notes_bcba.paybcba === 1"
+                                    >Pay</span
+                                  ><br />
+                                  <span
+                                    class="badge bg-warning"
+                                    *ngIf="notes_bcba.mdbcba"
+                                    >{{ notes_bcba.mdbcba }}</span
+                                  >
+                                  <span
+                                    class="badge bg-warning"
+                                    *ngIf="notes_bcba.md2bcba"
+                                    >{{ notes_bcba.md2bcba }}</span
+                                  >
+                                </div>
+                                <div class="comman-activitys flex-grow-1">
+                                  <h3>PatientId:{{ notes_bcba.patient_id }}</h3>
+                                  <p><b>Bip id:</b> {{ notes_bcba.bip_id }}</p>
+                                  <p>
+                                    <b>location:</b> {{ notes_bcba.location }}
+                                  </p>
+                                  <p>
+                                    <b>provider name:</b>
+                                    {{ notes_bcba.provider_name.name }}
+                                    {{ notes_bcba.provider_name.surname }}
+                                  </p>
+                                  <p>
+                                    <b>provider npi:</b>
+                                    {{ notes_bcba.provider_name.npi }}
+                                  </p>
+                                  <p>
+                                    <b>Supervisor name:</b>
+                                    {{ notes_bcba.aba_supervisor.name }}
+                                    {{ notes_bcba.aba_supervisor.surname }}
+                                  </p>
+                                  <p>
+                                    <b>Supervisor npi:</b>
+                                    {{ notes_bcba.aba_supervisor.npi }}
+                                  </p>
+                                  <p *ngIf="notes_bcba.note_description">
+                                    <b>note description:</b>
+                                    {{ notes_bcba.note_description }}
+                                  </p>
+                                  <ng-container
+                                    *ngIf="!notes_bcba.note_description"
+                                  >
+                                    <button class="custom-badge status-pink">
+                                      note description: Pendiente
+                                    </button>
+                                  </ng-container>
+                                </div>
+                              </div>
+                            </li>
+                          </ng-container>
+                        </ul>
+                      </div>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngIf="option_selected == 4">
+                    <div class="setting-form-blk">
+                      <form>
+                        <div class="row">
+                          <div class="col-12">
+                            <div class="form-heading">
+                              <h4>Account Setting</h4>
+                            </div>
+                          </div>
+                          <div class="col-12 col-sm-12">
+                            <div class="form-group local-forms">
+                              <label>First Name </label>
+                              <input
+                                class="form-control"
+                                type="text"
+                                name="name"
+                                [(ngModel)]="name"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-12 col-sm-12">
+                            <div class="form-group local-forms">
+                              <label>Last Name </label>
+                              <input
+                                class="form-control"
+                                type="text"
+                                name="surname"
+                                [(ngModel)]="surname"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-12 col-sm-12">
+                            <div class="form-group local-forms">
+                              <label>Phone </label>
+                              <input
+                                class="form-control"
+                                type="text"
+                                name="phone"
+                                [(ngModel)]="phone"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-12 col-sm-12">
+                            <div class="form-group local-forms">
+                              <label>Email </label>
+                              <input
+                                class="form-control"
+                                disabled
+                                type="email"
+                                name="email"
+                                [(ngModel)]="email"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-12 col-sm-12">
+                            <div class="form-group local-forms">
+                              <label
+                                >Address
+                                <span class="login-danger">*</span></label
+                              >
+                              <textarea
+                                class="form-control"
+                                rows="3"
+                                cols="30"
+                                [(ngModel)]="address"
+                                name="address"
+                              ></textarea>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="form-heading">
+                            <h4>Security Setting</h4>
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-12">
+                          <div class="form-group local-forms">
+                            <label>New Password </label>
+                            <input
+                              class="form-control"
+                              type="password"
+                              name="password"
+                              [(ngModel)]="password"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-12">
+                          <div class="form-group local-forms">
+                            <label>Confirm Password </label>
+                            <input
+                              class="form-control"
+                              type="password"
+                              name="password_repeat"
+                              [(ngModel)]="password_repeat"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <!-- validaciones -->
+                          <div class="form-group row" *ngIf="text_success">
+                            <div class="col-12">
+                              <div
+                                class="alert alert-success alert-dismissible fade show"
+                                role="alert"
+                              >
+                                <strong>Exito!</strong>{{ text_success }}.
+                                <button
+                                  type="button"
+                                  class="btn-close"
+                                  data-bs-dismiss="alert"
+                                  aria-label="Close"
+                                >
+                                  <span aria-hidden="true"> </span>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="form-group row" *ngIf="text_validation">
+                            <div class="col-12">
+                              <div
+                                class="alert alert-warning alert-dismissible fade show"
+                                role="alert"
+                              >
+                                <strong>!</strong> {{ text_validation }}.
+                                <button
+                                  type="button"
+                                  class="btn-close"
+                                  data-bs-dismiss="alert"
+                                  aria-label="Close"
+                                >
+                                  <span aria-hidden="true"> </span>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- validaciones -->
+                          <div class="doctor-submit">
+                            <button
+                              type="button"
+                              (click)="update()"
+                              class="btn btn-primary submit-form me-2"
+                            >
+                              Edit
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <!-- <div class="doctor-personals-grp">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="heading-detail ">
@@ -569,136 +974,151 @@
                                                 <h4>{{location.title}}</h4>
                                                 <span>{{location.state}}</span>
                                             </li>
-                                            
+
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </div> -->
-                        <div class="doctor-personals-grp">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="heading-detail ">
-                                        <h4 class="mb-3">About me</h4>
-                                        <!-- <p>Hello I am Smith Bruklin a Gynaecologist in Sanjivni Hospital Surat. I love to work with all my hospital staff and seniour doctors.</p> -->
-                                    </div>
-                                    <div class="about-me-list">
-                                        <ul class="list-space">
-                                            <li>
-                                                <h4>Gender</h4>
-                                                <span *ngIf="doctor_selected.gender == 2" >Female</span>
-                                                <span *ngIf="doctor_selected.gender == 1" >Male</span>
-                                            </li>
-                                            <li>
-                                                <h4>Birth Day</h4>
-                                                <span>{{doctor_selected.birth_date}}</span>
-                                            </li>
-                                            <li>
-                                                <h4>Languages</h4>
-                                                <span>{{doctor_selected.languages}}</span>
-                                            </li>
-                                            <li>
-                                                <h4>Phone</h4>
-                                                <span>{{doctor_selected.phone}}</span>
-                                            </li>
-                                            <li>
-                                                <h4>Role</h4>
-                                                <span>{{doctor_selected.roles.name}}</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="doctor-personals-grp">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="heading-detail ">
-                                        <h4 class="mb-3">CEU</h4>
-                                        <!-- <p>Hello I am Smith Bruklin a Gynaecologist in Sanjivni Hospital Surat. I love to work with all my hospital staff and seniour doctors.</p> -->
-                                    </div>
-                                    <div class="about-me-list">
-                                        <ul class="list-space">
-                                            <li>
-                                                <h4>CEU HIPPA Annually</h4>
-                                                <span>{{doctor_selected.ceu_hippa_annually}}</span>
-                                            </li>
-                                            <li>
-                                                <h4>CEU Domestic Violence (no expiration )</h4>
-                                                <span>{{doctor_selected.ceu_domestic_violence_no_expiration}}</span>
-                                            </li>
-                                            <li>
-                                                <h4>CEU Security Awarence Annually</h4>
-                                                <span>{{doctor_selected.ceu_security_awareness_annually}}</span>
-                                            </li>
-                                            <li>
-                                                <h4>CEU Zero Tolerance (every 3 years)</h4>
-                                                <span>{{doctor_selected.ceu_zero_tolerance_every_3_years}}</span>
-                                            </li>
-                                            <li>
-                                                <h4>CEU- HIV/bloodborne pathogens/infection control (no expiration)</h4>
-                                                <span>{{doctor_selected.ceu_hiv_bloodborne_pathogens_infection_control_no_expiration}}</span>
-                                            </li>
-                                            <li>
-                                                <h4>CEU Civil Rights (no expiration)</h4>
-                                                <span>{{doctor_selected.ceu_civil_rights_no_expiration}}</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="doctor-personals-grp">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="heading-detail ">
-                                        <h4 class="mb-3">Others</h4>
-                                        <!-- <p>Hello I am Smith Bruklin a Gynaecologist in Sanjivni Hospital Surat. I love to work with all my hospital staff and seniour doctors.</p> -->
-                                    </div>
-                                    <div class="about-me-list">
-                                        <ul class="list-space">
-                                            <li>
-                                                <h4>School Badge</h4>
-                                                <span>{{doctor_selected.school_badge}}</span>
-                                            </li>
-                                            <li>
-                                                <h4>W-9/W-4 form</h4>
-                                                <span>{{doctor_selected.w_9_w_4_form}}</span>
-                                            </li>
-                                            <li>
-                                                <h4>Contract</h4>
-                                                <span>{{doctor_selected.contract}}</span>
-                                            </li>
-                                            <li>
-                                                <h4>2/4 Week Notice Agreement</h4>
-                                                <span>{{doctor_selected.two_four_week_notice_agreement}}</span>
-                                            </li>
-                                            <li>
-                                                <h4>Credentialing package (BCBAs only)</h4>
-                                                <span>{{doctor_selected.credentialing_package_bcbas_only}}</span>
-                                            </li>
-                                            <li>
-                                                <h4>CAQH# (BCBAs only)</h4>
-                                                <span>{{doctor_selected.caqh_bcbas_only}}</span>
-                                            </li>
-                                            <li>
-                                                <h4>Contract Type</h4>
-                                                <span>{{doctor_selected.contract_type}}</span>
-                                            </li>
-                                            <li>
-                                                <h4>Salary</h4>
-                                                <span>{{doctor_selected.salary}}</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
+            <div class="doctor-personals-grp">
+              <div class="card">
+                <div class="card-body">
+                  <div class="heading-detail">
+                    <h4 class="mb-3">About me</h4>
+                    <!-- <p>Hello I am Smith Bruklin a Gynaecologist in Sanjivni Hospital Surat. I love to work with all my hospital staff and seniour doctors.</p> -->
+                  </div>
+                  <div class="about-me-list">
+                    <ul class="list-space">
+                      <li>
+                        <h4>Gender</h4>
+                        <span *ngIf="doctor_selected.gender == 2">Female</span>
+                        <span *ngIf="doctor_selected.gender == 1">Male</span>
+                      </li>
+                      <li>
+                        <h4>Birth Day</h4>
+                        <span>{{ doctor_selected.birth_date }}</span>
+                      </li>
+                      <li>
+                        <h4>Languages</h4>
+                        <span>{{ doctor_selected.languages }}</span>
+                      </li>
+                      <li>
+                        <h4>Phone</h4>
+                        <span>{{ doctor_selected.phone }}</span>
+                      </li>
+                      <li>
+                        <h4>Role</h4>
+                        <span>{{ doctor_selected.roles.name }}</span>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
+              </div>
             </div>
+            <div class="doctor-personals-grp">
+              <div class="card">
+                <div class="card-body">
+                  <div class="heading-detail">
+                    <h4 class="mb-3">CEU</h4>
+                    <!-- <p>Hello I am Smith Bruklin a Gynaecologist in Sanjivni Hospital Surat. I love to work with all my hospital staff and seniour doctors.</p> -->
+                  </div>
+                  <div class="about-me-list">
+                    <ul class="list-space">
+                      <li>
+                        <h4>CEU HIPPA Annually</h4>
+                        <span>{{ doctor_selected.ceu_hippa_annually }}</span>
+                      </li>
+                      <li>
+                        <h4>CEU Domestic Violence (no expiration )</h4>
+                        <span>{{
+                          doctor_selected.ceu_domestic_violence_no_expiration
+                        }}</span>
+                      </li>
+                      <li>
+                        <h4>CEU Security Awarence Annually</h4>
+                        <span>{{
+                          doctor_selected.ceu_security_awareness_annually
+                        }}</span>
+                      </li>
+                      <li>
+                        <h4>CEU Zero Tolerance (every 3 years)</h4>
+                        <span>{{
+                          doctor_selected.ceu_zero_tolerance_every_3_years
+                        }}</span>
+                      </li>
+                      <li>
+                        <h4>
+                          CEU- HIV/bloodborne pathogens/infection control (no
+                          expiration)
+                        </h4>
+                        <span>{{
+                          doctor_selected.ceu_hiv_bloodborne_pathogens_infection_control_no_expiration
+                        }}</span>
+                      </li>
+                      <li>
+                        <h4>CEU Civil Rights (no expiration)</h4>
+                        <span>{{
+                          doctor_selected.ceu_civil_rights_no_expiration
+                        }}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="doctor-personals-grp">
+              <div class="card">
+                <div class="card-body">
+                  <div class="heading-detail">
+                    <h4 class="mb-3">Others</h4>
+                    <!-- <p>Hello I am Smith Bruklin a Gynaecologist in Sanjivni Hospital Surat. I love to work with all my hospital staff and seniour doctors.</p> -->
+                  </div>
+                  <div class="about-me-list">
+                    <ul class="list-space">
+                      <li>
+                        <h4>School Badge</h4>
+                        <span>{{ doctor_selected.school_badge }}</span>
+                      </li>
+                      <li>
+                        <h4>W-9/W-4 form</h4>
+                        <span>{{ doctor_selected.w_9_w_4_form }}</span>
+                      </li>
+                      <li>
+                        <h4>Contract</h4>
+                        <span>{{ doctor_selected.contract }}</span>
+                      </li>
+                      <li>
+                        <h4>2/4 Week Notice Agreement</h4>
+                        <span>{{
+                          doctor_selected.two_four_week_notice_agreement
+                        }}</span>
+                      </li>
+                      <li>
+                        <h4>Credentialing package (BCBAs only)</h4>
+                        <span>{{
+                          doctor_selected.credentialing_package_bcbas_only
+                        }}</span>
+                      </li>
+                      <li>
+                        <h4>CAQH# (BCBAs only)</h4>
+                        <span>{{ doctor_selected.caqh_bcbas_only }}</span>
+                      </li>
+                      <li>
+                        <h4>Contract Type</h4>
+                        <span>{{ doctor_selected.contract_type }}</span>
+                      </li>
+                      <li>
+                        <h4>Salary</h4>
+                        <span>{{ doctor_selected.salary }}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
- 

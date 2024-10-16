@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
 import { CrisisPlanService } from '../../service/crisis-plan.service';
+import { AppUser } from 'src/app/shared/models/users.models';
 
 @Component({
   selector: 'app-crisis-plan',
@@ -11,11 +12,11 @@ import { CrisisPlanService } from '../../service/crisis-plan.service';
 })
 export class CrisisPlanComponent {
   valid_form_success = false;
-  text_validation: string = '';
-  text_success: string = '';
+  text_validation = '';
+  text_success = '';
 
   client_id: any;
-  user: any;
+  user: AppUser;
   doctor_id: any;
   client_selected: any;
   patient_id: any;
@@ -56,8 +57,8 @@ export class CrisisPlanComponent {
   means_homicidality: any;
   prior_attempt_homicidality: any;
 
-  crisisPlans: any[] = [];
-  caregiver_requirements_for_prevention_of_crisis: any[] = [];
+  crisisPlans = [];
+  caregiver_requirements_for_prevention_of_crisis = [];
   crisisplanId: any;
   crisis_description: any;
   crisis_note: any;
@@ -71,7 +72,7 @@ export class CrisisPlanComponent {
   ) {}
 
   ngOnInit(): void {
-    // window.scrollTo(0, 0);//inicia la vista siempre desde arriba
+    // //inicia la vista siempre desde arriba
 
     //me subcribo al id recibido por el parametro de la url
     this.ativatedRoute.params.subscribe((resp: any) => {
@@ -274,7 +275,7 @@ export class CrisisPlanComponent {
     //   return;
     // }
 
-    let data = {
+    const data = {
       id: this.crisisplanId,
       bip_id: this.bip_selectedIdd,
       patient_id: this.patient_id,

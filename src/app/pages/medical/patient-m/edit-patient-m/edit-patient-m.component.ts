@@ -6,8 +6,9 @@ import { InsuranceService } from '../../insurance/service/insurance.service';
 import Swal from 'sweetalert2';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Location } from '@angular/common';
+import { AppUser } from 'src/app/shared/models/users.models';
 // declare function alertClose():any;
-declare var $: any;
+declare let $: any;
 
 export interface ResponseBackend {
   users: User[];
@@ -38,37 +39,37 @@ export interface Service {
 export class EditPatientMComponent {
   routes = AppRoutes;
   selectedValue!: string;
-  selectedValueLocation!: string;
+  selectedValueLocation!: number;
   selectedValueInsurer!: string;
   selectedValueCode!: any;
   selectedValueCodeProvider!: string;
   selectedValuePosCovered!: string;
 
-  option_selected: number = 0;
+  option_selected = 0;
 
   patient_id: any;
-  f: string = '';
+  f = '';
 
   client_id: any;
-  first_name: string = '';
-  last_name: string = '';
-  parent_guardian_name: string = '';
+  first_name = '';
+  last_name = '';
+  parent_guardian_name = '';
   relationship: any;
-  language: string = '';
-  phone: string = '';
-  home_phone: string = '';
-  work_phone: string = '';
-  zip: string = '';
-  state: string = '';
-  email: string = '';
-  education: string = '';
-  profession: string = '';
-  school_name: string = '';
-  school_number: string = '';
-  birth_date: string = '';
-  age: number = 0;
-  gender: number = 1;
-  address: string = '';
+  language = '';
+  phone = '';
+  home_phone = '';
+  work_phone = '';
+  zip = '';
+  state = '';
+  email = '';
+  education = '';
+  profession = '';
+  school_name = '';
+  school_number = '';
+  birth_date = '';
+  age = 0;
+  gender = 1;
+  address = '';
   special_note: any;
   city: any;
   patient_control: any;
@@ -99,7 +100,7 @@ export class EditPatientMComponent {
   pa_services_start_date: Date;
   pa_services_end_date: Date;
   cpt: any;
-  n_units: number = 0;
+  n_units = 0;
 
   s_unit: any;
   n_code: any;
@@ -228,23 +229,23 @@ export class EditPatientMComponent {
 
   patient_selected: any;
 
-  specialists: any[] = [];
-  locations: any[] = [];
-  insurances: any[] = [];
-  notes: any[] = [];
-  insurer_name: any[] = [];
-  assesstmentlists: any[] = [];
-  services_code: any[] = [];
-  services: any[] = [];
-  pa_assessmentgroup: any[] = [];
-  posGroup: any[] = [];
-  poscoveredList: any[] = [];
+  specialists = [];
+  locations = [];
+  insurances = [];
+  notes = [];
+  insurer_name = [];
+  assesstmentlists = [];
+  services_code = [];
+  services = [];
+  pa_assessmentgroup = [];
+  posGroup = [];
+  poscoveredList = [];
 
-  roles_rbt: any[] = [];
-  roles_bcba: any[] = [];
-  roles_manager: any[] = [];
-  role_localmanager: any[] = [];
-  insurance_codes: any[] = [];
+  roles_rbt = [];
+  roles_bcba = [];
+  roles_manager = [];
+  role_localmanager = [];
+  insurance_codes = [];
   insurance: any;
   insurances_name: any;
   code: any;
@@ -257,14 +258,14 @@ export class EditPatientMComponent {
   insurance_id: any;
   id: any;
 
-  user: any;
+  user: AppUser;
   doctor_id: any;
   location_id: any;
   location: any;
   provider: any;
 
-  FILES: any[] = [];
-  FilesAdded: any[] = [];
+  FILES = [];
+  FilesAdded = [];
   file_selected: any;
   doc: any;
   FILE: any;
@@ -283,7 +284,7 @@ export class EditPatientMComponent {
   }
 
   ngOnInit(): void {
-    // window.scrollTo(0, 0);
+    //
     this.ativatedRoute.params.subscribe((resp: any) => {
       this.client_id = resp.id;
     });
@@ -298,7 +299,7 @@ export class EditPatientMComponent {
     this.doctor_id = this.user.id;
     this.location_id = this.user.location_id;
 
-    if (this.user.roles[0] == 'MANAGER') {
+    if (this.user.roles[0] === 'MANAGER') {
       this.selectedValueLocation = this.user.location_id;
     }
   }
@@ -327,10 +328,10 @@ export class EditPatientMComponent {
         this.location = resp.location;
         this.locations = resp.locations;
         this.roles_rbt = this.specialists.filter(
-          (user) => user.roles[0].name == 'RBT'
+          (user) => user.roles[0].name === 'RBT'
         );
         this.roles_bcba = this.specialists.filter(
-          (user) => user.roles[0].name == 'BCBA'
+          (user) => user.roles[0].name === 'BCBA'
         );
       });
   }
@@ -346,10 +347,10 @@ export class EditPatientMComponent {
 
         this.locations = resp.locations;
         this.roles_rbt = this.specialists.filter(
-          (user) => user.roles[0].name == 'RBT'
+          (user) => user.roles[0].name === 'RBT'
         );
         this.roles_bcba = this.specialists.filter(
-          (user) => user.roles[0].name == 'BCBA'
+          (user) => user.roles[0].name === 'BCBA'
         );
 
         this.insuranceService
@@ -376,7 +377,7 @@ export class EditPatientMComponent {
   }
 
   showUser() {
-    this.patientService.getPatient(this.client_id).subscribe((resp: any) => {
+    this.patientService.getPatient(this.client_id).subscribe((resp) => {
       console.log(resp);
       this.patient_selected = resp.patient;
 
@@ -473,11 +474,11 @@ export class EditPatientMComponent {
       //  console.log(this.IMAGE_PREVISUALIZA);;
 
       this.pa_assessmentss = resp.pa_assessments ? resp.pa_assessments : null; // ?
-      let jsonObj = JSON.parse(this.pa_assessmentss) || '';
+      const jsonObj = JSON.parse(this.pa_assessmentss) || '';
       this.pa_assessmentgroup = jsonObj;
 
       // this.selectedValuePosCovered = resp.pos_covered ? resp.pos_covered : null;
-      // let jsonObj2 = JSON.parse(this.selectedValuePosCovered) || '';
+      // const jsonObj2 = JSON.parse(this.selectedValuePosCovered) || '';
       // this.posGroup= jsonObj2;
       // console.log(this.posGroup);
 
@@ -569,7 +570,7 @@ export class EditPatientMComponent {
     }
     this.text_validation = '';
     this.FILE_AVATAR = $event.target.files[0];
-    let reader = new FileReader();
+    const reader = new FileReader();
     reader.readAsDataURL(this.FILE_AVATAR);
     reader.onloadend = () => (this.IMAGE_PREVISUALIZA = reader.result);
   }
@@ -594,15 +595,16 @@ export class EditPatientMComponent {
   selectDoc(FILE: any) {
     this.file_selected = FILE;
   }
+  closeReload() {
+    throw new Error('Not implemented');
+  }
 
   getDocumentIframe(url) {
-    var document, results;
-
     if (url === null) {
       return '';
     }
-    results = url.match('[\\?&]v=([^&#]*)');
-    document = results === null ? url : results[1];
+    const results = url.match('[\\?&]v=([^&#]*)');
+    const document = results === null ? url : results[1];
 
     return this._sanitizer.bypassSecurityTrustResourceUrl(document);
   }
@@ -630,11 +632,11 @@ export class EditPatientMComponent {
     }
 
     // this.valid_form = false;
-    let formData = new FormData();
+    const formData = new FormData();
 
     formData.append('patient_id', this.patient_id);
 
-    this.FILES.forEach((file: any, index: number) => {
+    this.FILES?.forEach((file: any, index: number) => {
       formData.append('files[' + index + ']', file);
     });
 
@@ -643,7 +645,7 @@ export class EditPatientMComponent {
 
     this.patientService.storeLaboratory(formData).subscribe((resp: any) => {
       // console.log(resp);
-      if (resp.message == 403) {
+      if (resp.message === 403) {
         this.text_validation = resp.message_text;
         // Swal.fire('Error al eliminar', `resp.message_text`, 'error');
       } else {
@@ -663,7 +665,7 @@ export class EditPatientMComponent {
     // }
 
     // this.valid_form = false;
-    let formData = new FormData();
+    const formData = new FormData();
 
     formData.append('first_name', this.first_name);
     formData.append('last_name', this.last_name);
@@ -711,7 +713,7 @@ export class EditPatientMComponent {
       );
     }
     if (this.selectedValueLocation) {
-      formData.append('location_id', this.selectedValueLocation);
+      formData.append('location_id', this.selectedValueLocation + '');
     }
 
     if (this.selectedValueInsurer) {
@@ -789,14 +791,14 @@ export class EditPatientMComponent {
     }
 
     // if(this.selectedValueLocation ){
-    //   formData.append('location_id', this.selectedValueLocation);
+    //   formData.append('location_id', this.selectedValueLocation+'');
     // }
 
-    if (this.selectedValueLocation || this.user.roles[0] == 'SUPERADMIN') {
-      formData.append('location_id', this.selectedValueLocation);
+    if (this.selectedValueLocation || this.user.roles[0] === 'SUPERADMIN') {
+      formData.append('location_id', this.selectedValueLocation + '');
     }
-    if (this.user.roles[0] == 'MANAGER') {
-      formData.append('location_id', this.user.location_id);
+    if (this.user.roles[0] === 'MANAGER') {
+      formData.append('location_id', this.user.location_id + '');
     }
 
     if (this.welcome) {
@@ -853,7 +855,7 @@ export class EditPatientMComponent {
       .editPatient(formData, this.client_id)
       .subscribe((resp: any) => {
         // console.log(resp);
-        if (resp.message == 403) {
+        if (resp.message === 403) {
           this.text_validation = resp.message_text;
           // Swal.fire('Error al eliminar', `resp.message_text`, 'error');
         } else {

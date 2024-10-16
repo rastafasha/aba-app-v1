@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DataService } from 'src/app/shared/data/data.service';
-import { socialLinks } from 'src/app/shared/models/models';
+import { SocialLinks } from 'src/app/shared/models/models';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 
 @Component({
@@ -10,7 +10,7 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 })
 export class SocialLinksComponent {
   routes = AppRoutes;
-  socialLinks: Array<socialLinks> = [];
+  socialLinks: Array<SocialLinks> = [];
 
   constructor(public data: DataService) {
     this.socialLinks = this.data.socialLinks;

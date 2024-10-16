@@ -8,6 +8,7 @@ import { GoalService } from '../../bip/service/goal.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { PatientMService } from '../../patient-m/service/patient-m.service';
 import { NoteRbtService } from '../services/note-rbt.service';
+import { AppUser } from 'src/app/shared/models/users.models';
 
 @Component({
   selector: 'app-edit-note-rbt',
@@ -17,7 +18,7 @@ import { NoteRbtService } from '../services/note-rbt.service';
 export class EditNoteRbtComponent implements OnInit {
   routes = AppRoutes;
   target: number;
-  interventionsList: any[] = [];
+  interventionsList = [];
 
   changeTime() {
     this.selectedValueTimeIn = this.formatTime('11:00:00');
@@ -49,7 +50,7 @@ export class EditNoteRbtComponent implements OnInit {
   client_selected: any;
   note_selected: any;
   bip_id: any;
-  user: any;
+  user: AppUser;
 
   first_name = '';
   last_name = '';
@@ -119,18 +120,18 @@ export class EditNoteRbtComponent implements OnInit {
   location_id: number;
   patientLocation_id: any;
 
-  roles_rbt: any[] = [];
-  roles_bcba: any[] = [];
+  roles_rbt = [];
+  roles_bcba = [];
 
-  hours_days: any[] = [];
-  maladaptives: any[] = [];
-  replacementGoals: any[] = [];
-  intervention_added: any[] = [];
-  replacements: any[] = [];
-  interventionsgroup: any[] = [];
+  hours_days = [];
+  maladaptives = [];
+  replacementGoals = [];
+  intervention_added = [];
+  replacements = [];
+  interventionsgroup = [];
 
-  maladaptivegroup: any[] = [];
-  replacementgroup: any[] = [];
+  maladaptivegroup = [];
+  replacementgroup = [];
 
   maladaptiveSelected: any = null;
   replacementSelected: any = null;
@@ -149,7 +150,7 @@ export class EditNoteRbtComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // window.scrollTo(0, 0);
+    //
     this.ativatedRoute.params.subscribe((resp: any) => {
       this.note_id = resp.id;
     });
@@ -777,7 +778,7 @@ export class EditNoteRbtComponent implements OnInit {
       (resp: any) => {
         // console.log(resp);
 
-        if (resp.message == 403) {
+        if (resp.message === 403) {
           this.text_validation = resp.message_text;
           Swal.fire('Warning', this.text_validation, 'warning');
         } else {

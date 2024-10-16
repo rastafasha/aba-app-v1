@@ -5,6 +5,8 @@ import { url_media } from 'src/app/config/config';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { LocationService } from '../services/location.service';
+import { AppUser } from 'src/app/shared/models/users.models';
+import { PageService } from 'src/app/shared/services/pages.service';
 
 @Component({
   selector: 'app-location-view',
@@ -14,7 +16,7 @@ import { LocationService } from '../services/location.service';
 export class LocationViewComponent {
   routes = AppRoutes;
   selectedValue!: string;
-  option_selected: number = 1;
+  option_selected = 1;
 
   dataSource!: MatTableDataSource<any>;
 
@@ -30,15 +32,15 @@ export class LocationViewComponent {
   serialNumberArray: number[] = [];
   currentPage = 1;
   pageNumberArray: number[] = [];
-  pageSelection: any[] = [];
+  pageSelection = [];
   totalPages = 0;
 
-  title: string = '';
+  title = '';
 
   URLMedia = `${url_media}`;
-  services: any[] = [];
-  patients: any[] = [];
-  specialists: any[] = [];
+  services = [];
+  patients = [];
+  specialists = [];
   location_info: any;
 
   code: any;
@@ -50,20 +52,20 @@ export class LocationViewComponent {
 
   location_id: any;
   location_iddd: any;
-  user: any;
-  roles: any[] = [];
+  user: AppUser;
+  roles = [];
   location_selected: any;
 
-  patient_generals: any[] = [];
+  patient_generals = [];
 
   valid_form = false;
   valid_form_success = false;
 
-  text_success: string = '';
-  text_validation: string = '';
+  text_success = '';
+  text_validation = '';
 
-  patientList: any[] = [];
-  specialistList: any[] = [];
+  patientList = [];
+  specialistList = [];
   patientid: any;
   patient_id: any;
   doctor_generals: any;
@@ -74,11 +76,11 @@ export class LocationViewComponent {
   constructor(
     private doctorService: DoctorService,
     private locationService: LocationService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private pageService: PageService
   ) {}
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
     this.activatedRoute.params.subscribe((resp: any) => {
       this.location_id = resp.id;
       // console.log(resp);
@@ -87,9 +89,9 @@ export class LocationViewComponent {
 
     const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
-    this.roles = this.user.roles[0];
+    this.roles = this.user.roles;
 
-    this.doctorService.closeMenuSidebar();
+    this.pageService.onInitPage();
   }
 
   isPermission(permission: string) {

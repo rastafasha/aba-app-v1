@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
 import { ConsentToTreatmentService } from '../../service/consent-to-treatment.service';
+import { AppUser } from 'src/app/shared/models/users.models';
 @Component({
   selector: 'app-consent-treatment-form',
   templateUrl: './consent-treatment-form.component.html',
@@ -12,11 +13,11 @@ export class ConsentTreatmentFormComponent {
   valid_form = false;
   valid_form_success = false;
 
-  text_success: string = '';
-  text_validation: string = '';
+  text_success = '';
+  text_validation = '';
 
   client_id: any;
-  user: any;
+  user: AppUser;
   doctor_id: any;
   client_selected: any;
   patient_id: any;
@@ -24,8 +25,8 @@ export class ConsentTreatmentFormComponent {
   bip_selectedId: any;
   bip_selectedIdd: any;
 
-  analyst_signature_date: string = '';
-  parent_guardian_signature_date: string = '';
+  analyst_signature_date = '';
+  parent_guardian_signature_date = '';
 
   FILE_SIGNATURE_ANAYST: any;
   IMAGE_PREVISUALIZA_SIGNATURE_ANAYST = 'assets/img/user-06.jpg';
@@ -47,7 +48,7 @@ export class ConsentTreatmentFormComponent {
   ) {}
 
   ngOnInit(): void {
-    // window.scrollTo(0, 0);//inicia la vista siempre desde arriba
+    // //inicia la vista siempre desde arriba
 
     //me subcribo al id recibido por el parametro de la url
     this.ativatedRoute.params.subscribe((resp: any) => {
@@ -132,7 +133,7 @@ export class ConsentTreatmentFormComponent {
     }
     this.text_validation = '';
     this.FILE_SIGNATURE_ANAYST = $event.target.files[0];
-    let reader = new FileReader();
+    const reader = new FileReader();
     reader.readAsDataURL(this.FILE_SIGNATURE_ANAYST);
     reader.onloadend = () =>
       (this.IMAGE_PREVISUALIZA_SIGNATURE_ANAYST = reader.result as string);
@@ -147,7 +148,7 @@ export class ConsentTreatmentFormComponent {
     this.text_validation = '';
     this.FILE_SIGNATURE_PARENT = $event.target.files[0];
     // console.log(this.FILE_SIGNATURE_PARENT);
-    let reader2 = new FileReader();
+    const reader2 = new FileReader();
     reader2.readAsDataURL(this.FILE_SIGNATURE_PARENT);
     reader2.onloadend = () =>
       (this.IMAGE_PREVISUALIZA_SIGNATURE_PARENT = reader2.result as string);
@@ -160,7 +161,7 @@ export class ConsentTreatmentFormComponent {
     //   return;
     // }
     // this.valid_form = false;
-    let formData = new FormData();
+    const formData = new FormData();
 
     formData.append(
       'parent_guardian_signature_date',
@@ -177,11 +178,13 @@ export class ConsentTreatmentFormComponent {
     // condiciones para revisar si viene o no la foto
     formData.append('imagen', this.FILE_SIGNATURE_ANAYST);
     if (this.analyst_signature) {
+      //
     }
 
     // condiciones para revisar si viene o no la foto... no funciona
     formData.append('imagenn', this.FILE_SIGNATURE_PARENT);
     if (this.parent_guardian_signature) {
+      //
     }
 
     this.valid_form_success = false;
@@ -190,9 +193,9 @@ export class ConsentTreatmentFormComponent {
     if (this.client_id_consentToTreatment && this.consentToTreatmentid) {
       this.consentToTreatmentService
         .createConsentToTreatment(formData)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           // console.log(resp);
-          if (resp.message == 403) {
+          if (resp.message === 403) {
             this.text_validation = resp.message_text;
           } else {
             Swal.fire(
@@ -208,7 +211,7 @@ export class ConsentTreatmentFormComponent {
         .createConsentToTreatment(formData)
         .subscribe((resp: any) => {
           // console.log(resp);
-          if (resp.message == 403) {
+          if (resp.message === 403) {
             this.text_validation = resp.message_text;
           } else {
             // this.valid_form_success = true;

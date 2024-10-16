@@ -6,6 +6,7 @@ import { DoctorService } from '../../doctors/service/doctor.service';
 import * as XLSX from 'xlsx';
 import { InsuranceService } from '../service/insurance.service';
 import { Location } from '@angular/common';
+import { PageService } from 'src/app/shared/services/pages.service';
 declare var $: any;
 
 @Component({
@@ -16,7 +17,7 @@ declare var $: any;
 export class InsuranceListComponent {
   routes = AppRoutes;
 
-  insuranceList: any[] = [];
+  insuranceList = [];
   dataSource!: MatTableDataSource<any>;
 
   showFilter = false;
@@ -30,23 +31,22 @@ export class InsuranceListComponent {
   serialNumberArray: number[] = [];
   currentPage = 1;
   pageNumberArray: number[] = [];
-  pageSelection: any[] = [];
+  pageSelection = [];
   totalPages = 0;
 
-  insurance_generals: any[] = [];
+  insurance_generals = [];
   insurance_id: any;
   insurance_selected: any;
   text_validation: any;
 
   constructor(
-    private doctorService: DoctorService,
+    private pageService: PageService,
     private fileSaver: FileSaverService,
     private insuranceService: InsuranceService,
     private location: Location
   ) {}
   ngOnInit() {
-    window.scrollTo(0, 0);
-    this.doctorService.closeMenuSidebar();
+    this.pageService.onInitPage();
     this.getTableData();
   }
 
@@ -87,16 +87,16 @@ export class InsuranceListComponent {
   deleteInsurance() {
     this.insuranceService
       .deleteInsurance(this.insurance_selected.id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log(resp);
 
-        if (resp.message == 403) {
+        if (resp.message === 403) {
           this.text_validation = resp.message_text;
         } else {
           const INDEX = this.insuranceList.findIndex(
-            (item: any) => item.id == this.insurance_selected.id
+            (item) => item.id === this.insurance_selected.id
           );
-          if (INDEX != -1) {
+          if (INDEX !== -1) {
             this.insuranceList.splice(INDEX, 1);
 
             $('#delete_insurance').hide();
@@ -133,13 +133,13 @@ export class InsuranceListComponent {
   }
 
   getMoreData(event: string): void {
-    if (event == 'next') {
+    if (event === 'next') {
       this.currentPage++;
       this.pageIndex = this.currentPage - 1;
       this.limit += this.pageSize;
       this.skip = this.pageSize * this.pageIndex;
       this.getTableDataGeneral();
-    } else if (event == 'previous') {
+    } else if (event === 'previous') {
       this.currentPage--;
       this.pageIndex = this.currentPage - 1;
       this.limit -= this.pageSize;
@@ -172,7 +172,7 @@ export class InsuranceListComponent {
   private calculateTotalPages(totalDatadoctor: number, pageSize: number): void {
     this.pageNumberArray = [];
     this.totalPages = totalDatadoctor / pageSize;
-    if (this.totalPages % 1 != 0) {
+    if (this.totalPages % 1 !== 0) {
       this.totalPages = Math.trunc(this.totalPages + 1);
     }
     /* eslint no-var: off */

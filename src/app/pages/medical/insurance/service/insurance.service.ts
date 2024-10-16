@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/core/auth/auth.service';
 export class InsuranceService {
   constructor(public http: HttpClient, authService: AuthService) {}
 
-  listInsurances(page: number = 1, insurer_name: string = '') {
+  listInsurances(page = 1, insurer_name = '') {
     let LINK = '';
     if (insurer_name) {
       LINK += '&insurer_name=' + insurer_name;
@@ -48,7 +48,7 @@ export class InsuranceService {
 
   deleteInsurance(insurance_id: any) {
     const URL = url_servicios + '/insurance/destroy/' + insurance_id;
-    return this.http.delete(URL);
+    return this.http.delete<any>(URL);
   }
 
   storeInsuranceService(data: any) {

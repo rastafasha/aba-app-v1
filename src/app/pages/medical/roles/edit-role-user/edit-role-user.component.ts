@@ -13,10 +13,10 @@ import { RolesService } from '../service/roles.service';
 export class EditRoleUserComponent {
   routes = AppRoutes;
 
-  sideBar: any[] = [];
+  sideBar = [];
   role_id: any = null;
-  name: string = '';
-  permissions: any[] = [];
+  name = '';
+  permissions = [];
   valid_form = false;
   valid_form_success = false;
   text_validation: any = null;
@@ -29,7 +29,6 @@ export class EditRoleUserComponent {
   ) {}
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
     this.sideBar = this.dataService.sidebar[0].menu;
     this.ativatedRoute.params.subscribe((resp: any) => {
       this.role_id = resp.id;
@@ -52,9 +51,9 @@ export class EditRoleUserComponent {
   addPermission(subMenu: any) {
     if (subMenu.permision) {
       const INDEX = this.permissions.findIndex(
-        (item: any) => item == subMenu.permision
+        (item: any) => item === subMenu.permision
       );
-      if (INDEX != -1) {
+      if (INDEX !== -1) {
         this.permissions.splice(INDEX, 1);
       } else {
         this.permissions.push(subMenu.permision);
@@ -65,11 +64,11 @@ export class EditRoleUserComponent {
 
   save() {
     this.valid_form = false;
-    if (!this.name || this.permissions.length == 0) {
+    if (!this.name || this.permissions.length === 0) {
       this.valid_form = true;
       return;
     }
-    let data = {
+    const data = {
       name: this.name,
       permissions: this.permissions,
     };
@@ -78,7 +77,7 @@ export class EditRoleUserComponent {
 
     this.roleService.editRole(data, this.role_id).subscribe((resp: any) => {
       // console.log(resp);
-      if (resp.message == 403) {
+      if (resp.message === 403) {
         this.text_validation = resp.message_text;
         return;
       }

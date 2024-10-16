@@ -10,7 +10,9 @@ import { environment } from 'src/environments/environment';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { InsuranceService } from '../../insurance/service/insurance.service';
 import { PatientMService } from '../service/patient-m.service';
+import { PageService } from 'src/app/shared/services/pages.service';
 
+// eslint-disable-next-line no-var
 declare var $: any;
 
 @Component({
@@ -22,19 +24,19 @@ export class ProfilePatientMComponent {
   routes = AppRoutes;
   @ViewChild('contentToConvert') contentToConvert!: ElementRef;
   patientProfile: any[];
-  option_selected: number = 1;
+  option_selected = 1;
   patient_id: any;
 
-  num_appointment: number = 0;
-  money_of_appointments: number = 0;
-  num_appointment_pendings: number = 0;
+  num_appointment = 0;
+  money_of_appointments = 0;
+  num_appointment_pendings = 0;
   patient_selected: any;
   appointment_pendings: any[] = [];
   appointments: any[] = [];
   pa_assessments: string;
 
-  text_success: string = '';
-  text_validation: string = '';
+  text_success = '';
+  text_validation = '';
 
   imagenSerUrl = environment.url_media;
   pa_assessmentgroup: any[] = [];
@@ -80,16 +82,17 @@ export class ProfilePatientMComponent {
 
   constructor(
     private patientService: PatientMService,
-    private activatedRoute: ActivatedRoute,
+    private pageService: PageService,
     private doctorService: DoctorService,
+    private activatedRoute: ActivatedRoute,
     private insuranceService: InsuranceService,
     private _sanitizer: DomSanitizer,
     private authService: AuthService,
     private location: Location
   ) {}
   ngOnInit(): void {
-    window.scrollTo(0, 0);
-    this.doctorService.closeMenuSidebar();
+    this.pageService.onInitPage();
+
     this.activatedRoute.params.subscribe((resp: any) => {
       // console.log(resp);
       this.client_id = resp.id;
@@ -155,7 +158,7 @@ export class ProfilePatientMComponent {
         this.clin_director_id = resp.patient.clin_director_id;
         // this.appointment_pendings= resp.appointment_pendings.data;
         this.pa_assessmentss = resp.pa_assessments;
-        let jsonObj = JSON.parse(this.pa_assessmentss) || '';
+        const jsonObj = JSON.parse(this.pa_assessmentss) || '';
         this.pa_assessmentgroup = jsonObj;
 
         this.patientService
@@ -243,11 +246,11 @@ export class ProfilePatientMComponent {
       const imgWidth = 210;
       const pageHeight = 295;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      var heightLeft = imgHeight;
+      let heightLeft = imgHeight;
 
       // Create a new PDF document
       const pdf = new jspdf.jsPDF('p', 'mm');
-      var position = 0;
+      let position = 0;
 
       pdf.addImage(
         canvas.toDataURL('image/png'),
@@ -285,15 +288,21 @@ export class ProfilePatientMComponent {
   }
 
   getDocumentIframe(url) {
-    var document, results;
-
     if (url === null) {
       return '';
     }
-    results = url.match('[\\?&]v=([^&#]*)');
-    document = results === null ? url : results[1];
+    const results = url.match('[\\?&]v=([^&#]*)');
+    const document = results === null ? url : results[1];
 
     return this._sanitizer.bypassSecurityTrustResourceUrl(document);
+  }
+
+  selectDoc(FILE: any) {
+    throw new Error('Not implemented');
+  }
+
+  closeReload() {
+    throw new Error('Not implemented');
   }
 
   closeModalDoc() {

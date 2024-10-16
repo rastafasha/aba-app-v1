@@ -18,15 +18,15 @@ export class ClientReportModel {
   patientID: any;
   patientName: any;
   doctor_selected_full_name: any;
-  billing_total: number = 0;
+  billing_total = 0;
   week_total_hours: string;
-  week_total_units: number = 0;
-  total_hours: number = 0;
-  total_units: number = 0;
-  charges: number = 0;
-  unitPrize: number = 0;
-  unitPrizeCpt: number = 0;
-  xe: number = 0;
+  week_total_units = 0;
+  total_hours = 0;
+  total_units = 0;
+  charges = 0;
+  unitPrize = 0;
+  unitPrizeCpt = 0;
+  xe = 0;
   is_xe: boolean;
 
   session_date: any;
@@ -76,7 +76,7 @@ export class ClientReportModel {
   //data: any;
 
   providersSponsorsList: any;
-  factorPorcentual: number = 1.66666666666667;
+  factorPorcentual = 1.66666666666667;
 
   doctor_selected: any = null;
   combinedList: any[];

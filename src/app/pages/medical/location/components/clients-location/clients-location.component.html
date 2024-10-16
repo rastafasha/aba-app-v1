@@ -1,230 +1,359 @@
 <div class="card">
-    <div class="card-body">
-        <div class="row" >
-            <div class="col-12">
-                <div class="form-heading">
-                    <h4>Clients: </h4>
-                    <div class="doctor-search-blk" >
-                        <div class="top-nav-search table-search-blk">
-                                <input  class="form-control" placeholder="Search here" [(ngModel)]="searchDataValue"
-                                (ngModelChange)="searchData(searchDataValue)">
-                                <a class="btn"><img src="assets/img/icons/search-normal.svg" alt=""></a>
-                        </div>
-                        <div class="add-group" >
-                            <a routerLink="/patients/add" class="btn btn-primary add-pluss ms-2" *ngIf="isPermission('register_patient')"><img src="assets/img/icons/plus.svg" alt=""></a>
-                            <a href="javascript:;" (click)="PageSize()" class="btn btn-primary doctor-refresh ms-2"><img src="assets/img/icons/re-fresh.svg" alt=""></a>
-                            
-                        </div>
-                    </div>
-                </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-12">
+        <div class="form-heading">
+          <h4>Clients:</h4>
+          <div class="doctor-search-blk">
+            <div class="top-nav-search table-search-blk">
+              <input
+                class="form-control"
+                placeholder="Search here"
+                [(ngModel)]="searchDataValue"
+                (ngModelChange)="searchData(searchDataValue)"
+              />
+              <a class="btn"
+                ><img src="assets/img/icons/search-normal.svg" alt=""
+              /></a>
             </div>
-            
-            
-            <div class="row align-items-center table-responsive" >
-                
-                
-                <table matSort  class="table border-0 custom-table comman-table datatable mb-0">
-                    <thead>
-                        <tr>
-                            
-                            <th mat-sort-header="avatarp">Avatar</th>
-                            <th mat-sort-header="namep">Full Name</th>
-                            <th mat-sort-header="emailp">Email</th>
-                            <th mat-sort-header="telefonop">Phone</th>
-                            <th mat-sort-header="elegible">Status</th>
-                            <th mat-sort-header="ops" *ngIf="roles ==='SUPERADMIN' || roles ==='MANAGER'">Options</th>
-                            <th mat-sort-header="createdp">Created At</th>
-                             <th ></th> <!--acciones -->
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let patient of patients">
-                            
-                            <td>
-                                <div *ngIf="!patient.avatar">
-                                    <img src="./assets/img/no-image.jpg" >
-                                </div>
-                                <div *ngIf="patient.avatar">
-                                    <img  src="{{patient.avatar}}" class="avatarlist"  [alt]="patient.first_name">
-                                </div> 
-                            </td>
-                            <td>
-                              <a  [routerLink]="['/patients/profile/', patient.id]">
-                                {{patient.first_name + ' ' + (patient.first_name ? patient.last_name: '')}}
-                              </a>
-                            </td>
-                            <td>{{patient.email}}</td>
-                            <td>{{patient.phone}}</td>
-                            <td>
-                            <span class="badge bg-primary"
-                                *ngIf="patient.status === 'incoming'">Incoming</span>
-                            <span class="badge bg-success"
-                                *ngIf="patient.status === 'active'">Active</span>
-                            <span class="badge bg-danger"
-                                *ngIf="patient.status === 'inactive'">Inactive</span>
-                                <span class="badge bg-primary"
-                                      *ngIf="patient.status === 'onHold'">On Hold</span>
-                            <span class="badge bg-primary"
-                                *ngIf="patient.status === 'onDischarge'">On Discharge</span>
-                            <span class="badge bg-primary"
-                                *ngIf="patient.status === 'waitintOnPa'">Waiting on PA</span>
-                            <span class="badge bg-primary"
-                                *ngIf="patient.status === 'waitintOnPaIa'">Waiting on PA IA</span>
-                            <span class="badge bg-primary"
-                                *ngIf="patient.status === 'waitintOnIa'">Waiting on School</span>
-                            <span class="badge bg-primary"
-                                *ngIf="patient.status === 'waitintOnServices'">Waiting on Services</span>
-                            <span class="badge bg-primary"
-                                *ngIf="patient.status === 'waitintOnStaff'">Waiting on Staff</span>
-                            <span class="badge bg-primary"
-                                *ngIf="patient.status === 'waitintOnSchool'">Waiting on School</span>
-
-                            <span *ngIf="patient.status === 'active'">
-                              <button class="btn btn-outline-success" *ngIf="roles ==='SUPERADMIN' || roles === 'MANAGER'|| roles === 'LM' || roles ==='BCBA'" [routerLink]="['/bip/attention/', patient.patient_id]" tooltip="BIP Create"><i class="fa fa-address-book"></i></button>
-                              <button class="btn btn-outline-dark" *ngIf="isPermission('view_bip')" [routerLink]="['/bip/profile/', patient.patient_id]" tooltip="BIP View"><i class="fa fa-eye"></i></button>
-                              <button class="btn btn-outline-success" *ngIf="roles ==='SUPERADMIN' || roles === 'MANAGER'|| roles === 'LM' ||  roles ==='RBT'" [routerLink]="['/note-rbt/', patient.patient_id]" tooltip="Create RBT Note"> <i class="fa fa-id-card "></i> </button>
-                              <button class="btn btn-outline-primary" *ngIf="roles ==='SUPERADMIN' || roles === 'MANAGER'|| roles === 'LM' ||  roles ==='RBT'" [routerLink]="['/note-rbt/listbyclient/', patient.patient_id]" tooltip="RBT Note list"> <i class="fa fa-bars"></i> </button>
-                              <button class="btn btn-outline-secondary" *ngIf="roles ==='SUPERADMIN' || roles === 'MANAGER'|| roles === 'LM' || roles ==='BCBA'" [routerLink]="['/note-bcba/', patient.patient_id]" tooltip="Create BCBA Note"> <i class="fa fa-id-badge"></i> </button>
-                              <button class="btn btn-outline-primary" *ngIf="roles ==='SUPERADMIN' || roles === 'MANAGER'|| roles === 'LM' || roles ==='BCBA'" [routerLink]="['/note-bcba/listbyclient/', patient.patient_id]" tooltip="BCBA Note list"> <i class="fa fa-bars"></i> </button>
-                              <button class="btn btn-outline-warning" *ngIf="roles ==='SUPERADMIN' || roles === 'MANAGER'" [routerLink]="['/client-report/byclient/', patient.patient_id]" tooltip="Log Report"> <i class="fa fa-check-circle"></i> </button>
-                            </span>
-                        </td>
-                          <td *ngIf="roles ==='SUPERADMIN'">
-                            <select
-                            class="form-control form-select-solid fw-bolder"
-                            
-                            name="state" [(ngModel)]="patient.status" (change)="cambiarStatusCliente(patient)"
-                            placeholder="state">
-                            <option>-- Select --</option>
-                            <option value="incoming">Incoming</option>
-                              <option value="active">Active</option>
-                              <option value="inactive">Inactive</option>
-                                      <option value="onHold">On Hold</option>
-                                      <option value="onDischarge">On Discharge</option>
-                                      <option value="waitintOnPa">Waiting on PA</option>
-                                      <option value="waitintOnPaIa">Waiting on PA IA</option>
-                                      <option value="waitintOnIa">Waiting on IA</option>
-                                      <option value="waitintOnServices">Waiting on Services</option>
-                                      <option value="waitintOnStaff">Waiting on Staff</option>
-                                      <option value="waitintOnSchool">Waiting on School</option>
-                              </select>
-                          </td>
-                            <td>{{patient.created_at | date }}</td>
-                            
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="table_footer">
-                    <div class="col-sm-12 col-md-5">
-                      <div class="dataTables_info">
-                        Showing {{ serialNumberArray[0] }} to
-                        {{ serialNumberArray[serialNumberArray.length - 1] }} of
-                        {{ totalDatapatient }} entries
-                      </div>
-                    </div>
-    
-                    <div class="col-sm-12 col-md-7">
-                      <div class="pagination_section">
-                        <ul class="pagination">
-                          <li
-                            class="page-item"
-                            [ngClass]="{
-                              disabled: currentPage === 1
-                            }"
-                          >
-                            <a
-                              (click)="getMoreData('previous')"
-                              class="page-link"
-                              href="javascript:void(0);"
-                              tabindex="-1"
-                              >Previous</a
-                            >
-                          </li>
-    
-                          <ng-container
-                            *ngFor="let item of pageNumberArray; let i = index"
-                          >
-                            <li
-                              class="page-item"
-                              [class.active]="item === currentPage"
-                              [ngClass]="
-                                (pageNumberArray[currentPage - 2] > item &&
-                                  item !== 1 &&
-                                  pageNumberArray.length > 6) ||
-                                (pageNumberArray[currentPage] < item &&
-                                  item !== 1 &&
-                                  pageNumberArray.length > 6 &&
-                                  pageNumberArray.length !== item)
-                                  ? 'hide-page-no'
-                                  : 'show-page-no'
-                              "
-                            >
-                              <a
-                                (click)="moveToPage(item)"
-                                class="page-link"
-                                href="javascript:void(0);"
-                              >
-                                {{ item }}
-                              </a>
-                            </li>
-                            <li
-                              class="page-item"
-                              *ngIf="
-                                i === 0 &&
-                                pageNumberArray.length > 6 &&
-                                currentPage > 2
-                              "
-                              [hidden]="currentPage === 1"
-                              (click)="moveToPage(currentPage - 2)"
-                            >
-                              <a class="page-link" href="javascript:void(0);">
-                                ...
-                              </a>
-                            </li>
-                            <li
-                              *ngIf="
-                                i === pageNumberArray.length - 2 &&
-                                pageNumberArray.length > 6
-                              "
-                              [hidden]="
-                                currentPage >=
-                                  pageNumberArray[pageNumberArray.length - 2] ||
-                                totalData <
-                                  serialNumberArray[serialNumberArray.length - 1]
-                              "
-                              class="page-item"
-                              (click)="moveToPage(currentPage + 2)"
-                            >
-                              <a class="page-link" href="javascript:void(0);">
-                                ...
-                              </a>
-                            </li>
-                          </ng-container>
-    
-                          <li
-                            class="page-item"
-                            [ngClass]="{
-                              disabled:
-                                currentPage ===
-                                  pageNumberArray[pageNumberArray.length - 1] ||
-                                  specialistList.length === 0
-                            }"
-                          >
-                            <a
-                              (click)="getMoreData('next')"
-                              class="page-link"
-                              href="javascript:void(0);"
-                              >Next
-                            </a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
+            <div class="add-group">
+              <a
+                routerLink="/patients/add"
+                class="btn btn-primary add-pluss ms-2"
+                *ngIf="isPermission('register_patient')"
+                ><img src="assets/img/icons/plus.svg" alt=""
+              /></a>
+              <a
+                href="javascript:;"
+                (click)="PageSize()"
+                class="btn btn-primary doctor-refresh ms-2"
+                ><img src="assets/img/icons/re-fresh.svg" alt=""
+              /></a>
             </div>
-            
-            
+          </div>
         </div>
-        
+      </div>
+
+      <div class="row align-items-center table-responsive">
+        <table
+          matSort
+          class="table border-0 custom-table comman-table datatable mb-0"
+        >
+          <thead>
+            <tr>
+              <th mat-sort-header="avatarp">Avatar</th>
+              <th mat-sort-header="namep">Full Name</th>
+              <th mat-sort-header="emailp">Email</th>
+              <th mat-sort-header="telefonop">Phone</th>
+              <th mat-sort-header="elegible">Status</th>
+              <th
+                mat-sort-header="ops"
+                *ngIf="roles === 'SUPERADMIN' || roles === 'MANAGER'"
+              >
+                Options
+              </th>
+              <th mat-sort-header="createdp">Created At</th>
+              <th></th>
+              <!--acciones -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let patient of patients">
+              <td>
+                <div *ngIf="!patient.avatar">
+                  <img src="./assets/img/no-image.jpg" />
+                </div>
+                <div *ngIf="patient.avatar">
+                  <img
+                    src="{{ patient.avatar }}"
+                    class="avatarlist"
+                    [alt]="patient.first_name"
+                  />
+                </div>
+              </td>
+              <td>
+                <a [routerLink]="['/patients/profile/', patient.id]">
+                  {{
+                    patient.first_name +
+                      " " +
+                      (patient.first_name ? patient.last_name : "")
+                  }}
+                </a>
+              </td>
+              <td>{{ patient.email }}</td>
+              <td>{{ patient.phone }}</td>
+              <td>
+                <span
+                  class="badge bg-primary"
+                  *ngIf="patient.status === 'incoming'"
+                  >Incoming</span
+                >
+                <span
+                  class="badge bg-success"
+                  *ngIf="patient.status === 'active'"
+                  >Active</span
+                >
+                <span
+                  class="badge bg-danger"
+                  *ngIf="patient.status === 'inactive'"
+                  >Inactive</span
+                >
+                <span
+                  class="badge bg-primary"
+                  *ngIf="patient.status === 'onHold'"
+                  >On Hold</span
+                >
+                <span
+                  class="badge bg-primary"
+                  *ngIf="patient.status === 'onDischarge'"
+                  >On Discharge</span
+                >
+                <span
+                  class="badge bg-primary"
+                  *ngIf="patient.status === 'waitintOnPa'"
+                  >Waiting on PA</span
+                >
+                <span
+                  class="badge bg-primary"
+                  *ngIf="patient.status === 'waitintOnPaIa'"
+                  >Waiting on PA IA</span
+                >
+                <span
+                  class="badge bg-primary"
+                  *ngIf="patient.status === 'waitintOnIa'"
+                  >Waiting on School</span
+                >
+                <span
+                  class="badge bg-primary"
+                  *ngIf="patient.status === 'waitintOnServices'"
+                  >Waiting on Services</span
+                >
+                <span
+                  class="badge bg-primary"
+                  *ngIf="patient.status === 'waitintOnStaff'"
+                  >Waiting on Staff</span
+                >
+                <span
+                  class="badge bg-primary"
+                  *ngIf="patient.status === 'waitintOnSchool'"
+                  >Waiting on School</span
+                >
+
+                <span *ngIf="patient.status === 'active'">
+                  <button
+                    class="btn btn-outline-success"
+                    *ngIf="
+                      roles === 'SUPERADMIN' ||
+                      roles === 'MANAGER' ||
+                      roles === 'LM' ||
+                      roles === 'BCBA'
+                    "
+                    [routerLink]="['/bip/attention/', patient.patient_id]"
+                    tooltip="BIP Create"
+                  >
+                    <i class="fa fa-address-book"></i>
+                  </button>
+                  <button
+                    class="btn btn-outline-dark"
+                    *ngIf="isPermission('view_bip')"
+                    [routerLink]="['/bip/profile/', patient.patient_id]"
+                    tooltip="BIP View"
+                  >
+                    <i class="fa fa-eye"></i>
+                  </button>
+                  <button
+                    class="btn btn-outline-success"
+                    *ngIf="
+                      roles === 'SUPERADMIN' ||
+                      roles === 'MANAGER' ||
+                      roles === 'LM' ||
+                      roles === 'RBT'
+                    "
+                    [routerLink]="['/note-rbt/', patient.patient_id]"
+                    tooltip="Create RBT Note"
+                  >
+                    <i class="fa fa-id-card"></i>
+                  </button>
+                  <button
+                    class="btn btn-outline-primary"
+                    *ngIf="
+                      roles === 'SUPERADMIN' ||
+                      roles === 'MANAGER' ||
+                      roles === 'LM' ||
+                      roles === 'RBT'
+                    "
+                    [routerLink]="[routes.noteRbt.list, patient.patient_id]"
+                    tooltip="RBT Note list"
+                  >
+                    <i class="fa fa-bars"></i>
+                  </button>
+                  <button
+                    class="btn btn-outline-secondary"
+                    *ngIf="
+                      roles === 'SUPERADMIN' ||
+                      roles === 'MANAGER' ||
+                      roles === 'LM' ||
+                      roles === 'BCBA'
+                    "
+                    [routerLink]="['/note-bcba/', patient.patient_id]"
+                    tooltip="Create BCBA Note"
+                  >
+                    <i class="fa fa-id-badge"></i>
+                  </button>
+                  <button
+                    class="btn btn-outline-primary"
+                    *ngIf="
+                      roles === 'SUPERADMIN' ||
+                      roles === 'MANAGER' ||
+                      roles === 'LM' ||
+                      roles === 'BCBA'
+                    "
+                    [routerLink]="[routes.noteBcba.list, patient.patient_id]"
+                    tooltip="BCBA Note list"
+                  >
+                    <i class="fa fa-bars"></i>
+                  </button>
+                  <button
+                    class="btn btn-outline-warning"
+                    *ngIf="roles === 'SUPERADMIN' || roles === 'MANAGER'"
+                    [routerLink]="[
+                      '/client-report/byclient/',
+                      patient.patient_id
+                    ]"
+                    tooltip="Log Report"
+                  >
+                    <i class="fa fa-check-circle"></i>
+                  </button>
+                </span>
+              </td>
+              <td *ngIf="roles === 'SUPERADMIN'">
+                <select
+                  class="form-control form-select-solid fw-bolder"
+                  name="state"
+                  [(ngModel)]="patient.status"
+                  (change)="cambiarStatusCliente(patient)"
+                  placeholder="state"
+                >
+                  <option>-- Select --</option>
+                  <option value="incoming">Incoming</option>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                  <option value="onHold">On Hold</option>
+                  <option value="onDischarge">On Discharge</option>
+                  <option value="waitintOnPa">Waiting on PA</option>
+                  <option value="waitintOnPaIa">Waiting on PA IA</option>
+                  <option value="waitintOnIa">Waiting on IA</option>
+                  <option value="waitintOnServices">Waiting on Services</option>
+                  <option value="waitintOnStaff">Waiting on Staff</option>
+                  <option value="waitintOnSchool">Waiting on School</option>
+                </select>
+              </td>
+              <td>{{ patient.created_at | date }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="table_footer">
+          <div class="col-sm-12 col-md-5">
+            <div class="dataTables_info">
+              Showing {{ serialNumberArray[0] }} to
+              {{ serialNumberArray[serialNumberArray.length - 1] }} of
+              {{ totalDatapatient }} entries
+            </div>
+          </div>
+
+          <div class="col-sm-12 col-md-7">
+            <div class="pagination_section">
+              <ul class="pagination">
+                <li
+                  class="page-item"
+                  [ngClass]="{
+                    disabled: currentPage === 1
+                  }"
+                >
+                  <a
+                    (click)="getMoreData('previous')"
+                    class="page-link"
+                    href="javascript:void(0);"
+                    tabindex="-1"
+                    >Previous</a
+                  >
+                </li>
+
+                <ng-container
+                  *ngFor="let item of pageNumberArray; let i = index"
+                >
+                  <li
+                    class="page-item"
+                    [class.active]="item === currentPage"
+                    [ngClass]="
+                      (pageNumberArray[currentPage - 2] > item &&
+                        item !== 1 &&
+                        pageNumberArray.length > 6) ||
+                      (pageNumberArray[currentPage] < item &&
+                        item !== 1 &&
+                        pageNumberArray.length > 6 &&
+                        pageNumberArray.length !== item)
+                        ? 'hide-page-no'
+                        : 'show-page-no'
+                    "
+                  >
+                    <a
+                      (click)="moveToPage(item)"
+                      class="page-link"
+                      href="javascript:void(0);"
+                    >
+                      {{ item }}
+                    </a>
+                  </li>
+                  <li
+                    class="page-item"
+                    *ngIf="
+                      i === 0 && pageNumberArray.length > 6 && currentPage > 2
+                    "
+                    [hidden]="currentPage === 1"
+                    (click)="moveToPage(currentPage - 2)"
+                  >
+                    <a class="page-link" href="javascript:void(0);"> ... </a>
+                  </li>
+                  <li
+                    *ngIf="
+                      i === pageNumberArray.length - 2 &&
+                      pageNumberArray.length > 6
+                    "
+                    [hidden]="
+                      currentPage >=
+                        pageNumberArray[pageNumberArray.length - 2] ||
+                      totalData <
+                        serialNumberArray[serialNumberArray.length - 1]
+                    "
+                    class="page-item"
+                    (click)="moveToPage(currentPage + 2)"
+                  >
+                    <a class="page-link" href="javascript:void(0);"> ... </a>
+                  </li>
+                </ng-container>
+
+                <li
+                  class="page-item"
+                  [ngClass]="{
+                    disabled:
+                      currentPage ===
+                        pageNumberArray[pageNumberArray.length - 1] ||
+                      specialistList.length === 0
+                  }"
+                >
+                  <a
+                    (click)="getMoreData('next')"
+                    class="page-link"
+                    href="javascript:void(0);"
+                    >Next
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

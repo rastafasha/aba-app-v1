@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
 import { MonitoringEvaluatingService } from '../../service/monitoring-evaluating.service';
+import { AppUser } from 'src/app/shared/models/users.models';
 
 @Component({
   selector: 'app-monitoring-evaluating',
@@ -11,8 +12,8 @@ import { MonitoringEvaluatingService } from '../../service/monitoring-evaluating
 })
 export class MonitoringEvaluatingComponent {
   valid_form_success = false;
-  text_validation: string = '';
-  text_success: string = '';
+  text_validation = '';
+  text_success = '';
 
   goal: any;
   lto: any;
@@ -20,12 +21,12 @@ export class MonitoringEvaluatingComponent {
   end_date: Date;
   decription: any;
   status: any;
-  rbt_training_goals: any[] = [];
-  training_goals: any[] = [];
-  monitoring_status_sto_edit: any[] = [];
+  rbt_training_goals = [];
+  training_goals = [];
+  monitoring_status_sto_edit = [];
 
   client_id: any;
-  user: any;
+  user: AppUser;
   doctor_id: any;
   client_selected: any;
   patient_id: any;
@@ -40,7 +41,7 @@ export class MonitoringEvaluatingComponent {
   monitorid: any;
   lto_edit: any;
 
-  gollto_edit: any[] = [];
+  gollto_edit = [];
 
   current_status: any;
 
@@ -51,7 +52,7 @@ export class MonitoringEvaluatingComponent {
   ) {}
 
   ngOnInit(): void {
-    // window.scrollTo(0, 0);//inicia la vista siempre desde arriba
+    // //inicia la vista siempre desde arriba
 
     //me subcribo al id recibido por el parametro de la url
     this.ativatedRoute.params.subscribe((resp: any) => {
@@ -176,7 +177,7 @@ export class MonitoringEvaluatingComponent {
     this.monitoring_status_sto_edit = caregiver;
     // console.log(this.monitoring_status_sto_edit.status_sto);
 
-    let data = {
+    const data = {
       rbt_training_goals: this.training_goals,
     };
 
@@ -192,7 +193,7 @@ export class MonitoringEvaluatingComponent {
   cambiarLTO(goalsto: any) {
     this.lto_edit = goalsto;
 
-    let data = {
+    const data = {
       rbt_training_goals: this.training_goals,
     };
 
@@ -213,7 +214,7 @@ export class MonitoringEvaluatingComponent {
       return;
     }
 
-    let data = {
+    const data = {
       id: this.monitoringtid,
       bip_id: this.bip_selectedIdd,
       patient_id: this.patient_id,

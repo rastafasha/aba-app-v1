@@ -1,11 +1,13 @@
 import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { DoctorService } from '../service/doctor.service';
+import { AppUser } from 'src/app/shared/models/users.models';
+import { PageService } from 'src/app/shared/services/pages.service';
 
 const url_servicios = environment.url_servicios;
 @Component({
@@ -13,96 +15,98 @@ const url_servicios = environment.url_servicios;
   templateUrl: './add-doctor.component.html',
   styleUrls: ['./add-doctor.component.scss'],
 })
-export class AddDoctorComponent {
+export class AddDoctorComponent implements OnInit {
   routes = AppRoutes;
   selectedValue!: string;
-  selectedValueLocation!: string;
+  selectedValueLocation!: number;
 
-  name: string = '';
-  surname: string = '';
-  phone: any;
-  email: string = '';
-  password: string = '';
-  password_confirmation: string = '';
-  birth_date: string = '';
-  gender: number = 1;
-  education: string = '';
-  designation: string = '';
-  address: string = '';
+  name = '';
+  surname = '';
+  phone = '';
+  email = '';
+  password = '';
+  password_confirmation = '';
+  birth_date = '';
+  gender = 1;
+  education = '';
+  designation = '';
+  address = '';
 
-  currently_pay_through_company: string = '';
-  llc: string = '';
-  ien: string = '';
-  wc: string = '';
-  agency_location: string = '';
-  city: string = '';
-  languages: string = '';
-  dob: string = '';
-  ss_number: string = '';
-  date_of_hire: string = '';
-  start_pay: string = '';
-  driver_license_expiration: string = '';
-  cpr_every_2_years: string = '';
-  background_every_5_years: string = '';
-  e_verify: string = '';
-  national_sex_offender_registry: string = '';
-  certificate_number: string = '';
-  bacb_license_expiration: string = '';
-  liability_insurance_annually: string = '';
-  local_police_rec_every_5_years: string = '';
-  npi: string = '';
-  medicaid_provider: string = '';
+  currently_pay_through_company = '';
+  llc = '';
+  ien = '';
+  wc = '';
+  agency_location = '';
+  city = '';
+  languages = '';
+  dob = '';
+  ss_number = '';
+  date_of_hire = '';
+  start_pay = '';
+  driver_license_expiration = '';
+  cpr_every_2_years = '';
+  background_every_5_years = '';
+  e_verify = '';
+  national_sex_offender_registry = '';
+  certificate_number = '';
+  bacb_license_expiration = '';
+  liability_insurance_annually = '';
+  local_police_rec_every_5_years = '';
+  npi = '';
+  medicaid_provider = '';
 
-  ceu_hippa_annually: string = '';
-  ceu_domestic_violence_no_expiration: string = '';
-  ceu_security_awareness_annually: string = '';
-  ceu_zero_tolerance_every_3_years: string = '';
-  ceu_hiv_bloodborne_pathogens_infection_control_no_expiration: string = '';
-  ceu_civil_rights_no_expiration: string = '';
+  ceu_hippa_annually = '';
+  ceu_domestic_violence_no_expiration = '';
+  ceu_security_awareness_annually = '';
+  ceu_zero_tolerance_every_3_years = '';
+  ceu_hiv_bloodborne_pathogens_infection_control_no_expiration = '';
+  ceu_civil_rights_no_expiration = '';
 
-  school_badge: string = '';
-  w_9_w_4_form: string = '';
-  contract: string = '';
-  two_four_week_notice_agreement: string = '';
-  credentialing_package_bcbas_only: string = '';
-  caqh_bcbas_only: string = '';
-  contract_type: string = '';
-  salary: number = 0;
+  school_badge = '';
+  w_9_w_4_form = '';
+  contract = '';
+  two_four_week_notice_agreement = '';
+  credentialing_package_bcbas_only = '';
+  caqh_bcbas_only = '';
+  contract_type = '';
+  salary = 0;
 
-  roles: any[] = [];
-  locations: any[] = [];
+  role: string;
+  roles: { id: number; name: string }[] = [];
+  locations = [];
 
-  FILE_AVATAR: any;
+  FILE_AVATAR: Blob;
   IMAGE_PREVISUALIZA = 'assets/img/user-06.jpg';
-  FILE_SIGNATURE: any;
+  FILE_SIGNATURE: Blob;
   IMAGE_PREVISUALIZA_SIGNATURE = 'assets/img/user-06.jpg';
 
   valid_form = false;
   valid_form_success = false;
 
-  text_success: string = '';
-  text_validation: string = '';
+  text_success = '';
+  text_validation = '';
   locations_selected: number[] = [];
-  user: any;
-  doctor_id: any;
+  user: AppUser;
+  doctor_id: number;
   location: any;
   emailExists: boolean;
 
   constructor(
     private doctorService: DoctorService,
+    private pageService: PageService,
     private router: Router,
     private locationBack: Location,
     private http: HttpClient
   ) {}
 
   ngOnInit(): void {
-    // window.scrollTo(0, 0);
-    this.doctorService.closeMenuSidebar();
+    //
+    this.pageService.onInitPage();
     const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
-    this.roles = this.user.roles[0];
+    this.role = this.user.roles[0];
     this.doctor_id = this.user.id;
-    if (this.user.roles[0] == 'MANAGER') {
+    if (this.user.roles[0] === 'MANAGER') {
       this.selectedValueLocation = this.user.location_id;
       this.getConfigLocation();
     } else {
@@ -112,11 +116,11 @@ export class AddDoctorComponent {
 
   checkEmailExistence(): void {
     this.http
-      .get(`${url_servicios}/doctors/check-email-exist/${this.email}`)
-      .subscribe((response: any) => {
+      .get<any>(`${url_servicios}/doctors/check-email-exist/${this.email}`)
+      .subscribe((response) => {
         this.emailExists = response.exist.email;
         console.log(this.emailExists);
-        if (this.emailExists == null) {
+        if (this.emailExists === null) {
           this.emailExists = false;
         } else {
           this.emailExists = true;
@@ -156,7 +160,7 @@ export class AddDoctorComponent {
     }
     this.text_validation = '';
     this.FILE_AVATAR = $event.target.files[0];
-    let reader = new FileReader();
+    const reader = new FileReader();
     reader.readAsDataURL(this.FILE_AVATAR);
     reader.onloadend = () =>
       (this.IMAGE_PREVISUALIZA = reader.result as string);
@@ -169,10 +173,10 @@ export class AddDoctorComponent {
     }
     this.text_validation = '';
     this.FILE_SIGNATURE = $event.target.files[0];
-    let reader2 = new FileReader();
-    reader2.readAsDataURL(this.FILE_SIGNATURE);
-    reader2.onloadend = () =>
-      (this.IMAGE_PREVISUALIZA_SIGNATURE = reader2.result as string);
+    const reader = new FileReader();
+    reader.readAsDataURL(this.FILE_SIGNATURE);
+    reader.onloadend = () =>
+      (this.IMAGE_PREVISUALIZA_SIGNATURE = reader.result as string);
   }
 
   save() {
@@ -224,12 +228,12 @@ export class AddDoctorComponent {
       // return;
     }
 
-    if (this.password != this.password_confirmation) {
+    if (this.password !== this.password_confirmation) {
       this.text_validation = 'Las contraseña debe ser igual';
       // return;
     }
 
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append('name', this.name);
     formData.append('surname', this.surname);
     formData.append('phone', this.phone);
@@ -319,28 +323,28 @@ export class AddDoctorComponent {
     formData.append('salary', this.salary + '');
     let locations = '';
     this.locations_selected.forEach((location, index) => {
-      if (index != 0) {
+      if (index !== 0) {
         locations += `,${location.toString()}`;
       } else {
         locations += location.toString();
       }
     });
-    if (this.user.roles[0] == 'SUPERADMIN') {
+    if (this.user.roles[0] === 'SUPERADMIN') {
       formData.append('locations_selected', locations);
     }
-    if (this.user.roles[0] == 'MANAGER') {
-      formData.append('locations_selected', this.user.location_id);
+    if (this.user.roles[0] === 'MANAGER') {
+      formData.append('locations_selected', this.user.location_id.toString());
     }
 
-    if (this.user.roles[0] == 'SUPERADMIN') {
-      this.doctorService.storeDoctor(formData).subscribe((resp: any) => {
+    if (this.user.roles[0] === 'SUPERADMIN') {
+      this.doctorService.storeDoctor(formData).subscribe((resp) => {
         // console.log(resp);
 
-        if (resp.status == 500) {
+        if (resp.status === 500) {
           this.text_validation = resp.message_text;
           Swal.fire('Warning', resp.message_text, 'warning');
         }
-        if (resp.message == 403) {
+        if (resp.message === 403) {
           this.text_validation = resp.message_text;
           Swal.fire('Warning', resp.message_text, 'warning');
         } else {
@@ -349,19 +353,19 @@ export class AddDoctorComponent {
           Swal.fire('Created', `Employee Created successfully!`, 'success');
           this.router.navigate([AppRoutes.doctors.list]);
           // this.ngOnInit();
-          // window.scrollTo(0, 0);
+          //
         }
       });
     }
-    if (this.user.roles[0] == 'MANAGER') {
+    if (this.user.roles[0] === 'MANAGER') {
       this.doctorService.storeDoctor(formData).subscribe((resp: any) => {
         // console.log(resp);
 
-        if (resp.status == 500) {
+        if (resp.status === 500) {
           this.text_validation = resp.message_text;
           Swal.fire('Warning', resp.message_text, 'warning');
         }
-        if (resp.message == 403) {
+        if (resp.message === 403) {
           this.text_validation = resp.message_text;
           Swal.fire('Warning', resp.message_text, 'warning');
         } else {

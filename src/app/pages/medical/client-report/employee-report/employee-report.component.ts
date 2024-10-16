@@ -11,6 +11,7 @@ import { NoteBcbaService } from '../../notes-bcba/services/note-bcba.service';
 import { NoteRbtService } from '../../notes/services/note-rbt.service';
 import { ClientReportModel } from '../client-report.model';
 import { ClientReportService } from '../client-report.service';
+import { AppUser } from 'src/app/shared/models/users.models';
 
 declare var $: any;
 
@@ -40,7 +41,7 @@ export class EmployeeReportComponent {
   billing_selected: any;
   sponsor_id: any;
   noterbt_id: any;
-  user: any;
+  user: AppUser;
 
   clientReport: ClientReportModel;
 
@@ -58,43 +59,43 @@ export class EmployeeReportComponent {
   serialNumberArray: number[] = [];
   currentPage = 1;
   pageNumberArray: number[] = [];
-  pageSelection: any[] = [];
+  pageSelection = [];
   totalPages = 0;
   text_validation: any;
 
-  roles: any[] = [];
-  permissions: any[] = [];
+  roles = [];
+  permissions = [];
   patientID: any;
   patientId: any;
 
   pa_assessments: string;
-  pa_assessmentsgroup: any[] = [];
+  pa_assessmentsgroup = [];
   cpt: any;
   n_units: any;
   pa_number: any;
-  insurances: any[] = [];
+  insurances = [];
   insurance_id: any;
   insuranceiddd: any;
   insurer_name: any;
-  sponsors: any[] = [];
-  modifiers: any[] = [];
+  sponsors = [];
+  modifiers = [];
   noteRbt: any;
-  pos_covered: any[] = [];
-  pa_assessmentgroup: any[] = [];
+  pos_covered = [];
+  pa_assessmentgroup = [];
   noteBcba: any;
   patient: any;
 
   patientName: any;
   doctor_selected_full_name: any;
-  billing_total: number = 0;
+  billing_total = 0;
   week_total_hours: string;
-  week_total_units: number = 0;
-  total_hours: number = 0;
-  total_units: number = 0;
-  charges: number = 0;
-  unitPrize: number = 0;
-  unitPrizeCpt: number = 0;
-  xe: number = 0;
+  week_total_units = 0;
+  total_hours = 0;
+  total_units = 0;
+  charges = 0;
+  unitPrize = 0;
+  unitPrizeCpt = 0;
+  xe = 0;
   is_xe: boolean;
 
   session_date: any;
@@ -145,7 +146,7 @@ export class EmployeeReportComponent {
   noteType: string;
 
   providersSponsorsList: any;
-  factorPorcentual: number = 1.66666666666667;
+  factorPorcentual = 1.66666666666667;
 
   doctor_selected: any = null;
   combinedList: any[];
@@ -166,7 +167,7 @@ export class EmployeeReportComponent {
   ) {}
 
   ngOnInit(): void {
-    // window.scrollTo(0, 0);
+    //
     this.ativatedRoute.params.subscribe((resp: any) => {
       this.patient_id = resp.patient_id;
       this.patientId = resp.patient_id;
@@ -180,7 +181,7 @@ export class EmployeeReportComponent {
     this.paybcba = false;
 
     this.doctorService.getUserRoles();
-    this.user = this.authService.user;
+    this.user = this.authService.user as AppUser;
     this.getTableData();
   }
 
@@ -216,7 +217,7 @@ export class EmployeeReportComponent {
 
     this.clientReportService
       .getAllClientReportEmployeeByPatient(
-        this.user.id,
+        this.user.id.toString(),
         this.patientId,
         page,
         this.date_start,
@@ -300,7 +301,7 @@ export class EmployeeReportComponent {
         this.bcba2_id = resp.patient.bcba2_id;
 
         this.pa_assessments = resp.pa_assessments;
-        let jsonObj = JSON.parse(this.pa_assessments);
+        const jsonObj = JSON.parse(this.pa_assessments);
 
         jsonObj.sort((a, b) => {
           const dateA = new Date(a.pa_services_start_date);
@@ -458,11 +459,11 @@ export class EmployeeReportComponent {
 
   extractDataHours() {
     // recorrer el array de billing_general para extraer la data
-    let hours_group: string[] = [];
-    let units_group: string[] = [];
+    const hours_group: string[] = [];
+    const units_group: string[] = [];
     const extractedData = this.clientReport_generals;
 
-    let array = this.clientReport_generals;
+    const array = this.clientReport_generals;
     for (this.clientReport_generals of array) {
       hours_group.push(this.clientReport_generals.total_hours);
       units_group.push(this.clientReport_generals.total_units);
@@ -589,13 +590,13 @@ export class EmployeeReportComponent {
   }
 
   getMoreData(event: string): void {
-    if (event == 'next') {
+    if (event === 'next') {
       this.currentPage++;
       this.pageIndex = this.currentPage - 1;
       this.limit += this.pageSize;
       this.skip = this.pageSize * this.pageIndex;
       this.getTableDataGeneral();
-    } else if (event == 'previous') {
+    } else if (event === 'previous') {
       this.currentPage--;
       this.pageIndex = this.currentPage - 1;
       this.limit -= this.pageSize;
@@ -633,7 +634,7 @@ export class EmployeeReportComponent {
   ): void {
     // this.pageNumberArray = [];
     this.totalPages = totalDatapatient / pageSize;
-    if (this.totalPages % 1 != 0) {
+    if (this.totalPages % 1 !== 0) {
       this.totalPages = Math.trunc(this.totalPages + 1);
     }
     /* eslint no-var: off */
@@ -754,7 +755,7 @@ export class EmployeeReportComponent {
       chargesrbt: data.rbt.session_units_total * this.unitPrize,
       // noterbt_id: data.id,
     };
-    let VALUE3 = {
+    const VALUE3 = {
       session_date: data.bcba.session_date,
       cpt_code: data.bcba.cpt_code,
       pos: data.bcba.meet_with_client_at,
@@ -774,7 +775,7 @@ export class EmployeeReportComponent {
 
     console.log(VALUE);
 
-    let totalValue = [VALUE, VALUE2, VALUE3];
+    const totalValue = [VALUE, VALUE2, VALUE3];
 
     if (this.billing_selected) {
       //si  tiene bip se agrega a la informacion de la consulta

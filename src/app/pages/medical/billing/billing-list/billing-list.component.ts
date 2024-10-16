@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import * as jsPDF from 'jspdf';
 import { FileSaverService } from 'ngx-filesaver';
@@ -8,6 +8,8 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 import * as XLSX from 'xlsx';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { BillingService } from '../billing.service';
+import { AppUser } from 'src/app/shared/models/users.models';
+import { PageService } from 'src/app/shared/services/pages.service';
 
 declare var $: any;
 @Component({
@@ -15,10 +17,10 @@ declare var $: any;
   templateUrl: './billing-list.component.html',
   styleUrls: ['./billing-list.component.scss'],
 })
-export class BillingListComponent {
+export class BillingListComponent implements OnInit {
   routes = AppRoutes;
 
-  billingList: any[] = [];
+  billingList = [];
   dataSource!: MatTableDataSource<any>;
 
   showFilter = false;
@@ -32,27 +34,26 @@ export class BillingListComponent {
   serialNumberArray: number[] = [];
   currentPage = 1;
   pageNumberArray: number[] = [];
-  pageSelection: any[] = [];
+  pageSelection = [];
   totalPages = 0;
 
   billing_generals: any;
   billing_id: any;
   billing_selected: any;
   text_validation: any;
-  user: any;
+  user: AppUser;
 
   constructor(
     private billingService: BillingService,
-    private doctorService: DoctorService,
+    private pageService: PageService,
     private fileSaver: FileSaverService,
     private authService: AuthService,
     private location: Location
   ) {}
   ngOnInit() {
-    window.scrollTo(0, 0);
-    this.doctorService.closeMenuSidebar();
+    this.pageService.onInitPage();
     this.getTableData();
-    this.user = this.authService.user;
+    this.user = this.authService.user as AppUser;
   }
 
   goBack() {
@@ -73,7 +74,7 @@ export class BillingListComponent {
     this.billingList = [];
     this.serialNumberArray = [];
 
-    this.billingService.listBillings().subscribe((resp: any) => {
+    this.billingService.listBillings().subscribe((resp) => {
       // console.log(resp);
 
       this.totalBilling = resp.billings.data.length;
@@ -121,13 +122,13 @@ export class BillingListComponent {
   }
 
   getMoreData(event: string): void {
-    if (event == 'next') {
+    if (event === 'next') {
       this.currentPage++;
       this.pageIndex = this.currentPage - 1;
       this.limit += this.pageSize;
       this.skip = this.pageSize * this.pageIndex;
       this.getTableDataGeneral();
-    } else if (event == 'previous') {
+    } else if (event === 'previous') {
       this.currentPage--;
       this.pageIndex = this.currentPage - 1;
       this.limit -= this.pageSize;
@@ -148,6 +149,9 @@ export class BillingListComponent {
     this.getTableDataGeneral();
   }
 
+  deleteRol() {
+    throw new Error('Method not implemented');
+  }
   PageSize(): void {
     this.pageSelection = [];
     this.limit = this.pageSize;
@@ -160,7 +164,7 @@ export class BillingListComponent {
   private calculateTotalPages(totalBilling: number, pageSize: number): void {
     this.pageNumberArray = [];
     this.totalPages = totalBilling / pageSize;
-    if (this.totalPages % 1 != 0) {
+    if (this.totalPages % 1 !== 0) {
       this.totalPages = Math.trunc(this.totalPages + 1);
     }
     /* eslint no-var: off */

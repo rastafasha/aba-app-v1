@@ -6,32 +6,39 @@ import { ListPatientMComponent } from './list-patient-m/list-patient-m.component
 import { EditPatientMComponent } from './edit-patient-m/edit-patient-m.component';
 import { ProfilePatientMComponent } from './profile-patient-m/profile-patient-m.component';
 import { ClientLogReportComponent } from './client-log-report/client-log-report.component';
+import { AppRoutes, lastRoutes } from 'src/app/shared/routes/routes';
 
 const routes: Routes = [
-  {path:'', component:PatientMComponent,
-  children:[
-    {
-      path:'add', component:AddPatientMComponent
-    },
-    {
-      path:'list', component:ListPatientMComponent
-    },
-    {
-      path:'ws', component:ClientLogReportComponent
-    },
-    {
-      path:'list/edit/:id', component:EditPatientMComponent
-    },
-    {
-      path:'profile/:id', component:ProfilePatientMComponent
-    },
-    
-  ]
-  }
+  {
+    path: '',
+    component: PatientMComponent,
+    children: [
+      {
+        path: lastRoutes(AppRoutes.patients.add),
+        component: AddPatientMComponent,
+      },
+      {
+        path: lastRoutes(AppRoutes.patients.list),
+        component: ListPatientMComponent,
+      },
+      {
+        path: lastRoutes(AppRoutes.patients.logReport),
+        component: ClientLogReportComponent,
+      },
+      {
+        path: lastRoutes(AppRoutes.patients.listEdit, 2, '/:id'),
+        component: EditPatientMComponent,
+      },
+      {
+        path: lastRoutes(AppRoutes.patients.profile, 1, '/:id'),
+        component: ProfilePatientMComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class PatientMRoutingModule { }
+export class PatientMRoutingModule {}

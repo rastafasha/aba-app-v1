@@ -2,7 +2,7 @@ import { IEnvironment } from './environment.interface';
 
 export const environment: IEnvironment = {
   production: false,
-  mock: true,
+  mock: false,
   //local
   // url_backend: 'http://127.0.0.1:8000/',
   // url_servicios: 'http://127.0.0.1:8000/api',

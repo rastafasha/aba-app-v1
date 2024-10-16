@@ -3,8 +3,8 @@ import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DataService } from 'src/app/shared/data/data.service';
 import {
-  pageSelection,
-  apiResultFormat,
+  PageSelection,
+  ApiResultFormat,
   schedule,
 } from 'src/app/shared/models/models';
 import { AppRoutes } from 'src/app/shared/routes/routes';
@@ -28,10 +28,10 @@ export class ScheduleComponent implements OnInit {
   skip = 0;
   limit: number = this.pageSize;
   pageIndex = 0;
-  serialNumberArray: Array<number> = [];
+  serialNumberArray: number[] = [];
   currentPage = 1;
-  pageNumberArray: Array<number> = [];
-  pageSelection: Array<pageSelection> = [];
+  pageNumberArray: number[] = [];
+  pageSelection: PageSelection[] = [];
   totalPages = 0;
 
   constructor(public data: DataService) {}
@@ -42,7 +42,7 @@ export class ScheduleComponent implements OnInit {
     this.schedule = [];
     this.serialNumberArray = [];
 
-    this.data.getSchedule().subscribe((data: apiResultFormat) => {
+    this.data.getSchedule().subscribe((data: ApiResultFormat) => {
       this.totalData = data.totalData;
       data.data.map((res: schedule, index: number) => {
         const serialNumber = index + 1;
@@ -79,13 +79,13 @@ export class ScheduleComponent implements OnInit {
   }
 
   getMoreData(event: string): void {
-    if (event == 'next') {
+    if (event === 'next') {
       this.currentPage++;
       this.pageIndex = this.currentPage - 1;
       this.limit += this.pageSize;
       this.skip = this.pageSize * this.pageIndex;
       this.getTableData();
-    } else if (event == 'previous') {
+    } else if (event === 'previous') {
       this.currentPage--;
       this.pageIndex = this.currentPage - 1;
       this.limit -= this.pageSize;
@@ -117,7 +117,7 @@ export class ScheduleComponent implements OnInit {
   private calculateTotalPages(totalData: number, pageSize: number): void {
     this.pageNumberArray = [];
     this.totalPages = totalData / pageSize;
-    if (this.totalPages % 1 != 0) {
+    if (this.totalPages % 1 !== 0) {
       this.totalPages = Math.trunc(this.totalPages + 1);
     }
     /* eslint no-var: off */

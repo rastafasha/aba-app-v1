@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { NoteBcbaService } from '../services/note-bcba.service';
 import { InsuranceService } from '../../insurance/service/insurance.service';
 import { Location } from '@angular/common';
+import { AppUser } from 'src/app/shared/models/users.models';
 
 @Component({
   selector: 'app-note-bcba-edit',
@@ -48,7 +49,7 @@ export class NoteBcbaEditComponent {
   client_selected: any;
   note_selected: any;
   bip_id: any;
-  user: any;
+  user: AppUser;
   first_name = '';
   last_name = '';
   diagnosis_code = '';
@@ -114,32 +115,32 @@ export class NoteBcbaEditComponent {
   note_id: any;
   note_selectedId: any;
 
-  roles_rbt: any[] = [];
-  roles_bcba: any[] = [];
+  roles_rbt = [];
+  roles_bcba = [];
 
-  hours_days: any[] = [];
-  specialists: any[] = [];
-  maladaptives: any[] = [];
-  replacementGoals: any[] = [];
-  intervention_added: any[] = [];
-  replacements: any[] = [];
-  interventionsgroup: any[] = [];
+  hours_days = [];
+  specialists = [];
+  maladaptives = [];
+  replacementGoals = [];
+  intervention_added = [];
+  replacements = [];
+  interventionsgroup = [];
 
-  maladaptivegroup: any[] = [];
-  replacementgroup: any[] = [];
+  maladaptivegroup = [];
+  replacementgroup = [];
 
   maladaptiveSelected: any = null;
   replacementSelected: any = null;
   birth_date: any;
   cpt: any;
   note_description: any;
-  caregivers_training_goals: any[] = [];
-  rbt_training_goals: any[] = [];
+  caregivers_training_goals = [];
+  rbt_training_goals = [];
   rbt_training_goalsgroup: any;
   caregivers_training_goalsgroup: any;
-  pa_assessmentsgroup: any[] = [];
+  pa_assessmentsgroup = [];
   pa_assessments: any;
-  n_un: any[] = [];
+  n_un = [];
 
   location: any;
   porcent_of_occurrences = 0;
@@ -163,7 +164,7 @@ export class NoteBcbaEditComponent {
   ) {}
 
   ngOnInit(): void {
-    // window.scrollTo(0, 0);
+    //
     this.ativatedRoute.params.subscribe((resp: any) => {
       this.note_id = resp.id;
     });
@@ -514,7 +515,7 @@ export class NoteBcbaEditComponent {
       .subscribe((resp: any) => {
         // console.log(resp);
 
-        if (resp.message == 403) {
+        if (resp.message === 403) {
           this.text_validation = resp.message_text;
         } else {
           // this.text_success = 'Employer created';

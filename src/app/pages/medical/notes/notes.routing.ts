@@ -5,29 +5,35 @@ import { NoteRbtComponent } from './note-rbt/note-rbt.component';
 import { NotesByClientComponent } from './notes-by-client/notes-by-client.component';
 import { EditNoteRbtComponent } from './edit-note-rbt/edit-note-rbt.component';
 import { NoteRbtViewComponent } from './note-rbt-view/note-rbt-view.component';
+import { AppRoutes, lastRoutes } from 'src/app/shared/routes/routes';
 
 const routes: Routes = [
-  {path:'', component:NotesComponent,
-  children:[
-    {
-      path:':patient_id', component:NoteRbtComponent
-    },
-    {
-      path:'edit/:id', component:EditNoteRbtComponent
-    },
-    {
-      path:'listbyclient/:id', component:NotesByClientComponent
-    },
-    {
-      path:'view/:id', component:NoteRbtViewComponent
-    },
-    
-  ]
-  }
+  {
+    path: '',
+    component: NotesComponent,
+    children: [
+      {
+        path: lastRoutes(AppRoutes.noteRbt.noteRbt, 0, ':patient_id'),
+        component: NoteRbtComponent,
+      },
+      {
+        path: lastRoutes(AppRoutes.noteRbt.edit, 1, '/:id'),
+        component: EditNoteRbtComponent,
+      },
+      {
+        path: lastRoutes(AppRoutes.noteRbt.list, 1, '/:id'),
+        component: NotesByClientComponent,
+      },
+      {
+        path: lastRoutes(AppRoutes.noteRbt.view, 1, '/:id'),
+        component: NoteRbtViewComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class NotesRoutingModule { }
+export class NotesRoutingModule {}

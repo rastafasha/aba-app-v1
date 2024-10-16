@@ -27,13 +27,13 @@ export class PatientMService {
       LINK += '&email_patient=' + email_patient;
     }
     const URL = url_servicios + '/patients?page=' + page + LINK;
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 
   // listPatients(){
   //   const headers = new HttpHeaders({'Authorization': 'Bearer'+this.authService.token})
   //   const URL = url_servicios+'/patients';
-  //   return this.http.get(URL, {headers:headers});
+  //   return this.http.get<any>(URL, {headers:headers});
   // }
 
   listPatients(search: any, status: any, location_id: any) {
@@ -49,36 +49,36 @@ export class PatientMService {
     }
 
     const URL = url_servicios + '/patients' + LINK;
-    return this.http.get(URL);
-    // return this.http.get(URL, {headers: headers}).pipe(
+    return this.http.get<any>(URL);
+    // return this.http.get<any>(URL, {headers: headers}).pipe(
     //   finalize(()=> this.isLoadingSubject.next(false))
     // )
   }
 
   configPatients(page = 1, search = '') {
     const URL = url_servicios + '/patients?page=' + page + '&search=' + search;
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 
   getPatient(client_id: any) {
     const URL = url_servicios + '/patients/show/' + client_id;
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
   getPatientsByDoctor(doctor_id: any) {
     const URL = url_servicios + '/patients/byDoctor/' + doctor_id;
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
   createPatient(data) {
     const URL = url_servicios + '/patients/store';
-    return this.http.post(URL, data);
+    return this.http.post<any>(URL, data);
   }
   editPatient(data: any, client_id: any) {
     const URL = url_servicios + '/patients/update/' + client_id;
-    return this.http.post(URL, data);
+    return this.http.post<any>(URL, data);
   }
   patientUpdate(data: any, client_id: any) {
     const URL = url_servicios + '/patients/patientupdate/' + client_id;
-    return this.http.post(URL, data);
+    return this.http.post<any>(URL, data);
   }
   deletePatient(client_id: any) {
     const URL = url_servicios + '/patients/destroy/' + client_id;
@@ -87,11 +87,11 @@ export class PatientMService {
 
   showPatientProfile(client_id: any) {
     const URL = url_servicios + '/patients/profile/' + client_id;
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
   getPatientByPatientid(patient_id: any) {
     const URL = url_servicios + '/patients/shobypatientid/' + patient_id;
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 
   listConfig(location_id: any): Observable<any> {
@@ -101,7 +101,7 @@ export class PatientMService {
 
   getPatientByLocations(location_id: any) {
     const URL = url_servicios + '/patients/shobypatienLocation/' + location_id;
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 
   updateStatus(data: any, client_id: any) {
@@ -113,17 +113,17 @@ export class PatientMService {
 
   storeLaboratory(data: any) {
     const URL = url_servicios + '/patient_file/store';
-    return this.http.post(URL, data);
+    return this.http.post<any>(URL, data);
   }
 
   getLaboratoryByPatient(patient_id: any) {
     const URL = url_servicios + '/patient_file/showBypatient/' + patient_id;
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 
   editLaboratory(data: any, laboratory_id: any) {
     const URL = url_servicios + '/patient_file/update/' + laboratory_id;
-    return this.http.post(URL, data);
+    return this.http.post<any>(URL, data);
   }
 
   deleteLaboratory(laboratory_id: any) {
@@ -133,14 +133,14 @@ export class PatientMService {
 
   getPosCovered() {
     const URL = '/assets/json/poscovered.json';
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 
   // config log report
 
   configPatientsLogReport() {
     const URL = url_servicios + '/clientlogreport';
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 
   listPatientLogReport(search: any, status: any): Observable<any> {
@@ -163,7 +163,7 @@ export class PatientMService {
         });
       })
     );
-    // return this.http.get(URL, {headers: headers}).pipe(
+    // return this.http.get<any>(URL, {headers: headers}).pipe(
     //   finalize(()=> this.isLoadingSubject.next(false))
     // )
   }

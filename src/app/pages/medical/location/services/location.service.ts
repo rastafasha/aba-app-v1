@@ -10,13 +10,13 @@ export class LocationService {
   constructor(public http: HttpClient, authService: AuthService) {}
 
   listAppointmentPays(
-    page: number = 1,
-    client_id: string = '',
-    name_client: string = '',
-    email_client: string = '',
-    doctor_id: string = '',
-    name_doctor: string = '',
-    email_doctor: string = ''
+    page = 1,
+    client_id = '',
+    name_client = '',
+    email_client = '',
+    doctor_id = '',
+    name_doctor = '',
+    email_doctor = ''
   ) {
     let LINK = '';
     if (client_id) {

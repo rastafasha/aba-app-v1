@@ -5,6 +5,7 @@ import { DoctorService } from '../../doctors/service/doctor.service';
 import { InsuranceService } from '../service/insurance.service';
 import Swal from 'sweetalert2';
 import { Location } from '@angular/common';
+import { PageService } from 'src/app/shared/services/pages.service';
 @Component({
   selector: 'app-insurance-edit',
   templateUrl: './insurance-edit.component.html',
@@ -13,16 +14,16 @@ import { Location } from '@angular/common';
 export class InsuranceEditComponent {
   routes = AppRoutes;
   selectedValue!: string;
-  option_selected: number = 1;
+  option_selected = 1;
 
-  insurer_name: string = '';
+  insurer_name = '';
 
-  notes: any[] = [];
+  notes = [];
   note: any;
 
-  services: any[] = [];
-  maladaptive_edit: any[] = [];
-  note_edit: any[] = [];
+  services = [];
+  maladaptive_edit = [];
+  note_edit = [];
   code: any;
   provider: any;
   description: any;
@@ -36,11 +37,11 @@ export class InsuranceEditComponent {
   valid_form = false;
   valid_form_success = false;
 
-  text_success: string = '';
-  text_validation: string = '';
+  text_success = '';
+  text_validation = '';
 
   constructor(
-    private doctorService: DoctorService,
+    private pageService: PageService,
     private insuranceService: InsuranceService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -48,8 +49,7 @@ export class InsuranceEditComponent {
   ) {}
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
-    this.doctorService.closeMenuSidebar();
+    this.pageService.onInitPage();
     this.activatedRoute.params.subscribe((resp: any) => {
       // console.log(resp);
       this.insurance_id = resp.id;
@@ -149,7 +149,7 @@ export class InsuranceEditComponent {
       .subscribe((resp: any) => {
         // console.log(resp);
 
-        if (resp.message == 403) {
+        if (resp.message === 403) {
           this.text_validation = resp.message_text;
         } else {
           // this.text_success = 'El insurance ha sido registrado correctamente';

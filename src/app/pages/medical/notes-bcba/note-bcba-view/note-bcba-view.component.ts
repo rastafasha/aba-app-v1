@@ -7,6 +7,8 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { NoteBcbaService } from '../services/note-bcba.service';
+import { AppUser } from 'src/app/shared/models/users.models';
+import { PageService } from 'src/app/shared/services/pages.service';
 
 @Component({
   selector: 'app-note-bcba-view',
@@ -17,7 +19,7 @@ export class NoteBcbaViewComponent {
   routes = AppRoutes;
   @ViewChild('contentToConvert') contentToConvert!: ElementRef;
   patientProfile: any[];
-  option_selected: number = 1;
+  option_selected = 1;
   patient_id: any;
   // option_selected:number = 0;
 
@@ -39,42 +41,42 @@ export class NoteBcbaViewComponent {
   client_selected: any;
   note_selected: any;
   bip_id: any;
-  user: any;
+  user: AppUser;
 
-  first_name: string = '';
-  last_name: string = '';
-  diagnosis_code: string = '';
+  first_name = '';
+  last_name = '';
+  diagnosis_code = '';
 
-  provider_name_g: string = '';
-  provider_credential: string = '';
-  pos: string = '';
-  session_date: string = '';
-  time_in: string = '';
-  time_out: string = '';
-  time_in2: string = '';
-  time_out2: string = '';
-  session_length_total: string = '';
-  session_length_total2: string = '';
-  environmental_changes: string = '';
+  provider_name_g = '';
+  provider_credential = '';
+  pos = '';
+  session_date = '';
+  time_in = '';
+  time_out = '';
+  time_in2 = '';
+  time_out2 = '';
+  session_length_total = '';
+  session_length_total2 = '';
+  environmental_changes = '';
 
-  sumary_note: string = '';
-  meet_with_client_at: string = '';
-  client_appeared: string = '';
-  as_evidenced_by: string = '';
-  rbt_modeled_and_demonstrated_to_caregiver: string = '';
-  client_response_to_treatment_this_session: string = '';
-  progress_noted_this_session_compared_to_previous_session: string = '';
-  next_session_is_scheduled_for: string = '';
-  provider_name: string = '';
-  supervisor_name: string = '';
+  sumary_note = '';
+  meet_with_client_at = '';
+  client_appeared = '';
+  as_evidenced_by = '';
+  rbt_modeled_and_demonstrated_to_caregiver = '';
+  client_response_to_treatment_this_session = '';
+  progress_noted_this_session_compared_to_previous_session = '';
+  next_session_is_scheduled_for = '';
+  provider_name = '';
+  supervisor_name = '';
 
-  number_of_occurrences: number = 0;
-  number_of_correct_responses: number = 0;
-  total_trials: number = 0;
-  number_of_correct_response: number = 0;
-  maladaptive: string = '';
-  replacement: string = '';
-  maladaptive_behavior: string = '';
+  number_of_occurrences = 0;
+  number_of_correct_responses = 0;
+  total_trials = 0;
+  number_of_correct_response = 0;
+  maladaptive = '';
+  replacement = '';
+  maladaptive_behavior = '';
   interventions: any;
   provider_signature: any;
   supervisor_signature: any;
@@ -106,33 +108,33 @@ export class NoteBcbaViewComponent {
   note_id: any;
   note_selectedId: any;
 
-  roles_rbt: any[] = [];
-  roles_bcba: any[] = [];
+  roles_rbt = [];
+  roles_bcba = [];
 
-  hours_days: any[] = [];
-  maladaptives: any[] = [];
-  replacementGoals: any[] = [];
-  intervention_added: any[] = [];
-  replacements: any[] = [];
-  interventionsgroup: any[] = [];
+  hours_days = [];
+  maladaptives = [];
+  replacementGoals = [];
+  intervention_added = [];
+  replacements = [];
+  interventionsgroup = [];
 
-  maladaptivegroup: any[] = [];
-  replacementgroup: any[] = [];
+  maladaptivegroup = [];
+  replacementgroup = [];
 
   maladaptiveSelected: any = null;
   replacementSelected: any = null;
 
   note_description: any;
-  caregivers_training_goals: any[] = [];
-  rbt_training_goals: any[] = [];
+  caregivers_training_goals = [];
+  rbt_training_goals = [];
   rbt_training_goalsgroup: any;
   caregivers_training_goalsgroup: any;
-  aba_supervisor: any[] = [];
+  aba_supervisor = [];
 
   location: any;
   birth_date: any;
-  porcent_of_occurrences: number = 0;
-  porcent_of_correct_response: number = 0;
+  porcent_of_occurrences = 0;
+  porcent_of_correct_response = 0;
   lto: any = null;
   caregiver_goal: any = null;
   cpt_code: any = null;
@@ -143,19 +145,19 @@ export class NoteBcbaViewComponent {
   doctor_selected_bcba: any = null;
   doctor_selected_full_name_bcba: any = null;
   pa_assessments: string;
-  pa_assessmentsgroup: any[] = [];
+  pa_assessmentsgroup = [];
 
   constructor(
     private noteBcbaService: NoteBcbaService,
     private activatedRoute: ActivatedRoute,
+    private pageService: PageService,
     private doctorService: DoctorService,
     private bipService: BipService,
     private locations: Location
   ) {}
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
-    this.doctorService.closeMenuSidebar();
+    this.pageService.onInitPage();
     this.activatedRoute.params.subscribe((resp: any) => {
       // console.log(resp);
       this.note_id = resp.id;
@@ -206,12 +208,12 @@ export class NoteBcbaViewComponent {
       this.selectedValueTimeOut2 = this.note_selected.time_out2;
 
       this.caregivers_training_goalsgroup = resp.caregiver_goals;
-      let jsonObj = JSON.parse(this.caregivers_training_goalsgroup) || '';
+      const jsonObj = JSON.parse(this.caregivers_training_goalsgroup) || '';
       this.caregivers_training_goals = jsonObj;
       console.log(this.caregivers_training_goals);
 
       this.rbt_training_goalsgroup = resp.rbt_training_goals;
-      let jsonObj1 = JSON.parse(this.rbt_training_goalsgroup) || '';
+      const jsonObj1 = JSON.parse(this.rbt_training_goalsgroup) || '';
       this.rbt_training_goals = jsonObj1;
       console.log(this.rbt_training_goals);
 
@@ -277,7 +279,7 @@ export class NoteBcbaViewComponent {
         this.diagnosis_code = this.patient_selected.diagnosis_code;
 
         // this.pa_assessments = resp.patient.pa_assessments;
-        //   let jsonObj = JSON.parse(this.pa_assessments) || '';
+        //   const jsonObj = JSON.parse(this.pa_assessments) || '';
         //   this.pa_assessmentsgroup = jsonObj;
       });
   }
@@ -294,11 +296,11 @@ export class NoteBcbaViewComponent {
       const imgWidth = 210;
       const pageHeight = 295;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      var heightLeft = imgHeight;
+      let heightLeft = imgHeight;
 
       // Create a new PDF document
       const pdf = new jspdf.jsPDF('p', 'mm');
-      var position = 0;
+      let position = 0;
 
       pdf.addImage(
         canvas.toDataURL('image/png'),

@@ -16,7 +16,7 @@ export class CalendarComponent {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   options: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  events: any[] = [];
+  events = [];
 
   constructor(private data: DataService) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

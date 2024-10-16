@@ -4,6 +4,7 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { InsuranceService } from '../service/insurance.service';
 import { Location } from '@angular/common';
+import { PageService } from 'src/app/shared/services/pages.service';
 
 @Component({
   selector: 'app-insurance-add',
@@ -14,11 +15,11 @@ export class InsuranceAddComponent {
   routes = AppRoutes;
   selectedValue!: string;
 
-  insurer_name: string = '';
-  notes: any[] = [];
+  insurer_name = '';
+  notes = [];
   note: any;
 
-  services: any[] = [];
+  services = [];
   code: any;
   provider: any;
   description: any;
@@ -29,19 +30,18 @@ export class InsuranceAddComponent {
   valid_form = false;
   valid_form_success = false;
 
-  text_success: string = '';
-  text_validation: string = '';
+  text_success = '';
+  text_validation = '';
 
   constructor(
-    private doctorService: DoctorService,
+    private pageService: PageService,
     private insuranceService: InsuranceService,
     private router: Router,
     private location: Location
   ) {}
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
-    this.doctorService.closeMenuSidebar();
+    this.pageService.onInitPage();
   }
 
   goBack() {
@@ -95,7 +95,7 @@ export class InsuranceAddComponent {
     this.insuranceService.storeInsurance(data).subscribe((resp: any) => {
       // console.log(resp);
 
-      if (resp.message == 403) {
+      if (resp.message === 403) {
         this.text_validation = resp.message_text;
       } else {
         this.text_success = 'El insurance ha sido registrado correctamente';

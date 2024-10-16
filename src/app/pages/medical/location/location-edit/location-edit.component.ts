@@ -16,17 +16,17 @@ export class LocationEditComponent {
   location_id: any;
   client_id: any;
   doctor_id: any;
-  selectedValueLocation!: string;
+  selectedValueLocation!: number;
 
-  title: string = '';
-  phone1: string = '';
-  phone2: string = '';
-  telfax: string = '';
-  zip: string = '';
-  state: string = '';
-  email: string = '';
+  title = '';
+  phone1 = '';
+  phone2 = '';
+  telfax = '';
+  zip = '';
+  state = '';
+  email = '';
   city: any;
-  address: string = '';
+  address = '';
 
   location_selected: any;
 
@@ -47,7 +47,6 @@ export class LocationEditComponent {
   ) {}
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
     this.ativatedRoute.params.subscribe((resp: any) => {
       this.location_id = resp.id;
     });
@@ -97,7 +96,7 @@ export class LocationEditComponent {
     }
     this.text_validation = '';
     this.FILE_AVATAR = $event.target.files[0];
-    let reader = new FileReader();
+    const reader = new FileReader();
     reader.readAsDataURL(this.FILE_AVATAR);
     reader.onloadend = () => (this.IMAGE_PREVISUALIZA = reader.result);
   }
@@ -112,7 +111,7 @@ export class LocationEditComponent {
     }
 
     // this.valid_form = false;
-    let formData = new FormData();
+    const formData = new FormData();
     if (this.title) {
       formData.append('title', this.title);
     }
@@ -152,7 +151,7 @@ export class LocationEditComponent {
       .editLocation(formData, this.location_id)
       .subscribe((resp: any) => {
         // console.log(resp);
-        if (resp.message == 403) {
+        if (resp.message === 403) {
           this.text_validation = resp.message_text;
         } else {
           // this.text_success = "El location se ha actualizado";

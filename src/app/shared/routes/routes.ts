@@ -1,37 +1,40 @@
 import { AccountsRoutes } from './accounts.routes';
 import { AppointmentsRoutes } from './appointments.routes';
-import { AuthRoutes } from './auth.routes';
 import { AssetsRoutes } from './assets.routes';
-import { BlogsRoutes } from './blogs.routes';
+import { ActivityRoutes } from './activity.routes';
+import { PagesRoutes } from './pages.routes';
+import { ProfileRoutes } from './profile.routes';
+import { ReportRoutes } from './report.routes';
+import { AuthRoutes } from './auth.routes';
+import { BillingRoutes } from './billing.routes';
+import { BipRoutes } from './bip.routes';
 import { CallsRoutes } from './calls.routes';
 import { ChatRoutes } from './chat.routes';
+import { ClientReportRoutes } from './client-report.routes';
 import { ComponentsRoutes } from './components.routes';
 import { DashboardRoutes } from './dashboard.routes';
-import { SpecialitiesRoutes } from './specialities.routes';
 import { DepartmentsRoutes } from './departments.routes';
-import { DoctorsRoutes } from './doctors.routes';
 import { DoctorScheduleRoutes } from './doctor-schedule.routes';
-import { StaffRoutes } from './staff.routes';
-import { NoteBcbaRoutes } from './note-bcba.routes';
-import { NoteRbtRoutes } from './note-rbt.routes';
-import { LocationRoutes } from './location.routes';
-import { BipRoutes } from './bip.routes';
-import { InsuranceRoutes } from './insurance.routes';
-import { RolesRoutes } from './roles.routes';
+import { DoctorsRoutes } from './doctors.routes';
+import { EmailRoutes } from './email.routes';
 import { ErrorRoutes } from './error.routes';
-import { TablesRoutes } from './tables.routes';
 import { FormsRoutes } from './forms.routes';
 import { GalleryRoutes } from './gallery.routes';
+import { InsuranceRoutes } from './insurance.routes';
 import { InvoiceRoutes } from './invoice.routes';
-import { SettingsRoutes } from './settings.routes';
+import { LocationRoutes } from './location.routes';
+import { MedicalRoutes } from './medical.routes';
+import { NoteBcbaRoutes } from './note-bcba.routes';
+import { NoteRbtRoutes } from './note-rbt.routes';
 import { PatientsRoutes } from './patients.routes';
 import { PayrollRoutes } from './payroll.routes';
-import { EmailRoutes } from './email.routes';
-import { ClientReportRoutes } from './client-report.routes';
-import { MedicalRoutes } from './medical.routes';
-import { BillingRoutes } from './BillingRoutes';
+import { RolesRoutes } from './roles.routes';
+import { SettingsRoutes } from './settings.routes';
+import { SpecialitiesRoutes } from './specialities.routes';
+import { StaffRoutes } from './staff.routes';
+import { TablesRoutes } from './tables.routes';
 
-export const baseUrl: string = '';
+export const baseUrl = '';
 
 export class AppRoutes {
   static get auth(): typeof AuthRoutes {
@@ -43,8 +46,8 @@ export class AppRoutes {
   static get appointments(): typeof AppointmentsRoutes {
     return AppointmentsRoutes;
   }
-  static get activities(): string {
-    return `${baseUrl}/activities`;
+  static get activities(): typeof ActivityRoutes {
+    return ActivityRoutes;
   }
   static get assets(): typeof AssetsRoutes {
     return AssetsRoutes;
@@ -52,9 +55,8 @@ export class AppRoutes {
   static get billing(): typeof BillingRoutes {
     return BillingRoutes;
   }
-
-  static get blankPage(): string {
-    return `${baseUrl}/blank-page`;
+  static get pages(): typeof PagesRoutes {
+    return PagesRoutes;
   }
   // static get blogs(): typeof BlogsRoutes {
   //   return BlogsRoutes;
@@ -62,9 +64,6 @@ export class AppRoutes {
   //static get calendar(): string {
   // `  return ${baseUrl}/calendar`;
   // }
-  static get calendar(): string {
-    return `${baseUrl}/appointment-calendar/show`;
-  }
   static get calls(): typeof CallsRoutes {
     return CallsRoutes;
   }
@@ -113,21 +112,11 @@ export class AppRoutes {
   //static get salary(): string {
   // `  return ${baseUrl}/payroll/salary`;
   // }
-  static get salary(): string {
-    return `${baseUrl}/appointment-pay/list`;
+  static get profile(): typeof ProfileRoutes {
+    return ProfileRoutes;
   }
-
-  static get profile(): string {
-    return `${baseUrl}/profile`;
-  }
-  static get editProfile(): string {
-    return `${baseUrl}/edit-profile`;
-  }
-  static get expenseReports(): string {
-    return `${baseUrl}/reports/expense-reports`;
-  }
-  static get invoiceReports(): string {
-    return `${baseUrl}/reports/invoice-reports`;
+  static get reports(): typeof ReportRoutes {
+    return ReportRoutes;
   }
   static get settings(): typeof SettingsRoutes {
     return SettingsRoutes;
@@ -167,7 +156,5 @@ export class AppRoutes {
 export const lastRoutes = (route: string, deep = 1, extra = ''): string => {
   const routes = route.split('/');
   const path = routes.slice(routes.length - deep);
-  const result = path.join('/') + extra;
-  console.log(result);
-  return result;
+  return path.join('/') + extra;
 };

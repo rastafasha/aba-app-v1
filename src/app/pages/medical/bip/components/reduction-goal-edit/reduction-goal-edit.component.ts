@@ -4,6 +4,7 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
 import { GoalService } from '../../service/goal.service';
+import { AppUser } from 'src/app/shared/models/users.models';
 
 @Component({
   selector: 'app-reduction-goal-edit',
@@ -15,11 +16,11 @@ export class ReductionGoalEditComponent {
 
   routes = AppRoutes;
   valid_form_success = false;
-  text_validation: string = '';
-  text_success: string = '';
+  text_validation = '';
+  text_success = '';
 
   client_id: any;
-  user: any;
+  user: AppUser;
   doctor_id: any;
   patient_id: any;
   client_selected: any;
@@ -28,17 +29,17 @@ export class ReductionGoalEditComponent {
   bip_selected: any;
   bip_selectedId: any;
   bip_selectedIdd: any;
-  maladaptives: any[] = [];
+  maladaptives = [];
 
-  goalSustitutions: any[] = [];
+  goalSustitutions = [];
   client_id_goalSustitution: any;
 
   //goals
   maladaptiveSelected: any;
   maladaptiveSelectedSon: any;
   goalmaladaptive: any;
-  goalmaladaptive_child: any[] = [];
-  goalReductionPatientIds: any[] = [];
+  goalmaladaptive_child = [];
+  goalReductionPatientIds = [];
 
   goalmaladaptiveid: any;
   current_status!: any;
@@ -74,11 +75,11 @@ export class ReductionGoalEditComponent {
   goalpatient_selected: any;
   goal_selected: any;
   goalsbybipid: any;
-  goals: any[] = [];
-  goalReductions: any[] = [];
+  goals = [];
+  goalReductions = [];
 
-  golsto_edit: any[] = [];
-  gollto_edit: any[] = [];
+  golsto_edit = [];
+  gollto_edit = [];
 
   goalmaladaptive_clientId: any;
   goalReductionId: any;
@@ -315,7 +316,7 @@ export class ReductionGoalEditComponent {
     this.status_sto_edit = goalsto;
     // console.log(this.status_sto_edit.status_sto);
 
-    let data = {
+    const data = {
       goalstos: this.golsto,
       goalltos: this.gollto,
     };
@@ -333,7 +334,7 @@ export class ReductionGoalEditComponent {
     this.status_sto_edit = goallto;
     // console.log(this.status_lto_edit.status_lto);
 
-    let data = {
+    const data = {
       goalstos: this.golsto,
       goalltos: this.gollto,
     };
@@ -364,7 +365,7 @@ export class ReductionGoalEditComponent {
     //   return;
     // }
 
-    let data = {
+    const data = {
       id: this.goalmaladaptiveid,
       bip_id: this.bip_selectedIdd,
       maladaptive: this.maladap.maladaptive_behavior,

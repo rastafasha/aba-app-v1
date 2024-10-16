@@ -18,11 +18,12 @@ import {
   ChartComponent,
 } from 'ng-apexcharts';
 import { DataService } from 'src/app/shared/data/data.service';
-import { patientDashboard } from 'src/app/shared/models/models';
+import { PatientDashboard } from 'src/app/shared/models/models';
 
 import { ActivatedRoute } from '@angular/router';
 import { BipService } from '../../../service/bip.service';
 import { GraphicReductionService } from '../../../service/graphic-reduction.service';
+import { AppUser } from 'src/app/shared/models/users.models';
 interface data {
   value: string;
 }
@@ -66,7 +67,7 @@ export type ChartOptions = {
   styleUrls: ['./chart-reduction.component.scss'],
 })
 export class ChartReductionComponent {
-  selectedValue: string = '03';
+  selectedValue = '03';
   @ViewChild('chart') chart!: ChartComponent;
 
   @Input() maladaptiveSelectedSon: any;
@@ -78,10 +79,10 @@ export class ChartReductionComponent {
 
   chartOptionsOne: Partial<ChartOptions>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  carousel1: any[] = [];
+  carousel1 = [];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  carousel2: any[] = [];
-  dataSource!: MatTableDataSource<patientDashboard>;
+  carousel2 = [];
+  dataSource!: MatTableDataSource<PatientDashboard>;
   slideConfig = {
     slidesToShow: 3,
     slidesToScroll: 3,
@@ -90,43 +91,43 @@ export class ChartReductionComponent {
   };
 
   //datos reales
-  bips: any[] = [];
-  user: any;
+  bips = [];
+  user: AppUser;
   maladaptiveSelected: any;
   maladaptive: any;
   patient_id: any;
   client_id: any;
   created_at: any;
-  session_date: any[] = [];
+  session_date = [];
   maladaptives: any = null;
-  session_dates: any[] = [];
+  session_dates = [];
   number_of_occurrences: number;
-  patient_selected: any[] = [];
+  patient_selected = [];
   client_selected: any = null;
-  sessionDates: any[] = [];
+  sessionDates = [];
 
-  maladaptiveBehaviors: any[] = [];
-  maladaptivess: any[] = [];
+  maladaptiveBehaviors = [];
+  maladaptivess = [];
   existgrfic: any;
   loading: boolean;
 
   maladaptivesCol: any[];
-  sessions_dates: any[] = [];
+  sessions_dates = [];
   number_of_occurrence: any[];
   noteRbt: any[];
   dates: any[];
 
-  query_patient_by_genders: any[] = [];
-  query_patients_specialities: any[] = [];
-  query_patients_speciality_porcentaje: any[] = [];
-  query_income_year: any[] = [];
-  notesRbts: any[] = [];
-  graphData: any[] = [];
-  dataChartMaladative: any[] = [];
+  query_patient_by_genders = [];
+  query_patients_specialities = [];
+  query_patients_speciality_porcentaje = [];
+  query_income_year = [];
+  notesRbts = [];
+  graphData = [];
+  dataChartMaladative = [];
 
-  respuestas: any = [{}];
-  dataGrafico: any[] = [];
-  replacementsExtractedGoal: any = ([] = [{}]);
+  respuestas: any[] = [{}];
+  dataGrafico = [];
+  replacementsExtractedGoal: any[] = [{}];
   //datos reales
 
   constructor(
@@ -229,9 +230,9 @@ export class ChartReductionComponent {
 
         // fin funcion de pablo alcorta
         // recorremos el resultado del array maladaptivesParsed para extraer los solicitados por el request
-        let number_of_occurrences: number[] = [];
-        let maladaptive_behavior: string[] = [];
-        let array = this.graphData;
+        const number_of_occurrences: number[] = [];
+        const maladaptive_behavior: string[] = [];
+        const array = this.graphData;
         for (this.maladaptives of array) {
           number_of_occurrences.push(
             Number(this.maladaptives.number_of_occurrences)
@@ -355,11 +356,11 @@ export class ChartReductionComponent {
 
   extractData() {
     // recorrer el array de billing_general para extraer la data
-    let hours_group: string[] = [];
-    let units_group: string[] = [];
+    const hours_group: string[] = [];
+    const units_group: string[] = [];
     const extractedData = this.maladaptives;
 
-    let array = this.maladaptives;
+    const array = this.maladaptives;
     for (this.maladaptives of array) {
       hours_group.push(this.maladaptives.total_hours);
       units_group.push(this.maladaptives.total_units);
@@ -388,7 +389,7 @@ export class ChartReductionComponent {
   }
 
   getGraphicPatientMonth() {
-    let data = {
+    const data = {
       month: this.selectedValue,
     };
     this.graphicReductionService
@@ -398,7 +399,7 @@ export class ChartReductionComponent {
 
         //start
         this.query_income_year = resp.query_income_year;
-        let data_income: any[] = [];
+        const data_income = [];
         this.query_income_year.forEach((element: any) => {
           data_income.push(element.income);
         });

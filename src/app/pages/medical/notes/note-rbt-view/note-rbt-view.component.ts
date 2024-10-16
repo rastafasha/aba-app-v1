@@ -1,23 +1,25 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { AppRoutes } from 'src/app/shared/routes/routes';
-import { DoctorService } from '../../doctors/service/doctor.service';
-import * as jspdf from 'jspdf';
-import html2canvas from 'html2canvas';
-import { InsuranceService } from '../../insurance/service/insurance.service';
-import { NoteRbtService } from '../services/note-rbt.service';
-import { BipService } from '../../bip/service/bip.service';
 import { Location } from '@angular/common';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import html2canvas from 'html2canvas';
+import * as jspdf from 'jspdf';
+import { AppUser } from 'src/app/shared/models/users.models';
+import { AppRoutes } from 'src/app/shared/routes/routes';
+import { PageService } from 'src/app/shared/services/pages.service';
+import { BipService } from '../../bip/service/bip.service';
+import { DoctorService } from '../../doctors/service/doctor.service';
+import { NoteRbtService } from '../services/note-rbt.service';
+
 @Component({
   selector: 'app-note-rbt-view',
   templateUrl: './note-rbt-view.component.html',
   styleUrls: ['./note-rbt-view.component.scss'],
 })
-export class NoteRbtViewComponent {
+export class NoteRbtViewComponent implements OnInit {
   routes = AppRoutes;
   @ViewChild('contentToConvert') contentToConvert!: ElementRef;
   patientProfile: any[];
-  option_selected: number = 1;
+  option_selected = 1;
   patient_id: any;
   // option_selected:number = 0;
 
@@ -38,42 +40,42 @@ export class NoteRbtViewComponent {
   client_selected: any;
   note_selected: any;
   bip_id: any;
-  user: any;
+  user: AppUser;
 
-  first_name: string = '';
-  last_name: string = '';
-  diagnosis_code: string = '';
+  first_name = '';
+  last_name = '';
+  diagnosis_code = '';
 
-  provider_name_g: string = '';
-  provider_credential: string = '';
-  pos: string = '';
-  session_date: string = '';
-  time_in: string = '';
-  time_out: string = '';
-  time_in2: string = '';
-  time_out2: string = '';
-  session_length_total: string = '';
-  session_length_total2: string = '';
-  environmental_changes: string = '';
+  provider_name_g = '';
+  provider_credential = '';
+  pos = '';
+  session_date = '';
+  time_in = '';
+  time_out = '';
+  time_in2 = '';
+  time_out2 = '';
+  session_length_total = '';
+  session_length_total2 = '';
+  environmental_changes = '';
 
-  sumary_note: string = '';
-  meet_with_client_at: string = '';
-  client_appeared: string = '';
-  as_evidenced_by: string = '';
-  rbt_modeled_and_demonstrated_to_caregiver: string = '';
-  client_response_to_treatment_this_session: string = '';
-  progress_noted_this_session_compared_to_previous_session: string = '';
-  next_session_is_scheduled_for: string = '';
-  provider_name: string = '';
-  supervisor_name: string = '';
+  sumary_note = '';
+  meet_with_client_at = '';
+  client_appeared = '';
+  as_evidenced_by = '';
+  rbt_modeled_and_demonstrated_to_caregiver = '';
+  client_response_to_treatment_this_session = '';
+  progress_noted_this_session_compared_to_previous_session = '';
+  next_session_is_scheduled_for = '';
+  provider_name = '';
+  supervisor_name = '';
 
-  number_of_occurrences: number = 0;
-  number_of_correct_responses: number = 0;
-  total_trials: number = 0;
-  number_of_correct_response: number = 0;
-  maladaptive: string = '';
-  replacement: string = '';
-  maladaptive_behavior: string = '';
+  number_of_occurrences = 0;
+  number_of_correct_responses = 0;
+  total_trials = 0;
+  number_of_correct_response = 0;
+  maladaptive = '';
+  replacement = '';
+  maladaptive_behavior = '';
   interventions: any;
   provider_signature: any;
   supervisor_signature: any;
@@ -106,18 +108,18 @@ export class NoteRbtViewComponent {
   note_selectedId: any;
   statusNote: any;
 
-  roles_rbt: any[] = [];
-  roles_bcba: any[] = [];
+  roles_rbt = [];
+  roles_bcba = [];
 
-  hours_days: any[] = [];
-  maladaptives: any[] = [];
-  replacementGoals: any[] = [];
-  intervention_added: any[] = [];
-  replacements: any[] = [];
-  interventionsgroup: any[] = [];
+  hours_days = [];
+  maladaptives = [];
+  replacementGoals = [];
+  intervention_added = [];
+  replacements = [];
+  interventionsgroup = [];
 
-  maladaptivegroup: any[] = [];
-  replacementgroup: any[] = [];
+  maladaptivegroup = [];
+  replacementgroup = [];
 
   maladaptiveSelected: any = null;
   replacementSelected: any = null;
@@ -131,13 +133,12 @@ export class NoteRbtViewComponent {
     private noteRbtService: NoteRbtService,
     private activatedRoute: ActivatedRoute,
     private doctorService: DoctorService,
-    private insuranceService: InsuranceService,
+    private pageService: PageService,
     private bipService: BipService,
     private location: Location
   ) {}
   ngOnInit(): void {
-    window.scrollTo(0, 0);
-    this.doctorService.closeMenuSidebar();
+    this.pageService.onInitPage();
     this.doctorService.getUserRoles();
 
     this.activatedRoute.params.subscribe((resp: any) => {
@@ -174,7 +175,7 @@ export class NoteRbtViewComponent {
         this.note_selected.client_response_to_treatment_this_session;
 
       this.interventions = resp.interventions;
-      let jsonObj = JSON.parse(this.interventions) || '';
+      const jsonObj = JSON.parse(this.interventions) || '';
       this.interventionsgroup = jsonObj;
       // console.log(this.interventionsgroup);
 
@@ -192,12 +193,12 @@ export class NoteRbtViewComponent {
       this.natural_teaching = this.interventionsgroup[0].natural_teaching;
 
       this.maladaptive = resp.maladaptives;
-      let jsonObj1 = JSON.parse(this.maladaptive) || '';
+      const jsonObj1 = JSON.parse(this.maladaptive) || '';
       this.maladaptivegroup = jsonObj1;
       // console.log(this.maladaptivegroup);
 
       this.replacement = resp.replacements; // ?
-      let jsonObj2 = JSON.parse(this.replacement) || '';
+      const jsonObj2 = JSON.parse(this.replacement) || '';
       this.replacementgroup = jsonObj2;
       // console.log(this.replacementgroup);
 
@@ -308,11 +309,11 @@ export class NoteRbtViewComponent {
       const imgWidth = 210;
       const pageHeight = 295;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      var heightLeft = imgHeight;
+      let heightLeft = imgHeight;
 
       // Create a new PDF document
       const pdf = new jspdf.jsPDF('p', 'mm');
-      var position = 0;
+      let position = 0;
 
       pdf.addImage(
         canvas.toDataURL('image/png'),

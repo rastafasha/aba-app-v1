@@ -8,6 +8,8 @@ import Swal from 'sweetalert2';
 import { Location } from '@angular/common';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { PageService } from 'src/app/shared/services/pages.service';
+import { AppUser } from 'src/app/shared/models/users.models';
 
 export interface ResponseBackend {
   users: User[];
@@ -39,31 +41,31 @@ const url_servicios = environment.url_servicios;
 export class AddPatientMComponent {
   routes = AppRoutes;
   patient_id: any;
-  selectedValueLocation!: string;
+  selectedValueLocation!: number;
   selectedValueCode!: string;
   selectedValuePosCovered!: string;
   selectedValueUnitPrize!: string;
-  option_selected: number = 0;
+  option_selected = 0;
 
   first_name: string;
-  last_name: string = '';
-  parent_guardian_name: string = '';
+  last_name = '';
+  parent_guardian_name = '';
   relationship: any;
-  language: string = '';
-  phone: string = '';
-  home_phone: string = '';
-  work_phone: string = '';
-  zip: string = '';
-  state: string = '';
-  email: string = '';
-  education: string = '';
-  profession: string = '';
-  school_name: string = '';
-  school_number: string = '';
-  birth_date: string = '';
-  age: number = 0;
-  gender: number = 1;
-  address: string = '';
+  language = '';
+  phone = '';
+  home_phone = '';
+  work_phone = '';
+  zip = '';
+  state = '';
+  email = '';
+  education = '';
+  profession = '';
+  school_name = '';
+  school_number = '';
+  birth_date = '';
+  age = 0;
+  gender = 1;
+  address = '';
   special_note: any;
   city: any;
   patient_control: any;
@@ -85,7 +87,7 @@ export class AddPatientMComponent {
   eqhlid: any;
   roles_doctor: any;
 
-  pa_assessments: any[] = [];
+  pa_assessments = [];
   pa_assessment: any;
   pa_assessment_start_date: Date;
   pa_assessment_end_date: Date;
@@ -93,7 +95,7 @@ export class AddPatientMComponent {
   pa_services_start_date: Date;
   pa_services_end_date: Date;
   cpt: any;
-  n_units: number = 0;
+  n_units = 0;
 
   welcome:
     | 'waiting'
@@ -196,12 +198,12 @@ export class AddPatientMComponent {
     | '2 insurance';
   interview: 'pending' | 'send' | 'receive' | 'no apply';
 
-  specialists: any[] = [];
-  locations: any[] = [];
-  roles_rbt: any[] = [];
-  roles_bcba: any[] = [];
-  insurances: any[] = [];
-  insurance_codes: any[] = [];
+  specialists = [];
+  locations = [];
+  roles_rbt = [];
+  roles_bcba = [];
+  insurances = [];
+  insurance_codes = [];
   insurance: any;
   code: any;
   provider: any;
@@ -239,16 +241,16 @@ export class AddPatientMComponent {
   IMAGE_PREVISUALIZA_REFERAL = 'assets/img/user-06.jpg';
 
   insurer_name: any;
-  notes: any[] = [];
-  services: any[] = [];
-  services_code: any[] = [];
+  notes = [];
+  services = [];
+  services_code = [];
   poscoveredList: string = null;
 
   telehealth: boolean;
   pay: boolean;
-  user: any;
+  user: AppUser;
   doctor: any;
-  roles: any[] = [];
+  roles = [];
   doctor_id: any;
   locationId: any;
   location: any;
@@ -260,7 +262,7 @@ export class AddPatientMComponent {
 
   constructor(
     private patientService: PatientMService,
-    private doctorService: DoctorService,
+    private pageService: PageService,
     private insuranceService: InsuranceService,
     private router: Router,
     private locationBack: Location,
@@ -268,8 +270,8 @@ export class AddPatientMComponent {
   ) {}
 
   ngOnInit(): void {
-    // window.scrollTo(0, 0);
-    this.doctorService.closeMenuSidebar();
+    //
+    this.pageService.onInitPage();
 
     this.getPoscoveredList();
     // this.insuranceData();
@@ -277,10 +279,10 @@ export class AddPatientMComponent {
     this.user = JSON.parse(USER ? USER : '');
     this.doctor_id = this.user.id;
     this.locationId = this.user.location_id;
-    this.roles = this.user.roles[0];
+    this.roles = this.user.roles;
     // console.log(this.locationId);
 
-    if (this.user.roles[0] == 'MANAGER') {
+    if (this.user.roles[0] === 'MANAGER') {
       this.selectedValueLocation = this.user.location_id;
     }
     this.getConfig();
@@ -292,11 +294,11 @@ export class AddPatientMComponent {
 
   checkEmailExistence(): void {
     this.http
-      .get(`${url_servicios}/doctors/check-email-exist/${this.email}`)
-      .subscribe((response: any) => {
+      .get<any>(`${url_servicios}/doctors/check-email-exist/${this.email}`)
+      .subscribe((response) => {
         this.emailExists = response.exist.email;
         console.log(this.emailExists);
-        if (this.emailExists == null) {
+        if (this.emailExists === null) {
           this.emailExists = false;
         } else {
           this.emailExists = true;
@@ -322,10 +324,10 @@ export class AddPatientMComponent {
         this.insurances = resp.insurances;
 
         this.roles_rbt = this.specialists.filter(
-          (user) => user.roles[0].name == 'RBT'
+          (user) => user.roles[0].name === 'RBT'
         );
         this.roles_bcba = this.specialists.filter(
-          (user) => user.roles[0].name == 'BCBA'
+          (user) => user.roles[0].name === 'BCBA'
         );
         console.log(this.roles_bcba);
       });
@@ -436,7 +438,7 @@ export class AddPatientMComponent {
     }
     this.text_validation = '';
     this.FILE_AVATAR = $event.target.files[0];
-    let reader = new FileReader();
+    const reader = new FileReader();
     reader.readAsDataURL(this.FILE_AVATAR);
     reader.onloadend = () =>
       (this.IMAGE_PREVISUALIZA = reader.result as string);
@@ -448,7 +450,7 @@ export class AddPatientMComponent {
     }
     this.text_validation = '';
     this.FILE_AVATAR = $event.target.files[0];
-    let reader = new FileReader();
+    const reader = new FileReader();
     reader.readAsDataURL(this.FILE_AVATAR);
     reader.onloadend = () =>
       (this.IMAGE_PREVISUALIZA = reader.result as string);
@@ -460,7 +462,7 @@ export class AddPatientMComponent {
     }
     this.text_validation = '';
     this.FILE_AVATAR = $event.target.files[0];
-    let reader = new FileReader();
+    const reader = new FileReader();
     reader.readAsDataURL(this.FILE_AVATAR);
     reader.onloadend = () =>
       (this.IMAGE_PREVISUALIZA = reader.result as string);
@@ -502,7 +504,7 @@ export class AddPatientMComponent {
     }
 
     // this.valid_form = false;
-    let formData = new FormData();
+    const formData = new FormData();
 
     formData.append('first_name', this.first_name);
     formData.append('last_name', this.last_name);
@@ -546,11 +548,11 @@ export class AddPatientMComponent {
 
     formData.append('pos_covered', this.poscoveredList);
 
-    if (this.user.roles[0] == 'SUPERADMIN') {
-      formData.append('location_id', this.selectedValueLocation);
+    if (this.user.roles[0] === 'SUPERADMIN') {
+      formData.append('location_id', this.selectedValueLocation + '');
     }
-    if (this.user.roles[0] == 'MANAGER') {
-      formData.append('location_id', this.user.location_id);
+    if (this.user.roles[0] === 'MANAGER') {
+      formData.append('location_id', this.user.location_id + '');
     }
     // formData.append('location_id', this.locationId);
 
@@ -601,9 +603,9 @@ export class AddPatientMComponent {
     this.valid_form_success = false;
     this.text_validation = '';
 
-    if (this.user.roles[0] == 'SUPERADMIN') {
+    if (this.user.roles[0] === 'SUPERADMIN') {
       this.patientService.createPatient(formData).subscribe((resp: any) => {
-        if (resp.message == 403) {
+        if (resp.message === 403) {
           this.text_validation = resp.message_text;
         } else {
           Swal.fire('Created', `Client Created successfully!`, 'success');
@@ -611,9 +613,9 @@ export class AddPatientMComponent {
         }
       });
     }
-    if (this.user.roles[0] == 'MANAGER') {
+    if (this.user.roles[0] === 'MANAGER') {
       this.patientService.createPatient(formData).subscribe((resp: any) => {
-        if (resp.message == 403) {
+        if (resp.message === 403) {
           this.text_validation = resp.message_text;
         } else {
           Swal.fire('Created', `Client Created successfully!`, 'success');

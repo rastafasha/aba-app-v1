@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import * as jsPDF from 'jspdf';
 import { FileSaverService } from 'ngx-filesaver';
@@ -8,16 +8,18 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
 import { DoctorService } from '../service/doctor.service';
+import { AppUser } from 'src/app/shared/models/users.models';
+import { PageService } from 'src/app/shared/services/pages.service';
 declare var $: any;
 @Component({
   selector: 'app-list-doctor',
   templateUrl: './list-doctor.component.html',
   styleUrls: ['./list-doctor.component.scss'],
 })
-export class ListDoctorComponent {
+export class ListDoctorComponent implements OnInit {
   routes = AppRoutes;
 
-  doctorList: any[] = [];
+  doctorList = [];
   dataSource!: MatTableDataSource<any>;
 
   showFilter = false;
@@ -31,35 +33,35 @@ export class ListDoctorComponent {
   serialNumberArray: number[] = [];
   currentPage = 1;
   pageNumberArray: number[] = [];
-  pageSelection: any[] = [];
+  pageSelection = [];
   totalPages = 0;
 
-  doctor_generals: any[] = [];
-  doctorEmployeesList: any[] = [];
-  roles: any[] = [];
+  doctor_generals = [];
+  doctorEmployeesList = [];
+  role: string;
   doctor_id: any;
   doctor_selected: any;
   text_validation: any;
-  user: any;
+  user: AppUser;
   locationId: any;
 
   constructor(
     private doctorService: DoctorService,
     private fileSaver: FileSaverService,
     private authService: AuthService,
+    private pageService: PageService,
     private location: Location
   ) {}
   ngOnInit() {
-    window.scrollTo(0, 0);
-    this.doctorService.closeMenuSidebar();
+    this.pageService.onInitPage();
     this.getTableData();
 
     const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
-    this.roles = this.user.roles[0];
+    this.role = this.user.roles[0];
     this.locationId = this.user.location_id;
 
-    this.user = this.authService.user;
+    this.user = this.authService.user as AppUser;
   }
 
   goBack() {
@@ -121,13 +123,13 @@ export class ListDoctorComponent {
       .subscribe((resp: any) => {
         // console.log(resp);
 
-        if (resp.message == 403) {
+        if (resp.message === 403) {
           this.text_validation = resp.message_text;
         } else {
           const INDEX = this.doctorList.findIndex(
-            (item: any) => item.id == this.doctor_selected.id
+            (item) => item.id === this.doctor_selected.id
           );
-          if (INDEX != -1) {
+          if (INDEX !== -1) {
             this.doctorList.splice(INDEX, 1);
 
             $('#delete_patient').hide();
@@ -164,13 +166,13 @@ export class ListDoctorComponent {
   }
 
   getMoreData(event: string): void {
-    if (event == 'next') {
+    if (event === 'next') {
       this.currentPage++;
       this.pageIndex = this.currentPage - 1;
       this.limit += this.pageSize;
       this.skip = this.pageSize * this.pageIndex;
       this.getTableDataGeneral();
-    } else if (event == 'previous') {
+    } else if (event === 'previous') {
       this.currentPage--;
       this.pageIndex = this.currentPage - 1;
       this.limit -= this.pageSize;
@@ -203,7 +205,7 @@ export class ListDoctorComponent {
   private calculateTotalPages(totalDatadoctor: number, pageSize: number): void {
     this.pageNumberArray = [];
     this.totalPages = totalDatadoctor / pageSize;
-    if (this.totalPages % 1 != 0) {
+    if (this.totalPages % 1 !== 0) {
       this.totalPages = Math.trunc(this.totalPages + 1);
     }
     /* eslint no-var: off */

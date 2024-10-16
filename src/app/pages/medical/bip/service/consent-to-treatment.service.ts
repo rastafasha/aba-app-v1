@@ -11,27 +11,27 @@ export class ConsentToTreatmentService {
 
   listConsentToTreatments() {
     const URL = url_servicios + '/consenttotreatment';
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 
   getConsentToTreatment(user_id: any) {
     const URL = url_servicios + '/consenttotreatment/show/' + user_id;
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 
   getConsentToTreatmentbyPatientId(patient_id: any) {
     const URL =
       url_servicios + '/consenttotreatment/showgbyPatientId/' + patient_id;
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 
   createConsentToTreatment(data) {
     const URL = url_servicios + '/consenttotreatment/store';
-    return this.http.post(URL, data);
+    return this.http.post<any>(URL, data);
   }
   editConsentToTreatment(data: any, user_id: any) {
     const URL = url_servicios + '/consenttotreatment/update/' + user_id;
-    return this.http.post(URL, data);
+    return this.http.post<any>(URL, data);
   }
   deleteConsentToTreatment(user_id: any) {
     const URL = url_servicios + '/consenttotreatment/destroy/' + user_id;
@@ -40,6 +40,6 @@ export class ConsentToTreatmentService {
 
   showConsentToTreatmentProfile(user_id: any) {
     const URL = url_servicios + '/consenttotreatment/profile/' + user_id;
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 }

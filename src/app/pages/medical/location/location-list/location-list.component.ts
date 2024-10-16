@@ -7,6 +7,7 @@ import { DoctorService } from '../../doctors/service/doctor.service';
 import { PatientMService } from '../../patient-m/service/patient-m.service';
 import { LocationService } from '../services/location.service';
 import { Location } from '@angular/common';
+import { PageService } from 'src/app/shared/services/pages.service';
 
 declare var $: any;
 @Component({
@@ -17,7 +18,7 @@ declare var $: any;
 export class LocationListComponent {
   routes = AppRoutes;
 
-  locationList: any[] = [];
+  locationList = [];
   dataSource!: MatTableDataSource<any>;
 
   showFilter = false;
@@ -31,23 +32,22 @@ export class LocationListComponent {
   serialNumberArray: number[] = [];
   currentPage = 1;
   pageNumberArray: number[] = [];
-  pageSelection: any[] = [];
+  pageSelection = [];
   totalPages = 0;
 
-  location_generals: any[] = [];
+  location_generals = [];
   location_id: any;
   location_selected: any;
   text_validation: any;
 
   constructor(
     private locationService: LocationService,
-    private doctorService: DoctorService,
+    private pageService: PageService,
     private fileSaver: FileSaverService,
     private location: Location
   ) {}
   ngOnInit() {
-    window.scrollTo(0, 0);
-    this.doctorService.closeMenuSidebar();
+    this.pageService.onInitPage();
     this.getTableData();
   }
 
@@ -95,13 +95,13 @@ export class LocationListComponent {
       .subscribe((resp: any) => {
         // console.log(resp);
 
-        if (resp.message == 403) {
+        if (resp.message === 403) {
           this.text_validation = resp.message_text;
         } else {
           const INDEX = this.locationList.findIndex(
-            (item: any) => item.id == this.location_selected.id
+            (item: any) => item.id === this.location_selected.id
           );
-          if (INDEX != -1) {
+          if (INDEX !== -1) {
             this.locationList.splice(INDEX, 1);
 
             $('#delete_patient').hide();
@@ -144,13 +144,13 @@ export class LocationListComponent {
   }
 
   getMoreData(event: string): void {
-    if (event == 'next') {
+    if (event === 'next') {
       this.currentPage++;
       this.pageIndex = this.currentPage - 1;
       this.limit += this.pageSize;
       this.skip = this.pageSize * this.pageIndex;
       this.getTableData(this.currentPage);
-    } else if (event == 'previous') {
+    } else if (event === 'previous') {
       this.currentPage--;
       this.pageIndex = this.currentPage - 1;
       this.limit -= this.pageSize;
@@ -186,7 +186,7 @@ export class LocationListComponent {
   ): void {
     this.pageNumberArray = [];
     this.totalPages = totalDataPatient / pageSize;
-    if (this.totalPages % 1 != 0) {
+    if (this.totalPages % 1 !== 0) {
       this.totalPages = Math.trunc(this.totalPages + 1);
     }
     /* eslint no-var: off */

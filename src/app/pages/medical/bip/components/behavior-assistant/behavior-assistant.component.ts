@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AppUser } from 'src/app/shared/models/users.models';
 
 @Component({
   selector: 'app-behavior-assistant',
@@ -8,8 +9,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class BehaviorAssistantComponent {
   valid_form_success = false;
-  text_validation: string = '';
-  text_success: string = '';
+  text_validation = '';
+  text_success = '';
 
   monday: any;
   tuesday: any;
@@ -18,10 +19,10 @@ export class BehaviorAssistantComponent {
   friday: any;
   saturday: any;
 
-  behaviors: any[] = [];
+  behaviors = [];
 
   client_id: any;
-  user: any;
+  user: AppUser;
   doctor_id: any;
   client_selected: any;
   patient_id: any;
@@ -38,7 +39,7 @@ export class BehaviorAssistantComponent {
   constructor(private ativatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
-    // window.scrollTo(0, 0);//inicia la vista siempre desde arriba
+    // //inicia la vista siempre desde arriba
 
     //me subcribo al id recibido por el parametro de la url
     this.ativatedRoute.params.subscribe((resp: any) => {

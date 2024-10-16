@@ -6,11 +6,12 @@ import { Router } from '@angular/router';
 import { FileSaverService } from 'ngx-filesaver';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { ActionModalComponent } from 'src/app/shared/components/action-modal/action-modal.component';
+import { AppUser } from 'src/app/shared/models/users.models';
 import { AppRoutes } from 'src/app/shared/routes/routes';
+import { PageService } from 'src/app/shared/services/pages.service';
 import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
 import { BipService } from '../../bip/service/bip.service';
-import { DoctorService } from '../../doctors/service/doctor.service';
 import { PatientMService } from '../service/patient-m.service';
 
 declare var $: any;
@@ -23,7 +24,7 @@ export class ListPatientMComponent {
   isLoading = true;
   routes = AppRoutes;
 
-  patientList: any[] = [];
+  patientList = [];
   dataSource!: MatTableDataSource<any>;
 
   showFilter = false;
@@ -36,28 +37,28 @@ export class ListPatientMComponent {
   pageIndex = 0;
   serialNumberArray: number[] = [];
   currentPage = 1;
+  totalData = 0;
   pageNumberArray: number[] = [];
-  pageSelection: any[] = [];
+  pageSelection = [];
   totalPages = 0;
 
-  patient_generals: any[] = [];
+  patient_generals = [];
   patient_id: any;
   patientid: any;
   patient_selected: any;
   text_validation: any;
-  user: any;
-  _roles: string[] = [];
-  role: string = null;
-  permissions: any[] = [];
-  maladaptives: any[] = [];
-  doctorPatientList: any[] = [];
-  locationPatientList: any[] = [];
+  user: AppUser;
+  roles: string;
+  permissions = [];
+  maladaptives = [];
+  doctorPatientList = [];
+  locationPatientList = [];
   search: any = null;
   status: any = null;
   location_id: any;
 
   constructor(
-    private doctorService: DoctorService,
+    private pageService: PageService,
     private patientService: PatientMService,
     private fileSaver: FileSaverService,
     private authService: AuthService,
@@ -67,16 +68,14 @@ export class ListPatientMComponent {
     private router: Router
   ) {}
   ngOnInit() {
-    window.scrollTo(0, 0);
-    this.doctorService.closeMenuSidebar();
+    this.pageService.onInitPage();
     this.getTableData();
 
-    const USER = localStorage.getItem('user');
-    this.user = JSON.parse(USER ? USER : '');
-    this.role = this.user.roles[0];
+    this.user = this.authService.user as AppUser;
+    this.roles = this.user.roles[0];
     this.location_id = this.user.location_id;
 
-    this.user = this.authService.user;
+    this.user = this.authService.user as AppUser;
     this.getPatiensByDoctor();
   }
 
@@ -168,13 +167,13 @@ export class ListPatientMComponent {
       .subscribe((resp: any) => {
         // console.log(resp);
 
-        if (resp.message == 403) {
+        if (resp.message === 403) {
           this.text_validation = resp.message_text;
         } else {
           const INDEX = this.patientList.findIndex(
-            (item: any) => item.id == this.patient_selected.id
+            (item: any) => item.id === this.patient_selected.id
           );
-          if (INDEX != -1) {
+          if (INDEX !== -1) {
             this.patientList.splice(INDEX, 1);
 
             $('#delete_patient').hide();
@@ -252,13 +251,13 @@ export class ListPatientMComponent {
   }
 
   getMoreData(event: string): void {
-    if (event == 'next') {
+    if (event === 'next') {
       this.currentPage++;
       this.pageIndex = this.currentPage - 1;
       this.limit += this.pageSize;
       this.skip = this.pageSize * this.pageIndex;
       this.getTableDataGeneral();
-    } else if (event == 'previous') {
+    } else if (event === 'previous') {
       this.currentPage--;
       this.pageIndex = this.currentPage - 1;
       this.limit -= this.pageSize;
@@ -295,7 +294,7 @@ export class ListPatientMComponent {
   ): void {
     this.pageNumberArray = [];
     this.totalPages = totalDatapatient / pageSize;
-    if (this.totalPages % 1 != 0) {
+    if (this.totalPages % 1 !== 0) {
       this.totalPages = Math.trunc(this.totalPages + 1);
     }
     /* eslint no-var: off */
@@ -475,19 +474,24 @@ export class ListPatientMComponent {
 
     switch (action.title) {
       case 'BIP Create':
-        return ['SUPERADMIN', 'MANAGER', 'LM', 'BCBA'].includes(this.role);
+        return ['SUPERADMIN', 'MANAGER', 'LM', 'BCBA'].includes(this.roles);
       case 'BIP View':
         return this.isPermission('view_bip');
       case 'Create RBT Note':
       case 'RBT Note list':
-        return ['SUPERADMIN', 'MANAGER', 'LM', 'RBT'].includes(this.role);
+        return ['SUPERADMIN', 'MANAGER', 'LM', 'RBT'].includes(this.roles);
       case 'Create BCBA Note':
       case 'BCBA Note list':
-        return ['SUPERADMIN', 'MANAGER', 'LM', 'BCBA'].includes(this.role);
+        return ['SUPERADMIN', 'MANAGER', 'LM', 'BCBA'].includes(this.roles);
       case 'Log Report':
-        return ['SUPERADMIN', 'MANAGER'].includes(this.role);
+        return ['SUPERADMIN', 'MANAGER'].includes(this.roles);
       default:
         return false;
     }
+  }
+
+  closeMenuSidebar() {
+    $('.sidebar').addClass('cerrar');
+    $('.menu-opened').remove('menu-opened');
   }
 }

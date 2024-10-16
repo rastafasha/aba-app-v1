@@ -12,4 +12,12 @@ export class AppointmentsRoutes {
   static get edit(): string {
     return `${baseUrl}/appointments/edit`;
   }
+
+  static get show(): string {
+    return `${baseUrl}/appointment-calendar/show`;
+  }
+
+  static get salary(): string {
+    return `${baseUrl}/appointment-pay/list`;
+  }
 }

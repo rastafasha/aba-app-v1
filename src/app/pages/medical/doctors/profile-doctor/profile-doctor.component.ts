@@ -7,6 +7,8 @@ import { AuthService } from 'src/app/core/auth/auth.service';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
 import { DoctorService } from '../service/doctor.service';
+import { AppUser } from 'src/app/shared/models/users.models';
+import { PageService } from 'src/app/shared/services/pages.service';
 @Component({
   selector: 'app-profile-doctor',
   templateUrl: './profile-doctor.component.html',
@@ -15,14 +17,14 @@ import { DoctorService } from '../service/doctor.service';
 export class ProfileDoctorComponent {
   routes = AppRoutes;
   @ViewChild('contentToConvert') contentToConvert!: ElementRef;
-  option_selected: number = 1;
+  option_selected = 1;
   doctorProfile: any[];
 
   doctor_id: any;
 
-  num_appointment: number = 0;
-  money_of_appointments: number = 0;
-  num_appointment_pendings: number = 0;
+  num_appointment = 0;
+  money_of_appointments = 0;
+  num_appointment_pendings = 0;
   doctor_selected: any;
   patient_id: any;
   maladaptive_behavior: any;
@@ -31,47 +33,47 @@ export class ProfileDoctorComponent {
   total_notes_bips: number;
   total_notes_bcbas: number;
   total_notes_rbts: number;
-  appointment_pendings: any[] = [];
-  appointments: any[] = [];
-  notes_bcbas: any[] = [];
-  notes_rbts: any[] = [];
-  patients: any[] = [];
-  locations: any[] = [];
-  name: string = '';
-  surname: string = '';
-  mobile: string = '';
-  email: string = '';
-  address: string = '';
-  password: string = '';
-  password_repeat: string = '';
+  appointment_pendings = [];
+  appointments = [];
+  notes_bcbas = [];
+  notes_rbts = [];
+  patients = [];
+  locations = [];
+  name = '';
+  surname = '';
+  mobile = '';
+  email = '';
+  address = '';
+  password = '';
+  password_repeat = '';
 
-  text_success: string = '';
-  text_validation: string = '';
+  text_success = '';
+  text_validation = '';
 
-  user: any;
-  roles: any[] = [];
+  user: AppUser;
+  roles = [];
 
   constructor(
     private doctorService: DoctorService,
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
+    private pageService: PageService,
     private location: Location
   ) {}
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
-    this.doctorService.closeMenuSidebar();
-    this.activatedRoute.params.subscribe((resp: any) => {
+    this.pageService.onInitPage();
+    this.activatedRoute.params.subscribe((resp) => {
       // console.log(resp);
-      this.doctor_id = resp.id;
+      this.doctor_id = resp['id'];
     });
     this.getDoctor();
 
     const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
-    this.roles = this.user.roles[0];
+    this.roles = this.user.roles;
 
-    this.user = this.authService.user;
+    this.user = this.authService.user as AppUser;
   }
 
   goBack() {
@@ -129,18 +131,19 @@ export class ProfileDoctorComponent {
     }
 
     if (this.password) {
-      if (this.password != this.password_repeat) {
+      if (this.password !== this.password_repeat) {
         this.text_validation = 'Las contraseña debe ser igual';
         return;
       }
     }
 
-    let data: any = {
+    const data = {
       name: this.name,
       surname: this.surname,
       mobile: this.mobile,
       email: this.email,
       address: this.address,
+      password: undefined,
     };
 
     if (this.password) {
@@ -148,10 +151,10 @@ export class ProfileDoctorComponent {
     }
     this.doctorService
       .editDoctorProfile(data, this.doctor_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log(resp);
 
-        if (resp.message == 403) {
+        if (resp.message === 403) {
           this.text_validation = resp.message_text;
           Swal.fire('Error', resp.message_text, 'warning');
         } else {
@@ -170,11 +173,11 @@ export class ProfileDoctorComponent {
       const imgWidth = 210;
       const pageHeight = 295;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      var heightLeft = imgHeight;
+      let heightLeft = imgHeight;
 
       // Create a new PDF document
       const pdf = new jspdf.jsPDF('p', 'mm');
-      var position = 0;
+      let position = 0;
 
       pdf.addImage(
         canvas.toDataURL('image/png'),

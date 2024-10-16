@@ -21,6 +21,7 @@ import { DataService } from './data/data.service';
 import { MaterialModule } from './material.module';
 import { NgxBootstrapModule } from './ngx-bootstrap/ngx-bootstrap.module';
 import { NoInfoComponent } from './no-info/no-info.component';
+import { PageService } from './services/pages.service';
 
 @NgModule({
   declarations: [
@@ -81,6 +82,6 @@ import { NoInfoComponent } from './no-info/no-info.component';
     ActionButtonComponent,
     ActionModalComponent,
   ],
-  providers: [DataService],
+  providers: [DataService, PageService],
 })
 export class SharedModule {}

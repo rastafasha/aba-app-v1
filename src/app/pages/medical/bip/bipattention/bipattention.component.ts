@@ -5,6 +5,7 @@ import { BipService } from '../service/bip.service';
 import { PatientMService } from '../../patient-m/service/patient-m.service';
 import { GoalService } from '../service/goal.service';
 import { Location } from '@angular/common';
+import { AppUser } from 'src/app/shared/models/users.models';
 
 @Component({
   selector: 'app-bipattention',
@@ -15,23 +16,23 @@ export class BipattentionComponent {
   routes = AppRoutes;
 
   valid_form_success = false;
-  text_validation: string = '';
-  text_success: string = '';
-  option_selected: number = 1;
+  text_validation = '';
+  text_success = '';
+  option_selected = 1;
 
-  first_name: string = '';
-  last_name: string = '';
-  phone: string = '';
-  parent_guardian_name: string = '';
-  relationship: string = '';
-  address: string = '';
-  age: number = 0;
-  birth_date: string = '';
+  first_name = '';
+  last_name = '';
+  phone = '';
+  parent_guardian_name = '';
+  relationship = '';
+  address = '';
+  age = 0;
+  birth_date = '';
 
   client_id: any;
   patient_id: any;
   doctor_id: any;
-  user: any;
+  user: AppUser;
 
   type_of_assessment: any;
   background_information: any;
@@ -45,7 +46,7 @@ export class BipattentionComponent {
   goal: any;
   date: any;
   decription_goal: any;
-  goals: any[] = [];
+  goals = [];
 
   bip_selected: any;
   bip_selectedid: any;
@@ -54,13 +55,13 @@ export class BipattentionComponent {
   education_status: any;
   phisical_and_medical_status: any;
   assestment_conducted: any;
-  documents: any[] = [];
-  maladaptives: any[] = [];
-  maladaptive_behavior: any[] = [];
-  assesstments: any[] = [];
-  assesstmentsDocuments: any[] = [];
-  prevalent_setting_event_and_atecedents: any[] = [];
-  interventions: any[] = [];
+  documents = [];
+  maladaptives = [];
+  maladaptive_behavior = [];
+  assesstments = [];
+  assesstmentsDocuments = [];
+  prevalent_setting_event_and_atecedents = [];
+  interventions = [];
 
   constructor(
     private bipService: BipService,
@@ -72,7 +73,6 @@ export class BipattentionComponent {
   ) {}
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
     this.ativatedRoute.params.subscribe((resp: any) => {
       this.patient_id = resp.patient_id;
       // this.patient_id= resp.id

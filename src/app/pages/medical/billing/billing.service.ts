@@ -11,21 +11,21 @@ export class BillingService {
 
   listBillings() {
     const URL = url_servicios + '/billing';
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
   config() {
     const URL = url_servicios + '/billing/config';
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 
   getBilling(id: any) {
     const URL = url_servicios + '/billing/show/' + id;
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 
   editBilling(data: any, client_id: any) {
     const URL = url_servicios + '/billing/update/' + client_id;
-    return this.http.post(URL, data);
+    return this.http.post<any>(URL, data);
   }
   deleteBilling(patient_id: any) {
     const URL = url_servicios + '/billing/destroy/' + patient_id;
@@ -34,11 +34,11 @@ export class BillingService {
 
   showBillingbyPatient(patient_id: any) {
     const URL = url_servicios + '/billing/byprofile/' + patient_id;
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 
   showBillingProfile(patient_id: any) {
     const URL = url_servicios + '/billing/profile/' + patient_id;
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 }

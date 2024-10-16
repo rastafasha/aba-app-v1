@@ -11,15 +11,15 @@ export class RolesService {
 
   listRoles() {
     const URL = url_servicios + '/roles';
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
   storeRole(data: any) {
     const URL = url_servicios + '/roles/store';
-    return this.http.post(URL, data);
+    return this.http.post<any>(URL, data);
   }
   getRole(role_id: any) {
     const URL = url_servicios + '/roles/show/' + role_id;
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
   editRole(data: any, role_id: any) {
     const URL = url_servicios + '/roles/update/' + role_id;
@@ -28,6 +28,6 @@ export class RolesService {
 
   deleteRole(role_id: any) {
     const URL = url_servicios + '/roles/destroy/' + role_id;
-    return this.http.delete(URL);
+    return this.http.delete<any>(URL);
   }
 }

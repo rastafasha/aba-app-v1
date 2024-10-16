@@ -13,6 +13,7 @@ import { NoteBcbaService } from '../../../notes-bcba/services/note-bcba.service'
 import { NoteRbtService } from '../../../notes/services/note-rbt.service';
 import { PatientMService } from '../../../patient-m/service/patient-m.service';
 import { LocationService } from '../../services/location.service';
+import { AppUser } from 'src/app/shared/models/users.models';
 
 @Component({
   selector: 'app-log-notas',
@@ -31,7 +32,7 @@ export class LogNotasComponent {
   sponsor_id: any;
   noterbt_id: any;
   location_id: any;
-  user: any;
+  user: AppUser;
 
   clientReport: ClientReportModel;
 
@@ -49,29 +50,29 @@ export class LogNotasComponent {
   serialNumberArray: number[] = [];
   currentPage = 1;
   pageNumberArray: number[] = [];
-  pageSelection: any[] = [];
+  pageSelection = [];
   totalPages = 0;
   text_validation: any;
 
-  roles: any[] = [];
-  permissions: any[] = [];
+  roles = [];
+  permissions = [];
   patientID: any;
   patientId: any;
 
   pa_assessments: any;
-  pa_assessmentsgroup: any[] = [];
+  pa_assessmentsgroup = [];
   cpt: any;
   n_units: any;
   pa_number: any;
-  insurances: any[] = [];
+  insurances = [];
   insurance_id: any;
   insuranceiddd: any;
   insurer_name: any;
-  sponsors: any[] = [];
-  modifiers: any[] = [];
+  sponsors = [];
+  modifiers = [];
   noteRbt: any;
-  pos_covered: any[] = [];
-  pa_assessmentgroup: any[] = [];
+  pos_covered = [];
+  pa_assessmentgroup = [];
   noteBcba: any;
   patient: any;
 
@@ -166,7 +167,7 @@ export class LogNotasComponent {
   ) {}
 
   ngOnInit(): void {
-    // window.scrollTo(0, 0);
+    //
     this.ativatedRoute.params.subscribe((resp: any) => {
       console.log(resp);
       this.location_id = resp.id;
@@ -181,7 +182,7 @@ export class LogNotasComponent {
     this.paybcba = false;
 
     this.doctorService.getUserRoles();
-    this.user = this.authService.user;
+    this.user = this.authService.user as AppUser;
   }
 
   isPermission(permission: string) {
@@ -589,13 +590,13 @@ export class LogNotasComponent {
   }
 
   getMoreData(event: string): void {
-    if (event == 'next') {
+    if (event === 'next') {
       this.currentPage++;
       this.pageIndex = this.currentPage - 1;
       this.limit += this.pageSize;
       this.skip = this.pageSize * this.pageIndex;
       this.getTableDataGeneral();
-    } else if (event == 'previous') {
+    } else if (event === 'previous') {
       this.currentPage--;
       this.pageIndex = this.currentPage - 1;
       this.limit -= this.pageSize;
@@ -633,7 +634,7 @@ export class LogNotasComponent {
   ): void {
     // this.pageNumberArray = [];
     this.totalPages = totalDatapatient / pageSize;
-    if (this.totalPages % 1 != 0) {
+    if (this.totalPages % 1 !== 0) {
       this.totalPages = Math.trunc(this.totalPages + 1);
     }
     /* eslint no-var: off */

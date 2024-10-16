@@ -1,6 +1,6 @@
 <div class="header">
   <div class="header-left">
-    <span *ngIf="roles === 'SUPERADMIN'">
+    <span *ngIf="role === 'SUPERADMIN'">
       <a [routerLink]="routes.dashboard.admin" class="logo">
         <img
           src="assets/webp/aba-logo-new.webp"
@@ -11,8 +11,8 @@
         <span><b>ABA</b> Therapy</span>
       </a>
     </span>
-    <span *ngIf="roles === 'RBT' || roles === 'BCBA'">
-      <a [routerLink]="[routes.doctor.profile, user.id]" class="logo">
+    <span *ngIf="role === 'RBT' || role === 'BCBA'">
+      <a [routerLink]="[routes.doctors.profile, user.id]" class="logo">
         <img
           src="assets/webp/aba-logo-new.webp"
           width="35"
@@ -22,7 +22,7 @@
         <span><b>ABA</b> Therapy</span>
       </a>
     </span>
-    <span *ngIf="roles === 'MANAGER'">
+    <span *ngIf="role === 'MANAGER'">
       <a [routerLink]="[routes.location.view, user.location_id]" class="logo">
         <img
           src="assets/webp/aba-logo-new.webp"
@@ -147,7 +147,7 @@
       >
         <div class="user-names">
           <h5>{{ user.name }}</h5>
-          <span>{{ user.roles }}</span>
+          <span>{{ user.roles[0] }}</span>
         </div>
         <span class="user-img">
           <div *ngIf="user">
@@ -163,63 +163,63 @@
       </a>
       <div class="dropdown-menu">
         <a
-          *ngIf="roles === 'SUPERADMIN'"
+          *ngIf="role === 'SUPERADMIN'"
           class="dropdown-item"
           [routerLink]="[routes.doctors.profile, user.id]"
           >Mi Perfil</a
         >
         <a
-          *ngIf="roles === 'MANAGER'"
+          *ngIf="role === 'MANAGER'"
           class="dropdown-item"
           [routerLink]="[routes.doctors.profile, user.id]"
           >Mi Perfil</a
         >
         <a
-          *ngIf="roles === 'DOCTOR'"
+          *ngIf="role === 'DOCTOR'"
           class="dropdown-item"
           [routerLink]="[routes.doctors.profile, user.id]"
           >Mi Perfil</a
         >
         <a
-          *ngIf="roles === 'LM'"
+          *ngIf="role === 'LM'"
           class="dropdown-item"
           [routerLink]="[routes.doctors.profile, user.id]"
           >Mi Perfil</a
         >
         <a
-          *ngIf="roles === 'BCBA'"
+          *ngIf="role === 'BCBA'"
           class="dropdown-item"
           [routerLink]="[routes.doctors.profile, user.id]"
           >Mi Perfil</a
         >
         <a
-          *ngIf="roles === 'RBT'"
+          *ngIf="role === 'RBT'"
           class="dropdown-item"
           [routerLink]="[routes.doctors.profile, user.id]"
           >Mi Perfil</a
         >
 
         <a
-          *ngIf="roles === 'SUPERADMIN'"
+          *ngIf="role === 'SUPERADMIN'"
           class="dropdown-item"
           [routerLink]="[routes.doctors.listEdit, user.id]"
           >Editar Perfil</a
         >
         <a
-          *ngIf="roles === 'MANAGER'"
+          *ngIf="role === 'MANAGER'"
           class="dropdown-item"
           [routerLink]="[routes.doctors.listEdit, user.id]"
           >Editar Perfil</a
         >
         <a
-          *ngIf="roles === 'DOCTOR'"
+          *ngIf="role === 'DOCTOR'"
           class="dropdown-item"
           [routerLink]="[routes.doctors.listEdit, user.id]"
           >Editar Perfil</a
         >
-        <!-- <a *ngIf="roles === 'LM'" class="dropdown-item" [routerLink]="[routes.doctors.listEdit, user.id]">Editar Perfil</a> -->
-        <!-- <a *ngIf="roles === 'BCBA'" class="dropdown-item" [routerLink]="[routes.doctors.listEdit, user.id]">Editar Perfil</a> -->
-        <!-- <a *ngIf="roles === 'RBT'" class="dropdown-item" [routerLink]="[routes.doctors.listEdit, user.id]">Editar Perfil</a> -->
+        <!-- <a *ngIf="role === 'LM'" class="dropdown-item" [routerLink]="[routes.doctors.listEdit, user.id]">Editar Perfil</a> -->
+        <!-- <a *ngIf="role === 'BCBA'" class="dropdown-item" [routerLink]="[routes.doctors.listEdit, user.id]">Editar Perfil</a> -->
+        <!-- <a *ngIf="role === 'RBT'" class="dropdown-item" [routerLink]="[routes.doctors.listEdit, user.id]">Editar Perfil</a> -->
 
         <a class="dropdown-item" style="cursor: pointer" (click)="logout()"
           >Salir</a

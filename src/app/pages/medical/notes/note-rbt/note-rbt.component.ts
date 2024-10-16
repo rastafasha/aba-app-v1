@@ -9,7 +9,8 @@ import { DoctorService } from '../../doctors/service/doctor.service';
 import Swal from 'sweetalert2';
 import { Location } from '@angular/common';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-declare var $: any;
+import { AppUser } from 'src/app/shared/models/users.models';
+declare let $: any;
 
 export interface POSModel {
   id: number;
@@ -42,7 +43,7 @@ export class NoteRbtComponent implements OnInit {
   selectedValueProviderName!: string;
   selectedValueMaladaptive!: string;
   selectedValueProviderCredential!: string;
-  option_selected: number = 0;
+  option_selected = 0;
   isGeneratingSummary = false;
 
   client_id: any;
@@ -51,41 +52,41 @@ export class NoteRbtComponent implements OnInit {
   patient_selected: any;
   client_selected: any;
   bip_id: any;
-  user: any;
+  user: AppUser;
 
-  first_name: string = '';
-  last_name: string = '';
-  diagnosis_code: string = '';
+  first_name = '';
+  last_name = '';
+  diagnosis_code = '';
 
-  provider_name_g: string = '';
-  provider_credential: string = '';
+  provider_name_g = '';
+  provider_credential = '';
   pos: POSModel;
-  session_date: string = '';
-  time_in: string = '';
-  time_out: string = '';
-  time_in2: string = '';
-  time_out2: string = '';
-  session_length_total: string = '';
-  session_length_total2: string = '';
-  environmental_changes: string = '';
+  session_date = '';
+  time_in = '';
+  time_out = '';
+  time_in2 = '';
+  time_out2 = '';
+  session_length_total = '';
+  session_length_total2 = '';
+  environmental_changes = '';
 
-  sumary_note: string = '';
-  meet_with_client_at: string = '';
-  client_appeared: string = '';
-  as_evidenced_by: string = '';
-  rbt_modeled_and_demonstrated_to_caregiver: string = '';
-  client_response_to_treatment_this_session: string = '';
-  progress_noted_this_session_compared_to_previous_session: string = '';
-  next_session_is_scheduled_for: string = '';
-  provider_name: string = '';
-  supervisor_name: string = '';
+  sumary_note = '';
+  meet_with_client_at = '';
+  client_appeared = '';
+  as_evidenced_by = '';
+  rbt_modeled_and_demonstrated_to_caregiver = '';
+  client_response_to_treatment_this_session = '';
+  progress_noted_this_session_compared_to_previous_session = '';
+  next_session_is_scheduled_for = '';
+  provider_name = '';
+  supervisor_name = '';
 
   number_of_occurrences: number;
   number_of_correct_responses: number;
   total_trials: number;
   number_of_correct_response: number;
-  maladaptive: string = '';
-  replacement: string = '';
+  maladaptive = '';
+  replacement = '';
   interventions: any;
   provider_signature: any;
   supervisor_signature: any;
@@ -117,18 +118,18 @@ export class NoteRbtComponent implements OnInit {
   note_id: any;
   porcentage_diario: any;
 
-  roles_rbt: any[] = [];
-  roles_bcba: any[] = [];
+  roles_rbt = [];
+  roles_bcba = [];
 
-  hours_days: any[] = [];
-  maladaptives: any[] = [];
+  hours_days = [];
+  maladaptives = [];
   replacementGoals: any;
-  replacements: any[] = [];
+  replacements = [];
 
   maladaptiveSelected: any = null;
   replacementSelected: any = null;
-  maladp_added: any[] = [];
-  replacement_added: any[] = [];
+  maladp_added = [];
+  replacement_added = [];
   maladaptive_behavior: any = null;
   electronic_signature: any;
   doctor: any;
@@ -143,7 +144,7 @@ export class NoteRbtComponent implements OnInit {
   location_id: number;
   patientLocation_id: any;
 
-  intervention_added: any[] = [];
+  intervention_added = [];
   interventionsSelected = {};
   interventionsList = [
     { id: 'pairing', name: 'Pairing', value: false },
@@ -229,7 +230,7 @@ export class NoteRbtComponent implements OnInit {
   }
 
   getProfileBip() {
-    this.bipService.showBipProfile(this.patient_id).subscribe((resp: any) => {
+    this.bipService.showBipProfile(this.patient_id).subscribe((resp) => {
       console.log(resp);
       this.client_selected = resp;
 
@@ -248,7 +249,7 @@ export class NoteRbtComponent implements OnInit {
 
       this.pa_assessments = resp.patient.pa_assessments;
       // console.log(this.pa_assessments);
-      let jsonObj = JSON.parse(this.pa_assessments) || '';
+      const jsonObj = JSON.parse(this.pa_assessments) || '';
       this.pa_assessmentsgroup = jsonObj;
       console.log(this.pa_assessmentsgroup);
 
@@ -481,7 +482,7 @@ export class NoteRbtComponent implements OnInit {
     }
     this.text_validation = '';
     this.FILE_SIGNATURE_RBT = $event.target.files[0];
-    let reader = new FileReader();
+    const reader = new FileReader();
     reader.readAsDataURL(this.FILE_SIGNATURE_RBT);
     reader.onloadend = () =>
       (this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED = reader.result);
@@ -494,7 +495,7 @@ export class NoteRbtComponent implements OnInit {
     }
     this.text_validation = '';
     this.FILE_SIGNATURE_BCBA = $event.target.files[0];
-    let reader2 = new FileReader();
+    const reader2 = new FileReader();
     reader2.readAsDataURL(this.FILE_SIGNATURE_BCBA);
     reader2.onloadend = () =>
       (this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED = reader2.result);
@@ -546,9 +547,9 @@ export class NoteRbtComponent implements OnInit {
   save() {
     this.text_validation = '';
     if (
-      this.maladaptives[0].number_of_occurrences == undefined ||
-      this.replacementGoals[0].number_of_correct_response == undefined ||
-      this.intervention_added.length == 0 ||
+      this.maladaptives[0].number_of_occurrences === undefined ||
+      this.replacementGoals[0].number_of_correct_response === undefined ||
+      this.intervention_added.length === 0 ||
       !this.meet_with_client_at ||
       !this.environmental_changes ||
       !this.client_appeared ||
@@ -669,7 +670,7 @@ export class NoteRbtComponent implements OnInit {
 
     this.noteRbtService.createNote(formData).subscribe(
       (resp: any) => {
-        if (resp.message == 403) {
+        if (resp.message === 403) {
           this.text_validation = resp.message_text;
           Swal.fire('Warning', resp.message_text, 'warning');
         } else {
@@ -679,7 +680,6 @@ export class NoteRbtComponent implements OnInit {
         }
       },
       (error) => {
-        console.error('Error creating note:', error);
         if (error.includes('Time conflict')) {
           this.text_validation =
             'There is a time conflict with an existing note. Please choose a different time.';

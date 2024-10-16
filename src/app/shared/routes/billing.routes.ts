@@ -7,7 +7,6 @@ export class BillingRoutes {
   static get list(): string {
     return `${baseUrl}/billing/list`;
   }
-
   static get byClient(): string {
     return `${baseUrl}/billing/by-client`;
   }

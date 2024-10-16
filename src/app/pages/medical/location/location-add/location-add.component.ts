@@ -6,6 +6,7 @@ import { InsuranceService } from '../../insurance/service/insurance.service';
 import { PatientMService } from '../../patient-m/service/patient-m.service';
 import { LocationService } from '../services/location.service';
 import { Location } from '@angular/common';
+import { PageService } from 'src/app/shared/services/pages.service';
 
 @Component({
   selector: 'app-location-add',
@@ -16,17 +17,17 @@ export class LocationAddComponent {
   routes = AppRoutes;
   client_id: any;
   doctor_id: any;
-  selectedValueLocation!: string;
+  selectedValueLocation!: number;
 
-  title: string = '';
-  phone1: string = '';
-  phone2: string = '';
-  telfax: string = '';
-  zip: string = '';
-  state: string = '';
-  email: string = '';
+  title = '';
+  phone1 = '';
+  phone2 = '';
+  telfax = '';
+  zip = '';
+  state = '';
+  email = '';
   city: any;
-  address: string = '';
+  address = '';
 
   FILE_AVATAR: any;
   IMAGE_PREVISUALIZA: any = 'assets/img/user-06.jpg';
@@ -37,15 +38,13 @@ export class LocationAddComponent {
 
   constructor(
     private locationService: LocationService,
-    private doctorService: DoctorService,
-    private insuranceService: InsuranceService,
+    private pageService: PageService,
     private router: Router,
     private location: Location
   ) {}
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
-    this.doctorService.closeMenuSidebar();
+    this.pageService.onInitPage();
     this.getConfig();
   }
 
@@ -66,7 +65,7 @@ export class LocationAddComponent {
     }
     this.text_validation = '';
     this.FILE_AVATAR = $event.target.files[0];
-    let reader = new FileReader();
+    const reader = new FileReader();
     reader.readAsDataURL(this.FILE_AVATAR);
     reader.onloadend = () => (this.IMAGE_PREVISUALIZA = reader.result);
   }
@@ -79,7 +78,7 @@ export class LocationAddComponent {
     }
 
     // this.valid_form = false;
-    let formData = new FormData();
+    const formData = new FormData();
 
     formData.append('title', this.title);
     formData.append('phone1', this.phone1);
@@ -103,7 +102,7 @@ export class LocationAddComponent {
 
     this.locationService.storeLocation(formData).subscribe((resp: any) => {
       // console.log(resp);
-      if (resp.message == 403) {
+      if (resp.message === 403) {
         this.text_validation = resp.message_text;
       } else {
         this.router.navigate([AppRoutes.location.list]);

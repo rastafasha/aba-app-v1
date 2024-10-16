@@ -4,6 +4,7 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { InsuranceService } from '../service/insurance.service';
 import { Location } from '@angular/common';
+import { PageService } from 'src/app/shared/services/pages.service';
 
 @Component({
   selector: 'app-insurance-view',
@@ -14,12 +15,12 @@ export class InsuranceViewComponent {
   routes = AppRoutes;
   selectedValue!: string;
 
-  insurer_name: string = '';
+  insurer_name = '';
 
-  notes: any[] = [];
+  notes = [];
   note: any;
 
-  services: any[] = [];
+  services = [];
   code: any;
   provider: any;
   description: any;
@@ -33,11 +34,11 @@ export class InsuranceViewComponent {
   valid_form = false;
   valid_form_success = false;
 
-  text_success: string = '';
-  text_validation: string = '';
+  text_success = '';
+  text_validation = '';
 
   constructor(
-    private doctorService: DoctorService,
+    private pageService: PageService,
     private insuranceService: InsuranceService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -45,8 +46,7 @@ export class InsuranceViewComponent {
   ) {}
 
   ngOnInit(): void {
-    window.scrollTo(0, 0);
-    this.doctorService.closeMenuSidebar();
+    this.pageService.onInitPage();
     this.activatedRoute.params.subscribe((resp: any) => {
       // console.log(resp);
       this.insurance_id = resp.id;
@@ -121,7 +121,7 @@ export class InsuranceViewComponent {
       .subscribe((resp: any) => {
         // console.log(resp);
 
-        if (resp.message == 403) {
+        if (resp.message === 403) {
           this.text_validation = resp.message_text;
         } else {
           this.text_success = 'El insurance ha sido registrado correctamente';

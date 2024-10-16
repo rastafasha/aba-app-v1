@@ -7,6 +7,7 @@ import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { InsuranceService } from '../../insurance/service/insurance.service';
 import { NoteBcbaService } from '../services/note-bcba.service';
+import { AppUser } from 'src/app/shared/models/users.models';
 
 @Component({
   selector: 'app-note-bcba',
@@ -44,7 +45,7 @@ export class NoteBcbaComponent {
   patient_selected: any;
   client_selected: any;
   bip_id: any;
-  user: any;
+  user: AppUser;
 
   first_name = '';
   last_name = '';
@@ -110,35 +111,35 @@ export class NoteBcbaComponent {
   birth_date = '';
   rendering_provider: any;
 
-  roles_rbt: any[] = [];
-  roles_bcba: any[] = [];
+  roles_rbt = [];
+  roles_bcba = [];
 
-  hours_days: any[] = [];
-  specialists: any[] = [];
-  maladaptives: any[] = [];
-  replacementGoals: any[] = [];
-  intervention_added: any[] = [];
-  replacements: any[] = [];
+  hours_days = [];
+  specialists = [];
+  maladaptives = [];
+  replacementGoals = [];
+  intervention_added = [];
+  replacements = [];
 
   maladaptiveSelected: any = null;
   replacementSelected: any = null;
   lto: any = null;
   caregiver_goal: any = null;
-  maladp_added: any[] = [];
-  replacement_added: any[] = [];
+  maladp_added = [];
+  replacement_added = [];
   pa_assessments: string;
-  pa_assessmentsgroup: any[] = [];
-  familiEnvolments: any[] = [];
-  monitoringEvaluatingPatientIds: any[] = [];
-  caregivers_training_goals: any[] = [];
-  rbt_training_goals: any[] = [];
-  posGruoup: any[] = [];
+  pa_assessmentsgroup = [];
+  familiEnvolments = [];
+  monitoringEvaluatingPatientIds = [];
+  caregivers_training_goals = [];
+  rbt_training_goals = [];
+  posGruoup = [];
   note_description: any;
   insurer_name: any;
   services: any;
   insurer_id: any;
   cpt: any;
-  roles: any[] = [];
+  roles: string[];
   electronic_signature: any;
   doctor: any;
   full_name: any;
@@ -158,7 +159,7 @@ export class NoteBcbaComponent {
   ) {}
 
   ngOnInit(): void {
-    // window.scrollTo(0, 0);
+    //
     this.ativatedRoute.params.subscribe((resp: any) => {
       this.patient_id = resp.patient_id;
     });
@@ -167,7 +168,7 @@ export class NoteBcbaComponent {
 
     const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
-    this.roles = this.user.roles[0];
+    this.roles = this.user.roles;
     this.doctor_id = this.user.id;
     this.getDoctor();
     this.specialistData();
@@ -520,7 +521,7 @@ export class NoteBcbaComponent {
     this.noteBcbaService.createNote(formData).subscribe((resp: any) => {
       // console.log(resp);
 
-      if (resp.message == 403) {
+      if (resp.message === 403) {
         this.text_validation = resp.message_text;
       } else {
         this.text_success = 'Note BCBA created';

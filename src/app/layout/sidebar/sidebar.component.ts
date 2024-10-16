@@ -47,10 +47,10 @@ export class SidebarComponent implements OnInit {
     } else {
       //vamos a filtrar y validar que opciones puede ver el rol
       const permissions = this.user?.permissions;
-      const SIDE_BAR_G: any[] = [];
+      const SIDE_BAR_G = [];
 
       this.data.sidebar.forEach((side: any) => {
-        const SIDE_B: any[] = [];
+        const SIDE_B = [];
         side.menu.forEach((menu_s: any) => {
           const SUB_MENUS = menu_s.subMenus.filter(
             (submenu: any) =>

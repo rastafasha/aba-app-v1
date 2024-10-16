@@ -298,7 +298,7 @@
                         }"
                         class="custom-badge"
                       >
-                        {{ data.status == "inactive" ? "Inactive" : "Active" }}
+                        {{ data.status === "inactive" ? "Inactive" : "Active" }}
                       </button>
                     </td>
                     <td>{{ data.created_at | date }}</td>

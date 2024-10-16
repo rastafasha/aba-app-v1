@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { NoteBcbaService } from '../services/note-bcba.service';
+import { AppUser } from 'src/app/shared/models/users.models';
 declare var $: any;
 @Component({
   selector: 'app-note-bcba-by-client',
@@ -19,10 +20,10 @@ export class NoteBcbaByClientComponent {
   note_selected: any;
   bip_id: any;
   note_id: any;
-  user: any;
+  user: AppUser;
 
-  notesPatientList: any[] = [];
-  notespatient_generals: any[] = [];
+  notesPatientList = [];
+  notespatient_generals = [];
   dataSource!: MatTableDataSource<any>;
   showFilter = false;
   searchDataValue = '';
@@ -35,7 +36,7 @@ export class NoteBcbaByClientComponent {
   serialNumberArray: number[] = [];
   currentPage = 1;
   pageNumberArray: number[] = [];
-  pageSelection: any[] = [];
+  pageSelection = [];
   totalPages = 0;
   text_validation: any;
 
@@ -47,7 +48,7 @@ export class NoteBcbaByClientComponent {
   ) {}
 
   ngOnInit(): void {
-    // window.scrollTo(0, 0);
+    //
     this.ativatedRoute.params.subscribe((resp: any) => {
       this.patient_id = resp.id;
 
@@ -60,7 +61,7 @@ export class NoteBcbaByClientComponent {
     const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
     this.doctor_id = this.user.id;
-    this.user = this.authService.user;
+    this.user = this.authService.user as AppUser;
   }
 
   goBack() {
@@ -138,13 +139,13 @@ export class NoteBcbaByClientComponent {
   }
 
   getMoreData(event: string): void {
-    if (event == 'next') {
+    if (event === 'next') {
       this.currentPage++;
       this.pageIndex = this.currentPage - 1;
       this.limit += this.pageSize;
       this.skip = this.pageSize * this.pageIndex;
       this.getTableDataGeneral();
-    } else if (event == 'previous') {
+    } else if (event === 'previous') {
       this.currentPage--;
       this.pageIndex = this.currentPage - 1;
       this.limit -= this.pageSize;
@@ -180,7 +181,7 @@ export class NoteBcbaByClientComponent {
   ): void {
     this.pageNumberArray = [];
     this.totalPages = totalDatapatient / pageSize;
-    if (this.totalPages % 1 != 0) {
+    if (this.totalPages % 1 !== 0) {
       this.totalPages = Math.trunc(this.totalPages + 1);
     }
     /* eslint no-var: off */
@@ -200,13 +201,13 @@ export class NoteBcbaByClientComponent {
       .subscribe((resp: any) => {
         // console.log(resp);
 
-        if (resp.message == 403) {
+        if (resp.message === 403) {
           this.text_validation = resp.message_text;
         } else {
           const INDEX = this.notesPatientList.findIndex(
             (item: any) => item.id == this.note_selected.id
           );
-          if (INDEX != -1) {
+          if (INDEX !== -1) {
             this.notesPatientList.splice(INDEX, 1);
 
             $('#delete_patient').hide();

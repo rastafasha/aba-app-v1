@@ -1,11 +1,14 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-maladaptives',
   template: `
     <div class="col-12">
       <h4>Maladaptives</h4>
-      <p class="text">Note: Please fill out all fields, if you didn't have any reaction, enter "0"</p>
+      <p class="text">
+        Note: Please fill out all fields, if you didn't have any reaction, enter
+        "0"
+      </p>
     </div>
     <div class="container">
       <form autocomplete="off">
@@ -15,13 +18,20 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
               <div class="title mb-2">
                 <h4 class="label">{{ behavior.maladaptive_behavior }}</h4>
               </div>
-              <input class="form-control mb-2"
-                     [name]="'number_of_occurrences_' + i"
-                     [(ngModel)]="behavior.number_of_occurrences"
-                     type="number"
-                     min="0"
-                     required
-                     [ngClass]="{'is-valid': behavior.number_of_occurrences >= 0, 'is-invalid': behavior.number_of_occurrences < 0 || behavior.number_of_occurrences === undefined}">
+              <input
+                class="form-control mb-2"
+                [name]="'number_of_occurrences_' + i"
+                [(ngModel)]="behavior.number_of_occurrences"
+                type="number"
+                min="0"
+                required
+                [ngClass]="{
+                  'is-valid': behavior.number_of_occurrences >= 0,
+                  'is-invalid':
+                    behavior.number_of_occurrences < 0 ||
+                    behavior.number_of_occurrences === undefined
+                }"
+              />
               <div class="invalid-feedback">
                 Please enter a valid number (0 or greater).
               </div>
@@ -30,9 +40,9 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
         </div>
       </form>
     </div>
-  `
+  `,
 })
 export class MaladaptivesComponent {
-  @Input() maladaptives: any[] = [];
+  @Input() maladaptives = [];
   @Output() maladaptivesChange = new EventEmitter<any[]>();
 }

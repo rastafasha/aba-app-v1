@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
+import { AppUser } from 'src/app/shared/models/users.models';
 
 @Component({
   selector: 'app-bip-form',
@@ -13,20 +14,20 @@ export class BipFormComponent {
   routes = AppRoutes;
 
   valid_form_success = false;
-  text_validation: string = '';
-  text_success: string = '';
-  option_selected: number = 1;
+  text_validation = '';
+  text_success = '';
+  option_selected = 1;
 
-  first_name: string = '';
-  last_name: string = '';
-  phone: string = '';
-  parent_guardian_name: string = '';
-  relationship: string = '';
-  address: string = '';
-  age: number = 0;
-  dob: string = '';
+  first_name = '';
+  last_name = '';
+  phone = '';
+  parent_guardian_name = '';
+  relationship = '';
+  address = '';
+  age = 0;
+  dob = '';
 
-  medical: any[] = [];
+  medical = [];
   description: any;
   name_medical: any;
   uso: any;
@@ -35,7 +36,7 @@ export class BipFormComponent {
   id: any;
   patient_id: any;
   doctor_id: any;
-  user: any;
+  user: AppUser;
 
   type_of_assessment: any;
   background_information: any;
@@ -49,16 +50,16 @@ export class BipFormComponent {
   assestment_conducted: any;
   assestment_conducted_options: any;
 
-  reduction: any[] = [];
-  maladaptive: any[] = [];
+  reduction = [];
+  maladaptive = [];
 
-  documents: any[] = [];
+  documents = [];
   document_title: any;
   document_status: any;
 
   //maladaptives
 
-  maladaptives: any[] = [];
+  maladaptives = [];
 
   maladaptive_behavior: any;
   topografical_definition: any;
@@ -67,24 +68,24 @@ export class BipFormComponent {
   initial_interesting: any;
   current_intensity: any;
 
-  maladaptive_edit: any[] = [];
-  medication_edit: any[] = [];
-  evaluation_edit: any[] = [];
-  prevalent_edit: any[] = [];
-  sensory_edit: any[] = [];
-  escape_edit: any[] = [];
-  intervention_edit: any[] = [];
-  atention_edit: any[] = [];
-  tangible_edit: any[] = [];
+  maladaptive_edit = [];
+  medication_edit = [];
+  evaluation_edit = [];
+  prevalent_edit = [];
+  sensory_edit = [];
+  escape_edit = [];
+  intervention_edit = [];
+  atention_edit = [];
+  tangible_edit = [];
 
   //assestments
-  assesstments: any[] = [];
-  assesstmentsDocuments: any[] = [];
-  assestmentEvaluationSettings: any[] = [];
-  accesstoTangibles: any[] = [];
-  accesstoSensories: any[] = [];
-  accesstoAttention: any[] = [];
-  accesstoEscape: any[] = [];
+  assesstments = [];
+  assesstmentsDocuments = [];
+  assestmentEvaluationSettings = [];
+  accesstoTangibles = [];
+  accesstoSensories = [];
+  accesstoAttention = [];
+  accesstoEscape = [];
   assestment_title: any;
   assestment_status: any;
   tangible: any;
@@ -96,7 +97,7 @@ export class BipFormComponent {
   // @malcolmcordova
 
   //
-  prevalent_setting_event_and_atecedents: any[] = [];
+  prevalent_setting_event_and_atecedents = [];
   prevalent_setting_event_and_atecedent: any;
   behavior: any;
   hypothesized_functions: any;
@@ -128,9 +129,9 @@ export class BipFormComponent {
   preescribing_physician: any;
   phiysical_and_medical: any;
 
-  interventions: any[] = [];
-  phiysicalAndMedicalSt: any[] = [];
-  phiysical_and_medical_status: any[] = [];
+  interventions = [];
+  phiysicalAndMedicalSt = [];
+  phiysical_and_medical_status = [];
 
   pairing: any;
   premack_principal: any;
@@ -151,7 +152,7 @@ export class BipFormComponent {
   bip_selectedid: any;
 
   inteventionSelected: any;
-  access_to_tangibles: any[] = [];
+  access_to_tangibles = [];
 
   constructor(
     private bipService: BipService,
@@ -159,7 +160,7 @@ export class BipFormComponent {
   ) {}
 
   ngOnInit(): void {
-    // window.scrollTo(0, 0);//inicia la vista siempre desde arriba
+    // //inicia la vista siempre desde arriba
     //me subcribo al id recibido por el parametro de la url
     this.ativatedRoute.params.subscribe((resp: any) => {
       this.patient_id = resp.patient_id; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
@@ -818,7 +819,7 @@ export class BipFormComponent {
       // return;
     }
 
-    let data = {
+    const data = {
       id: this.bip_selectedid,
       client_id: this.client_selected.patient.id,
       patient_id: this.patient_id,

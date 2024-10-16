@@ -224,7 +224,7 @@
                                             <td>{{unitPrize | currency }}</td>
                                             <td>
                                                 {{(( data.rbt?.session_units_total * unitPrize | currency))}}
-                                                <span *ngIf="md == 'XE' || md2 == 'XE'">
+                                                <span *ngIf="md === 'XE' || md2 === 'XE'">
                                                     xe:{{(( data.rbt?.session_units_total * unitPrize * xe |
                                                     currency))}}
                                                 </span>
@@ -328,7 +328,7 @@
                                             <td>{{unitPrize | currency}}</td>
                                             <td>
                                                 {{(( data.bcba?.session_units_total * unitPrize | currency))}}
-                                                <span *ngIf="mdbcba == 'XE' || md2bcba == 'XE'">
+                                                <span *ngIf="mdbcba === 'XE' || md2bcba === 'XE'">
                                                     xe:{{(( data.bcba?.session_units_total * unitPrize * xe |
                                                     currency))}}
                                                 </span>

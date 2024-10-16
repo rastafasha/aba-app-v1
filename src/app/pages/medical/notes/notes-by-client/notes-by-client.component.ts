@@ -6,6 +6,7 @@ import { finalize } from 'rxjs';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { NoteRbtService } from '../services/note-rbt.service';
+import { AppUser } from 'src/app/shared/models/users.models';
 declare var $: any;
 @Component({
   selector: 'app-notes-by-client',
@@ -21,11 +22,11 @@ export class NotesByClientComponent {
   note_selected: any;
   bip_id: any;
   note_id: any;
-  user: any;
+  user: AppUser;
 
   isLoading = true;
-  notesPatientList: any[] = [];
-  notespatient_generals: any[] = [];
+  notesPatientList = [];
+  notespatient_generals = [];
   dataSource!: MatTableDataSource<any>;
   showFilter = false;
   searchDataValue = '';
@@ -38,12 +39,12 @@ export class NotesByClientComponent {
   serialNumberArray: number[] = [];
   currentPage = 1;
   pageNumberArray: number[] = [];
-  pageSelection: any[] = [];
+  pageSelection = [];
   totalPages = 0;
   text_validation: any;
 
-  roles: any[] = [];
-  permissions: any[] = [];
+  roles = [];
+  permissions = [];
 
   constructor(
     private ativatedRoute: ActivatedRoute,
@@ -54,7 +55,7 @@ export class NotesByClientComponent {
   ) {}
 
   ngOnInit(): void {
-    // window.scrollTo(0, 0);
+    //
     this.ativatedRoute.params.subscribe((resp: any) => {
       this.patient_id = resp.id;
 
@@ -68,7 +69,7 @@ export class NotesByClientComponent {
     // const USER = localStorage.getItem("user");
     // this.user = JSON.parse(USER ? USER: '');
     // this.doctor_id = this.user.id;
-    this.user = this.authService.user;
+    this.user = this.authService.user as AppUser;
   }
 
   goBack() {
@@ -151,13 +152,13 @@ export class NotesByClientComponent {
   }
 
   getMoreData(event: string): void {
-    if (event == 'next') {
+    if (event === 'next') {
       this.currentPage++;
       this.pageIndex = this.currentPage - 1;
       this.limit += this.pageSize;
       this.skip = this.pageSize * this.pageIndex;
       this.getTableDataGeneral();
-    } else if (event == 'previous') {
+    } else if (event === 'previous') {
       this.currentPage--;
       this.pageIndex = this.currentPage - 1;
       this.limit -= this.pageSize;
@@ -193,7 +194,7 @@ export class NotesByClientComponent {
   ): void {
     this.pageNumberArray = [];
     this.totalPages = totalDatapatient / pageSize;
-    if (this.totalPages % 1 != 0) {
+    if (this.totalPages % 1 !== 0) {
       this.totalPages = Math.trunc(this.totalPages + 1);
     }
     /* eslint no-var: off */
@@ -213,13 +214,13 @@ export class NotesByClientComponent {
       .subscribe((resp: any) => {
         // console.log(resp);
 
-        if (resp.message == 403) {
+        if (resp.message === 403) {
           this.text_validation = resp.message_text;
         } else {
           const INDEX = this.notesPatientList.findIndex(
             (item: any) => item.id == this.note_selected.id
           );
-          if (INDEX != -1) {
+          if (INDEX !== -1) {
             this.notesPatientList.splice(INDEX, 1);
 
             $('#delete_patient').hide();

@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { authData } from './data/auth';
-import { HttpResponse } from '@angular/common/http';
+import { HttpRequest, HttpResponse } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthMock {
-  constructor() {}
-
-  handleRequest(url: string): Observable<any> {
+  handleRequest(
+    request: HttpRequest<unknown>
+  ): Observable<HttpResponse<unknown>> {
+    const url = request.url.replace(environment.url_servicios, '');
     switch (url) {
       case '/login':
         return of(new HttpResponse({ body: this.login() }));

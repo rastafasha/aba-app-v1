@@ -18,11 +18,12 @@ import {
   ChartComponent,
 } from 'ng-apexcharts';
 import { DataService } from 'src/app/shared/data/data.service';
-import { patientDashboard } from 'src/app/shared/models/models';
+import { PatientDashboard } from 'src/app/shared/models/models';
 
 import { ActivatedRoute } from '@angular/router';
 import { BipService } from '../../../service/bip.service';
 import { GraphicReductionService } from '../../../service/graphic-reduction.service';
+import { AppUser } from 'src/app/shared/models/users.models';
 interface data {
   value: string;
 }
@@ -66,7 +67,7 @@ export type ChartOptions = {
   styleUrls: ['./chart-replacement.component.scss'],
 })
 export class ChartReplacementComponent {
-  selectedValue: string = '03';
+  selectedValue = '03';
   @ViewChild('chart') chart!: ChartComponent;
 
   @Input() goal: any;
@@ -75,10 +76,10 @@ export class ChartReplacementComponent {
 
   chartOptionsOne: Partial<ChartOptions>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  carousel1: any[] = [];
+  carousel1 = [];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  carousel2: any[] = [];
-  dataSource!: MatTableDataSource<patientDashboard>;
+  carousel2 = [];
+  dataSource!: MatTableDataSource<PatientDashboard>;
   slideConfig = {
     slidesToShow: 3,
     slidesToScroll: 3,
@@ -87,33 +88,33 @@ export class ChartReplacementComponent {
   };
 
   //datos reales
-  bips: any[] = [];
-  user: any;
+  bips = [];
+  user: AppUser;
   maladaptiveSelected: any;
   maladaptive: any;
   patient_id: any;
   client_id: any;
   created_at: Date;
-  session_date: any[] = [];
-  replacements: any[] = [];
-  session_dates: any[] = [];
+  session_date = [];
+  replacements = [];
+  session_dates = [];
   number_of_occurrences: number;
-  patient_selected: any[] = [];
+  patient_selected = [];
   client_selected: any = null;
-  sessionDates: any[] = [];
-  replacement: any[] = [];
+  sessionDates = [];
+  replacement = [];
 
-  maladaptiveBehaviors: any[] = [];
-  replacementsExtractedGoal: any = ([] = [{}]);
+  maladaptiveBehaviors = [];
+  replacementsExtractedGoal: any = [];
   number_of_correct_response: any;
 
-  query_patient_by_genders: any[] = [];
-  query_patients_specialities: any[] = [];
-  query_patients_speciality_porcentaje: any[] = [];
-  query_income_year: any[] = [];
-  notesRbts: any[] = [];
-  replacementeFiltrado: any[] = [];
-  graphData: any[] = [];
+  query_patient_by_genders = [];
+  query_patients_specialities = [];
+  query_patients_speciality_porcentaje = [];
+  query_income_year = [];
+  notesRbts = [];
+  replacementeFiltrado = [];
+  graphData = [];
   goals: any = null;
   sessions_dates: any[];
   number_of_occurrence: any[];
@@ -211,9 +212,9 @@ export class ChartReplacementComponent {
         }
         // fin funcion de pablo alcorta
         // recorremos el resultado del array goalsParsed para extraer los solicitados por el request
-        let number_of_correct_response: number[] = [];
-        let goal: string[] = [];
-        let array = this.graphData;
+        const number_of_correct_response = [];
+        const goal: string[] = [];
+        const array = this.graphData;
         for (this.goals of array) {
           number_of_correct_response.push(
             Number(this.goals.number_of_correct_response)

@@ -3,9 +3,9 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import {
-  pageSelection,
-  apiResultFormat,
-  staffholidays,
+  PageSelection,
+  ApiResultFormat,
+  StaffHolidays,
 } from 'src/app/shared/models/models';
 import { DataService } from 'src/app/shared/data/data.service';
 
@@ -17,8 +17,8 @@ import { DataService } from 'src/app/shared/data/data.service';
 export class StaffHolidayComponent implements OnInit {
   routes = AppRoutes;
 
-  staffHoliday: Array<staffholidays> = [];
-  dataSource!: MatTableDataSource<staffholidays>;
+  staffHoliday: Array<StaffHolidays> = [];
+  dataSource!: MatTableDataSource<StaffHolidays>;
 
   showFilter = false;
   searchDataValue = '';
@@ -31,7 +31,7 @@ export class StaffHolidayComponent implements OnInit {
   serialNumberArray: number[] = [];
   currentPage = 1;
   pageNumberArray: number[] = [];
-  pageSelection: Array<pageSelection> = [];
+  pageSelection: PageSelection[] = [];
   totalPages = 0;
 
   constructor(public data: DataService) {}
@@ -42,16 +42,16 @@ export class StaffHolidayComponent implements OnInit {
     this.staffHoliday = [];
     this.serialNumberArray = [];
 
-    this.data.getStaffHoliday().subscribe((data: apiResultFormat) => {
+    this.data.getStaffHoliday().subscribe((data: ApiResultFormat) => {
       this.totalData = data.totalData;
-      data.data.map((res: staffholidays, index: number) => {
+      data.data.map((res: StaffHolidays, index: number) => {
         const serialNumber = index + 1;
         if (index >= this.skip && serialNumber <= this.limit) {
           this.staffHoliday.push(res);
           this.serialNumberArray.push(serialNumber);
         }
       });
-      this.dataSource = new MatTableDataSource<staffholidays>(
+      this.dataSource = new MatTableDataSource<StaffHolidays>(
         this.staffHoliday
       );
       this.calculateTotalPages(this.totalData, this.pageSize);
@@ -80,13 +80,13 @@ export class StaffHolidayComponent implements OnInit {
   }
 
   getMoreData(event: string): void {
-    if (event == 'next') {
+    if (event === 'next') {
       this.currentPage++;
       this.pageIndex = this.currentPage - 1;
       this.limit += this.pageSize;
       this.skip = this.pageSize * this.pageIndex;
       this.getTableData();
-    } else if (event == 'previous') {
+    } else if (event === 'previous') {
       this.currentPage--;
       this.pageIndex = this.currentPage - 1;
       this.limit -= this.pageSize;
@@ -118,7 +118,7 @@ export class StaffHolidayComponent implements OnInit {
   private calculateTotalPages(totalData: number, pageSize: number): void {
     this.pageNumberArray = [];
     this.totalPages = totalData / pageSize;
-    if (this.totalPages % 1 != 0) {
+    if (this.totalPages % 1 !== 0) {
       this.totalPages = Math.trunc(this.totalPages + 1);
     }
     /* eslint no-var: off */

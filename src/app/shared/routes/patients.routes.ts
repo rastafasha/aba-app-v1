@@ -10,11 +10,11 @@ export class PatientsRoutes {
   }
 
   static get profile(): string {
-    return `${baseUrl}/patients/patient-profile`;
+    return `${baseUrl}/patients/profile`;
   }
 
   static get setting(): string {
-    return `${baseUrl}/patients/patient-setting`;
+    return `${baseUrl}/patients/setting`;
   }
 
   static get add(): string {
@@ -23,6 +23,10 @@ export class PatientsRoutes {
 
   static get list(): string {
     return `${baseUrl}/patients/list`;
+  }
+
+  static get listEdit(): string {
+    return `${baseUrl}/patients/list/edit`;
   }
 
   static get logReport(): string {
