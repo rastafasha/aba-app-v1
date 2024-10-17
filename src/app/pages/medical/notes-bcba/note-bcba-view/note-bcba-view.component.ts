@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import html2canvas from 'html2canvas';
 import * as jspdf from 'jspdf';
@@ -15,7 +15,7 @@ import { PageService } from 'src/app/shared/services/pages.service';
   templateUrl: './note-bcba-view.component.html',
   styleUrls: ['./note-bcba-view.component.scss'],
 })
-export class NoteBcbaViewComponent {
+export class NoteBcbaViewComponent implements OnInit {
   routes = AppRoutes;
   @ViewChild('contentToConvert') contentToConvert!: ElementRef;
   patientProfile: any[];
@@ -94,10 +94,11 @@ export class NoteBcbaViewComponent {
   extinction: any;
   natural_teaching: any;
 
-  FILE_SIGNATURE_RBT: any;
-  IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED: any = 'assets/img/user-06.jpg';
-  FILE_SIGNATURE_BCBA: any;
-  IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED: any = 'assets/img/user-06.jpg';
+  public FILE_SIGNATURE_RBT: any;
+  public IMAGE_PREVISUALIZA_SIGNATURE__BCBA_CREATED = 'assets/img/user-06.jpg';
+  public FILE_SIGNATURE_BCBA: any;
+  public IMAGE_PREVISUALIZA_SIGNATURE_SUPERVISOR_CREATED =
+    'assets/img/user-06.jpg';
 
   rbt_id: any;
   bcba_id: any;
@@ -141,7 +142,7 @@ export class NoteBcbaViewComponent {
   doctor_selected: any = null;
   doctor_selected_full_name: any = null;
   doctor_selected_rbt: any = null;
-  doctor_selected_full_name_rbt: any = null;
+  doctor_selected_full_name_supervisor: any = null;
   doctor_selected_bcba: any = null;
   doctor_selected_full_name_bcba: any = null;
   pa_assessments: string;
@@ -224,9 +225,9 @@ export class NoteBcbaViewComponent {
       this.selectedValueRBT = this.note_selected.provider_name;
       this.selectedValueBCBA = this.note_selected.supervisor_name;
 
-      this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED =
+      this.IMAGE_PREVISUALIZA_SIGNATURE__BCBA_CREATED =
         this.note_selected.provider_signature;
-      this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED =
+      this.IMAGE_PREVISUALIZA_SIGNATURE_SUPERVISOR_CREATED =
         this.note_selected.supervisor_signature;
 
       this.getProfileBip();
@@ -250,7 +251,7 @@ export class NoteBcbaViewComponent {
     this.doctorService.showDoctor(this.aba_supervisor).subscribe((resp) => {
       console.log(resp);
       this.doctor_selected_rbt = resp.user;
-      this.doctor_selected_full_name_rbt = resp.user.full_name;
+      this.doctor_selected_full_name_supervisor = resp.user.full_name;
     });
   }
   getDoctorBcba() {

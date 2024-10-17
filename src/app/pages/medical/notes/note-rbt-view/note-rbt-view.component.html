@@ -28,9 +28,7 @@
                                     <h4>Client Note Rbt </h4>
                                 </div>
                                 <div class="doctor-profile-head">
-                                    <!-- <div class="profile-bg-img">
-                                        <img  src="assets/img/profile-bg.jpg"  alt="Profile">
-                                    </div> -->
+                                    
                                     <div class="row">
                                         <div class="col-lg-4 col-md-4">
                                             <div class="profile-user-box">
@@ -51,24 +49,12 @@
                                                     <h5>diagnosis_code</h5>
                                                     <h4>{{patient_selected.diagnosis_code}}</h4>
                                                 </div>
-                                                <!-- <div class="doctor-follows">
-                                                    <h5>Status</h5>
-                                                    <span class="badge bg-primary"
-                                                        *ngIf="patient_selected.status === 'incoming'">Incoming</span>
-                                                    <span class="badge bg-success"
-                                                        *ngIf="patient_selected.status === 'active'">Active</span>
-                                                    <span class="badge bg-danger"
-                                                        *ngIf="patient_selected.status === 'inactive'">Inactive</span>
-
-                                                </div> -->
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-4 d-flex align-items-center">
                                             <div class="follow-btn-group">
-                                                <!-- *ngIf="roles === 'SUPERADMIN' || roles === 'MANAGER' ||  permissions ==='edit_noterbt' "  || note_selected.billed === 0 -->
                                                 <a [routerLink]="['/note-rbt/edit/', note_id]" *ngIf="note_selected.status === 'pending' || note_selected.status === 'no'  "   class="btn btn-info follow-btns">Edit</a>
                                                 <button class="btn btn-info follow-btns" (click)="convertToPdf()">Save PDF</button>
-                                                <!-- <button type="submit" class="btn btn-info message-btns">Message</button> -->
                                             </div>
                                         </div>
                                     </div>
@@ -144,18 +130,7 @@
                                                         <h3>{{note_selected.session_date|date}}</h3>
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-3 col-md-6 col-xl-4">
-                                                    <div class="detail-personal">
-                                                        <h2>Create At</h2>
-                                                        <h3>{{note_selected.created_at|date}}</h3>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-md-6 col-xl-4">
-                                                    <div class="detail-personal">
-                                                        <h2>Updated At</h2>
-                                                        <h3>{{note_selected.updated_at|date}}</h3>
-                                                    </div>
-                                                </div>
+        
                                                 <div class="clear"></div>
                                                 <h5 class="mb-3">Morning Session</h5>
                                                 <div class="col-xl-3 col-md-4">
@@ -486,55 +461,55 @@
                                                         <h3>{{note_selected.as_evidenced_by}}</h3>
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-3 col-md-6">
+                                                <div class="col-xl-12">
                                                     <div class="detail-personal">
                                                         <h2>RBT modeled and demonstrated to caregiver</h2>
                                                         <h3>{{note_selected.rbt_modeled_and_demonstrated_to_caregiver}}</h3>
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-3 col-md-6 col-xl-4">
+                                                <div class="col-xl-12">
                                                     <div class="detail-personal">
                                                         <h2>Client response to treatment this session</h2>
                                                         <h3>{{note_selected.client_response_to_treatment_this_session}}</h3>
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-3 col-md-6 col-xl-4">
+                                                <div class="col-xl-3 col-md-6 col-xl-6">
                                                     <div class="detail-personal">
                                                         <h2>Progress noted this session compared to previous session</h2>
                                                         <h3>{{note_selected.progress_noted_this_session_compared_to_previous_session}}</h3>
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-3 col-md-6 col-xl-4">
+                                                <div class="col-xl-3 col-md-6 col-xl-6">
                                                     <div class="detail-personal">
                                                         <h2>Next session is scheduled for</h2>
                                                         <h3>{{note_selected.next_session_is_scheduled_for|date}}</h3>
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-3 col-md-6">
-                                                    <div class="detail-personal">
-                                                        <h2>Provider Signature</h2>
-                                                        <!-- <h3>{{note_selected.provider_signature}}</h3> -->
-                                                        <img  src="{{IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED}}" style="width: 100%;"  >
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-md-6">
-                                                    <div class="detail-personal">
-                                                        <h2>Provider name RBT</h2>
-                                                        <h3>{{doctor_selected_full_name_rbt}}</h3>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-md-6">
-                                                    <div class="detail-personal">
-                                                        <h2>Supervisor Signature</h2>
-                                                        <!-- <h3>{{note_selected.supervisor_signature}}</h3> -->
-                                                        <!-- {{imagenSerUrl}} -->
-                                                        <img  src="{{IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED}}" style="width: 100%;"  >
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-md-6">
-                                                    <div class="detail-personal">
-                                                        <h2>Supervisor name BCBA</h2>
-                                                        <h3>{{doctor_selected_full_name_bcba}}</h3>
+                                                <div class="row mt-5">
+                                                    <div class="col-xs-12 d-flex align-items-center justify-content-center">
+                                                        <div class="col-xl-4 col-md-6 ">
+                                                            <div class="detail-personal">
+                                                                <h2>Provider Signature</h2>
+                                                                <!-- <h3>{{note_selected.provider_signature}}</h3> -->
+                                                                <img  src="{{IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED}}" style="width: 100%;"  >
+                                                            </div>
+                                                            <div class="detail-personal">
+                                                                <h2>Provider name RBT</h2>
+                                                                <h3>{{doctor_selected_full_name_rbt}}</h3>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-4 col-md-6 ">
+                                                            <div class="detail-personal">
+                                                                <h2>Supervisor Signature</h2>
+                                                                <!-- <h3>{{note_selected.supervisor_signature}}</h3> -->
+                                                                <!-- {{imagenSerUrl}} -->
+                                                                <img  src="{{IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED}}" style="width: 100%;"  >
+                                                            </div>
+                                                            <div class="detail-personal ">
+                                                                <h2>Supervisor name BCBA</h2>
+                                                                <h3>{{doctor_selected_full_name_bcba}}</h3>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 
