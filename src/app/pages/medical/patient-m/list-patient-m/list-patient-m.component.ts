@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
@@ -20,7 +20,7 @@ declare var $: any;
   templateUrl: './list-patient-m.component.html',
   styleUrls: ['./list-patient-m.component.scss'],
 })
-export class ListPatientMComponent {
+export class ListPatientMComponent implements OnInit {
   isLoading = true;
   routes = AppRoutes;
 

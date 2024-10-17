@@ -1,15 +1,14 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
-import { MedicalRoutingModule } from './medical.routing';
-import { MedicalComponent } from './medical.component';
 import { CoreModule } from 'src/app/core/core.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { ClientReportComponent } from './client-report/client-report.component';
 import { ComponentsModule } from './bip/components/components.module';
+import { MedicalComponent } from './medical.component';
+import { MedicalRoutingModule } from './medical.routing';
 
 @NgModule({
-  declarations: [MedicalComponent, ClientReportComponent],
+  declarations: [MedicalComponent],
   imports: [
     CommonModule,
     MedicalRoutingModule,

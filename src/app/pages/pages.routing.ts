@@ -112,11 +112,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./doctor/doctor.module').then((m) => m.DoctorModule),
       },
-      {
-        path: 'patient',
-        loadChildren: () =>
-          import('./patient/patient.module').then((m) => m.PatientModule),
-      },
+      // {
+      //   path: 'patient',
+      //   loadChildren: () =>
+      //     import('./patient/patient.module').then((m) => m.PatientModule),
+      // },
       {
         path: 'staff',
         loadChildren: () =>

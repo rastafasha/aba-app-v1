@@ -42,6 +42,7 @@ export class BillingListComponent implements OnInit {
   billing_selected: any;
   text_validation: any;
   user: AppUser;
+  doctor_selected: any;
 
   constructor(
     private billingService: BillingService,
@@ -68,6 +69,10 @@ export class BillingListComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  selectUser(user: any) {
+    throw new Error('Method not implemented');
   }
 
   private getTableData(): void {

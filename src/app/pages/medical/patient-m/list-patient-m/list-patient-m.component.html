@@ -363,7 +363,7 @@
                                   <strong>!</strong> {{ text_validation }}.
                                   <button
                                     type="button"
-                                    class="btn-close"
+                                    class="btn btn-close"
                                     data-bs-dismiss="alert"
                                     aria-label="Close"
                                   >
@@ -602,9 +602,7 @@
                     <th mat-sort-header="location">location</th>
                     <th mat-sort-header="patient_id">Patient Id</th>
                     <th mat-sort-header="elegible">Status</th>
-                    <th mat-sort-header="ops" *ngIf="roles === 'SUPERADMIN'">
-                      Options
-                    </th>
+                    <th mat-sort-header="ops">Options</th>
                     <th mat-sort-header="created">Created At</th>
                     <th></th>
                     <!--acciones -->
@@ -779,7 +777,7 @@
                           class="btn btn-outline-warning"
                           *ngIf="roles === 'MANAGER'"
                           [routerLink]="[
-                            '/client-report/byclient/',
+                            routes.clientReport.byClient,
                             data.patient_id
                           ]"
                           tooltip="Log Report"
@@ -888,7 +886,7 @@
                                   <strong>!</strong> {{ text_validation }}.
                                   <button
                                     type="button"
-                                    class="btn-close"
+                                    class="btn btn-close"
                                     data-bs-dismiss="alert"
                                     aria-label="Close"
                                   >
@@ -1100,9 +1098,7 @@
                     <th mat-sort-header="location">location</th>
                     <th mat-sort-header="patient_id">Patient Id</th>
                     <th mat-sort-header="elegible">Status</th>
-                    <th mat-sort-header="ops" *ngIf="roles === 'SUPERADMIN'">
-                      Options
-                    </th>
+                    <th mat-sort-header="ops">Options</th>
                     <th mat-sort-header="created">Created At</th>
                     <th></th>
                     <!--acciones -->
@@ -1145,12 +1141,6 @@
                       <span *ngIf="data.status === 'active'">
                         <button
                           class="btn btn-outline-success"
-                          *ngIf="
-                            roles === 'SUPERADMIN' ||
-                            roles === 'MANAGER' ||
-                            roles === 'LM' ||
-                            roles === 'BCBA'
-                          "
                           [routerLink]="['/bip/attention/', data.patient_id]"
                           tooltip="BIP Create"
                         >
@@ -1166,12 +1156,6 @@
                         </button>
                         <button
                           class="btn btn-outline-success"
-                          *ngIf="
-                            roles === 'SUPERADMIN' ||
-                            roles === 'MANAGER' ||
-                            roles === 'LM' ||
-                            roles === 'RBT'
-                          "
                           [routerLink]="['/note-rbt/', data.patient_id]"
                           tooltip="Create RBT Note"
                         >
@@ -1179,28 +1163,13 @@
                         </button>
                         <button
                           class="btn btn-outline-primary"
-                          *ngIf="
-                            roles === 'SUPERADMIN' ||
-                            roles === 'MANAGER' ||
-                            roles === 'LM' ||
-                            roles === 'RBT'
-                          "
-                          [routerLink]="[
-                            '/note-rbt/listbyclient/',
-                            data.patient_id
-                          ]"
+                          [routerLink]="[routes.noteRbt.list, data.patient_id]"
                           tooltip="RBT Note list"
                         >
                           <i class="fa fa-bars"></i>
                         </button>
                         <button
                           class="btn btn-outline-secondary"
-                          *ngIf="
-                            roles === 'SUPERADMIN' ||
-                            roles === 'MANAGER' ||
-                            roles === 'LM' ||
-                            roles === 'BCBA'
-                          "
                           [routerLink]="['/note-bcba/', data.patient_id]"
                           tooltip="Create BCBA Note"
                         >
@@ -1208,12 +1177,6 @@
                         </button>
                         <button
                           class="btn btn-outline-primary"
-                          *ngIf="
-                            roles === 'SUPERADMIN' ||
-                            roles === 'MANAGER' ||
-                            roles === 'LM' ||
-                            roles === 'BCBA'
-                          "
                           [routerLink]="[
                             '/note-bcba/listbyclient/',
                             data.patient_id
@@ -1225,7 +1188,7 @@
                         <!-- <button class="btn btn-outline-warning" *ngIf="roles ==='SUPERADMIN' || roles === 'MANAGER'" [routerLink]="['/billing/byclient/', data.patient_id]" tooltip="Billing by this user"> <i class="fa fa-credit-card"></i> </button> -->
                       </span>
                     </td>
-                    <td *ngIf="roles === 'SUPERADMIN'">
+                    <td>
                       <select
                         class="form-control form-select-solid fw-bolder"
                         name="state"
@@ -1312,7 +1275,7 @@
                                   <strong>!</strong> {{ text_validation }}.
                                   <button
                                     type="button"
-                                    class="btn-close"
+                                    class="btn btn-close"
                                     data-bs-dismiss="alert"
                                     aria-label="Close"
                                   >

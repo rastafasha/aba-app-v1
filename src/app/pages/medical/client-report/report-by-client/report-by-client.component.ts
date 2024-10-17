@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, map, Observable, tap } from 'rxjs';
@@ -30,7 +30,7 @@ export interface NoteRbt {
   templateUrl: './report-by-client.component.html',
   styleUrls: ['./report-by-client.component.scss'],
 })
-export class ReportByClientComponent {
+export class ReportByClientComponent implements OnInit {
   searchDataDoctor = '';
   date_start: any;
   date_end: any;

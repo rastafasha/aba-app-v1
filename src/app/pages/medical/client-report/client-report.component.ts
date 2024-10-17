@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from 'src/app/shared/data/data.service';
-import { SideBarData, MenuItem } from 'src/app/shared/models/models';
+import { MenuItem, SideBarData } from 'src/app/shared/models/models';
 import { SideBarService } from 'src/app/shared/side-bar/side-bar.service';
 interface Route {
   url: string;
@@ -28,7 +28,7 @@ export class ClientReportComponent {
     private data: DataService
   ) {
     this.sideBar.toggleSideBar.subscribe((res: string) => {
-      if (res == 'true') {
+      if (res === 'true') {
         this.miniSidebar = 'true';
       } else {
         this.miniSidebar = 'false';
@@ -36,7 +36,7 @@ export class ClientReportComponent {
     });
 
     this.sideBar.toggleMobileSideBar.subscribe((res: string) => {
-      if (res == 'true' || res == 'true') {
+      if (res === 'true' || res === 'true') {
         this.mobileSidebar = 'true';
       } else {
         this.mobileSidebar = 'false';
@@ -45,18 +45,18 @@ export class ClientReportComponent {
 
     this.sideBar.expandSideBar.subscribe((res: string) => {
       this.expandMenu = res;
-      if (res == 'false' && this.miniSidebar == 'true') {
+      if (res === 'false' && this.miniSidebar === 'true') {
         this.data.sidebar.map((mainMenus: SideBarData) => {
           mainMenus.menu.map((resMenu: MenuItem) => {
             resMenu.showSubRoute = false;
           });
         });
       }
-      if (res == 'true' && this.miniSidebar == 'true') {
+      if (res === 'true' && this.miniSidebar === 'true') {
         this.data.sidebar.map((mainMenus: SideBarData) => {
           mainMenus.menu.map((resMenu: MenuItem) => {
             const menuValue = sessionStorage.getItem('menuValue');
-            if (menuValue && menuValue == resMenu.menuValue) {
+            if (menuValue && menuValue === resMenu.menuValue) {
               resMenu.showSubRoute = true;
             } else {
               resMenu.showSubRoute = false;

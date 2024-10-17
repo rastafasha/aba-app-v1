@@ -12,8 +12,6 @@ import { CountUpModule } from 'ngx-countup';
 import { NgxEditorModule } from 'ngx-editor';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
-import { HeaderComponent } from '../layout/header/header.component';
-import { SidebarComponent } from '../layout/sidebar/sidebar.component';
 import { ActionButtonComponent } from './components/action-button/action-button.component';
 import { ActionModalComponent } from './components/action-modal/action-modal.component';
 import { SkeletonLoaderComponent } from './components/skeleton-loader/skeleton-loader.component';
@@ -21,6 +19,7 @@ import { DataService } from './data/data.service';
 import { MaterialModule } from './material.module';
 import { NgxBootstrapModule } from './ngx-bootstrap/ngx-bootstrap.module';
 import { NoInfoComponent } from './no-info/no-info.component';
+import { PipesModule } from './pipes/pipes.module';
 import { PageService } from './services/pages.service';
 
 @NgModule({
@@ -81,6 +80,7 @@ import { PageService } from './services/pages.service';
     SkeletonLoaderComponent,
     ActionButtonComponent,
     ActionModalComponent,
+    PipesModule,
   ],
   providers: [DataService, PageService],
 })

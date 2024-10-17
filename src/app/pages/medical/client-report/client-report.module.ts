@@ -10,16 +10,21 @@ import { ComponentsModule } from '../bip/components/components.module';
 import { ClientReportRoutingModule } from './client-report.routing';
 import { EmployeeReportComponent } from './employee-report/employee-report.component';
 import { ReportByClientComponent } from './report-by-client/report-by-client.component';
+import { ClientReportComponent } from './client-report.component';
 
 @NgModule({
-  declarations: [ReportByClientComponent, EmployeeReportComponent],
+  declarations: [
+    ReportByClientComponent,
+    EmployeeReportComponent,
+    ClientReportComponent,
+  ],
   imports: [
     CommonModule,
     ClientReportRoutingModule,
     FormsModule,
+    RouterModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RouterModule,
     SharedModule,
     ComponentsModule,
     PipesModule,

@@ -201,7 +201,7 @@ export interface staffList {
   joiningDate: number;
   img: string;
 }
-export interface patientsList {
+export interface PatientsList {
   name: string;
   department: string;
   specialization: string;
