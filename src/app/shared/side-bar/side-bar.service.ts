@@ -7,34 +7,32 @@ interface MainMenu {
 
 interface MenuItem {
   menuValue: string;
-  showSubRoute: boolean;  
+  showSubRoute: boolean;
 }
 @Injectable({
   providedIn: 'root',
 })
 export class SideBarService {
-  public toggleSideBar: BehaviorSubject<string> = new BehaviorSubject<string>(
-    localStorage.getItem('isMiniSidebar') || "false"
+  toggleSideBar: BehaviorSubject<string> = new BehaviorSubject<string>(
+    localStorage.getItem('isMiniSidebar') || 'false'
   );
 
-  public toggleMobileSideBar: BehaviorSubject<string> = new BehaviorSubject<string>(
-    localStorage.getItem('isMobileSidebar') || "false"
+  toggleMobileSideBar: BehaviorSubject<string> = new BehaviorSubject<string>(
+    localStorage.getItem('isMobileSidebar') || 'false'
   );
 
-  public expandSideBar: BehaviorSubject<string> = new BehaviorSubject<string>("false");
+  expandSideBar: BehaviorSubject<string> = new BehaviorSubject<string>('false');
 
-  constructor(private data: DataService) {
-   
-  }
+  constructor(private data: DataService) {}
 
-  public switchSideMenuPosition(): void {
+  switchSideMenuPosition(): void {
     if (localStorage.getItem('isMiniSidebar')) {
-      this.toggleSideBar.next("false");
+      this.toggleSideBar.next('false');
       localStorage.removeItem('isMiniSidebar');
-      this.data.sideBar.map((mainMenus: MainMenu) => {
+      this.data.sidebar.map((mainMenus: MainMenu) => {
         mainMenus.menu.map((resMenu: MenuItem) => {
           const menuValue = sessionStorage.getItem('menuValue');
-          if (menuValue && menuValue == resMenu.menuValue) {
+          if (menuValue && menuValue === resMenu.menuValue) {
             resMenu.showSubRoute = true;
           }
         });
@@ -42,7 +40,7 @@ export class SideBarService {
     } else {
       this.toggleSideBar.next('true');
       localStorage.setItem('isMiniSidebar', 'true');
-      this.data.sideBar.map((mainMenus: MainMenu) => {
+      this.data.sidebar.map((mainMenus: MainMenu) => {
         mainMenus.menu.map((resMenu: MenuItem) => {
           resMenu.showSubRoute = false;
         });
@@ -50,14 +48,13 @@ export class SideBarService {
     }
   }
 
-  public switchMobileSideBarPosition(): void {
+  switchMobileSideBarPosition(): void {
     if (localStorage.getItem('isMobileSidebar')) {
-      this.toggleMobileSideBar.next("false");
+      this.toggleMobileSideBar.next('false');
       localStorage.removeItem('isMobileSidebar');
     } else {
-      this.toggleMobileSideBar.next("true");
+      this.toggleMobileSideBar.next('true');
       localStorage.setItem('isMobileSidebar', 'true');
     }
   }
-
 }

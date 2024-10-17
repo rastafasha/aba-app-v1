@@ -7,5 +7,5 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
   styleUrls: ['./uikit.component.scss'],
 })
 export class UikitComponent {
-  public routes = AppRoutes;
+  routes = AppRoutes;
 }

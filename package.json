@@ -10,7 +10,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test:prod": "ng test --browsers=ChromeHeadless --watch=false --code-coverage",
-    "lint": "ng lint"
+    "lint": "npx eslint . --fix"
   },
   "private": true,
   "dependencies": {

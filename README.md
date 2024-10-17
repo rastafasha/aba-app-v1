@@ -46,10 +46,58 @@ Usan tanto componentes y servicios del módulo **Shared** (componentes atómicos
 - **Páginas de usuarios:** Un módulo para la gestión de usuarios, que usa elementos compartidos como botones o tablas (del módulo Shared) y lógica centralizada de autenticación (del módulo Core).
 - **Páginas de administración:** Para manejar configuraciones específicas, como el panel de control, que puede tener componentes de formularios reutilizables de Shared y servicios de configuración de Core.
 
-### Principio de Slicing Vertical
+### 3. Principio de Slicing Vertical
 La idea es estructurar los módulos para que **cada funcionalidad esté completamente encapsulada**, lo que permite que cada módulo funcione de forma independiente y sea escalable.
 
 - **Shared** y **Core** proporcionan las herramientas comunes y específicas respectivamente.
 - Los módulos de funcionalidades ensamblan estos elementos para crear flujos completos de la aplicación.
 
 
+src/
+│
+├── app/
+│   ├── core/
+│   │   ├── auth/
+│   │   │   ├── auth.guard.ts
+│   │   │   └── auth.service.ts
+│   │   ├── core.component.ts
+│   │   ├── core.module.ts
+│   │   └── core.routing.ts
+│   │
+│   ├── pages/
+│   │   ├── authentication/
+│   │   │   ├── login.component.ts
+│   │   │   ├── register.component.ts
+│   │   │   └── authentication.module.ts
+│   │   ├── error/
+│   │   │   ├── error.component.ts
+│   │   │   └── error.module.ts
+│   │   ├── dashboard/
+│   │   │   ├── dashboard.component.ts
+│   │   │   └── dashboard.module.ts
+│   │   ├── medical/
+│   │   │   ├── doctor/
+│   │   │   │   ├── doctor.component.ts
+│   │   │   │   └── doctor.module.ts
+│   │   │   ├── patient/
+│   │   │   │   ├── patient.component.ts
+│   │   │   │   └── patient.module.ts
+│   │   │   └── appointments/
+│   │   │       ├── appointments.component.ts
+│   │   │       └── appointments.module.ts
+│   │   └── ... (otros módulos de páginas)
+│   │
+│   ├── shared/
+│   │   ├── components/
+│   │   │   ├── button/
+│   │   │   │   ├── button.component.ts
+│   │   │   │   └── button.module.ts
+│   │   │   └── ... (otros componentes compartidos)
+│   │   ├── directives/
+│   │   ├── pipes/
+│   │   └── models/
+│   │
+│   ├── app.routing.module.ts
+│   └── app.component.ts
+│
+└── assets/

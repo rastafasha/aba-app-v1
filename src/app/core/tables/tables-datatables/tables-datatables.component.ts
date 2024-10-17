@@ -3,8 +3,8 @@ import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DataService } from 'src/app/shared/data/data.service';
 import {
-  pageSelection,
-  apiResultFormat,
+  PageSelection,
+  ApiResultFormat,
   datatables,
 } from 'src/app/shared/models/models';
 import { AppRoutes } from 'src/app/shared/routes/routes';
@@ -15,24 +15,24 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
   styleUrls: ['./tables-datatables.component.scss'],
 })
 export class TablesDatatablesComponent implements OnInit {
-  public routes = AppRoutes;
+  routes = AppRoutes;
 
-  public dataTables: Array<datatables> = [];
+  dataTables: Array<datatables> = [];
   dataSource!: MatTableDataSource<datatables>;
 
-  public showFilter = false;
-  public searchDataValue = '';
-  public lastIndex = 0;
-  public pageSize = 10;
-  public totalData = 0;
-  public skip = 0;
-  public limit: number = this.pageSize;
-  public pageIndex = 0;
-  public serialNumberArray: Array<number> = [];
-  public currentPage = 1;
-  public pageNumberArray: Array<number> = [];
-  public pageSelection: Array<pageSelection> = [];
-  public totalPages = 0;
+  showFilter = false;
+  searchDataValue = '';
+  lastIndex = 0;
+  pageSize = 10;
+  totalData = 0;
+  skip = 0;
+  limit: number = this.pageSize;
+  pageIndex = 0;
+  serialNumberArray: number[] = [];
+  currentPage = 1;
+  pageNumberArray: number[] = [];
+  pageSelection: PageSelection[] = [];
+  totalPages = 0;
 
   constructor(public data: DataService) {}
   ngOnInit() {
@@ -42,7 +42,7 @@ export class TablesDatatablesComponent implements OnInit {
     this.dataTables = [];
     this.serialNumberArray = [];
 
-    this.data.getDataTables().subscribe((data: apiResultFormat) => {
+    this.data.getDataTables().subscribe((data: ApiResultFormat) => {
       this.totalData = data.totalData;
       data.data.map((res: datatables, index: number) => {
         const serialNumber = index + 1;
@@ -56,12 +56,12 @@ export class TablesDatatablesComponent implements OnInit {
     });
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public searchData(value: any): void {
+  searchData(value: any): void {
     this.dataSource.filter = value.trim().toLowerCase();
     this.dataTables = this.dataSource.filteredData;
   }
 
-  public sortData(sort: Sort) {
+  sortData(sort: Sort) {
     const data = this.dataTables.slice();
 
     if (!sort.active || sort.direction === '') {
@@ -77,14 +77,14 @@ export class TablesDatatablesComponent implements OnInit {
     }
   }
 
-  public getMoreData(event: string): void {
-    if (event == 'next') {
+  getMoreData(event: string): void {
+    if (event === 'next') {
       this.currentPage++;
       this.pageIndex = this.currentPage - 1;
       this.limit += this.pageSize;
       this.skip = this.pageSize * this.pageIndex;
       this.getTableData();
-    } else if (event == 'previous') {
+    } else if (event === 'previous') {
       this.currentPage--;
       this.pageIndex = this.currentPage - 1;
       this.limit -= this.pageSize;
@@ -93,7 +93,7 @@ export class TablesDatatablesComponent implements OnInit {
     }
   }
 
-  public moveToPage(pageNumber: number): void {
+  moveToPage(pageNumber: number): void {
     this.currentPage = pageNumber;
     this.skip = this.pageSelection[pageNumber - 1].skip;
     this.limit = this.pageSelection[pageNumber - 1].limit;
@@ -105,7 +105,7 @@ export class TablesDatatablesComponent implements OnInit {
     this.getTableData();
   }
 
-  public PageSize(): void {
+  PageSize(): void {
     this.pageSelection = [];
     this.limit = this.pageSize;
     this.skip = 0;
@@ -116,7 +116,7 @@ export class TablesDatatablesComponent implements OnInit {
   private calculateTotalPages(totalData: number, pageSize: number): void {
     this.pageNumberArray = [];
     this.totalPages = totalData / pageSize;
-    if (this.totalPages % 1 != 0) {
+    if (this.totalPages % 1 !== 0) {
       this.totalPages = Math.trunc(this.totalPages + 1);
     }
     /* eslint no-var: off */

@@ -7,5 +7,5 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
   styleUrls: ['./blank-page.component.scss'],
 })
 export class BlankPageComponent {
-  public routes = AppRoutes;
+  routes = AppRoutes;
 }

@@ -1,13 +1,13 @@
-export interface pageSelection {
+export interface PageSelection {
   skip: number;
   limit: number;
 }
-export interface apiResultFormat {
+export interface ApiResultFormat {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data: Array<any>;
+  data: any[];
   totalData: number;
 }
-export interface expenses {
+export interface Expenses {
   item: string;
   purchaseFrom: string;
   purchaseBy: string;
@@ -17,7 +17,7 @@ export interface expenses {
   status: string;
   img: string;
 }
-export interface staffholidays {
+export interface StaffHolidays {
   title: string;
   holidayDate: number;
   day: string;
@@ -174,7 +174,7 @@ export interface exponsesreport {
   status: string;
   img: string;
 }
-export interface patientDashboard {
+export interface PatientDashboard {
   doctorName: string;
   diagnosis: string;
   date: number;
@@ -201,7 +201,7 @@ export interface staffList {
   joiningDate: number;
   img: string;
 }
-export interface patientsList {
+export interface PatientsList {
   name: string;
   department: string;
   specialization: string;
@@ -257,7 +257,7 @@ export interface blogs {
   paragraph: string;
   msg: string;
 }
-export interface recentPatients {
+export interface RecentPatients {
   no: string;
   patientName: string;
   age: number | string;
@@ -267,7 +267,7 @@ export interface recentPatients {
   img: string;
   triage: string;
 }
-export interface upcomingAppointments {
+export interface UpcomingAppointments {
   no: string;
   patientName: string;
   doctor: string;
@@ -276,7 +276,7 @@ export interface upcomingAppointments {
   disease: string;
   img: string;
 }
-export interface socialLinks {
+export interface SocialLinks {
   icon: string;
   placeholder: string;
 }
@@ -300,7 +300,6 @@ export interface SubMenu {
   menuValue: string;
   route: string;
   base: string;
- 
 }
 export interface MenuItem {
   menuValue: string;
@@ -312,7 +311,6 @@ export interface MenuItem {
   icon?: string;
   faIcon?: boolean;
   subMenus: SubMenu[];
-  
 }
 
 export interface SideBarData {
@@ -320,6 +318,4 @@ export interface SideBarData {
   showAsTab: boolean;
   separateRoute: boolean;
   menu: MenuItem[];
-} 
-  
-
+}

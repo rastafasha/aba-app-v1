@@ -7,5 +7,5 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
   styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent {
-  public routes = AppRoutes;
+  routes = AppRoutes;
 }

@@ -27,7 +27,7 @@ export class TransformToDatePipe implements PipeTransform {
   /**
    * Convierte un tiempo en formato HH:MM:SS a formato DD/MM/YYYY hh:mm:ss AM/PM
    */
-  public transformHHMMSSToDateTime(time: string, date?: Date | undefined) {
+  transformHHMMSSToDateTime(time: string, date?: Date | undefined) {
     if (!date) {
       date = new Date();
     }

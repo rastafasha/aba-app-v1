@@ -7,5 +7,5 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
   styleUrls: ['./tables-basic.component.scss'],
 })
 export class TablesBasicComponent {
-  public routes = AppRoutes;
+  routes = AppRoutes;
 }

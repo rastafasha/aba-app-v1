@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, of } from 'rxjs';
+import { catchError, map, of, tap } from 'rxjs';
 import { ErrorHandlerService } from '../../shared/error/error-handler.service';
 import { StorageService } from '../../shared/storage/storage.service';
 import { AUTH_CONSTS, AUTH_URLS } from './auth.const';
@@ -48,15 +48,17 @@ export class AuthService {
   login(email: string, password: string) {
     return this.http.post<Auth>(AUTH_URLS.login, { email, password }).pipe(
       map((auth) => {
+        console.log(auth);
         return this.setUserToStorage(auth);
       }),
+      tap(() => this.getUserFromStorage()),
       catchError((error: HttpErrorResponse) => {
         try {
           this.errorHandler.handleError(error);
         } catch (error) {
           //
         }
-        return of(undefined);
+        return of(false);
       })
     );
   }
@@ -65,8 +67,9 @@ export class AuthService {
     this.storage.remove(AUTH_CONSTS.token);
     this.storage.remove(AUTH_CONSTS.user);
     this.storage.remove(AUTH_CONSTS.auth);
-    // TODO: se usa?
-    this.storage.remove(AUTH_CONSTS.authToken);
+    // puede ser posible que sea necesario
+    // desconectar desde el backend
+    return of(null);
   }
 
   getUserRomoto<T>(data: unknown) {
