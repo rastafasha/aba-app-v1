@@ -1,16 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AppUser } from 'src/app/shared/models/users.models';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
-import { AppUser } from 'src/app/shared/models/users.models';
 
 @Component({
   selector: 'app-bip-form',
   templateUrl: './bipform.component.html',
   styleUrls: ['./bipform.component.scss'],
 })
-export class BipFormComponent {
+export class BipFormComponent implements OnInit {
   routes = AppRoutes;
 
   valid_form_success = false;
@@ -162,8 +162,8 @@ export class BipFormComponent {
   ngOnInit(): void {
     // //inicia la vista siempre desde arriba
     //me subcribo al id recibido por el parametro de la url
-    this.ativatedRoute.params.subscribe((resp: any) => {
-      this.patient_id = resp.patient_id; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
+    this.ativatedRoute.params.subscribe((resp) => {
+      this.patient_id = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
     });
     this.getProfileBip(); // se pide el perfil del paciente por el bip relacionado
 
@@ -177,14 +177,14 @@ export class BipFormComponent {
 
   //se obtiene el perfil del usuario, por el cliente_id  que seria igual al id de la url
   getProfileBip() {
-    this.bipService.showBipProfile(this.patient_id).subscribe((resp: any) => {
+    this.bipService.showBipProfile(this.patient_id).subscribe((resp) => {
       // console.log(resp);
       this.client_selected = resp; // asignamos el objeto a nuestra variable
 
       //traemos la info del usuario
       if (this.client_selected.type !== null) {
         // si hay o no informacion del paciente
-        if (this.client_selected.eligibility == 'yes') {
+        if (this.client_selected.eligibility === 'yes') {
           // si el status es positivo para proceder
           this.first_name = this.client_selected.patient.first_name;
           this.last_name = this.client_selected.patient.last_name;
@@ -203,7 +203,7 @@ export class BipFormComponent {
   //obtenemos el bip por el id..
   getBip() {
     if (this.patient_id !== null && this.patient_id !== undefined) {
-      this.bipService.getBipByUser(this.patient_id).subscribe((resp: any) => {
+      this.bipService.getBipByUser(this.patient_id).subscribe((resp) => {
         // console.log(resp);
 
         this.bip_selected = resp; //asigamos una variable a la respuesta
@@ -863,17 +863,15 @@ export class BipFormComponent {
     if (this.bip_selected) {
       //si  tiene bip se agrega a la informacion de la consulta
 
-      this.bipService
-        .update(data, this.bip_selectedid)
-        .subscribe((resp: any) => {
-          Swal.fire('Updated', `Bip Updated successfully!`, 'success');
-          this.ngOnInit();
-        });
+      this.bipService.update(data, this.bip_selectedid).subscribe((resp) => {
+        Swal.fire('Updated', `Bip Updated successfully!`, 'success');
+        this.ngOnInit();
+      });
     } else {
       // si no viene crea el bip
 
       //crear
-      this.bipService.createBip(data).subscribe((resp: any) => {
+      this.bipService.createBip(data).subscribe((resp) => {
         // console.log(resp);
         // this.text_success = 'Se guardó la informacion de la cita médica'
         Swal.fire('Updated', `Bip Created successfully!`, 'success');

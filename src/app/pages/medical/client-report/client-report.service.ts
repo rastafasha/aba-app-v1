@@ -1,17 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { url_servicios } from 'src/app/config/config';
-import { AuthService } from 'src/app/core/auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClientReportService {
-  constructor(public http: HttpClient, authService: AuthService) {}
+  constructor(public http: HttpClient) {}
 
   listClientReports() {
     const URL = url_servicios + '/client_report';
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 
   // listClientReportsSearch(page:number=1, search:string='', provider_name_g:number=0,session_date:string= ''){
@@ -27,7 +26,7 @@ export class ClientReportService {
   //     LINK+="&session_date="+session_date;
   //   }
   //   const URL = url_servicios+'/client_report?page='+page+LINK;
-  //   return this.http.get(URL, {headers:headers});
+  //   return this.http.get<any>(URL, {headers:headers});
   // }
 
   listClientReportsSearch(
@@ -37,7 +36,7 @@ export class ClientReportService {
     // speciality_id:number=0,
     date_start = '',
     date_end = '',
-    patient_id: any = null
+    patient_id = null
   ) {
     let LINK = '';
     if (search_doctor) {
@@ -57,34 +56,34 @@ export class ClientReportService {
     }
     const URL =
       url_servicios + '/client_report/byprofile/?page=' + page + LINK + '/';
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 
   config() {
     const URL = url_servicios + '/client_report/config';
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
   getClientReport(id: any) {
     const URL = url_servicios + '/client_report/show/' + id;
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 
   editClientReport(data: any, client_id: any) {
     const URL = url_servicios + '/client_report/update/' + client_id;
-    return this.http.post(URL, data);
+    return this.http.post<any>(URL, data);
   }
   deleteClientReport(patient_id: any) {
     const URL = url_servicios + '/client_report/destroy/' + patient_id;
-    return this.http.delete(URL);
+    return this.http.delete<any>(URL);
   }
 
   showClientReportbyPatient(patient_id: any) {
     const URL = url_servicios + '/client_report/byprofile/' + patient_id;
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 
   getAllClientReportByPatient(
-    patient_id: any = '',
+    patient_id = '',
     page = 1,
     date_start = '',
     date_end = '',
@@ -106,11 +105,11 @@ export class ClientReportService {
       '/?page=' +
       page +
       LINK;
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 
   getAllClientReportByLocation(
-    location_id: any = '',
+    location_id = '',
     page = 1,
     date_start = '',
     date_end = '',
@@ -132,7 +131,7 @@ export class ClientReportService {
       '/?page=' +
       page +
       LINK;
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 
   getAllClientReportEmployeeByPatient(
@@ -161,20 +160,20 @@ export class ClientReportService {
       '/?page=' +
       page +
       LINK;
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 
   showClientReportProfile(patient_id: any) {
     const URL = url_servicios + '/client_report/profile/' + patient_id;
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 
   create(data) {
     const URL = url_servicios + '/client_report/store';
-    return this.http.post(URL, data);
+    return this.http.post<any>(URL, data);
   }
   udpate(data: any, client_id: any) {
     const URL = url_servicios + '/client_report/update/' + client_id;
-    return this.http.post(URL, data);
+    return this.http.post<any>(URL, data);
   }
 }

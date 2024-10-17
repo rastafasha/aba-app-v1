@@ -158,9 +158,9 @@ export class NoteBcbaViewComponent {
 
   ngOnInit(): void {
     this.pageService.onInitPage();
-    this.activatedRoute.params.subscribe((resp: any) => {
+    this.activatedRoute.params.subscribe((resp) => {
       // console.log(resp);
-      this.note_id = resp.id;
+      this.note_id = resp['id'];
     });
     this.getConfig();
     this.getNote();
@@ -171,13 +171,13 @@ export class NoteBcbaViewComponent {
   }
 
   getConfig() {
-    this.noteBcbaService.listConfigNote().subscribe((resp: any) => {
+    this.noteBcbaService.listConfigNote().subscribe((resp) => {
       console.log(resp);
     });
   }
 
   getNote() {
-    this.noteBcbaService.getNote(this.note_id).subscribe((resp: any) => {
+    this.noteBcbaService.getNote(this.note_id).subscribe((resp) => {
       console.log(resp);
       this.note_selected = resp.noteBcba;
       this.note_selectedId = resp.noteBcba.id;
@@ -239,7 +239,7 @@ export class NoteBcbaViewComponent {
   getDoctor() {
     this.doctorService
       .showDoctor(this.selectedValueRendering)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         console.log(resp);
         this.doctor_selected = resp.user;
         this.doctor_selected_full_name = resp.user.full_name;
@@ -247,28 +247,24 @@ export class NoteBcbaViewComponent {
   }
 
   getDoctorRbt() {
-    this.doctorService
-      .showDoctor(this.aba_supervisor)
-      .subscribe((resp: any) => {
-        console.log(resp);
-        this.doctor_selected_rbt = resp.user;
-        this.doctor_selected_full_name_rbt = resp.user.full_name;
-      });
+    this.doctorService.showDoctor(this.aba_supervisor).subscribe((resp) => {
+      console.log(resp);
+      this.doctor_selected_rbt = resp.user;
+      this.doctor_selected_full_name_rbt = resp.user.full_name;
+    });
   }
   getDoctorBcba() {
-    this.doctorService
-      .showDoctor(this.selectedValueBCBA)
-      .subscribe((resp: any) => {
-        console.log(resp);
-        this.doctor_selected_bcba = resp.user;
-        this.doctor_selected_full_name_bcba = resp.user.full_name;
-      });
+    this.doctorService.showDoctor(this.selectedValueBCBA).subscribe((resp) => {
+      console.log(resp);
+      this.doctor_selected_bcba = resp.user;
+      this.doctor_selected_full_name_bcba = resp.user.full_name;
+    });
   }
 
   getProfileBip() {
     this.bipService
       .getBipProfilePatient_id(this.patient_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         console.log(resp);
         this.patient_selected = resp.patient;
 

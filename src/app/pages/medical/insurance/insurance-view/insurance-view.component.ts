@@ -47,9 +47,9 @@ export class InsuranceViewComponent {
 
   ngOnInit(): void {
     this.pageService.onInitPage();
-    this.activatedRoute.params.subscribe((resp: any) => {
+    this.activatedRoute.params.subscribe((resp) => {
       // console.log(resp);
-      this.insurance_id = resp.id;
+      this.insurance_id = resp['id'];
     });
 
     this.getConfig();
@@ -60,16 +60,14 @@ export class InsuranceViewComponent {
   }
 
   getConfig() {
-    this.insuranceService
-      .showInsurance(this.insurance_id)
-      .subscribe((resp: any) => {
-        // console.log(resp);
-        this.insurance_selected = resp;
+    this.insuranceService.showInsurance(this.insurance_id).subscribe((resp) => {
+      // console.log(resp);
+      this.insurance_selected = resp;
 
-        this.insurer_name = this.insurance_selected.insurer_name;
-        this.notes = this.insurance_selected.notes;
-        this.services = this.insurance_selected.services;
-      });
+      this.insurer_name = this.insurance_selected.insurer_name;
+      this.notes = this.insurance_selected.notes;
+      this.services = this.insurance_selected.services;
+    });
   }
 
   addService() {
@@ -118,7 +116,7 @@ export class InsuranceViewComponent {
 
     this.insuranceService
       .editInsurance(data, this.insurance_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log(resp);
 
         if (resp.message === 403) {

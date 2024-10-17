@@ -82,7 +82,7 @@ export class PatientMService {
   }
   deletePatient(client_id: any) {
     const URL = url_servicios + '/patients/destroy/' + client_id;
-    return this.http.delete(URL);
+    return this.http.delete<any>(URL);
   }
 
   showPatientProfile(client_id: any) {
@@ -106,7 +106,7 @@ export class PatientMService {
 
   updateStatus(data: any, client_id: any) {
     const URL = url_servicios + '/patients/update/eligibility/' + client_id;
-    return this.http.put(URL, data);
+    return this.http.put<any>(URL, data);
   }
 
   //files
@@ -128,7 +128,7 @@ export class PatientMService {
 
   deleteLaboratory(laboratory_id: any) {
     const URL = url_servicios + '/patient_file/delete-file/' + laboratory_id;
-    return this.http.delete(URL);
+    return this.http.delete<any>(URL);
   }
 
   getPosCovered() {

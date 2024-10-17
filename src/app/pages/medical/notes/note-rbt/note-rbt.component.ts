@@ -180,8 +180,8 @@ export class NoteRbtComponent implements OnInit {
     this.doctor_id = this.user.id;
     this.getDoctor();
 
-    this.ativatedRoute.params.subscribe((resp: any) => {
-      this.patient_id = resp.patient_id;
+    this.ativatedRoute.params.subscribe((resp) => {
+      this.patient_id = resp['patient_id'];
     });
     this.getConfig();
     this.getProfileBip();
@@ -210,7 +210,7 @@ export class NoteRbtComponent implements OnInit {
   }
 
   getDoctor() {
-    this.doctorService.showDoctor(this.doctor_id).subscribe((resp: any) => {
+    this.doctorService.showDoctor(this.doctor_id).subscribe((resp) => {
       this.doctor = resp.user;
       console.log(this.doctor);
       this.electronic_signature = resp.user.electronic_signature;
@@ -219,7 +219,7 @@ export class NoteRbtComponent implements OnInit {
   }
 
   getConfig() {
-    this.noteRbtService.listConfigNote().subscribe((resp: any) => {
+    this.noteRbtService.listConfigNote().subscribe((resp) => {
       // console.log(resp);
 
       this.roles_rbt = resp.roles_rbt;
@@ -274,7 +274,7 @@ export class NoteRbtComponent implements OnInit {
   getMaladaptivesBipByPatientId() {
     this.bipService
       .getBipProfilePatient_id(this.patient_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log(resp);
         this.maladaptives = resp.maladaptives;
         this.bip_id = resp.id;
@@ -283,7 +283,7 @@ export class NoteRbtComponent implements OnInit {
   getReplacementsByPatientId() {
     this.noteRbtService
       .showReplacementbyPatient(this.patient_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         console.log(resp);
         this.replacementGoals = resp.replacementGoals;
         this.goal = resp.replacementGoals[0].goal;
@@ -293,53 +293,44 @@ export class NoteRbtComponent implements OnInit {
   }
 
   specialistData() {
-    this.doctorService
-      .showDoctorProfile(this.doctor_id)
-      .subscribe((resp: any) => {
-        // console.log(resp);
-        this.provider_credential = resp.doctor.certificate_number;
-        // this.notes = resp.notes;
-        // this.services = resp.services;
-      });
+    this.doctorService.showDoctorProfile(this.doctor_id).subscribe((resp) => {
+      // console.log(resp);
+      this.provider_credential = resp.doctor.certificate_number;
+      // this.notes = resp.notes;
+      // this.services = resp.services;
+    });
   }
   // traer el target de todos los replacements
   getStoInprogressGoal() {
-    this.goalService
-      .getStobyGoalinProgress(this.goal)
-      .subscribe((resp: any) => {
-        console.log('getStoInprogressGoal', resp);
-        this.stoInprogressGoal = resp.goalstos.in_progress;
-        this.stoInprogressGoal.forEach((element: any) => {
-          this.stoInprogressGoal.push(element);
-        });
-        this.stoInprogressGoal.forEach((element: any) => {
-          this.stoInprogressGoal.push(element);
-        });
+    this.goalService.getStobyGoalinProgress(this.goal).subscribe((resp) => {
+      console.log('getStoInprogressGoal', resp);
+      this.stoInprogressGoal = resp.goalstos.in_progress;
+      this.stoInprogressGoal.forEach((element: any) => {
+        this.stoInprogressGoal.push(element);
       });
+      this.stoInprogressGoal.forEach((element: any) => {
+        this.stoInprogressGoal.push(element);
+      });
+    });
   }
 
   getStoInprogressGoal1() {
-    this.goalService
-      .getStobyGoalinProgress(this.goal)
-      .subscribe((resp: any) => {
-        console.log(resp);
-        if (resp && resp.goalstos && resp.goalstos.in_progress) {
-          const inProgress =
-            resp.goalstos.in_progress[this.replacementGoals.id];
-          if (inProgress) {
-            this.stoGoalinProgress = inProgress.sustitution_status_sto;
-            this.target = inProgress.target;
-          } else {
-            console.log(
-              `in_progress[${this.replacementGoals.id}] is undefined`
-            );
-          }
+    this.goalService.getStobyGoalinProgress(this.goal).subscribe((resp) => {
+      console.log(resp);
+      if (resp && resp.goalstos && resp.goalstos.in_progress) {
+        const inProgress = resp.goalstos.in_progress[this.replacementGoals.id];
+        if (inProgress) {
+          this.stoGoalinProgress = inProgress.sustitution_status_sto;
+          this.target = inProgress.target;
         } else {
-          console.log(
-            'resp or resp.goalstos or resp.goalstos.in_progress is undefined'
-          );
+          console.log(`in_progress[${this.replacementGoals.id}] is undefined`);
         }
-      });
+      } else {
+        console.log(
+          'resp or resp.goalstos or resp.goalstos.in_progress is undefined'
+        );
+      }
+    });
   }
 
   // selectSpecialist(event:any){
@@ -350,16 +341,14 @@ export class NoteRbtComponent implements OnInit {
   // }
 
   speciaFirmaDataRbt(selectedValueRBT) {
-    this.doctorService
-      .showDoctorProfile(selectedValueRBT)
-      .subscribe((resp: any) => {
-        console.log(resp);
-        this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED =
-          resp.doctor.electronic_signature;
-        console.log(this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED);
-        // this.notes = resp.notes;
-        // this.services = resp.services;
-      });
+    this.doctorService.showDoctorProfile(selectedValueRBT).subscribe((resp) => {
+      console.log(resp);
+      this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED =
+        resp.doctor.electronic_signature;
+      console.log(this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED);
+      // this.notes = resp.notes;
+      // this.services = resp.services;
+    });
   }
   selectFirmaSpecialistRbt(event: any) {
     event = this.selectedValueRBT;
@@ -370,7 +359,7 @@ export class NoteRbtComponent implements OnInit {
   speciaFirmaDataBcba(selectedValueBCBA) {
     this.doctorService
       .showDoctorProfile(selectedValueBCBA)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         console.log(resp);
         this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED =
           resp.doctor.electronic_signature;

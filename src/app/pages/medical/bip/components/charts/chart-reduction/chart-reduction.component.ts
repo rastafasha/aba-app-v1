@@ -146,8 +146,8 @@ export class ChartReductionComponent {
     this.baseline_date;
     this.baseline_level;
 
-    this.activatedRoute.params.subscribe((resp: any) => {
-      this.patient_id = resp.patient_id; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
+    this.activatedRoute.params.subscribe((resp) => {
+      this.patient_id = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
       // console.log(this.patient_id);
       this.getBip(); // se pide el perfil del paciente por el bip relacionado
       this.getProfileBip(); // se pide el perfil del paciente por el bip relacionado
@@ -157,7 +157,7 @@ export class ChartReductionComponent {
 
   // traemos la fecha inicial que viene de la creacion del bip
   getBip() {
-    this.bipService.getBipByUser(this.patient_id).subscribe((resp: any) => {
+    this.bipService.getBipByUser(this.patient_id).subscribe((resp) => {
       // console.log(resp);
       this.created_at = resp.bip.created_at;
       // console.log('creacion bip',this.created_at);
@@ -166,7 +166,7 @@ export class ChartReductionComponent {
 
   //traemos la info del paciente o cliente
   getProfileBip() {
-    this.bipService.showBipProfile(this.patient_id).subscribe((resp: any) => {
+    this.bipService.showBipProfile(this.patient_id).subscribe((resp) => {
       // console.log(resp);
       this.client_selected = resp; // asignamos el objeto a nuestra variable
       this.patient_id = resp.patient.patient_id;
@@ -192,7 +192,7 @@ export class ChartReductionComponent {
   getGraphicMaladaptive() {
     this.graphicReductionService
       .listMaladaptivesGraphics(this.maladaptive_behavior, this.patient_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log(resp);
 
         this.existgrfic = resp.maladaptivesCol;
@@ -392,59 +392,57 @@ export class ChartReductionComponent {
     const data = {
       month: this.selectedValue,
     };
-    this.graphicReductionService
-      .graphicPatientMonth(data)
-      .subscribe((resp: any) => {
-        console.log(resp);
+    this.graphicReductionService.graphicPatientMonth(data).subscribe((resp) => {
+      console.log(resp);
 
-        //start
-        this.query_income_year = resp.query_income_year;
-        const data_income = [];
-        this.query_income_year.forEach((element: any) => {
-          data_income.push(element.income);
-        });
+      //start
+      this.query_income_year = resp.query_income_year;
+      const data_income = [];
+      this.query_income_year.forEach((element: any) => {
+        data_income.push(element.income);
+      });
 
-        this.chartOptionsOne = {
-          chart: {
-            height: 200,
-            type: 'line',
-            toolbar: {
+      this.chartOptionsOne = {
+        chart: {
+          height: 200,
+          type: 'line',
+          toolbar: {
+            show: false,
+          },
+        },
+        grid: {
+          show: true,
+          xaxis: {
+            lines: {
               show: false,
             },
           },
-          grid: {
-            show: true,
-            xaxis: {
-              lines: {
-                show: false,
-              },
-            },
-            yaxis: {
-              lines: {
-                show: true,
-              },
+          yaxis: {
+            lines: {
+              show: true,
             },
           },
-          dataLabels: {
-            enabled: false,
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        stroke: {
+          curve: 'smooth',
+        },
+        series: [
+          {
+            name: 'Income',
+            color: '#2E37A4',
+            data: data_income,
           },
-          stroke: {
-            curve: 'smooth',
-          },
-          series: [
-            {
-              name: 'Income',
-              color: '#2E37A4',
-              data: data_income,
-            },
-          ],
-          xaxis: {
-            categories: resp.months_name,
-          },
-        };
+        ],
+        xaxis: {
+          categories: resp.months_name,
+        },
+      };
 
-        //end
-      });
+      //end
+    });
   }
   // selectedMonth(){
   //   // console.log(this.selectedValue);

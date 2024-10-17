@@ -75,8 +75,8 @@ export class CrisisPlanComponent {
     // //inicia la vista siempre desde arriba
 
     //me subcribo al id recibido por el parametro de la url
-    this.ativatedRoute.params.subscribe((resp: any) => {
-      this.patient_id = resp.patient_id; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
+    this.ativatedRoute.params.subscribe((resp) => {
+      this.patient_id = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
       this.getProfileBip(); // se solicita la info del perfil del usuario
       // this.getGoalbyPatient(); // se solicita la info del perfil del usuario
     });
@@ -91,12 +91,12 @@ export class CrisisPlanComponent {
 
   //obtenemos el perfil  del paciente por el id de la ruta
   getProfileBip() {
-    this.bipService.showBipProfile(this.patient_id).subscribe((resp: any) => {
+    this.bipService.showBipProfile(this.patient_id).subscribe((resp) => {
       // console.log('profilebip', resp);
       this.client_selected = resp; //convertimos la respuesta en un variable
 
       this.client_id = this.client_selected.patient.id;
-      if (this.patient_id != null) {
+      if (this.patient_id !== null) {
         this.getPatientGoalFamilyEnvolments(this.patient_id);
       }
     });
@@ -105,7 +105,7 @@ export class CrisisPlanComponent {
   //obtenemos el bip por el id
   getBip() {
     if (this.patient_id !== null && this.patient_id !== undefined) {
-      this.bipService.getBipByUser(this.patient_id).subscribe((resp: any) => {
+      this.bipService.getBipByUser(this.patient_id).subscribe((resp) => {
         // console.log('bip',resp);
 
         this.bip_selected = resp; //convertimos la respuesta en un variable
@@ -122,7 +122,7 @@ export class CrisisPlanComponent {
   getPatientGoalFamilyEnvolments(patient_id) {
     this.crisisPlanService
       .getCrisisPlanbyPatientId(patient_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log('goals sustition by patientid',resp);
         this.crisisPlans = resp.crisiPlanPatientIds.data;
         this.crisisplanId = resp.crisiPlanPatientIds.data[0].id;
@@ -292,14 +292,14 @@ export class CrisisPlanComponent {
     if (this.client_id_crisisPlans && this.crisisplanId) {
       this.crisisPlanService
         .editCrisisPlan(data, this.crisisplanId)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           // console.log(resp);
           // this.text_success = 'Goal Updated'
           Swal.fire('Updated', `Crisis Plan Updated successfully!`, 'success');
           this.ngOnInit();
         });
     } else {
-      this.crisisPlanService.createCrisisPlan(data).subscribe((resp: any) => {
+      this.crisisPlanService.createCrisisPlan(data).subscribe((resp) => {
         // console.log(resp);
         this.crisisid = resp.id;
         // this.text_success = 'Goal created successfully!'

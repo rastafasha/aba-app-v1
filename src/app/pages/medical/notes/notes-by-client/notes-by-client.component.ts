@@ -1,19 +1,19 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs';
 import { AuthService } from 'src/app/core/auth/auth.service';
+import { AppUser } from 'src/app/shared/models/users.models';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { NoteRbtService } from '../services/note-rbt.service';
-import { AppUser } from 'src/app/shared/models/users.models';
 declare var $: any;
 @Component({
   selector: 'app-notes-by-client',
   templateUrl: './notes-by-client.component.html',
   styleUrls: ['./notes-by-client.component.scss'],
 })
-export class NotesByClientComponent {
+export class NotesByClientComponent implements OnInit {
   patient_id: any;
   patientId: any;
   doctor_id: any;
@@ -56,8 +56,8 @@ export class NotesByClientComponent {
 
   ngOnInit(): void {
     //
-    this.ativatedRoute.params.subscribe((resp: any) => {
-      this.patient_id = resp.id;
+    this.ativatedRoute.params.subscribe((resp) => {
+      this.patient_id = resp['id'];
 
       // this.patient_id= resp.patient_id;
       // console.log(this.client_id);
@@ -87,11 +87,9 @@ export class NotesByClientComponent {
   }
 
   getNotesByPatient() {
-    this.noteRbtService
-      .showNotebyPatient(this.patient_id)
-      .subscribe((resp: any) => {
-        console.log(resp);
-      });
+    this.noteRbtService.showNotebyPatient(this.patient_id).subscribe((resp) => {
+      console.log(resp);
+    });
   }
 
   private getTableData(): void {
@@ -106,7 +104,7 @@ export class NotesByClientComponent {
           this.isLoading = false; // Set loading to false when request completes
         })
       )
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         this.totalDataNotepatient = resp.note_rbts.data.length;
         this.notespatient_generals = resp.note_rbts.data;
         this.patientId = resp.note_rbts.data[0].patient_id;
@@ -209,28 +207,26 @@ export class NotesByClientComponent {
     this.note_selected = note;
   }
   deleteRol() {
-    this.noteRbtService
-      .deleteNote(this.note_selected.id)
-      .subscribe((resp: any) => {
-        // console.log(resp);
+    this.noteRbtService.deleteNote(this.note_selected.id).subscribe((resp) => {
+      // console.log(resp);
 
-        if (resp.message === 403) {
-          this.text_validation = resp.message_text;
-        } else {
-          const INDEX = this.notesPatientList.findIndex(
-            (item: any) => item.id == this.note_selected.id
-          );
-          if (INDEX !== -1) {
-            this.notesPatientList.splice(INDEX, 1);
+      if (resp.message === 403) {
+        this.text_validation = resp.message_text;
+      } else {
+        const INDEX = this.notesPatientList.findIndex(
+          (item) => item.id === this.note_selected.id
+        );
+        if (INDEX !== -1) {
+          this.notesPatientList.splice(INDEX, 1);
 
-            $('#delete_patient').hide();
-            $('#delete_patient').removeClass('show');
-            $('.modal-backdrop').remove();
-            $('body').removeClass();
-            $('body').removeAttr('style');
-            this.note_selected = null;
-          }
+          $('#delete_patient').hide();
+          $('#delete_patient').removeClass('show');
+          $('.modal-backdrop').remove();
+          $('body').removeClass();
+          $('body').removeAttr('style');
+          this.note_selected = null;
         }
-      });
+      }
+    });
   }
 }

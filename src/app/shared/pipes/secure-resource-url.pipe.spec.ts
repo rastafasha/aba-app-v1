@@ -1,8 +1,8 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SecureResourceUrlPipe } from './secure-resource-url.pipe';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 fdescribe('SecureResourceUrlPipe', () => {
   let pipe: SecureResourceUrlPipe;
@@ -31,8 +31,7 @@ fdescribe('SecureResourceUrlPipe', () => {
   });
 
   it('debería transformar un recurso seguro', () => {
-    const headers = new HttpHeaders({ Accept: 'application/pdf' });
-    const result$ = pipe
+    pipe
       .transform(url)
       .subscribe((result) =>
         expect(result).toEqual(sanitizer.bypassSecurityTrustResourceUrl(url))

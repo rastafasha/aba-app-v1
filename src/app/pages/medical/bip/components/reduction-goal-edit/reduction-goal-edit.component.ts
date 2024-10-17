@@ -92,8 +92,8 @@ export class ReductionGoalEditComponent {
 
   ngOnInit(): void {
     //me subcribo al id recibido por el parametro de la url
-    this.ativatedRoute.params.subscribe((resp: any) => {
-      this.patient_id = resp.patient_id; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
+    this.ativatedRoute.params.subscribe((resp) => {
+      this.patient_id = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
       // this.getProfileBip(); // se solicita la info del perfil del usuario
       // console.log(this.patient_id);
     });
@@ -108,7 +108,7 @@ export class ReductionGoalEditComponent {
   //obtenemos el bip por el id
   getBip() {
     if (this.patient_id !== null && this.patient_id !== undefined) {
-      this.bipService.getBipByUser(this.patient_id).subscribe((resp: any) => {
+      this.bipService.getBipByUser(this.patient_id).subscribe((resp) => {
         // console.log('bip',resp);
         this.bip_selectedIdd = resp.bip.id; //convertimos la respuesta en un variable
       });
@@ -121,7 +121,7 @@ export class ReductionGoalEditComponent {
     this.patient_id = this.patient_id;
     this.goalService
       .listMaladaptivesGoals(this.maladap.maladaptive_behavior, this.patient_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         console.log(resp);
         //  this.bip_selectedIdd = resp.goalsmaladaptive.data[0].bip_id;
 
@@ -174,7 +174,7 @@ export class ReductionGoalEditComponent {
 
   deleteMaladaptiveSon(goalsto: any) {
     // this.maladaptiveSelectedSon.splice(i,1);
-    this.goalService.deleteGoal(goalsto.id).subscribe((resp: any) => {
+    this.goalService.deleteGoal(goalsto.id).subscribe((resp) => {
       // alert("Se elimino el objetivo");
       // this.getGoals();
     });
@@ -378,7 +378,7 @@ export class ReductionGoalEditComponent {
     if (this.patient_id && this.goalmaladaptiveid) {
       this.goalService
         .editGoal(data, this.goalmaladaptiveid)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           // console.log(resp);
           // this.text_success = 'Goal Updated'
           Swal.fire(
@@ -389,7 +389,7 @@ export class ReductionGoalEditComponent {
           this.ngOnInit();
         });
     } else {
-      this.goalService.createGoal(data).subscribe((resp: any) => {
+      this.goalService.createGoal(data).subscribe((resp) => {
         console.log(resp);
         this.goalid = resp.id;
         // this.text_success = 'Goal created successfully!'

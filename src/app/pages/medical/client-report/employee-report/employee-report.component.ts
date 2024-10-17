@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, map, Observable, tap } from 'rxjs';
@@ -32,7 +32,7 @@ export interface NoteRbt {
   templateUrl: './employee-report.component.html',
   styleUrls: ['./employee-report.component.scss'],
 })
-export class EmployeeReportComponent {
+export class EmployeeReportComponent implements OnInit {
   searchDataDoctor = '';
   date_start: any;
   date_end: any;
@@ -168,9 +168,9 @@ export class EmployeeReportComponent {
 
   ngOnInit(): void {
     //
-    this.ativatedRoute.params.subscribe((resp: any) => {
-      this.patient_id = resp.patient_id;
-      this.patientId = resp.patient_id;
+    this.ativatedRoute.params.subscribe((resp) => {
+      this.patient_id = resp['patient_id'];
+      this.patientId = resp['patient_id'];
       console.log(this.patient_id);
     });
 
@@ -200,7 +200,7 @@ export class EmployeeReportComponent {
   }
 
   getConfig() {
-    this.clientReportService.config().subscribe((resp: any) => {
+    this.clientReportService.config().subscribe((resp) => {
       // console.log(resp);
       this.insurances = resp.insurances;
       this.sponsors = resp.doctors;
@@ -224,7 +224,7 @@ export class EmployeeReportComponent {
         this.date_end,
         this.noteType
       )
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         console.log('todo', resp);
         const pa = resp.arrayPages;
         // const pa = [1,2,3,4,5,6,7,8,9,10]
@@ -443,7 +443,7 @@ export class EmployeeReportComponent {
 
   //trae el nombre del doctor quien hizo la nota rbt
   getDoctorRBT() {
-    this.doctorService.showDoctor(this.tecnicoRbts).subscribe((resp: any) => {
+    this.doctorService.showDoctor(this.tecnicoRbts).subscribe((resp) => {
       console.log('doctor rbt y location', resp);
       this.doctor_selected = resp.user;
       this.full_name = resp.user.full_name;
@@ -451,7 +451,7 @@ export class EmployeeReportComponent {
   }
   // supervisor del tecnico solo sacamos el npi
   getDoctorBcba() {
-    this.doctorService.showDoctor(this.supervisor).subscribe((resp: any) => {
+    this.doctorService.showDoctor(this.supervisor).subscribe((resp) => {
       console.log('bcba', resp);
       this.npi = resp.user.npi;
     });
@@ -782,7 +782,7 @@ export class EmployeeReportComponent {
 
       this.clientReportService
         .udpate(VALUE, this.billing_selected)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           // console.log(resp);
           // this.text_success = 'Bip Updated'
           Swal.fire('Updated', `Bip Updated successfully!`, 'success');
@@ -790,17 +790,17 @@ export class EmployeeReportComponent {
         });
       this.noteRbtService
         .noteUpdateModifier(VALUE2, data.rbt.id)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           console.log(resp);
         });
       this.noteBCbaService
         .noteBCBAUpdateModifier(VALUE3, data.bcba.id)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           console.log(resp);
         });
     } else {
       //crear
-      this.clientReportService.create(VALUE).subscribe((resp: any) => {
+      this.clientReportService.create(VALUE).subscribe((resp) => {
         // console.log(resp);
         // this.text_success = 'Se guardó la informacion de la cita médica'
         Swal.fire('Created', `Created successfully!`, 'success');
@@ -809,12 +809,12 @@ export class EmployeeReportComponent {
 
       this.noteRbtService
         .noteUpdateModifier(VALUE2, data.rbt.id)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           console.log(resp);
         });
       this.noteBCbaService
         .noteBCBAUpdateModifier(VALUE3, data.bcba.id)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           console.log(resp);
         });
     }

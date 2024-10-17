@@ -119,8 +119,8 @@ export class ReplacementGoalFormComponent {
     // //inicia la vista siempre desde arriba
 
     //me subcribo al id recibido por el parametro de la url
-    this.ativatedRoute.params.subscribe((resp: any) => {
-      this.patient_id = resp.patient_id; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
+    this.ativatedRoute.params.subscribe((resp) => {
+      this.patient_id = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
       this.getProfileBip(); // se solicita la info del perfil del usuario
     });
 
@@ -132,12 +132,12 @@ export class ReplacementGoalFormComponent {
 
   //obtenemos el perfil  del paciente por el id de la ruta
   getProfileBip() {
-    this.bipService.showBipProfile(this.patient_id).subscribe((resp: any) => {
+    this.bipService.showBipProfile(this.patient_id).subscribe((resp) => {
       // console.log('profilebip', resp);
       this.client_selected = resp; //convertimos la respuesta en un variable
 
       this.patient_id = this.client_selected.patient.patient_id;
-      if (this.patient_id != null) {
+      if (this.patient_id !== null) {
         this.getPatientGoalSustitutions(this.patient_id);
       }
     });
@@ -146,7 +146,7 @@ export class ReplacementGoalFormComponent {
   //obtenemos el bip por el id
   getBip() {
     if (this.patient_id !== null && this.patient_id !== undefined) {
-      this.bipService.getBipByUser(this.patient_id).subscribe((resp: any) => {
+      this.bipService.getBipByUser(this.patient_id).subscribe((resp) => {
         // console.log('bip',resp);
 
         this.bip_selected = resp; //convertimos la respuesta en un variable
@@ -162,7 +162,7 @@ export class ReplacementGoalFormComponent {
   getPatientGoalSustitutions(patient_id) {
     this.goalSustitutionService
       .getGoalSustitutionbyPatientId(patient_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         /* eslint-disable */ console.log(
           ...oo_oo(
             `3021847437_165_8_165_57_4`,
@@ -229,7 +229,7 @@ export class ReplacementGoalFormComponent {
     this.goals.splice(i, 1);
     this.goalSustitutionService
       .deleteGoalSustitution(goalsto.id)
-      .subscribe((resp: any) => {});
+      .subscribe((resp) => {});
   }
 
   //fin selectores
@@ -503,7 +503,7 @@ export class ReplacementGoalFormComponent {
 
     this.goalSustitutionService
       .createGoalSustitution(data)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log(resp);
         this.goalsustitid = resp.id;
         // this.text_success = 'Goal created successfully!'
@@ -551,7 +551,7 @@ export class ReplacementGoalFormComponent {
 
     this.goalSustitutionService
       .createGoalSustitution(data)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log(resp);
         this.goalsustitid = resp.id;
         // this.text_success = 'Goal created successfully!'
@@ -572,7 +572,7 @@ export class ReplacementGoalFormComponent {
       .listMaladaptivesGoalSustitutions(
         this.goalSelectedSon.maladaptive_behavior
       )
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log( resp);
 
         this.goalmaladaptive_child = resp.goalsmaladaptive.data;

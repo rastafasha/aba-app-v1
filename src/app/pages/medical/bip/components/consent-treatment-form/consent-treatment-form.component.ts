@@ -51,8 +51,8 @@ export class ConsentTreatmentFormComponent {
     // //inicia la vista siempre desde arriba
 
     //me subcribo al id recibido por el parametro de la url
-    this.ativatedRoute.params.subscribe((resp: any) => {
-      this.patient_id = resp.patient_id; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
+    this.ativatedRoute.params.subscribe((resp) => {
+      this.patient_id = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
       this.getProfileBip(); // se solicita la info del perfil del usuario
       // this.getGoalbyPatient(); // se solicita la info del perfil del usuario
     });
@@ -67,12 +67,12 @@ export class ConsentTreatmentFormComponent {
 
   //obtenemos el perfil  del paciente por el id de la ruta
   getProfileBip() {
-    this.bipService.showBipProfile(this.patient_id).subscribe((resp: any) => {
+    this.bipService.showBipProfile(this.patient_id).subscribe((resp) => {
       // console.log('profilebip', resp);
       this.client_selected = resp; //convertimos la respuesta en un variable
 
       this.client_id = this.client_selected.patient.id;
-      if (this.patient_id != null) {
+      if (this.patient_id !== null) {
         this.getPatientConsentToTreatment(this.patient_id);
       }
     });
@@ -81,7 +81,7 @@ export class ConsentTreatmentFormComponent {
   //obtenemos el bip por el id
   getBip() {
     if (this.patient_id !== null && this.patient_id !== undefined) {
-      this.bipService.getBipByUser(this.patient_id).subscribe((resp: any) => {
+      this.bipService.getBipByUser(this.patient_id).subscribe((resp) => {
         // console.log('bip',resp);
 
         this.bip_selected = resp; //convertimos la respuesta en un variable
@@ -97,7 +97,7 @@ export class ConsentTreatmentFormComponent {
   getPatientConsentToTreatment(patient_id) {
     this.consentToTreatmentService
       .getConsentToTreatmentbyPatientId(patient_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log('goals sustition by patientid',resp);
         this.consentToTreatments = resp.consentToTreatmentPatientIds.data[0];
         this.consentToTreatmentid =
@@ -209,7 +209,7 @@ export class ConsentTreatmentFormComponent {
     } else {
       this.consentToTreatmentService
         .createConsentToTreatment(formData)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           // console.log(resp);
           if (resp.message === 403) {
             this.text_validation = resp.message_text;

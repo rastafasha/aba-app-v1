@@ -368,7 +368,7 @@ export class AddPatientMComponent {
   insuranceData(selectedValueInsurer) {
     this.insuranceService
       .showInsurance(selectedValueInsurer)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         console.log(resp);
         this.insurer_name = resp.insurer_name;
         // this.notes = resp.notes;
@@ -604,7 +604,7 @@ export class AddPatientMComponent {
     this.text_validation = '';
 
     if (this.user.roles[0] === 'SUPERADMIN') {
-      this.patientService.createPatient(formData).subscribe((resp: any) => {
+      this.patientService.createPatient(formData).subscribe((resp) => {
         if (resp.message === 403) {
           this.text_validation = resp.message_text;
         } else {
@@ -614,7 +614,7 @@ export class AddPatientMComponent {
       });
     }
     if (this.user.roles[0] === 'MANAGER') {
-      this.patientService.createPatient(formData).subscribe((resp: any) => {
+      this.patientService.createPatient(formData).subscribe((resp) => {
         if (resp.message === 403) {
           this.text_validation = resp.message_text;
         } else {

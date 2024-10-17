@@ -3,8 +3,8 @@ import { Component } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/core/auth/auth.service';
-import { NoteBcbaService } from '../services/note-bcba.service';
 import { AppUser } from 'src/app/shared/models/users.models';
+import { NoteBcbaService } from '../services/note-bcba.service';
 declare var $: any;
 @Component({
   selector: 'app-note-bcba-by-client',
@@ -49,8 +49,8 @@ export class NoteBcbaByClientComponent {
 
   ngOnInit(): void {
     //
-    this.ativatedRoute.params.subscribe((resp: any) => {
-      this.patient_id = resp.id;
+    this.ativatedRoute.params.subscribe((resp) => {
+      this.patient_id = resp['id'];
 
       // this.patient_id= resp.patient_id;
       // console.log(this.client_id);
@@ -81,7 +81,7 @@ export class NoteBcbaByClientComponent {
   getNotesByPatient() {
     this.noteBcbaService
       .showNotebyPatient(this.patient_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         console.log(resp);
       });
   }
@@ -92,7 +92,7 @@ export class NoteBcbaByClientComponent {
 
     this.noteBcbaService
       .showNotebyPatient(this.patient_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         console.log(resp);
 
         this.totalDataNotepatient = resp.noteBcbas.data.length;
@@ -196,28 +196,26 @@ export class NoteBcbaByClientComponent {
     this.note_selected = note;
   }
   deleteRol() {
-    this.noteBcbaService
-      .deleteNote(this.note_selected.id)
-      .subscribe((resp: any) => {
-        // console.log(resp);
+    this.noteBcbaService.deleteNote(this.note_selected.id).subscribe((resp) => {
+      // console.log(resp);
 
-        if (resp.message === 403) {
-          this.text_validation = resp.message_text;
-        } else {
-          const INDEX = this.notesPatientList.findIndex(
-            (item: any) => item.id == this.note_selected.id
-          );
-          if (INDEX !== -1) {
-            this.notesPatientList.splice(INDEX, 1);
+      if (resp.message === 403) {
+        this.text_validation = resp.message_text;
+      } else {
+        const INDEX = this.notesPatientList.findIndex(
+          (item: any) => item.id === this.note_selected.id
+        );
+        if (INDEX !== -1) {
+          this.notesPatientList.splice(INDEX, 1);
 
-            $('#delete_patient').hide();
-            $('#delete_patient').removeClass('show');
-            $('.modal-backdrop').remove();
-            $('body').removeClass();
-            $('body').removeAttr('style');
-            this.note_selected = null;
-          }
+          $('#delete_patient').hide();
+          $('#delete_patient').removeClass('show');
+          $('.modal-backdrop').remove();
+          $('body').removeClass();
+          $('body').removeAttr('style');
+          this.note_selected = null;
         }
-      });
+      }
+    });
   }
 }

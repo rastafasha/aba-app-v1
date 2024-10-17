@@ -84,30 +84,26 @@ export class ListPatientMComponent implements OnInit {
   }
 
   getPatiensByDoctor() {
-    this.patientService
-      .getPatientsByDoctor(this.user.id)
-      .subscribe((resp: any) => {
-        // console.log(resp);
-        this.doctorPatientList = resp.patients.data;
-      });
+    this.patientService.getPatientsByDoctor(this.user.id).subscribe((resp) => {
+      // console.log(resp);
+      this.doctorPatientList = resp.patients.data;
+    });
     this.getPatiensByLocation();
   }
   getPatiensByLocation() {
     this.patientService
       .getPatientByLocations(this.location_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log(resp);
         this.locationPatientList = resp.patients.data;
       });
   }
 
   isMaladaptiveBip() {
-    this.bipService
-      .getBipByPatient_id(this.patient_id)
-      .subscribe((resp: any) => {
-        console.log(resp);
-        this.maladaptives = resp.maladaptives;
-      });
+    this.bipService.getBipByPatient_id(this.patient_id).subscribe((resp) => {
+      console.log(resp);
+      this.maladaptives = resp.maladaptives;
+    });
   }
 
   isPermission(permission: string) {
@@ -164,7 +160,7 @@ export class ListPatientMComponent implements OnInit {
   deleteRol() {
     this.patientService
       .deletePatient(this.patient_selected.id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log(resp);
 
         if (resp.message === 403) {

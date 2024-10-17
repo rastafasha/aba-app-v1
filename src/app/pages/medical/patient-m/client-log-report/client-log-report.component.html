@@ -1,41 +1,44 @@
 <div class="page-wrapper">
-    <div class="content">
-    
-        <!-- Page Header -->
-        <div class="page-header">
-            <div class="row">
-                <div class="col-sm-12">
-                    <!-- <ul class="breadcrumb">
+  <div class="content">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <!-- <ul class="breadcrumb">
                       <li class="breadcrumb-item"><a routerLink="/">Dashboard </a></li>
                       <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
                       <li class="breadcrumb-item active"><a routerLink="/patients/list">Client List </a></li>
                       <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
                         <li class="breadcrumb-item active">Clients Log Report</li>
                     </ul> -->
-                    <div class=" doctor-submit text-start">
-                      <button class="btn btn-primary btn-sm " (click)="goBack() ">Back</button>
-                  </div>
-                </div>
-            </div>
+          <div class="doctor-submit text-start">
+            <button class="btn btn-primary btn-sm" (click)="goBack()">
+              Back
+            </button>
+          </div>
         </div>
-        <!-- /Page Header -->
-        
-        <!-- table patients all -->
-        <div class="row" *ngIf="roles === 'SUPERADMIN' || roles === 'LM' || roles === 'MANAGER'">
-            <div class="col-sm-12">
-            
-                <div class="card card-table show-entire">
-                    <div class="card-body">
-                      <!-- <div class="staff-search-table">
+      </div>
+    </div>
+    <!-- /Page Header -->
+
+    <!-- table patients all -->
+    <div
+      class="row"
+      *ngIf="roles === 'SUPERADMIN' || roles === 'LM' || roles === 'MANAGER'"
+    >
+      <div class="col-sm-12">
+        <div class="card card-table show-entire">
+          <div class="card-body">
+            <!-- <div class="staff-search-table">
                         <form>
                             <div class="row">
-                                <div class="col-12 col-md-6 col-xl-4">  
+                                <div class="col-12 col-md-6 col-xl-4">
                                     <div class="form-group local-forms">
                                         <label >Doctor Name </label>
                                         <input [(ngModel)]="searchDataDoctor" name="searchDataDoctor" class="form-control" type="text"  >
                                     </div>
                                 </div>
-                                <div class="col-12 col-md-6 col-xl-4">  
+                                <div class="col-12 col-md-6 col-xl-4">
                                     <div class="form-group local-forms">
                                         <label >Patient Name </label>
                                         <input [(ngModel)]="searchDataValue" name="searchDataValue" class="form-control" type="text"  >
@@ -65,20 +68,20 @@
                                     <div class="form-group local-forms">
                                         <label >From </label>
                                         <input class="form-control datetimepicker" name="date_start" [(ngModel)]="date_start" type="date"   >
-                                        
+
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-xl-4">
                                     <div class="form-group local-forms">
                                         <label >To </label>
                                         <input class="form-control datetimepicker" name="date_end" [(ngModel)]="date_end" type="date"   >
-                                       
+
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-xl-4">
                                     <div class="doctor-submit">
                                         <button type="button" class="btn btn-primary submit-list-form me-2" (click)="searchData()">Search</button>
-                                        
+
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-3">
@@ -89,27 +92,38 @@
                             </div>
                         </form>
                     </div> -->
-                    
-                        <!-- Table Header -->
-                        <div class="page-table-header mb-2">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <div class="doctor-table-blk">
-                                        <h3>WS</h3>
-                                        <div class="doctor-search-blk">
-                                            <div class="top-nav-search table-search-blk">
-                                                    <input  class="form-control" placeholder="Search here" [(ngModel)]="searchDataValue"
-                                                    (ngModelChange)="searchData(searchDataValue)">
-                                                    <a class="btn"><img src="assets/img/icons/search-normal.svg" alt=""></a>
-                                            </div>
-                                            <div class="add-group">
-                                                <!-- <a routerLink="/patients/add" class="btn btn-primary add-pluss ms-2" *ngIf="isPermission('register_patient')"><img src="assets/img/icons/plus.svg" alt=""></a> -->
-                                                <a href="javascript:;" (click)="PageSize()" class="btn btn-primary doctor-refresh ms-2"><img src="assets/img/icons/re-fresh.svg" alt=""></a>
-                                                <!-- <div class="px-7 py-5" data-kt-user-table-filter="form">
+
+            <!-- Table Header -->
+            <div class="page-table-header mb-2">
+              <div class="row align-items-center">
+                <div class="col">
+                  <div class="doctor-table-blk">
+                    <h3>WS</h3>
+                    <div class="doctor-search-blk">
+                      <div class="top-nav-search table-search-blk">
+                        <input
+                          class="form-control"
+                          placeholder="Search here"
+                          [(ngModel)]="searchDataValue"
+                          (ngModelChange)="searchData(searchDataValue)"
+                        />
+                        <a class="btn"
+                          ><img src="assets/img/icons/search-normal.svg" alt=""
+                        /></a>
+                      </div>
+                      <div class="add-group">
+                        <!-- <a routerLink="/patients/add" class="btn btn-primary add-pluss ms-2" *ngIf="isPermission('register_patient')"><img src="assets/img/icons/plus.svg" alt=""></a> -->
+                        <a
+                          href="javascript:;"
+                          (click)="PageSize()"
+                          class="btn btn-primary doctor-refresh ms-2"
+                          ><img src="assets/img/icons/re-fresh.svg" alt=""
+                        /></a>
+                        <!-- <div class="px-7 py-5" data-kt-user-table-filter="form">
                                                   <div class="mb-10">
-                                                      
+
                                                       <select [(ngModel)]="status" (change)="getTableData()" class="form-select form-select-solid fw-bolder" data-kt-select2="true" data-placeholder="Select option" data-allow-clear="true" data-kt-user-table-filter="role" data-hide-search="true">
-                                                          
+
                                                           <option value="0">All</option>
                                                           <option value="incoming">incoming</option>
                                                           <option value="active">active</option>
@@ -117,389 +131,521 @@
                                                       </select>
                                                   </div>
                                               </div> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-auto text-end float-end ms-auto download-grp">
-                                     <!-- <a type="button" (click)="pdfExport()" class=" me-2"><img src="assets/img/icons/pdf-icon-01.svg"   alt="Export to Pdf"  title="Export to Pdf"></a> -->
-                                     <a type="button" (click)="txtExport()" class=" me-2"><img src="assets/img/icons/pdf-icon-02.svg"   alt="Export to TXT" title="Export to TXT"></a>
-                                     <a type="button" (click)="csvExport()" class=" me-2"><img src="assets/img/icons/pdf-icon-03.svg"    alt="Export to CSV" title="Export to CSV"></a>
-                                     <a type="button" (click)="excelExport()" ><img src="assets/img/icons/pdf-icon-04.svg"   alt="Export to XLS" title="Export to XLS"></a>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /Table Header -->
-                        
-                        <div class="table-responsive" >
-                            <table matSort (matSortChange)="sortData($event)" 
-                            class="table  table-striped border-0 custom-table comman-table datatable mb-0">
-                                <thead>
-                                    <tr>
-                                        
-                                      <th mat-sort-header="agency">Agency</th>
-                                      <th mat-sort-header="ops" *ngIf="roles ==='SUPERADMIN'">Options</th>
-                                      <th mat-sort-header="status">Status</th>
-                                      <th mat-sort-header="avatarmanager"> Avatar Manager</th>
-                                      <th mat-sort-header="manager">Manager</th>
-                                      <th mat-sort-header="avatar">Avatar</th>
-                                      <th mat-sort-header="name">F Name</th>
-                                      <th mat-sort-header="lastname">L Name</th>
-                                      <th mat-sort-header="birth_date">Birth Date</th>
-                                      <th mat-sort-header="address">Address</th>
-                                      <th mat-sort-header="city">City</th>
-                                      <th mat-sort-header="zip">ZIP</th>
-                                      <th mat-sort-header="phonec">Phone</th>
-                                      <th mat-sort-header="email">email</th>
-                                      <th mat-sort-header="codes">Diagnosis codes</th>
-                                      <th mat-sort-header="insurer">Insurer</th>
-                                      <th mat-sort-header="telehealth">Telehealth</th>
-                                      <th mat-sort-header="pay">Pay</th>
-                                      <th mat-sort-header="oop">OOP</th>
-                                      <th mat-sort-header="benefits">Edit Benefits</th>
-                                      <th mat-sort-header="eligibility date">Eligibility Date</th>
-                                      <th mat-sort-header="eqhid">Eqhl ID</th>
-                                      <th mat-sort-header="patient_id">Patient Id</th>
-
-                                      <th mat-sort-header="pa_assestment">Pa Assestment</th>
-                                      <th mat-sort-header="pa_service">Pa Service</th>
-                                      <th mat-sort-header="pa_startdate">Pa Start Date</th>
-                                      
-                                      <th mat-sort-header="schedule">Schedule</th>
-                                      <th mat-sort-header="average">Average</th>
-                                      <th mat-sort-header="53">53</th>
-                                      <th mat-sort-header="rbt name">Home RBT</th>
-                                      <th mat-sort-header="school rbt">School RBT</th>
-                                      <th mat-sort-header="home bca">Home BCBA</th>
-                                      <th mat-sort-header="school bca">School bca</th>
-                                      <th mat-sort-header="55">55</th>
-                                      <th mat-sort-header="56">56</th>
-                                      <th mat-sort-header="parent communication">Parent Communication</th>
-                                      
-                                      
-                                      <th mat-sort-header="welcome">Welcome</th>
-                                      <th mat-sort-header="consent">Consent</th>
-                                      <th mat-sort-header="insurance card">Insurance Card</th>
-                                      <th mat-sort-header="eligibility">Eligibility</th>
-                                      <th mat-sort-header="mnl">MNL</th>
-                                      <th mat-sort-header="referral">Referral</th>
-                                      <th mat-sort-header="ados">ADOS</th>
-                                      <th mat-sort-header="iep">IEP</th>
-                                      <th mat-sort-header="asd diagnosis">ASD Diagnosis</th>
-                                      <th mat-sort-header="cde">CDE</th>
-                                      <th mat-sort-header="submitted">Submited</th>
-                                      <th mat-sort-header="interview">Interview</th>
-                                      
-                                      <th mat-sort-header="created">Created At</th>
-                                         
-                                    </tr>
-                                </thead>
-                                <tbody >
-                                    <tr *ngFor="let data of patientList, let i= index;">
-                                        <td>{{data.locals.title}}</td>
-                                        <td *ngIf="roles ==='SUPERADMIN'">
-                                            <select
-                                            class="form-control form-select-solid fw-bolder"
-                                            
-                                            name="state" [(ngModel)]="data.status" (change)="cambiarStatus(data)"
-                                            placeholder="state">
-                                            <option>-- Select --</option>
-                                            <option value="incoming">Incoming</option>
-                                              <option value="active">Active</option>
-                                              <option value="inactive">Inactive</option>
-                                              <option value="incoming">Incoming</option>
-                                              <option value="onHold">On Hold</option>
-                                              <option value="onDischarge">On Discharge</option>
-                                              <option value="waitintOnPa">Waiting on PA</option>
-                                              <option value="waitintOnPaIa">Waiting on PA IA</option>
-                                              <option value="waitintOnIa">Waiting on IA</option>
-                                              <option value="waitintOnServices">Waiting on Services</option>
-                                              <option value="waitintOnStaff">Waiting on Staff</option>
-                                              <option value="waitintOnSchool">Waiting on School</option>
-                                              </select>
-                                          </td>
-                                        
-                                        <td>
-                                            <span class="badge bg-primary"
-                                                *ngIf="data.status === 'incoming'">Incoming</span>
-                                            <span class="badge bg-success"
-                                                *ngIf="data.status === 'active'">Active</span>
-                                            <span class="badge bg-danger"
-                                                *ngIf="data.status === 'inactive'">Inactive</span>
-                                                <span class="badge bg-primary"
-                                                *ngIf="data.status === 'onDischarge'">On Discharge</span>
-                                                <span class="badge bg-primary"
-                                                *ngIf="data.status === 'onHold'">On Hold</span>
-                                            <span class="badge bg-primary"
-                                                *ngIf="data.status === 'waitintOnPa'">Waiting on PA</span>
-                                            <span class="badge bg-primary"
-                                                *ngIf="data.status === 'waitintOnPaIa'">Waiting on PA IA</span>
-                                            <span class="badge bg-primary"
-                                                *ngIf="data.status === 'waitintOnIa'">Waiting on School</span>
-                                            <span class="badge bg-primary"
-                                                *ngIf="data.status === 'waitintOnServices'">Waiting on Services</span>
-                                            <span class="badge bg-primary"
-                                                *ngIf="data.status === 'waitintOnStaff'">Waiting on Staff</span>
-                                            <span class="badge bg-primary"
-                                                *ngIf="data.status === 'waitintOnSchool'">Waiting on School</span>
-      
-                                            
-                                        </td>
-                                        <td>
-                                            <div *ngIf="!data.avatar">
-                                                <img src="./assets/img/no-image.jpg" >
-                                            </div>
-                                            <div *ngIf="data.avatar">
-                                                <img  src="{{data.clin_director.avatar}}" class="avatarlist"   [alt]="data.clin_director.name">
-                                            </div>
-                                        </td>
-                                        <td>
-                                          {{data.clin_director.name + ' ' + (data.clin_director.surname ? data.clin_director.surname: '')}}
-                                        </td>
-                                        
-                                        <td>
-                                            <div *ngIf="!data.avatar">
-                                                <img src="./assets/img/no-image.jpg" >
-                                            </div>
-                                            <div *ngIf="data.avatar">
-                                                <img  src="{{data.avatar}}" class="avatarlist"   [alt]="data.first_name">
-                                            </div>
-                                        </td>
-                                      <td >
-                                        <a [routerLink]="['/patients/profile/', data.id]">
-                                        <!-- {{data.first_name + ' ' + (data.last_name ? data.last_name: '')}} -->
-                                        {{data.first_name }}
-                                      </a>
-                                      <td > {{data.last_name }} </td>
-                                      <td>{{data.birth_date}}</td>
-                                      <td>{{data.address | slice:0:10}}... <i class="fa fa-info-circle" style="padding: 5px 0px;" [tooltip]="data.address "></i></td>
-                                      <td>{{data.city}}</td>
-                                      <td>{{data.zip}}</td>
-                                      <td>{{data.phone}}</td>
-                                      <td>{{data.email}}</td>
-                                      <td>{{data.diagnosis_code}}</td>
-                                      <td>{{data.insurances.insurer_name}}</td>
-                                      <td>
-                                        <!-- {{data.telehealth}} -->
-                                        <span class="badge bg-success"
-                                        *ngIf="data.telehealth === 'true'">True</span>
-                                        <span class="badge bg-danger"
-                                        *ngIf="data.telehealth === 'false'">False</span>
-                                      </td>
-                                      <td>
-                                        <span class="badge bg-success"
-                                        *ngIf="data.pay === 'true'">True</span>
-                                        <span class="badge bg-danger"
-                                        *ngIf="data.pay === 'false'">False</span>
-                                      </td>
-                                      <td>{{data.oop}}</td>
-                                      <td>
-                                        <a [routerLink]="['/patients/list/edit/', data.id]" fragment="benefits">
-                                          benefits
-                                        </a>
-                                        </td>
-                                      <td>{{data.elegibility_date}}</td>
-                                      <td>{{data.eqhlid}}</td>
-                                      <td>{{data.patient_id}}</td>
-                                      <td>
-                                        {{data.pa_assessments[0]?.pa_assessment}}
-                                      </td>
-                                      <td>
-                                        {{data.pa_assessments[0]?.pa_services}}
-                                      </td>
-                                      <td>
-                                        {{data.pa_assessments[0]?.pa_services_start_date| date}}
-                                      </td>
-                                    
-                                    <td>{{data.schedule | slice:0:10}}... <i class="fa fa-info-circle" style="padding: 5px 0px;" [tooltip]="data.schedule "></i></td>
-                                    <td>average ??</td>
-                                    <td>
-                                      <span *ngIf="data.pa_assessments[0]?.cpt == '97153'">
-                                        {{data.pa_assessments[0]?.cpt}}
-                                      </span>
-                                    </td>
-                                    <td>
-                                      {{data.rbt_home.name + ' ' + (data.rbt_home.surname ? data.rbt_home.surname: '')}}
-                                    </td>
-                                    <td>
-                                      {{data.rbt2_school.name + ' ' + (data.rbt2_school.surname ? data.rbt2_school.surname: '')}}
-                                      </td>
-                                    <td>
-                                      {{data.bcba_home.name + ' ' + (data.bcba_home.surname ? data.bcba_home.surname: '')}}
-                                      </td>
-                                    <td>
-                                      {{data.bcba2_school.name + ' ' + (data.bcba2_school.surname ? data.bcba2_school.surname: '')}}
-                                        </td>
-                                        <td>
-                                          <span *ngIf="data.pa_assessments[0]?.cpt == '97155'">
-                                            {{data.pa_assessments[0]?.cpt}}
-                                          </span>
-                                        </td>
-                                    <td>
-                                      <span *ngIf="data.pa_assessments[0]?.cpt == '97156'">
-                                        {{data.pa_assessments[0]?.cpt}}
-                                      </span>
-                                    </td>
-                                    <td>{{data.special_note}}</td>
-                                    
-                                      <td>{{data.welcome}}</td>
-                                      <td>{{data.consent}}</td>
-                                      <td>{{data.insurance_card}}</td>
-                                      <td>
-                                        <span class="badge bg-danger"
-                                                  *ngIf="data.eligibility === 'no'">No</span>
-                                              <span class="badge bg-success"
-                                                  *ngIf="data.eligibility === 'yes'">Yes</span>
-                                              <span class="badge bg-primary"
-                                                  *ngIf="data.eligibility === 'waiting'">Waiting</span>
-                                              <span class="badge bg-primary"
-                                                  *ngIf="data.eligibility === 'requested'">Requested</span>
-                                              <span class="badge bg-primary"
-                                                  *ngIf="data.eligibility === 'reviewing'">Reviewing</span>
-                                              <span class="badge bg-primary"
-                                                  *ngIf="data.eligibility === 'psycho eval'">Psycho eval</span>
-                                              <span class="badge bg-primary"
-                                                  *ngIf="data.eligibility === 'need new'">Need new</span>
-                                              <span class="badge bg-primary"
-                                                  *ngIf="data.eligibility === '2 insurance'">2 insurance</span>
-                                    </td>
-                                    <td>{{data.mnl}}</td>
-                                    <td>{{data.referral}}</td>
-                                    <td>{{data.ados}}</td>
-                                    <td>{{data.iep}}</td>
-                                    <td>{{data.asd_diagnosis}}</td>
-                                    <td>{{data.cde}}</td>
-                                    <td>{{data.submitted}}</td>
-                                    <td>{{data.interview}}</td>
-                                    
-                                        <!-- <td>{{data.permision_pluck.length > 0 ? data.permision_pluck: 'TODOS LOS PERMISOS' }}</td> -->
-                                        <td>{{data.created_at | date }}</td>
-                                        
-                                        
-  
-                                        
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="table_footer">
-                                <div class="col-sm-12 col-md-5">
-                                  <div class="dataTables_info">
-                                    Showing {{ serialNumberArray[0] }} to
-                                    {{ serialNumberArray[serialNumberArray.length - 1] }} of
-                                    {{ totalDatapatient }} entries
-                                  </div>
-                                </div>
-                
-                                <div class="col-sm-12 col-md-7">
-                                  <div class="pagination_section">
-                                    <ul class="pagination">
-                                      <li
-                                        class="page-item"
-                                        [ngClass]="{
-                                          disabled: currentPage === 1
-                                        }"
-                                      >
-                                        <a
-                                          (click)="getMoreData('previous')"
-                                          class="page-link"
-                                          href="javascript:void(0);"
-                                          tabindex="-1"
-                                          >Previous</a
-                                        >
-                                      </li>
-                
-                                      <ng-container
-                                        *ngFor="let item of pageNumberArray; let i = index"
-                                      >
-                                        <li
-                                          class="page-item"
-                                          [class.active]="item === currentPage"
-                                          [ngClass]="
-                                            (pageNumberArray[currentPage - 2] > item &&
-                                              item !== 1 &&
-                                              pageNumberArray.length > 6) ||
-                                            (pageNumberArray[currentPage] < item &&
-                                              item !== 1 &&
-                                              pageNumberArray.length > 6 &&
-                                              pageNumberArray.length !== item)
-                                              ? 'hide-page-no'
-                                              : 'show-page-no'
-                                          "
-                                        >
-                                          <a
-                                            (click)="moveToPage(item)"
-                                            class="page-link"
-                                            href="javascript:void(0);"
-                                          >
-                                            {{ item }}
-                                          </a>
-                                        </li>
-                                        <li
-                                          class="page-item"
-                                          *ngIf="
-                                            i === 0 &&
-                                            pageNumberArray.length > 6 &&
-                                            currentPage > 2
-                                          "
-                                          [hidden]="currentPage === 1"
-                                          (click)="moveToPage(currentPage - 2)"
-                                        >
-                                          <a class="page-link" href="javascript:void(0);">
-                                            ...
-                                          </a>
-                                        </li>
-                                        <li
-                                          *ngIf="
-                                            i === pageNumberArray.length - 2 &&
-                                            pageNumberArray.length > 6
-                                          "
-                                          [hidden]="
-                                            currentPage >=
-                                              pageNumberArray[pageNumberArray.length - 2] ||
-                                            totalData <
-                                              serialNumberArray[serialNumberArray.length - 1]
-                                          "
-                                          class="page-item"
-                                          (click)="moveToPage(currentPage + 2)"
-                                        >
-                                          <a class="page-link" href="javascript:void(0);">
-                                            ...
-                                          </a>
-                                        </li>
-                                      </ng-container>
-                
-                                      <li
-                                        class="page-item"
-                                        [ngClass]="{
-                                          disabled:
-                                            currentPage ===
-                                              pageNumberArray[pageNumberArray.length - 1] ||
-                                              patientList.length === 0
-                                        }"
-                                      >
-                                        <a
-                                          (click)="getMoreData('next')"
-                                          class="page-link"
-                                          href="javascript:void(0);"
-                                          >Next
-                                        </a>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </div>
-                        </div>
-  
-                        
-                        
+                      </div>
                     </div>
-                </div>							
-            </div>					
+                  </div>
+                </div>
+                <div class="col-auto text-end float-end ms-auto download-grp">
+                  <!-- <a type="button" (click)="pdfExport()" class=" me-2"><img src="assets/img/icons/pdf-icon-01.svg"   alt="Export to Pdf"  title="Export to Pdf"></a> -->
+                  <a type="button" (click)="txtExport()" class="me-2"
+                    ><img
+                      src="assets/img/icons/pdf-icon-02.svg"
+                      alt="Export to TXT"
+                      title="Export to TXT"
+                  /></a>
+                  <a type="button" (click)="csvExport()" class="me-2"
+                    ><img
+                      src="assets/img/icons/pdf-icon-03.svg"
+                      alt="Export to CSV"
+                      title="Export to CSV"
+                  /></a>
+                  <a type="button" (click)="excelExport()"
+                    ><img
+                      src="assets/img/icons/pdf-icon-04.svg"
+                      alt="Export to XLS"
+                      title="Export to XLS"
+                  /></a>
+                </div>
+              </div>
+            </div>
+            <!-- /Table Header -->
+
+            <div class="table-responsive">
+              <table
+                matSort
+                (matSortChange)="sortData($event)"
+                class="table table-striped border-0 custom-table comman-table datatable mb-0"
+              >
+                <thead>
+                  <tr>
+                    <th mat-sort-header="agency">Agency</th>
+                    <th mat-sort-header="ops" *ngIf="roles === 'SUPERADMIN'">
+                      Options
+                    </th>
+                    <th mat-sort-header="status">Status</th>
+                    <th mat-sort-header="avatarmanager">Avatar Manager</th>
+                    <th mat-sort-header="manager">Manager</th>
+                    <th mat-sort-header="avatar">Avatar</th>
+                    <th mat-sort-header="name">F Name</th>
+                    <th mat-sort-header="lastname">L Name</th>
+                    <th mat-sort-header="birth_date">Birth Date</th>
+                    <th mat-sort-header="address">Address</th>
+                    <th mat-sort-header="city">City</th>
+                    <th mat-sort-header="zip">ZIP</th>
+                    <th mat-sort-header="phonec">Phone</th>
+                    <th mat-sort-header="email">email</th>
+                    <th mat-sort-header="codes">Diagnosis codes</th>
+                    <th mat-sort-header="insurer">Insurer</th>
+                    <th mat-sort-header="telehealth">Telehealth</th>
+                    <th mat-sort-header="pay">Pay</th>
+                    <th mat-sort-header="oop">OOP</th>
+                    <th mat-sort-header="benefits">Edit Benefits</th>
+                    <th mat-sort-header="eligibility date">Eligibility Date</th>
+                    <th mat-sort-header="eqhid">Eqhl ID</th>
+                    <th mat-sort-header="patient_id">Patient Id</th>
+
+                    <th mat-sort-header="pa_assestment">Pa Assestment</th>
+                    <th mat-sort-header="pa_service">Pa Service</th>
+                    <th mat-sort-header="pa_startdate">Pa Start Date</th>
+
+                    <th mat-sort-header="schedule">Schedule</th>
+                    <th mat-sort-header="average">Average</th>
+                    <th mat-sort-header="53">53</th>
+                    <th mat-sort-header="rbt name">Home RBT</th>
+                    <th mat-sort-header="school rbt">School RBT</th>
+                    <th mat-sort-header="home bca">Home BCBA</th>
+                    <th mat-sort-header="school bca">School bca</th>
+                    <th mat-sort-header="55">55</th>
+                    <th mat-sort-header="56">56</th>
+                    <th mat-sort-header="parent communication">
+                      Parent Communication
+                    </th>
+
+                    <th mat-sort-header="welcome">Welcome</th>
+                    <th mat-sort-header="consent">Consent</th>
+                    <th mat-sort-header="insurance card">Insurance Card</th>
+                    <th mat-sort-header="eligibility">Eligibility</th>
+                    <th mat-sort-header="mnl">MNL</th>
+                    <th mat-sort-header="referral">Referral</th>
+                    <th mat-sort-header="ados">ADOS</th>
+                    <th mat-sort-header="iep">IEP</th>
+                    <th mat-sort-header="asd diagnosis">ASD Diagnosis</th>
+                    <th mat-sort-header="cde">CDE</th>
+                    <th mat-sort-header="submitted">Submited</th>
+                    <th mat-sort-header="interview">Interview</th>
+
+                    <th mat-sort-header="created">Created At</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of patientList; let i = index">
+                    <td>{{ data.locals.title }}</td>
+                    <td *ngIf="roles === 'SUPERADMIN'">
+                      <select
+                        class="form-control form-select-solid fw-bolder"
+                        name="state"
+                        [(ngModel)]="data.status"
+                        (change)="cambiarStatus(data)"
+                        placeholder="state"
+                      >
+                        <option>-- Select --</option>
+                        <option value="incoming">Incoming</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                        <option value="incoming">Incoming</option>
+                        <option value="onHold">On Hold</option>
+                        <option value="onDischarge">On Discharge</option>
+                        <option value="waitintOnPa">Waiting on PA</option>
+                        <option value="waitintOnPaIa">Waiting on PA IA</option>
+                        <option value="waitintOnIa">Waiting on IA</option>
+                        <option value="waitintOnServices">
+                          Waiting on Services
+                        </option>
+                        <option value="waitintOnStaff">Waiting on Staff</option>
+                        <option value="waitintOnSchool">
+                          Waiting on School
+                        </option>
+                      </select>
+                    </td>
+
+                    <td>
+                      <span
+                        class="badge bg-primary"
+                        *ngIf="data.status === 'incoming'"
+                        >Incoming</span
+                      >
+                      <span
+                        class="badge bg-success"
+                        *ngIf="data.status === 'active'"
+                        >Active</span
+                      >
+                      <span
+                        class="badge bg-danger"
+                        *ngIf="data.status === 'inactive'"
+                        >Inactive</span
+                      >
+                      <span
+                        class="badge bg-primary"
+                        *ngIf="data.status === 'onDischarge'"
+                        >On Discharge</span
+                      >
+                      <span
+                        class="badge bg-primary"
+                        *ngIf="data.status === 'onHold'"
+                        >On Hold</span
+                      >
+                      <span
+                        class="badge bg-primary"
+                        *ngIf="data.status === 'waitintOnPa'"
+                        >Waiting on PA</span
+                      >
+                      <span
+                        class="badge bg-primary"
+                        *ngIf="data.status === 'waitintOnPaIa'"
+                        >Waiting on PA IA</span
+                      >
+                      <span
+                        class="badge bg-primary"
+                        *ngIf="data.status === 'waitintOnIa'"
+                        >Waiting on School</span
+                      >
+                      <span
+                        class="badge bg-primary"
+                        *ngIf="data.status === 'waitintOnServices'"
+                        >Waiting on Services</span
+                      >
+                      <span
+                        class="badge bg-primary"
+                        *ngIf="data.status === 'waitintOnStaff'"
+                        >Waiting on Staff</span
+                      >
+                      <span
+                        class="badge bg-primary"
+                        *ngIf="data.status === 'waitintOnSchool'"
+                        >Waiting on School</span
+                      >
+                    </td>
+                    <td>
+                      <div *ngIf="!data.avatar">
+                        <img src="./assets/img/no-image.jpg" />
+                      </div>
+                      <div *ngIf="data.avatar">
+                        <img
+                          src="{{ data.clin_director.avatar }}"
+                          class="avatarlist"
+                          [alt]="data.clin_director.name"
+                        />
+                      </div>
+                    </td>
+                    <td>
+                      {{
+                        data.clin_director.name +
+                          " " +
+                          (data.clin_director.surname
+                            ? data.clin_director.surname
+                            : "")
+                      }}
+                    </td>
+
+                    <td>
+                      <div *ngIf="!data.avatar">
+                        <img src="./assets/img/no-image.jpg" />
+                      </div>
+                      <div *ngIf="data.avatar">
+                        <img
+                          src="{{ data.avatar }}"
+                          class="avatarlist"
+                          [alt]="data.first_name"
+                        />
+                      </div>
+                    </td>
+                    <td>
+                      <a [routerLink]="['/patients/profile/', data.id]">
+                        <!-- {{data.first_name + ' ' + (data.last_name ? data.last_name: '')}} -->
+                        {{ data.first_name }}
+                      </a>
+                    </td>
+
+                    <td>{{ data.last_name }}</td>
+                    <td>{{ data.birth_date }}</td>
+                    <td>
+                      {{ data.address | slice : 0 : 10 }}...
+                      <i
+                        class="fa fa-info-circle"
+                        style="padding: 5px 0px"
+                        [tooltip]="data.address"
+                      ></i>
+                    </td>
+                    <td>{{ data.city }}</td>
+                    <td>{{ data.zip }}</td>
+                    <td>{{ data.phone }}</td>
+                    <td>{{ data.email }}</td>
+                    <td>{{ data.diagnosis_code }}</td>
+                    <td>{{ data.insurances.insurer_name }}</td>
+                    <td>
+                      <!-- {{data.telehealth}} -->
+                      <span
+                        class="badge bg-success"
+                        *ngIf="data.telehealth === 'true'"
+                        >True</span
+                      >
+                      <span
+                        class="badge bg-danger"
+                        *ngIf="data.telehealth === 'false'"
+                        >False</span
+                      >
+                    </td>
+                    <td>
+                      <span class="badge bg-success" *ngIf="data.pay === 'true'"
+                        >True</span
+                      >
+                      <span class="badge bg-danger" *ngIf="data.pay === 'false'"
+                        >False</span
+                      >
+                    </td>
+                    <td>{{ data.oop }}</td>
+                    <td>
+                      <a
+                        [routerLink]="['/patients/list/edit/', data.id]"
+                        fragment="benefits"
+                      >
+                        benefits
+                      </a>
+                    </td>
+                    <td>{{ data.elegibility_date }}</td>
+                    <td>{{ data.eqhlid }}</td>
+                    <td>{{ data.patient_id }}</td>
+                    <td>
+                      {{ data.pa_assessments[0]?.pa_assessment }}
+                    </td>
+                    <td>
+                      {{ data.pa_assessments[0]?.pa_services }}
+                    </td>
+                    <td>
+                      {{
+                        data.pa_assessments[0]?.pa_services_start_date | date
+                      }}
+                    </td>
+
+                    <td>
+                      {{ data.schedule | slice : 0 : 10 }}...
+                      <i
+                        class="fa fa-info-circle"
+                        style="padding: 5px 0px"
+                        [tooltip]="data.schedule"
+                      ></i>
+                    </td>
+                    <td>average ??</td>
+                    <td>
+                      <span *ngIf="data.pa_assessments[0]?.cpt === '97153'">
+                        {{ data.pa_assessments[0]?.cpt }}
+                      </span>
+                    </td>
+                    <td>
+                      {{
+                        data.rbt_home.name +
+                          " " +
+                          (data.rbt_home.surname ? data.rbt_home.surname : "")
+                      }}
+                    </td>
+                    <td>
+                      {{
+                        data.rbt2_school.name +
+                          " " +
+                          (data.rbt2_school.surname
+                            ? data.rbt2_school.surname
+                            : "")
+                      }}
+                    </td>
+                    <td>
+                      {{
+                        data.bcba_home.name +
+                          " " +
+                          (data.bcba_home.surname ? data.bcba_home.surname : "")
+                      }}
+                    </td>
+                    <td>
+                      {{
+                        data.bcba2_school.name +
+                          " " +
+                          (data.bcba2_school.surname
+                            ? data.bcba2_school.surname
+                            : "")
+                      }}
+                    </td>
+                    <td>
+                      <span *ngIf="data.pa_assessments[0]?.cpt === '97155'">
+                        {{ data.pa_assessments[0]?.cpt }}
+                      </span>
+                    </td>
+                    <td>
+                      <span *ngIf="data.pa_assessments[0]?.cpt === '97156'">
+                        {{ data.pa_assessments[0]?.cpt }}
+                      </span>
+                    </td>
+                    <td>{{ data.special_note }}</td>
+
+                    <td>{{ data.welcome }}</td>
+                    <td>{{ data.consent }}</td>
+                    <td>{{ data.insurance_card }}</td>
+                    <td>
+                      <span
+                        class="badge bg-danger"
+                        *ngIf="data.eligibility === 'no'"
+                        >No</span
+                      >
+                      <span
+                        class="badge bg-success"
+                        *ngIf="data.eligibility === 'yes'"
+                        >Yes</span
+                      >
+                      <span
+                        class="badge bg-primary"
+                        *ngIf="data.eligibility === 'waiting'"
+                        >Waiting</span
+                      >
+                      <span
+                        class="badge bg-primary"
+                        *ngIf="data.eligibility === 'requested'"
+                        >Requested</span
+                      >
+                      <span
+                        class="badge bg-primary"
+                        *ngIf="data.eligibility === 'reviewing'"
+                        >Reviewing</span
+                      >
+                      <span
+                        class="badge bg-primary"
+                        *ngIf="data.eligibility === 'psycho eval'"
+                        >Psycho eval</span
+                      >
+                      <span
+                        class="badge bg-primary"
+                        *ngIf="data.eligibility === 'need new'"
+                        >Need new</span
+                      >
+                      <span
+                        class="badge bg-primary"
+                        *ngIf="data.eligibility === '2 insurance'"
+                        >2 insurance</span
+                      >
+                    </td>
+                    <td>{{ data.mnl }}</td>
+                    <td>{{ data.referral }}</td>
+                    <td>{{ data.ados }}</td>
+                    <td>{{ data.iep }}</td>
+                    <td>{{ data.asd_diagnosis }}</td>
+                    <td>{{ data.cde }}</td>
+                    <td>{{ data.submitted }}</td>
+                    <td>{{ data.interview }}</td>
+
+                    <!-- <td>{{data.permision_pluck.length > 0 ? data.permision_pluck: 'TODOS LOS PERMISOS' }}</td> -->
+                    <td>{{ data.created_at | date }}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="table_footer">
+                <div class="col-sm-12 col-md-5">
+                  <div class="dataTables_info">
+                    Showing {{ serialNumberArray[0] }} to
+                    {{ serialNumberArray[serialNumberArray.length - 1] }} of
+                    {{ totalDatapatient }} entries
+                  </div>
+                </div>
+
+                <div class="col-sm-12 col-md-7">
+                  <div class="pagination_section">
+                    <ul class="pagination">
+                      <li
+                        class="page-item"
+                        [ngClass]="{
+                          disabled: currentPage === 1
+                        }"
+                      >
+                        <a
+                          (click)="getMoreData('previous')"
+                          class="page-link"
+                          href="javascript:void(0);"
+                          tabindex="-1"
+                          >Previous</a
+                        >
+                      </li>
+
+                      <ng-container
+                        *ngFor="let item of pageNumberArray; let i = index"
+                      >
+                        <li
+                          class="page-item"
+                          [class.active]="item === currentPage"
+                          [ngClass]="
+                            (pageNumberArray[currentPage - 2] > item &&
+                              item !== 1 &&
+                              pageNumberArray.length > 6) ||
+                            (pageNumberArray[currentPage] < item &&
+                              item !== 1 &&
+                              pageNumberArray.length > 6 &&
+                              pageNumberArray.length !== item)
+                              ? 'hide-page-no'
+                              : 'show-page-no'
+                          "
+                        >
+                          <a
+                            (click)="moveToPage(item)"
+                            class="page-link"
+                            href="javascript:void(0);"
+                          >
+                            {{ item }}
+                          </a>
+                        </li>
+                        <li
+                          class="page-item"
+                          *ngIf="
+                            i === 0 &&
+                            pageNumberArray.length > 6 &&
+                            currentPage > 2
+                          "
+                          [hidden]="currentPage === 1"
+                          (click)="moveToPage(currentPage - 2)"
+                        >
+                          <a class="page-link" href="javascript:void(0);">
+                            ...
+                          </a>
+                        </li>
+                        <li
+                          *ngIf="
+                            i === pageNumberArray.length - 2 &&
+                            pageNumberArray.length > 6
+                          "
+                          [hidden]="
+                            currentPage >=
+                              pageNumberArray[pageNumberArray.length - 2] ||
+                            totalData <
+                              serialNumberArray[serialNumberArray.length - 1]
+                          "
+                          class="page-item"
+                          (click)="moveToPage(currentPage + 2)"
+                        >
+                          <a class="page-link" href="javascript:void(0);">
+                            ...
+                          </a>
+                        </li>
+                      </ng-container>
+
+                      <li
+                        class="page-item"
+                        [ngClass]="{
+                          disabled:
+                            currentPage ===
+                              pageNumberArray[pageNumberArray.length - 1] ||
+                            patientList.length === 0
+                        }"
+                      >
+                        <a
+                          (click)="getMoreData('next')"
+                          class="page-link"
+                          href="javascript:void(0);"
+                          >Next
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <!--  end table patients all -->
+      </div>
     </div>
+    <!--  end table patients all -->
   </div>
-  
-  
-  
+</div>

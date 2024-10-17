@@ -38,12 +38,12 @@ export class LocationService {
       LINK += '&email_doctor=' + email_doctor;
     }
     const URL = url_servicios + '/appointmentpay?page=' + page + LINK;
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 
   getLocations() {
     const URL = url_servicios + '/location';
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 
   listLocationPatients(search: any, status: any, location_id: any) {
@@ -59,30 +59,30 @@ export class LocationService {
     }
 
     const URL = url_servicios + '/patients' + LINK;
-    return this.http.get(URL);
-    // return this.http.get(URL, {headers: headers}).pipe(
+    return this.http.get<any>(URL);
+    // return this.http.get<any>(URL, {headers: headers}).pipe(
     //   finalize(()=> this.isLoadingSubject.next(false))
     // )
   }
   listConfig() {
     const URL = url_servicios + '/location/config';
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
   storeLocation(data: any) {
     const URL = url_servicios + '/location/store';
-    return this.http.post(URL, data);
+    return this.http.post<any>(URL, data);
   }
   getLocation(location_id: any) {
     const URL = url_servicios + '/location/show/' + location_id;
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
   editLocation(data: any, location_id: any) {
     const URL = url_servicios + '/location/update/' + location_id;
-    return this.http.post(URL, data);
+    return this.http.post<any>(URL, data);
   }
 
   deleteLocation(location_id: any) {
     const URL = url_servicios + '/roles/destroy/' + location_id;
-    return this.http.delete(URL);
+    return this.http.delete<any>(URL);
   }
 }

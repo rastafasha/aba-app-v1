@@ -131,8 +131,8 @@ export class BipProfileComponent {
   ngOnInit(): void {
     this.pageService.onInitPage();
     // this.doctorService.getUserRoles();
-    this.activatedRoute.params.subscribe((resp: any) => {
-      this.patient_id = resp.patient_id;
+    this.activatedRoute.params.subscribe((resp) => {
+      this.patient_id = resp['patient_id'];
       console.log(this.patient_id);
       this.getPatient();
     });
@@ -156,7 +156,7 @@ export class BipProfileComponent {
   getPatient() {
     this.bipService
       .getBipProfilePatientPdf_id(this.patient_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         console.log(resp);
         this.bip_selected = resp.bip;
         this.patient_selected = resp.patient ? resp.patient : null;

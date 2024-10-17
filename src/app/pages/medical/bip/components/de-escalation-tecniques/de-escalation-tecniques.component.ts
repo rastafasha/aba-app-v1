@@ -56,8 +56,8 @@ export class DeEscalationTecniquesComponent {
     // //inicia la vista siempre desde arriba
 
     //me subcribo al id recibido por el parametro de la url
-    this.ativatedRoute.params.subscribe((resp: any) => {
-      this.patient_id = resp.patient_id; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
+    this.ativatedRoute.params.subscribe((resp) => {
+      this.patient_id = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
       this.getProfileBip(); // se solicita la info del perfil del usuario
       // this.getGoalbyPatient(); // se solicita la info del perfil del usuario
     });
@@ -72,12 +72,12 @@ export class DeEscalationTecniquesComponent {
 
   //obtenemos el perfil  del paciente por el id de la ruta
   getProfileBip() {
-    this.bipService.showBipProfile(this.patient_id).subscribe((resp: any) => {
+    this.bipService.showBipProfile(this.patient_id).subscribe((resp) => {
       // console.log('profilebip', resp);
       this.client_selected = resp; //convertimos la respuesta en un variable
 
       this.client_id = this.client_selected.patient.id;
-      if (this.patient_id != null) {
+      if (this.patient_id !== null) {
         this.getPatientGoalFamilyEnvolments(this.patient_id);
       }
     });
@@ -86,7 +86,7 @@ export class DeEscalationTecniquesComponent {
   //obtenemos el bip por el id
   getBip() {
     if (this.patient_id !== null && this.patient_id !== undefined) {
-      this.bipService.getBipByUser(this.patient_id).subscribe((resp: any) => {
+      this.bipService.getBipByUser(this.patient_id).subscribe((resp) => {
         // console.log('bip',resp);
 
         this.bip_selected = resp; //convertimos la respuesta en un variable
@@ -103,7 +103,7 @@ export class DeEscalationTecniquesComponent {
   getPatientGoalFamilyEnvolments(patient_id) {
     this.deEscalationTechniqueService
       .getDeEscalationTechniquebyPatientId(patient_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log('goals sustition by patientid',resp);
         this.deEscalalationsTechs = resp.deEscalationTechniquePatientIds.data;
         this.deEscalalationsTechid =
@@ -205,7 +205,7 @@ export class DeEscalationTecniquesComponent {
     if (this.client_id_deEscalalationsTechs && this.deEscalalationsTechid) {
       this.deEscalationTechniqueService
         .editDeEscalationTechnique(data, this.deEscalalationsTechid)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           // console.log(resp);
           // this.text_success = 'Goal Updated'
           Swal.fire(
@@ -218,7 +218,7 @@ export class DeEscalationTecniquesComponent {
     } else {
       this.deEscalationTechniqueService
         .createDeEscalationTechnique(data)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           // console.log(resp);
           this.goalFamilyid = resp.id;
           // this.text_success = 'Goal created successfully!'

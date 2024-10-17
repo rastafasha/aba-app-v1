@@ -1,15 +1,14 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { FileSaverService } from 'ngx-filesaver';
 import { AuthService } from 'src/app/core/auth/auth.service';
+import { AppUser } from 'src/app/shared/models/users.models';
 import { AppRoutes } from 'src/app/shared/routes/routes';
+import { PageService } from 'src/app/shared/services/pages.service';
 import * as XLSX from 'xlsx';
 import { BipService } from '../../bip/service/bip.service';
-import { DoctorService } from '../../doctors/service/doctor.service';
 import { PatientMService } from '../service/patient-m.service';
-import { PageService } from 'src/app/shared/services/pages.service';
-import { AppUser } from 'src/app/shared/models/users.models';
 
 declare var $: any;
 @Component({
@@ -17,7 +16,7 @@ declare var $: any;
   templateUrl: './client-log-report.component.html',
   styleUrls: ['./client-log-report.component.scss'],
 })
-export class ClientLogReportComponent {
+export class ClientLogReportComponent implements OnInit {
   routes = AppRoutes;
 
   patientList = [];
@@ -33,6 +32,7 @@ export class ClientLogReportComponent {
   pageIndex = 0;
   serialNumberArray: number[] = [];
   currentPage = 1;
+  totalData = 0;
   pageNumberArray: number[] = [];
   pageSelection = [];
   totalPages = 0;
@@ -84,21 +84,17 @@ export class ClientLogReportComponent {
   }
 
   getPatiensByDoctor() {
-    this.patientService
-      .getPatientsByDoctor(this.user.id)
-      .subscribe((resp: any) => {
-        // console.log(resp);
-        this.doctorPatientList = resp.patients;
-      });
+    this.patientService.getPatientsByDoctor(this.user.id).subscribe((resp) => {
+      // console.log(resp);
+      this.doctorPatientList = resp.patients;
+    });
   }
 
   isMaladaptiveBip() {
-    this.bipService
-      .getBipByPatient_id(this.patient_id)
-      .subscribe((resp: any) => {
-        console.log(resp);
-        this.maladaptives = resp.maladaptives;
-      });
+    this.bipService.getBipByPatient_id(this.patient_id).subscribe((resp) => {
+      console.log(resp);
+      this.maladaptives = resp.maladaptives;
+    });
   }
 
   isPermission(permission: string) {
@@ -117,7 +113,7 @@ export class ClientLogReportComponent {
     // this.search, this.status
     this.patientService
       .listPatientLogReport(this.search, this.status)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         console.log(resp);
 
         // trae el ultimo
@@ -174,7 +170,7 @@ export class ClientLogReportComponent {
   deleteRol() {
     this.patientService
       .deletePatient(this.patient_selected.id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log(resp);
 
         if (resp.message === 403) {

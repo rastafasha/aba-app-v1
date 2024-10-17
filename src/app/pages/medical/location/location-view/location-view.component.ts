@@ -81,8 +81,8 @@ export class LocationViewComponent {
   ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe((resp: any) => {
-      this.location_id = resp.id;
+    this.activatedRoute.params.subscribe((resp) => {
+      this.location_id = resp['id'];
       // console.log(resp);
     });
     this.getLocation();
@@ -110,37 +110,35 @@ export class LocationViewComponent {
   }
 
   getLocation() {
-    this.locationService
-      .getLocation(this.location_id)
-      .subscribe((resp: any) => {
-        console.log(resp);
-        this.location_selected = resp.location;
+    this.locationService.getLocation(this.location_id).subscribe((resp) => {
+      console.log(resp);
+      this.location_selected = resp.location;
 
-        this.location_info = this.location_selected.location;
-        // this.title= this.location_selected.location.title;
-        this.patients = resp.patients;
-        this.specialists = resp.specialists;
+      this.location_info = this.location_selected.location;
+      // this.title= this.location_selected.location.title;
+      this.patients = resp.patients;
+      this.specialists = resp.specialists;
 
-        this.totalDatapatient = resp.specialists.length;
+      this.totalDatapatient = resp.specialists.length;
 
-        this.locationService
-          .listLocationPatients(this.search, this.status, this.location_id)
-          .subscribe((resp: any) => {
-            this.totalDatapatient = resp.patients.data.length;
-            this.patient_generals = resp.patients.data;
-            this.patientid = resp.patients.data.id;
-            this.patient_id = resp.patients.data.patient_id;
-            //  this.getTableDataGeneralPatient();
-          });
-
-        this.doctorService.listDoctors().subscribe((resp: any) => {
-          // console.log(resp);
-
-          this.totalDatadoctor = resp.users.data.length;
-          this.doctor_generals = resp.users.data;
-          this.doctor_id = resp.users.id;
-          // this.getTableDataGeneralSpecialist();
+      this.locationService
+        .listLocationPatients(this.search, this.status, this.location_id)
+        .subscribe((resp) => {
+          this.totalDatapatient = resp.patients.data.length;
+          this.patient_generals = resp.patients.data;
+          this.patientid = resp.patients.data.id;
+          this.patient_id = resp.patients.data.patient_id;
+          //  this.getTableDataGeneralPatient();
         });
+
+      this.doctorService.listDoctors().subscribe((resp) => {
+        // console.log(resp);
+
+        this.totalDatadoctor = resp.users.data.length;
+        this.doctor_generals = resp.users.data;
+        this.doctor_id = resp.users.id;
+        // this.getTableDataGeneralSpecialist();
       });
+    });
   }
 }

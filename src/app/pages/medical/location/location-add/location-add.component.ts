@@ -53,7 +53,7 @@ export class LocationAddComponent {
   }
 
   getConfig() {
-    this.locationService.listConfig().subscribe((resp: any) => {
+    this.locationService.listConfig().subscribe((resp) => {
       console.log(resp);
     });
   }
@@ -100,7 +100,7 @@ export class LocationAddComponent {
     this.valid_form_success = false;
     this.text_validation = '';
 
-    this.locationService.storeLocation(formData).subscribe((resp: any) => {
+    this.locationService.storeLocation(formData).subscribe((resp) => {
       // console.log(resp);
       if (resp.message === 403) {
         this.text_validation = resp.message_text;

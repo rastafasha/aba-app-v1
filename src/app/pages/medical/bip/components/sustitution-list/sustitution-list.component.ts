@@ -1,17 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AppUser } from 'src/app/shared/models/users.models';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
 import { GoalSustitutionService } from '../../service/goal-sustitution.service';
-import { AppUser } from 'src/app/shared/models/users.models';
 declare let $: any;
 @Component({
   selector: 'app-sustitution-list',
   templateUrl: './sustitution-list.component.html',
   styleUrls: ['./sustitution-list.component.scss'],
 })
-export class SustitutionListComponent {
+export class SustitutionListComponent implements OnInit {
   routes = AppRoutes;
   valid_form_success = false;
   text_validation = '';
@@ -119,8 +119,8 @@ export class SustitutionListComponent {
     // //inicia la vista siempre desde arriba
 
     //me subcribo al id recibido por el parametro de la url
-    this.ativatedRoute.params.subscribe((resp: any) => {
-      this.patient_id = resp.patient_id; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
+    this.ativatedRoute.params.subscribe((resp) => {
+      this.patient_id = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
       this.getProfileBip(); // se solicita la info del perfil del usuario
     });
 
@@ -132,12 +132,12 @@ export class SustitutionListComponent {
 
   //obtenemos el perfil  del paciente por el id de la ruta
   getProfileBip() {
-    this.bipService.showBipProfile(this.patient_id).subscribe((resp: any) => {
+    this.bipService.showBipProfile(this.patient_id).subscribe((resp) => {
       // console.log('profilebip', resp);
       this.client_selected = resp; //convertimos la respuesta en un variable
 
       this.patient_id = this.client_selected.patient.patient_id;
-      if (this.patient_id != null) {
+      if (this.patient_id !== null) {
         this.getPatientGoalSustitutions(this.patient_id);
       }
     });
@@ -146,7 +146,7 @@ export class SustitutionListComponent {
   //obtenemos el bip por el id
   getBip() {
     if (this.patient_id !== null && this.patient_id !== undefined) {
-      this.bipService.getBipByUser(this.patient_id).subscribe((resp: any) => {
+      this.bipService.getBipByUser(this.patient_id).subscribe((resp) => {
         // console.log('bip',resp);
 
         this.bip_selected = resp; //convertimos la respuesta en un variable
@@ -162,7 +162,7 @@ export class SustitutionListComponent {
   getPatientGoalSustitutions(patient_id) {
     this.goalSustitutionService
       .getGoalSustitutionbyPatientId(patient_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         /* eslint-disable */ console.log(
           ...oo_oo(
             `1929542002_165_8_165_57_4`,
@@ -229,7 +229,7 @@ export class SustitutionListComponent {
     this.goals.splice(i, 1);
     this.goalSustitutionService
       .deleteGoalSustitution(goalsto.id)
-      .subscribe((resp: any) => {});
+      .subscribe((resp) => {});
   }
 
   //fin selectores
@@ -504,7 +504,7 @@ export class SustitutionListComponent {
     if (this.goalSelectedId) {
       this.goalSustitutionService
         .editGoalSustitution(data, this.goalSelectedId)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           // console.log(resp);
           // this.text_success = 'Goal Updated'
           Swal.fire(
@@ -517,7 +517,7 @@ export class SustitutionListComponent {
     } else {
       this.goalSustitutionService
         .createGoalSustitution(data)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           // console.log(resp);
           this.goalsustitid = resp.id;
           // this.text_success = 'Goal created successfully!'
@@ -553,7 +553,7 @@ export class SustitutionListComponent {
 
     this.goalSustitutionService
       .createGoalSustitution(data)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log(resp);
         this.goalsustitid = resp.id;
         // this.text_success = 'Goal created successfully!'
@@ -574,7 +574,7 @@ export class SustitutionListComponent {
       .listMaladaptivesGoalSustitutions(
         this.goalSelectedSon.maladaptive_behavior
       )
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         this.goalmaladaptive_child = resp.goalsmaladaptive.data;
         this.maladaptive_child = resp.goalsmaladaptive.data[0].maladaptive;
         this.golsto_child = this.goalmaladaptive_child[0].goalstos;

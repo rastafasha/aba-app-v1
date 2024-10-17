@@ -68,7 +68,7 @@ export class AddRoleUserComponent {
     this.valid_form_success = false;
     this.text_validation = null;
 
-    this.roleService.storeRole(data).subscribe((resp: any) => {
+    this.roleService.storeRole(data).subscribe((resp) => {
       // console.log(resp);
       if (resp.message === 403) {
         this.text_validation = resp.message_text;

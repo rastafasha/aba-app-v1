@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin, map, Observable, tap } from 'rxjs';
 import { AuthService } from 'src/app/core/auth/auth.service';
+import { AppUser } from 'src/app/shared/models/users.models';
 import Swal from 'sweetalert2';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { InsuranceService } from '../../insurance/service/insurance.service';
@@ -11,7 +12,7 @@ import { NoteBcbaService } from '../../notes-bcba/services/note-bcba.service';
 import { NoteRbtService } from '../../notes/services/note-rbt.service';
 import { ClientReportModel } from '../client-report.model';
 import { ClientReportService } from '../client-report.service';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export interface InsuranceCptPrizeResponse {
   unit_prize: number;
@@ -168,9 +169,9 @@ export class ReportByClientComponent implements OnInit {
 
   ngOnInit(): void {
     //
-    this.ativatedRoute.params.subscribe((resp: any) => {
-      this.patient_id = resp.patient_id;
-      this.patientId = resp.patient_id;
+    this.ativatedRoute.params.subscribe((resp) => {
+      this.patient_id = resp['patient_id'];
+      this.patientId = resp['patient_id'];
       console.log(this.patient_id);
     });
 
@@ -200,7 +201,7 @@ export class ReportByClientComponent implements OnInit {
   }
 
   getConfig() {
-    this.clientReportService.config().subscribe((resp: any) => {
+    this.clientReportService.config().subscribe((resp) => {
       // console.log(resp);
       this.insurances = resp.insurances;
       this.sponsors = resp.doctors;
@@ -223,7 +224,7 @@ export class ReportByClientComponent implements OnInit {
         this.date_end,
         this.noteType
       )
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log('todo',resp);
         const pa = resp.arrayPages;
         // const pa = [1,2,3,4,5,6,7,8,9,10]
@@ -340,7 +341,7 @@ export class ReportByClientComponent implements OnInit {
   getInsurer() {
     //sacamos los detalles insurance seleccionado
     this.insuranceService.showInsurance(this.insurance_id).subscribe(
-      (resp: any) => {
+      (resp) => {
         // console.log('insurer', resp);
         this.insuranceiddd = resp.id;
 
@@ -363,7 +364,7 @@ export class ReportByClientComponent implements OnInit {
           this.provider
         ).subscribe();
       },
-      (error: any) => {
+      (error: HttpErrorResponse) => {
         console.error('Error fetching insurance data:', error);
       }
     );
@@ -442,7 +443,7 @@ export class ReportByClientComponent implements OnInit {
 
   //trae el nombre del doctor quien hizo la nota rbt
   getDoctorRBT() {
-    this.doctorService.showDoctor(this.tecnicoRbts).subscribe((resp: any) => {
+    this.doctorService.showDoctor(this.tecnicoRbts).subscribe((resp) => {
       // console.log('doctor rbt y location',resp);
       this.doctor_selected = resp.user;
       this.full_name = resp.user.full_name;
@@ -450,7 +451,7 @@ export class ReportByClientComponent implements OnInit {
   }
   // supervisor del tecnico solo sacamos el npi
   getDoctorBcba() {
-    this.doctorService.showDoctor(this.supervisor).subscribe((resp: any) => {
+    this.doctorService.showDoctor(this.supervisor).subscribe((resp) => {
       // console.log('bcba',resp);
       this.npi = resp.user.npi;
     });
@@ -777,7 +778,7 @@ export class ReportByClientComponent implements OnInit {
 
       this.clientReportService
         .udpate(VALUE, this.billing_selected)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           // console.log(resp);
           // this.text_success = 'Bip Updated'
           Swal.fire('Updated', `Bip Updated successfully!`, 'success');
@@ -785,17 +786,17 @@ export class ReportByClientComponent implements OnInit {
         });
       this.noteRbtService
         .noteUpdateModifier(VALUE2, data.rbt.id)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           // console.log(resp);
         });
       this.noteBCbaService
         .noteBCBAUpdateModifier(VALUE3, data.bcba.id)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           // console.log(resp);
         });
     } else {
       //crear
-      this.clientReportService.create(VALUE).subscribe((resp: any) => {
+      this.clientReportService.create(VALUE).subscribe((resp) => {
         // console.log(resp);
         // this.text_success = 'Se guardó la informacion de la cita médica'
         Swal.fire('Updated', `Added successfully!`, 'success');
@@ -804,12 +805,12 @@ export class ReportByClientComponent implements OnInit {
 
       this.noteRbtService
         .noteUpdateModifier(VALUE2, data.rbt.id)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           // console.log(resp);
         });
       this.noteBCbaService
         .noteBCBAUpdateModifier(VALUE3, data.bcba.id)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           // console.log(resp);
         });
     }

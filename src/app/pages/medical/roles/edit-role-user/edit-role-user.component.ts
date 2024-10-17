@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from 'src/app/shared/data/data.service';
 import { AppRoutes } from 'src/app/shared/routes/routes';
@@ -10,16 +10,16 @@ import { RolesService } from '../service/roles.service';
   templateUrl: './edit-role-user.component.html',
   styleUrls: ['./edit-role-user.component.scss'],
 })
-export class EditRoleUserComponent {
+export class EditRoleUserComponent implements OnInit {
   routes = AppRoutes;
 
   sideBar = [];
-  role_id: any = null;
+  role_id: number = null;
   name = '';
   permissions = [];
   valid_form = false;
   valid_form_success = false;
-  text_validation: any = null;
+  text_validation: string = null;
 
   constructor(
     private dataService: DataService,
@@ -30,8 +30,8 @@ export class EditRoleUserComponent {
 
   ngOnInit(): void {
     this.sideBar = this.dataService.sidebar[0].menu;
-    this.ativatedRoute.params.subscribe((resp: any) => {
-      this.role_id = resp.id;
+    this.ativatedRoute.params.subscribe((resp) => {
+      this.role_id = resp['id'];
     });
     this.showRole();
   }
@@ -41,7 +41,7 @@ export class EditRoleUserComponent {
   }
 
   showRole() {
-    this.roleService.getRole(this.role_id).subscribe((resp: any) => {
+    this.roleService.getRole(this.role_id).subscribe((resp) => {
       // console.log(resp);
       this.name = resp.name;
       this.permissions = resp.permision_pluck;
@@ -51,7 +51,7 @@ export class EditRoleUserComponent {
   addPermission(subMenu: any) {
     if (subMenu.permision) {
       const INDEX = this.permissions.findIndex(
-        (item: any) => item === subMenu.permision
+        (item) => item === subMenu.permision
       );
       if (INDEX !== -1) {
         this.permissions.splice(INDEX, 1);
@@ -75,7 +75,7 @@ export class EditRoleUserComponent {
     this.valid_form_success = false;
     this.text_validation = null;
 
-    this.roleService.editRole(data, this.role_id).subscribe((resp: any) => {
+    this.roleService.editRole(data, this.role_id).subscribe((resp) => {
       // console.log(resp);
       if (resp.message === 403) {
         this.text_validation = resp.message_text;

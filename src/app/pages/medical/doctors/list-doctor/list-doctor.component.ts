@@ -80,7 +80,7 @@ export class ListDoctorComponent implements OnInit {
   getPatiensByLocation() {
     this.doctorService
       .getEmployeesByLocation(this.locationId)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log(resp);
         this.doctorEmployeesList = resp.patients.data;
       });
@@ -90,7 +90,7 @@ export class ListDoctorComponent implements OnInit {
     this.doctorList = [];
     this.serialNumberArray = [];
 
-    this.doctorService.listDoctors().subscribe((resp: any) => {
+    this.doctorService.listDoctors().subscribe((resp) => {
       // console.log(resp);
 
       this.totalDatadoctor = resp.users.data.length;
@@ -120,7 +120,7 @@ export class ListDoctorComponent implements OnInit {
   deleteRol() {
     this.doctorService
       .deleteDoctor(this.doctor_selected.id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log(resp);
 
         if (resp.message === 403) {

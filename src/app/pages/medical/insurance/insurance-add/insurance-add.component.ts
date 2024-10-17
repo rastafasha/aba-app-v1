@@ -92,7 +92,7 @@ export class InsuranceAddComponent {
       notes: this.notes,
     };
 
-    this.insuranceService.storeInsurance(data).subscribe((resp: any) => {
+    this.insuranceService.storeInsurance(data).subscribe((resp) => {
       // console.log(resp);
 
       if (resp.message === 403) {

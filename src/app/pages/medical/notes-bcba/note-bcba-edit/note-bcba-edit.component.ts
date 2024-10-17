@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { BipService } from '../../bip/service/bip.service';
@@ -16,7 +16,7 @@ import { AppUser } from 'src/app/shared/models/users.models';
   templateUrl: './note-bcba-edit.component.html',
   styleUrls: ['./note-bcba-edit.component.scss'],
 })
-export class NoteBcbaEditComponent {
+export class NoteBcbaEditComponent implements OnInit {
   routes = AppRoutes;
   summary_note = '';
   isGeneratingSummary = false;
@@ -165,8 +165,8 @@ export class NoteBcbaEditComponent {
 
   ngOnInit(): void {
     //
-    this.ativatedRoute.params.subscribe((resp: any) => {
-      this.note_id = resp.id;
+    this.ativatedRoute.params.subscribe((resp) => {
+      this.note_id = resp['id'];
     });
     this.getConfig();
     this.getNote();
@@ -181,7 +181,7 @@ export class NoteBcbaEditComponent {
   }
 
   getConfig() {
-    this.noteBcbaService.listConfigNote().subscribe((resp: any) => {
+    this.noteBcbaService.listConfigNote().subscribe((resp) => {
       console.log(resp);
 
       this.roles_rbt = resp.roles_rbt;
@@ -192,7 +192,7 @@ export class NoteBcbaEditComponent {
   }
 
   getNote() {
-    this.noteBcbaService.getNote(this.note_id).subscribe((resp: any) => {
+    this.noteBcbaService.getNote(this.note_id).subscribe((resp) => {
       console.log('respuesta de getNote', resp);
       this.note_selected = resp.noteBcba;
       this.note_selectedId = resp.noteBcba.id;
@@ -259,7 +259,7 @@ export class NoteBcbaEditComponent {
   getProfileBip() {
     this.bipService
       .getBipProfilePatient_id(this.patient_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         console.log(resp);
         this.client_selected = resp;
 
@@ -278,7 +278,7 @@ export class NoteBcbaEditComponent {
   getReplacementsByPatientId() {
     this.noteBcbaService
       .showReplacementbyPatient(this.patient_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         console.log(resp);
         this.pa_assessments = resp.pa_assessments;
         const jsonObj = JSON.parse(this.pa_assessments) || '';
@@ -292,20 +292,18 @@ export class NoteBcbaEditComponent {
   }
 
   insuranceData() {
-    this.insuranceService
-      .showInsurance(this.insurer_id)
-      .subscribe((resp: any) => {
-        // console.log(resp);
-        this.insurer_name = resp.insurer_name;
-        // this.notes = resp.notes;
-        this.services = resp.services;
-      });
+    this.insuranceService.showInsurance(this.insurer_id).subscribe((resp) => {
+      // console.log(resp);
+      this.insurer_name = resp.insurer_name;
+      // this.notes = resp.notes;
+      this.services = resp.services;
+    });
   }
 
   specialistData(selectedValueInsurer) {
     this.doctorService
       .showDoctorProfile(selectedValueInsurer)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log(resp);
         this.provider_credential = resp.doctor.certificate_number;
         // this.notes = resp.notes;
@@ -370,16 +368,14 @@ export class NoteBcbaEditComponent {
   }
 
   speciaFirmaDataRbt(selectedValueRBT) {
-    this.doctorService
-      .showDoctorProfile(selectedValueRBT)
-      .subscribe((resp: any) => {
-        console.log(resp);
-        this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED =
-          resp.doctor.electronic_signature;
-        // console.log(this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED);
-        // this.notes = resp.notes;
-        // this.services = resp.services;
-      });
+    this.doctorService.showDoctorProfile(selectedValueRBT).subscribe((resp) => {
+      console.log(resp);
+      this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED =
+        resp.doctor.electronic_signature;
+      // console.log(this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED);
+      // this.notes = resp.notes;
+      // this.services = resp.services;
+    });
   }
   selectFirmaSpecialistRbt(event: any) {
     event = this.selectedValueRBT;
@@ -390,7 +386,7 @@ export class NoteBcbaEditComponent {
   speciaFirmaDataBcba(selectedValueBCBA) {
     this.doctorService
       .showDoctorProfile(selectedValueBCBA)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log(resp);
         this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED =
           resp.doctor.electronic_signature;
@@ -413,7 +409,7 @@ export class NoteBcbaEditComponent {
     //   return;
     // }
 
-    // if(this.password != this.password_confirmation  ){
+    // if(this.password !== this.password_confirmation  ){
     //   this.text_validation = 'Las contraseña debe ser igual';
     //   return;
     // }
@@ -512,7 +508,7 @@ export class NoteBcbaEditComponent {
 
     this.noteBcbaService
       .editNote(formData, this.note_selectedId)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log(resp);
 
         if (resp.message === 403) {

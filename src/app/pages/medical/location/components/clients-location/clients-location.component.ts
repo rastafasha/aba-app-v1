@@ -95,9 +95,9 @@ export class ClientsLocationComponent {
 
     this.pageService.onInitPage();
 
-    this.activatedRoute.params.subscribe((resp: any) => {
+    this.activatedRoute.params.subscribe((resp) => {
       console.log(resp);
-      this.location_id = resp.id;
+      this.location_id = resp['id'];
     });
 
     this.activatedRoute.params.subscribe((params) => {
@@ -122,29 +122,27 @@ export class ClientsLocationComponent {
   }
 
   getLocation() {
-    this.locationService
-      .getLocation(this.location_id)
-      .subscribe((resp: any) => {
-        console.log(resp);
-        this.location_selected = resp.location;
+    this.locationService.getLocation(this.location_id).subscribe((resp) => {
+      console.log(resp);
+      this.location_selected = resp.location;
 
-        this.location_info = this.location_selected.location;
-        // this.title= this.location_selected.location.title;
-        this.patients = resp.patients;
-        this.specialists = resp.specialists;
+      this.location_info = this.location_selected.location;
+      // this.title= this.location_selected.location.title;
+      this.patients = resp.patients;
+      this.specialists = resp.specialists;
 
-        this.totalDatapatient = resp.specialists.length;
+      this.totalDatapatient = resp.specialists.length;
 
-        this.locationService
-          .listLocationPatients(this.search, this.status, this.location_id)
-          .subscribe((resp: any) => {
-            this.totalDatapatient = resp.patients.data.length;
-            this.patient_generals = resp.patients.data;
-            this.patientid = resp.patients.data.id;
-            this.patient_id = resp.patients.data.patient_id;
-            this.getTableDataGeneralPatient();
-          });
-      });
+      this.locationService
+        .listLocationPatients(this.search, this.status, this.location_id)
+        .subscribe((resp) => {
+          this.totalDatapatient = resp.patients.data.length;
+          this.patient_generals = resp.patients.data;
+          this.patientid = resp.patients.data.id;
+          this.patient_id = resp.patients.data.patient_id;
+          this.getTableDataGeneralPatient();
+        });
+    });
   }
 
   getTableDataGeneralPatient() {

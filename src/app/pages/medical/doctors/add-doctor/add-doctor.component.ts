@@ -133,7 +133,7 @@ export class AddDoctorComponent implements OnInit {
   }
 
   getConfig() {
-    this.doctorService.listConfig().subscribe((resp: any) => {
+    this.doctorService.listConfig().subscribe((resp) => {
       // console.log(resp);
       this.roles = resp.roles;
 
@@ -144,7 +144,7 @@ export class AddDoctorComponent implements OnInit {
   getConfigLocation() {
     this.doctorService
       .listConfigLocation(this.selectedValueLocation)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log(resp);
         this.roles = resp.roles;
 
@@ -358,7 +358,7 @@ export class AddDoctorComponent implements OnInit {
       });
     }
     if (this.user.roles[0] === 'MANAGER') {
-      this.doctorService.storeDoctor(formData).subscribe((resp: any) => {
+      this.doctorService.storeDoctor(formData).subscribe((resp) => {
         // console.log(resp);
 
         if (resp.status === 500) {

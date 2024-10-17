@@ -35,7 +35,7 @@ export class ConsentToTreatmentService {
   }
   deleteConsentToTreatment(user_id: any) {
     const URL = url_servicios + '/consenttotreatment/destroy/' + user_id;
-    return this.http.delete(URL);
+    return this.http.delete<any>(URL);
   }
 
   showConsentToTreatmentProfile(user_id: any) {

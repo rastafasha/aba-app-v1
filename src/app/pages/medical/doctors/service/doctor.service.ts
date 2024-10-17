@@ -58,7 +58,7 @@ export class DoctorService {
 
   deleteDoctor(doctor_id: any) {
     const URL = url_servicios + '/doctors/destroy/' + doctor_id;
-    return this.http.delete(URL);
+    return this.http.delete<any>(URL);
   }
 
   getUserRoles() {
@@ -70,7 +70,7 @@ export class DoctorService {
 
   updateStatus(data: any, doctor_id: any) {
     const URL = url_servicios + '/doctors/update/status/' + doctor_id;
-    return this.http.put(URL, data);
+    return this.http.put<any>(URL, data);
   }
 
   getEmployeesByLocation(location_id: any) {

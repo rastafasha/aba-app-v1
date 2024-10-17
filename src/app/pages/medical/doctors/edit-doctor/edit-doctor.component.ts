@@ -126,7 +126,7 @@ export class EditDoctorComponent implements OnInit {
   getConfigLocation() {
     this.doctorService
       .listConfigLocation(this.selectedValueLocation)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log(resp);
         this.roles = resp.roles;
 
@@ -136,7 +136,7 @@ export class EditDoctorComponent implements OnInit {
       });
   }
   getConfig() {
-    this.doctorService.listConfig().subscribe((resp: any) => {
+    this.doctorService.listConfig().subscribe((resp) => {
       // console.log(resp);
       this.roles = resp.roles;
       this.locations = resp.locations;
@@ -146,7 +146,7 @@ export class EditDoctorComponent implements OnInit {
   }
 
   showDoctortoEdit() {
-    this.doctorService.showDoctor(this.doctor_id).subscribe((resp: any) => {
+    this.doctorService.showDoctor(this.doctor_id).subscribe((resp) => {
       this.locations_selected = resp.locations || [];
       this.doctor_selected = resp.user;
 

@@ -151,8 +151,8 @@ export class EditNoteRbtComponent implements OnInit {
 
   ngOnInit(): void {
     //
-    this.ativatedRoute.params.subscribe((resp: any) => {
-      this.note_id = resp.id;
+    this.ativatedRoute.params.subscribe((resp) => {
+      this.note_id = resp['id'];
     });
 
     //  this.countValue();
@@ -173,7 +173,7 @@ export class EditNoteRbtComponent implements OnInit {
   }
 
   getConfig() {
-    this.noteRbtService.listConfigNote().subscribe((resp: any) => {
+    this.noteRbtService.listConfigNote().subscribe((resp) => {
       this.roles_rbt = resp.roles_rbt;
       this.roles_bcba = resp.roles_bcba;
       this.getNote();
@@ -234,7 +234,7 @@ export class EditNoteRbtComponent implements OnInit {
   }
 
   getNote() {
-    this.noteRbtService.getNote(this.note_id).subscribe((resp: any) => {
+    this.noteRbtService.getNote(this.note_id).subscribe((resp) => {
       console.log('Response from getNote:', resp);
 
       this.target = resp.target;
@@ -333,7 +333,7 @@ export class EditNoteRbtComponent implements OnInit {
   getProfileBip() {
     this.bipService
       .getBipProfilePatient_id(this.patient_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         console.log(resp);
         this.client_selected = resp;
 
@@ -365,7 +365,7 @@ export class EditNoteRbtComponent implements OnInit {
   specialistData(selectedValueInsurer) {
     this.doctorService
       .showDoctorProfile(selectedValueInsurer)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         console.log(resp);
         this.provider_credential = resp.doctor.certificate_number;
         // this.notes = resp.notes;
@@ -461,14 +461,12 @@ export class EditNoteRbtComponent implements OnInit {
   }
 
   speciaFirmaDataRbt(selectedValueRBT) {
-    this.doctorService
-      .showDoctorProfile(selectedValueRBT)
-      .subscribe((resp: any) => {
-        this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED =
-          resp.doctor.electronic_signature;
-        // this.notes = resp.notes;
-        // this.services = resp.services;
-      });
+    this.doctorService.showDoctorProfile(selectedValueRBT).subscribe((resp) => {
+      this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED =
+        resp.doctor.electronic_signature;
+      // this.notes = resp.notes;
+      // this.services = resp.services;
+    });
   }
   selectFirmaSpecialistRbt(event: any) {
     event = this.selectedValueRBT;
@@ -478,7 +476,7 @@ export class EditNoteRbtComponent implements OnInit {
   speciaFirmaDataBcba(selectedValueBCBA) {
     this.doctorService
       .showDoctorProfile(selectedValueBCBA)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED =
           resp.doctor.electronic_signature;
         // this.notes = resp.notes;
@@ -647,7 +645,7 @@ export class EditNoteRbtComponent implements OnInit {
     //   return;
     // }
 
-    // if(this.password != this.password_confirmation  ){
+    // if(this.password !== this.password_confirmation  ){
     //   this.text_validation = 'Las contraseña debe ser igual';
     //   return;
     // }

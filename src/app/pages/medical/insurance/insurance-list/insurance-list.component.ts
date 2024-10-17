@@ -57,7 +57,7 @@ export class InsuranceListComponent {
     this.insuranceList = [];
     this.serialNumberArray = [];
 
-    this.insuranceService.listInsurances().subscribe((resp: any) => {
+    this.insuranceService.listInsurances().subscribe((resp) => {
       console.log(resp);
 
       this.totalDataInsurance = resp.insurances.data.length;

@@ -59,7 +59,7 @@ export class LocationListComponent {
     this.locationList = [];
     this.serialNumberArray = [];
 
-    this.locationService.getLocations().subscribe((resp: any) => {
+    this.locationService.getLocations().subscribe((resp) => {
       console.log(resp);
 
       this.totalDataLocation = resp.total;
@@ -92,7 +92,7 @@ export class LocationListComponent {
   deletePatient() {
     this.locationService
       .deleteLocation(this.location_selected.id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log(resp);
 
         if (resp.message === 403) {

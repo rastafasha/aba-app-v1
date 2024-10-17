@@ -11,12 +11,12 @@ export class GraphicReductionService {
 
   listGraphics() {
     const URL = url_servicios + '/graphic_reduction';
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 
   getGraphic(user_id: any) {
     const URL = url_servicios + '/graphic_reduction/show/' + user_id;
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 
   listMaladaptivesGraphics(maladaptive: any, patient_id: any) {
@@ -26,7 +26,7 @@ export class GraphicReductionService {
       maladaptive +
       '/' +
       patient_id;
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
   listReductionGraphics(replacement: any, patient_id: any): Observable<any> {
     const URL =
@@ -40,16 +40,16 @@ export class GraphicReductionService {
 
   listConfig() {
     const URL = url_servicios + '/graphic_reduction/config';
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 
   getPatient(patient_id: any) {
     const URL = url_servicios + '/graphic_reduction/showpatient/' + patient_id;
-    return this.http.get(URL);
+    return this.http.get<any>(URL);
   }
 
   graphicPatientMonth(data) {
     const URL = url_servicios + '/graphic_reduction/patient-month';
-    return this.http.post(URL, data);
+    return this.http.post<any>(URL, data);
   }
 }

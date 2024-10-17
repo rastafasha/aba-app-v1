@@ -95,8 +95,8 @@ export class SpecialistLocationComponent {
 
     this.pageService.onInitPage();
 
-    this.activatedRoute.params.subscribe((resp: any) => {
-      this.location_id = resp.id;
+    this.activatedRoute.params.subscribe((resp) => {
+      this.location_id = resp['id'];
       console.log(resp);
     });
 
@@ -118,28 +118,26 @@ export class SpecialistLocationComponent {
   }
 
   getLocation() {
-    this.locationService
-      .getLocation(this.location_id)
-      .subscribe((resp: any) => {
-        console.log(resp);
-        this.location_selected = resp.location;
+    this.locationService.getLocation(this.location_id).subscribe((resp) => {
+      console.log(resp);
+      this.location_selected = resp.location;
 
-        this.location_info = this.location_selected.location;
-        // this.title= this.location_selected.location.title;
-        this.patients = resp.patients;
-        this.specialists = resp.specialists;
+      this.location_info = this.location_selected.location;
+      // this.title= this.location_selected.location.title;
+      this.patients = resp.patients;
+      this.specialists = resp.specialists;
 
-        this.totalDatapatient = resp.specialists.length;
+      this.totalDatapatient = resp.specialists.length;
 
-        this.doctorService.listDoctors().subscribe((resp: any) => {
-          // console.log(resp);
+      this.doctorService.listDoctors().subscribe((resp) => {
+        // console.log(resp);
 
-          this.totalDatadoctor = resp.users.data.length;
-          this.doctor_generals = resp.users.data;
-          this.doctor_id = resp.users.id;
-          this.getTableDataGeneralSpecialist();
-        });
+        this.totalDatadoctor = resp.users.data.length;
+        this.doctor_generals = resp.users.data;
+        this.doctor_id = resp.users.id;
+        this.getTableDataGeneralSpecialist();
       });
+    });
   }
 
   getTableDataGeneralSpecialist() {

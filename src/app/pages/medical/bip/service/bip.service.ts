@@ -45,7 +45,7 @@ export class BipService {
   }
   deleteBip(client_id: any) {
     const URL = url_servicios + '/bip/destroy/' + client_id;
-    return this.http.delete(URL);
+    return this.http.delete<any>(URL);
   }
 
   showBipProfile(patient_id: any) {
@@ -64,10 +64,10 @@ export class BipService {
 
   update(data: any, client_id: any) {
     const URL = url_servicios + '/bip/update/' + client_id;
-    return this.http.put(URL, data);
+    return this.http.put<any>(URL, data);
   }
   updateStatus(data: any, client_id: any) {
     const URL = url_servicios + '/bip/update/eligibility/' + client_id;
-    return this.http.put(URL, data);
+    return this.http.put<any>(URL, data);
   }
 }

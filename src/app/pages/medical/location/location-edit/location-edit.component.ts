@@ -47,8 +47,8 @@ export class LocationEditComponent {
   ) {}
 
   ngOnInit(): void {
-    this.ativatedRoute.params.subscribe((resp: any) => {
-      this.location_id = resp.id;
+    this.ativatedRoute.params.subscribe((resp) => {
+      this.location_id = resp['id'];
     });
     this.showLocation();
     this.getConfig();
@@ -59,32 +59,30 @@ export class LocationEditComponent {
   }
 
   getConfig() {
-    this.locationService.listConfig().subscribe((resp: any) => {
+    this.locationService.listConfig().subscribe((resp) => {
       console.log(resp);
     });
   }
 
   showLocation() {
-    this.locationService
-      .getLocation(this.location_id)
-      .subscribe((resp: any) => {
-        console.log(resp);
-        this.location_selected = resp.location;
+    this.locationService.getLocation(this.location_id).subscribe((resp) => {
+      console.log(resp);
+      this.location_selected = resp.location;
 
-        // this.selectedValueLocation = this.location_selected.locations.id;
+      // this.selectedValueLocation = this.location_selected.locations.id;
 
-        this.title = this.location_selected.title;
-        this.email = this.location_selected.email;
-        this.phone1 = this.location_selected.phone1;
-        this.phone2 = this.location_selected.phone2;
-        this.telfax = this.location_selected.telfax;
-        this.zip = this.location_selected.zip;
-        this.email = this.location_selected.email;
-        this.address = this.location_selected.address;
-        this.city = this.location_selected.city;
-        this.state = this.location_selected.state;
-        this.IMAGE_PREVISUALIZA = this.location_selected.avatar;
-      });
+      this.title = this.location_selected.title;
+      this.email = this.location_selected.email;
+      this.phone1 = this.location_selected.phone1;
+      this.phone2 = this.location_selected.phone2;
+      this.telfax = this.location_selected.telfax;
+      this.zip = this.location_selected.zip;
+      this.email = this.location_selected.email;
+      this.address = this.location_selected.address;
+      this.city = this.location_selected.city;
+      this.state = this.location_selected.state;
+      this.IMAGE_PREVISUALIZA = this.location_selected.avatar;
+    });
   }
 
   //files
@@ -149,7 +147,7 @@ export class LocationEditComponent {
 
     this.locationService
       .editLocation(formData, this.location_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log(resp);
         if (resp.message === 403) {
           this.text_validation = resp.message_text;

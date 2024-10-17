@@ -1,16 +1,16 @@
 import { Location } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import html2canvas from 'html2canvas';
 import * as jspdf from 'jspdf';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { AppRoutes } from 'src/app/shared/routes/routes';
+import { PageService } from 'src/app/shared/services/pages.service';
 import { environment } from 'src/environments/environment';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { InsuranceService } from '../../insurance/service/insurance.service';
 import { PatientMService } from '../service/patient-m.service';
-import { PageService } from 'src/app/shared/services/pages.service';
 
 // eslint-disable-next-line no-var
 declare var $: any;
@@ -20,7 +20,7 @@ declare var $: any;
   templateUrl: './profile-patient-m.component.html',
   styleUrls: ['./profile-patient-m.component.scss'],
 })
-export class ProfilePatientMComponent {
+export class ProfilePatientMComponent implements OnInit {
   routes = AppRoutes;
   @ViewChild('contentToConvert') contentToConvert!: ElementRef;
   patientProfile: any[];
@@ -31,24 +31,24 @@ export class ProfilePatientMComponent {
   money_of_appointments = 0;
   num_appointment_pendings = 0;
   patient_selected: any;
-  appointment_pendings: any[] = [];
-  appointments: any[] = [];
+  appointment_pendings = [];
+  appointments = [];
   pa_assessments: string;
 
   text_success = '';
   text_validation = '';
 
   imagenSerUrl = environment.url_media;
-  pa_assessmentgroup: any[] = [];
-  pa_assessmentss: any = <any>[];
+  pa_assessmentgroup = [];
+  pa_assessmentss = [];
 
-  FILES: any[] = [];
-  FilesAdded: any[] = [];
+  FILES = [];
+  FilesAdded = [];
   file_selected: any;
 
-  specialists: any[] = [];
-  locations: any[] = [];
-  insurances: any[] = [];
+  specialists = [];
+  locations = [];
+  insurances = [];
   insurance_id: any;
   roles_rbt: any;
   roles_bcba: any;
@@ -90,12 +90,13 @@ export class ProfilePatientMComponent {
     private authService: AuthService,
     private location: Location
   ) {}
+
   ngOnInit(): void {
     this.pageService.onInitPage();
 
-    this.activatedRoute.params.subscribe((resp: any) => {
+    this.activatedRoute.params.subscribe((resp) => {
       // console.log(resp);
-      this.client_id = resp.id;
+      this.client_id = resp['id'];
     });
     this.getPatient();
     this.getConfig();
@@ -122,7 +123,7 @@ export class ProfilePatientMComponent {
   }
 
   getConfig() {
-    this.patientService.listConfig(this.location_id).subscribe((resp: any) => {
+    this.patientService.listConfig(this.location_id).subscribe((resp) => {
       this.specialists = resp.specialists;
       this.insurances = resp.insurances;
       this.insurance_id =
@@ -131,7 +132,7 @@ export class ProfilePatientMComponent {
 
       this.insuranceService
         .showInsurance(this.insurance_id)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           // console.log(resp);
           this.insuranceiddd = resp.id;
           this.insurer_name = resp.insurer_name;
@@ -140,78 +141,74 @@ export class ProfilePatientMComponent {
   }
 
   getPatient() {
-    this.patientService
-      .showPatientProfile(this.client_id)
-      .subscribe((resp: any) => {
-        console.log(resp);
-        this.appointments = resp.appointments;
-        this.num_appointment = resp.num_appointment;
-        this.money_of_appointments = resp.money_of_appointments;
-        this.num_appointment_pendings = resp.num_appointment_pendings;
-        this.patient_selected = resp.patient;
-        this.patient_id = resp.patient.patient_id;
-        this.avatar = resp.patient.avatar;
-        this.rbt_id = resp.patient.rbt_home_id;
-        this.rbt2_id = resp.patient.rbt2_school_id;
-        this.bcba_id = resp.patient.bcba_home_id;
-        this.bcba2_id = resp.patient.bcba2_school_id;
-        this.clin_director_id = resp.patient.clin_director_id;
-        // this.appointment_pendings= resp.appointment_pendings.data;
-        this.pa_assessmentss = resp.pa_assessments;
-        const jsonObj = JSON.parse(this.pa_assessmentss) || '';
-        this.pa_assessmentgroup = jsonObj;
+    this.patientService.showPatientProfile(this.client_id).subscribe((resp) => {
+      console.log(resp);
+      this.appointments = resp.appointments;
+      this.num_appointment = resp.num_appointment;
+      this.money_of_appointments = resp.money_of_appointments;
+      this.num_appointment_pendings = resp.num_appointment_pendings;
+      this.patient_selected = resp.patient;
+      this.patient_id = resp.patient.patient_id;
+      this.avatar = resp.patient.avatar;
+      this.rbt_id = resp.patient.rbt_home_id;
+      this.rbt2_id = resp.patient.rbt2_school_id;
+      this.bcba_id = resp.patient.bcba_home_id;
+      this.bcba2_id = resp.patient.bcba2_school_id;
+      this.clin_director_id = resp.patient.clin_director_id;
+      // this.appointment_pendings= resp.appointment_pendings.data;
+      this.pa_assessmentss = resp.pa_assessments;
+      const jsonObj = JSON.parse(this.pa_assessmentss.toString()) || '';
+      this.pa_assessmentgroup = jsonObj;
 
-        this.patientService
-          .getLaboratoryByPatient(this.patient_id)
-          .subscribe((resp: any) => {
-            // console.log(resp);
-            this.FilesAdded = resp.patientFiles.data;
-          });
+      this.patientService
+        .getLaboratoryByPatient(this.patient_id)
+        .subscribe((resp) => {
+          // console.log(resp);
+          this.FilesAdded = resp.patientFiles.data;
+        });
 
-        this.getDoctorRbt1();
-        this.getDoctorRbt2();
-        this.getDoctorBcba();
-        this.getDoctorBcba2();
-        this.getDoctorDirector();
-      });
+      this.getDoctorRbt1();
+      this.getDoctorRbt2();
+      this.getDoctorBcba();
+      this.getDoctorBcba2();
+      this.getDoctorDirector();
+    });
   }
 
   getDoctorRbt1() {
-    this.doctorService.showDoctor(this.rbt_id).subscribe((resp: any) => {
+    this.doctorService.showDoctor(this.rbt_id).subscribe((resp) => {
       this.doctor_selected_rbt = resp.user;
       this.doctor_selected_full_name_rbt = resp.user.full_name;
     });
   }
 
   getDoctorRbt2() {
-    this.doctorService.showDoctor(this.rbt2_id).subscribe((resp: any) => {
+    this.doctorService.showDoctor(this.rbt2_id).subscribe((resp) => {
       // console.log(resp);
       this.doctor_selected_rbt2 = resp.user;
       this.doctor_selected_full_name_rbt2 = resp.user.full_name;
     });
   }
   getDoctorBcba() {
-    this.doctorService.showDoctor(this.bcba_id).subscribe((resp: any) => {
+    this.doctorService.showDoctor(this.bcba_id).subscribe((resp) => {
       // console.log(resp);
       this.doctor_selected_bcba = resp.user;
       this.doctor_selected_full_name_bcba = resp.user.full_name;
     });
   }
   getDoctorBcba2() {
-    this.doctorService.showDoctor(this.bcba2_id).subscribe((resp: any) => {
+    this.doctorService.showDoctor(this.bcba2_id).subscribe((resp) => {
       // console.log(resp);
       this.doctor_selected_bcba2 = resp.user;
       this.doctor_selected_full_name_bcba2 = resp.user.full_name;
     });
   }
   getDoctorDirector() {
-    this.doctorService
-      .showDoctor(this.clin_director_id)
-      .subscribe((resp: any) => {
-        // console.log(resp);
-        this.doctor_selected_clin_director = resp.user;
-        this.doctor_selected_full_name_clin_director = resp.user.full_name;
-      });
+    this.doctorService.showDoctor(this.clin_director_id).subscribe((resp) => {
+      // console.log(resp);
+      this.doctor_selected_clin_director = resp.user;
+      this.doctor_selected_full_name_clin_director = resp.user.full_name;
+    });
   }
 
   optionSelected(value: number) {

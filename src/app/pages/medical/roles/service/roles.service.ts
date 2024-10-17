@@ -1,13 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { url_servicios } from 'src/app/config/config';
-import { AuthService } from 'src/app/core/auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RolesService {
-  constructor(public http: HttpClient, authService: AuthService) {}
+  constructor(public http: HttpClient) {}
 
   listRoles() {
     const URL = url_servicios + '/roles';
@@ -23,7 +22,7 @@ export class RolesService {
   }
   editRole(data: any, role_id: any) {
     const URL = url_servicios + '/roles/update/' + role_id;
-    return this.http.put(URL, data);
+    return this.http.put<any>(URL, data);
   }
 
   deleteRole(role_id: any) {

@@ -1,16 +1,16 @@
-import { Component } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AppUser } from 'src/app/shared/models/users.models';
 import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
 import { GoalFamilyEnvolmentService } from '../../service/goal-family-envolment.service';
-import { AppUser } from 'src/app/shared/models/users.models';
 
 @Component({
   selector: 'app-family-involvement-goal-form',
   templateUrl: './family-involvement-goal-form.component.html',
   styleUrls: ['./family-involvement-goal-form.component.scss'],
 })
-export class FamilyInvolvementGoalFormComponent {
+export class FamilyInvolvementGoalFormComponent implements OnInit {
   valid_form_success = false;
   text_validation = '';
   text_success = '';
@@ -53,8 +53,8 @@ export class FamilyInvolvementGoalFormComponent {
     // //inicia la vista siempre desde arriba
 
     //me subcribo al id recibido por el parametro de la url
-    this.ativatedRoute.params.subscribe((resp: any) => {
-      this.patient_id = resp.patient_id; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
+    this.ativatedRoute.params.subscribe((resp) => {
+      this.patient_id = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
       this.getProfileBip(); // se solicita la info del perfil del usuario
     });
 
@@ -66,12 +66,12 @@ export class FamilyInvolvementGoalFormComponent {
 
   //obtenemos el perfil  del paciente por el id de la ruta
   getProfileBip() {
-    this.bipService.showBipProfile(this.patient_id).subscribe((resp: any) => {
+    this.bipService.showBipProfile(this.patient_id).subscribe((resp) => {
       // console.log('profilebip', resp);
       this.client_selected = resp; //convertimos la respuesta en un variable
 
       this.client_id = this.client_selected.patient.id;
-      if (this.patient_id != null) {
+      if (this.patient_id !== null) {
         this.getPatientGoalFamilyEnvolments(this.patient_id);
       }
     });
@@ -80,7 +80,7 @@ export class FamilyInvolvementGoalFormComponent {
   //obtenemos el bip por el id
   getBip() {
     if (this.patient_id !== null && this.patient_id !== undefined) {
-      this.bipService.getBipByUser(this.patient_id).subscribe((resp: any) => {
+      this.bipService.getBipByUser(this.patient_id).subscribe((resp) => {
         // console.log('bip',resp);
 
         this.bip_selected = resp; //convertimos la respuesta en un variable
@@ -97,7 +97,7 @@ export class FamilyInvolvementGoalFormComponent {
   getPatientGoalFamilyEnvolments(patient_id) {
     this.goalFamilyEnvolmentService
       .getGoalFamilyEnvolmentbyPatientId(patient_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log('goals sustition by patientid',resp);
         this.goalFamilyEnvolments = resp.familiEnvolmentPatientIds.data;
         this.goalFamilyEnvolmentid = resp.familiEnvolmentPatientIds.data[0].id;
@@ -216,7 +216,7 @@ export class FamilyInvolvementGoalFormComponent {
     if (this.client_id_goalFamilyEnvolments && this.goalFamilyEnvolmentid) {
       this.goalFamilyEnvolmentService
         .editGoalFamilyEnvolment(data, this.goalFamilyEnvolmentid)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           // console.log(resp);
           // this.text_success = 'Goal Updated'
           Swal.fire(
@@ -229,7 +229,7 @@ export class FamilyInvolvementGoalFormComponent {
     } else {
       this.goalFamilyEnvolmentService
         .createGoalFamilyEnvolment(data)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           // console.log(resp);
           this.goalFamilyid = resp.id;
           // this.text_success = 'Goal created successfully!'

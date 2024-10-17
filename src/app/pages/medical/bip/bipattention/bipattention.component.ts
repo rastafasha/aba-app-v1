@@ -73,8 +73,8 @@ export class BipattentionComponent {
   ) {}
 
   ngOnInit(): void {
-    this.ativatedRoute.params.subscribe((resp: any) => {
-      this.patient_id = resp.patient_id;
+    this.ativatedRoute.params.subscribe((resp) => {
+      this.patient_id = resp['patient_id'];
       // this.patient_id= resp.id
       console.log(this.patient_id);
     });
@@ -94,7 +94,7 @@ export class BipattentionComponent {
   }
 
   getProfileBip() {
-    this.bipService.showBipProfile(this.patient_id).subscribe((resp: any) => {
+    this.bipService.showBipProfile(this.patient_id).subscribe((resp) => {
       // console.log(resp);
       this.client_selected = resp;
 

@@ -143,27 +143,27 @@ export class ChartReplacementComponent {
   ngOnInit(): void {
     this.goal;
     this.baseline_d;
-    this.activatedRoute.params.subscribe((resp: any) => {
-      this.patient_id = resp.patient_id; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
+    this.activatedRoute.params.subscribe((resp) => {
+      this.patient_id = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
     });
     this.getProfileBip(); // se pide el perfil del paciente por el bip relacionado
     this.getBip(); // se pide el perfil del paciente por el bip relacionado
   }
 
   getBip() {
-    this.bipService.getBipByUser(this.patient_id).subscribe((resp: any) => {
+    this.bipService.getBipByUser(this.patient_id).subscribe((resp) => {
       this.created_at = resp.bip.created_at;
     });
   }
 
   getProfileBip() {
-    this.bipService.showBipProfile(this.patient_id).subscribe((resp: any) => {
+    this.bipService.showBipProfile(this.patient_id).subscribe((resp) => {
       // console.log(resp);
       this.client_selected = resp; // asignamos el objeto a nuestra variable
       //traemos la info del usuario
       if (this.client_selected.type !== null) {
         // si hay o no informacion del paciente
-        if (this.client_selected.eligibility == 'yes') {
+        if (this.client_selected.eligibility === 'yes') {
           // si el status es positivo para proceder
           this.patient_id = this.client_selected.patient_id;
         }
@@ -178,7 +178,7 @@ export class ChartReplacementComponent {
   getGoalsReductions() {
     this.graphicReductionService
       .listReductionGraphics(this.goal, this.patient_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         console.log(resp);
         this.existgrfic = resp.replacementsCol;
 
@@ -260,7 +260,7 @@ export class ChartReplacementComponent {
           const arrayLabelSemanal = [];
           this.sessions_dates.forEach((date, index) => {
             if (index > 0) {
-              if (cantidadDeDias == 0) {
+              if (cantidadDeDias === 0) {
                 labelSemanal = date.substr(0, 10);
               }
               acumulador = acumulador + +this.number_of_correct_response[index];
@@ -269,8 +269,8 @@ export class ChartReplacementComponent {
               // console.log(sumadorDeTrials, index)
 
               if (
-                cantidadDeDias == 7 ||
-                index + 1 == this.sessions_dates.length
+                cantidadDeDias === 7 ||
+                index + 1 === this.sessions_dates.length
               ) {
                 labelSemanal += ' - ' + date.substr(0, 10);
                 acumuladorDeSemanas.push(acumulador);

@@ -91,31 +91,29 @@ export class ProfileDoctorComponent {
   }
 
   getDoctor() {
-    this.doctorService
-      .showDoctorProfile(this.doctor_id)
-      .subscribe((resp: any) => {
-        console.log(resp);
-        this.doctor_selected = resp.doctor;
-        this.locations = resp.doctor.locations.data;
-        console.log(this.locations);
-        // this.num_appointment= resp.num_appointment;
-        // this.money_of_appointments= resp.money_of_appointments;
-        // this.num_appointment_pendings= resp.num_appointment_pendings;
-        // this.appointment_pendings= resp.appointment_pendings.data;
-        // this.appointments= resp.appointments;
+    this.doctorService.showDoctorProfile(this.doctor_id).subscribe((resp) => {
+      console.log(resp);
+      this.doctor_selected = resp.doctor;
+      this.locations = resp.doctor.locations.data;
+      console.log(this.locations);
+      // this.num_appointment= resp.num_appointment;
+      // this.money_of_appointments= resp.money_of_appointments;
+      // this.num_appointment_pendings= resp.num_appointment_pendings;
+      // this.appointment_pendings= resp.appointment_pendings.data;
+      // this.appointments= resp.appointments;
 
-        this.name = this.doctor_selected.name;
-        this.surname = this.doctor_selected.surname;
-        this.mobile = this.doctor_selected.mobile;
-        this.email = this.doctor_selected.email;
-        this.address = this.doctor_selected.address;
-        this.notes_bcbas = resp.notes_bcbas;
-        this.notes_rbts = resp.notes_rbts;
-        this.patients = resp.patients;
-        this.total_notes_bips = resp.total_notes_bips;
-        this.total_notes_bcbas = resp.total_notes_bcbas;
-        this.total_notes_rbts = resp.total_notes_rbts;
-      });
+      this.name = this.doctor_selected.name;
+      this.surname = this.doctor_selected.surname;
+      this.mobile = this.doctor_selected.mobile;
+      this.email = this.doctor_selected.email;
+      this.address = this.doctor_selected.address;
+      this.notes_bcbas = resp.notes_bcbas;
+      this.notes_rbts = resp.notes_rbts;
+      this.patients = resp.patients;
+      this.total_notes_bips = resp.total_notes_bips;
+      this.total_notes_bcbas = resp.total_notes_bcbas;
+      this.total_notes_rbts = resp.total_notes_rbts;
+    });
   }
 
   optionSelected(value: number) {

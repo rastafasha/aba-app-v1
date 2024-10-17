@@ -576,7 +576,7 @@ export class PatientDashboardComponent implements OnInit {
   getPatient() {
     this.dashboardService
       .dashboardPatient(this.patient_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         console.log(resp);
       });
   }

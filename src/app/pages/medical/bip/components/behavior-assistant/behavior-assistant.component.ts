@@ -42,8 +42,8 @@ export class BehaviorAssistantComponent {
     // //inicia la vista siempre desde arriba
 
     //me subcribo al id recibido por el parametro de la url
-    this.ativatedRoute.params.subscribe((resp: any) => {
-      this.client_id = resp.id; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
+    this.ativatedRoute.params.subscribe((resp) => {
+      this.client_id = resp['id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
     });
     const USER = localStorage.getItem('user'); // se solicita el usuario logueado
     this.user = JSON.parse(USER ? USER : ''); //  si no hay un usuario en el localstorage retorna un objeto vacio

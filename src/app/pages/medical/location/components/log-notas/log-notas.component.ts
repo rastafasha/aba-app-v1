@@ -168,9 +168,9 @@ export class LogNotasComponent {
 
   ngOnInit(): void {
     //
-    this.ativatedRoute.params.subscribe((resp: any) => {
+    this.ativatedRoute.params.subscribe((resp) => {
       console.log(resp);
-      this.location_id = resp.id;
+      this.location_id = resp['id'];
     });
     this.getLocation();
     // this.locationId;
@@ -196,7 +196,7 @@ export class LogNotasComponent {
   }
 
   getConfig() {
-    this.clientReportService.config().subscribe((resp: any) => {
+    this.clientReportService.config().subscribe((resp) => {
       // console.log(resp);
       this.insurances = resp.insurances;
       this.sponsors = resp.doctors;
@@ -204,13 +204,11 @@ export class LogNotasComponent {
   }
 
   getLocation() {
-    this.locationService
-      .getLocation(this.location_id)
-      .subscribe((resp: any) => {
-        console.log(resp);
-        this.location_selected = resp.location;
-        this.patients = resp.patients;
-      });
+    this.locationService.getLocation(this.location_id).subscribe((resp) => {
+      console.log(resp);
+      this.location_selected = resp.location;
+      this.patients = resp.patients;
+    });
   }
 
   getTableData(page = 1): void {
@@ -229,7 +227,7 @@ export class LogNotasComponent {
         this.date_end,
         this.noteType
       )
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log('todo',resp);
         const pa = resp.arrayPages;
         // const pa = [1,2,3,4,5,6,7,8,9,10]
@@ -345,7 +343,7 @@ export class LogNotasComponent {
   getInsurer() {
     //sacamos los detalles insurance seleccionado
     this.insuranceService.showInsurance(this.insurance_id).subscribe(
-      (resp: any) => {
+      (resp) => {
         // console.log('insurer', resp);
         this.insuranceiddd = resp.id;
 
@@ -447,7 +445,7 @@ export class LogNotasComponent {
 
   //trae el nombre del doctor quien hizo la nota rbt
   getDoctorRBT() {
-    this.doctorService.showDoctor(this.tecnicoRbts).subscribe((resp: any) => {
+    this.doctorService.showDoctor(this.tecnicoRbts).subscribe((resp) => {
       // console.log('doctor rbt y location',resp);
       this.doctor_selected = resp.user;
       this.full_name = resp.user.full_name;
@@ -455,7 +453,7 @@ export class LogNotasComponent {
   }
   // supervisor del tecnico solo sacamos el npi
   getDoctorBcba() {
-    this.doctorService.showDoctor(this.supervisor).subscribe((resp: any) => {
+    this.doctorService.showDoctor(this.supervisor).subscribe((resp) => {
       // console.log('bcba',resp);
       this.npi = resp.user.npi;
     });
@@ -782,7 +780,7 @@ export class LogNotasComponent {
 
       this.clientReportService
         .udpate(VALUE, this.billing_selected)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           // console.log(resp);
           // this.text_success = 'Bip Updated'
           Swal.fire('Updated', `Bip Updated successfully!`, 'success');
@@ -790,17 +788,17 @@ export class LogNotasComponent {
         });
       this.noteRbtService
         .noteUpdateModifier(VALUE2, data.rbt.id)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           // console.log(resp);
         });
       this.noteBCbaService
         .noteBCBAUpdateModifier(VALUE3, data.bcba.id)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           // console.log(resp);
         });
     } else {
       //crear
-      this.clientReportService.create(VALUE).subscribe((resp: any) => {
+      this.clientReportService.create(VALUE).subscribe((resp) => {
         // console.log(resp);
         // this.text_success = 'Se guardó la informacion de la cita médica'
         Swal.fire('Updated', `Added successfully!`, 'success');
@@ -809,12 +807,12 @@ export class LogNotasComponent {
 
       this.noteRbtService
         .noteUpdateModifier(VALUE2, data.rbt.id)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           // console.log(resp);
         });
       this.noteBCbaService
         .noteBCBAUpdateModifier(VALUE3, data.bcba.id)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           // console.log(resp);
         });
     }
@@ -850,7 +848,7 @@ export class LogNotasComponent {
   insuranceData(selectedValueInsurer) {
     this.insuranceService
       .showInsurance(selectedValueInsurer)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         console.log(resp);
         this.insurer_name = resp.insurer_name;
         // this.notes = resp.notes;
@@ -866,7 +864,7 @@ export class LogNotasComponent {
   PatientData(selectedValuePatient) {
     this.patientService
       .getPatientByPatientid(selectedValuePatient)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         console.log(resp);
       });
   }

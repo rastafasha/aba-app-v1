@@ -79,8 +79,8 @@ export class BillingByClientComponent {
 
   ngOnInit(): void {
     //
-    this.ativatedRoute.params.subscribe((resp: any) => {
-      this.patient_id = resp.id;
+    this.ativatedRoute.params.subscribe((resp) => {
+      this.patient_id = resp['id'];
 
       // this.patient_id= resp.patient_id;
       // console.log(this.client_id);
@@ -113,7 +113,7 @@ export class BillingByClientComponent {
   getPatient() {
     this.patientService
       .getPatientByPatientid(this.patient_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log(resp);
         this.patient = resp.patient;
         this.patientID = this.patient.patient_id;
@@ -130,7 +130,7 @@ export class BillingByClientComponent {
   getProfileBilling() {
     this.billingService
       .showBillingProfile(this.patient_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         console.log(resp);
         this.client_selected = resp.patient;
         //convierto la data de la coleccion json para extraer los datos
@@ -146,7 +146,7 @@ export class BillingByClientComponent {
   }
 
   getConfig() {
-    this.billingService.config().subscribe((resp: any) => {
+    this.billingService.config().subscribe((resp) => {
       console.log(resp);
       this.insurances = resp.insurances;
       this.insurance_id =
@@ -156,7 +156,7 @@ export class BillingByClientComponent {
 
       this.insuranceService
         .showInsurance(this.insurance_id)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           this.insuranceiddd = resp.id;
 
           this.insurer_name = resp.insurer_name;
@@ -174,7 +174,7 @@ export class BillingByClientComponent {
 
     this.billingService
       .showBillingbyPatient(this.patient_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         console.log(resp);
 
         this.totalDataBilling = resp.billings.length;
@@ -232,7 +232,7 @@ export class BillingByClientComponent {
 
   //trae el nombre del doctor quien hizo la nota rbt
   getDoctor() {
-    this.doctorService.showDoctor(this.sponsor_id).subscribe((resp: any) => {
+    this.doctorService.showDoctor(this.sponsor_id).subscribe((resp) => {
       console.log(resp);
       // this.doctor_selected = resp.user;
       // this.doctor_selected_full_name = resp.user.full_name;
@@ -393,7 +393,7 @@ export class BillingByClientComponent {
   deleteRol() {
     this.billingService
       .deleteBilling(this.billing_selected.id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log(resp);
 
         if (resp.message === 403) {

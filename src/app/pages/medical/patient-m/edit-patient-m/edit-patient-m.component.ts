@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AppRoutes } from 'src/app/shared/routes/routes';
-import { PatientMService } from '../service/patient-m.service';
-import { InsuranceService } from '../../insurance/service/insurance.service';
-import Swal from 'sweetalert2';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Location } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppUser } from 'src/app/shared/models/users.models';
+import { AppRoutes } from 'src/app/shared/routes/routes';
+import Swal from 'sweetalert2';
+import { InsuranceService } from '../../insurance/service/insurance.service';
+import { PatientMService } from '../service/patient-m.service';
 // declare function alertClose():any;
 declare let $: any;
 
@@ -36,7 +36,7 @@ export interface Service {
   templateUrl: './edit-patient-m.component.html',
   styleUrls: ['./edit-patient-m.component.scss'],
 })
-export class EditPatientMComponent {
+export class EditPatientMComponent implements OnInit {
   routes = AppRoutes;
   selectedValue!: string;
   selectedValueLocation!: number;
@@ -285,8 +285,8 @@ export class EditPatientMComponent {
 
   ngOnInit(): void {
     //
-    this.ativatedRoute.params.subscribe((resp: any) => {
-      this.client_id = resp.id;
+    this.ativatedRoute.params.subscribe((resp) => {
+      this.client_id = resp['id'];
     });
 
     this.showUser();
@@ -318,7 +318,7 @@ export class EditPatientMComponent {
   getInitConfig() {
     this.patientService
       .listConfig(this.patient_selected.location_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         console.log(resp);
         this.specialists = resp.users;
         this.insurances = resp.insurances;
@@ -338,7 +338,7 @@ export class EditPatientMComponent {
   getConfig() {
     this.patientService
       .listConfig(this.selectedValueLocation)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         console.log(resp);
         this.specialists = resp.users;
         this.insurances = resp.insurances;
@@ -355,7 +355,7 @@ export class EditPatientMComponent {
 
         this.insuranceService
           .showInsurance(this.insurance_id)
-          .subscribe((resp: any) => {
+          .subscribe((resp) => {
             this.insuranceiddd = resp.id;
             this.insurer_name = resp.insurer_name;
           });
@@ -491,7 +491,7 @@ export class EditPatientMComponent {
 
       this.patientService
         .getLaboratoryByPatient(this.patient_id)
-        .subscribe((resp: any) => {
+        .subscribe((resp) => {
           console.log(resp);
           this.FilesAdded = resp.patientFiles.data
             ? resp.patientFiles.data
@@ -511,7 +511,7 @@ export class EditPatientMComponent {
   insuranceData(selectedValueInsurer) {
     this.insuranceService
       .showInsurance(selectedValueInsurer)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         console.log('desde el insurer seleccionado', resp);
         this.services = resp.services;
         this.code = resp.services.code;
@@ -588,7 +588,7 @@ export class EditPatientMComponent {
 
   deleteFile(FILE: any) {
     this.FilesAdded.splice(FILE, 1);
-    this.patientService.deleteLaboratory(FILE.id).subscribe((resp: any) => {
+    this.patientService.deleteLaboratory(FILE.id).subscribe((resp) => {
       this.showUser();
     });
   }
@@ -643,7 +643,7 @@ export class EditPatientMComponent {
     this.valid_form_success = false;
     this.text_validation = '';
 
-    this.patientService.storeLaboratory(formData).subscribe((resp: any) => {
+    this.patientService.storeLaboratory(formData).subscribe((resp) => {
       // console.log(resp);
       if (resp.message === 403) {
         this.text_validation = resp.message_text;
@@ -853,7 +853,7 @@ export class EditPatientMComponent {
 
     this.patientService
       .editPatient(formData, this.client_id)
-      .subscribe((resp: any) => {
+      .subscribe((resp) => {
         // console.log(resp);
         if (resp.message === 403) {
           this.text_validation = resp.message_text;

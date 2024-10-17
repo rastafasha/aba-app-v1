@@ -29,7 +29,7 @@ export class BillingService {
   }
   deleteBilling(patient_id: any) {
     const URL = url_servicios + '/billing/destroy/' + patient_id;
-    return this.http.delete(URL);
+    return this.http.delete<any>(URL);
   }
 
   showBillingbyPatient(patient_id: any) {

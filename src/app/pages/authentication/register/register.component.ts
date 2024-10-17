@@ -31,7 +31,7 @@ export class RegisterComponent {
   }
 
   submit() {
-    if (this.form.value.password != this.form.value.confirmPassword) {
+    if (this.form.value.password !== this.form.value.confirmPassword) {
       this.isValidConfirmPassword = true;
     } else {
       this.isValidConfirmPassword = false;
