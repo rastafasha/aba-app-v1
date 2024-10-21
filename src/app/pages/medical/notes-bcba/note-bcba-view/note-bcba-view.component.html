@@ -5,12 +5,6 @@
         <div class="page-header">
             <div class="row">
                 <div class="col-sm-12">
-                    <!-- <ul class="breadcrumb">
-                        <li class="breadcrumb-item active"><a routerLink="/patients/list">Client List / </a></li>
-                        <li class="breadcrumb-item"><a [routerLink]="['/note-bcba/listbyclient/', patient_id]">Note BCBA List </a></li>
-                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
-                        <li class="breadcrumb-item active">Client Note Bcba</li>
-                    </ul> -->
                     <div class=" doctor-submit text-start">
                         <button class="btn btn-primary btn-sm " (click)="goBack() ">Back</button>
                     </div>
@@ -29,16 +23,15 @@
                                     <h4>Client Note BCBA </h4>
                                 </div>
                                 <div class="doctor-profile-head">
-                                    <!-- <div class="profile-bg-img">
-                                        <img  src="assets/img/profile-bg.jpg"  alt="Profile">
-                                    </div> -->
                                     <div class="row">
                                         <div class="col-lg-4 col-md-4">
-                                            <div class="profile-user-box">
+                                            <div class="profile-user-box" style="padding-top: 10px;">
                                                 
                                                 <div class="names-profiles">
                                                     <h5>Client</h5>
-                                                    <h4>{{patient_selected.first_name}}</h4>
+                                                    <p>{{patient_selected.first_name}}</p>
+                                                    <h5>Provider Name</h5>
+                                                    <p>{{doctor_selected_full_name}}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -46,31 +39,18 @@
                                             <div class="follow-group">
                                                 <div class="doctor-follows">
                                                     <h5>Patient ID</h5>
-                                                    <h4>{{patient_selected.patient_id}}</h4>
+                                                    <p>{{patient_selected.patient_id}}</p>
                                                 </div>
-                                                
                                                 <div class="doctor-follows">
                                                     <h5>diagnosis_code</h5>
-                                                    <h4>{{patient_selected.diagnosis_code}}</h4>
+                                                    <p>{{patient_selected.diagnosis_code}}</p>
                                                 </div>
-                                                <!-- <div class="doctor-follows">
-                                                    <h5>Status</h5>
-                                                    <span class="badge bg-primary"
-                                                        *ngIf="patient_selected.status === 'incoming'">Incoming</span>
-                                                    <span class="badge bg-success"
-                                                        *ngIf="patient_selected.status === 'active'">Active</span>
-                                                    <span class="badge bg-danger"
-                                                        *ngIf="patient_selected.status === 'inactive'">Inactive</span>
-
-                                                </div> -->
                                             </div>
                                         </div>
                                         <div class="col-lg-4 col-md-4 d-flex align-items-center">
                                             <div class="follow-btn-group">
-                                                <!-- || note_selected.billedbcba === 0    -->
                                                 <a [routerLink]="['/note-bcba/edit/', note_id]" *ngIf="note_selected.status === 'pending' || note_selected.status === 'no'  "   class="btn btn-info follow-btns">Edit</a>
                                                 <button class="btn btn-info follow-btns" (click)="convertToPdf()">Save PDF</button>
-                                                <!-- <button type="submit" class="btn btn-info message-btns">Message</button> -->
                                             </div>
                                         </div>
                                     </div>
@@ -93,69 +73,69 @@
                                                    
                                                     <div class="detail-personal">
                                                         <h2>Patient Id</h2>
-                                                        <h3>{{patient_selected.patient_id }} </h3>
+                                                        <p>{{patient_selected.patient_id }} </p>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-3 col-md-6">
                                                    
                                                     <div class="detail-personal">
                                                         <h2>PO </h2>
-                                                        <h3>{{patient_selected.pos_covered}}</h3>
+                                                        <p>{{patient_selected.pos_covered}}</p>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-3 col-md-6">
                                                    
                                                     <div class="detail-personal">
                                                         <h2>Full Name</h2>
-                                                        <h3>{{patient_selected.first_name }} {{patient_selected.last_name }}</h3>
+                                                        <p>{{patient_selected.first_name }} {{patient_selected.last_name }}</p>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-3 col-md-6">
                                                     <div class="detail-personal">
                                                         <h2>Diagnosis code</h2>
-                                                        <h3>{{patient_selected.diagnosis_code}}</h3>
+                                                        <p>{{patient_selected.diagnosis_code}}</p>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-3 col-md-3">
                                                     <div class="detail-personal">
                                                         <h2>Rendering Provider</h2>
-                                                        <h3>{{doctor_selected_full_name}}</h3>
+                                                        <p>{{doctor_selected_full_name}}</p>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-3 col-md-3">
                                                     <div class="detail-personal">
-                                                        <h2>Aba Supervisor</h2>
-                                                        <h3>{{doctor_selected_full_name_rbt}}</h3>
+                                                        <h2>Supervising BCBA</h2>
+                                                        <p>{{doctor_selected_full_name_bcba}}</p>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-3 col-md-3">
                                                     <div class="detail-personal">
                                                         <h2>CPT Code</h2>
-                                                        <h3>{{note_selected.cpt_code}}</h3>
+                                                        <p>{{note_selected.cpt_code}}</p>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-3 col-md-3">
                                                     <div class="detail-personal">
                                                         <h2>Meet with client at</h2>
-                                                        <h3>{{note_selected.meet_with_client_at}}</h3>
+                                                        <p>{{note_selected.meet_with_client_at}}</p>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-3 col-xs-6 ">
                                                     <div class="detail-personal">
                                                         <h2>Modifier</h2>
-                                                        <h3>{{note_selected.mdbcba}}</h3>
+                                                        <p>{{note_selected.mdbcba}}</p>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-3 col-xs-6 ">
                                                     <div class="detail-personal">
                                                         <h2>Modifier 2 (optional)</h2>
-                                                        <h3>{{note_selected.md2bcba}}</h3>
+                                                        <p>{{note_selected.md2bcba}}</p>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-3 col-xs-6">
                                                     <div class="detail-personal">
                                                         <h2>Date Session</h2>
-                                                        <h3>{{note_selected.session_date|date}}</h3>
+                                                        <p>{{note_selected.session_date|date}}</p>
                                                     </div>
                                                 </div>
                                                 <!-- <div class="col-xl-3 col-xs-6 col-xl-4">
@@ -175,20 +155,20 @@
                                                     
                                                     <div class="detail-personal">
                                                         <h2>Time In</h2>
-                                                        <h3>{{note_selected.time_in | transformToDate }}</h3>
+                                                        <p>{{note_selected.time_in | transformToDate }}</p>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-3 col-md-6 col-xl-4">
                                                     <div class="detail-personal">
                                                         <h2>Time Out</h2>
-                                                        <h3>{{note_selected.time_out | transformToDate }}</h3>
+                                                        <p>{{note_selected.time_out | transformToDate }}</p>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-3 col-md-6 col-xl-4">
                                                     
                                                     <div class="detail-personal">
                                                         <h2>Total Morning Session</h2>
-                                                        <h3>{{note_selected.session_length_total | transformToDate }}</h3>
+                                                        <p>{{note_selected.session_length_total  }}</p>
                                                     </div>
                                                 </div>
                                                 <div class="clear"></div>
@@ -196,25 +176,25 @@
                                                 <div class="col-xl-3 col-md-6 col-xl-4">
                                                     <div class="detail-personal">
                                                         <h2>Time In </h2>
-                                                        <h3>{{note_selected.time_in2 | transformToDate }}</h3>
+                                                        <p>{{note_selected.time_in2 | transformToDate }}</p>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-3 col-md-6 col-xl-4">
                                                     <div class="detail-personal">
                                                         <h2>Time Out </h2>
-                                                        <h3>{{note_selected.time_out2 | transformToDate }}</h3>
+                                                        <p>{{note_selected.time_out2 | transformToDate }}</p>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-3 col-md-6 col-xl-4">
                                                     <div class="detail-personal">
                                                         <h2>Total First Afternoon</h2>
-                                                        <h3>{{note_selected.session_length_total2 | transformToDate }}</h3>
+                                                        <p>{{note_selected.session_length_total2  }}</p>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-12">
                                                     <div class="detail-personal">
                                                         <h2>Note Description</h2>
-                                                        <h3>{{note_selected.note_description}}</h3>
+                                                        <p>{{note_selected.note_description}}</p>
                                                     </div>
                                                 </div>
                                                 
@@ -314,7 +294,7 @@
                                                 
                                                 <div class="detail-personal">
                                                     <h2>Summary Note</h2>
-                                                    <h3>{{note_selected.summary_note}}</h3>
+                                                    <p>{{note_selected.summary_note}}</p>
                                                 </div>
                                             </div>
                                             <div class="row mt-5">
@@ -322,26 +302,25 @@
                                                     <div class="col-xl-4 col-md-6">
                                                         <div class="detail-personal">
                                                             <h2>Provider Signature</h2>
-                                                            <!-- <h3>{{note_selected.provider_signature}}</h3> -->
-                                                            <!-- <img  src="{{note_selected.provider_signature}}" style="width: 100%;"  > -->
-                                                            <img  src="{{IMAGE_PREVISUALIZA_SIGNATURE__BCBA_CREATED}}" style="width: 100%;"  >
+                                                            <img  src="{{IMAGE_PREVISUALIZA_SIGNATURE__BCBA_CREATED}}" style="width: 100%; height:fit-content; max-height: 100px;"  >
                                                         </div>
                                                         <div class="detail-personal">
-                                                            <h2>Provider name BCBA</h2>
-                                                            <h3>{{doctor_selected_full_name_bcba}}</h3>
+                                                            <h2 style="margin: 0;">Provider name BCBA</h2>
+                                                            <p style="margin-bottom: 15px;">{{doctor_selected_full_name}}</p>
+                                                            <h2 style="margin: 0;">Date Session</h2>
+                                                            <p>{{note_selected.session_date|date}}</p>
                                                         </div>
                                                     </div>
                                                     <div class="col-xl-4 col-md-6">
                                                         <div class="detail-personal">
                                                             <h2>Supervisor Signature</h2>
-                                                            <!-- <h3>{{note_selected.supervisor_signature}}</h3> -->
-                                                            <!-- {{imagenSerUrl}} -->
-                                                            <!-- <img  src="{{note_selected.supervisor_signature}}" style="width: 100%;"  > -->
-                                                            <img  src="{{IMAGE_PREVISUALIZA_SIGNATURE_SUPERVISOR_CREATED}}" style="width: 100%;"  >
-                                                            <div class="detail-personal">
-                                                                <h2>Supervisor name </h2>
-                                                                <h3>{{doctor_selected_full_name_supervisor}}</h3>
-                                                            </div>
+                                                            <img  src="{{IMAGE_PREVISUALIZA_SIGNATURE_SUPERVISOR_CREATED}}" style="width: 100%; height:fit-content; max-height: 100px;"  >
+                                                        </div>
+                                                        <div class="detail-personal">
+                                                            <h2 style="margin: 0;">Supervisor name </h2>
+                                                            <p style="margin-bottom: 15px;">{{doctor_selected_full_name_supervisor}}</p>
+                                                            <h2 style="margin: 0;">Date Session</h2>
+                                                            <p>{{note_selected.session_date|date}}</p>
                                                         </div>
                                                     </div>
                                                 </div>
