@@ -5,9 +5,9 @@ name: Develop And Test
 
 on:
   push:
-    branches: [ "main","develop", "feature/**"]
+    branches: [ "develop", "feature/**"]
   pull_request:
-    branches: [ "main","develop" ]
+    branches: [ "develop" ]
 
 jobs:
   build:
