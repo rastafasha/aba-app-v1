@@ -30,8 +30,7 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./dist/aba-angular/
-        server-dir: ./
+        local-dir: dist/aba-angular/
   # test:
     # runs-on: ubuntu-latest
     # needs: build
