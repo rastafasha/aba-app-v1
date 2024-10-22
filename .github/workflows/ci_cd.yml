@@ -11,26 +11,30 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [20.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Downloading repository
+      uses: actions/checkout@v4
+    - name: Use Node.js 20
       uses: actions/setup-node@v4
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 20
         cache: 'npm'
-    - run: npm ci
-    - run: npm run build
-    - run: npm run test:prod
-
-    - name: FTP-Deploy-Action
+    - name: Install Packages
+      run: npm ci
+    - name: Building
+      run: npm run build
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Testing
+      run: npm run test:prod
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+    - name: Deploying
       uses: SamKirkland/FTP-Deploy-Action@4.3.3
       with:
         server: ${{ secrets.FTP_SERVER }}
