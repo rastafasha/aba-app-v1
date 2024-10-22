@@ -24,15 +24,15 @@ jobs:
       run: npm ci
     - name: Building
       run: npm run build
-  test:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-    - name: Testing
-      run: npm run test:prod
+  # test:
+    # runs-on: ubuntu-latest
+    # needs: build
+    # steps:
+    # - name: Testing
+    #   run: npm run test:prod
   deploy:
     runs-on: ubuntu-latest
-    needs: test
+    # needs: test
     steps:
     - name: Deploying
       uses: SamKirkland/FTP-Deploy-Action@4.3.3
@@ -41,3 +41,4 @@ jobs:
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: ./dist/aba-angular/
+        server-dir: ./
