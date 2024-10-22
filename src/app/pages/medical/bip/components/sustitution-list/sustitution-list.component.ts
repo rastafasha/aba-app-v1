@@ -5,7 +5,7 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
 import { GoalSustitutionService } from '../../service/goal-sustitution.service';
-declare let $: any;
+
 @Component({
   selector: 'app-sustitution-list',
   templateUrl: './sustitution-list.component.html',
@@ -106,8 +106,8 @@ export class SustitutionListComponent implements OnInit {
   goalSelectedId: any;
   newGoaladd: any;
 
-  golsto_edit = [];
-  gollto_edit = [];
+  golsto_edit = null;
+  gollto_edit = null;
 
   constructor(
     private bipService: BipService,

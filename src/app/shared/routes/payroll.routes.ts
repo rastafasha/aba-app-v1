@@ -1,15 +1,21 @@
 import { baseUrl } from './routes';
 
 export class PayrollRoutes {
-  static get addSalary(): string {
+  static get payroll(): string {
+    return `${baseUrl}/payroll`;
+  }
+  static get salary(): string {
+    return `${baseUrl}/payroll/salary`;
+  }
+  static get add(): string {
     return `${baseUrl}/payroll/add-salary`;
   }
 
-  static get editSalary(): string {
+  static get edit(): string {
     return `${baseUrl}/payroll/edit-salary`;
   }
 
-  static get salaryView(): string {
+  static get view(): string {
     return `${baseUrl}/payroll/salary-view`;
   }
 }

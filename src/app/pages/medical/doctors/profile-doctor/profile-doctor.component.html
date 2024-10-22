@@ -87,9 +87,9 @@
                         <div
                           class="doctor-follows"
                           *ngIf="
-                            roles === 'SUPERADMIN' ||
-                            roles === 'LM' ||
-                            roles === 'BCBA'
+                            role === 'SUPERADMIN' ||
+                            role === 'LM' ||
+                            role === 'BCBA'
                           "
                         >
                           <h5>Bips</h5>
@@ -98,9 +98,9 @@
                         <div
                           class="doctor-follows"
                           *ngIf="
-                            roles === 'SUPERADMIN' ||
-                            roles === 'LM' ||
-                            roles === 'BCBA'
+                            role === 'SUPERADMIN' ||
+                            role === 'LM' ||
+                            role === 'BCBA'
                           "
                         >
                           <h5>Notes BCBA</h5>
@@ -109,9 +109,9 @@
                         <div
                           class="doctor-follows"
                           *ngIf="
-                            roles === 'SUPERADMIN' ||
-                            roles === 'LM' ||
-                            roles === 'RBT'
+                            role === 'SUPERADMIN' ||
+                            role === 'LM' ||
+                            role === 'RBT'
                           "
                         >
                           <h5>Notes RBT</h5>
@@ -214,7 +214,7 @@
                                 <a
                                   class="dropdown-item"
                                   *ngIf="
-                                    roles === 'SUPERADMIN' || roles === 'BCBA'
+                                    role === 'SUPERADMIN' || role === 'BCBA'
                                   "
                                   [routerLink]="[
                                     '/bip/attention/',
@@ -240,7 +240,7 @@
                                 <a
                                   class="dropdown-item"
                                   *ngIf="
-                                    roles === 'SUPERADMIN' || roles === 'RBT'
+                                    role === 'SUPERADMIN' || role === 'RBT'
                                   "
                                   [routerLink]="['/note-rbt/', data.patient_id]"
                                   ><i
@@ -251,7 +251,7 @@
                                 <a
                                   class="dropdown-item"
                                   *ngIf="
-                                    roles === 'SUPERADMIN' || roles === 'RBT'
+                                    role === 'SUPERADMIN' || role === 'RBT'
                                   "
                                   [routerLink]="[
                                     '/note-rbt/listbyclient/',
@@ -265,7 +265,7 @@
                                 <a
                                   class="dropdown-item"
                                   *ngIf="
-                                    roles === 'SUPERADMIN' || roles === 'BCBA'
+                                    role === 'SUPERADMIN' || role === 'BCBA'
                                   "
                                   [routerLink]="[
                                     '/note-bcba/',
@@ -279,7 +279,7 @@
                                 <a
                                   class="dropdown-item"
                                   *ngIf="
-                                    roles === 'SUPERADMIN' || roles === 'BCBA'
+                                    role === 'SUPERADMIN' || role === 'BCBA'
                                   "
                                   [routerLink]="[
                                     '/note-bcba/listbyclient/',
@@ -308,7 +308,7 @@
                         <a
                           href="#"
                           onclick="return false;"
-                          [ngClass]="{ active: option_selected == 1 }"
+                          [ngClass]="{ active: option_selected === 1 }"
                           (click)="optionSelected(1)"
                           ><span class="set-about-icon me-2"
                             ><img
@@ -320,15 +320,15 @@
 
                       <li
                         *ngIf="
-                          roles === 'SUPERADMIN' ||
-                          roles === 'LM' ||
-                          roles === 'RBT'
+                          role === 'SUPERADMIN' ||
+                          role === 'LM' ||
+                          role === 'RBT'
                         "
                       >
                         <a
                           href="#"
                           onclick="return false;"
-                          [ngClass]="{ active: option_selected == 2 }"
+                          [ngClass]="{ active: option_selected === 2 }"
                           (click)="optionSelected(2)"
                           ><span class="set-about-icon me-2"
                             ><img
@@ -339,15 +339,15 @@
                       </li>
                       <li
                         *ngIf="
-                          roles === 'SUPERADMIN' ||
-                          roles === 'LM' ||
-                          roles === 'BCBA'
+                          role === 'SUPERADMIN' ||
+                          role === 'LM' ||
+                          role === 'BCBA'
                         "
                       >
                         <a
                           href="#"
                           onclick="return false;"
-                          [ngClass]="{ active: option_selected == 3 }"
+                          [ngClass]="{ active: option_selected === 3 }"
                           (click)="optionSelected(3)"
                           ><span class="set-about-icon me-2"
                             ><img
@@ -357,11 +357,11 @@
                         </a>
                       </li>
                       <!-- <li>
-                                                <a href="#" onclick="return false;" [ngClass]="{'active': option_selected == 4}" (click)="optionSelected(4)"><span class="set-about-icon me-2"><img src="assets/img/icons/menu-icon-16.svg" alt=""></span>Settings</a>
+                                                <a href="#" onclick="return false;" [ngClass]="{'active': option_selected === 4}" (click)="optionSelected(4)"><span class="set-about-icon me-2"><img src="assets/img/icons/menu-icon-16.svg" alt=""></span>Settings</a>
                                             </li> -->
                     </ul>
                   </div>
-                  <ng-container *ngIf="option_selected == 1">
+                  <ng-container *ngIf="option_selected === 1">
                     <div class="card">
                       <div class="card-body p-0">
                         <div class="personal-list-out">
@@ -615,7 +615,7 @@
                       </div>
                     </div>
                   </ng-container>
-                  <ng-container *ngIf="option_selected == 2">
+                  <ng-container *ngIf="option_selected === 2">
                     <div class="activity scrooldiv">
                       <div class="activity-box">
                         <ul class="activity-list">
@@ -709,7 +709,7 @@
                       </div>
                     </div>
                   </ng-container>
-                  <ng-container *ngIf="option_selected == 3">
+                  <ng-container *ngIf="option_selected === 3">
                     <div class="activity scrooldiv">
                       <div class="activity-box">
                         <ul class="activity-list">
@@ -807,7 +807,7 @@
                       </div>
                     </div>
                   </ng-container>
-                  <ng-container *ngIf="option_selected == 4">
+                  <ng-container *ngIf="option_selected === 4">
                     <div class="setting-form-blk">
                       <form>
                         <div class="row">
@@ -845,7 +845,7 @@
                                 class="form-control"
                                 type="text"
                                 name="phone"
-                                [(ngModel)]="phone"
+                                [(ngModel)]="mobile"
                               />
                             </div>
                           </div>
@@ -991,8 +991,8 @@
                     <ul class="list-space">
                       <li>
                         <h4>Gender</h4>
-                        <span *ngIf="doctor_selected.gender == 2">Female</span>
-                        <span *ngIf="doctor_selected.gender == 1">Male</span>
+                        <span *ngIf="doctor_selected.gender === 2">Female</span>
+                        <span *ngIf="doctor_selected.gender === 1">Male</span>
                       </li>
                       <li>
                         <h4>Birth Day</h4>

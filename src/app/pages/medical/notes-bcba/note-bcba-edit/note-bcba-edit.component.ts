@@ -102,8 +102,10 @@ export class NoteBcbaEditComponent implements OnInit {
   natural_teaching: any;
 
   FILE_SIGNATURE_RBT: any;
+  IMAGE_PREVISUALIZA_SIGNATURE__RBT: any;
   IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED: any = 'assets/img/user-06.jpg';
   FILE_SIGNATURE_BCBA: any;
+  IMAGE_PREVISUALIZA_SIGNATURE_BCBA: any;
   IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED: any = 'assets/img/user-06.jpg';
 
   rbt_id: any;
@@ -241,7 +243,6 @@ export class NoteBcbaEditComponent implements OnInit {
       this.session_length_total = this.note_selected.session_length_total;
       this.session_length_total2 = this.note_selected.session_length_total2;
 
-      
       // this.selectedValueTimeIn = this.note_selected.time_in;
       // this.selectedValueTimeOut = this.note_selected.time_out;
       // this.selectedValueTimeIn2 = this.note_selected.time_in2;

@@ -22,8 +22,8 @@ export class InsuranceEditComponent {
   note: any;
 
   services = [];
-  maladaptive_edit = [];
-  note_edit = [];
+  maladaptive_edit: any;
+  note_edit: any;
   code: any;
   provider: any;
   description: any;
@@ -108,7 +108,7 @@ export class InsuranceEditComponent {
     this.notes.splice(i, 1);
   }
 
-  cambiarStatus(serv: any) {
+  cambiarStatus(serv: any, i: number) {
     this.maladaptive_edit = serv;
     Swal.fire(
       'Updated',
@@ -116,11 +116,11 @@ export class InsuranceEditComponent {
       'success'
     );
   }
-  seleccionarParaEdit(serv: any) {
+  seleccionarParaEdit(serv: any, i: number) {
     this.maladaptive_edit = serv;
     // console.log(this.maladaptive_edit);
   }
-  cambiarNote(note: any) {
+  cambiarNote(note: any, i: number) {
     this.note_edit = note;
     Swal.fire(
       'Updated',
@@ -155,5 +155,8 @@ export class InsuranceEditComponent {
           this.router.navigate([AppRoutes.insurance.list]);
         }
       });
+  }
+  closeReload() {
+    throw new Error('Method not implemented');
   }
 }

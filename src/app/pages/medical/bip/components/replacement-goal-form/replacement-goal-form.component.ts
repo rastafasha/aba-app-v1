@@ -1,17 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
 import { GoalSustitutionService } from '../../service/goal-sustitution.service';
 import { AppUser } from 'src/app/shared/models/users.models';
-declare let $: any;
 @Component({
   selector: 'app-replacement-goal-form',
   templateUrl: './replacement-goal-form.component.html',
   styleUrls: ['./replacement-goal-form.component.scss'],
 })
 export class ReplacementGoalFormComponent {
+  @Input() goal: any;
+
   routes = AppRoutes;
   valid_form_success = false;
   text_validation = '';
@@ -81,7 +82,6 @@ export class ReplacementGoalFormComponent {
 
   arrayFk: any;
 
-  goal: any;
   goals: any;
   initial_interesting: any;
   target: any;
@@ -106,8 +106,8 @@ export class ReplacementGoalFormComponent {
   goalSelectedId: any;
   newGoaladd: any;
 
-  golsto_edit = [];
-  gollto_edit = [];
+  golsto_edit: any;
+  gollto_edit: any;
 
   constructor(
     private bipService: BipService,

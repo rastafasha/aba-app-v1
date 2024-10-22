@@ -6,7 +6,7 @@
         <div class="col-sm-12">
           <ul class="breadcrumb">
             <li class="breadcrumb-item">
-              <a [routerLink]="routes.expenseReports">Reports </a>
+              <a [routerLink]="routes.reports.expenses">Reports </a>
             </li>
             <li class="breadcrumb-item">
               <i class="feather icon-chevron-right"></i>
@@ -177,12 +177,12 @@
                       </div>
                     </td>
                     <td>
-                      <a [routerLink]="routes.invoiceView">{{
+                      <a [routerLink]="routes.reports.invoices">{{
                         data.invoiceNumber
                       }}</a>
                     </td>
                     <td class="profile-image">
-                      <a [routerLink]="routes.profile"
+                      <a [routerLink]="routes.profile.profile"
                         ><img
                           width="28"
                           height="28"
@@ -218,7 +218,7 @@
                         <div class="dropdown-menu dropdown-menu-end">
                           <a
                             class="dropdown-item"
-                            [routerLink]="routes.editExpense"
+                            [routerLink]="routes.reports.expensesEdit"
                             ><i class="fa-solid fa-pen-to-square m-r-5"></i>
                             Edit</a
                           >

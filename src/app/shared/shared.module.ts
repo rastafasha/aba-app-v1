@@ -22,13 +22,15 @@ import { NoInfoComponent } from './no-info/no-info.component';
 import { PipesModule } from './pipes/pipes.module';
 import { PageService } from './services/pages.service';
 
+const components = [
+  NoInfoComponent,
+  SkeletonLoaderComponent,
+  ActionButtonComponent,
+  ActionModalComponent,
+];
+
 @NgModule({
-  declarations: [
-    NoInfoComponent,
-    SkeletonLoaderComponent,
-    ActionButtonComponent,
-    ActionModalComponent,
-  ],
+  declarations: [...components],
   imports: [
     CommonModule,
     NgxBootstrapModule,
@@ -62,6 +64,7 @@ import { PageService } from './services/pages.service';
     MatDialogModule,
   ],
   exports: [
+    ...components,
     CommonModule,
     NgxBootstrapModule,
     CountUpModule,

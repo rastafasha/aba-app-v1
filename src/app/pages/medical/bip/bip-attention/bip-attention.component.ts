@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { BipService } from '../service/bip.service';
@@ -8,11 +8,11 @@ import { Location } from '@angular/common';
 import { AppUser } from 'src/app/shared/models/users.models';
 
 @Component({
-  selector: 'app-bipattention',
-  templateUrl: './bipattention.component.html',
-  styleUrls: ['./bipattention.component.scss'],
+  selector: 'app-bip-attention',
+  templateUrl: './bip-attention.component.html',
+  styleUrls: ['./bip-attention.component.scss'],
 })
-export class BipattentionComponent {
+export class BipAttentionComponent implements OnInit {
   routes = AppRoutes;
 
   valid_form_success = false;

@@ -109,9 +109,6 @@ export class AppRoutes {
   static get payroll(): typeof PayrollRoutes {
     return PayrollRoutes;
   }
-  //static get salary(): string {
-  // `  return ${baseUrl}/payroll/salary`;
-  // }
   static get profile(): typeof ProfileRoutes {
     return ProfileRoutes;
   }

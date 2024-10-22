@@ -1,22 +1,21 @@
 import { Location } from '@angular/common';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import html2canvas from 'html2canvas';
 import * as jspdf from 'jspdf';
 import { AuthService } from 'src/app/core/auth/auth.service';
-import { AppRoutes } from 'src/app/shared/routes/routes';
-import { environment } from 'src/environments/environment';
-import { DoctorService } from '../../doctors/service/doctor.service';
-import { BipService } from '../service/bip.service';
 import { AppUser } from 'src/app/shared/models/users.models';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
+import { environment } from 'src/environments/environment';
+import { BipService } from '../service/bip.service';
 
 @Component({
   selector: 'app-bip-profile',
   templateUrl: './bip-profile.component.html',
   styleUrls: ['./bip-profile.component.scss'],
 })
-export class BipProfileComponent {
+export class BipProfileComponent implements OnInit {
   routes = AppRoutes;
   @ViewChild('contentToConvert') contentToConvert!: ElementRef;
   patientProfile: any[];
@@ -49,16 +48,16 @@ export class BipProfileComponent {
   patient_selected: any = {};
   reduction_goals = [];
   reduction_goals_goalltos = [];
-  reduction_goals_goalstos: string;
+  reduction_goals_goalstos = [];
   sustitution_goal = [];
-  sustitution_goal_ltos: string;
-  sustitution_goal_stos: string;
-  family_envolment: string;
-  monitoring_evalutating: string;
-  monitoring_evalutating_goals: string;
-  generalization_training: string;
-  transition_fading_plans: string;
-  de_escalation_techniques: string;
+  sustitution_goal_ltos: any[] = [];
+  sustitution_goal_stos: any[] = [];
+  family_envolment: any[] = [];
+  monitoring_evalutating: any[] = [];
+  monitoring_evalutating_goals: any[] = [];
+  generalization_training: any[] = [];
+  transition_fading_plans: any[] = [];
+  de_escalation_techniques: any[] = [];
   analyst_signature: any = '';
   analyst_signature_date = '';
   parent_guardian_signature: any = '';
@@ -110,14 +109,14 @@ export class BipProfileComponent {
   permissions = [];
   preescribing_physician: any;
   phiysical_and_medical: any;
-  phiysical_and_medical_status = [];
-  hypothesis_based_intervention = [];
-  assestmentEvaluationSettings = [];
+  phiysical_and_medical_status: any;
+  hypothesis_based_intervention: any;
+  assestmentEvaluationSettings: any;
 
-  accesstoTangibles = [];
-  accesstoAttention = [];
-  accesstoEscape = [];
-  accesstoSensory = [];
+  accesstoTangibles: any;
+  accesstoAttention: any;
+  accesstoEscape: any;
+  accesstoSensory: any;
 
   imagenSerUrl = environment.url_media;
 
@@ -261,31 +260,37 @@ export class BipProfileComponent {
         this.crisis_plan = this.bip_selected.crisis_plan[0];
         this.risk_factors = this.bip_selected.crisis_plan[0].risk_factors;
 
-        const jsonObj = JSON.parse(this.reduction_goals_goalstos) || '';
+        const jsonObj =
+          JSON.parse(this.reduction_goals_goalstos.toString()) || '';
         this.reduction_goals_goalstos = jsonObj;
         // console.log(this.reduction_goals_goalstos);
 
-        const jsonObj1 = JSON.parse(this.sustitution_goal_stos) || '';
+        const jsonObj1 =
+          JSON.parse(this.sustitution_goal_stos.toString()) || '';
         this.sustitution_goal_stos = jsonObj1;
         // console.log(this.sustitution_goal_stos);
 
-        const jsonObj2 = JSON.parse(this.sustitution_goal_ltos) || '';
+        const jsonObj2 =
+          JSON.parse(this.sustitution_goal_ltos.toString()) || '';
         this.sustitution_goal_ltos = jsonObj2;
         // console.log(this.sustitution_goal_ltos);
 
-        const jsonObj3 = JSON.parse(this.family_envolment) || '';
+        const jsonObj3 = JSON.parse(this.family_envolment.toString()) || '';
         this.family_envolment = jsonObj3;
         // console.log(this.family_envolment);
 
-        const jsonObj4 = JSON.parse(this.monitoring_evalutating_goals) || '';
+        const jsonObj4 =
+          JSON.parse(this.monitoring_evalutating_goals.toString()) || '';
         this.monitoring_evalutating_goals = jsonObj4;
         // console.log(this.monitoring_evalutating_goals);
 
-        const jsonObj5 = JSON.parse(this.transition_fading_plans) || '';
+        const jsonObj5 =
+          JSON.parse(this.transition_fading_plans.toString()) || '';
         this.transition_fading_plans = jsonObj5;
         // console.log(this.transition_fading_plans);
 
-        const jsonObj6 = JSON.parse(this.de_escalation_techniques) || '';
+        const jsonObj6 =
+          JSON.parse(this.de_escalation_techniques.toString()) || '';
         this.de_escalation_techniques = jsonObj6;
         // console.log(this.transition_fading_plans);
 

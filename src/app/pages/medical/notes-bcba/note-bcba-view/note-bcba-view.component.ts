@@ -3,12 +3,12 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import html2canvas from 'html2canvas';
 import * as jspdf from 'jspdf';
+import { AppUser } from 'src/app/shared/models/users.models';
 import { AppRoutes } from 'src/app/shared/routes/routes';
+import { PageService } from 'src/app/shared/services/pages.service';
 import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { NoteBcbaService } from '../services/note-bcba.service';
-import { AppUser } from 'src/app/shared/models/users.models';
-import { PageService } from 'src/app/shared/services/pages.service';
 
 @Component({
   selector: 'app-note-bcba-view',

@@ -1,22 +1,21 @@
-import { Component, Input } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { AppRoutes } from 'src/app/shared/routes/routes';
 import { Location } from '@angular/common';
-import { url_media } from 'src/app/config/config';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import Swal from 'sweetalert2';
-import { LocationService } from '../../services/location.service';
-import { DoctorService } from '../../../doctors/service/doctor.service';
-import { PatientMService } from '../../../patient-m/service/patient-m.service';
+import { ActivatedRoute } from '@angular/router';
+import { url_media } from 'src/app/config/config';
 import { AppUser } from 'src/app/shared/models/users.models';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
+import Swal from 'sweetalert2';
+import { DoctorService } from '../../../doctors/service/doctor.service';
+import { LocationService } from '../../services/location.service';
 
 @Component({
   selector: 'app-specialist-location',
   templateUrl: './specialist-location.component.html',
   styleUrls: ['./specialist-location.component.scss'],
 })
-export class SpecialistLocationComponent {
+export class SpecialistLocationComponent implements OnInit {
   @Input() locationId: any;
 
   routes = AppRoutes;
@@ -36,6 +35,7 @@ export class SpecialistLocationComponent {
   pageIndex = 0;
   serialNumberArray: number[] = [];
   currentPage = 1;
+  totalData = 1;
   pageNumberArray: number[] = [];
   pageSelection = [];
   totalPages = 0;
@@ -58,7 +58,7 @@ export class SpecialistLocationComponent {
   location_id: any;
   location_iddd: any;
   user: AppUser;
-  roles = [];
+  role: string;
   location_selected: any;
 
   patient_generals = [];
@@ -91,7 +91,7 @@ export class SpecialistLocationComponent {
 
     const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
-    this.roles = this.user.roles;
+    this.role = this.user.roles[0];
 
     this.pageService.onInitPage();
 

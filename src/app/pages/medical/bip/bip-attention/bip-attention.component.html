@@ -209,7 +209,7 @@
             <a
               href="#"
               onclick="return false;"
-              [ngClass]="{ active: option_selected == 1 }"
+              [ngClass]="{ active: option_selected === 1 }"
               (click)="optionSelected(1)"
               ><span class="set-about-icon me-2"
                 ><img src="assets/img/icons/menu-icon-02.svg" alt="" /></span
@@ -220,7 +220,7 @@
             <a
               href="#"
               onclick="return false;"
-              [ngClass]="{ active: option_selected == 2 }"
+              [ngClass]="{ active: option_selected === 2 }"
               (click)="optionSelected(2)"
               ><span class="set-about-icon me-2"
                 ><img src="assets/img/icons/menu-icon-02.svg" alt="" /></span
@@ -231,7 +231,7 @@
             <a
               href="#"
               onclick="return false;"
-              [ngClass]="{ active: option_selected == 3 }"
+              [ngClass]="{ active: option_selected === 3 }"
               (click)="optionSelected(3)"
               ><span class="set-about-icon me-2"
                 ><img src="assets/img/icons/menu-icon-02.svg" alt="" /></span
@@ -242,7 +242,7 @@
             <a
               href="#"
               onclick="return false;"
-              [ngClass]="{ active: option_selected == 4 }"
+              [ngClass]="{ active: option_selected === 4 }"
               (click)="optionSelected(4)"
               ><span class="set-about-icon me-2"
                 ><img src="assets/img/icons/menu-icon-02.svg" alt="" /></span
@@ -253,7 +253,7 @@
             <a
               href="#"
               onclick="return false;"
-              [ngClass]="{ active: option_selected == 5 }"
+              [ngClass]="{ active: option_selected === 5 }"
               (click)="optionSelected(5)"
               ><span class="set-about-icon me-2"
                 ><img src="assets/img/icons/menu-icon-02.svg" alt="" /></span
@@ -264,7 +264,7 @@
             <a
               href="#"
               onclick="return false;"
-              [ngClass]="{ active: option_selected == 6 }"
+              [ngClass]="{ active: option_selected === 6 }"
               (click)="optionSelected(6)"
               ><span class="set-about-icon me-2"
                 ><img src="assets/img/icons/menu-icon-02.svg" alt="" /></span
@@ -275,7 +275,7 @@
             <a
               href="#"
               onclick="return false;"
-              [ngClass]="{ active: option_selected == 7 }"
+              [ngClass]="{ active: option_selected === 7 }"
               (click)="optionSelected(7)"
               ><span class="set-about-icon me-2"
                 ><img src="assets/img/icons/menu-icon-02.svg" alt="" /></span
@@ -286,7 +286,7 @@
             <a
               href="#"
               onclick="return false;"
-              [ngClass]="{ active: option_selected == 8 }"
+              [ngClass]="{ active: option_selected === 8 }"
               (click)="optionSelected(8)"
               ><span class="set-about-icon me-2"
                 ><img src="assets/img/icons/menu-icon-02.svg" alt="" /></span
@@ -297,7 +297,7 @@
             <a
               href="#"
               onclick="return false;"
-              [ngClass]="{ active: option_selected == 9 }"
+              [ngClass]="{ active: option_selected === 9 }"
               (click)="optionSelected(9)"
               ><span class="set-about-icon me-2"
                 ><img src="assets/img/icons/menu-icon-02.svg" alt="" /></span
@@ -308,7 +308,7 @@
             <a
               href="#"
               onclick="return false;"
-              [ngClass]="{ active: option_selected == 10 }"
+              [ngClass]="{ active: option_selected === 10 }"
               (click)="optionSelected(10)"
               ><span class="set-about-icon me-2"
                 ><img src="assets/img/icons/menu-icon-02.svg" alt="" /></span
@@ -324,53 +324,53 @@
           </li>
         </ul>
       </div>
-      <ng-container *ngIf="option_selected == 1">
+      <ng-container *ngIf="option_selected === 1">
         <!-- bip --><app-bip-form
         ></app-bip-form>
         <!-- fin bip -->
       </ng-container>
-      <ng-container *ngIf="option_selected == 2">
+      <ng-container *ngIf="option_selected === 2">
         <!-- Reduction Goal -->
         <app-reduction-goal-form></app-reduction-goal-form>
         <!-- fin Reduction Goal -->
       </ng-container>
-      <ng-container *ngIf="option_selected == 3">
+      <ng-container *ngIf="option_selected === 3">
         <!-- Reduction Goal -->
         <!-- <app-sustitution-goal-form></app-sustitution-goal-form> -->
         <app-sustitution-list></app-sustitution-list>
         <!-- fin Reduction Goal -->
       </ng-container>
-      <ng-container *ngIf="option_selected == 4">
+      <ng-container *ngIf="option_selected === 4">
         <!-- Reduction Goal -->
         <app-family-involvement-goal-form></app-family-involvement-goal-form>
         <!-- fin Reduction Goal -->
       </ng-container>
-      <ng-container *ngIf="option_selected == 5">
+      <ng-container *ngIf="option_selected === 5">
         <!-- Reduction Goal -->
         <app-monitoring-evaluating></app-monitoring-evaluating>
         <!-- fin Reduction Goal -->
       </ng-container>
-      <ng-container *ngIf="option_selected == 6">
+      <ng-container *ngIf="option_selected === 6">
         <!-- Reduction Goal -->
         <app-behavior-assistant></app-behavior-assistant>
         <!-- fin Reduction Goal -->
       </ng-container>
-      <ng-container *ngIf="option_selected == 7">
+      <ng-container *ngIf="option_selected === 7">
         <!-- Reduction Goal -->
         <app-generalization-training></app-generalization-training>
         <!-- fin Reduction Goal -->
       </ng-container>
-      <ng-container *ngIf="option_selected == 8">
+      <ng-container *ngIf="option_selected === 8">
         <!-- Reduction Goal -->
         <app-crisis-plan></app-crisis-plan>
         <!-- fin Reduction Goal -->
       </ng-container>
-      <ng-container *ngIf="option_selected == 9">
+      <ng-container *ngIf="option_selected === 9">
         <!-- Reduction Goal -->
         <app-de-escalation-tecniques></app-de-escalation-tecniques>
         <!-- fin Reduction Goal -->
       </ng-container>
-      <ng-container *ngIf="option_selected == 10">
+      <ng-container *ngIf="option_selected === 10">
         <!-- Reduction Goal -->
         <app-consent-treatment-form></app-consent-treatment-form>
         <!-- fin Reduction Goal -->

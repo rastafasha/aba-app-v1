@@ -684,7 +684,7 @@
                                                     <ng-container *ngFor="let appointment of appointments">
                                                         <li>
                                                             <div class="activity-user">
-                                                                <a [routerLink]="routes.profile" [attr.title]="appointment.doctor.full_name" data-bs-toggle="tooltip" class="avatar">
+                                                                <a [routerLink]="routes.profile.profile" [attr.title]="appointment.doctor.full_name" data-bs-toggle="tooltip" class="avatar">
                                                                     <img [attr.alt]="appointment.doctor.full_name" [src]="appointment.doctor.avatar" class="img-fluid rounded-circle">
                                                                 </a>
                                                             </div>

@@ -78,8 +78,8 @@ export class ReductionGoalEditComponent {
   goals = [];
   goalReductions = [];
 
-  golsto_edit = [];
-  gollto_edit = [];
+  golsto_edit: any;
+  gollto_edit: any;
 
   goalmaladaptive_clientId: any;
   goalReductionId: any;
@@ -118,7 +118,6 @@ export class ReductionGoalEditComponent {
   //obtenemos los goals del maladaptive por nombre
   //obtenemos los maladaptives iniciales para poder relacionarlos con los goals
   getGoalsMaladaptives() {
-    this.patient_id = this.patient_id;
     this.goalService
       .listMaladaptivesGoals(this.maladap.maladaptive_behavior, this.patient_id)
       .subscribe((resp) => {
@@ -157,7 +156,7 @@ export class ReductionGoalEditComponent {
         }
         // aqui si no hay goalmaladaptive o es undefined no traigas nada para evitar el error en consola
         if (
-          this.goalmaladaptive == undefined &&
+          this.goalmaladaptive === undefined &&
           this.client_id === this.goalmaladaptive_clientId
         ) {
           this.current_status = '';

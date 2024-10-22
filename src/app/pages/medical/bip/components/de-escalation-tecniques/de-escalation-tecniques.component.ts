@@ -27,7 +27,7 @@ export class DeEscalationTecniquesComponent {
 
   caregivers_training_goals = [];
   deEscalationopts = [];
-  escalation_edit = [];
+  escalation_edit: any;
 
   client_id: any;
   user: AppUser;

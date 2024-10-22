@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { url_media } from 'src/app/config/config';
@@ -7,13 +7,14 @@ import { DoctorService } from '../../doctors/service/doctor.service';
 import { LocationService } from '../services/location.service';
 import { AppUser } from 'src/app/shared/models/users.models';
 import { PageService } from 'src/app/shared/services/pages.service';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
 @Component({
   selector: 'app-location-view',
   templateUrl: './location-view.component.html',
   styleUrls: ['./location-view.component.scss'],
 })
-export class LocationViewComponent {
+export class LocationViewComponent implements OnInit {
   routes = AppRoutes;
   selectedValue!: string;
   option_selected = 1;
@@ -53,7 +54,7 @@ export class LocationViewComponent {
   location_id: any;
   location_iddd: any;
   user: AppUser;
-  roles = [];
+  role: string;
   location_selected: any;
 
   patient_generals = [];
@@ -74,6 +75,7 @@ export class LocationViewComponent {
   status: any = null;
 
   constructor(
+    private authService: AuthService,
     private doctorService: DoctorService,
     private locationService: LocationService,
     private activatedRoute: ActivatedRoute,
@@ -87,9 +89,8 @@ export class LocationViewComponent {
     });
     this.getLocation();
 
-    const USER = localStorage.getItem('user');
-    this.user = JSON.parse(USER ? USER : '');
-    this.roles = this.user.roles;
+    this.user = this.authService.user as AppUser;
+    this.role = this.user.roles[0];
 
     this.pageService.onInitPage();
   }

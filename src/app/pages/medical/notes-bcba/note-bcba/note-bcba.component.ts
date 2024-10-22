@@ -28,10 +28,10 @@ export class NoteBcbaComponent {
   selectedValueProvider!: string;
   selectedValueRBT!: string;
   selectedValueBCBA!: string;
-  selectedValueTimeIn = 0;
-  selectedValueTimeOut = 0;
-  selectedValueTimeIn2 = 0;
-  selectedValueTimeOut2 = 0;
+  selectedValueTimeIn: any = 0;
+  selectedValueTimeOut: any = 0;
+  selectedValueTimeIn2: any = 0;
+  selectedValueTimeOut2: any = 0;
   selectedValueProviderName!: string;
   selectedValueMaladaptive!: string;
   selectedValueRendering!: string;
@@ -98,6 +98,7 @@ export class NoteBcbaComponent {
   FILE_SIGNATURE_RBT: any;
   IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED: any = 'assets/img/user-06.jpg';
   FILE_SIGNATURE_BCBA: any;
+  IMAGE_PREVISUALIZA_SIGNATURE_BCBA: any;
   IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED: any = 'assets/img/user-06.jpg';
 
   rbt_id: any;
@@ -357,16 +358,16 @@ export class NoteBcbaComponent {
     console.log('selectFirmaSpecialistBcba', this.selectedValueBCBA, event);
   }
 
-  hourTimeInSelected(value: number) {
+  hourTimeInSelected(value: string) {
     this.selectedValueTimeIn = value;
   }
-  hourTimeOutSelected(value: number) {
+  hourTimeOutSelected(value: string) {
     this.selectedValueTimeOut = value;
   }
-  hourTimeIn2Selected(value: number) {
+  hourTimeIn2Selected(value: string) {
     this.selectedValueTimeIn2 = value;
   }
-  hourTimeOut2Selected(value: number) {
+  hourTimeOut2Selected(value: string) {
     this.selectedValueTimeOut2 = value;
   }
 

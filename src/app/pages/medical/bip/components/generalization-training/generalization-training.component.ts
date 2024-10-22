@@ -136,7 +136,7 @@ export class GeneralizationTrainingComponent {
     this.generalizations.splice(i, 1);
   }
 
-  cambiarStatusSto(generalization: any) {
+  cambiarStatusSto(generalization: any, i: number) {
     this.family_edit = generalization;
     Swal.fire(
       'Updated',

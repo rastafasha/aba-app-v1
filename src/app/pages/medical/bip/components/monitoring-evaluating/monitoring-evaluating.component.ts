@@ -41,7 +41,7 @@ export class MonitoringEvaluatingComponent {
   monitorid: any;
   lto_edit: any;
 
-  gollto_edit = [];
+  gollto_edit: any;
 
   current_status: any;
 

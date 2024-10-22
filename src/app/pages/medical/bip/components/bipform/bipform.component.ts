@@ -68,15 +68,15 @@ export class BipFormComponent implements OnInit {
   initial_interesting: any;
   current_intensity: any;
 
-  maladaptive_edit = [];
-  medication_edit = [];
-  evaluation_edit = [];
-  prevalent_edit = [];
-  sensory_edit = [];
-  escape_edit = [];
-  intervention_edit = [];
-  atention_edit = [];
-  tangible_edit = [];
+  maladaptive_edit: any;
+  medication_edit: any;
+  evaluation_edit: any;
+  prevalent_edit: any;
+  sensory_edit: any;
+  escape_edit: any;
+  intervention_edit: any;
+  atention_edit: any;
+  tangible_edit: any;
 
   //assestments
   assesstments = [];

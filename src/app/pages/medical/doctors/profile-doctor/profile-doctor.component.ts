@@ -51,7 +51,7 @@ export class ProfileDoctorComponent {
   text_validation = '';
 
   user: AppUser;
-  roles = [];
+  role: string = null;
 
   constructor(
     private doctorService: DoctorService,
@@ -69,11 +69,8 @@ export class ProfileDoctorComponent {
     });
     this.getDoctor();
 
-    const USER = localStorage.getItem('user');
-    this.user = JSON.parse(USER ? USER : '');
-    this.roles = this.user.roles;
-
     this.user = this.authService.user as AppUser;
+    this.role = this.user.roles[0];
   }
 
   goBack() {

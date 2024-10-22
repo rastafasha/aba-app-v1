@@ -485,9 +485,4 @@ export class ListPatientMComponent implements OnInit {
         return false;
     }
   }
-
-  closeMenuSidebar() {
-    $('.sidebar').addClass('cerrar');
-    $('.menu-opened').remove('menu-opened');
-  }
 }

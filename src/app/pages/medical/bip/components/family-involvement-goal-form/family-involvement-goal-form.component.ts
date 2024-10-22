@@ -41,7 +41,7 @@ export class FamilyInvolvementGoalFormComponent implements OnInit {
   client_id_goalFamilyEnvolments: any;
   goalFamilyEnvolmentid: any;
   goalFamilyid: any;
-  selectedCaregiver = [];
+  selectedCaregiver: any;
 
   constructor(
     private bipService: BipService,

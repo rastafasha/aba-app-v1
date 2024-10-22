@@ -104,9 +104,12 @@ export class EditNoteRbtComponent implements OnInit {
   natural_teaching: any;
 
   FILE_SIGNATURE_RBT: any;
+  IMAGE_PREVISUALIZA_SIGNATURE__RBT: any;
   IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED: any;
   FILE_SIGNATURE_BCBA: any;
-  IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED: any = 'assets/img/user-06.jpg';
+  IMAGE_PREVISUALIZA_SIGNATURE_BCBA: any;
+  IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED: string | Blob =
+    'assets/img/user-06.jpg';
 
   rbt_id: any;
   bcba_id: any;
@@ -635,7 +638,8 @@ export class EditNoteRbtComponent implements OnInit {
     const reader2 = new FileReader();
     reader2.readAsDataURL(this.FILE_SIGNATURE_BCBA);
     reader2.onloadend = () =>
-      (this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED = reader2.result);
+      (this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED =
+        reader2.result as string);
   }
 
   save() {

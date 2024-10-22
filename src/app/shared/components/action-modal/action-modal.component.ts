@@ -12,7 +12,12 @@ export class ActionModalComponent {
     @Inject(MAT_DIALOG_DATA)
     public data: {
       patient: Record<string, unknown>;
-      actions: { icon: string; buttonClass: string; onClick: () => void }[];
+      actions: {
+        icon: string;
+        title: string;
+        buttonClass: string;
+        onClick: () => void;
+      }[];
     }
   ) {}
 

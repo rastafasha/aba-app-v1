@@ -244,7 +244,7 @@ export class AddPatientMComponent {
   notes = [];
   services = [];
   services_code = [];
-  poscoveredList: string = null;
+  poscoveredList: any[] = [];
 
   telehealth: boolean;
   pay: boolean;
@@ -546,7 +546,7 @@ export class AddPatientMComponent {
     formData.append('copayments', this.copayments);
     formData.append('oop', this.oop);
 
-    formData.append('pos_covered', this.poscoveredList);
+    formData.append('pos_covered', this.poscoveredList.toString());
 
     if (this.user.roles[0] === 'SUPERADMIN') {
       formData.append('location_id', this.selectedValueLocation + '');

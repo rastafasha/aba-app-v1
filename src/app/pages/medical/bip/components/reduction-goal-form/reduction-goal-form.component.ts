@@ -79,7 +79,7 @@ export class ReductionGoalFormComponent {
   goalReductions = [];
 
   golsto_edit = [];
-  gollto_edit = [];
+  gollto_edit: any;
 
   goalmaladaptive_clientId: any;
   goalReductionId: any;
@@ -93,7 +93,7 @@ export class ReductionGoalFormComponent {
   ngOnInit(): void {
     //me subcribo al id recibido por el parametro de la url
     this.ativatedRoute.params.subscribe((resp) => {
-      this.patient_id = resp["patient_id"]; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
+      this.patient_id = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
       this.getProfileBip(); // se solicita la info del perfil del usuario
       // console.log(this.patient_id);
     });

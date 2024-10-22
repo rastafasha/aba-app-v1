@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { BipRoutingModule } from './bip.routing';
 import { BipComponent } from './bip.component';
-import { BipattentionComponent } from './bipattention/bipattention.component';
+import { BipAttentionComponent } from './bip-attention/bip-attention.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -15,13 +15,13 @@ import { ComponentsModule } from './components/components.module';
 @NgModule({
   declarations: [
     BipComponent,
-    BipattentionComponent,
+    BipAttentionComponent,
     BipListComponent,
     BipProfileComponent,
   ],
   exports: [
     BipComponent,
-    BipattentionComponent,
+    BipAttentionComponent,
     BipListComponent,
     BipProfileComponent,
   ],
