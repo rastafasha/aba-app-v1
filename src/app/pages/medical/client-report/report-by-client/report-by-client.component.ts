@@ -553,9 +553,13 @@ export class ReportByClientComponent implements OnInit {
       0
     );
     let minutes = 0;
-    this.clientReportList.forEach((element) => {
-      const [horas, minutos] = element.total_hours.split(':').map(Number);
-      minutes += horas * 60 + minutos;
+    this.noteRbt.forEach((element) => {
+      const [horasRbt, minutosRbt] = element.total_hours.split(':').map(Number);
+      minutes += horasRbt * 60 + minutosRbt;
+    });
+    this.noteBcba.forEach((element) => {
+      const [horasBcba, minutosBcba] = element.total_hours.split(':').map(Number);
+      minutes += horasBcba * 60 + minutosBcba;
     });
     const horasTotales = Math.floor(minutes / 60);
     const minutosTotales = minutes % 60;
