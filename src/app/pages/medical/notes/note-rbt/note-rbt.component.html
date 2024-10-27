@@ -421,7 +421,7 @@
                                             <mat-select [(ngModel)]="selectedValueBCBA" name="bcba"
                                                 [ngModelOptions]="{standalone: true}" class="form-control select"
                                                 placeholder="Select Specialist"
-                                                (selectionChange)="selectFirmaSpecialistBcba($event)" value="select">
+                                                (selectionChange)="selectFirmaSpecialistBcba()" value="select">
                                                 <mat-option [value]="null">--Select-</mat-option>
                                                 <mat-option *ngFor="let data of roles_bcba" [value]="data.id">
                                                     {{data.name}} {{data.surname}}
