@@ -3,7 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { BipService } from '../../bip/service/bip.service';
 import { GoalService } from '../../bip/service/goal.service';
-import { PatientMService } from '../../patient-m/service/patient-m.service';
 import { NoteRbtService } from '../services/note-rbt.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import Swal from 'sweetalert2';
@@ -11,7 +10,6 @@ import { Location } from '@angular/common';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { AppUser } from 'src/app/shared/models/users.models';
 import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
-declare let $: any;
 
 export interface POSModel {
   id: number;
@@ -166,6 +164,8 @@ export class NoteRbtComponent implements OnInit {
   selectedPaService: PaService | null = null;
   selectedValueCode = '';
 
+  projectedUnits = 0;
+
   // session_date: Date;
   // next_session_is_scheduled_for: Date;
 
@@ -275,10 +275,8 @@ export class NoteRbtComponent implements OnInit {
     }
   }
 
-  selectCpt(event: any) {
-    event = this.selectedValueCode;
-    // this.getCPtLißst(this.selectedValueCode);
-    console.log(this.selectedValueCode);
+  selectCpt(event: { value: string }) {
+    event.value = this.selectedValueCode;
   }
 
   getMaladaptivesBipByPatientId() {
@@ -304,12 +302,10 @@ export class NoteRbtComponent implements OnInit {
 
   specialistData() {
     this.doctorService.showDoctorProfile(this.doctor_id).subscribe((resp) => {
-      // console.log(resp);
       this.provider_credential = resp.doctor.certificate_number;
-      // this.notes = resp.notes;
-      // this.services = resp.services;
     });
   }
+
   // traer el target de todos los replacements
   getStoInprogressGoal() {
     this.goalService.getStobyGoalinProgress(this.goal).subscribe((resp) => {
@@ -343,12 +339,6 @@ export class NoteRbtComponent implements OnInit {
     });
   }
 
-  // selectSpecialist(event:any){
-  //   event = this.selectedValueProviderName;
-  //   this.specialistData(this.selectedValueProviderName);
-  //   console.log(this.selectedValueProviderName);
-
-  // }
 
   speciaFirmaDataRbt(selectedValueRBT) {
     this.doctorService.showDoctorProfile(selectedValueRBT).subscribe((resp) => {
@@ -360,13 +350,12 @@ export class NoteRbtComponent implements OnInit {
       // this.services = resp.services;
     });
   }
-  selectFirmaSpecialistRbt(event: any) {
-    event = this.selectedValueRBT;
+  selectFirmaSpecialistRbt() {
     this.speciaFirmaDataRbt(this.selectedValueRBT);
     console.log(this.selectedValueRBT);
   }
 
-  speciaFirmaDataBcba(selectedValueBCBA) {
+  speciaFirmaDataBcba(selectedValueBCBA: string) {
     this.doctorService
       .showDoctorProfile(selectedValueBCBA)
       .subscribe((resp) => {
@@ -379,23 +368,81 @@ export class NoteRbtComponent implements OnInit {
       });
   }
 
-  selectFirmaSpecialistBcba(event: any) {
-    event = this.selectedValueBCBA;
+  selectFirmaSpecialistBcba() {
     this.speciaFirmaDataBcba(this.selectedValueBCBA);
     console.log(this.selectedValueBCBA);
   }
 
+  calculateUnitsFromTime(startTime: string, endTime: string): number {
+    if (!startTime || !endTime) return 0;
+
+    const start = this.parseTime(startTime);
+    const end = this.parseTime(endTime);
+
+    if (!start || !end) return 0;
+
+    const durationMinutes = (end.getTime() - start.getTime()) / (1000 * 60);
+    return Math.ceil(durationMinutes / 15);
+  }
+
+  parseTime(timeStr: string): Date | null {
+    if (!timeStr) return null;
+
+    const [hours, minutes] = timeStr.split(':').map(Number);
+    const date = new Date();
+    date.setHours(hours, minutes, 0, 0);
+    return date;
+  }
+
+  calculateProjectedUnits(): void {
+    let totalUnits = 0;
+
+    if (this.selectedValueTimeIn && this.selectedValueTimeOut) {
+      const morningUnits = this.calculateUnitsFromTime(
+        this.selectedValueTimeIn,
+        this.selectedValueTimeOut
+      );
+      totalUnits += morningUnits;
+    }
+
+    if (this.selectedValueTimeIn2 && this.selectedValueTimeOut2) {
+      const afternoonUnits = this.calculateUnitsFromTime(
+        this.selectedValueTimeIn2,
+        this.selectedValueTimeOut2
+      );
+      totalUnits += afternoonUnits;
+    }
+
+    this.projectedUnits = totalUnits;
+  }
+
+  getUsedUnitsPercentage(): number {
+    if (!this.selectedPaService) return 0;
+    return ((this.selectedPaService.n_units - this.selectedPaService.available_units) / this.selectedPaService.n_units) * 100;
+  }
+
+  getProjectedUnitsPercentage(): number {
+    if (!this.selectedPaService) return 0;
+    return (this.projectedUnits / this.selectedPaService.n_units) * 100;
+  }
+
   hourTimeInSelected(value: string) {
+    console.log('hourTimeInSelected', value);
     this.selectedValueTimeIn = value;
+    this.calculateProjectedUnits();
   }
   hourTimeOutSelected(value: string) {
+    console.log('hourTimeOutSelected', value);
     this.selectedValueTimeOut = value;
+    this.calculateProjectedUnits();
   }
   hourTimeIn2Selected(value: string) {
     this.selectedValueTimeIn2 = value;
+    this.calculateProjectedUnits();
   }
   hourTimeOut2Selected(value: string) {
     this.selectedValueTimeOut2 = value;
+    this.calculateProjectedUnits();
   }
 
   selectMaladaptive(behavior: any) {
@@ -404,6 +451,11 @@ export class NoteRbtComponent implements OnInit {
     // this.maladp_added.push({
     //   maladaptive : behavior
     // })
+  }
+
+  isExceedingAvailableUnits(): boolean {
+    if (!this.selectedPaService) return false;
+    return this.projectedUnits > this.selectedPaService.available_units;
   }
 
   selectReplacement(replacemen: any) {

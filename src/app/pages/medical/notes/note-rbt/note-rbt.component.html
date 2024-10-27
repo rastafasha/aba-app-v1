@@ -92,7 +92,7 @@
                                       (selectionChange)="onPaServiceSelect($event)"
                                       class="form-control select"
                                       placeholder="Select Service">
-                                      <mat-option *ngFor="let service of paServices" [value]="service">
+                                      <mat-option *ngFor="let service of pa_services" [value]="service">
                                         {{service.pa_services}} ({{service.cpt}})
                                       </mat-option>
                                     </mat-select>
@@ -105,16 +105,27 @@
                                     <div class="units-container">
                                       <div class="units-wrapper">
                                         <div class="progress-container">
+                                          <!-- Current usage bar -->
                                           <div class="progress-bar"
-                                            [style.width.%]="((selectedPaService.n_units - selectedPaService.available_units) / selectedPaService.n_units) * 100">
+                                            [style.width.%]="getUsedUnitsPercentage()">
+                                          </div>
+                                          <!-- Projected usage bar -->
+                                          <div class="progress-bar-projected"
+                                            [style.width.%]="getProjectedUnitsPercentage()"
+                                            [style.left.%]="getUsedUnitsPercentage()">
                                           </div>
                                         </div>
                                         <div class="units-text">
-                                          {{selectedPaService.available_units}}/{{selectedPaService.n_units}} units
+                                          {{selectedPaService.available_units}}
+                                          <span *ngIf="projectedUnits > 0">(+{{projectedUnits}})</span>
+                                          /{{selectedPaService.n_units}} units
                                         </div>
                                       </div>
                                     </div>
                                   </div>
+                                </div>
+                                <div class="alert alert-warning" *ngIf="isExceedingAvailableUnits()">
+                                  Warning: This note will exceed the available units for this service.
                                 </div>
                                 <!--  fin units -->
 
@@ -140,7 +151,7 @@
                                                     <label>Time In <span class="login-danger">*</span></label>
                                                     <input [value]="selectedValueTimeIn" [ngxTimepicker]="toggleTimepicker" readonly
                                                         [format]="24" max="12:00" class="form-control" name="time_in" [(ngModel)]="selectedValueTimeIn">
-                                                    <ngx-material-timepicker (timeChanged)="hourTimeInSelected($event)" #toggleTimepicker></ngx-material-timepicker>
+                                                    <ngx-material-timepicker (timeSet)="hourTimeInSelected($event)" #toggleTimepicker></ngx-material-timepicker>
 
 
                                                 </div>
@@ -150,7 +161,7 @@
                                                     <label>Time Out <span class="login-danger">*</span></label>
                                                     <input [ngxTimepicker]="toggleTimepicker2" readonly
                                                         [value]="selectedValueTimeOut"  [(ngModel)]="selectedValueTimeOut"[format]="24" class="form-control" name="time_out">
-                                                    <ngx-material-timepicker (timeChanged)="hourTimeOutSelected($event)" #toggleTimepicker2></ngx-material-timepicker>
+                                                    <ngx-material-timepicker (timeSet)="hourTimeOutSelected($event)" #toggleTimepicker2></ngx-material-timepicker>
                                                 </div>
                                             </div>
                                         </div>
@@ -163,7 +174,7 @@
                                                     <label >Time In <span class="login-danger">*</span></label>
                                                     <input [ngxTimepicker]="toggleTimepicker3" readonly
                                                         [value]="selectedValueTimeIn2" [format]="24" class="form-control" name="time_in2" [(ngModel)]="selectedValueTimeIn2" >
-                                                    <ngx-material-timepicker (timeChanged)="hourTimeIn2Selected($event)" #toggleTimepicker3></ngx-material-timepicker>
+                                                    <ngx-material-timepicker (timeSet)="hourTimeIn2Selected($event)" #toggleTimepicker3></ngx-material-timepicker>
                                                 </div>
                                             </div>
                                             <div class="col-xs-12 col-sm-6">
@@ -171,7 +182,7 @@
                                                     <label >Time Out <span class="login-danger">*</span></label>
                                                     <input [ngxTimepicker]="toggleTimepicker4" readonly
                                                         [value]="selectedValueTimeOut2" [format]="24" class="form-control" name="time_out2">
-                                                    <ngx-material-timepicker (timeChanged)="hourTimeOut2Selected($event)" #toggleTimepicker4></ngx-material-timepicker>
+                                                    <ngx-material-timepicker (timeSet)="hourTimeOut2Selected($event)" #toggleTimepicker4></ngx-material-timepicker>
                                                 </div>
                                             </div>
                                         </div>
