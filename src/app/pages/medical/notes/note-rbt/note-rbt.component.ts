@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { Location } from '@angular/common';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { AppUser } from 'src/app/shared/models/users.models';
+import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 declare let $: any;
 
 export interface POSModel {
@@ -35,7 +36,6 @@ export class NoteRbtComponent implements OnInit {
   selectedValueProvider!: string;
   selectedValueRBT!: string;
   selectedValueBCBA!: string;
-  selectedValueCode!: string;
   selectedValueTimeIn = '';
   selectedValueTimeOut = '';
   selectedValueTimeIn2 = '';
@@ -162,6 +162,10 @@ export class NoteRbtComponent implements OnInit {
     { id: 'natural_teaching', name: 'Natural Teaching', value: false },
   ];
 
+  pa_services: PaService[] = [];
+  selectedPaService: PaService | null = null;
+  selectedValueCode = '';
+
   // session_date: Date;
   // next_session_is_scheduled_for: Date;
 
@@ -248,11 +252,9 @@ export class NoteRbtComponent implements OnInit {
       // console.log( this.pos);
       this.diagnosis_code = this.client_selected.patient.diagnosis_code;
 
-      this.pa_assessments = resp.patient.pa_assessments;
-      // console.log(this.pa_assessments);
-      const jsonObj = JSON.parse(this.pa_assessments) || '';
-      this.pa_assessmentsgroup = jsonObj;
-      console.log(this.pa_assessmentsgroup);
+      this.pa_services = resp.patient.pa_services;
+
+      console.log('Mapped PA Services:', this.pa_services);
 
       // this.n_un = this.pa_assessmentsgroup[0].n_units;
       // this.unitsAsignated = this.pa_assessmentsgroup.n_units;
@@ -264,6 +266,13 @@ export class NoteRbtComponent implements OnInit {
       this.getMaladaptivesBipByPatientId();
       this.getReplacementsByPatientId();
     });
+  }
+
+  onPaServiceSelect(event: any) {
+    const service = event.value;
+    if (service) {
+      this.selectedValueCode = service.cpt;
+    }
   }
 
   selectCpt(event: any) {
@@ -538,6 +547,10 @@ export class NoteRbtComponent implements OnInit {
 
   save() {
     this.text_validation = '';
+    if (!this.selectedPaService) {
+      this.text_validation = 'Please select a service';
+      return;
+    }
     if (
       this.maladaptives[0].number_of_occurrences === undefined ||
       this.replacementGoals[0].number_of_correct_response === undefined ||
@@ -591,6 +604,9 @@ export class NoteRbtComponent implements OnInit {
     formData.append('provider_name', this.doctor_id);
     formData.append('supervisor_name', this.selectedValueBCBA);
     formData.append('cpt_code', this.selectedValueCode);
+
+    formData.append('pa_service_id', this.selectedPaService.id.toString());
+    formData.append('cpt_code', this.selectedPaService.cpt);
 
     if (this.selectedValueTimeIn) {
       formData.append(

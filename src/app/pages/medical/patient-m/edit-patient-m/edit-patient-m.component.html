@@ -1297,216 +1297,139 @@
       <div class="col-sm-12">
         <div class="card">
           <div class="card-body">
-            <form autocomplete="off">
+            <form #paForm="ngForm" (ngSubmit)="addPaService()">
               <div class="row">
-                <!-- pas -->
                 <div class="col-12">
                   <div class="card-box">
                     <div class="card-block">
                       <h3 class="card-title">PAs</h3>
 
-                      <div class="row align-items-center">
-                        <div class="col-xs-12">
-                          <div class="row">
-                            <div class="col-12 col-md-6 col-xl-4">
-                              <div class="form-group local-forms">
-                                <label
-                                  >PA Services
-                                  <span class="login-danger">*</span></label
-                                >
-                                <input
-                                  class="form-control"
-                                  autocomplete="off"
-                                  name="pa_services"
-                                  [(ngModel)]="pa_services"
-                                  type="text"
-                                />
-                              </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-xl-4">
-                              <div class="form-group local-forms">
-                                <label
-                                  >Patient Services Start Date<span
-                                    class="login-danger"
-                                    >*</span
-                                  ></label
-                                >
-                                <input
-                                  class="form-control datetimepicker"
-                                  name="pa_services_start_date"
-                                  [(ngModel)]="pa_services_start_date"
-                                  type="text"
-                                  matInput
-                                  [matDatepicker]="picker5"
-                                />
-                                <mat-datepicker #picker5></mat-datepicker>
-                                <mat-datepicker-toggle
-                                  matIconSuffix
-                                  [for]="picker5"
-                                ></mat-datepicker-toggle>
-                              </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-xl-4">
-                              <div class="form-group local-forms">
-                                <label
-                                  >Patient Services End Date<span
-                                    class="login-danger"
-                                    >*</span
-                                  ></label
-                                >
-                                <input
-                                  class="form-control datetimepicker"
-                                  name="pa_services_end_date"
-                                  [(ngModel)]="pa_services_end_date"
-                                  type="text"
-                                  matInput
-                                  [matDatepicker]="picker6"
-                                />
-                                <mat-datepicker #picker6></mat-datepicker>
-                                <mat-datepicker-toggle
-                                  matIconSuffix
-                                  [for]="picker6"
-                                ></mat-datepicker-toggle>
-                              </div>
-                            </div>
-                            <div class="col-12 col-md-4">
-                              <div class="form-group local-forms">
-                                <label
-                                  >CPT
-                                  <span class="login-danger">*</span></label
-                                >
-                                <mat-select
-                                  [(ngModel)]="selectedValueCode"
-                                  name="code"
-                                  class="form-control select"
-                                  placeholder="Select Code"
-                                  (change)="selectProviderCpt($event)"
-                                >
-                                  <mat-option
-                                    *ngFor="let data of services"
-                                    [value]="data.code"
-                                  >
-                                    {{ data.code }} | {{ data.provider }}
-                                  </mat-option>
-                                </mat-select>
-                              </div>
-                            </div>
-                            <div class="col-12 col-md-4">
-                              <div class="form-group local-forms">
-                                <label
-                                  >No.Units<span class="login-danger"
-                                    >*</span
-                                  ></label
-                                >
-                                <input
-                                  class="form-control"
-                                  autocomplete="off"
-                                  name="n_units"
-                                  [(ngModel)]="n_units"
-                                  type="number"
-                                />
-                              </div>
-                            </div>
-                            <div class="col-12 mb-3 doctor-submit text-end">
-                              <button
-                                class="btn btn-primary btn-sm"
-                                (click)="addPAAssestment()"
-                              >
-                                Add
-                              </button>
+                      <!-- PA Service Form -->
+                      <div class="row align-items-center mb-4">
+                        <div class="col-12 col-md-6 col-xl-4">
+                          <div class="form-group local-forms">
+                            <label>PA Service Name <span class="login-danger">*</span></label>
+                            <input
+                              class="form-control"
+                              [(ngModel)]="newPaService.pa_services"
+                              name="pa_services"
+                              required
+                              #nameInput="ngModel"
+                              type="text"
+                            />
+                            <div *ngIf="nameInput.invalid && (nameInput.dirty || nameInput.touched)" class="text-danger">
+                              <small *ngIf="nameInput.errors?.['required']">Name is required</small>
                             </div>
                           </div>
                         </div>
-                        <div class="col-xs-12">
-                          <div class="table-responsive">
-                            <table class="table mb-0">
-                              <thead>
-                                <tr>
-                                  <th>PA Services</th>
-                                  <th>Patient Services Start Date</th>
-                                  <th>Patient Services End Date</th>
-                                  <th>CPT</th>
-                                  <!-- <th>Provider</th> -->
-                                  <th>n units</th>
-                                  <th>Options</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr
-                                  *ngFor="
-                                    let asses of pa_assessmentgroup;
-                                    let i = index
-                                  "
-                                >
-                                  <td>
-                                    {{ asses.pa_services }}
-                                  </td>
-                                  <td>
-                                    {{ asses.pa_services_start_date | date }}
-                                  </td>
-                                  <td>
-                                    {{ asses.pa_services_end_date | date }}
-                                  </td>
-                                  <td>
-                                    {{ asses.cpt }}
-                                  </td>
-                                  <!-- <td>
-                                                            {{asses.provider}}
-                                                        </td> -->
-                                  <td>
-                                    {{ asses.n_units }}
-                                  </td>
-                                  <td>
-                                    <button
-                                      class="btn btn-outline-danger btn-sm"
-                                      (click)="deletePAAssestment(i)"
-                                    >
-                                      x
-                                    </button>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
+
+                        <div class="col-12 col-md-6 col-xl-4">
+                          <div class="form-group local-forms">
+                            <label>CPT Code <span class="login-danger">*</span></label>
+                            <mat-select
+                              [(ngModel)]="newPaService.cpt"
+                              name="cpt"
+                              required
+                              class="form-control select"
+                              placeholder="Select Code"
+                              (selectionChange)="selectProviderCpt($event)"
+                            >
+                              <mat-option *ngFor="let data of services" [value]="data.code">
+                                {{ data.code }} | {{ data.provider }}
+                              </mat-option>
+                            </mat-select>
                           </div>
+                        </div>
+
+                        <div class="col-12 col-md-6 col-xl-4">
+                          <div class="form-group local-forms">
+                            <label>Number of Units <span class="login-danger">*</span></label>
+                            <input
+                              class="form-control"
+                              [(ngModel)]="newPaService.n_units"
+                              name="n_units"
+                              required
+                              type="number"
+                              min="0"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-12 col-md-6 col-xl-4">
+                          <div class="form-group local-forms">
+                            <label>Start Date <span class="login-danger">*</span></label>
+                            <input
+                              class="form-control"
+                              [(ngModel)]="newPaService.start_date"
+                              name="start_date"
+                              required
+                              type="date"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-12 col-md-6 col-xl-4">
+                          <div class="form-group local-forms">
+                            <label>End Date <span class="login-danger">*</span></label>
+                            <input
+                              class="form-control"
+                              [(ngModel)]="newPaService.end_date"
+                              name="end_date"
+                              required
+                              type="date"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-12 text-end">
+                          <button
+                            type="submit"
+                            class="btn btn-primary me-2"
+                            [disabled]="paForm.invalid"
+                          >
+                            Add PA Service
+                          </button>
                         </div>
                       </div>
+
+                      <!-- PA Services Table -->
+                      <div class="table-responsive">
+                        <table class="table table-striped mb-0">
+                          <thead>
+                            <tr>
+                              <th>Name</th>
+                              <th>CPT Code</th>
+                              <th>Units</th>
+                              <th>Start Date</th>
+                              <th>End Date</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let paService of paServices">
+                              <td>{{ paService.pa_services }}</td>
+                              <td>{{ paService.cpt }}</td>
+                              <td>{{ paService.n_units }}</td>
+                              <td>{{ paService.start_date | date }}</td>
+                              <td>{{ paService.end_date | date }}</td>
+                              <td>
+                                <button
+                                  type="button"
+                                  class="btn btn-sm btn-danger"
+                                  (click)="deletePaService(paService)"
+                                >
+                                  <i class="fas fa-trash"></i>
+                                </button>
+                              </td>
+                            </tr>
+                            <tr *ngIf="paServices.length === 0">
+                              <td colspan="6" class="text-center">No PA services found</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
                     </div>
-                  </div>
-                </div>
-                <!-- pas -->
-
-                <!-- <div class="col-12" *ngIf="valid_form">
-                                    <div class="form-group row" *ngIf="valid_form_success">
-                                        <div class="col-md-12">
-                                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                                <strong>Success!</strong> The Patient has been registered.
-                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                                                    <span aria-hidden="true"> </span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row" *ngIf="text_validation">
-                                        <div class="col-md-12">
-                                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                                <strong>!</strong> {{text_validation}}.
-                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                                                    <span aria-hidden="true"> </span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
-
-                <div class="col-12">
-                  <div class="doctor-submit text-end">
-                    <button
-                      type="button"
-                      class="btn btn-primary submit-form me-2"
-                      (click)="save()"
-                    >
-                      Save
-                    </button>
                   </div>
                 </div>
               </div>
@@ -1514,6 +1437,7 @@
           </div>
         </div>
       </div>
+
       <!-- fin PAs -->
 
       <!-- Files -->
