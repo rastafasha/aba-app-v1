@@ -1,7 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Query } from '@angular/core';
 import { url_servicios } from 'src/app/config/config';
-import { LocationApi, LocationApiResponse } from '../models/locations.model';
+import {
+  LocationApi,
+  LocationApiResponse,
+  LocationViewApiResponse,
+} from '../models/locations.model';
 
 @Injectable({
   providedIn: 'root',
@@ -72,9 +76,9 @@ export class LocationService {
     const URL = url_servicios + '/location/store';
     return this.http.post<any>(URL, data);
   }
-  getLocation(location_id: any) {
+  getLocation(location_id: number) {
     const URL = url_servicios + '/location/show/' + location_id;
-    return this.http.get<any>(URL);
+    return this.http.get<LocationViewApiResponse>(URL);
   }
   editLocation(data: any, location_id: any) {
     const URL = url_servicios + '/location/update/' + location_id;

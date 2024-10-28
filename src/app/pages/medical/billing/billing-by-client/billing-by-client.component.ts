@@ -310,7 +310,7 @@ export class BillingByClientComponent {
     }
   }
 
-  onPaginateChange(event: any) {
+  onPaginateChange(event) {
     this.skip = event.pageIndex * this.pageSize;
     this.totalDataBilling += this.getPageTotal();
     this.getTableDataGeneral();

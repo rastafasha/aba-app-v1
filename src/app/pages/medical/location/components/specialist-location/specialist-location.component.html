@@ -10,7 +10,7 @@
                 class="form-control"
                 placeholder="Search here"
                 [(ngModel)]="searchDataValue"
-                (ngModelChange)="searchDataDoct(searchDataValue)"
+                (ngModelChange)="search($event)"
               />
               <a class="btn"
                 ><img src="assets/img/icons/search-normal.svg" alt=""
@@ -59,16 +59,18 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let specialist of specialists">
+            <tr *ngFor="let specialist of list">
               <td>
                 <div *ngIf="!specialist.avatar">
-                  <img src="./assets/img/no-image.jpg" class="avatarlist" />
+                  <img src="assets/img/no-image.jpg" class="avatarlist" />
                 </div>
                 <div *ngIf="specialist.avatar">
                   <img
-                    src="{{ specialist.avatar }}"
+                    #avatarRef
+                    [src]="specialist.avatar"
                     class="avatarlist"
-                    [alt]="specialist.name"
+                    [alt]="specialist.full_name"
+                    (error)="avatarRef.src = 'assets/img/no-image.jpg'"
                   />
                 </div>
               </td>
@@ -127,7 +129,7 @@
             <div class="dataTables_info">
               Showing {{ serialNumberArray[0] }} to
               {{ serialNumberArray[serialNumberArray.length - 1] }} of
-              {{ totalDatapatient }} entries
+              {{ total }} entries
             </div>
           </div>
 

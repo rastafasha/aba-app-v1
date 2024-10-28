@@ -9,6 +9,11 @@ import { PageService } from 'src/app/shared/services/pages.service';
 import Swal from 'sweetalert2';
 import { DoctorService } from '../../../doctors/service/doctor.service';
 import { LocationService } from '../../services/location.service';
+import {
+  LocationApi,
+  LocationPatients,
+  LocationSpecialist,
+} from '../../models/locations.model';
 
 @Component({
   selector: 'app-specialist-location',
@@ -28,7 +33,7 @@ export class SpecialistLocationComponent implements OnInit {
   searchDataValue = '';
   lastIndex = 0;
   pageSize = 10;
-  totalDatapatient = 0;
+  total = 0;
   totalDatadoctor = 0;
   skip = 0;
   limit = this.pageSize;
@@ -44,9 +49,8 @@ export class SpecialistLocationComponent implements OnInit {
 
   URLMedia = `${url_media}`;
   services = [];
-  patients = [];
-  specialists = [];
-  location_info: any;
+  patients: LocationPatients[] = [];
+  list: LocationSpecialist[] = [];
 
   code: any;
   provider: any;
@@ -59,7 +63,7 @@ export class SpecialistLocationComponent implements OnInit {
   location_iddd: any;
   user: AppUser;
   role: string;
-  location_selected: any;
+  location_selected: LocationApi;
 
   patient_generals = [];
 
@@ -75,7 +79,6 @@ export class SpecialistLocationComponent implements OnInit {
   patient_id: any;
   doctor_generals: any;
   doctor_id: any;
-  search: any = null;
   status: any = null;
 
   constructor(
@@ -122,12 +125,10 @@ export class SpecialistLocationComponent implements OnInit {
       console.log(resp);
       this.location_selected = resp.location;
 
-      this.location_info = this.location_selected.location;
-      // this.title= this.location_selected.location.title;
       this.patients = resp.patients;
-      this.specialists = resp.specialists;
+      this.list = resp.specialists;
 
-      this.totalDatapatient = resp.specialists.length;
+      this.total = resp.specialists.length;
 
       this.doctorService.listDoctors().subscribe((resp) => {
         // console.log(resp);
@@ -144,14 +145,14 @@ export class SpecialistLocationComponent implements OnInit {
     this.specialistList = [];
     this.serialNumberArray = [];
 
-    this.doctor_generals.map((res: any, index: number) => {
+    this.doctor_generals.map((res, index: number) => {
       const serialNumber = index + 1;
       if (index >= this.skip && serialNumber <= this.limit) {
         this.specialistList.push(res);
         this.serialNumberArray.push(serialNumber);
       }
     });
-    this.dataSource = new MatTableDataSource<any>(this.specialistList);
+    this.dataSource = new MatTableDataSource(this.specialistList);
     this.calculateTotalPages(this.totalDatadoctor, this.pageSize);
   }
 
@@ -214,19 +215,19 @@ export class SpecialistLocationComponent implements OnInit {
     this.location.back(); // <-- go back to previous location on cancel
   }
 
-  searchDataDoct(value: any): void {
+  search(value): void {
     this.dataSource.filter = value.trim().toLowerCase();
     this.specialistList = this.dataSource.filteredData;
   }
 
-  cambiarStatusDoctor(specialist: any) {
+  cambiarStatusDoctor(specialist) {
     const VALUE = specialist.status;
     console.log(VALUE);
 
     this.doctorService
       .updateStatus(specialist, specialist.id)
       .subscribe((resp) => {
-        // console.log(resp);
+        console.log(resp);
         Swal.fire(
           'Updated',
           `Employee Status Updated successfully!`,

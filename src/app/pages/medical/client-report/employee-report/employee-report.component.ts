@@ -573,7 +573,7 @@ export class EmployeeReportComponent implements OnInit {
     this.week_total_units = totalUnits;
   }
 
-  onPaginateChange(event: any) {
+  onPaginateChange(event) {
     this.skip = event.pageIndex * this.pageSize;
     this.totalDataClientReport += this.getPageTotal();
     this.getTableDataGeneral();

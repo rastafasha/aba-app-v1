@@ -311,14 +311,14 @@ export class NoteBcbaComponent {
   //   console.log(this.selectedValueRendering);
 
   // }
-  selectSpecialistab(event: any) {
+  selectSpecialistab(event) {
     this.selectedValueAba = event.value;
     // event = this.selectedValueAba;
     this.specialistDataSupervisor(this.selectedValueAba);
     console.log('selectedValueAba', this.selectedValueAba);
   }
 
-  selectCpt(event: any) {
+  selectCpt(event) {
     event = this.selectedValueCode;
     this.getCPtList(this.selectedValueCode);
     console.log(this.selectedValueCode);
@@ -333,7 +333,7 @@ export class NoteBcbaComponent {
       // this.services = resp.services;
     });
   }
-  selectFirmaSpecialistRbt(event: any) {
+  selectFirmaSpecialistRbt(event) {
     event = this.selectedValueRBT;
     this.speciaFirmaData(this.selectedValueRBT);
     console.log(this.selectedValueRBT);
@@ -352,7 +352,7 @@ export class NoteBcbaComponent {
       });
   }
 
-  selectFirmaSpecialistBcba(event: any) {
+  selectFirmaSpecialistBcba(event) {
     // event = this.selectedValueBCBA;
     this.speciaFirmaDataBcba(this.selectedValueBCBA);
     console.log('selectFirmaSpecialistBcba', this.selectedValueBCBA, event);
@@ -383,7 +383,7 @@ export class NoteBcbaComponent {
   }
 
   //funcion para la primera imagen.. funciona
-  loadFile($event: any) {
+  loadFile($event) {
     if ($event.target.files[0].type.indexOf('image')) {
       this.text_validation = 'Solamente pueden ser archivos de tipo imagen';
       return;
@@ -396,7 +396,7 @@ export class NoteBcbaComponent {
       (this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED = reader.result);
   }
 
-  loadFileSignature($event: any) {
+  loadFileSignature($event) {
     if ($event.target.files[0].type.indexOf('image')) {
       this.text_validation = 'Solamente pueden ser archivos de tipo imagen';
       return;

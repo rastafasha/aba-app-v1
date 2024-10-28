@@ -10,7 +10,7 @@ import { LocationService } from '../services/location.service';
 
 declare var $;
 
-const fileName = 'clients_db_aba_therapy';
+const fileName = 'locations_db_aba_therapy';
 const EXCEL_EXTENSION = '.xlsx';
 const TXT_TYPE = 'text/txt';
 const TXT_EXTENSION = '.txt';

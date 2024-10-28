@@ -266,7 +266,7 @@ export class NoteRbtComponent implements OnInit {
     });
   }
 
-  selectCpt(event: any) {
+  selectCpt(event) {
     event = this.selectedValueCode;
     // this.getCPtLißst(this.selectedValueCode);
     console.log(this.selectedValueCode);
@@ -351,7 +351,7 @@ export class NoteRbtComponent implements OnInit {
       // this.services = resp.services;
     });
   }
-  selectFirmaSpecialistRbt(event: any) {
+  selectFirmaSpecialistRbt(event) {
     event = this.selectedValueRBT;
     this.speciaFirmaDataRbt(this.selectedValueRBT);
     console.log(this.selectedValueRBT);
@@ -370,7 +370,7 @@ export class NoteRbtComponent implements OnInit {
       });
   }
 
-  selectFirmaSpecialistBcba(event: any) {
+  selectFirmaSpecialistBcba(event) {
     event = this.selectedValueBCBA;
     this.speciaFirmaDataBcba(this.selectedValueBCBA);
     console.log(this.selectedValueBCBA);
@@ -465,7 +465,7 @@ export class NoteRbtComponent implements OnInit {
   }
 
   //funcion para la primera imagen.. funciona
-  loadFile($event: any) {
+  loadFile($event) {
     if ($event.target.files[0].type.indexOf('image')) {
       this.text_validation = 'Solamente pueden ser archivos de tipo imagen';
       return;
@@ -479,7 +479,7 @@ export class NoteRbtComponent implements OnInit {
         reader.result as string);
   }
 
-  loadFileSignature($event: any) {
+  loadFileSignature($event) {
     if ($event.target.files[0].type.indexOf('image')) {
       this.text_validation = 'Solamente pueden ser archivos de tipo imagen';
       return;

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, forkJoin, map, tap } from 'rxjs';
@@ -15,13 +15,14 @@ import { PatientMService } from '../../../patient-m/service/patient-m.service';
 import { LocationService } from '../../services/location.service';
 import { AppUser } from 'src/app/shared/models/users.models';
 import { AppRoutes } from 'src/app/shared/routes/routes';
+import { LocationApi } from '../../models/locations.model';
 
 @Component({
   selector: 'app-log-notas',
   templateUrl: './log-notas.component.html',
   styleUrls: ['./log-notas.component.scss'],
 })
-export class LogNotasComponent {
+export class LogNotasComponent implements OnInit {
   // @Input() locationId:any;
   routes = AppRoutes;
 
@@ -154,7 +155,7 @@ export class LogNotasComponent {
 
   selectedValueInsurer!: string;
   selectedValuePatient!: string;
-  location_selected: any;
+  location_selected: LocationApi;
 
   constructor(
     private ativatedRoute: ActivatedRoute,
@@ -230,7 +231,7 @@ export class LogNotasComponent {
         this.noteType
       )
       .subscribe((resp) => {
-        // console.log('todo',resp);
+        console.log(resp);
         const pa = resp.arrayPages;
         // const pa = [1,2,3,4,5,6,7,8,9,10]
         this.pageNumberArray = [];
@@ -299,13 +300,13 @@ export class LogNotasComponent {
 
         //fin union
 
-        this.rbt_id = resp.patient.rbt_id;
-        this.rbt2_id = resp.patient.rbt2_id;
-        this.bcba_id = resp.patient.bcba_id;
-        this.bcba2_id = resp.patient.bcba2_id;
+        this.rbt_id = resp.patient?.rbt_id;
+        this.rbt2_id = resp.patient?.rbt2_id;
+        this.bcba_id = resp.patient?.bcba_id;
+        this.bcba2_id = resp.patient?.bcba2_id;
 
         this.pa_assessments = resp.pa_assessments;
-        const jsonObj = JSON.parse(this.pa_assessments);
+        const jsonObj = JSON.parse(this.pa_assessments ?? '[]');
 
         jsonObj.sort((a, b) => {
           const dateA = new Date(a.pa_services_start_date);
@@ -344,6 +345,7 @@ export class LogNotasComponent {
 
   getInsurer() {
     //sacamos los detalles insurance seleccionado
+    if (!this.insurance_id) return;
     this.insuranceService.showInsurance(this.insurance_id).subscribe(
       (resp) => {
         // console.log('insurer', resp);
@@ -447,6 +449,7 @@ export class LogNotasComponent {
 
   //trae el nombre del doctor quien hizo la nota rbt
   getDoctorRBT() {
+    if (!this.tecnicoRbts) return;
     this.doctorService.showDoctor(this.tecnicoRbts).subscribe((resp) => {
       // console.log('doctor rbt y location',resp);
       this.doctor_selected = resp.user;
@@ -537,14 +540,14 @@ export class LogNotasComponent {
     this.serialNumberArray = [];
     this.totalDataClientReport = 0;
 
-    this.clientReport_generals.map((res: any, index: number) => {
+    this.clientReport_generals.map((res, index: number) => {
       const serialNumber = index + 1;
       if (index >= this.skip && serialNumber <= this.limit) {
         this.clientReportList.push(res);
         this.serialNumberArray.push(serialNumber);
       }
     });
-    this.dataSource = new MatTableDataSource<any>(this.clientReportList);
+    this.dataSource = new MatTableDataSource(this.clientReportList);
     // this.calculateTotalPages(this.totalDataClientReport, this.pageSize);
 
     this.calculateUnitsAndHours();
@@ -573,7 +576,7 @@ export class LogNotasComponent {
     this.week_total_units = totalUnits;
   }
 
-  onPaginateChange(event: any) {
+  onPaginateChange(event) {
     this.skip = event.pageIndex * this.pageSize;
     this.totalDataClientReport += this.getPageTotal();
     this.getTableDataGeneral();
@@ -842,7 +845,7 @@ export class LogNotasComponent {
     });
   }
 
-  selectInsurance(event: any) {
+  selectInsurance(event) {
     event = this.selectedValueInsurer;
     this.insuranceData(this.selectedValueInsurer);
   }
@@ -858,12 +861,13 @@ export class LogNotasComponent {
         this.provider = resp.services[0].provider;
       });
   }
-  selectPatient(event: any) {
+
+  selectPatient(event) {
     event = this.selectedValueInsurer;
     this.insuranceData(this.selectedValueInsurer);
   }
 
-  PatientData(selectedValuePatient) {
+  private PatientData(selectedValuePatient) {
     this.patientService
       .getPatientByPatientid(selectedValuePatient)
       .subscribe((resp) => {
