@@ -134,7 +134,11 @@
               <th mat-sort-header="date_note">Date of Note</th>
               <th mat-sort-header="date_note">Status</th>
               <th mat-sort-header="pos">POS</th>
-              <th mat-sort-header="time_in">Total Hours</th>
+              <th mat-sort-header="time_in">Time in (M)</th>
+              <th mat-sort-header="time_out">Time Out (M)</th>
+              <th mat-sort-header="time_in2">Time in (A)</th>
+              <th mat-sort-header="time_out2">Time Out (A)</th>
+              <th mat-sort-header="totalHours">Total Hours</th>
               <th mat-sort-header="cpt">CPT</th>
               <th mat-sort-header="insurance">Insurance</th>
               <th mat-sort-header="md">Modifier</th>
@@ -156,8 +160,8 @@
                 <td><span class="badge badge-success">RBT</span></td>
                 <td>
                   <span *ngIf="data?.rbt">
-                    <a [routerLink]="['/note-rbt/view/', data.rbt.id]">
-                      {{ data.rbt?.session_date | date }}
+                    <a [routerLink]="[routes.noteRbt.view, data.rbt.id]">
+                      {{ data.rbt?.session_date | date : "shortDate" }}
                     </a>
                   </span>
                   <i
@@ -187,6 +191,26 @@
                 </td>
                 <td>
                   {{ data.rbt?.meet_with_client_at ?? "N/A" }}
+                </td>
+                <td>
+                  <span *ngIf="data.rbt">{{
+                    data.rbt?.time_in ?? "N/A" | transformToDate
+                  }}</span>
+                </td>
+                <td>
+                  <span *ngIf="data.rbt">{{
+                    data.rbt?.time_out ?? "N/A" | transformToDate
+                  }}</span>
+                </td>
+                <td>
+                  <span *ngIf="data.rbt">{{
+                    data.rbt?.time_in2 ?? "N/A" | transformToDate
+                  }}</span>
+                </td>
+                <td>
+                  <span *ngIf="data.rbt">{{
+                    data.rbt?.time_out2 ?? "N/A" | transformToDate
+                  }}</span>
                 </td>
                 <td>
                   <span *ngIf="data.rbt">{{
@@ -337,8 +361,8 @@
 
                 <td>
                   <span *ngIf="data?.bcba">
-                    <a [routerLink]="['/note-bcba/view/', data.bcba?.id]">
-                      {{ data.bcba?.session_date | date }}
+                    <a [routerLink]="[routes.noteBcba.noteBcba, data.bcba?.id]">
+                      {{ data.bcba?.session_date | date : "shortDate" }}
                     </a>
                   </span>
 
@@ -369,6 +393,26 @@
                 </td>
                 <td>
                   {{ data.bcba.meet_with_client_at ?? "N/A" }}
+                </td>
+                <td>
+                  <span *ngIf="data.bcba">{{
+                    data.bcba?.time_in ?? "N/A" | transformToDate
+                  }}</span>
+                </td>
+                <td>
+                  <span *ngIf="data.bcba">{{
+                    data.bcba?.time_out ?? "N/A" | transformToDate
+                  }}</span>
+                </td>
+                <td>
+                  <span *ngIf="data.bcba">{{
+                    data.bcba?.time_in2 ?? "N/A" | transformToDate
+                  }}</span>
+                </td>
+                <td>
+                  <span *ngIf="data.bcba">{{
+                    data.bcba?.time_out2 ?? "N/A" | transformToDate
+                  }}</span>
                 </td>
 
                 <td>

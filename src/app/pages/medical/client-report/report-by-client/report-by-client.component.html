@@ -4,13 +4,6 @@
     <div class="page-header">
       <div class="row">
         <div class="col-sm-12">
-          <!-- <ul class="breadcrumb">
-                        <li class="breadcrumb-item active"><a routerLink="/">Dashboard </a></li>
-                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
-                        <li class="breadcrumb-item active"><a routerLink="/patients/list">Client List  </a></li>
-                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
-                        <li class="breadcrumb-item active">Log Report by Client</li>
-                    </ul> -->
           <div class="doctor-submit text-start">
             <button class="btn btn-primary btn-sm" (click)="goBack()">
               Back
@@ -246,7 +239,7 @@
                       <td><span class="badge badge-success">RBT</span></td>
                       <td>
                         <span *ngIf="data?.rbt">
-                          <a [routerLink]="['/note-rbt/view/', data.rbt.id]">
+                          <a [routerLink]="[routes.noteRbt.view, data.rbt.id]">
                             {{ data.rbt?.session_date | date }}
                           </a>
                         </span>
@@ -445,7 +438,9 @@
 
                       <td>
                         <span *ngIf="data?.bcba">
-                          <a [routerLink]="['/note-bcba/view/', data.bcba?.id]">
+                          <a
+                            [routerLink]="[routes.noteBcba.view, data.bcba?.id]"
+                          >
                             {{ data.bcba?.session_date | date }}
                           </a>
                         </span>

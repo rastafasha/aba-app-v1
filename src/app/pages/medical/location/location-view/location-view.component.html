@@ -6,7 +6,7 @@
         <div class="col-sm-12">
           <ul class="breadcrumb">
             <li class="breadcrumb-item" *ngIf="role === 'SUPERADMIN'">
-              <a routerLink="/location/list">Locations </a>
+              <a [routerLink]="routes.location.list">Locations </a>
             </li>
             <li class="breadcrumb-item" *ngIf="role === 'SUPERADMIN'">
               <i class="feather icon-chevron-right"></i>
@@ -122,7 +122,7 @@
             (click)="optionSelected(3)"
             ><span class="set-about-icon me-2"
               ><img src="assets/img/icons/menu-icon-02.svg" alt="" /></span
-            >Notes</a
+            >Location Log</a
           >
         </li>
       </ul>

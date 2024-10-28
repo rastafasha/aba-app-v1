@@ -8,9 +8,16 @@ export class AppointmentsRoutes {
   static get list(): string {
     return `${baseUrl}/appointments/list`;
   }
+  static get listEdit(): string {
+    return `${baseUrl}/appointments/list/edit`;
+  }
 
   static get edit(): string {
     return `${baseUrl}/appointments/edit`;
+  }
+
+  static get citaMedica(): string {
+    return `${baseUrl}/appointments/cita-medica`;
   }
 
   static get show(): string {

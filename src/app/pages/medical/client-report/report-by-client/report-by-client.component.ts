@@ -13,6 +13,7 @@ import { NoteRbtService } from '../../notes/services/note-rbt.service';
 import { ClientReportModel } from '../client-report.model';
 import { ClientReportService } from '../client-report.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 
 export interface InsuranceCptPrizeResponse {
   unit_prize: number;
@@ -32,6 +33,7 @@ export interface NoteRbt {
   styleUrls: ['./report-by-client.component.scss'],
 })
 export class ReportByClientComponent implements OnInit {
+  routes = AppRoutes;
   searchDataDoctor = '';
   date_start: any;
   date_end: any;
@@ -555,14 +557,16 @@ export class ReportByClientComponent implements OnInit {
       (total, objeto) => total + objeto.session_units_total,
       0
     );
-    const totalUnits = unitsBcba+unitsRbt;
+    const totalUnits = unitsBcba + unitsRbt;
     let minutes = 0;
     this.noteRbt.forEach((element) => {
       const [horasRbt, minutosRbt] = element.total_hours.split(':').map(Number);
       minutes += horasRbt * 60 + minutosRbt;
     });
     this.noteBcba.forEach((element) => {
-      const [horasBcba, minutosBcba] = element.total_hours.split(':').map(Number);
+      const [horasBcba, minutosBcba] = element.total_hours
+        .split(':')
+        .map(Number);
       minutes += horasBcba * 60 + minutosBcba;
     });
     const horasTotales = Math.floor(minutes / 60);
@@ -576,7 +580,7 @@ export class ReportByClientComponent implements OnInit {
     this.week_total_units = totalUnits;
   }
 
-  onPaginateChange(event: any) {
+  onPaginateChange(event) {
     this.skip = event.pageIndex * this.pageSize;
     this.totalDataClientReport += this.getPageTotal();
     this.getTableDataGeneral();

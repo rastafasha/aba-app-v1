@@ -247,7 +247,7 @@ export class EditDoctorComponent implements OnInit {
     });
   }
 
-  loadFile($event: any) {
+  loadFile($event) {
     if ($event.target.files[0].type.indexOf('image')) {
       this.text_validation = 'Solamente pueden ser archivos de tipo imagen';
       return;
@@ -259,7 +259,7 @@ export class EditDoctorComponent implements OnInit {
     reader.onloadend = () => (this.IMAGE_PREVISUALIZA = reader.result);
   }
 
-  loadFileSignature($event: any) {
+  loadFileSignature($event) {
     if ($event.target.files[0].type.indexOf('image')) {
       this.text_validation = 'Solamente pueden ser archivos de tipo imagen';
       return;

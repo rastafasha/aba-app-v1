@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProfileDoctorComponent } from './profile-doctor/profile-doctor.component';
 import { PipesModule } from 'src/app/shared/pipes/pipes.module';
+import { LayoutModule } from '../../../layout/layout.module';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { PipesModule } from 'src/app/shared/pipes/pipes.module';
     RouterModule,
     SharedModule,
     PipesModule,
+    LayoutModule,
   ],
 })
 export class DoctorsModule {}

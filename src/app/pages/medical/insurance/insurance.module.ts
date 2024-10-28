@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { InsuranceViewComponent } from './insurance-view/insurance-view.component';
+import { LayoutModule } from '../../../layout/layout.module';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { InsuranceViewComponent } from './insurance-view/insurance-view.componen
     HttpClientModule,
     RouterModule,
     SharedModule,
+    LayoutModule,
   ],
 })
 export class InsuranceModule {}

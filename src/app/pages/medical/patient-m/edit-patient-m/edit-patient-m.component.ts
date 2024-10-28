@@ -362,14 +362,14 @@ export class EditPatientMComponent implements OnInit {
       });
   }
 
-  selectCategory(event: any) {
+  selectCategory(event) {
     const VALUE = event;
     this.selectedValueLocation = VALUE;
     // console.log(this.selectedValueLocation);
     this.getConfig();
   }
 
-  selectPOS(event: any) {
+  selectPOS(event) {
     const VALUE = event;
     this.selectedValuePosCovered = VALUE;
     // console.log(this.selectedValuePosCovered);
@@ -503,7 +503,7 @@ export class EditPatientMComponent implements OnInit {
   }
 
   // seleccionas otro si se quiere cambiar trayendo el event como id o como objeto y pasas el valor necesario
-  selectInsurance(event: any) {
+  selectInsurance(event) {
     event = this.selectedValueInsurer;
     this.insuranceData(this.selectedValueInsurer); // se envia el insurer para traer los codigos de los servicios
   }
@@ -519,7 +519,7 @@ export class EditPatientMComponent implements OnInit {
       });
   }
 
-  selectProviderCpt(event: any) {
+  selectProviderCpt(event) {
     const selectedValue = event.target.value;
     console.log(selectedValue);
 
@@ -563,7 +563,7 @@ export class EditPatientMComponent implements OnInit {
   //listas
   //files
 
-  loadFile($event: any) {
+  loadFile($event) {
     if ($event.target.files[0].type.indexOf('image')) {
       this.text_validation = 'Solamente pueden ser archivos de tipo imagen';
       return;
@@ -575,7 +575,7 @@ export class EditPatientMComponent implements OnInit {
     reader.onloadend = () => (this.IMAGE_PREVISUALIZA = reader.result);
   }
 
-  processFile($event: any) {
+  processFile($event) {
     for (const file of $event.target.files) {
       this.FILES.push(file);
     }

@@ -1,152 +1,230 @@
 <div class="page-wrapper">
-    <div class="content">
-
-        <!-- Page Header -->
-        <div class="page-header">
-            <div class="row">
-                <div class="col-sm-12">
-                    <!-- <ul class="breadcrumb">
-
-                        <li class="breadcrumb-item"><a routerLink="/patients/list">Clients List </a></li>
-                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
-                        <li class="breadcrumb-item active">Create BCBA Note </li>
-                    </ul> -->
-                    <div class=" doctor-submit text-start">
-                        <button class="btn btn-primary btn-sm " (click)="goBack() ">Back</button>
-                    </div>
-                </div>
-            </div>
+  <div class="content">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="doctor-submit text-start">
+            <button class="btn btn-primary btn-sm" (click)="goBack()">
+              Back
+            </button>
+          </div>
         </div>
-        <!-- /Page Header -->
-        <div class="row">
-            <!-- paciente -->
-            <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-body">
-                        <form autocomplete="false">
+      </div>
+    </div>
+    <!-- /Page Header -->
+    <div class="row">
+      <!-- paciente -->
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <form autocomplete="false">
+              <!-- paciente -->
+              <div class="row align-items-center py-4">
+                <div class="col-12 py-4">
+                  <h4>Create Note Bcba</h4>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label
+                      >POS Avaiable<span class="login-danger">*</span></label
+                    >
+                    <input
+                      class="form-control"
+                      name="pos"
+                      disabled
+                      [(ngModel)]="pos"
+                      type="text"
+                    />
 
-                            <!-- paciente -->
-                            <div class="row align-items-center py-4" >
-                                <div class="col-12 py-4">
-                                    <h4>Create Note Bcba</h4>
-                                </div>
-                                <div class="col-12 col-md-6 col-xl-4">
-                                    <div class="form-group local-forms">
-                                        <label >POS  Avaiable<span class="login-danger">*</span></label>
-                                        <input class="form-control" name="pos" disabled
-                                            [(ngModel)]="pos" type="text">
-
-                                            <!-- <mat-select [(ngModel)]="pos" name="pos" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select POS Asigned">
+                    <!-- <mat-select [(ngModel)]="pos" name="pos" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select POS Asigned">
                                                 <mat-option *ngFor="let data of pos, let i=index"  [value]="data.name">
                                                 {{data.name}}
                                                 </mat-option>
                                             </mat-select> -->
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-xl-4">
-                                    <div class="form-group local-forms">
-                                        <label >Patient ID <span class="login-danger">*</span></label>
-                                        <input class="form-control"  name="patient_id"  disabled [(ngModel)]="patient_id" type="text"  >
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-xl-4">
-                                    <div class="form-group local-forms">
-                                        <label >Diagnosis Code <span class="login-danger">*</span></label>
-                                        <input class="form-control" name="diagnosis_code"  disabled [(ngModel)]="diagnosis_code" type="text"  >
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-xl-4">
-                                    <div class="form-group local-forms">
-                                        <label >Birth day <span class="login-danger">*</span></label>
-                                        <input class="form-control datetimepicker" disabled name="birth_date" [(ngModel)]="birth_date" type="text" matInput [matDatepicker]="picker"  >
-                                        <mat-datepicker #picker></mat-datepicker>
-                                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-xl-4">
-                                    <div class="form-group local-forms">
-                                        <label >Rendering Provider <span class="login-danger">*</span></label>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label
+                      >Patient ID <span class="login-danger">*</span></label
+                    >
+                    <input
+                      class="form-control"
+                      name="patient_id"
+                      disabled
+                      [(ngModel)]="patient_id"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label
+                      >Diagnosis Code <span class="login-danger">*</span></label
+                    >
+                    <input
+                      class="form-control"
+                      name="diagnosis_code"
+                      disabled
+                      [(ngModel)]="diagnosis_code"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label>Birth day <span class="login-danger">*</span></label>
+                    <input
+                      class="form-control datetimepicker"
+                      disabled
+                      name="birth_date"
+                      [(ngModel)]="birth_date"
+                      type="text"
+                      matInput
+                      [matDatepicker]="picker"
+                    />
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-datepicker-toggle
+                      matIconSuffix
+                      [for]="picker"
+                    ></mat-datepicker-toggle>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label
+                      >Rendering Provider
+                      <span class="login-danger">*</span></label
+                    >
 
-                                        <p style="padding:10px">{{doctor.full_name ? doctor.full_name: ''}}</p>
-                                       
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-xl-4">
-                                    <div class="form-group local-forms">
-                                        <label >Aba Supervisor<span class="login-danger">*</span></label>
-                                        <mat-select [(ngModel)]="selectedValueAba" name="aba_supervisor" [ngModelOptions]="{standalone: true}" class="form-control select"
-                                         (selectionChange)="selectSpecialistab($event)"  placeholder="Select Specialist">
-                                            <mat-option *ngFor="let data of specialists, let i=index;" [value]="data.id">
-                                            {{data?.name}} {{data?.surname}}
-                                            </mat-option>
-                                        </mat-select>
-
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-3 ">
-                                    <div class="form-group local-forms">
-                                        <label >CPT <span class="login-danger">*</span></label>
-                                        <mat-select [(ngModel)]="selectedValueCode" name="code" [ngModelOptions]="{standalone: true}"
-                                        class="form-control select"  placeholder="Select Code"
-                                        (selectionChange)="selectCpt($event)"
-                                        >
-                                            <mat-option *ngFor="let data of pa_assessmentsgroup, let i=index;" [value]="data.cpt">
-                                            {{data.cpt}} | {{data.provider}}
-                                            </mat-option>
-                                        </mat-select>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-3">
-                                    <div class="form-group local-forms">
-                                        <label >Units Asigned <span class="login-danger">*</span></label>
-                                        <!-- <input class="form-control" name="n_units" disabled
+                    <p style="padding: 10px">
+                      {{ doctor.full_name ? doctor.full_name : "" }}
+                    </p>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label
+                      >Aba Supervisor<span class="login-danger">*</span></label
+                    >
+                    <mat-select
+                      [(ngModel)]="selectedValueAba"
+                      name="aba_supervisor"
+                      [ngModelOptions]="{ standalone: true }"
+                      class="form-control select"
+                      (selectionChange)="selectSpecialistab($event)"
+                      placeholder="Select Specialist"
+                    >
+                      <mat-option
+                        *ngFor="let data of specialists; let i = index"
+                        [value]="data.id"
+                      >
+                        {{ data?.name }} {{ data?.surname }}
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+                <div class="col-12 col-md-3">
+                  <div class="form-group local-forms">
+                    <label>CPT <span class="login-danger">*</span></label>
+                    <mat-select
+                      [(ngModel)]="selectedValueCode"
+                      name="code"
+                      [ngModelOptions]="{ standalone: true }"
+                      class="form-control select"
+                      placeholder="Select Code"
+                      (selectionChange)="selectCpt($event)"
+                    >
+                      <mat-option
+                        *ngFor="let data of pa_assessmentsgroup; let i = index"
+                        [value]="data.cpt"
+                      >
+                        {{ data.cpt }} | {{ data.provider }}
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+                <div class="col-12 col-md-3">
+                  <div class="form-group local-forms">
+                    <label
+                      >Units Asigned <span class="login-danger">*</span></label
+                    >
+                    <!-- <input class="form-control" name="n_units" disabled
                                             [(ngModel)]="unitsAsignated" type="text" > -->
-                                            <!-- {{n_un}} -->
-                                            <!-- <mat-option *ngFor="let data of pa_assessmentsgroup, let i=index;">
+                    <!-- {{n_un}} -->
+                    <!-- <mat-option *ngFor="let data of pa_assessmentsgroup, let i=index;">
                                             </mat-option> -->
-                                            <!-- {{unitsAsignated}} -->
-                                        <mat-select [(ngModel)]="selectedValueCode" name="n_units" disable [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select Code">
-                                            <mat-option *ngFor="let data of pa_assessmentsgroup" disable  [value]="data.cpt">
-                                            {{data.n_units}}
-                                            </mat-option>
-                                        </mat-select>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-3">
-                                    <div class="form-group local-forms">
-                                        <label>Met with client at <span class="login-danger">*</span></label>
-                                        <select class="form-control form-select-solid fw-bolder"
-                                            name="meet_with_client_at" [(ngModel)]="meet_with_client_at">
-                                            <option>-- Select --</option>
-                                            <option value="03">03 School</option>
-                                            <option value="12">12 Home</option>
-                                            <option value="02">02 Telehealth</option>
-                                            <option value="99">99 Other</option>
-                                        </select>
-                                    </div>
-                                </div>
+                    <!-- {{unitsAsignated}} -->
+                    <mat-select
+                      [(ngModel)]="selectedValueCode"
+                      name="n_units"
+                      disable
+                      [ngModelOptions]="{ standalone: true }"
+                      class="form-control select"
+                      placeholder="Select Code"
+                    >
+                      <mat-option
+                        *ngFor="let data of pa_assessmentsgroup"
+                        disable
+                        [value]="data.cpt"
+                      >
+                        {{ data.n_units }}
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+                <div class="col-12 col-md-3">
+                  <div class="form-group local-forms">
+                    <label
+                      >Met with client at
+                      <span class="login-danger">*</span></label
+                    >
+                    <select
+                      class="form-control form-select-solid fw-bolder"
+                      name="meet_with_client_at"
+                      [(ngModel)]="meet_with_client_at"
+                    >
+                      <option>-- Select --</option>
+                      <option value="03">03 School</option>
+                      <option value="12">12 Home</option>
+                      <option value="02">02 Telehealth</option>
+                      <option value="99">99 Other</option>
+                    </select>
+                  </div>
+                </div>
 
-                                <div class="col-12 col-md-3">
-                                    <div class="form-group local-forms">
-                                        <label>Date <span class="login-danger">*</span></label>
-                                        <input class="form-control datetimepicker" autocomplete="false"
-                                            name="session_date" [(ngModel)]="session_date" type="text" matInput
-                                            [matDatepicker]="pickerSesDate">
-                                        <mat-datepicker #pickerSesDate></mat-datepicker>
-                                        <mat-datepicker-toggle matIconSuffix
-                                            [for]="pickerSesDate"></mat-datepicker-toggle>
-                                    </div>
-                                </div>
-                                <div class="clear"></div>
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-6">
-                                        <h5 class="mb-3">Morning Session</h5>
-                                        <div class="row">
-                                            <div class="col-xs-12 col-sm-6">
-                                                <div class="form-group local-forms">
-                                                    <label>Time In <span class="login-danger">*</span></label>
+                <div class="col-12 col-md-3">
+                  <div class="form-group local-forms">
+                    <label>Date <span class="login-danger">*</span></label>
+                    <input
+                      class="form-control datetimepicker"
+                      autocomplete="false"
+                      name="session_date"
+                      [(ngModel)]="session_date"
+                      type="text"
+                      matInput
+                      [matDatepicker]="pickerSesDate"
+                    />
+                    <mat-datepicker #pickerSesDate></mat-datepicker>
+                    <mat-datepicker-toggle
+                      matIconSuffix
+                      [for]="pickerSesDate"
+                    ></mat-datepicker-toggle>
+                  </div>
+                </div>
+                <div class="clear"></div>
+                <div class="row">
+                  <div class="col-xs-12 col-sm-6">
+                    <h5 class="mb-3">Morning Session</h5>
+                    <div class="row">
+                      <div class="col-xs-12 col-sm-6">
+                        <div class="form-group local-forms">
+                          <label
+                            >Time In <span class="login-danger">*</span></label
+                          >
 
-                                                    <!-- <mat-select [(ngModel)]="selectedValueTimeIn" name="time_in"
+                          <!-- <mat-select [(ngModel)]="selectedValueTimeIn" name="time_in"
                                                         [ngModelOptions]="{standalone: true}"
                                                         (onChange)="hourTimeInSelected($event)" class="form-control select"
                                                         placeholder="Select Hour">
@@ -154,262 +232,383 @@
                                                             {{data.name}}
                                                         </mat-option>
                                                     </mat-select> -->
-                                                    <!-- <input [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly
+                          <!-- <input [ngxTimepicker]="toggleTimepicker" [disableClick]="true" readonly
                                                     [(ngModel)]="selectedValueTimeIn" name="time_in" [format]="24" [max]="'12:00'"  (onChange)="hourTimeInSelected($event)" [ngModelOptions]="{standalone: true}">
                                                     <ngx-material-timepicker-toggle [for]="toggleTimepicker"></ngx-material-timepicker-toggle>
                                                     <ngx-material-timepicker #toggleTimepicker></ngx-material-timepicker> -->
 
-                                                    <input [ngxTimepicker]="toggleTimepicker" [(ngModel)]="selectedValueTimeIn" readonly
-                                                        [value]="selectedValueTimeIn" [format]="24"  [max]="'12:00'" class="form-control" name="time_in" >
-                                                    <ngx-material-timepicker (timeChanged)="hourTimeInSelected($event)" #toggleTimepicker></ngx-material-timepicker>
+                          <input
+                            [ngxTimepicker]="toggleTimepicker"
+                            [(ngModel)]="selectedValueTimeIn"
+                            readonly
+                            [value]="selectedValueTimeIn"
+                            [format]="24"
+                            [max]="'12:00'"
+                            class="form-control"
+                            name="time_in"
+                          />
+                          <ngx-material-timepicker
+                            (timeChanged)="hourTimeInSelected($event)"
+                            #toggleTimepicker
+                          ></ngx-material-timepicker>
+                        </div>
+                      </div>
+                      <div class="col-xs-12 col-sm-6">
+                        <div class="form-group local-forms">
+                          <label
+                            >Time Out <span class="login-danger">*</span></label
+                          >
 
-
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-6">
-                                                <div class="form-group local-forms">
-                                                    <label>Time Out <span class="login-danger">*</span></label>
-
-                                                    <!-- <input [ngxTimepicker]="toggleTimepicker2" [disableClick]="true" readonly
+                          <!-- <input [ngxTimepicker]="toggleTimepicker2" [disableClick]="true" readonly
                                                     [(ngModel)]="selectedValueTimeOut" name="time_out" [format]="24"   (onChange)="hourTimeOutSelected($event)" [ngModelOptions]="{standalone: true}">
                                                     <ngx-material-timepicker-toggle [for]="toggleTimepicker2"></ngx-material-timepicker-toggle>
                                                     <ngx-material-timepicker #toggleTimepicker2></ngx-material-timepicker> -->
 
-                                                    <input [ngxTimepicker]="toggleTimepicker2" [(ngModel)]="selectedValueTimeOut" readonly
-                                                    [value]="selectedValueTimeOut"  [format]="24" class="form-control" name="time_out2">
-                                                <ngx-material-timepicker (timeChanged)="hourTimeOutSelected($event)" #toggleTimepicker2></ngx-material-timepicker>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6">
-                                        <h5 class="mb-3">Afternoon Session</h5>
-                                        <div class="row">
-                                            <div class="col-xs-12 col-sm-6">
-                                                <div class="form-group local-forms">
-                                                    <label >Time In <span class="login-danger">*</span></label>
+                          <input
+                            [ngxTimepicker]="toggleTimepicker2"
+                            [(ngModel)]="selectedValueTimeOut"
+                            readonly
+                            [value]="selectedValueTimeOut"
+                            [format]="24"
+                            class="form-control"
+                            name="time_out2"
+                          />
+                          <ngx-material-timepicker
+                            (timeChanged)="hourTimeOutSelected($event)"
+                            #toggleTimepicker2
+                          ></ngx-material-timepicker>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-6">
+                    <h5 class="mb-3">Afternoon Session</h5>
+                    <div class="row">
+                      <div class="col-xs-12 col-sm-6">
+                        <div class="form-group local-forms">
+                          <label
+                            >Time In <span class="login-danger">*</span></label
+                          >
 
-                                                    <!-- <input [ngxTimepicker]="toggleTimepicker3" [disableClick]="true" readonly
+                          <!-- <input [ngxTimepicker]="toggleTimepicker3" [disableClick]="true" readonly
                                                     [(ngModel)]="selectedValueTimeIn2" name="time_in2" [format]="24"   (onChange)="hourTimeInSelected($event)" [ngModelOptions]="{standalone: true}">
 
                                                     <ngx-material-timepicker-toggle [for]="toggleTimepicker3"></ngx-material-timepicker-toggle>
                                                     <ngx-material-timepicker #toggleTimepicker3></ngx-material-timepicker> -->
 
-                                                    <input [ngxTimepicker]="toggleTimepicker3" [(ngModel)]="selectedValueTimeIn2" readonly
-                                                    [value]="selectedValueTimeIn2" [format]="24" class="form-control" name="time_in2" >
-                                                <ngx-material-timepicker (timeChanged)="hourTimeIn2Selected($event)" #toggleTimepicker3></ngx-material-timepicker>
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-6">
-                                                <div class="form-group local-forms">
-                                                    <label >Time Out <span class="login-danger">*</span></label>
-                                                    <!-- <input [ngxTimepicker]="toggleTimepicker4" [disableClick]="true" readonly
+                          <input
+                            [ngxTimepicker]="toggleTimepicker3"
+                            [(ngModel)]="selectedValueTimeIn2"
+                            readonly
+                            [value]="selectedValueTimeIn2"
+                            [format]="24"
+                            class="form-control"
+                            name="time_in2"
+                          />
+                          <ngx-material-timepicker
+                            (timeChanged)="hourTimeIn2Selected($event)"
+                            #toggleTimepicker3
+                          ></ngx-material-timepicker>
+                        </div>
+                      </div>
+                      <div class="col-xs-12 col-sm-6">
+                        <div class="form-group local-forms">
+                          <label
+                            >Time Out <span class="login-danger">*</span></label
+                          >
+                          <!-- <input [ngxTimepicker]="toggleTimepicker4" [disableClick]="true" readonly
                                                     [(ngModel)]="selectedValueTimeOut2" name="time_out2" [format]="24"   (onChange)="hourTimeInSelected($event)" [ngModelOptions]="{standalone: true}">
                                                     <ngx-material-timepicker-toggle [for]="toggleTimepicker4"></ngx-material-timepicker-toggle>
                                                     <ngx-material-timepicker #toggleTimepicker4></ngx-material-timepicker> -->
-                                                    <input [ngxTimepicker]="toggleTimepicker4" [(ngModel)]="selectedValueTimeOut2" readonly
-                                                        [value]="selectedValueTimeOut2"  [format]="24" class="form-control" name="time_out2">
-                                                    <ngx-material-timepicker (timeChanged)="hourTimeOut2Selected($event)" #toggleTimepicker4></ngx-material-timepicker>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                                <div class="col-12 ">
-                                    <div class="form-group local-forms">
-                                        <label >Note Description<span class="login-danger">*</span></label>
-                                        <textarea class="form-control" name="note_description" [(ngModel)]="note_description" rows="4" cols="30"></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- paciente -->
-                        </form>
-
+                          <input
+                            [ngxTimepicker]="toggleTimepicker4"
+                            [(ngModel)]="selectedValueTimeOut2"
+                            readonly
+                            [value]="selectedValueTimeOut2"
+                            [format]="24"
+                            class="form-control"
+                            name="time_out2"
+                          />
+                          <ngx-material-timepicker
+                            (timeChanged)="hourTimeOut2Selected($event)"
+                            #toggleTimepicker4
+                          ></ngx-material-timepicker>
+                        </div>
+                      </div>
                     </div>
+                  </div>
                 </div>
-
-            </div>
-            <!-- fin paciente -->
-
-
-
-            <!-- Maladaptives -->
-            <div class="col-xs-12 col-sm-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="col-12">
-                            <h4>Caregiver Goal</h4>
-                            <p class="text-danger">Note: Please fill out all fields. If you didn't have any reaction, enter "0"</p>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table mb-0">
-                                <thead>
-                                    <tr>
-                                        <th>Caregiver Goal</th>
-                                        <th>% of Occurrences</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let goal of caregivers_training_goals; let i = index">
-                                        <td>{{goal.caregiver_goal}}</td>
-                                        <td>
-                                            <input class="form-control" type="number"
-                                                   [(ngModel)]="goal.porcent_of_correct_response"
-                                                   (ngModelChange)="updateCaregiverGoal(i)">
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                <div class="col-12">
+                  <div class="form-group local-forms">
+                    <label
+                      >Note Description<span class="login-danger"
+                        >*</span
+                      ></label
+                    >
+                    <textarea
+                      class="form-control"
+                      name="note_description"
+                      [(ngModel)]="note_description"
+                      rows="4"
+                      cols="30"
+                    ></textarea>
+                  </div>
                 </div>
+              </div>
+              <!-- paciente -->
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- fin paciente -->
 
+      <!-- Maladaptives -->
+      <div class="col-xs-12 col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <div class="col-12">
+              <h4>Caregiver Goal</h4>
+              <p class="text-danger">
+                Note: Please fill out all fields. If you didn't have any
+                reaction, enter "0"
+              </p>
             </div>
-            <!-- fin Maladaptives -->
-            <!-- replacements -->
-            <div class="col-xs-12 col-sm-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="col-12">
-                            <h4>RBT Training goals</h4>
-                            <p class="text-danger">Note: Please fill out all fields. If you didn't have any reaction, enter "0"</p>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table mb-0">
-                                <thead>
-                                    <tr>
-                                        <th>RBT Training Goal</th>
-                                        <th>% of correct responses</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let goal of rbt_training_goals; let i = index">
-                                        <td>{{goal.lto}}</td>
-                                        <td>
-                                            <input class="form-control" type="number"
-                                                   [(ngModel)]="goal.porcent_of_correct_response"
-                                                   (ngModelChange)="updateRbtGoal(i)">
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+            <div class="table-responsive">
+              <table class="table mb-0">
+                <thead>
+                  <tr>
+                    <th>Caregiver Goal</th>
+                    <th>% of Occurrences</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let goal of caregivers_training_goals;
+                      let i = index
+                    "
+                  >
+                    <td>{{ goal.caregiver_goal }}</td>
+                    <td>
+                      <input
+                        class="form-control"
+                        type="number"
+                        [(ngModel)]="goal.porcent_of_correct_response"
+                        (ngModelChange)="updateCaregiverGoal(i)"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- fin Maladaptives -->
+      <!-- replacements -->
+      <div class="col-xs-12 col-sm-6">
+        <div class="card">
+          <div class="card-body">
+            <div class="col-12">
+              <h4>RBT Training goals</h4>
+              <p class="text-danger">
+                Note: Please fill out all fields. If you didn't have any
+                reaction, enter "0"
+              </p>
+            </div>
+            <div class="table-responsive">
+              <table class="table mb-0">
+                <thead>
+                  <tr>
+                    <th>RBT Training Goal</th>
+                    <th>% of correct responses</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let goal of rbt_training_goals; let i = index">
+                    <td>{{ goal.lto }}</td>
+                    <td>
+                      <input
+                        class="form-control"
+                        type="number"
+                        [(ngModel)]="goal.porcent_of_correct_response"
+                        (ngModelChange)="updateRbtGoal(i)"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- fin replacements -->
+
+      <!-- paciente -->
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <form autocomplete="false">
+              <div class="col-12">
+                <div class="form-group local-forms">
+                  <label>Summary Note<span class="login-danger">*</span></label>
+                  <textarea
+                    class="form-control"
+                    name="summary_note"
+                    [(ngModel)]="summary_note"
+                    rows="4"
+                    cols="30"
+                  ></textarea>
+                  <button
+                    class="btn btn-primary ml-2 btn-sm"
+                    (click)="generateAISummary()"
+                    [disabled]="isGeneratingSummary"
+                  >
+                    {{
+                      isGeneratingSummary
+                        ? "Generating..."
+                        : "Generate AI Summary"
+                    }}
+                  </button>
                 </div>
-            </div>
-            <!-- fin replacements -->
+              </div>
 
-            <!-- paciente -->
-            <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-body">
-                        <form autocomplete="false">
-
-                          <div class="col-12 ">
-                              <div class="form-group local-forms">
-                                  <label>Summary Note<span class="login-danger">*</span></label>
-                                  <textarea class="form-control" name="summary_note" [(ngModel)]="summary_note" rows="4" cols="30"></textarea>
-                                  <button class="btn btn-primary ml-2 btn-sm" (click)="generateAISummary()" [disabled]="isGeneratingSummary">
-                                      {{ isGeneratingSummary ? 'Generating...' : 'Generate AI Summary' }}
-                                  </button>
-                              </div>
-                          </div>
-
-                            <!-- paciente -->
-                            <div class="row align-items-center py-4" >
-                                <div class="col-12 col-md-6 col-xl-4">
-                                    <div class="form-group local-forms">
-                                        <label >Provider name BCBA </label>
-                                        <p style="padding:10px">{{doctor.full_name ? doctor.full_name: ''}}</p>
-                                        <!-- <mat-select [(ngModel)]="selectedValueRBT" name="rbt" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select Specialist" (selectionChange)="selectFirmaSpecialistRbt($event)">
+              <!-- paciente -->
+              <div class="row align-items-center py-4">
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label>Provider name BCBA </label>
+                    <p style="padding: 10px">
+                      {{ doctor.full_name ? doctor.full_name : "" }}
+                    </p>
+                    <!-- <mat-select [(ngModel)]="selectedValueRBT" name="rbt" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select Specialist" (selectionChange)="selectFirmaSpecialistRbt($event)">
                                             <mat-option *ngFor="let data of roles_bcba" [value]="data.id">
                                             {{data.name}} {{data.surname}}
                                             </mat-option>
                                         </mat-select> -->
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-xl-6">
-                                    <div class="form-group local-top-form">
-                                        <label class="local-top">Provider Signature <span class="login-danger">*</span></label>
-                                        <!-- <div class="settings-btn upload-files-avator">
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-6">
+                  <div class="form-group local-top-form">
+                    <label class="local-top"
+                      >Provider Signature
+                      <span class="login-danger">*</span></label
+                    >
+                    <!-- <div class="settings-btn upload-files-avator">
                                             <input type="file" accept="image/*" name="provider_signature" id="file" (change)="loadFile($event)" class="hide-input">
                                             <label for="file" class="upload">Choose File</label>
                                         </div> -->
-                                    </div>
+                  </div>
 
-                                    <!-- previsualizacion de la foto -->
-                                    <div *ngIf="FILE_SIGNATURE_RBT">
-                                        <img [src]="electronic_signature" style="width: 250px;" alt="">
-                                    </div>
-                                    <div *ngIf="IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED">
-                                        <img [src]="electronic_signature" style="width: 250px;" alt="">
-                                    </div>
-                                    <!-- previsualizacion de la foto -->
-                                </div>
+                  <!-- previsualizacion de la foto -->
+                  <div *ngIf="FILE_SIGNATURE_RBT">
+                    <img
+                      [src]="electronic_signature"
+                      style="width: 250px"
+                      alt=""
+                    />
+                  </div>
+                  <div *ngIf="IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED">
+                    <img
+                      [src]="electronic_signature"
+                      style="width: 250px"
+                      alt=""
+                    />
+                  </div>
+                  <!-- previsualizacion de la foto -->
+                </div>
 
-
-                                <div class="col-12 col-md-6 col-xl-4">
-                                    <div class="form-group local-forms">
-                                        <div class="form-group local-forms">
-                                            <label >Supervisor name BCBA <span class="login-danger">*</span></label>
-                                            <mat-select [(ngModel)]="selectedValueBCBA" name="bcba" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select Specialist" (selectionChange)="selectSpecialistab($event)">
-                                                <mat-option *ngFor="let data of specialists" [value]="data.id">
-                                                {{data.name}} {{data.surname}}
-                                                </mat-option>
-                                            </mat-select>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-xl-6">
-                                    <div class="form-group local-top-form">
-                                        <label class="local-top">Supervisor Signature <span class="login-danger">*</span></label>
-                                        <!-- <div class="settings-btn upload-files-avator">
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <div class="form-group local-forms">
+                      <label
+                        >Supervisor name BCBA
+                        <span class="login-danger">*</span></label
+                      >
+                      <mat-select
+                        [(ngModel)]="selectedValueBCBA"
+                        name="bcba"
+                        [ngModelOptions]="{ standalone: true }"
+                        class="form-control select"
+                        placeholder="Select Specialist"
+                        (selectionChange)="selectSpecialistab($event)"
+                      >
+                        <mat-option
+                          *ngFor="let data of specialists"
+                          [value]="data.id"
+                        >
+                          {{ data.name }} {{ data.surname }}
+                        </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-6">
+                  <div class="form-group local-top-form">
+                    <label class="local-top"
+                      >Supervisor Signature
+                      <span class="login-danger">*</span></label
+                    >
+                    <!-- <div class="settings-btn upload-files-avator">
                                             <input type="file" accept="image/*" name="imagenn" id="file1" (change)="loadFileSignature($event)" class="hide-input">
                                             <label for="file1" class="upload">Choose File</label>
                                         </div> -->
-                                    </div>
+                  </div>
 
-                                    <!-- previsualizacion de la foto -->
-                                    <div *ngIf="FILE_SIGNATURE_BCBA">
-                                        <img [src]="IMAGE_PREVISUALIZA_SIGNATURE_BCBA" style="width: 250px;" alt="">
-                                    </div>
-                                    <div *ngIf="IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED">
-                                        <img [src]="IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED" style="width: 250px;" alt="">
-                                    </div>
-                                    <!-- previsualizacion de la foto -->
-                                </div>
-
-                            </div>
-                            <!-- paciente -->
-
-                            <div class="form-group row" *ngIf="text_validation">
-                                <div class="col-md-12">
-                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                        <strong>!</strong> {{text_validation}}.
-                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true"> </span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="doctor-submit text-end">
-                                    <button type="button" class="btn btn-primary submit-form me-2" (click)="save()">Save</button>
-
-                                </div>
-                            </div>
-                        </form>
-
-                    </div>
+                  <!-- previsualizacion de la foto -->
+                  <div *ngIf="FILE_SIGNATURE_BCBA">
+                    <img
+                      [src]="IMAGE_PREVISUALIZA_SIGNATURE_BCBA"
+                      style="width: 250px"
+                      alt=""
+                    />
+                  </div>
+                  <div *ngIf="IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED">
+                    <img
+                      [src]="IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED"
+                      style="width: 250px"
+                      alt=""
+                    />
+                  </div>
+                  <!-- previsualizacion de la foto -->
                 </div>
+              </div>
+              <!-- paciente -->
 
-            </div>
-            <!-- fin paciente -->
-
-
+              <div class="form-group row" *ngIf="text_validation">
+                <div class="col-md-12">
+                  <div
+                    class="alert alert-danger alert-dismissible fade show"
+                    role="alert"
+                  >
+                    <strong>!</strong> {{ text_validation }}.
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="alert"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true"> </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="doctor-submit text-end">
+                  <button
+                    type="button"
+                    class="btn btn-primary submit-form me-2"
+                    (click)="save()"
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
+      <!-- fin paciente -->
     </div>
+  </div>
 </div>

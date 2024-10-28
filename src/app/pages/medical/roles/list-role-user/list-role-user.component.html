@@ -4,11 +4,6 @@
     <div class="page-header">
       <div class="row">
         <div class="col-sm-12">
-          <!-- <ul class="breadcrumb">
-                      <li class="breadcrumb-item"><a routerLink="/">Dashboard</a></li>
-                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
-                        <li class="breadcrumb-item active">Roles List</li>
-                    </ul> -->
           <div class="doctor-submit text-start">
             <button class="btn btn-primary btn-sm" (click)="goBack()">
               Back
@@ -43,7 +38,7 @@
                       </div>
                       <div class="add-group">
                         <a
-                          routerLink="/roles/register"
+                          [routerLink]="routes.roles.register"
                           class="btn btn-primary add-pluss ms-2"
                           ><img src="assets/img/icons/plus.svg" alt=""
                         /></a>
@@ -135,7 +130,7 @@
                         <div class="dropdown-menu dropdown-menu-end">
                           <a
                             class="dropdown-item"
-                            [routerLink]="['/roles/list/edit/', data.id]"
+                            [routerLink]="[routes.roles.edit, data.id]"
                             ><i class="fa-solid fa-pen-to-square m-r-5"></i>
                             Edit</a
                           >

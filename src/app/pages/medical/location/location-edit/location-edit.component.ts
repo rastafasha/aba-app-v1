@@ -87,7 +87,7 @@ export class LocationEditComponent {
 
   //files
 
-  loadFile($event: any) {
+  loadFile($event) {
     if ($event.target.files[0].type.indexOf('image')) {
       this.text_validation = 'Solamente pueden ser archivos de tipo imagen';
       return;

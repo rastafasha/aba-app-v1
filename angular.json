@@ -63,6 +63,7 @@
               "outputHashing": "all"
             },
             "development": {
+              "serviceWorker": false,
               "optimization": true,
               "outputHashing": "none",
               "sourceMap": true,
@@ -84,8 +85,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "port": 4200,
-            "liveReload": true
+            "port": 4200
           },
           "configurations": {
             "production": {

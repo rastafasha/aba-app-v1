@@ -11,6 +11,7 @@ import { ClientReportRoutingModule } from './client-report.routing';
 import { EmployeeReportComponent } from './employee-report/employee-report.component';
 import { ReportByClientComponent } from './report-by-client/report-by-client.component';
 import { ClientReportComponent } from './client-report.component';
+import { LayoutModule } from '../../../layout/layout.module';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ClientReportComponent } from './client-report.component';
     SharedModule,
     ComponentsModule,
     PipesModule,
+    LayoutModule,
   ],
 })
 export class ClientReportModule {}

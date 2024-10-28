@@ -4,11 +4,6 @@
     <div class="page-header">
       <div class="row">
         <div class="col-sm-12">
-          <!-- <ul class="breadcrumb">
-                      <li class="breadcrumb-item"><a routerLink="/">Dashboard</a></li>
-                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
-                        <li class="breadcrumb-item active">Billing List</li>
-                    </ul> -->
           <div class="doctor-submit text-start">
             <button class="btn btn-primary btn-sm" (click)="goBack()">
               Back
@@ -43,7 +38,7 @@
                       </div>
                       <div class="add-group">
                         <a
-                          routerLink="/doctors/add"
+                          [routerLink]="routes.doctors.add"
                           *ngIf="isPermission('register_employer')"
                           class="btn btn-primary add-pluss ms-2"
                           ><img src="assets/img/icons/plus.svg" alt=""
@@ -104,7 +99,7 @@
                 <tbody>
                   <tr *ngFor="let data of billingList">
                     <td>
-                      <a [routerLink]="['/billing/byclient/', data.id]">
+                      <a [routerLink]="[routes.billing.byClient, data.id]">
                         {{ data.patient_id }}
                       </a>
                     </td>

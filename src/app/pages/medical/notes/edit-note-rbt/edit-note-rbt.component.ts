@@ -359,7 +359,7 @@ export class EditNoteRbtComponent implements OnInit {
       });
   }
 
-  selectCpt(event: any) {
+  selectCpt(event) {
     event = this.selectedValueCode;
     // this.getCPtLißst(this.selectedValueCode);
     console.log(event);
@@ -376,7 +376,7 @@ export class EditNoteRbtComponent implements OnInit {
       });
   }
 
-  selectSpecialist(event: any) {
+  selectSpecialist(event) {
     event = this.selectedValueProviderName;
     this.specialistData(this.selectedValueProviderName);
   }
@@ -471,7 +471,7 @@ export class EditNoteRbtComponent implements OnInit {
       // this.services = resp.services;
     });
   }
-  selectFirmaSpecialistRbt(event: any) {
+  selectFirmaSpecialistRbt(event) {
     event = this.selectedValueRBT;
     this.speciaFirmaDataRbt(this.selectedValueRBT);
   }
@@ -487,7 +487,7 @@ export class EditNoteRbtComponent implements OnInit {
       });
   }
 
-  selectFirmaSpecialistBcba(event: any) {
+  selectFirmaSpecialistBcba(event) {
     event = this.selectedValueBCBA;
     this.speciaFirmaDataBcba(this.selectedValueBCBA);
   }
@@ -615,7 +615,7 @@ export class EditNoteRbtComponent implements OnInit {
   }
 
   //funcion para la primera imagen.. funciona
-  loadFile($event: any) {
+  loadFile($event) {
     if ($event.target.files[0].type.indexOf('image')) {
       this.text_validation = 'Solamente pueden ser archivos de tipo imagen';
       return;
@@ -628,7 +628,7 @@ export class EditNoteRbtComponent implements OnInit {
       (this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED = reader.result);
   }
 
-  loadFileSignature($event: any) {
+  loadFileSignature($event) {
     if ($event.target.files[0].type.indexOf('image')) {
       this.text_validation = 'Solamente pueden ser archivos de tipo imagen';
       return;

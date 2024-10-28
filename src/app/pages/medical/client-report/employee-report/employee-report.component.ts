@@ -12,8 +12,7 @@ import { NoteRbtService } from '../../notes/services/note-rbt.service';
 import { ClientReportModel } from '../client-report.model';
 import { ClientReportService } from '../client-report.service';
 import { AppUser } from 'src/app/shared/models/users.models';
-
-declare var $: any;
+import { AppRoutes } from 'src/app/shared/routes/routes';
 
 export interface InsuranceCptPrizeResponse {
   unit_prize: number;
@@ -33,6 +32,7 @@ export interface NoteRbt {
   styleUrls: ['./employee-report.component.scss'],
 })
 export class EmployeeReportComponent implements OnInit {
+  routes = AppRoutes;
   searchDataDoctor = '';
   date_start: any;
   date_end: any;
@@ -573,7 +573,7 @@ export class EmployeeReportComponent implements OnInit {
     this.week_total_units = totalUnits;
   }
 
-  onPaginateChange(event: any) {
+  onPaginateChange(event) {
     this.skip = event.pageIndex * this.pageSize;
     this.totalDataClientReport += this.getPageTotal();
     this.getTableDataGeneral();

@@ -333,7 +333,7 @@ export class AddPatientMComponent {
       });
   }
 
-  selectCategory(event: any) {
+  selectCategory(event) {
     const VALUE = event;
     this.selectedValueLocation = VALUE;
     console.log(this.selectedValueLocation);
@@ -377,7 +377,7 @@ export class AddPatientMComponent {
       });
   }
 
-  selectProviderCpt(event: any) {
+  selectProviderCpt(event) {
     const selectedValue = event.target.value;
     console.log(selectedValue);
 
@@ -392,7 +392,7 @@ export class AddPatientMComponent {
     }
   }
 
-  selectInsurance(event: any) {
+  selectInsurance(event) {
     event = this.selectedValueInsurer;
     this.insuranceData(this.selectedValueInsurer);
   }
@@ -431,7 +431,7 @@ export class AddPatientMComponent {
     this.pa_assessments.splice(i, 1);
   }
 
-  loadFile($event: any) {
+  loadFile($event) {
     if ($event.target.files[0].type.indexOf('image')) {
       this.text_validation = 'Solamente pueden ser archivos de tipo imagen';
       return;
@@ -443,7 +443,7 @@ export class AddPatientMComponent {
     reader.onloadend = () =>
       (this.IMAGE_PREVISUALIZA = reader.result as string);
   }
-  loadFileDoctorR($event: any) {
+  loadFileDoctorR($event) {
     if ($event.target.files[0].type.indexOf('image')) {
       this.text_validation = 'Solamente pueden ser archivos de tipo pdf';
       return;
@@ -455,7 +455,7 @@ export class AddPatientMComponent {
     reader.onloadend = () =>
       (this.IMAGE_PREVISUALIZA = reader.result as string);
   }
-  loadFileMedicalNote($event: any) {
+  loadFileMedicalNote($event) {
     if ($event.target.files[0].type.indexOf('image')) {
       this.text_validation = 'Solamente pueden ser archivos de tipo pdf';
       return;
