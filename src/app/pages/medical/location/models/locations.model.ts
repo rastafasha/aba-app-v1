@@ -30,7 +30,7 @@ export interface LocationSpecialist {
   avatar: string;
 }
 
-export interface LocationPatients {
+export interface LocationPatient {
   id: number;
   patient_id: number;
   full_name: string;
@@ -48,6 +48,11 @@ export interface LocationPatients {
   bcba2_id: number;
 }
 
+export interface LocationInsurance {
+  insurer_name: string;
+  id: number;
+}
+
 export interface LocationApiResponse<T> {
   total: number;
   locations: {
@@ -58,6 +63,16 @@ export interface LocationApiResponse<T> {
 
 export interface LocationViewApiResponse {
   specialists: LocationSpecialist[];
-  patients: LocationPatients[];
+  patients: LocationPatient[];
   location: LocationApi;
+}
+
+export interface LocationLogFilter {
+  page?: number;
+  insurance_id: number;
+  patient_id: number;
+  note_type: 'rbt' | 'bcba' | null;
+  status_type: string;
+  date_start: number | string;
+  date_end: number | string;
 }

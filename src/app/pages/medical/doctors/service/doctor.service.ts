@@ -61,13 +61,6 @@ export class DoctorService {
     return this.http.delete<any>(URL);
   }
 
-  getUserRoles() {
-    const USER = localStorage.getItem('user');
-    this.user = JSON.parse(USER ? USER : '');
-    this.roles = this.user.roles;
-    this.permissions = this.user.permissions;
-  }
-
   updateStatus(data: any, doctor_id: any) {
     const URL = url_servicios + '/doctors/update/status/' + doctor_id;
     return this.http.put<any>(URL, data);

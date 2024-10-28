@@ -11,7 +11,7 @@ import { DoctorService } from '../../../doctors/service/doctor.service';
 import { LocationService } from '../../services/location.service';
 import {
   LocationApi,
-  LocationPatients,
+  LocationPatient,
   LocationSpecialist,
 } from '../../models/locations.model';
 
@@ -49,7 +49,7 @@ export class SpecialistLocationComponent implements OnInit {
 
   URLMedia = `${url_media}`;
   services = [];
-  patients: LocationPatients[] = [];
+  patients: LocationPatient[] = [];
   list: LocationSpecialist[] = [];
 
   code: any;

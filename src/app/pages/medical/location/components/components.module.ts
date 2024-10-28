@@ -8,26 +8,17 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { LocationRoutingModule } from '../location.routing';
 import { SpecialistLocationComponent } from './specialist-location/specialist-location.component';
 import { ClientsLocationComponent } from './clients-location/clients-location.component';
+import { LogNotasSearchComponent } from './log-notas/log-notas-search/log-notas-search.component';
 
+const components = [
+  LogNotasComponent,
+  SpecialistLocationComponent,
+  ClientsLocationComponent,
+  LogNotasSearchComponent,
+];
 @NgModule({
-  declarations: [
-    LogNotasComponent,
-    SpecialistLocationComponent,
-    ClientsLocationComponent,
-  ],
-  exports: [
-    LogNotasComponent,
-    SpecialistLocationComponent,
-    ClientsLocationComponent,
-  ],
-  imports: [
-    CommonModule,
-    LocationRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    RouterModule,
-    SharedModule,
-  ],
+  declarations: [...components],
+  exports: [...components],
+  imports: [SharedModule],
 })
-export class CompModule {}
+export class LocationComponentsModule {}

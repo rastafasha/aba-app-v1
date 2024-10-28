@@ -14,6 +14,7 @@ import { ClientReportModel } from '../client-report.model';
 import { ClientReportService } from '../client-report.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AppRoutes } from 'src/app/shared/routes/routes';
+import { LocationInsurance } from '../../location/models/locations.model';
 
 export interface InsuranceCptPrizeResponse {
   unit_prize: number;
@@ -74,11 +75,10 @@ export class ReportByClientComponent implements OnInit {
   cpt: any;
   n_units: any;
   pa_number: any;
-  insurances = [];
+  insurances: LocationInsurance[] = [];
   insurance_id: any;
   insuranceiddd: any;
   insurer_name: any;
-  sponsors = [];
   modifiers = [];
   noteRbt: any = null;
   pos_covered = [];
@@ -183,7 +183,6 @@ export class ReportByClientComponent implements OnInit {
     this.billedbcba = false;
     this.paybcba = false;
 
-    this.doctorService.getUserRoles();
     this.user = this.authService.user as AppUser;
     this.getTableData();
   }
@@ -206,7 +205,6 @@ export class ReportByClientComponent implements OnInit {
     this.clientReportService.config().subscribe((resp) => {
       // console.log(resp);
       this.insurances = resp.insurances;
-      this.sponsors = resp.doctors;
     });
   }
 
