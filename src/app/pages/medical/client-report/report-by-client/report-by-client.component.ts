@@ -547,11 +547,17 @@ export class ReportByClientComponent implements OnInit {
   }
 
   calculateUnitsAndHours() {
-    // console.log('notas rbt',this.clientReportList)
-    const totalUnits = this.clientReportList.reduce(
+    console.log('notas rbt',this.noteRbt)
+    console.log('notas bcba',this.noteBcba)
+    const unitsBcba = this.noteBcba.reduce(
       (total, objeto) => total + objeto.session_units_total,
       0
     );
+    const unitsRbt = this.noteRbt.reduce(
+      (total, objeto) => total + objeto.session_units_total,
+      0
+    );
+    const totalUnits = unitsBcba+unitsRbt;
     let minutes = 0;
     this.noteRbt.forEach((element) => {
       const [horasRbt, minutosRbt] = element.total_hours.split(':').map(Number);
