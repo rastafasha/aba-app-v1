@@ -547,8 +547,6 @@ export class ReportByClientComponent implements OnInit {
   }
 
   calculateUnitsAndHours() {
-    console.log('notas rbt',this.noteRbt)
-    console.log('notas bcba',this.noteBcba)
     const unitsBcba = this.noteBcba.reduce(
       (total, objeto) => total + objeto.session_units_total,
       0
@@ -570,7 +568,6 @@ export class ReportByClientComponent implements OnInit {
     const horasTotales = Math.floor(minutes / 60);
     const minutosTotales = minutes % 60;
     let stringMinutos: string;
-    // console.log('horas totales - minutos totales',horasTotales, minutosTotales)
     if (minutosTotales === 0) stringMinutos = '00';
     else if (minutosTotales < 10) stringMinutos = `0${minutosTotales}`;
     else stringMinutos = minutosTotales.toString();
