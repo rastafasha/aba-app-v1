@@ -24,12 +24,6 @@
     <div class="page-header">
       <div class="row">
         <div class="col-sm-12">
-          <!-- <ul class="breadcrumb">
-                      <li class="breadcrumb-item active"><a routerLink="/">Dashboard /</a></li>
-                      <li class="breadcrumb-item active"><a routerLink="/patients/list">Client List / </a></li>
-                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
-                        <li class="breadcrumb-item active">Rbt Notes List by Client</li>
-                    </ul> -->
           <div class="doctor-submit text-start">
             <button class="btn btn-primary btn-sm" (click)="goBack()">
               Back
@@ -37,7 +31,7 @@
             <a
               class="btn btn-primary btn-sm"
               *ngIf="user.roles[0] === 'SUPERADMIN'"
-              [routerLink]="['/client-report/by-client/', patientId]"
+              [routerLink]="[routes.clientReport.byClient, patientId]"
               >Go To Log Report</a
             >
           </div>

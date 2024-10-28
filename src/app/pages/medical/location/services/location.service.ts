@@ -1,13 +1,13 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { url_servicios } from 'src/app/config/config';
-import { AuthService } from 'src/app/core/auth/auth.service';
+import { LocationApi, LocationApiResponse } from '../models/locations.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LocationService {
-  constructor(public http: HttpClient, authService: AuthService) {}
+  constructor(public http: HttpClient) {}
 
   listAppointmentPays(
     page = 1,
@@ -43,7 +43,7 @@ export class LocationService {
 
   getLocations() {
     const URL = url_servicios + '/location';
-    return this.http.get<any>(URL);
+    return this.http.get<LocationApiResponse<LocationApi[]>>(URL);
   }
 
   listLocationPatients(search: any, status: any, location_id: any) {

@@ -1,13 +1,12 @@
-import { Component } from '@angular/core';
+import { Location } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { FileSaverService } from 'ngx-filesaver';
 import { AppRoutes } from 'src/app/shared/routes/routes';
-import * as XLSX from 'xlsx';
-import { DoctorService } from '../../doctors/service/doctor.service';
-import { PatientMService } from '../../patient-m/service/patient-m.service';
-import { LocationService } from '../services/location.service';
-import { Location } from '@angular/common';
 import { PageService } from 'src/app/shared/services/pages.service';
+import * as XLSX from 'xlsx';
+import { LocationService } from '../services/location.service';
+import { LocationApi } from '../models/locations.model';
 
 declare var $: any;
 @Component({
@@ -15,11 +14,11 @@ declare var $: any;
   templateUrl: './location-list.component.html',
   styleUrls: ['./location-list.component.scss'],
 })
-export class LocationListComponent {
+export class LocationListComponent implements OnInit {
   routes = AppRoutes;
 
   locationList = [];
-  dataSource!: MatTableDataSource<any>;
+  dataSource!: MatTableDataSource<LocationApi[]>;
 
   showFilter = false;
   searchDataValue = '';
@@ -46,6 +45,7 @@ export class LocationListComponent {
     private fileSaver: FileSaverService,
     private location: Location
   ) {}
+
   ngOnInit() {
     this.pageService.onInitPage();
     this.getTableData();
@@ -60,13 +60,10 @@ export class LocationListComponent {
     this.serialNumberArray = [];
 
     this.locationService.getLocations().subscribe((resp) => {
-      console.log(resp);
-
       this.totalDataLocation = resp.total;
       this.locationList = resp.locations.data;
       this.location_id = resp.locations.id;
-      // this.getTableDataGeneral();
-      this.dataSource = new MatTableDataSource<any>(this.locationList);
+      this.dataSource = new MatTableDataSource(this.locationList);
       this.calculateTotalPages(this.totalDataLocation, this.pageSize);
     });
   }
@@ -116,10 +113,7 @@ export class LocationListComponent {
       });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   searchData() {
-    // this.dataSource.filter = value.trim().toLowerCase();
-    // this.locationList = this.dataSource.filteredData;
     this.pageSelection = [];
     this.limit = this.pageSize;
     this.skip = 0;
