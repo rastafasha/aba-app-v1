@@ -8,7 +8,7 @@ import * as XLSX from 'xlsx';
 import { LocationApi } from '../models/locations.model';
 import { LocationService } from '../services/location.service';
 
-declare var $: any;
+declare var $;
 
 const fileName = 'clients_db_aba_therapy';
 const EXCEL_EXTENSION = '.xlsx';
@@ -294,16 +294,5 @@ export class LocationListComponent implements OnInit {
     //     doc.save('patients_db_aba_project.pdf');
     //   }
     // });
-  }
-
-  cambiarStatus(data: any) {
-    // const VALUE = data.eligibility;
-    // console.log(VALUE);
-    // this.locationService.(data, data.id).subscribe(
-    //   resp =>{
-    //     console.log(resp);
-    //     this.getTableData();
-    //   }
-    // )
   }
 }

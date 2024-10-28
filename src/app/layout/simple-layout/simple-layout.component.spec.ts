@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SimpleLayoutComponent } from './simple-layout.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 fdescribe('SimpleLayoutComponent', () => {
   let component: SimpleLayoutComponent;
@@ -9,6 +10,7 @@ fdescribe('SimpleLayoutComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [SimpleLayoutComponent],
+      imports: [HttpClientTestingModule],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SimpleLayoutComponent);

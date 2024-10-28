@@ -78,7 +78,7 @@ export class SidebarComponent implements OnInit {
     sessionStorage.setItem('menuValue', menu.menuValue);
     this.sidebarData.map((mainMenus: SideBarData) => {
       mainMenus.menu.map((resMenu: MenuItem) => {
-        if (resMenu.menuValue == menu.menuValue) {
+        if (resMenu.menuValue === menu.menuValue) {
           menu.showSubRoute = !menu.showSubRoute;
         } else {
           resMenu.showSubRoute = false;
@@ -99,7 +99,7 @@ export class SidebarComponent implements OnInit {
     this.page = splitVal[2];
   }
   miniSideBarMouseHover(position: string): void {
-    if (position == 'over') {
+    if (position === 'over') {
       this.sideBar.expandSideBar.next('true');
     } else {
       this.sideBar.expandSideBar.next('false');
