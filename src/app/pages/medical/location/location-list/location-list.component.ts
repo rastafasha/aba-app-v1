@@ -5,10 +5,17 @@ import { FileSaverService } from 'ngx-filesaver';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
 import * as XLSX from 'xlsx';
-import { LocationService } from '../services/location.service';
 import { LocationApi } from '../models/locations.model';
+import { LocationService } from '../services/location.service';
 
 declare var $: any;
+
+const fileName = 'clients_db_aba_therapy';
+const EXCEL_EXTENSION = '.xlsx';
+const TXT_TYPE = 'text/txt';
+const TXT_EXTENSION = '.txt';
+const CSV_TYPE = 'text/csv';
+const CSV_EXTENSION = '.csv';
 @Component({
   selector: 'app-location-list',
   templateUrl: './location-list.component.html',
@@ -16,9 +23,9 @@ declare var $: any;
 })
 export class LocationListComponent implements OnInit {
   routes = AppRoutes;
-
-  locationList = [];
-  dataSource!: MatTableDataSource<LocationApi[]>;
+  list: LocationApi[] = [];
+  filteredList: LocationApi[] = [];
+  dataSource!: MatTableDataSource<LocationApi>;
 
   showFilter = false;
   searchDataValue = '';
@@ -34,10 +41,9 @@ export class LocationListComponent implements OnInit {
   pageSelection = [];
   totalPages = 0;
 
-  location_generals = [];
-  location_id: any;
-  location_selected: any;
-  text_validation: any;
+  location_id: number;
+  selected: LocationApi;
+  text_validation: string;
 
   constructor(
     private locationService: LocationService,
@@ -56,78 +62,89 @@ export class LocationListComponent implements OnInit {
   }
 
   private getTableData(page = 1): void {
-    this.locationList = [];
+    this.list = [];
+    this.filteredList = [];
     this.serialNumberArray = [];
 
-    this.locationService.getLocations().subscribe((resp) => {
+    this.locationService.getLocations(page).subscribe((resp) => {
       this.totalDataLocation = resp.total;
-      this.locationList = resp.locations.data;
+      this.list = resp.locations.data;
+      this.filteredList = resp.locations.data;
       this.location_id = resp.locations.id;
-      this.dataSource = new MatTableDataSource(this.locationList);
+      this.dataSource = new MatTableDataSource(this.list);
       this.calculateTotalPages(this.totalDataLocation, this.pageSize);
     });
   }
 
   getTableDataGeneral() {
-    this.locationList = [];
+    this.filteredList = [];
     this.serialNumberArray = [];
 
-    this.location_generals.map((res: any, index: number) => {
+    this.list.forEach((res, index: number) => {
       const serialNumber = index + 1;
       if (index >= this.skip && serialNumber <= this.limit) {
-        this.locationList.push(res);
+        this.filteredList.push(res);
         this.serialNumberArray.push(serialNumber);
       }
     });
-    this.dataSource = new MatTableDataSource<any>(this.locationList);
+    this.dataSource = new MatTableDataSource<LocationApi>(this.filteredList);
     this.calculateTotalPages(this.totalDataLocation, this.pageSize);
   }
-  selectUser(staff: any) {
-    this.location_selected = staff;
+
+  select(data) {
+    this.selected = data;
   }
 
   deletePatient() {
-    this.locationService
-      .deleteLocation(this.location_selected.id)
-      .subscribe((resp) => {
-        // console.log(resp);
+    this.locationService.deleteLocation(this.selected.id).subscribe((resp) => {
+      // console.log(resp);
 
-        if (resp.message === 403) {
-          this.text_validation = resp.message_text;
-        } else {
-          const INDEX = this.locationList.findIndex(
-            (item: any) => item.id === this.location_selected.id
-          );
-          if (INDEX !== -1) {
-            this.locationList.splice(INDEX, 1);
+      if (resp.message === 403) {
+        this.text_validation = resp.message_text;
+      } else {
+        const INDEX = this.list.findIndex(
+          (item) => item.id === this.selected.id
+        );
+        if (INDEX !== -1) {
+          this.list.splice(INDEX, 1);
 
-            $('#delete_patient').hide();
-            $('#delete_patient').removeClass('show');
-            $('.modal-backdrop').remove();
-            $('body').removeClass();
-            $('body').removeAttr('style');
-            this.location_selected = null;
-            this.getTableData();
-          }
+          $('#delete_patient').hide();
+          $('#delete_patient').removeClass('show');
+          $('.modal-backdrop').remove();
+          $('body').removeClass();
+          $('body').removeAttr('style');
+          this.selected = null;
+          this.getTableData();
         }
-      });
+      }
+    });
   }
 
-  searchData() {
+  searchData(event: string) {
+    const search = event.toLowerCase().trim();
     this.pageSelection = [];
     this.limit = this.pageSize;
     this.skip = 0;
     this.currentPage = 1;
-    this.getTableData();
+    if (!search) {
+      this.filteredList = [...this.list];
+      return;
+    }
+    this.filteredList = this.list.filter(
+      (item) =>
+        item.title.toLowerCase().includes(search) ||
+        item.city.toLowerCase().includes(search) ||
+        item.email.toLowerCase().includes(search)
+    );
   }
 
-  sortData(sort: any) {
-    const data = this.locationList.slice();
+  sortData(sort) {
+    const data = this.list.slice();
 
     if (!sort.active || sort.direction === '') {
-      this.locationList = data;
+      this.list = data;
     } else {
-      this.locationList = data.sort((a, b) => {
+      this.list = data.sort((a, b) => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const aValue = (a as any)[sort.active];
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -195,18 +212,17 @@ export class LocationListComponent implements OnInit {
   excelExport() {
     const EXCEL_TYPE =
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8';
-    const EXCLE_EXTENSION = '.xlsx';
 
     this.getTableDataGeneral();
 
     //custom code
-    const worksheet = XLSX.utils.json_to_sheet(this.locationList);
+    const worksheet = XLSX.utils.json_to_sheet(this.list);
 
     const workbook = {
       Sheets: {
-        testingSheet: worksheet,
+        data: worksheet,
       },
-      SheetNames: ['testingSheet'],
+      SheetNames: ['data'],
     };
 
     const excelBuffer = XLSX.write(workbook, {
@@ -216,22 +232,19 @@ export class LocationListComponent implements OnInit {
 
     const blobData = new Blob([excelBuffer], { type: EXCEL_TYPE });
 
-    this.fileSaver.save(blobData, 'clients_db_aba_therapy');
+    this.fileSaver.save(blobData, fileName + EXCEL_EXTENSION);
   }
   csvExport() {
-    const CSV_TYPE = 'text/csv';
-    const CSV_EXTENSION = '.csv';
-
     this.getTableDataGeneral();
 
     //custom code
-    const worksheet = XLSX.utils.json_to_sheet(this.locationList);
+    const worksheet = XLSX.utils.json_to_sheet(this.list);
 
     const workbook = {
       Sheets: {
-        testingSheet: worksheet,
+        data: worksheet,
       },
-      SheetNames: ['testingSheet'],
+      SheetNames: ['data'],
     };
 
     const excelBuffer = XLSX.write(workbook, {
@@ -241,33 +254,30 @@ export class LocationListComponent implements OnInit {
 
     const blobData = new Blob([excelBuffer], { type: CSV_TYPE });
 
-    this.fileSaver.save(blobData, 'clients_db_aba_therapy_csv', CSV_EXTENSION);
+    this.fileSaver.save(blobData, fileName + CSV_EXTENSION);
   }
 
   txtExport() {
-    const TXT_TYPE = 'text/txt';
-    const TXT_EXTENSION = '.txt';
-
     this.getTableDataGeneral();
 
     //custom code
-    const worksheet = XLSX.utils.json_to_sheet(this.locationList);
+    const worksheet = XLSX.utils.json_to_sheet(this.list);
 
     const workbook = {
       Sheets: {
-        testingSheet: worksheet,
+        data: worksheet,
       },
-      SheetNames: ['testingSheet'],
+      SheetNames: ['data'],
     };
 
     const excelBuffer = XLSX.write(workbook, {
-      bookType: 'xlsx',
+      bookType: 'txt',
       type: 'array',
     });
 
     const blobData = new Blob([excelBuffer], { type: TXT_TYPE });
 
-    this.fileSaver.save(blobData, 'clients_db_aba_therapy', TXT_EXTENSION);
+    this.fileSaver.save(blobData, fileName + TXT_EXTENSION);
   }
 
   pdfExport() {
@@ -275,9 +285,9 @@ export class LocationListComponent implements OnInit {
     // const worksheet = XLSX.utils.json_to_sheet(this.locationList);
     // const workbook = {
     //   Sheets:{
-    //     'testingSheet': worksheet
+    //     'data': worksheet
     //   },
-    //   SheetNames:['testingSheet']
+    //   SheetNames:['data']
     // }
     // doc.html(document.body, {
     //   callback: function (doc) {

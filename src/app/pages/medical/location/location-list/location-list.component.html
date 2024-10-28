@@ -30,7 +30,7 @@
                           class="form-control"
                           placeholder="Search here"
                           [(ngModel)]="searchDataValue"
-                          (ngModelChange)="searchData()"
+                          (ngModelChange)="searchData($event)"
                         />
                         <a class="btn"
                           ><img src="assets/img/icons/search-normal.svg" alt=""
@@ -98,7 +98,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let data of locationList">
+                  <tr *ngFor="let data of filteredList">
                     <td>
                       <a [routerLink]="[routes.location.view, data.id]">
                         {{ data.title }}
@@ -125,8 +125,8 @@
                             class="dropdown-item"
                             [routerLink]="[routes.location.edit, data.id]"
                             ><i class="fa-solid fa-pen-to-square m-r-5"></i>
-                            Edit</a
-                          >
+                            Edit
+                          </a>
                           <a
                             class="dropdown-item"
                             [routerLink]="[routes.location.view, data.id]"
@@ -136,7 +136,7 @@
                           <a
                             class="dropdown-item"
                             href="javascript:void(0);"
-                            (click)="selectUser(data)"
+                            (click)="select(data)"
                             data-bs-toggle="modal"
                             [attr.data-bs-target]="'#delete_staff-' + data.id"
                           >
@@ -161,9 +161,9 @@
                               width="50"
                               height="46"
                             />
-                            <h3 *ngIf="location_selected">
+                            <h3 *ngIf="selected">
                               Are you sure want to delete this location
-                              {{ location_selected.location_id }}?
+                              {{ selected.location_id }}?
                             </h3>
                             <!-- validacion si esta en uso -->
                             <div class="form-group row" *ngIf="text_validation">
@@ -301,7 +301,7 @@
                           disabled:
                             currentPage ===
                               pageNumberArray[pageNumberArray.length - 1] ||
-                            locationList.length === 0
+                            list.length === 0
                         }"
                       >
                         <a

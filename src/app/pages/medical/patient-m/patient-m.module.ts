@@ -16,6 +16,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ClientLogReportComponent } from './client-log-report/client-log-report.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { LayoutModule } from '../../../layout/layout.module';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { MatButtonModule } from '@angular/material/button';
     PdfViewerModule,
     MatDialogModule,
     MatButtonModule,
+    LayoutModule,
   ],
 })
 export class PatientMModule {}

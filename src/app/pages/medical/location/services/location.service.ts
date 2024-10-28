@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Query } from '@angular/core';
 import { url_servicios } from 'src/app/config/config';
 import { LocationApi, LocationApiResponse } from '../models/locations.model';
 
@@ -41,7 +41,7 @@ export class LocationService {
     return this.http.get<any>(URL);
   }
 
-  getLocations() {
+  getLocations(page: number) {
     const URL = url_servicios + '/location';
     return this.http.get<LocationApiResponse<LocationApi[]>>(URL);
   }

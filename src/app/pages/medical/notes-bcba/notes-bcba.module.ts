@@ -13,6 +13,7 @@ import { NoteBcbaViewComponent } from './note-bcba-view/note-bcba-view.component
 import { NoteBcbaComponent } from './note-bcba/note-bcba.component';
 import { NotesBcbaComponent } from './notes-bcba.component';
 import { NotesBcbaRoutingModule } from './notes-bcba.routing';
+import { LayoutModule } from '../../../layout/layout.module';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { NotesBcbaRoutingModule } from './notes-bcba.routing';
     SharedModule,
     ComponentsModule,
     PipesModule,
+    LayoutModule,
   ],
 })
 export class NotesBcbaModule {}
