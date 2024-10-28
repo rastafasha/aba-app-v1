@@ -1,21 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, forkJoin, map, tap } from 'rxjs';
-import { AuthService } from 'src/app/core/auth/auth.service';
+import { NoteBcba, NoteRbt } from 'src/app/shared/models/notes.model';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
-import { ClientReportModel } from '../../../client-report/client-report.model';
 import { ClientReportService } from '../../../client-report/client-report.service';
 import { InsuranceCptPrizeResponse } from '../../../client-report/report-by-client/report-by-client.component';
-import { DoctorService } from '../../../doctors/service/doctor.service';
 import { InsuranceService } from '../../../insurance/service/insurance.service';
 import { NoteBcbaService } from '../../../notes-bcba/services/note-bcba.service';
 import { NoteRbtService } from '../../../notes/services/note-rbt.service';
 import { PatientMService } from '../../../patient-m/service/patient-m.service';
+import {
+  LocationApi,
+  LocationInsurance,
+  LocationLogFilter,
+  LocationPatient,
+} from '../../models/locations.model';
 import { LocationService } from '../../services/location.service';
-import { AppUser } from 'src/app/shared/models/users.models';
-import { AppRoutes } from 'src/app/shared/routes/routes';
-import { LocationApi } from '../../models/locations.model';
 
 @Component({
   selector: 'app-log-notas',
@@ -26,26 +27,22 @@ export class LogNotasComponent implements OnInit {
   // @Input() locationId:any;
   routes = AppRoutes;
 
-  searchDataDoctor = '';
-  date_start: any;
-  date_end: any;
+  private patient_id: any;
+  private billing_selected: any;
+  // private sponsor_id: any;
+  // private noterbt_id: any;
+  private location_id: any;
+  // private user: AppUser;
 
-  patient_id: any;
-  billing_selected: any;
-  sponsor_id: any;
-  noterbt_id: any;
-  location_id: any;
-  user: AppUser;
+  // private clientReport: ClientReportModel;
 
-  clientReport: ClientReportModel;
-
-  clientReportList: any;
-  clientReport_generals: any;
-  dataSource!: MatTableDataSource<any>;
-  showFilter = false;
-  searchDataValue = '';
-  lastIndex = 0;
-  pageSize = 50;
+  private clientReport_generals: (NoteRbt | NoteBcba)[];
+  private clientReportList: (NoteRbt | NoteBcba)[];
+  // private dataSource!: MatTableDataSource<any>;
+  // private showFilter = false;
+  // private searchDataValue = '';
+  // private lastIndex = 0;
+  private pageSize = 50;
   totalDataClientReport = 0;
   skip = 0;
   limit = this.pageSize;
@@ -54,104 +51,100 @@ export class LogNotasComponent implements OnInit {
   currentPage = 1;
   pageNumberArray: number[] = [];
   pageSelection = [];
-  totalPages = 0;
-  text_validation: any;
+  private totalPages = 0;
+  // private text_validation: any;
 
-  roles = [];
-  permissions = [];
-  patientID: any;
-  patientId: any;
+  // private roles = [];
+  // private permissions = [];
+  // private patientID: any;
+  // private patientId: any;
 
-  pa_assessments: any;
-  pa_assessmentsgroup = [];
-  cpt: any;
-  n_units: any;
-  pa_number: any;
-  insurances = [];
-  insurance_id: any;
-  insuranceiddd: any;
-  insurer_name: any;
-  sponsors = [];
-  modifiers = [];
-  noteRbt: any;
-  pos_covered = [];
-  pa_assessmentgroup = [];
-  noteBcba: any;
-  patient: any;
+  insurances: LocationInsurance[] = [];
 
-  patientName: any;
-  doctor_selected_full_name: any;
-  billing_total = 0;
+  // private pa_assessments: any;
+  // private pa_assessmentsgroup = [];
+  // private cpt: any;
+  // private n_units: any;
+  private pa_number: any;
+  private insurance_id: any;
+  // private insuranceiddd: any;
+  private insurer_name: any;
+  // private modifiers = [];
+  private noteRbts: NoteRbt[];
+  private noteBcbas: NoteBcba[];
+  // private pa_assessmentgroup = [];
+  // private patient: any;
+
+  // private patientName: any;
+  // private doctor_selected_full_name: any;
+  // private billing_total = 0;
   week_total_hours: string;
   week_total_units = 0;
-  total_hours = 0;
-  total_units = 0;
-  charges = 0;
+  // private total_hours = 0;
+  // private total_units = 0;
+  // private charges = 0;
   unitPrize = 0;
   unitPrizeCpt = 0;
   xe = 0;
   xp = 0;
-  is_xe: boolean;
-  is_xp: boolean;
+  // private is_xe: boolean;
+  // private is_xp: boolean;
 
-  session_date: any;
-  time_in: any;
-  time_out: any;
-  time_in2: any;
-  time_out2: any;
-  pos: any;
-  billed: boolean;
-  pay: boolean;
-  billedbcba: boolean;
-  paybcba: boolean;
-  md: any;
-  md2: any;
-  mdbcba: any;
-  md2bcba: any;
-  pay_selected: any;
-  billed_selected: any;
-  total: any;
-  totalPorPagar: any;
-  resultconFactor: any;
-  unidades: any;
-  porPagar: any;
-  horaTrabajada: any;
-  factHoras: any;
-  totalHoras: any;
-  totalUnidades: any;
-  units: any;
-  hoursPerUnit: any;
-  timePerUnit: any;
+  // private session_date: any;
+  // private time_in: any;
+  // private time_out: any;
+  // private time_in2: any;
+  // private time_out2: any;
+  // private pos: any;
+  // private billed: boolean;
+  // private pay: boolean;
+  // private billedbcba: boolean;
+  // private paybcba: boolean;
+  md: string;
+  md2: string;
+  mdbcba: string;
+  md2bcba: string;
+  // private pay_selected: any;
+  // private billed_selected: any;
+  // private total: any;
+  // private totalPorPagar: any;
+  // private resultconFactor: any;
+  // private unidades: any;
+  // private porPagar: any;
+  // private horaTrabajada: any;
+  // private factHoras: any;
+  // private totalHoras: any;
+  // private totalUnidades: any;
+  // private units: any;
+  // private hoursPerUnit: any;
+  // private timePerUnit: any;
 
-  tecnicoRbts: any;
-  supervisor: any;
-  npi: any;
-  rbt_id: any;
-  rbt2_id: any;
-  bcba_id: any;
-  bcba2_id: any;
-  doctor_selected_bcba: any;
-  full_name: any;
-  doctors: any;
-  tecnicoDoctorNames: any;
+  // private tecnicoRbt: TecnicoRbt;
+  // private supervisorRbt: Supervisor;
+  private npi: any;
+  // private rbt_id: any;
+  // private rbt2_id: any;
+  // private bcba_id: any;
+  // private bcba2_id: any;
+  // private doctor_selected_bcba: any;
+  // private full_name: any;
+  // private tecnicoDoctorNames: any;
 
-  services: any;
-  provider: any;
-  selectedCpt: any;
-  //  data: any;
-  noteType: string;
-  statusType: string;
-  patients: any;
+  // private services: any;
+  private provider: any;
+  // private selectedCpt: any;
+  // private   data: any;
+  patients: LocationPatient[];
 
-  providersSponsorsList: any;
-  factorPorcentual = 1.66666666666667;
+  // private providersSponsorsList: any;
+  // private factorPorcentual = 1.66666666666667;
 
-  doctor_selected: any = null;
-  combinedList: any[];
+  // private doctor_selected: any = null;
+  combinedList: { rbt: NoteRbt; bcba: NoteBcba }[];
   unitPrizeCptBcba: any;
   unitPrizeCptRbt: any;
-  bcbaCptCode: string;
-  rbtCptCode: string;
+  // private bcbaCptCode: string;
+  // private rbtCptCode: string;
 
   selectedValueInsurer!: string;
   selectedValuePatient!: string;
@@ -160,8 +153,6 @@ export class LogNotasComponent implements OnInit {
   constructor(
     private ativatedRoute: ActivatedRoute,
     private clientReportService: ClientReportService,
-    private doctorService: DoctorService,
-    private authService: AuthService,
     private insuranceService: InsuranceService,
     private patientService: PatientMService,
     private noteRbtService: NoteRbtService,
@@ -170,136 +161,100 @@ export class LogNotasComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    //
+    // this.billed = false;
+    // this.pay = false;
+    // this.billedbcba = false;
+    // this.paybcba = false;
+
+    // this.user = this.authService.user as AppUser;
+
     this.ativatedRoute.params.subscribe((resp) => {
-      console.log(resp);
       this.location_id = resp['id'];
+      this.onRefresh();
     });
+  }
+
+  onRefresh() {
     this.getLocation();
-    // this.locationId;
-    this.getTableData();
     this.getConfig();
-    this.billed = false;
-    this.pay = false;
-    this.billedbcba = false;
-    this.paybcba = false;
-
-    this.doctorService.getUserRoles();
-    this.user = this.authService.user as AppUser;
+    this.getTableData();
   }
 
-  isPermission(permission: string) {
-    if (this.user.roles.includes('SUPERADMIN')) {
-      return true;
-    }
-    if (this.user.permissions.includes(permission)) {
-      return true;
-    }
-    return false;
-  }
-
-  getConfig() {
-    this.clientReportService.config().subscribe((resp) => {
-      // console.log(resp);
-      this.insurances = resp.insurances;
-      this.sponsors = resp.doctors;
-    });
+  onFilter(filter: LocationLogFilter) {
+    this.getTableData(1, filter);
   }
 
   getLocation() {
     this.locationService.getLocation(this.location_id).subscribe((resp) => {
-      console.log(resp);
       this.location_selected = resp.location;
       this.patients = resp.patients;
     });
   }
 
-  getTableData(page = 1): void {
+  getConfig() {
+    this.clientReportService.config().subscribe((resp) => {
+      this.insurances = resp.insurances;
+    });
+  }
+
+  getTableData(page = 1, filter: Partial<LocationLogFilter> = {}): void {
     this.clientReportList = [];
     this.serialNumberArray = [];
     this.currentPage = page;
 
-    // this.patientId = patient_id
-    // // this.patientId = 'cliente3243';
-
     this.clientReportService
-      .getAllClientReportByLocation(
-        this.location_id,
+      .getAllClientReportByLocation(this.location_id, {
         page,
-        this.date_start,
-        this.date_end,
-        this.noteType
-      )
+        ...filter,
+      })
       .subscribe((resp) => {
-        console.log(resp);
-        const pa = resp.arrayPages;
-        // const pa = [1,2,3,4,5,6,7,8,9,10]
-        this.pageNumberArray = [];
-        if (pa.length > 5) {
-          if (this.currentPage > 2 && this.currentPage < pa.length - 2) {
-            for (
-              let index = this.currentPage - 2;
-              index < this.currentPage + 3;
-              index++
-            ) {
-              this.pageNumberArray.push(index);
-            }
-          } else if (this.currentPage <= 2) {
-            for (let index = 1; index < 6; index++) {
-              this.pageNumberArray.push(index);
-            }
-          } else if (this.currentPage >= pa.length - 2) {
-            for (let index = pa.length - 4; index <= pa.length; index++) {
-              this.pageNumberArray.push(index);
-            }
-          }
-        } else {
-          this.pageNumberArray = pa;
-        }
+        this.pagesUpdate(resp.arrayPages);
         // traemos la info necesaria del paciente
         // this.patient_id = resp.patient.patient_id;
         // this.insurance_id = resp.patient.insurer_id;
-        this.billed = resp.noteRbts;
-        this.pay = resp.noteRbts;
-        this.billedbcba = resp.noteBcbas;
-        this.paybcba = resp.noteBcbas;
-        this.pos_covered = resp.pos_covered;
+        // this.billed = resp.noteRbts.length > 0;
+        // this.pay = resp.noteRbts.length > 0;
+        // this.billedbcba = resp.noteBcbas.length > 0;
+        // this.paybcba = resp.noteBcbas.length > 0;
 
-        // obtengo la info resumida de las notas rbt
-        this.noteRbt = resp.noteRbts;
-
+        this.noteRbts = resp.noteRbts;
+        this.noteBcbas = resp.noteBcbas;
+        // Filter (post backend filtering)
+        if (filter.note_type === 'rbt') this.noteBcbas = [];
+        if (filter.note_type === 'bcba') this.noteRbts = [];
+        if (filter.insurance_id) {
+          this.noteRbts = this.noteRbts.filter(
+            (note) => note.insurance_id === filter.insurance_id
+          );
+          this.noteBcbas = this.noteBcbas.filter(
+            (note) => note.insurance_id === filter.insurance_id
+          );
+        }
+        if (filter.patient_id) {
+          this.noteRbts = this.noteRbts.filter(
+            (note) => note.patient_id === filter.patient_id.toString()
+          );
+          this.noteBcbas = this.noteBcbas.filter(
+            (note) => note.patient_id === filter.patient_id.toString()
+          );
+        }
+        if (filter.status_type) {
+          this.noteRbts = this.noteRbts.filter(
+            (note) => note.status === filter.status_type
+          );
+          this.noteBcbas = this.noteBcbas.filter(
+            (note) => note.status === filter.status_type
+          );
+        }
         // aqui traigo los nombres de los doctores relacionados al paciente
-        this.doctors = resp.doctors;
-        this.supervisor =
-          resp.noteRbts.length > 0 ? resp.noteRbts[0].supervisor : '';
-        this.tecnicoRbts =
-          resp.noteRbts.length > 0 ? resp.noteRbts[0].tecnicoRbts : '';
+        // this.supervisorRbt =
+        //   resp.noteRbts.length > 0 ? resp.noteRbts[0].supervisor : null;
+        // this.tecnicoRbt =
+        //   resp.noteRbts.length > 0 ? resp.noteRbts[0].tecnicoRbt : null;
 
-        this.noteBcba = resp.noteBcbas;
+        this.combinedList = this.combineNotes(this.noteRbts, this.noteBcbas);
 
-        //unimos las notas rbt y bcba para mostrarlas en la misma tabla
-        const clientReportList =
-          this.noteRbt.length > this.noteBcba.length
-            ? this.noteRbt
-            : this.noteBcba;
-
-        this.combinedList = [];
-        clientReportList.forEach((item, index) => {
-          // console.log(this.noteRbt[index])
-          // console.log(this.noteBcba[index])
-          if (this.noteRbt[index] && this.noteBcba[index])
-            this.combinedList.push({
-              rbt: this.noteRbt[index],
-              bcba: this.noteBcba[index],
-            });
-          else if (this.noteRbt[index])
-            this.combinedList.push({ rbt: this.noteRbt[index], bcba: null });
-          else if (this.noteBcba[index])
-            this.combinedList.push({ rbt: null, bcba: this.noteBcba[index] });
-        });
-
-        //fin union
-
+        /*
         this.rbt_id = resp.patient?.rbt_id;
         this.rbt2_id = resp.patient?.rbt2_id;
         this.bcba_id = resp.patient?.bcba_id;
@@ -315,10 +270,13 @@ export class LogNotasComponent implements OnInit {
         });
 
         this.pa_assessmentsgroup = jsonObj;
+        */
 
-        this.totalDataClientReport = resp.noteRbts.length;
-        this.clientReport_generals = resp.noteRbts;
+        this.totalDataClientReport =
+          this.noteRbts.length + this.noteBcbas.length;
+        this.clientReport_generals = [...this.noteRbts, ...this.noteBcbas];
 
+        /*
         this.patient_id = resp.patient_id;
 
         for (let i = 0; i < this.pa_assessmentsgroup.length; i++) {
@@ -334,15 +292,17 @@ export class LogNotasComponent implements OnInit {
           //aqui se agrega pa assestment al total
           // this.clientReportList.push(this.pa_assessmentsgroup[i]);
         }
+        */
 
         this.getTableDataGeneral();
-        this.getInsurer();
-        this.getDoctorRBT();
+        // this.getInsurer();
+        // this.getDoctorRBT();
         //  this.getDoctorBcba();
         //  this.extractDataHours();
       });
   }
 
+  /*
   getInsurer() {
     //sacamos los detalles insurance seleccionado
     if (!this.insurance_id) return;
@@ -365,8 +325,8 @@ export class LogNotasComponent implements OnInit {
         // Call getPrizeCptNote with the correct parameters from noterbta list and notebcba list
         this.getPrizeCptNote(
           this.insurer_name,
-          this.noteBcba.cpt_code,
-          this.noteRbt.cpt_code,
+          this.noteBcbas[0].cpt_code,
+          this.noteRbts[0].cpt_code,
           this.provider
         ).subscribe();
       },
@@ -375,12 +335,13 @@ export class LogNotasComponent implements OnInit {
       }
     );
   }
+    */
   // funcion para obtener el valor de la unidad del cpt
   getPrizeCptNoteRbt(cptCode: string) {
     this.getPrizeCptNote(
       this.insurer_name,
       cptCode,
-      this.noteRbt.cpt_code,
+      this.noteRbts[0].cpt_code,
       this.provider
     ).subscribe((result: any) => {
       return result;
@@ -448,37 +409,39 @@ export class LogNotasComponent implements OnInit {
   // }
 
   //trae el nombre del doctor quien hizo la nota rbt
+  /*
   getDoctorRBT() {
-    if (!this.tecnicoRbts) return;
-    this.doctorService.showDoctor(this.tecnicoRbts).subscribe((resp) => {
+    if (!this.tecnicoRbt) return;
+    console.log(this.tecnicoRbt);
+    this.doctorService.showDoctor(this.tecnicoRbt.npi).subscribe((resp) => {
       // console.log('doctor rbt y location',resp);
       this.doctor_selected = resp.user;
       this.full_name = resp.user.full_name;
     });
   }
+    */
+  /*
   // supervisor del tecnico solo sacamos el npi
   getDoctorBcba() {
-    this.doctorService.showDoctor(this.supervisor).subscribe((resp) => {
+    this.doctorService.showDoctor(this.supervisorRbt).subscribe((resp) => {
       // console.log('bcba',resp);
       this.npi = resp.user.npi;
     });
   }
+  */
 
   extractDataHours() {
     // recorrer el array de billing_general para extraer la data
     const hours_group: string[] = [];
     const units_group: string[] = [];
-    const extractedData = this.clientReport_generals;
 
     const array = this.clientReport_generals;
-    for (this.clientReport_generals of array) {
-      hours_group.push(this.clientReport_generals.total_hours);
-      units_group.push(this.clientReport_generals.total_units);
+    for (const report of array) {
+      hours_group.push(report.total_hours);
+      units_group.push(report.total_units);
     }
-    // console.log(hours_group);
-    // console.log(units_group);
     // obtenemos el total de las horas en un rango de 7 dias  atras
-    var suma = 0;
+    let suma = 0;
     for (
       var i = hours_group.length - 1;
       i >= Math.max(0, hours_group.length - 7);
@@ -491,23 +454,23 @@ export class LogNotasComponent implements OnInit {
     // console.log("total semanal "+ this.week_total_hours );
 
     // obtenemos el total de las unidades en un rango de 7 dias  atras
-    var sumaunit = 0;
+    let sumaUnit = 0;
     for (
       var i = units_group.length - 1;
       i >= Math.max(0, units_group.length - 7);
       i--
     ) {
-      sumaunit += parseInt(units_group[i], 10) || 0;
+      sumaUnit += parseInt(units_group[i], 10) || 0;
     }
     // this.week_total_units = sumaunit / Math.min(7, units_group.length);// saca el promedio
-    this.week_total_units = sumaunit; // saca la suma
+    this.week_total_units = sumaUnit; // saca la suma
     // console.log("total semanal "+ this.week_total_units );
 
     // saco el valor de charges multiplicando el total de unidades por semana por el valor del cpt o n_units
     // this.getCharges();
   }
 
-  sortData(sort: any) {
+  sortData(sort) {
     const data = this.clientReportList.slice();
 
     if (!sort.active || sort.direction === '') {
@@ -523,33 +486,28 @@ export class LogNotasComponent implements OnInit {
     }
   }
 
-  searchData(location_id: any) {
-    // this.dataSource.filter = value.trim().toLowerCase();
-    // this.patientList = this.dataSource.filteredData;
+  searchData() {
     this.combinedList = [];
     this.pageSelection = [];
     this.limit = this.pageSize;
     this.skip = 0;
     this.currentPage = 1;
-    location_id;
     this.getTableData();
   }
 
-  getTableDataGeneral() {
+  private getTableDataGeneral() {
     this.clientReportList = [];
     this.serialNumberArray = [];
     this.totalDataClientReport = 0;
 
-    this.clientReport_generals.map((res, index: number) => {
+    this.clientReport_generals.forEach((res, index: number) => {
       const serialNumber = index + 1;
       if (index >= this.skip && serialNumber <= this.limit) {
         this.clientReportList.push(res);
         this.serialNumberArray.push(serialNumber);
       }
     });
-    this.dataSource = new MatTableDataSource(this.clientReportList);
-    // this.calculateTotalPages(this.totalDataClientReport, this.pageSize);
-
+    // this.dataSource = new MatTableDataSource(this.clientReportList);
     this.calculateUnitsAndHours();
   }
 
@@ -587,9 +545,7 @@ export class LogNotasComponent implements OnInit {
       this.skip + this.pageSize,
       this.clientReportList.length
     );
-    return this.clientReportList
-      .slice(this.skip, endIndex)
-      .reduce((acc, cur) => acc + cur.amount, 0);
+    return this.clientReportList.slice(this.skip, endIndex).length;
   }
 
   getMoreData(event: string): void {
@@ -618,17 +574,6 @@ export class LogNotasComponent implements OnInit {
       this.pageIndex = pageNumber + 1;
     }
     this.getTableDataGeneral();
-  }
-
-  PageSize(): void {
-    this.pageSelection = [];
-    this.limit = this.pageSize;
-    this.skip = 0;
-    this.currentPage = 1;
-    this.date_start = '';
-    this.date_end = '';
-    this.ngOnInit();
-    this.getTableData();
   }
 
   private calculateTotalPages(
@@ -679,24 +624,24 @@ export class LogNotasComponent implements OnInit {
   }
 
   isCheckedBilled() {
-    this.billed = !this.billed;
+    // this.billed = !this.billed;
     // console.log(this.billed);
     // if ( event.target.checked ) {
     // }
   }
   isCheckedBilledBcba() {
-    this.billedbcba = !this.billedbcba;
+    // this.billedbcba = !this.billedbcba;
     // console.log(this.billedbcba);
   }
 
   isCheckedPay() {
-    this.pay = !this.pay;
+    // this.pay = !this.pay;
     // console.log(this.pay);
     // if ( event.target.checked ) {
     // }
   }
   isCheckedPayBcba() {
-    this.paybcba = !this.paybcba;
+    // this.paybcba = !this.paybcba;
     // console.log(this.paybcba);
   }
 
@@ -846,7 +791,6 @@ export class LogNotasComponent implements OnInit {
   }
 
   selectInsurance(event) {
-    event = this.selectedValueInsurer;
     this.insuranceData(this.selectedValueInsurer);
   }
 
@@ -857,7 +801,7 @@ export class LogNotasComponent implements OnInit {
         console.log(resp);
         this.insurer_name = resp.insurer_name;
         // this.notes = resp.notes;
-        this.services = resp.services;
+        // this.services = resp.services;
         this.provider = resp.services[0].provider;
       });
   }
@@ -873,5 +817,50 @@ export class LogNotasComponent implements OnInit {
       .subscribe((resp) => {
         console.log(resp);
       });
+  }
+
+  private pagesUpdate(arrayPages: number[]) {
+    const pa = arrayPages;
+    this.pageNumberArray = [];
+    if (pa.length > 5) {
+      if (this.currentPage > 2 && this.currentPage < pa.length - 2) {
+        for (
+          let index = this.currentPage - 2;
+          index < this.currentPage + 3;
+          index++
+        ) {
+          this.pageNumberArray.push(index);
+        }
+      } else if (this.currentPage <= 2) {
+        for (let index = 1; index < 6; index++) {
+          this.pageNumberArray.push(index);
+        }
+      } else if (this.currentPage >= pa.length - 2) {
+        for (let index = pa.length - 4; index <= pa.length; index++) {
+          this.pageNumberArray.push(index);
+        }
+      }
+    } else {
+      this.pageNumberArray = pa;
+    }
+  }
+
+  private combineNotes(notesRbt: NoteRbt[], notesBcba: NoteBcba[]) {
+    const combinedList: { rbt: NoteRbt; bcba: NoteBcba }[] = [];
+    const clientReportList =
+      notesRbt.length > notesBcba.length ? notesRbt : notesBcba;
+
+    clientReportList.forEach((_, index) => {
+      if (notesRbt[index] && notesBcba[index])
+        combinedList.push({
+          rbt: notesRbt[index],
+          bcba: notesBcba[index],
+        });
+      else if (notesRbt[index])
+        combinedList.push({ rbt: notesRbt[index], bcba: null });
+      else if (notesBcba[index])
+        combinedList.push({ rbt: null, bcba: notesBcba[index] });
+    });
+    return combinedList;
   }
 }

@@ -139,7 +139,6 @@ export class NoteRbtViewComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.pageService.onInitPage();
-    this.doctorService.getUserRoles();
 
     this.activatedRoute.params.subscribe((resp) => {
       // console.log(resp);

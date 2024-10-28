@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { LayoutModule } from '../../../layout/layout.module';
-import { CompModule } from './components/comp.module';
+import { LocationComponentsModule } from './components/components.module';
 import { LocationAddComponent } from './location-add/location-add.component';
 import { LocationEditComponent } from './location-edit/location-edit.component';
 import { LocationListComponent } from './location-list/location-list.component';
@@ -30,7 +30,7 @@ import { LocationRoutingModule } from './location.routing';
     HttpClientModule,
     RouterModule,
     SharedModule,
-    CompModule,
+    LocationComponentsModule,
     LayoutModule,
   ],
 })

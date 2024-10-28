@@ -67,7 +67,6 @@ export class NotesByClientComponent implements OnInit {
     //  this.getNotesByPatient();
     this.getTableData();
 
-    this.doctorService.getUserRoles();
     // const USER = localStorage.getItem("user");
     // this.user = JSON.parse(USER ? USER: '');
     // this.doctor_id = this.user.id;
