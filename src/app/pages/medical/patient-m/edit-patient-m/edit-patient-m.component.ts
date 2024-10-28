@@ -7,7 +7,7 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
 import { InsuranceService } from '../../insurance/service/insurance.service';
 import { PatientMService } from '../service/patient-m.service';
-import { CreatePaServiceDto, PaService, PaServiceStatus } from 'src/app/shared/interfaces/pa-service.interface';
+import { CreatePaServiceDto, PaService } from 'src/app/shared/interfaces/pa-service.interface';
 import { PaServiceService } from '../service/pa-service.service';
 // declare function alertClose():any;
 declare let $: any;
@@ -280,7 +280,6 @@ export class EditPatientMComponent implements OnInit {
     n_units: 0,
     start_date: '',
     end_date: '',
-    status: 'active'
   };
 
   constructor(
@@ -358,7 +357,6 @@ export class EditPatientMComponent implements OnInit {
         n_units: this.newPaService.n_units,
         start_date: new Date(this.newPaService.start_date).toISOString().split('T')[0],
         end_date: new Date(this.newPaService.end_date).toISOString().split('T')[0],
-        status: 'active'
       };
 
       console.log('Sending PA service data:', paServiceData);
@@ -429,7 +427,6 @@ export class EditPatientMComponent implements OnInit {
       n_units: 0,
       start_date: '',
       end_date: '',
-      status: 'active'
     };
   }
 

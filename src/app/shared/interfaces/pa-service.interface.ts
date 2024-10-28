@@ -7,12 +7,10 @@ export interface PaService {
   available_units?: number;
   start_date: string;
   end_date: string;
-  status?: PaServiceStatus;
   created_at?: string;
   updated_at?: string;
 }
 
-export type PaServiceStatus = 'active' | 'inactive' | 'pending' | 'expired';
 
 export interface PaServiceResponse {
   pa_service: PaService;
@@ -36,5 +34,4 @@ export interface CreatePaServiceDto {
   n_units: number;
   start_date: string;
   end_date: string;
-  status: PaServiceStatus;
 }
