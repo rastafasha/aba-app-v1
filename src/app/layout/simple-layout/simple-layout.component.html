@@ -1,0 +1,28 @@
+<div
+  class="main-wrapper"
+  [ngClass]="{
+    'expand-menu': expandMenu === 'true' && miniSidebar === 'true',
+    'mini-sidebar': miniSidebar === 'true',
+    'slide-nav': mobileSidebar === 'true'
+  }"
+>
+  <app-header
+    [ngClass]="{
+      'd-none': sideBarActivePath === false && headerActivePath === false
+    }"
+  >
+  </app-header>
+  <app-sidebar
+    [ngClass]="{
+      'd-none': sideBarActivePath === false && headerActivePath === false
+    }"
+  >
+  </app-sidebar>
+  <ng-content></ng-content>
+  <div
+    class="sidebar-overlay"
+    [ngClass]="{
+      opened: mobileSidebar === 'true'
+    }"
+  ></div>
+</div>

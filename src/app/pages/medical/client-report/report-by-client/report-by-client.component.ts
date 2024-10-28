@@ -13,6 +13,7 @@ import { NoteRbtService } from '../../notes/services/note-rbt.service';
 import { ClientReportModel } from '../client-report.model';
 import { ClientReportService } from '../client-report.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 
 export interface InsuranceCptPrizeResponse {
   unit_prize: number;
@@ -32,6 +33,7 @@ export interface NoteRbt {
   styleUrls: ['./report-by-client.component.scss'],
 })
 export class ReportByClientComponent implements OnInit {
+  routes = AppRoutes;
   searchDataDoctor = '';
   date_start: any;
   date_end: any;

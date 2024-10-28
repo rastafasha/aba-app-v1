@@ -4,16 +4,6 @@
     <div class="page-header">
       <div class="row">
         <div class="col-sm-12">
-          <!-- <ul class="breadcrumb">
-                      <span  *ngIf="role === 'SUPERADMIN' ">
-                        <li class="breadcrumb-item"><a routerLink="/dashboard">Dashboard</a></li>
-                    </span>
-                      <span  *ngIf="role === 'MANAGER'">
-                        <li class="breadcrumb-item"><a [routerLink]="['/location/view/', user.location_id]">Dashboard</a></li>
-                    </span>
-                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
-                        <li class="breadcrumb-item active">Employees List</li>
-                    </ul> -->
           <div class="doctor-submit text-start">
             <button class="btn btn-primary btn-sm" (click)="goBack()">
               Back
@@ -48,7 +38,7 @@
                       </div>
                       <div class="add-group">
                         <a
-                          routerLink="/doctors/add"
+                          [routerLink]="routes.doctors.add"
                           *ngIf="isPermission('register_employer')"
                           class="btn btn-primary add-pluss ms-2"
                           ><img src="assets/img/icons/plus.svg" alt=""
@@ -423,7 +413,7 @@
                       </div>
                       <div class="add-group">
                         <a
-                          routerLink="/doctors/add"
+                          [routerLink]="routes.doctors.add"
                           *ngIf="isPermission('register_employer')"
                           class="btn btn-primary add-pluss ms-2"
                           ><img src="assets/img/icons/plus.svg" alt=""

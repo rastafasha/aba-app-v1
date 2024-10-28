@@ -8,6 +8,7 @@ import { InsuranceService } from '../../insurance/service/insurance.service';
 import { PatientMService } from '../../patient-m/service/patient-m.service';
 import { BillingService } from '../billing.service';
 import { AppUser } from 'src/app/shared/models/users.models';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 declare var $: any;
 
 @Component({
@@ -16,6 +17,8 @@ declare var $: any;
   styleUrls: ['./billing-by-client.component.scss'],
 })
 export class BillingByClientComponent {
+  routes = AppRoutes;
+  note_selected: any;
   searchDataDoctor = '';
   date_start: any;
   date_end: any;
@@ -400,7 +403,7 @@ export class BillingByClientComponent {
           this.text_validation = resp.message_text;
         } else {
           const INDEX = this.billingList.findIndex(
-            (item: any) => item.id == this.billing_selected.id
+            (item) => item.id === this.billing_selected.id
           );
           if (INDEX !== -1) {
             this.billingList.splice(INDEX, 1);

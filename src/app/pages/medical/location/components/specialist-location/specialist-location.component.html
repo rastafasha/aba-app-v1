@@ -18,7 +18,7 @@
             </div>
             <div class="add-group">
               <a
-                routerLink="/doctors/add"
+                [routerLink]="routes.doctors.add"
                 *ngIf="isPermission('register_employer')"
                 class="btn btn-primary add-pluss ms-2"
                 ><img src="assets/img/icons/plus.svg" alt=""

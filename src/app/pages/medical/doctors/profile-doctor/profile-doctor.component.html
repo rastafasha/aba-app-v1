@@ -4,19 +4,6 @@
     <div class="page-header">
       <div class="row">
         <div class="col-sm-12">
-          <!-- <ul class="breadcrumb">
-                        <span  *ngIf="roles === 'SUPERADMIN' || roles === 'LM' || roles === 'MANAGER'">
-                            <li class="breadcrumb-item"><a routerLink="/dashboard">Dashboard</a></li>
-                        </span>
-                        <span  *ngIf="roles === 'RBT' || roles === 'BCBA'">
-                            <li class="breadcrumb-item"><a [routerLink]="[routes.doctors.profile, user.id]">Dashboard</a></li>
-                            <li class="breadcrumb-item" ><i class="feather icon-chevron-right"></i></li>
-                        </span>
-                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
-                        <li class="breadcrumb-item" *ngIf="isPermission('list_employers')" ><a routerLink="/doctors/list">Employees </a></li>
-                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
-                        <li class="breadcrumb-item active">Employeer Profile</li>
-                    </ul> -->
           <div class="doctor-submit text-start">
             <button class="btn btn-primary btn-sm" (click)="goBack()">
               Back
@@ -164,10 +151,10 @@
                           <th mat-sort-header="doctor">Patient Id</th>
                           <th mat-sort-header="status">Status</th>
                           <th mat-sort-header="viewall">
-                            <a [routerLink]="['/patients/list']">View All</a>
+                            <a [routerLink]="[routes.patients.list]"
+                              >View All</a
+                            >
                           </th>
-                          <!-- <th mat-sort-header="statuspayment">Status Payment</th> -->
-                          <!-- <th mat-sort-header="charges">Monto ($)</th> -->
                           <th></th>
                         </tr>
                       </thead>
@@ -203,7 +190,7 @@
                                 <a
                                   class="dropdown-item"
                                   [routerLink]="[
-                                    '/client-report/employee_reportbyclient/',
+                                    routes.clientReport.employeeByClient,
                                     data.patient_id
                                   ]"
                                   ><i
@@ -217,7 +204,7 @@
                                     role === 'SUPERADMIN' || role === 'BCBA'
                                   "
                                   [routerLink]="[
-                                    '/bip/attention/',
+                                    routes.bip.attention,
                                     data.patient_id
                                   ]"
                                   ><i
@@ -229,7 +216,7 @@
                                   class="dropdown-item"
                                   *ngIf="isPermission('view_bip')"
                                   [routerLink]="[
-                                    '/bip/profile/',
+                                    routes.bip.profile,
                                     data.patient_id
                                   ]"
                                   ><i
@@ -242,7 +229,10 @@
                                   *ngIf="
                                     role === 'SUPERADMIN' || role === 'RBT'
                                   "
-                                  [routerLink]="['/note-rbt/', data.patient_id]"
+                                  [routerLink]="[
+                                    routes.noteRbt.noteRbt,
+                                    data.patient_id
+                                  ]"
                                   ><i
                                     class="fa-solid fa-pen-to-square m-r-5"
                                   ></i>
@@ -254,7 +244,7 @@
                                     role === 'SUPERADMIN' || role === 'RBT'
                                   "
                                   [routerLink]="[
-                                    '/note-rbt/listbyclient/',
+                                    routes.noteRbt.list,
                                     data.patient_id
                                   ]"
                                   ><i
@@ -268,7 +258,7 @@
                                     role === 'SUPERADMIN' || role === 'BCBA'
                                   "
                                   [routerLink]="[
-                                    '/note-bcba/',
+                                    routes.noteBcba.noteBcba,
                                     data.patient_id
                                   ]"
                                   ><i
@@ -282,7 +272,7 @@
                                     role === 'SUPERADMIN' || role === 'BCBA'
                                   "
                                   [routerLink]="[
-                                    '/note-bcba/listbyclient/',
+                                    routes.noteBcba.list,
                                     data.patient_id
                                   ]"
                                   ><i

@@ -4,20 +4,6 @@
     <div class="page-header">
       <div class="row">
         <div class="col-sm-12">
-          <!-- <ul class="breadcrumb">
-                    <span  *ngIf="roles === 'SUPERADMIN' ">
-                      <li class="breadcrumb-item"><a routerLink="/dashboard">Dashboard</a></li>
-                  </span>
-                    <span  *ngIf="roles === 'MANAGER'">
-                      <li class="breadcrumb-item"><a [routerLink]="['/location/view/', location_id]">Dashboard</a></li>
-                  </span>
-                  <li class="breadcrumb-item" ><i class="feather icon-chevron-right"></i></li>
-                  <span  *ngIf="roles === 'RBT' || roles === 'BCBA'">
-                      <li class="breadcrumb-item"><a [routerLink]="[routes.doctors.profile, user.id]">Dashboard</a></li>
-                  </span>
-                      <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
-                      <li class="breadcrumb-item active">Clients List</li>
-                  </ul> -->
           <div class="doctor-submit text-start">
             <button class="btn btn-primary btn-sm" (click)="goBack()">
               Back
@@ -53,7 +39,7 @@
                       </div>
                       <div class="add-group">
                         <a
-                          routerLink="/patients/add"
+                          [routerLink]="routes.patients.add"
                           class="btn btn-primary add-pluss ms-2"
                           *ngIf="isPermission('register_patient')"
                           ><img src="assets/img/icons/plus.svg" alt=""
@@ -156,7 +142,7 @@
                     </td>
 
                     <td>
-                      <a [routerLink]="['/patients/profile/', data.id]">
+                      <a [routerLink]="[routes.patients.profile, data.id]">
                         {{
                           data.first_name +
                             " " +
@@ -187,8 +173,6 @@
                     <td>{{ data.city }}</td>
                     <td>
                       {{ data.locals.title }}
-                      <!-- <a [routerLink]="['/location/view/', data.location_id]">
-                                      </a> -->
                     </td>
                     <td>{{ data.patient_id }}</td>
 
@@ -248,17 +232,6 @@
                         *ngIf="data.status === 'waitintOnSchool'"
                         >Waiting on School</span
                       >
-
-                      <!-- <span *ngIf="data.status === 'active'">
-                                        <button class="btn btn-outline-success" *ngIf="roles ==='SUPERADMIN' || roles === 'MANAGER'|| roles === 'LM' || roles ==='BCBA'" [routerLink]="['/bip/attention/', data.patient_id]" tooltip="BIP Create"><i class="fa fa-address-book"></i></button>
-                                        <button class="btn btn-outline-dark" *ngIf="isPermission('view_bip')" [routerLink]="['/bip/profile/', data.patient_id]" tooltip="BIP View"><i class="fa fa-eye"></i></button>
-                                        <button class="btn btn-outline-success" *ngIf="roles ==='SUPERADMIN' || roles === 'MANAGER'|| roles === 'LM' ||  roles ==='RBT'" [routerLink]="['/note-rbt/', data.patient_id]" tooltip="Create RBT Note"> <i class="fa fa-id-card "></i> </button>
-                                        <button class="btn btn-outline-primary" *ngIf="roles ==='SUPERADMIN' || roles === 'MANAGER'|| roles === 'LM' ||  roles ==='RBT'" [routerLink]="['/note-rbt/listbyclient/', data.patient_id]" tooltip="RBT Note list"> <i class="fa fa-bars"></i> </button>
-                                        <button class="btn btn-outline-secondary" *ngIf="roles ==='SUPERADMIN' || roles === 'MANAGER'|| roles === 'LM' || roles ==='BCBA'" [routerLink]="['/note-bcba/', data.patient_id]" tooltip="Create BCBA Note"> <i class="fa fa-id-badge"></i> </button>
-                                        <button class="btn btn-outline-primary" *ngIf="roles ==='SUPERADMIN' || roles === 'MANAGER'|| roles === 'LM' || roles ==='BCBA'" [routerLink]="['/note-bcba/listbyclient/', data.patient_id]" tooltip="BCBA Note list"> <i class="fa fa-bars"></i> </button>
-                                        <button class="btn btn-outline-warning" *ngIf="roles ==='SUPERADMIN' || roles === 'MANAGER'" [routerLink]="['/client-report/byclient/', data.patient_id]" tooltip="Log Report"> <i class="fa fa-check-circle"></i> </button>
-                                        <button class="btn btn-outline-warning" *ngIf="roles ==='SUPERADMIN' || roles === 'MANAGER'" [routerLink]="['/billing/byclient/', data.patient_id]" tooltip="Billing by this user"> <i class="fa fa-credit-card"></i> </button> -->
-                      <!-- </span> -->
                     </td>
                     <td *ngIf="roles === 'SUPERADMIN'">
                       <select
@@ -305,14 +278,14 @@
                           <a
                             class="dropdown-item"
                             *ngIf="isPermission('edit_patient')"
-                            [routerLink]="['/patients/list/edit/', data.id]"
+                            [routerLink]="[routes.patients.listEdit, data.id]"
                             ><i class="fa-solid fa-pen-to-square m-r-5"></i>
                             Edit</a
                           >
                           <a
                             class="dropdown-item"
                             *ngIf="isPermission('profile_patient')"
-                            [routerLink]="['/patients/profile/', data.id]"
+                            [routerLink]="[routes.patients.profile, data.id]"
                             ><i class="fa-solid fa-eye m-r-5"></i> View</a
                           >
 
@@ -534,7 +507,7 @@
                       </div>
                       <div class="add-group">
                         <a
-                          routerLink="/patients/add"
+                          [routerLink]="routes.patients.add"
                           class="btn btn-primary add-pluss ms-2"
                           *ngIf="isPermission('register_patient')"
                           ><img src="assets/img/icons/plus.svg" alt=""
@@ -627,7 +600,7 @@
                     </td>
 
                     <td>
-                      <a [routerLink]="['/patients/profile/', data.id]">
+                      <a [routerLink]="[routes.patients.profile, data.id]">
                         {{
                           data.first_name +
                             " " +
@@ -706,7 +679,7 @@
                             roles === 'LM' ||
                             roles === 'BCBA'
                           "
-                          [routerLink]="['/bip/attention/', data.patient_id]"
+                          [routerLink]="[routes.bip.attention, data.patient_id]"
                           tooltip="BIP Create"
                         >
                           <i class="fa fa-address-book"></i>
@@ -714,7 +687,7 @@
                         <button
                           class="btn btn-outline-dark"
                           *ngIf="isPermission('view_bip')"
-                          [routerLink]="['/bip/profile/', data.patient_id]"
+                          [routerLink]="[routes.bip.profile, data.patient_id]"
                           tooltip="BIP View"
                         >
                           <i class="fa fa-eye"></i>
@@ -726,7 +699,10 @@
                             roles === 'LM' ||
                             roles === 'RBT'
                           "
-                          [routerLink]="['/note-rbt/', data.patient_id]"
+                          [routerLink]="[
+                            routes.noteRbt.noteRbt,
+                            data.patient_id
+                          ]"
                           tooltip="Create RBT Note"
                         >
                           <i class="fa fa-id-card"></i>
@@ -738,10 +714,7 @@
                             roles === 'LM' ||
                             roles === 'RBT'
                           "
-                          [routerLink]="[
-                            '/note-rbt/listbyclient/',
-                            data.patient_id
-                          ]"
+                          [routerLink]="[routes.noteRbt.list, data.patient_id]"
                           tooltip="RBT Note list"
                         >
                           <i class="fa fa-bars"></i>
@@ -753,7 +726,10 @@
                             roles === 'LM' ||
                             roles === 'BCBA'
                           "
-                          [routerLink]="['/note-bcba/', data.patient_id]"
+                          [routerLink]="[
+                            routes.noteBcba.noteBcba,
+                            data.patient_id
+                          ]"
                           tooltip="Create BCBA Note"
                         >
                           <i class="fa fa-id-badge"></i>
@@ -765,10 +741,7 @@
                             roles === 'LM' ||
                             roles === 'BCBA'
                           "
-                          [routerLink]="[
-                            '/note-bcba/listbyclient/',
-                            data.patient_id
-                          ]"
+                          [routerLink]="[routes.noteBcba.list, data.patient_id]"
                           tooltip="BCBA Note list"
                         >
                           <i class="fa fa-bars"></i>
@@ -784,7 +757,6 @@
                         >
                           <i class="fa fa-check-circle"></i>
                         </button>
-                        <!-- <button class="btn btn-outline-warning" *ngIf="roles ==='SUPERADMIN' || roles === 'MANAGER'" [routerLink]="['/billing/byclient/', data.patient_id]" tooltip="Billing by this user"> <i class="fa fa-credit-card"></i> </button> -->
                       </span>
                     </td>
                     <td *ngIf="roles === 'MANAGER' || roles === 'LM'">
@@ -832,14 +804,14 @@
                           <a
                             class="dropdown-item"
                             *ngIf="isPermission('edit_patient')"
-                            [routerLink]="['/patients/list/edit/', data.id]"
+                            [routerLink]="[routes.patients.listEdit, data.id]"
                             ><i class="fa-solid fa-pen-to-square m-r-5"></i>
                             Edit</a
                           >
                           <a
                             class="dropdown-item"
                             *ngIf="isPermission('profile_patient')"
-                            [routerLink]="['/patients/profile/', data.id]"
+                            [routerLink]="[routes.patients.profile, data.id]"
                             ><i class="fa-solid fa-eye m-r-5"></i> View</a
                           >
 
@@ -1057,7 +1029,7 @@
                       </div>
                       <div class="add-group">
                         <a
-                          routerLink="/patients/add"
+                          [routerLink]="routes.patients.add"
                           class="btn btn-primary add-pluss ms-2"
                           *ngIf="isPermission('register_patient')"
                           ><img src="assets/img/icons/plus.svg" alt=""
@@ -1107,7 +1079,7 @@
                 <tbody>
                   <tr *ngFor="let data of doctorPatientList">
                     <td>
-                      <a [routerLink]="['/patients/profile/', data.id]">
+                      <a [routerLink]="[routes.patients.profile, data.id]">
                         {{
                           data.first_name +
                             " " +
@@ -1141,7 +1113,7 @@
                       <span *ngIf="data.status === 'active'">
                         <button
                           class="btn btn-outline-success"
-                          [routerLink]="['/bip/attention/', data.patient_id]"
+                          [routerLink]="[routes.bip.attention, data.patient_id]"
                           tooltip="BIP Create"
                         >
                           <i class="fa fa-address-book"></i>
@@ -1149,14 +1121,17 @@
                         <button
                           class="btn btn-outline-dark"
                           *ngIf="isPermission('view_bip')"
-                          [routerLink]="['/bip/profile/', data.patient_id]"
+                          [routerLink]="[routes.bip.profile, data.patient_id]"
                           tooltip="BIP View"
                         >
                           <i class="fa fa-eye"></i>
                         </button>
                         <button
                           class="btn btn-outline-success"
-                          [routerLink]="['/note-rbt/', data.patient_id]"
+                          [routerLink]="[
+                            routes.noteRbt.noteRbt,
+                            data.patient_id
+                          ]"
                           tooltip="Create RBT Note"
                         >
                           <i class="fa fa-id-card"></i>
@@ -1170,22 +1145,21 @@
                         </button>
                         <button
                           class="btn btn-outline-secondary"
-                          [routerLink]="['/note-bcba/', data.patient_id]"
+                          [routerLink]="[
+                            routes.noteBcba.noteBcba,
+                            data.patient_id
+                          ]"
                           tooltip="Create BCBA Note"
                         >
                           <i class="fa fa-id-badge"></i>
                         </button>
                         <button
                           class="btn btn-outline-primary"
-                          [routerLink]="[
-                            '/note-bcba/listbyclient/',
-                            data.patient_id
-                          ]"
+                          [routerLink]="[routes.noteBcba.list, data.patient_id]"
                           tooltip="BCBA Note list"
                         >
                           <i class="fa fa-bars"></i>
                         </button>
-                        <!-- <button class="btn btn-outline-warning" *ngIf="roles ==='SUPERADMIN' || roles === 'MANAGER'" [routerLink]="['/billing/byclient/', data.patient_id]" tooltip="Billing by this user"> <i class="fa fa-credit-card"></i> </button> -->
                       </span>
                     </td>
                     <td>
@@ -1221,14 +1195,14 @@
                           <a
                             class="dropdown-item"
                             *ngIf="isPermission('edit_patient')"
-                            [routerLink]="['/patients/list/edit/', data.id]"
+                            [routerLink]="[routes.patients.listEdit, data.id]"
                             ><i class="fa-solid fa-pen-to-square m-r-5"></i>
                             Edit</a
                           >
                           <a
                             class="dropdown-item"
                             *ngIf="isPermission('profile_patient')"
-                            [routerLink]="['/patients/profile/', data.id]"
+                            [routerLink]="[routes.patients.profile, data.id]"
                             ><i class="fa-solid fa-eye m-r-5"></i> View</a
                           >
 

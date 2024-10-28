@@ -348,7 +348,7 @@
                         }"
                         class="custom-badge"
                       >
-                        {{ data.status == 1 ? "Pendiente" : "Atendido" }}
+                        {{ data.status === 1 ? "Pendiente" : "Atendido" }}
                       </button>
                     </td>
                     <td>
@@ -359,7 +359,7 @@
                         }"
                         class="custom-badge"
                       >
-                        {{ data.status_pay == 1 ? "Pagado" : "Deuda" }}
+                        {{ data.status_pay === 1 ? "Pagado" : "Deuda" }}
                       </button>
                     </td>
                     <td>{{ data.amount }}</td>
@@ -376,15 +376,18 @@
                           <a
                             class="dropdown-item"
                             [routerLink]="[
-                              '/appointments/cita-medica/',
+                              routes.appointments.citaMedica,
                               data.id
                             ]"
                             ><i class="fa-solid fa-pen-to-square m-r-5"></i>
-                            Anteder</a
+                            Atender</a
                           >
                           <a
                             class="dropdown-item"
-                            [routerLink]="['/appointments/list/edit/', data.id]"
+                            [routerLink]="[
+                              routes.appointments.listEdit,
+                              data.id
+                            ]"
                             ><i class="fa-solid fa-pen-to-square m-r-5"></i>
                             Edit</a
                           >

@@ -18,7 +18,7 @@
             </div>
             <div class="add-group">
               <a
-                routerLink="/patients/add"
+                [routerLink]="routes.patients.add"
                 class="btn btn-primary add-pluss ms-2"
                 *ngIf="isPermission('register_patient')"
                 ><img src="assets/img/icons/plus.svg" alt=""
@@ -72,7 +72,7 @@
                 </div>
               </td>
               <td>
-                <a [routerLink]="['/patients/profile/', patient.id]">
+                <a [routerLink]="[routes.patients.profile, patient.id]">
                   {{
                     patient.first_name +
                       " " +
@@ -148,7 +148,7 @@
                       roles === 'LM' ||
                       roles === 'BCBA'
                     "
-                    [routerLink]="['/bip/attention/', patient.patient_id]"
+                    [routerLink]="[routes.bip.attention, patient.patient_id]"
                     tooltip="BIP Create"
                   >
                     <i class="fa fa-address-book"></i>
@@ -156,7 +156,7 @@
                   <button
                     class="btn btn-outline-dark"
                     *ngIf="isPermission('view_bip')"
-                    [routerLink]="['/bip/profile/', patient.patient_id]"
+                    [routerLink]="[routes.bip.profile, patient.patient_id]"
                     tooltip="BIP View"
                   >
                     <i class="fa fa-eye"></i>
@@ -169,7 +169,7 @@
                       roles === 'LM' ||
                       roles === 'RBT'
                     "
-                    [routerLink]="['/note-rbt/', patient.patient_id]"
+                    [routerLink]="[routes.noteRbt.noteRbt, patient.patient_id]"
                     tooltip="Create RBT Note"
                   >
                     <i class="fa fa-id-card"></i>
@@ -195,7 +195,10 @@
                       roles === 'LM' ||
                       roles === 'BCBA'
                     "
-                    [routerLink]="['/note-bcba/', patient.patient_id]"
+                    [routerLink]="[
+                      routes.noteBcba.noteBcba,
+                      patient.patient_id
+                    ]"
                     tooltip="Create BCBA Note"
                   >
                     <i class="fa fa-id-badge"></i>
@@ -217,7 +220,7 @@
                     class="btn btn-outline-warning"
                     *ngIf="roles === 'SUPERADMIN' || roles === 'MANAGER'"
                     [routerLink]="[
-                      '/client-report/byclient/',
+                      routes.clientReport.byClient,
                       patient.patient_id
                     ]"
                     tooltip="Log Report"

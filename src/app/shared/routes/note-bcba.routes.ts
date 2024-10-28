@@ -5,6 +5,10 @@ export class NoteBcbaRoutes {
     return `${baseUrl}/note-bcba`;
   }
 
+  static get view(): string {
+    return `${baseUrl}/note-bcba/view`;
+  }
+
   static get add(): string {
     return `${baseUrl}/note-bcba/add`;
   }

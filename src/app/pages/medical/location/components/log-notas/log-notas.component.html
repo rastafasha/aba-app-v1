@@ -156,7 +156,7 @@
                 <td><span class="badge badge-success">RBT</span></td>
                 <td>
                   <span *ngIf="data?.rbt">
-                    <a [routerLink]="['/note-rbt/view/', data.rbt.id]">
+                    <a [routerLink]="[routes.noteRbt.view, data.rbt.id]">
                       {{ data.rbt?.session_date | date }}
                     </a>
                   </span>
@@ -337,7 +337,7 @@
 
                 <td>
                   <span *ngIf="data?.bcba">
-                    <a [routerLink]="['/note-bcba/view/', data.bcba?.id]">
+                    <a [routerLink]="[routes.noteBcba.noteBcba, data.bcba?.id]">
                       {{ data.bcba?.session_date | date }}
                     </a>
                   </span>

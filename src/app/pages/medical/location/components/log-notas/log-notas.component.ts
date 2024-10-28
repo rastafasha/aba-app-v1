@@ -14,6 +14,7 @@ import { NoteRbtService } from '../../../notes/services/note-rbt.service';
 import { PatientMService } from '../../../patient-m/service/patient-m.service';
 import { LocationService } from '../../services/location.service';
 import { AppUser } from 'src/app/shared/models/users.models';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 
 @Component({
   selector: 'app-log-notas',
@@ -22,6 +23,7 @@ import { AppUser } from 'src/app/shared/models/users.models';
 })
 export class LogNotasComponent {
   // @Input() locationId:any;
+  routes = AppRoutes;
 
   searchDataDoctor = '';
   date_start: any;
