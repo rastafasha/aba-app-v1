@@ -144,6 +144,7 @@ export class NoteRbtComponent implements OnInit {
   stoInprogressGoal: any;
   location_id: number;
   patientLocation_id: any;
+  insuranceId: string;
 
   intervention_added = [];
   interventionsSelected = {};
@@ -238,6 +239,7 @@ export class NoteRbtComponent implements OnInit {
       this.first_name = this.client_selected.patient.first_name;
       this.last_name = this.client_selected.patient.last_name;
       this.patient_id = resp.patient.patient_id;
+      this.insuranceId = resp.patient.insuranceId;
       this.patientLocation_id = resp.patient.location_id;
       this.selectedValueProviderName = resp.patient.rbt_id;
       this.selectedValueRBT = resp.patient.rbt_id;
@@ -314,7 +316,7 @@ export class NoteRbtComponent implements OnInit {
       });
     });
   }
-
+  
   getStoInprogressGoal1() {
     this.goalService.getStobyGoalinProgress(this.goal).subscribe((resp) => {
       console.log(resp);
@@ -584,6 +586,7 @@ export class NoteRbtComponent implements OnInit {
     formData.append('diagnosis_code', this.diagnosis_code);
     formData.append('provider_credential', this.provider_credential);
     formData.append('location_id', this.patientLocation_id);
+    formData.append('insuranceId', this.insuranceId);// id del seguro preferiblemente que solo agarre la data al crear
 
     formData.append('session_date', this.session_date);
 
