@@ -148,6 +148,12 @@
                             <p>{{ note_selected.session_date | date }}</p>
                           </div>
                         </div>
+                        <div class="col-xl-3 col-xs-6 ">
+                          <div class="detail-personal">
+                              <h2>Session Length Total</h2>
+                              <p>{{note_selected.session_length_total}}</p>
+                          </div>
+                      </div>
                         <!-- <div class="col-xl-3 col-xs-6 col-xl-4">
                                                     <div class="detail-personal">
                                                         <h2>Create At</h2>
@@ -178,7 +184,7 @@
                         <div class="col-xl-3 col-md-6 col-xl-4">
                           <div class="detail-personal">
                             <h2>Total Morning Session</h2>
-                            <p>{{ note_selected.session_length_total }}</p>
+                            <p>{{ note_selected.session_length_morning_total }}</p>
                           </div>
                         </div>
                         <div class="clear"></div>
@@ -202,7 +208,7 @@
                         <div class="col-xl-3 col-md-6 col-xl-4">
                           <div class="detail-personal">
                             <h2>Total First Afternoon</h2>
-                            <p>{{ note_selected.session_length_total2 }}</p>
+                            <p>{{ note_selected.session_length_afternon_total }}</p>
                           </div>
                         </div>
                         <div class="col-xl-12">
@@ -360,7 +366,7 @@
                               <p style="margin-bottom: 15px">
                                 {{ doctor_selected_full_name }}
                               </p>
-                              <h2 style="margin: 0">Date Session</h2>
+                              <h2 style="margin: 0">Signature Date</h2>
                               <p>{{ note_selected.session_date | date }}</p>
                             </div>
                           </div>
@@ -383,7 +389,7 @@
                               <p style="margin-bottom: 15px">
                                 {{ doctor_selected_full_name_supervisor }}
                               </p>
-                              <h2 style="margin: 0">Date Session</h2>
+                              <h2 style="margin: 0">Signature Date</h2>
                               <p>{{ note_selected.session_date | date }}</p>
                             </div>
                           </div>

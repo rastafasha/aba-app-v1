@@ -148,6 +148,7 @@ export class NoteBcbaComponent {
   n_un: number;
   location_id: number;
   patientLocation_id: number;
+  insuranceId: string;
 
   constructor(
     private bipService: BipService,
@@ -209,6 +210,7 @@ export class NoteBcbaComponent {
       this.first_name = this.client_selected.first_name;
       this.last_name = this.client_selected.last_name;
       this.patient_id = this.client_selected.patient_id;
+      this.insuranceId = this.client_selected.insuranceId;
       this.patientLocation_id = this.client_selected.location_id;
       this.pos = this.client_selected.pos_covered;
       // this.pos = JSON.parse(resp.patient.pos_covered) ;
@@ -449,6 +451,8 @@ export class NoteBcbaComponent {
     formData.append('provider_name', this.doctor_id);
     formData.append('supervisor_name', this.selectedValueBCBA);
     formData.append('note_description', this.note_description);
+    formData.append('insuranceId', this.insuranceId);// id del seguro preferiblemente que solo agarre la data al crear
+
 
     formData.append(
       'rbt_training_goals',
