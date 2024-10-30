@@ -7,6 +7,8 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
 import { InsuranceService } from '../../insurance/service/insurance.service';
 import { PatientMService } from '../service/patient-m.service';
+import { CreatePaServiceDto, PaService } from 'src/app/shared/interfaces/pa-service.interface';
+import { PaServiceService } from '../service/pa-service.service';
 // declare function alertClose():any;
 declare let $: any;
 
@@ -271,6 +273,15 @@ export class EditPatientMComponent implements OnInit {
   FILE: any;
   datacode: any;
 
+  paServices: PaService[] = [];
+  newPaService: Partial<PaService> = {
+    pa_services: '',
+    cpt: '',
+    n_units: 0,
+    start_date: '',
+    end_date: '',
+  };
+
   constructor(
     private patientService: PatientMService,
     private router: Router,
@@ -278,7 +289,8 @@ export class EditPatientMComponent implements OnInit {
     private insuranceService: InsuranceService,
     private readonly sanitizer: DomSanitizer,
     private _sanitizer: DomSanitizer,
-    private locationBack: Location
+    private locationBack: Location,
+    private paServiceService: PaServiceService
   ) {
     this.selectedValueCodeProvider = this.selectedValueCode;
   }
@@ -302,6 +314,120 @@ export class EditPatientMComponent implements OnInit {
     if (this.user.roles[0] === 'MANAGER') {
       this.selectedValueLocation = this.user.location_id;
     }
+
+    this.loadPaServices();
+
+  }
+
+  loadPaServices() {
+    if (this.patient_id) {
+      console.log('Loading PA services for patient:', this.patient_id);
+      this.paServiceService.getPatientPaServices(this.patient_id)
+        .subscribe({
+          next: (response) => {
+            console.log('PA services loaded:', response);
+            this.paServices = response.pa_services;
+          },
+          error: (error) => {
+            console.error('Error loading PA services:', error);
+            let errorMessage = 'Error loading PA services';
+            if (error.error?.message) {
+              errorMessage = error.error.message;
+            }
+            Swal.fire('Error', errorMessage, 'error');
+          }
+        });
+    }
+  }
+
+  addPaService() {
+    if (this.patient_id) {
+      if (!this.newPaService.pa_services ||
+          !this.newPaService.cpt ||
+          !this.newPaService.n_units ||
+          !this.newPaService.start_date ||
+          !this.newPaService.end_date) {
+        Swal.fire('Error', 'All fields are required', 'error');
+        return;
+      }
+
+      const paServiceData: CreatePaServiceDto = {
+        pa_services: this.newPaService.pa_services,
+        cpt: this.newPaService.cpt,
+        n_units: this.newPaService.n_units,
+        start_date: new Date(this.newPaService.start_date).toISOString().split('T')[0],
+        end_date: new Date(this.newPaService.end_date).toISOString().split('T')[0],
+      };
+
+      console.log('Sending PA service data:', paServiceData);
+
+      this.paServiceService.createPaService(this.patient_id, paServiceData)
+      .subscribe({
+        next: (response) => {
+          console.log('PA service created:', response);
+          this.paServices.unshift(response.pa_service);
+          this.resetNewPaService();
+          Swal.fire('Success', 'PA service added successfully', 'success');
+        },
+        error: (error) => {
+          console.error('Error creating PA service:', error);
+          let errorMessage = 'Error creating PA service';
+          if (error.error?.messages) {
+            errorMessage = Object.values(error.error.messages).join('\n');
+          } else if (error.error?.message) {
+            errorMessage = error.error.message;
+          }
+          Swal.fire('Error', errorMessage, 'error');
+        }
+      });
+    } else {
+      Swal.fire('Error', 'Patient ID is required', 'error');
+    }
+  }
+
+  deletePaService(paService: PaService) {
+    if (!this.patient_id || !paService.id) {
+      Swal.fire('Error', 'Unable to delete PA service', 'error');
+      return;
+    }
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "This action cannot be undone",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.paServiceService.deletePaService(this.patient_id, paService.id!)
+          .subscribe({
+            next: () => {
+              this.paServices = this.paServices.filter(p => p.id !== paService.id);
+              Swal.fire('Deleted!', 'PA service has been deleted.', 'success');
+            },
+            error: (error) => {
+              console.error('Error deleting PA service:', error);
+              let errorMessage = 'Error deleting PA service';
+              if (error.error?.message) {
+                errorMessage = error.error.message;
+              }
+              Swal.fire('Error', errorMessage, 'error');
+            }
+          });
+      }
+    });
+  }
+
+  resetNewPaService() {
+    this.newPaService = {
+      pa_services: '',
+      cpt: '',
+      n_units: 0,
+      start_date: '',
+      end_date: '',
+    };
   }
 
   goBack() {
@@ -499,6 +625,7 @@ export class EditPatientMComponent implements OnInit {
         });
 
       this.getInitConfig();
+      this.loadPaServices();
     });
   }
 
@@ -520,17 +647,17 @@ export class EditPatientMComponent implements OnInit {
   }
 
   selectProviderCpt(event: any) {
-    const selectedValue = event.target.value;
-    console.log(selectedValue);
+    const selectedValue = event.value; // MatSelectChange provides value directly
+    console.log('Selected CPT:', selectedValue);
 
     const cptservice = this.services.find(
       (service: Service) => service.code === selectedValue
     );
     if (cptservice) {
       this.provider = cptservice.provider;
-      console.log(this.provider);
+      console.log('Provider:', this.provider);
     } else {
-      console.log('No se encontró el proveedor');
+      console.log('No provider found for selected CPT');
     }
   }
 
