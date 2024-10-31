@@ -486,9 +486,9 @@ export class NoteBcbaEditComponent implements OnInit {
     if (this.selectedValueBCBA) {
       formData.append('supervisor_name', this.selectedValueBCBA);
     }
-    if (this.note_description) {
-      formData.append('note_description', this.note_description);
-    }
+    // if (this.note_description) {
+    //   formData.append('note_description', this.note_description);
+    // }
     if (this.rbt_training_goals) {
       formData.append(
         'rbt_training_goals',
