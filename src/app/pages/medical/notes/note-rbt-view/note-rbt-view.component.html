@@ -49,7 +49,7 @@
                     <div class="col-lg-4 col-md-4 d-flex align-items-center">
                       <div class="follow-btn-group">
                         <a
-                          [routerLink]="[routes.noteRbt.edit, note_id]"
+                          [routerLink]="['/note-rbt/edit/', note_id]"
                           *ngIf="
                             note_selected.status === 'pending' ||
                             note_selected.status === 'no'
@@ -118,23 +118,35 @@
                             <p>{{ note_selected.provider_credential }}</p>
                           </div>
                         </div>
-
                         <div class="col-xl-3 col-md-6 col-xl-3">
+                          <div class="detail-personal">
+                            <h2>Supervisor BCBA</h2>
+                            <p>{{ doctor_selected_full_name_bcba }}</p>
+                          </div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="col-xl-3 col-md-6">
                           <div class="detail-personal">
                             <h2>Modifier</h2>
                             <p>{{ note_selected.md }}</p>
                           </div>
                         </div>
-                        <div class="col-xl-3 col-md-6 col-xl-3">
+                        <div class="col-xl-3 col-md-6">
                           <div class="detail-personal">
                             <h2>Modifier 2 (optional)</h2>
                             <p>{{ note_selected.md2 }}</p>
                           </div>
                         </div>
-                        <div class="col-xl-3 col-md-6 col-xl-4">
+                        <div class="col-xl-3 col-md-6">
                           <div class="detail-personal">
                             <h2>Date Session</h2>
                             <p>{{ note_selected.session_date | date }}</p>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                          <div class="detail-personal">
+                            <h2>Session Length Total</h2>
+                            <p>{{ note_selected.session_length_total }}</p>
                           </div>
                         </div>
 
@@ -157,7 +169,9 @@
                         <div class="col-xl-3 col-md-4">
                           <div class="detail-personal">
                             <h2>Total Morning Session</h2>
-                            <p>{{ note_selected.session_length_total }}</p>
+                            <p>
+                              {{ note_selected.session_length_morning_total }}
+                            </p>
                           </div>
                         </div>
                         <div class="clear"></div>
@@ -181,7 +195,9 @@
                         <div class="col-xl-3 col-md-4">
                           <div class="detail-personal">
                             <h2>Total Afternoon Session</h2>
-                            <p>{{ note_selected.session_length_total2 }}</p>
+                            <p>
+                              {{ note_selected.session_length_afternon_total }}
+                            </p>
                           </div>
                         </div>
                         <div class="col-xl-3 col-md-6">
@@ -830,7 +846,7 @@
                                 <p style="margin-bottom: 15px">
                                   {{ doctor_selected_full_name_rbt }}
                                 </p>
-                                <h2 style="margin: 0">Date Session</h2>
+                                <h2 style="margin: 0">Signature date</h2>
                                 <p>{{ note_selected.session_date | date }}</p>
                               </div>
                             </div>
@@ -853,10 +869,854 @@
                                 <p style="margin-bottom: 15px">
                                   {{ doctor_selected_full_name_bcba }}
                                 </p>
-                                <h2 style="margin: 0">Date Session</h2>
+                                <h2 style="margin: 0">Signature date</h2>
                                 <p>{{ note_selected.session_date | date }}</p>
                               </div>
                             </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Page Header -->
+<div class="row" id="contentToConvert" #contentToConvert>
+  <div class="col-sm-12" *ngIf="patient_selected">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="about-info mb-10">
+              <h4>Client Note Rbt</h4>
+            </div>
+            <div class="doctor-profile-head">
+              <div class="row">
+                <div class="col-lg-4 col-md-4">
+                  <div class="profile-user-box" style="padding-top: 10px">
+                    <div class="names-profiles">
+                      <h5>Client</h5>
+                      <p>{{ patient_selected.first_name }}</p>
+                      <h5>Provider Name</h5>
+                      <p>{{ doctor_selected_full_name }}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-4 d-flex align-items-center">
+                  <div class="follow-group">
+                    <div class="doctor-follows">
+                      <h5>Patient ID</h5>
+                      <p>{{ patient_selected.patient_id }}</p>
+                    </div>
+                    <div class="doctor-follows">
+                      <h5>diagnosis_code</h5>
+                      <p>{{ patient_selected.diagnosis_code }}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4 col-md-4 d-flex align-items-center">
+                  <div class="follow-btn-group">
+                    <a
+                      [routerLink]="[routes.noteRbt.edit, note_id]"
+                      *ngIf="
+                        note_selected.status === 'pending' ||
+                        note_selected.status === 'no'
+                      "
+                      class="btn btn-info follow-btns"
+                      >Edit</a
+                    >
+                    <button
+                      class="btn btn-info follow-btns"
+                      (click)="convertToPdf()"
+                    >
+                      Save PDF
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="doctor-personals-grp">
+          <div class="card">
+            <div class="card-body">
+              <ng-container *ngIf="option_selected === 1">
+                <div class="personal-list-out">
+                  <div class="row">
+                    <div class="col-xl-3 col-md-6">
+                      <div class="detail-personal">
+                        <h2>Patient Id</h2>
+                        <p>{{ patient_selected.patient_id }}</p>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                      <div class="detail-personal">
+                        <h2>Full Name</h2>
+                        <p>
+                          {{ patient_selected.first_name }}
+                          {{ patient_selected.last_name }}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                      <div class="detail-personal">
+                        <h2>Diagnosis code</h2>
+                        <p>{{ patient_selected.diagnosis_code }}</p>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                      <div class="detail-personal">
+                        <h2>POS</h2>
+                        <p>{{ note_selected.pos }}</p>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                      <div class="detail-personal">
+                        <h2>Provider Name</h2>
+                        <p>{{ doctor_selected_full_name }}</p>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 col-xl-3">
+                      <div class="detail-personal">
+                        <h2>Provider Credential</h2>
+                        <p>{{ note_selected.provider_credential }}</p>
+                      </div>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 col-xl-3">
+                      <div class="detail-personal">
+                        <h2>Modifier</h2>
+                        <p>{{ note_selected.md }}</p>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 col-xl-3">
+                      <div class="detail-personal">
+                        <h2>Modifier 2 (optional)</h2>
+                        <p>{{ note_selected.md2 }}</p>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 col-xl-4">
+                      <div class="detail-personal">
+                        <h2>Date Session</h2>
+                        <p>{{ note_selected.session_date | date }}</p>
+                      </div>
+                    </div>
+
+                    <div class="clear"></div>
+                    <h5 class="mb-3">Morning Session</h5>
+                    <div class="col-xl-3 col-md-4">
+                      <div class="detail-personal">
+                        <h2>Time In</h2>
+                        <p>{{ note_selected.time_in | transformToDate }}</p>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-md-4">
+                      <div class="detail-personal">
+                        <h2>Time Out</h2>
+                        <p>
+                          {{ note_selected.time_out | transformToDate }}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-md-4">
+                      <div class="detail-personal">
+                        <h2>Total Morning Session</h2>
+                        <p>{{ note_selected.session_length_total }}</p>
+                      </div>
+                    </div>
+                    <div class="clear"></div>
+                    <h5 class="mb-3">Afternoon Session</h5>
+                    <div class="col-xl-3 col-md-4">
+                      <div class="detail-personal">
+                        <h2>Time In</h2>
+                        <p>
+                          {{ note_selected.time_in2 | transformToDate }}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-md-4">
+                      <div class="detail-personal">
+                        <h2>Time Out</h2>
+                        <p>
+                          {{ note_selected.time_out2 | transformToDate }}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-md-4">
+                      <div class="detail-personal">
+                        <h2>Total Afternoon Session</h2>
+                        <p>{{ note_selected.session_length_total2 }}</p>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                      <div class="detail-personal">
+                        <h2>Environmental Changes</h2>
+                        <p>{{ note_selected.environmental_changes }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-sm-6">
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-title">Maladaptives</h4>
+                </div>
+                <div class="card-body p-0">
+                  <div class="personal-list-out">
+                    <div class="container">
+                      <div class="row">
+                        <table class="table mb-0">
+                          <thead>
+                            <tr>
+                              <th>
+                                <h2 style="font-size: 12px; font-weight: 500">
+                                  Maladaptive
+                                </h2>
+                              </th>
+                              <th>
+                                <h2 style="font-size: 12px; font-weight: 500">
+                                  # of Occurrences
+                                </h2>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr
+                              *ngFor="
+                                let behavior of maladaptivegroup;
+                                let i = index
+                              "
+                            >
+                              <td>
+                                <p>{{ behavior.maladaptive_behavior }}</p>
+                              </td>
+                              <td>
+                                <p>{{ behavior.number_of_occurrences }}</p>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-title">Replacements</h4>
+                </div>
+                <div class="card-body p-0">
+                  <div class="personal-list-out">
+                    <div class="container">
+                      <div class="row">
+                        <table class="table mb-0">
+                          <thead>
+                            <tr>
+                              <th>
+                                <h2 style="font-size: 12px; font-weight: 500">
+                                  Replacement
+                                </h2>
+                              </th>
+                              <th>
+                                <h2 style="font-size: 12px; font-weight: 500">
+                                  Total Trials
+                                </h2>
+                              </th>
+                              <th>
+                                <h2 style="font-size: 12px; font-weight: 500">
+                                  # of correct responses
+                                </h2>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr
+                              *ngFor="
+                                let replacemen of replacementgroup;
+                                let i = index
+                              "
+                            >
+                              <td>
+                                <p>{{ replacemen.goal }}</p>
+                              </td>
+                              <td>
+                                <p>{{ replacemen.total_trials }}</p>
+                              </td>
+                              <td>
+                                <p>
+                                  {{ replacemen.number_of_correct_response }}
+                                </p>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Interventions</h4>
+            </div>
+            <div class="card-body p-0">
+              <div class="personal-list-out">
+                <div class="container">
+                  <form autocomplete="false">
+                    <div class="col-xs-12">
+                      <div class="row">
+                        <div class="col-xs-12 col-sm-3">
+                          <div class="form-group">
+                            <div
+                              _ngcontent-rhp-c92=""
+                              class="card-header d-flex justify-content-between align-items-center"
+                            >
+                              <h5 _ngcontent-rhp-c92="" class="card-title">
+                                Pairing
+                              </h5>
+                              <div
+                                _ngcontent-rhp-c92=""
+                                class="status-toggle d-flex justify-content-between align-items-center"
+                              >
+                                <input
+                                  _ngcontent-rhp-c92=""
+                                  disabled
+                                  type="checkbox"
+                                  id="pairing"
+                                  class="check"
+                                  name="pairing"
+                                  [ngModelOptions]="{ standalone: true }"
+                                  [(ngModel)]="pairing"
+                                />
+                                <label
+                                  _ngcontent-rhp-c92=""
+                                  for="pairing"
+                                  class="checktoggle"
+                                  value="true"
+                                  >checkbox</label
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-3">
+                          <div class="form-group">
+                            <div
+                              _ngcontent-rhp-c92=""
+                              class="card-header d-flex justify-content-between align-items-center"
+                            >
+                              <h5 _ngcontent-rhp-c92="" class="card-title">
+                                Response Block
+                              </h5>
+                              <div
+                                _ngcontent-rhp-c92=""
+                                class="status-toggle d-flex justify-content-between align-items-center"
+                              >
+                                <input
+                                  _ngcontent-rhp-c92=""
+                                  disabled
+                                  type="checkbox"
+                                  id="response_block"
+                                  class="check"
+                                  name="response_block"
+                                  [ngModelOptions]="{ standalone: true }"
+                                  [(ngModel)]="response_block"
+                                />
+                                <label
+                                  _ngcontent-rhp-c92=""
+                                  for="response_block"
+                                  class="checktoggle"
+                                  value="true"
+                                  >checkbox</label
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-3">
+                          <div class="form-group">
+                            <div
+                              _ngcontent-rhp-c92=""
+                              class="card-header d-flex justify-content-between align-items-center"
+                            >
+                              <h5 _ngcontent-rhp-c92="" class="card-title">
+                                DRA
+                              </h5>
+                              <div
+                                _ngcontent-rhp-c92=""
+                                class="status-toggle d-flex justify-content-between align-items-center"
+                              >
+                                <input
+                                  _ngcontent-rhp-c92=""
+                                  disabled
+                                  type="checkbox"
+                                  id="DRA"
+                                  class="check"
+                                  name="DRA"
+                                  [ngModelOptions]="{ standalone: true }"
+                                  [(ngModel)]="DRA"
+                                />
+                                <label
+                                  _ngcontent-rhp-c92=""
+                                  for="DRA"
+                                  class="checktoggle"
+                                  value="true"
+                                  >checkbox</label
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-3">
+                          <div class="form-group">
+                            <div
+                              _ngcontent-rhp-c92=""
+                              class="card-header d-flex justify-content-between align-items-center"
+                            >
+                              <h5 _ngcontent-rhp-c92="" class="card-title">
+                                DRO
+                              </h5>
+                              <div
+                                _ngcontent-rhp-c92=""
+                                class="status-toggle d-flex justify-content-between align-items-center"
+                              >
+                                <input
+                                  _ngcontent-rhp-c92=""
+                                  disabled
+                                  type="checkbox"
+                                  id="DRO"
+                                  class="check"
+                                  name="DRO"
+                                  [ngModelOptions]="{ standalone: true }"
+                                  [(ngModel)]="DRO"
+                                />
+                                <label
+                                  _ngcontent-rhp-c92=""
+                                  for="DRO"
+                                  class="checktoggle"
+                                  value="true"
+                                  >checkbox</label
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-3">
+                          <div class="form-group">
+                            <div
+                              _ngcontent-rhp-c92=""
+                              class="card-header d-flex justify-content-between align-items-center"
+                            >
+                              <h5 _ngcontent-rhp-c92="" class="card-title">
+                                Redirection
+                              </h5>
+                              <div
+                                _ngcontent-rhp-c92=""
+                                class="status-toggle d-flex justify-content-between align-items-center"
+                              >
+                                <input
+                                  _ngcontent-rhp-c92=""
+                                  disabled
+                                  type="checkbox"
+                                  id="redirection"
+                                  class="check"
+                                  name="redirection"
+                                  [ngModelOptions]="{ standalone: true }"
+                                  [(ngModel)]="redirection"
+                                />
+                                <label
+                                  _ngcontent-rhp-c92=""
+                                  for="redirection"
+                                  class="checktoggle"
+                                  value="true"
+                                  >checkbox</label
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-3">
+                          <div class="form-group">
+                            <div
+                              _ngcontent-rhp-c92=""
+                              class="card-header d-flex justify-content-between align-items-center"
+                            >
+                              <h5 _ngcontent-rhp-c92="" class="card-title">
+                                Errorless Teaching
+                              </h5>
+                              <div
+                                _ngcontent-rhp-c92=""
+                                class="status-toggle d-flex justify-content-between align-items-center"
+                              >
+                                <input
+                                  _ngcontent-rhp-c92=""
+                                  disabled
+                                  type="checkbox"
+                                  id="errorless_teaching"
+                                  class="check"
+                                  name="errorless_teaching"
+                                  [ngModelOptions]="{ standalone: true }"
+                                  [(ngModel)]="errorless_teaching"
+                                />
+                                <label
+                                  _ngcontent-rhp-c92=""
+                                  for="errorless_teaching"
+                                  class="checktoggle"
+                                  value="true"
+                                  >checkbox</label
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-3">
+                          <div class="form-group">
+                            <div
+                              _ngcontent-rhp-c92=""
+                              class="card-header d-flex justify-content-between align-items-center"
+                            >
+                              <h5 _ngcontent-rhp-c92="" class="card-title">
+                                NCR
+                              </h5>
+                              <div
+                                _ngcontent-rhp-c92=""
+                                class="status-toggle d-flex justify-content-between align-items-center"
+                              >
+                                <input
+                                  _ngcontent-rhp-c92=""
+                                  disabled
+                                  type="checkbox"
+                                  id="NCR"
+                                  class="check"
+                                  name="NCR"
+                                  [ngModelOptions]="{ standalone: true }"
+                                  [(ngModel)]="NCR"
+                                />
+                                <label
+                                  _ngcontent-rhp-c92=""
+                                  for="NCR"
+                                  class="checktoggle"
+                                  value="true"
+                                  >checkbox</label
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-3">
+                          <div class="form-group">
+                            <div
+                              _ngcontent-rhp-c92=""
+                              class="card-header d-flex justify-content-between align-items-center"
+                            >
+                              <h5 _ngcontent-rhp-c92="" class="card-title">
+                                Shaping
+                              </h5>
+                              <div
+                                _ngcontent-rhp-c92=""
+                                class="status-toggle d-flex justify-content-between align-items-center"
+                              >
+                                <input
+                                  _ngcontent-rhp-c92=""
+                                  disabled
+                                  type="checkbox"
+                                  id="shaping"
+                                  class="check"
+                                  name="shaping"
+                                  [ngModelOptions]="{ standalone: true }"
+                                  [(ngModel)]="shaping"
+                                />
+                                <label
+                                  _ngcontent-rhp-c92=""
+                                  for="shaping"
+                                  class="checktoggle"
+                                  value="true"
+                                  >checkbox</label
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-3">
+                          <div class="form-group">
+                            <div
+                              _ngcontent-rhp-c92=""
+                              class="card-header d-flex justify-content-between align-items-center"
+                            >
+                              <h5 _ngcontent-rhp-c92="" class="card-title">
+                                Chaining
+                              </h5>
+                              <div
+                                _ngcontent-rhp-c92=""
+                                class="status-toggle d-flex justify-content-between align-items-center"
+                              >
+                                <input
+                                  _ngcontent-rhp-c92=""
+                                  disabled
+                                  type="checkbox"
+                                  id="chaining"
+                                  class="check"
+                                  name="chaining"
+                                  [ngModelOptions]="{ standalone: true }"
+                                  [(ngModel)]="chaining"
+                                />
+                                <label
+                                  _ngcontent-rhp-c92=""
+                                  for="chaining"
+                                  class="checktoggle"
+                                  value="true"
+                                  >checkbox</label
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-3">
+                          <div class="form-group">
+                            <div
+                              _ngcontent-rhp-c92=""
+                              class="card-header d-flex justify-content-between align-items-center"
+                            >
+                              <h5 _ngcontent-rhp-c92="" class="card-title">
+                                Token Economy
+                              </h5>
+                              <div
+                                _ngcontent-rhp-c92=""
+                                class="status-toggle d-flex justify-content-between align-items-center"
+                              >
+                                <input
+                                  _ngcontent-rhp-c92=""
+                                  disabled
+                                  type="checkbox"
+                                  id="token_economy"
+                                  class="check"
+                                  name="token_economy"
+                                  [ngModelOptions]="{ standalone: true }"
+                                  [(ngModel)]="token_economy"
+                                />
+                                <label
+                                  _ngcontent-rhp-c92=""
+                                  for="token_economy"
+                                  class="checktoggle"
+                                  value="true"
+                                  >checkbox</label
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-3">
+                          <div class="form-group">
+                            <div
+                              _ngcontent-rhp-c92=""
+                              class="card-header d-flex justify-content-between align-items-center"
+                            >
+                              <h5 _ngcontent-rhp-c92="" class="card-title">
+                                Extinction
+                              </h5>
+                              <div
+                                _ngcontent-rhp-c92=""
+                                class="status-toggle d-flex justify-content-between align-items-center"
+                              >
+                                <input
+                                  _ngcontent-rhp-c92=""
+                                  disabled
+                                  type="checkbox"
+                                  id="extinction"
+                                  class="check"
+                                  name="extinction"
+                                  [ngModelOptions]="{ standalone: true }"
+                                  [(ngModel)]="extinction"
+                                />
+                                <label
+                                  _ngcontent-rhp-c92=""
+                                  for="extinction"
+                                  class="checktoggle"
+                                  value="true"
+                                  >checkbox</label
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-3">
+                          <div class="form-group">
+                            <div
+                              _ngcontent-rhp-c92=""
+                              class="card-header d-flex justify-content-between align-items-center"
+                            >
+                              <h5 _ngcontent-rhp-c92="" class="card-title">
+                                Natural Teaching
+                              </h5>
+                              <div
+                                _ngcontent-rhp-c92=""
+                                class="status-toggle d-flex justify-content-between align-items-center"
+                              >
+                                <input
+                                  _ngcontent-rhp-c92=""
+                                  disabled
+                                  type="checkbox"
+                                  id="natural_teaching"
+                                  class="check"
+                                  name="natural_teaching"
+                                  [ngModelOptions]="{ standalone: true }"
+                                  [(ngModel)]="natural_teaching"
+                                />
+                                <label
+                                  _ngcontent-rhp-c92=""
+                                  for="natural_teaching"
+                                  class="checktoggle"
+                                  value="true"
+                                  >checkbox</label
+                                >
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Interventions -->
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Summary Note</h4>
+            </div>
+            <div class="card-body p-0">
+              <div class="personal-list-out">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-xl-3 col-md-6">
+                      <div class="detail-personal">
+                        <h2>Meet with client at</h2>
+                        <p>{{ note_selected.meet_with_client_at }}</p>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                      <div class="detail-personal">
+                        <h2>Client appeared</h2>
+                        <p>{{ note_selected.client_appeared }}</p>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                      <div class="detail-personal">
+                        <h2>As evidenced by</h2>
+                        <p>{{ note_selected.as_evidenced_by }}</p>
+                      </div>
+                    </div>
+                    <div class="col-xl-12">
+                      <div class="detail-personal">
+                        <h2>RBT modeled and demonstrated to caregiver</h2>
+                        <p>
+                          {{
+                            note_selected.rbt_modeled_and_demonstrated_to_caregiver
+                          }}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-xl-12">
+                      <div class="detail-personal">
+                        <h2>Client response to treatment this session</h2>
+                        <p>
+                          {{
+                            note_selected.client_response_to_treatment_this_session
+                          }}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 col-xl-6">
+                      <div class="detail-personal">
+                        <h2>
+                          Progress noted this session compared to previous
+                          session
+                        </h2>
+                        <p>
+                          {{
+                            note_selected.progress_noted_this_session_compared_to_previous_session
+                          }}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 col-xl-6">
+                      <div class="detail-personal">
+                        <h2>Next session is scheduled for</h2>
+                        <p>
+                          {{
+                            note_selected.next_session_is_scheduled_for | date
+                          }}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="row mt-5">
+                      <div
+                        class="col-xs-12 d-flex align-items-center justify-content-center"
+                      >
+                        <div class="col-xl-4 col-md-6">
+                          <div class="detail-personal">
+                            <h2>Provider Signature</h2>
+                            <img
+                              src="{{
+                                IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED
+                              }}"
+                              style="
+                                width: 100%;
+                                height: fit-content;
+                                max-height: 100px;
+                              "
+                            />
+                          </div>
+                          <div class="detail-personal">
+                            <h2 style="margin: 0">Provider name RBT</h2>
+                            <p style="margin-bottom: 15px">
+                              {{ doctor_selected_full_name_rbt }}
+                            </p>
+                            <h2 style="margin: 0">Date Session</h2>
+                            <p>{{ note_selected.session_date | date }}</p>
+                          </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6">
+                          <div class="detail-personal">
+                            <h2>Supervisor Signature</h2>
+                            <img
+                              src="{{
+                                IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED
+                              }}"
+                              style="
+                                width: 100%;
+                                height: fit-content;
+                                max-height: 100px;
+                              "
+                            />
+                          </div>
+                          <div class="detail-personal">
+                            <h2 style="margin: 0">Supervisor name BCBA</h2>
+                            <p style="margin-bottom: 15px">
+                              {{ doctor_selected_full_name_bcba }}
+                            </p>
+                            <h2 style="margin: 0">Date Session</h2>
+                            <p>{{ note_selected.session_date | date }}</p>
                           </div>
                         </div>
                       </div>

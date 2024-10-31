@@ -29,6 +29,9 @@
               <th mat-sort-header="totalHours">Total Hours</th>
               <th mat-sort-header="cpt">CPT</th>
               <th mat-sort-header="insurance">Insurance</th>
+              <th mat-sort-header="insurerId">Insurer ID</th>
+              <th mat-sort-header="client_id">Client Id</th>
+              <th mat-sort-header="client_name">Client Name</th>
               <th mat-sort-header="md">Modifier</th>
               <th mat-sort-header="md2">Modifier</th>
               <th mat-sort-header="totalunits">Total Units</th>
@@ -113,6 +116,20 @@
                 </td>
                 <td>
                   <span *ngIf="data.rbt"> Insurer Name </span>
+                </td>
+                <td>
+                  <span *ngIf="data.rbt?.insuranceId"> {{ data.rbt?.insuranceId ?? "Null" }} </span>
+                </td>
+                <td>
+                  <span *ngIf="data.rbt?.patient_id">
+                    <a [routerLink]="['/patients/profile/', data.rbt?.patient_id]">
+                      {{ data.rbt?.patient_id ?? "Null" }}
+                    </a>
+                    
+                    </span>
+                </td>
+                <td>
+                  <span *ngIf="data.rbt?.patient_id"> Client Name</span>
                 </td>
 
                 <!-- modificadores  -->
@@ -317,6 +334,20 @@
                 </td>
                 <td>
                   <span *ngIf="data.bcba"> Insurer Name </span>
+                </td>
+                <td>
+                  <span *ngIf="data.bcba?.insuranceId"> {{ data.bcba?.insuranceId ?? "Null" }} </span>
+                </td>
+                <td>
+                  <span *ngIf="data.bcba?.patient_id">
+                    <a [routerLink]="['/patients/profile/', data.bcba?.patient_id]">
+                      {{ data.bcba?.patient_id ?? "Null" }}
+                    </a>
+                    
+                    </span>
+                </td>
+                <td>
+                  <span *ngIf="data.bcba?.patient_id"> Client Name</span>
                 </td>
                 <!-- modificadores1 -->
                 <td>

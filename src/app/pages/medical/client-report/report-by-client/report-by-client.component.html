@@ -110,22 +110,22 @@
                   </thead>
                   <tbody class="overlaylist">
                     <tr
-                      *ngFor="let asses of pa_assessmentsgroup; let i = index"
+                      *ngFor="let service of paServices; let i = index"
                     >
                       <td>
-                        {{ asses.pa_services }}
+                        {{ service.pa_services }}
                       </td>
                       <td>
-                        {{ asses.cpt }}
+                        {{ service.cpt }}
                       </td>
                       <td>
-                        {{ asses.n_units }}
+                        {{ service.n_units }}
                       </td>
                       <td>
-                        {{ asses.pa_services_start_date | date }}
+                        {{ service.start_date | date }}
                       </td>
                       <td>
-                        {{ asses.pa_services_end_date | date }}
+                        {{ service.end_date | date }}
                       </td>
                     </tr>
                   </tbody>

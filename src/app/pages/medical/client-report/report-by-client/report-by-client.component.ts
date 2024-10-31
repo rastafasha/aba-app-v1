@@ -15,6 +15,7 @@ import { ClientReportService } from '../client-report.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { LocationInsurance } from '../../location/models/locations.model';
+import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 
 export interface InsuranceCptPrizeResponse {
   unit_prize: number;
@@ -158,6 +159,8 @@ export class ReportByClientComponent implements OnInit {
   bcbaCptCode: string;
   rbtCptCode: string;
 
+  paServices: PaService[] = [];
+
   constructor(
     private ativatedRoute: ActivatedRoute,
     private clientReportService: ClientReportService,
@@ -300,16 +303,7 @@ export class ReportByClientComponent implements OnInit {
         this.bcba_id = resp.patient.bcba_id;
         this.bcba2_id = resp.patient.bcba2_id;
 
-        this.pa_assessments = resp.pa_assessments;
-        const jsonObj = JSON.parse(this.pa_assessments);
-
-        jsonObj.sort((a, b) => {
-          const dateA = new Date(a.pa_services_start_date);
-          const dateB = new Date(b.pa_services_start_date);
-          return dateA.getTime() - dateB.getTime();
-        });
-
-        this.pa_assessmentsgroup = jsonObj;
+        this.paServices = resp.pa_services;
 
         this.totalDataClientReport = resp.noteRbts.length;
         this.clientReport_generals = resp.noteRbts;
