@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { ArrayFilterPipe } from './array-filter.pipe';
 
-fdescribe('Pipe: ArrayFilter', () => {
+describe('Pipe: ArrayFilter', () => {
   let pipe: ArrayFilterPipe;
 
   beforeEach(() => {

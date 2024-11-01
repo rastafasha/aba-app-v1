@@ -26,9 +26,11 @@ export interface NoteRbt {
   pay: number;
   status: string;
   created_at: string;
+  insuranceId: string;
 }
 
 export interface NoteBcba {
+  insuranceId: string;
   insurance_id?: number;
   id: number;
   patient_id: string;

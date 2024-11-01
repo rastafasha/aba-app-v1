@@ -1,17 +1,20 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, Query } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { url_servicios } from 'src/app/config/config';
 import {
   LocationApi,
   LocationApiResponse,
   LocationViewApiResponse,
 } from '../models/locations.model';
+import { ApiService } from 'src/app/core/services/api.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class LocationService {
-  constructor(public http: HttpClient) {}
+export class LocationService extends ApiService {
+  constructor(protected http: HttpClient) {
+    super(http, 'location');
+  }
 
   listAppointmentPays(
     page = 1,

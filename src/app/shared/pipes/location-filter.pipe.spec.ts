@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { LocationFilterPipe } from './location-filter.pipe';
 
-fdescribe('Pipe: LocationFilter', () => {
+describe('Pipe: LocationFilter', () => {
   let pipe: LocationFilterPipe;
 
   beforeEach(() => {

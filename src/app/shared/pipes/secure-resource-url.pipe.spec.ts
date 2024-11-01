@@ -4,7 +4,7 @@ import { TestBed } from '@angular/core/testing';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SecureResourceUrlPipe } from './secure-resource-url.pipe';
 
-fdescribe('SecureResourceUrlPipe', () => {
+describe('SecureResourceUrlPipe', () => {
   let pipe: SecureResourceUrlPipe;
   let sanitizer: DomSanitizer;
   const url = 'https://www.example.com/test.pdf';

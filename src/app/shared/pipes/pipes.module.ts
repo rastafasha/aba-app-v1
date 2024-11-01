@@ -5,6 +5,10 @@ import { RoleFilterPipe } from './roles-filter.pipe';
 import { LocationFilterPipe } from './location-filter.pipe';
 import { GetPrizeCptNotePipe } from './prize-cpt.pipe';
 import { SecureResourceUrlPipe } from './secure-resource-url.pipe';
+import { MinPipe } from './min.pipe';
+import { MaxPipe } from './max.pipe';
+import { CeilPipe } from './ceil.pipe';
+import { FloorPipe } from './floor.pipe';
 
 @NgModule({
   declarations: [
@@ -13,6 +17,10 @@ import { SecureResourceUrlPipe } from './secure-resource-url.pipe';
     RoleFilterPipe,
     LocationFilterPipe,
     GetPrizeCptNotePipe,
+    MinPipe,
+    MaxPipe,
+    CeilPipe,
+    FloorPipe,
   ],
   exports: [
     SecureResourceUrlPipe,
@@ -20,6 +28,10 @@ import { SecureResourceUrlPipe } from './secure-resource-url.pipe';
     RoleFilterPipe,
     LocationFilterPipe,
     GetPrizeCptNotePipe,
+    MinPipe,
+    MaxPipe,
+    CeilPipe,
+    FloorPipe,
   ],
   imports: [CommonModule],
 })

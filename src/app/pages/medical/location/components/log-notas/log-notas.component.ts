@@ -24,127 +24,48 @@ import { LocationService } from '../../services/location.service';
   styleUrls: ['./log-notas.component.scss'],
 })
 export class LogNotasComponent implements OnInit {
-  // @Input() locationId:any;
   routes = AppRoutes;
 
-  private patient_id: any;
+  private patient_id: number;
+  private location_id: number;
   private billing_selected: any;
-  // private sponsor_id: any;
-  // private noterbt_id: any;
-  private location_id: any;
-  // private user: AppUser;
-
-  // private clientReport: ClientReportModel;
 
   private clientReport_generals: (NoteRbt | NoteBcba)[];
   private clientReportList: (NoteRbt | NoteBcba)[];
-  // private dataSource!: MatTableDataSource<any>;
-  // private showFilter = false;
-  // private searchDataValue = '';
-  // private lastIndex = 0;
-  private pageSize = 50;
-  totalDataClientReport = 0;
-  skip = 0;
-  limit = this.pageSize;
-  pageIndex = 0;
-  serialNumberArray: number[] = [];
-  currentPage = 1;
-  pageNumberArray: number[] = [];
-  pageSelection = [];
-  private totalPages = 0;
-  // private text_validation: any;
 
-  // private roles = [];
-  // private permissions = [];
-  // private patientID: any;
-  // private patientId: any;
+  pageSize = 50;
+  total = 0;
+  skip = 0;
+  currentPage = 1;
 
   insurances: LocationInsurance[] = [];
 
-  // private pa_assessments: any;
-  // private pa_assessmentsgroup = [];
-  // private cpt: any;
-  // private n_units: any;
-  private pa_number: any;
-  private insurance_id: any;
-  // private insuranceiddd: any;
-  private insurer_name: any;
-  // private modifiers = [];
+  private pa_number: number;
+  private insurance_id: number;
+  private insurer_name: string;
   private noteRbts: NoteRbt[];
   private noteBcbas: NoteBcba[];
-  // private pa_assessmentgroup = [];
-  // private patient: any;
 
-  // private patientName: any;
-  // private doctor_selected_full_name: any;
-  // private billing_total = 0;
-  week_total_hours: string;
-  week_total_units = 0;
-  // private total_hours = 0;
-  // private total_units = 0;
-  // private charges = 0;
+  weekTotalHours = ':';
+  weekTotalUnits = 0;
   unitPrize = 0;
   unitPrizeCpt = 0;
   xe = 0;
   xp = 0;
-  // private is_xe: boolean;
-  // private is_xp: boolean;
 
-  // private session_date: any;
-  // private time_in: any;
-  // private time_out: any;
-  // private time_in2: any;
-  // private time_out2: any;
-  // private pos: any;
-  // private billed: boolean;
-  // private pay: boolean;
-  // private billedbcba: boolean;
-  // private paybcba: boolean;
   md: string;
   md2: string;
   mdbcba: string;
   md2bcba: string;
-  // private pay_selected: any;
-  // private billed_selected: any;
-  // private total: any;
-  // private totalPorPagar: any;
-  // private resultconFactor: any;
-  // private unidades: any;
-  // private porPagar: any;
-  // private horaTrabajada: any;
-  // private factHoras: any;
-  // private totalHoras: any;
-  // private totalUnidades: any;
-  // private units: any;
-  // private hoursPerUnit: any;
-  // private timePerUnit: any;
 
-  // private tecnicoRbt: TecnicoRbt;
-  // private supervisorRbt: Supervisor;
   private npi: any;
-  // private rbt_id: any;
-  // private rbt2_id: any;
-  // private bcba_id: any;
-  // private bcba2_id: any;
-  // private doctor_selected_bcba: any;
-  // private full_name: any;
-  // private tecnicoDoctorNames: any;
-
-  // private services: any;
   private provider: any;
-  // private selectedCpt: any;
-  // private   data: any;
-  patients: LocationPatient[];
-
-  // private providersSponsorsList: any;
-  // private factorPorcentual = 1.66666666666667;
-
-  // private doctor_selected: any = null;
-  combinedList: { rbt: NoteRbt; bcba: NoteBcba }[];
   unitPrizeCptBcba: any;
   unitPrizeCptRbt: any;
-  // private bcbaCptCode: string;
-  // private rbtCptCode: string;
+
+  patients: LocationPatient[];
+
+  combinedList: { rbt: NoteRbt; bcba: NoteBcba }[];
 
   selectedValueInsurer!: string;
   selectedValuePatient!: string;
@@ -161,13 +82,6 @@ export class LogNotasComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.billed = false;
-    // this.pay = false;
-    // this.billedbcba = false;
-    // this.paybcba = false;
-
-    // this.user = this.authService.user as AppUser;
-
     this.ativatedRoute.params.subscribe((resp) => {
       this.location_id = resp['id'];
       this.onRefresh();
@@ -199,7 +113,6 @@ export class LogNotasComponent implements OnInit {
 
   getTableData(page = 1, filter: Partial<LocationLogFilter> = {}): void {
     this.clientReportList = [];
-    this.serialNumberArray = [];
     this.currentPage = page;
 
     this.clientReportService
@@ -208,134 +121,43 @@ export class LogNotasComponent implements OnInit {
         ...filter,
       })
       .subscribe((resp) => {
-        this.pagesUpdate(resp.arrayPages);
-        // traemos la info necesaria del paciente
-        // this.patient_id = resp.patient.patient_id;
-        // this.insurance_id = resp.patient.insurer_id;
-        // this.billed = resp.noteRbts.length > 0;
-        // this.pay = resp.noteRbts.length > 0;
-        // this.billedbcba = resp.noteBcbas.length > 0;
-        // this.paybcba = resp.noteBcbas.length > 0;
+        let combineNotes = [
+          ...resp.noteRbts.map((note) => ({ ...note, type: 'rbt' })),
+          ...resp.noteBcbas.map((note) => ({ ...note, type: 'bcba' })),
+        ];
+        if (filter.note_type === 'rbt')
+          combineNotes = combineNotes.filter((note) => note.type === 'rbt');
+        if (filter.note_type === 'bcba')
+          combineNotes = combineNotes.filter((note) => note.type === 'bcba');
+        if (filter.insurance_id)
+          combineNotes = combineNotes.filter(
+            (note) => note.insurance_id === filter.insurance_id
+          );
+        if (filter.patient_id)
+          combineNotes = combineNotes.filter(
+            (note) => note.patient_id === filter.patient_id.toString()
+          );
+        if (filter.status_type)
+          combineNotes = combineNotes.filter(
+            (note) => note.status === filter.status_type
+          );
 
-        this.noteRbts = resp.noteRbts;
-        this.noteBcbas = resp.noteBcbas;
-        // Filter (post backend filtering)
-        if (filter.note_type === 'rbt') this.noteBcbas = [];
-        if (filter.note_type === 'bcba') this.noteRbts = [];
-        if (filter.insurance_id) {
-          this.noteRbts = this.noteRbts.filter(
-            (note) => note.insurance_id === filter.insurance_id
-          );
-          this.noteBcbas = this.noteBcbas.filter(
-            (note) => note.insurance_id === filter.insurance_id
-          );
-        }
-        if (filter.patient_id) {
-          this.noteRbts = this.noteRbts.filter(
-            (note) => note.patient_id === filter.patient_id.toString()
-          );
-          this.noteBcbas = this.noteBcbas.filter(
-            (note) => note.patient_id === filter.patient_id.toString()
-          );
-        }
-        if (filter.status_type) {
-          this.noteRbts = this.noteRbts.filter(
-            (note) => note.status === filter.status_type
-          );
-          this.noteBcbas = this.noteBcbas.filter(
-            (note) => note.status === filter.status_type
-          );
-        }
-        // aqui traigo los nombres de los doctores relacionados al paciente
-        // this.supervisorRbt =
-        //   resp.noteRbts.length > 0 ? resp.noteRbts[0].supervisor : null;
-        // this.tecnicoRbt =
-        //   resp.noteRbts.length > 0 ? resp.noteRbts[0].tecnicoRbt : null;
+        this.noteRbts = combineNotes.filter(
+          (note) => note.type === 'rbt'
+        ) as NoteRbt[];
+        this.noteBcbas = combineNotes.filter(
+          (note) => note.type === 'bcba'
+        ) as NoteBcba[];
 
         this.combinedList = this.combineNotes(this.noteRbts, this.noteBcbas);
 
-        /*
-        this.rbt_id = resp.patient?.rbt_id;
-        this.rbt2_id = resp.patient?.rbt2_id;
-        this.bcba_id = resp.patient?.bcba_id;
-        this.bcba2_id = resp.patient?.bcba2_id;
-
-        this.pa_assessments = resp.pa_assessments;
-        const jsonObj = JSON.parse(this.pa_assessments ?? '[]');
-
-        jsonObj.sort((a, b) => {
-          const dateA = new Date(a.pa_services_start_date);
-          const dateB = new Date(b.pa_services_start_date);
-          return dateA.getTime() - dateB.getTime();
-        });
-
-        this.pa_assessmentsgroup = jsonObj;
-        */
-
-        this.totalDataClientReport =
-          this.noteRbts.length + this.noteBcbas.length;
+        this.total = this.noteRbts.length + this.noteBcbas.length;
         this.clientReport_generals = [...this.noteRbts, ...this.noteBcbas];
 
-        /*
-        this.patient_id = resp.patient_id;
-
-        for (let i = 0; i < this.pa_assessmentsgroup.length; i++) {
-          if (
-            !this.serialNumberArray.includes(
-              this.pa_assessmentsgroup[i].serial_number
-            )
-          ) {
-            this.serialNumberArray.push(
-              this.pa_assessmentsgroup[i].serial_number
-            );
-          }
-          //aqui se agrega pa assestment al total
-          // this.clientReportList.push(this.pa_assessmentsgroup[i]);
-        }
-        */
-
         this.getTableDataGeneral();
-        // this.getInsurer();
-        // this.getDoctorRBT();
-        //  this.getDoctorBcba();
-        //  this.extractDataHours();
       });
   }
 
-  /*
-  getInsurer() {
-    //sacamos los detalles insurance seleccionado
-    if (!this.insurance_id) return;
-    this.insuranceService.showInsurance(this.insurance_id).subscribe(
-      (resp) => {
-        // console.log('insurer', resp);
-        this.insuranceiddd = resp.id;
-
-        this.insurer_name = resp.insurer_name;
-        this.modifiers = resp.notes;
-        this.services = resp.services;
-
-        this.provider = resp.services[0].provider;
-        this.cpt = resp.services[0].code;
-        // el valor de la unidad que viene desde el seguro,
-        // ahora debe ser desde la funcion mas abajo
-        this.unitPrize = resp.services[0].unit_prize;
-        console.log('cpt', this.cpt);
-
-        // Call getPrizeCptNote with the correct parameters from noterbta list and notebcba list
-        this.getPrizeCptNote(
-          this.insurer_name,
-          this.noteBcbas[0].cpt_code,
-          this.noteRbts[0].cpt_code,
-          this.provider
-        ).subscribe();
-      },
-      (error: any) => {
-        console.error('Error fetching insurance data:', error);
-      }
-    );
-  }
-    */
   // funcion para obtener el valor de la unidad del cpt
   getPrizeCptNoteRbt(cptCode: string) {
     this.getPrizeCptNote(
@@ -400,36 +222,6 @@ export class LogNotasComponent implements OnInit {
     );
   }
 
-  // fin funcion para obtener el valor de la unidad del cpt
-
-  // selectCpt(value:any){
-  //   this.selectedCpt = this.combinedList
-  //   this.getPrizeCptNote();
-
-  // }
-
-  //trae el nombre del doctor quien hizo la nota rbt
-  /*
-  getDoctorRBT() {
-    if (!this.tecnicoRbt) return;
-    console.log(this.tecnicoRbt);
-    this.doctorService.showDoctor(this.tecnicoRbt.npi).subscribe((resp) => {
-      // console.log('doctor rbt y location',resp);
-      this.doctor_selected = resp.user;
-      this.full_name = resp.user.full_name;
-    });
-  }
-    */
-  /*
-  // supervisor del tecnico solo sacamos el npi
-  getDoctorBcba() {
-    this.doctorService.showDoctor(this.supervisorRbt).subscribe((resp) => {
-      // console.log('bcba',resp);
-      this.npi = resp.user.npi;
-    });
-  }
-  */
-
   extractDataHours() {
     // recorrer el array de billing_general para extraer la data
     const hours_group: string[] = [];
@@ -443,7 +235,7 @@ export class LogNotasComponent implements OnInit {
     // obtenemos el total de las horas en un rango de 7 dias  atras
     let suma = 0;
     for (
-      var i = hours_group.length - 1;
+      let i = hours_group.length - 1;
       i >= Math.max(0, hours_group.length - 7);
       i--
     ) {
@@ -456,18 +248,13 @@ export class LogNotasComponent implements OnInit {
     // obtenemos el total de las unidades en un rango de 7 dias  atras
     let sumaUnit = 0;
     for (
-      var i = units_group.length - 1;
+      let i = units_group.length - 1;
       i >= Math.max(0, units_group.length - 7);
       i--
     ) {
       sumaUnit += parseInt(units_group[i], 10) || 0;
     }
-    // this.week_total_units = sumaunit / Math.min(7, units_group.length);// saca el promedio
-    this.week_total_units = sumaUnit; // saca la suma
-    // console.log("total semanal "+ this.week_total_units );
-
-    // saco el valor de charges multiplicando el total de unidades por semana por el valor del cpt o n_units
-    // this.getCharges();
+    this.weekTotalUnits = sumaUnit; // saca la suma
   }
 
   sortData(sort) {
@@ -486,28 +273,18 @@ export class LogNotasComponent implements OnInit {
     }
   }
 
+  onPageChange(page: number) {
+    this.getTableData(page);
+  }
+
   searchData() {
     this.combinedList = [];
-    this.pageSelection = [];
-    this.limit = this.pageSize;
     this.skip = 0;
     this.currentPage = 1;
     this.getTableData();
   }
 
   private getTableDataGeneral() {
-    this.clientReportList = [];
-    this.serialNumberArray = [];
-    this.totalDataClientReport = 0;
-
-    this.clientReport_generals.forEach((res, index: number) => {
-      const serialNumber = index + 1;
-      if (index >= this.skip && serialNumber <= this.limit) {
-        this.clientReportList.push(res);
-        this.serialNumberArray.push(serialNumber);
-      }
-    });
-    // this.dataSource = new MatTableDataSource(this.clientReportList);
     this.calculateUnitsAndHours();
   }
 
@@ -530,68 +307,8 @@ export class LogNotasComponent implements OnInit {
     else if (minutosTotales < 10) stringMinutos = `0${minutosTotales}`;
     else stringMinutos = minutosTotales.toString();
 
-    this.week_total_hours = `${horasTotales} : ${stringMinutos}`;
-    this.week_total_units = totalUnits;
-  }
-
-  onPaginateChange(event) {
-    this.skip = event.pageIndex * this.pageSize;
-    this.totalDataClientReport += this.getPageTotal();
-    this.getTableDataGeneral();
-  }
-
-  getPageTotal(): number {
-    const endIndex = Math.min(
-      this.skip + this.pageSize,
-      this.clientReportList.length
-    );
-    return this.clientReportList.slice(this.skip, endIndex).length;
-  }
-
-  getMoreData(event: string): void {
-    if (event === 'next') {
-      this.currentPage++;
-      this.pageIndex = this.currentPage - 1;
-      this.limit += this.pageSize;
-      this.skip = this.pageSize * this.pageIndex;
-      this.getTableDataGeneral();
-    } else if (event === 'previous') {
-      this.currentPage--;
-      this.pageIndex = this.currentPage - 1;
-      this.limit -= this.pageSize;
-      this.skip = this.pageSize * this.pageIndex;
-      this.getTableDataGeneral();
-    }
-  }
-
-  moveToPage(pageNumber: number): void {
-    this.currentPage = pageNumber;
-    this.skip = this.pageSelection[pageNumber - 1].skip;
-    this.limit = this.pageSelection[pageNumber - 1].limit;
-    if (pageNumber > this.currentPage) {
-      this.pageIndex = pageNumber - 1;
-    } else if (pageNumber < this.currentPage) {
-      this.pageIndex = pageNumber + 1;
-    }
-    this.getTableDataGeneral();
-  }
-
-  private calculateTotalPages(
-    totalDatapatient: number,
-    pageSize: number
-  ): void {
-    // this.pageNumberArray = [];
-    this.totalPages = totalDatapatient / pageSize;
-    if (this.totalPages % 1 !== 0) {
-      this.totalPages = Math.trunc(this.totalPages + 1);
-    }
-    /* eslint no-var: off */
-    for (var i = 1; i <= this.totalPages; i++) {
-      const limit = pageSize * i;
-      const skip = limit - pageSize;
-      this.pageNumberArray.push(i);
-      this.pageSelection.push({ skip: skip, limit: limit });
-    }
+    this.weekTotalHours = `${horasTotales} : ${stringMinutos}`;
+    this.weekTotalUnits = totalUnits;
   }
 
   selectUser(biilling: any) {
@@ -817,32 +534,6 @@ export class LogNotasComponent implements OnInit {
       .subscribe((resp) => {
         console.log(resp);
       });
-  }
-
-  private pagesUpdate(arrayPages: number[]) {
-    const pa = arrayPages;
-    this.pageNumberArray = [];
-    if (pa.length > 5) {
-      if (this.currentPage > 2 && this.currentPage < pa.length - 2) {
-        for (
-          let index = this.currentPage - 2;
-          index < this.currentPage + 3;
-          index++
-        ) {
-          this.pageNumberArray.push(index);
-        }
-      } else if (this.currentPage <= 2) {
-        for (let index = 1; index < 6; index++) {
-          this.pageNumberArray.push(index);
-        }
-      } else if (this.currentPage >= pa.length - 2) {
-        for (let index = pa.length - 4; index <= pa.length; index++) {
-          this.pageNumberArray.push(index);
-        }
-      }
-    } else {
-      this.pageNumberArray = pa;
-    }
   }
 
   private combineNotes(notesRbt: NoteRbt[], notesBcba: NoteBcba[]) {
