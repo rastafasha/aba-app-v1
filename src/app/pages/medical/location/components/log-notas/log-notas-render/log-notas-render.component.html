@@ -103,73 +103,50 @@
 
 <!-- modificadores Medicaid 1 -->
 <td>
-  <!-- *ngIf="insurer_name == 'Medicaid'" -->
-  <span>
-    <div class="form-group local-forms">
-      <select
-        class="form-control form-select-solid form-select-long fw-bolder"
-        name="md"
-        style="position: relative; top: 11px"
-        [(ngModel)]="note.md"
-        (change)="isSelectedModifier()"
-      >
-        <option>-- Select --</option>
-        <option value="HM">HM | RBT</option>
-        <option value="XE">
-          XE | 2 sessions same day, same provider, different POS
-        </option>
-        <option value="XP">XP | RBT overlap Not reimbursed</option>
-        <option value="HO">HO | BCBA</option>
-        <option value="GT">GT | Telehealth</option>
-        <option value="TS">TS | Reassessment</option>
-        <option value="TS">95 | Telehealth (only AETNA)</option>
-      </select>
-    </div>
-  </span>
+  <select
+    class="form-control form-select-solid fw-bolder"
+    name="md"
+    style="width: 9ch; text-overflow: ellipsis"
+    [(ngModel)]="note.md"
+    (change)="isSelectedModifier()"
+  >
+    <option>-- Select --</option>
+    <option *ngFor="let item of modifiers" [value]="item.value">
+      {{ item.value | uppercase }} : {{ item.description }}
+    </option>
+  </select>
 </td>
-<!-- modificadores1 -->
-<!-- modificadores Medicaid2 -->
-<td>
-  <!-- *ngIf="insurer_name == 'Medicaid'" -->
-  <span>
-    <div class="form-group local-forms">
-      <select
-        class="form-control form-select-solid form-select-long fw-bolder"
-        name="md2"
-        style="position: relative; top: 11px"
-        [(ngModel)]="note.md2"
-        (change)="isSelectedModifier2()"
-      >
-        <option>-- Select --</option>
-        <option value="HM">HM | RBT</option>
-        <option value="XE">
-          XE | 2 sessions same day, same provider, different POS
-        </option>
-        <option value="XP">XP | RBT overlap Not reimbursed</option>
-        <option value="HO">HO | BCBA</option>
-        <option value="GT">GT | Telehealth</option>
-        <option value="TS">TS | Reassessment</option>
-        <option value="TS">95 | Telehealth (only AETNA)</option>
-      </select>
-    </div>
-  </span>
-</td>
-<!-- modificadores2 -->
 
-<!-- fin modificadores -->
+<!-- modificadores Medicaid 2 -->
+<td>
+  <select
+    class="form-control form-select-solid fw-bolder"
+    style="width: 9ch; text-overflow: ellipsis"
+    name="md2"
+    [(ngModel)]="note.md2"
+    (change)="isSelectedModifier2()"
+  >
+    <option>-- Select --</option>
+    <option *ngFor="let item of modifiers" [value]="item.value">
+      {{ item.value | uppercase }} : {{ item.description }}
+    </option>
+  </select>
+</td>
 
+<!-- session_units_total -->
 <td>
-  <span>
-    {{ note.session_units_total }}
-  </span>
+  {{ note.session_units_total }}
 </td>
-<td>{{ unitPrize | currency }}</td>
+
+<!-- unitPrize -->
+
+<td>{{ unitPrice | currency }}</td>
+
+<!-- session_units_total -->
 <td>
-  {{ note.session_units_total * unitPrize | currency }}
-  <span *ngIf="note.md === 'XP' || note.md2 === 'XP'">
-    XP:{{ note.session_units_total * unitPrize * note.xp | currency }}
-  </span>
+  {{ note | logNotasSessionTotal : unitPrice : modifiers | currency }}
 </td>
+<!-- Tecnico -->
 <td>
   <span>
     {{ note.tecnico.name }}

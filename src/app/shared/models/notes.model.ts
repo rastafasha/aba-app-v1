@@ -115,8 +115,6 @@ export class NoteRbtBuilder implements NoteRbt {
   insuranceId: string;
 
   constructor(rbt: Partial<NoteRbt> = {}) {
-    console.log(rbt);
-
     this.type = 'rbt';
     this.id = rbt.id || 0;
     this.patient_id = rbt.patient_id || '';
