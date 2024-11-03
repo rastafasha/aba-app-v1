@@ -1,9 +1,37 @@
-.table.comman-table > tbody > tr > td {
-    padding: 0px 0px;
-    text-align: center;
+.table.comman-table > tbody {
+  > tr,
+  > .tr {
+    > td {
+      padding: 0px 0px;
+      text-align: center;
+    }
+  }
+}
+.table.comman-table > thead {
+  > tr,
+  > .tr {
+    > td {
+      padding: 0px 0px;
+      text-align: center;
+    }
+  }
 }
 
-.table.comman-table > thead > tr > td {
-    padding: 0px 0px;
-    text-align: center;
+::ng-deep .header-mw-100px .mat-sort-header-container {
+  min-width: 100px;
+}
+
+::ng-deep .header-mw-90px .mat-sort-header-container {
+  min-width: 90px;
+}
+::ng-deep .header-mw-80px .mat-sort-header-container {
+  min-width: 80px;
+}
+
+::ng-deep .header-mw-70px .mat-sort-header-container {
+  min-width: 70px;
+}
+
+::ng-deep .header-mw-60px .mat-sort-header-container {
+  min-width: 60px;
 }

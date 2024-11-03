@@ -11,6 +11,8 @@ import { environment } from 'src/environments/environment';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { InsuranceService } from '../../insurance/service/insurance.service';
 import { PatientMService } from '../service/patient-m.service';
+import { AppUser } from 'src/app/shared/models/users.models';
+import { map, switchMap } from 'rxjs';
 
 // eslint-disable-next-line no-var
 declare var $: any;
@@ -23,9 +25,11 @@ declare var $: any;
 export class ProfilePatientMComponent implements OnInit {
   routes = AppRoutes;
   @ViewChild('contentToConvert') contentToConvert!: ElementRef;
+  patient_id: number;
+  client_id: number;
+
   patientProfile: any[];
   option_selected = 1;
-  patient_id: any;
 
   num_appointment = 0;
   money_of_appointments = 0;
@@ -60,9 +64,8 @@ export class ProfilePatientMComponent implements OnInit {
   bcba_id: any;
   bcba2_id: any;
   clin_director_id: any;
-  client_id: any;
   avatar: any;
-  user: any;
+  user: AppUser;
 
   doctor_selected: any = null;
   doctor_selected_full_name: any = null;
@@ -95,15 +98,12 @@ export class ProfilePatientMComponent implements OnInit {
     this.pageService.onInitPage();
 
     this.activatedRoute.params.subscribe((resp) => {
-      // console.log(resp);
       this.client_id = resp['id'];
+      this.patient_id = resp['patient_id'];
+      this.getPatient();
     });
-    this.getPatient();
     this.getConfig();
-    this.user = this.authService.user;
-
-    const USER = localStorage.getItem('user');
-    this.user = JSON.parse(USER ? USER : '');
+    this.user = this.authService.user as AppUser;
     this.doctor_id = this.user.id;
     this.location_id = this.user.location_id;
   }
@@ -141,12 +141,21 @@ export class ProfilePatientMComponent implements OnInit {
   }
 
   getPatient() {
-    this.patientService.showPatientProfile(this.client_id).subscribe((resp) => {
+    const consulta$ = this.client_id
+      ? this.patientService.showPatientProfile(this.client_id)
+      : this.patientService
+          .getPatientByPatientId(this.patient_id)
+          .pipe(
+            switchMap((resp) =>
+              this.patientService.showPatientProfile(resp.patient.id)
+            )
+          );
+    consulta$.subscribe((resp) => {
       console.log(resp);
-      this.appointments = resp.appointments;
-      this.num_appointment = resp.num_appointment;
-      this.money_of_appointments = resp.money_of_appointments;
-      this.num_appointment_pendings = resp.num_appointment_pendings;
+      this.appointments = resp.appointments ?? [];
+      this.num_appointment = resp.num_appointment ?? 0;
+      this.money_of_appointments = resp.money_of_appointments ?? 0;
+      this.num_appointment_pendings = resp.num_appointment_pendings ?? 0;
       this.patient_selected = resp.patient;
       this.patient_id = resp.patient.patient_id;
       this.avatar = resp.patient.avatar;

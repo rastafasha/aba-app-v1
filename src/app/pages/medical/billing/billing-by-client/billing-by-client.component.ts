@@ -114,7 +114,7 @@ export class BillingByClientComponent {
 
   getPatient() {
     this.patientService
-      .getPatientByPatientid(this.patient_id)
+      .getPatientByPatientId(this.patient_id)
       .subscribe((resp) => {
         // console.log(resp);
         this.patient = resp.patient;

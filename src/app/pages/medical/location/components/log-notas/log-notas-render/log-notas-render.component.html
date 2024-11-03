@@ -1,0 +1,219 @@
+<!-- Type -->
+<td>
+  <span
+    class="badge"
+    [ngClass]="{
+      'bg-success': note.type === 'rbt',
+      'bg-primary': note.type === 'bcba'
+    }"
+    >{{ note.type | uppercase }}</span
+  >
+</td>
+<!-- Date -->
+<td>
+  <span>
+    <a
+      [routerLink]="[
+        note.type === 'rbt' ? routes.noteRbt.view : routes.noteBcba.view,
+        note.id
+      ]"
+    >
+      {{ note.session_date | date : "shortDate" }}
+    </a>
+  </span>
+  <i
+    class="fa bg-success indicador"
+    *ngIf="note.status === 'ok'"
+    [tooltip]="note.status"
+  ></i>
+  <i
+    class="fa bg-warning indicador"
+    *ngIf="note.status === 'pending'"
+    [tooltip]="note.status"
+  ></i>
+</td>
+<!-- Status -->
+<td>
+  <select
+    class="form-control form-select-solid form-select-long fw-bolder"
+    name="status"
+    [(ngModel)]="note.status"
+    (change)="onStatusChange()"
+    placeholder="status"
+  >
+    <option>-- Select --</option>
+    <option *ngFor="let status of statusOptions" [value]="status">
+      {{ status | titlecase }}
+    </option>
+  </select>
+</td>
+<!-- Pos -->
+<td>
+  {{ note.meet_with_client_at ?? "-" }}
+</td>
+<!-- Time In -->
+<td>
+  <span> {{ (note.time_in | transformToDate) ?? "-" }}</span>
+</td>
+<!-- Time Out -->
+<td>
+  <span>{{ (note.time_out | transformToDate) ?? "-" }}</span>
+</td>
+<!-- Time In 2 -->
+<td>
+  <span>{{ (note.time_in2 | transformToDate) ?? "-" }}</span>
+</td>
+<!-- Time Out 2 -->
+<td>
+  <span>{{ (note.time_out2 | transformToDate) ?? "-" }}</span>
+</td>
+<!-- Total Hours 2 -->
+<td>
+  <span>{{ note.total_hours ?? "-" }}</span>
+</td>
+<!-- Cpt Code -->
+<td>
+  <span>
+    {{ note.cpt_code }}
+  </span>
+</td>
+<!-- Insurer Name -->
+<td>
+  <span>
+    {{ (insurances | arrayFilter : "id" : note.insurance_id)?.[0]?.insurer_name }}
+  </span>
+</td>
+<!-- Insurer Id (Code) -->
+<td>
+  <span>
+    {{ note.insuranceId }}
+  </span>
+</td>
+
+<!-- patient_name -->
+<td>
+  <a [routerLink]="[routes.patients.profileByPatientId, note.patient_id]">
+    <span>
+      {{(patients|arrayFilter:'patient_id': note.patient_id)?.[0]?.full_name}}</span
+    >
+  </a>
+</td>
+
+<!-- modificadores  -->
+
+<!-- modificadores Medicaid 1 -->
+<td>
+  <!-- *ngIf="insurer_name == 'Medicaid'" -->
+  <span>
+    <div class="form-group local-forms">
+      <select
+        class="form-control form-select-solid form-select-long fw-bolder"
+        name="md"
+        style="position: relative; top: 11px"
+        [(ngModel)]="note.md"
+        (change)="isSelectedModifier()"
+      >
+        <option>-- Select --</option>
+        <option value="HM">HM | RBT</option>
+        <option value="XE">
+          XE | 2 sessions same day, same provider, different POS
+        </option>
+        <option value="XP">XP | RBT overlap Not reimbursed</option>
+        <option value="HO">HO | BCBA</option>
+        <option value="GT">GT | Telehealth</option>
+        <option value="TS">TS | Reassessment</option>
+        <option value="TS">95 | Telehealth (only AETNA)</option>
+      </select>
+    </div>
+  </span>
+</td>
+<!-- modificadores1 -->
+<!-- modificadores Medicaid2 -->
+<td>
+  <!-- *ngIf="insurer_name == 'Medicaid'" -->
+  <span>
+    <div class="form-group local-forms">
+      <select
+        class="form-control form-select-solid form-select-long fw-bolder"
+        name="md2"
+        style="position: relative; top: 11px"
+        [(ngModel)]="note.md2"
+        (change)="isSelectedModifier2()"
+      >
+        <option>-- Select --</option>
+        <option value="HM">HM | RBT</option>
+        <option value="XE">
+          XE | 2 sessions same day, same provider, different POS
+        </option>
+        <option value="XP">XP | RBT overlap Not reimbursed</option>
+        <option value="HO">HO | BCBA</option>
+        <option value="GT">GT | Telehealth</option>
+        <option value="TS">TS | Reassessment</option>
+        <option value="TS">95 | Telehealth (only AETNA)</option>
+      </select>
+    </div>
+  </span>
+</td>
+<!-- modificadores2 -->
+
+<!-- fin modificadores -->
+
+<td>
+  <span>
+    {{ note.session_units_total }}
+  </span>
+</td>
+<td>{{ unitPrize | currency }}</td>
+<td>
+  {{ note.session_units_total * unitPrize | currency }}
+  <span *ngIf="note.md === 'XP' || note.md2 === 'XP'">
+    XP:{{ note.session_units_total * unitPrize * note.xp | currency }}
+  </span>
+</td>
+<td>
+  <span>
+    {{ note.tecnico.name }}
+    {{ note.tecnico.surname }}
+  </span>
+</td>
+
+<td>
+  <div class="note-checkit">
+    <label class="custom_check">
+      <input
+        type="checkbox"
+        name="billed"
+        [(ngModel)]="note.billed"
+        (change)="isCheckedBilled()"
+      />
+      <span class="checkmark" value="false"></span>
+    </label>
+  </div>
+</td>
+<td>
+  <div class="note-checkit">
+    <label class="custom_check">
+      <input
+        type="checkbox"
+        name="pay"
+        [(ngModel)]="note.pay"
+        (change)="isCheckedPay()"
+      />
+      <span class="checkmark" value="false"></span>
+    </label>
+  </div>
+</td>
+
+<!-- <td>{{note.created_at | date }}</td> -->
+
+<td class="text-end">
+  <div class="doctor-submit text-end">
+    <button
+      type="button"
+      class="btn btn-primary submit-form me-2"
+      (click)="onSave()"
+    >
+      Save
+    </button>
+  </div>
+</td>

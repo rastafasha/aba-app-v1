@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, forkJoin, map, tap } from 'rxjs';
-import { NoteBcba, NoteRbt } from 'src/app/shared/models/notes.model';
+import {
+  isNoteBcba,
+  isNoteRbt,
+  NoteBcba,
+  NoteRbt,
+} from 'src/app/shared/models/notes.model';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
 import { ClientReportService } from '../../../client-report/client-report.service';
@@ -17,6 +22,8 @@ import {
   LocationPatient,
 } from '../../models/locations.model';
 import { LocationService } from '../../services/location.service';
+import { TableUtilsService } from 'src/app/shared/components/table/table-utils.service';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-log-notas',
@@ -45,6 +52,7 @@ export class LogNotasComponent implements OnInit {
   private insurer_name: string;
   private noteRbts: NoteRbt[];
   private noteBcbas: NoteBcba[];
+  notes: (NoteRbt | NoteBcba)[];
 
   weekTotalHours = ':';
   weekTotalUnits = 0;
@@ -65,8 +73,6 @@ export class LogNotasComponent implements OnInit {
 
   patients: LocationPatient[];
 
-  combinedList: { rbt: NoteRbt; bcba: NoteBcba }[];
-
   selectedValueInsurer!: string;
   selectedValuePatient!: string;
   location_selected: LocationApi;
@@ -78,7 +84,8 @@ export class LogNotasComponent implements OnInit {
     private patientService: PatientMService,
     private noteRbtService: NoteRbtService,
     private noteBCbaService: NoteBcbaService,
-    private locationService: LocationService
+    private locationService: LocationService,
+    private tableUtilsService: TableUtilsService
   ) {}
 
   ngOnInit(): void {
@@ -121,10 +128,7 @@ export class LogNotasComponent implements OnInit {
         ...filter,
       })
       .subscribe((resp) => {
-        let combineNotes = [
-          ...resp.noteRbts.map((note) => ({ ...note, type: 'rbt' })),
-          ...resp.noteBcbas.map((note) => ({ ...note, type: 'bcba' })),
-        ];
+        let combineNotes = [...resp.noteRbts, ...resp.noteBcbas];
         if (filter.note_type === 'rbt')
           combineNotes = combineNotes.filter((note) => note.type === 'rbt');
         if (filter.note_type === 'bcba')
@@ -142,16 +146,14 @@ export class LogNotasComponent implements OnInit {
             (note) => note.status === filter.status_type
           );
 
-        this.noteRbts = combineNotes.filter(
-          (note) => note.type === 'rbt'
-        ) as NoteRbt[];
-        this.noteBcbas = combineNotes.filter(
-          (note) => note.type === 'bcba'
-        ) as NoteBcba[];
+        this.noteRbts = combineNotes.filter(isNoteRbt);
+        this.noteBcbas = combineNotes.filter(isNoteBcba);
 
-        this.combinedList = this.combineNotes(this.noteRbts, this.noteBcbas);
+        this.notes = combineNotes.sort((a, b) =>
+          a.session_date > b.session_date ? -1 : 1
+        );
 
-        this.total = this.noteRbts.length + this.noteBcbas.length;
+        this.total = combineNotes.length;
         this.clientReport_generals = [...this.noteRbts, ...this.noteBcbas];
 
         this.getTableDataGeneral();
@@ -165,7 +167,7 @@ export class LogNotasComponent implements OnInit {
       cptCode,
       this.noteRbts[0].cpt_code,
       this.provider
-    ).subscribe((result: any) => {
+    ).subscribe((result) => {
       return result;
     });
   }
@@ -241,11 +243,7 @@ export class LogNotasComponent implements OnInit {
     ) {
       suma += parseInt(hours_group[i], 10) || 0;
     }
-    // this.week_total_hours = suma / Math.min(7, hours_group.length);// saca el promedio
-    // this.week_total_hours = suma ; // saca la suma
-    // console.log("total semanal "+ this.week_total_hours );
 
-    // obtenemos el total de las unidades en un rango de 7 dias  atras
     let sumaUnit = 0;
     for (
       let i = units_group.length - 1;
@@ -257,20 +255,8 @@ export class LogNotasComponent implements OnInit {
     this.weekTotalUnits = sumaUnit; // saca la suma
   }
 
-  sortData(sort) {
-    const data = this.clientReportList.slice();
-
-    if (!sort.active || sort.direction === '') {
-      this.clientReportList = data;
-    } else {
-      this.clientReportList = data.sort((a, b) => {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const aValue = (a as any)[sort.active];
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const bValue = (b as any)[sort.active];
-        return (aValue < bValue ? -1 : 1) * (sort.direction === 'asc' ? 1 : -1);
-      });
-    }
+  sortData(sort: Sort) {
+    this.notes = this.tableUtilsService.orderData(this.notes, sort);
   }
 
   onPageChange(page: number) {
@@ -278,7 +264,7 @@ export class LogNotasComponent implements OnInit {
   }
 
   searchData() {
-    this.combinedList = [];
+    this.notes = [];
     this.skip = 0;
     this.currentPage = 1;
     this.getTableData();
@@ -311,11 +297,11 @@ export class LogNotasComponent implements OnInit {
     this.weekTotalUnits = totalUnits;
   }
 
-  selectUser(biilling: any) {
+  selectUser(biilling) {
     this.billing_selected = biilling;
   }
 
-  addXp(value: any) {
+  addXp(value) {
     this.xp = value;
     // console.log(this.xp);
   }
@@ -530,28 +516,9 @@ export class LogNotasComponent implements OnInit {
 
   private PatientData(selectedValuePatient) {
     this.patientService
-      .getPatientByPatientid(selectedValuePatient)
+      .getPatientByPatientId(selectedValuePatient)
       .subscribe((resp) => {
         console.log(resp);
       });
-  }
-
-  private combineNotes(notesRbt: NoteRbt[], notesBcba: NoteBcba[]) {
-    const combinedList: { rbt: NoteRbt; bcba: NoteBcba }[] = [];
-    const clientReportList =
-      notesRbt.length > notesBcba.length ? notesRbt : notesBcba;
-
-    clientReportList.forEach((_, index) => {
-      if (notesRbt[index] && notesBcba[index])
-        combinedList.push({
-          rbt: notesRbt[index],
-          bcba: notesBcba[index],
-        });
-      else if (notesRbt[index])
-        combinedList.push({ rbt: notesRbt[index], bcba: null });
-      else if (notesBcba[index])
-        combinedList.push({ rbt: null, bcba: notesBcba[index] });
-    });
-    return combinedList;
   }
 }

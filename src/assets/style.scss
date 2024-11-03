@@ -561,7 +561,8 @@ textarea.form-control {
   color: $color_4;
   border: 1px solid #f0f0f0;
   > tbody {
-    > tr {
+    > tr,
+    .tr {
       > td {
         font-weight: 300;
       }
@@ -648,7 +649,8 @@ table.table {
 .table.table-white {
   background-color: $background-color_1;
 }
-.table-striped > tbody > tr:nth-of-type(2n + 1) {
+.table-striped > tbody > tr:nth-of-type(2n + 1),
+.tr:nth-of-type(2n + 1) {
   background-color: #f6f6f6;
 }
 .table-nowrap {
@@ -2438,7 +2440,8 @@ ul.chat-user-total {
   th {
     vertical-align: middle;
   }
-  tr {
+  tr,
+  .tr {
     td {
       img {
         margin-right: 5px;
@@ -2576,12 +2579,14 @@ ul.chat-user-total {
   }
 }
 .custom-table {
-  tr {
+  tr,
+  .tr {
     background-color: $background-color_1;
     white-space: nowrap;
   }
   tbody {
-    tr {
+    tr,
+    .tr {
       box-shadow: 0 0 3px #e5e5e5;
       border: 0;
       td {
@@ -2591,7 +2596,8 @@ ul.chat-user-total {
     }
   }
   thead {
-    tr {
+    tr,
+    .tr {
       th {
         border: 0;
         font-size: 14px;
@@ -2613,7 +2619,8 @@ ul.chat-user-total {
 }
 .table.custom-table {
   > tbody {
-    > tr {
+    > tr,
+    .tr {
       > td {
         padding: 10px 15px;
         vertical-align: middle;
@@ -2625,7 +2632,8 @@ ul.chat-user-total {
     }
   }
   > tfoot {
-    > tr {
+    > tr,
+    .tr {
       > td {
         padding: 10px 15px;
         vertical-align: middle;
@@ -2637,7 +2645,8 @@ ul.chat-user-total {
     }
   }
   > thead {
-    > tr {
+    > tr,
+    .tr {
       > td {
         padding: 10px 15px;
         vertical-align: middle;
@@ -3351,7 +3360,8 @@ table.dataTable {
 }
 .patient-table {
   tbody {
-    tr {
+    tr,
+    .tr {
       td {
         font-weight: 500;
         color: $color_1;
@@ -5798,7 +5808,8 @@ a.voice-icon {
 }
 .email-content {
   .table-inbox {
-    tr {
+    tr,
+    .tr {
       background: #fff;
       border-radius: 5px;
       td {
@@ -6330,7 +6341,8 @@ a.voice-icon {
 }
 .attent-table {
   thead {
-    tr {
+    tr,
+    .tr {
       th {
         &:first-child {
           color: $color_1;
@@ -7842,7 +7854,8 @@ a.btn.add-links {
 }
 .comman-table.custom-table {
   thead {
-    tr {
+    tr,
+    .tr {
       th {
         color: $color_1;
         font-size: 14px;
@@ -7852,7 +7865,8 @@ a.btn.add-links {
     }
   }
   tbody {
-    tr {
+    tr,
+    .tr {
       td {
         color: $color_1;
         font-size: 14px;
@@ -7944,7 +7958,8 @@ a.btn.add-links {
 }
 .table.comman-table {
   > thead {
-    > tr {
+    > tr,
+    .tr {
       > th {
         // padding: 15px 15px;
         padding: 8px 8px;
@@ -7952,7 +7967,8 @@ a.btn.add-links {
     }
   }
   > tbody {
-    > tr {
+    > tr,
+    .tr {
       > td {
         // padding: 15px 15px;
         padding: 8px 8px;
@@ -8680,7 +8696,8 @@ a.status-grey {
 }
 .profile-table.custom-table {
   thead {
-    tr {
+    tr,
+    .tr {
       th {
         font-size: 14px;
         color: $color_32;
@@ -8691,7 +8708,8 @@ a.status-grey {
     }
   }
   tbody {
-    tr {
+    tr,
+    .tr {
       td {
         font-size: 14px;
         color: $color_32;
@@ -8727,7 +8745,8 @@ a.status-grey {
 }
 .patient-profile-table {
   tbody {
-    tr {
+    tr,
+    .tr {
       td {
         &:nth-child(4) {
           color: $color_23;
@@ -8844,7 +8863,8 @@ a.status-grey {
   }
   font-size: 14px;
   margin-bottom: 0;
-  tr {
+  tr,
+  .tr {
     cursor: pointer;
   }
 }
@@ -8881,7 +8901,8 @@ a.status-grey {
 }
 .table.table-inbox {
   > tbody {
-    > tr {
+    > tr,
+    .tr {
       > td {
         border-bottom: 1px solid #f2f2f2;
         border-top: 0;
@@ -8893,7 +8914,8 @@ a.status-grey {
     }
   }
   > tfoot {
-    > tr {
+    > tr,
+    .tr {
       > td {
         border-bottom: 1px solid #f2f2f2;
         border-top: 0;
@@ -8905,7 +8927,8 @@ a.status-grey {
     }
   }
   > thead {
-    > tr {
+    > tr,
+    .tr {
       > td {
         border-bottom: 1px solid #f2f2f2;
         border-top: 0;
@@ -10682,7 +10705,8 @@ td.add-remove {
   text-align: right;
 }
 .invoice-table {
-  tr {
+  tr,
+  .tr {
     th {
       color: $color_89;
       font-weight: 600;
@@ -10698,7 +10722,8 @@ td.add-remove {
     }
   }
   > thead {
-    > tr {
+    > tr,
+    .tr {
       > th {
         background: #f5f7ff;
         border-top: 0;
@@ -10709,7 +10734,8 @@ td.add-remove {
     }
   }
   > tbody {
-    > tr {
+    > tr,
+    .tr {
       > td {
         font-weight: 400;
         color: $color_63;
@@ -10720,7 +10746,8 @@ td.add-remove {
   }
 }
 .invoice-table-two {
-  tr {
+  tr,
+  .tr {
     th {
       color: $color_89;
       font-weight: 600;
@@ -10946,7 +10973,8 @@ td.add-remove {
 }
 .invoices-table.custom-table {
   tbody {
-    tr {
+    tr,
+    .tr {
       box-shadow: none;
       td {
         vertical-align: middle;
@@ -10954,7 +10982,8 @@ td.add-remove {
     }
   }
   thead {
-    tr {
+    tr,
+    .tr {
       th {
         color: $color_1;
       }
@@ -10980,7 +11009,8 @@ td.add-remove {
   }
 }
 .grand-totals {
-  tr {
+  tr,
+  .tr {
     td {
       &:first-child {
         width: 75%;
@@ -11003,7 +11033,8 @@ td.add-remove {
   }
 }
 .total-fonts {
-  tr {
+  tr,
+  .tr {
     td {
       color: $color_30;
       font-weight: 500;
@@ -11329,7 +11360,8 @@ form {
   }
 }
 .card-block {
-  tr {
+  tr,
+  .tr {
     th {
       font-size: 14px;
     }
@@ -12773,3 +12805,10 @@ form {
   }
 }
 
+/**
+Specials
+*/
+
+.form-select-long {
+  min-width: max-content;
+}

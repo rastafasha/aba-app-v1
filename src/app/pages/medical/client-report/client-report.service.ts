@@ -5,8 +5,12 @@ import {
   ClientReportByLocation,
   ClientReportConfig,
 } from './client-report.model';
-import { tap } from 'rxjs';
+import { map, tap } from 'rxjs';
 import { LocationLogFilter } from '../location/models/locations.model';
+import {
+  NoteBcbaBuilder,
+  NoteRbtBuilder,
+} from 'src/app/shared/models/notes.model';
 
 @Injectable({
   providedIn: 'root',
@@ -129,7 +133,15 @@ export class ClientReportService {
     }).toString();
 
     const URL = `${url_servicios}/client_report/bylocation/${location_id}?${params}`;
-    return this.http.get<ClientReportByLocation>(URL);
+    return this.http.get<ClientReportByLocation>(URL).pipe(
+      map((response) => {
+        response.noteRbts =
+          response.noteRbts?.map((item) => new NoteRbtBuilder(item)) ?? [];
+        response.noteBcbas =
+          response.noteBcbas?.map((item) => new NoteBcbaBuilder(item)) ?? [];
+        return response;
+      })
+    );
   }
 
   getAllClientReportEmployeeByPatient(
