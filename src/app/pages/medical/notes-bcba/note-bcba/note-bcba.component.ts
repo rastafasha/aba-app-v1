@@ -450,7 +450,7 @@ export class NoteBcbaComponent {
 
     formData.append('provider_name', this.doctor_id);
     formData.append('supervisor_name', this.selectedValueBCBA);
-    formData.append('note_description', this.note_description);
+    // formData.append('note_description', this.note_description);
     formData.append('insuranceId', this.insuranceId);// id del seguro preferiblemente que solo agarre la data al crear
 
 

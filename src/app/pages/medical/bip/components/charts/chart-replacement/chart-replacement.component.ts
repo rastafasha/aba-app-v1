@@ -226,8 +226,22 @@ export class ChartReplacementComponent {
           number_of_trials.push(element.total_trials);
         });
 
-        this.stoName = resp.nameSto;
+        // this.stoName = resp.nameSto;
+        // this.stoName = resp.sustitutionStatusStoValues[0];
         this.stoStatus = resp.datosFiltrados[0];
+        this.stoName = resp.nameSto;
+
+        // if(resp.filtered_goals !== null){
+        //   console.log(this.stoStatus);
+
+        // }else{
+        //   this.stoStatus = resp.sustitutionStatusStoValues[0];
+        //   console.log(this.stoStatus);
+
+        // }
+
+
+        console.log(this.stoName);
 
         this.replacementsExtractedGoal = this.replacements;
 
