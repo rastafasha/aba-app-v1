@@ -2,124 +2,12 @@
   <div class="card-body">
     <div class="row">
       <!-- search -->
-      <div class="staff-search-table">
-        <form>
-          <div class="row search5">
-            <div class="col-12 col-md-3">
-              <div class="form-group local-forms">
-                <label>From </label>
-                <input
-                  class="form-control datetimepicker"
-                  name="date_start"
-                  [(ngModel)]="date_start"
-                  type="date"
-                />
-              </div>
-            </div>
-            <div class="col-12 col-md-3">
-              <div class="form-group local-forms">
-                <label>To </label>
-                <input
-                  class="form-control datetimepicker"
-                  name="date_end"
-                  [(ngModel)]="date_end"
-                  type="date"
-                />
-              </div>
-            </div>
-            <div class="col-12 col-md-3">
-              <div class="form-group local-forms">
-                <label>Note type </label>
-                <mat-select
-                  [(ngModel)]="noteType"
-                  [ngModelOptions]="{ standalone: true }"
-                  class="form-control select"
-                  placeholder="Select Note Type"
-                >
-                  <mat-option [value]="null"> All </mat-option>
-                  <mat-option [value]="'rbt'"> Rbt </mat-option>
-                  <mat-option [value]="'bcba'"> Bcba </mat-option>
-                </mat-select>
-              </div>
-            </div>
-            <div class="col-12 col-sm-3">
-              <div class="form-group local-forms">
-                <label>Insurer </label>
-                <mat-select
-                  [(ngModel)]="selectedValueInsurer"
-                  name="insurer"
-                  [ngModelOptions]="{ standalone: true }"
-                  class="form-control select"
-                  (selectionChange)="selectInsurance($event)"
-                  placeholder="Select Insurer"
-                >
-                  <mat-option *ngFor="let data of insurances" [value]="data.id">
-                    {{ data.insurer_name }}
-                  </mat-option>
-                </mat-select>
-              </div>
-            </div>
-            <div class="col-12 col-sm-3">
-              <div class="form-group local-forms">
-                <label>Client </label>
-                <mat-select
-                  [(ngModel)]="selectedValuePatient"
-                  name="insurer"
-                  [ngModelOptions]="{ standalone: true }"
-                  class="form-control select"
-                  (selectionChange)="selectPatient($event)"
-                  placeholder="Select Client"
-                >
-                  <mat-option
-                    *ngFor="let data of patients"
-                    [value]="data.patient_id"
-                  >
-                    {{ data.first_name }} {{ data.last_name }}
-                  </mat-option>
-                </mat-select>
-              </div>
-            </div>
-            <div class="col-12 col-md-3">
-              <div class="form-group local-forms">
-                <label>Status </label>
-                <mat-select
-                  [(ngModel)]="statusType"
-                  [ngModelOptions]="{ standalone: true }"
-                  class="form-control select"
-                  placeholder="Select Note Status"
-                >
-                  <mat-option [value]="null"> All </mat-option>
-                  <mat-option [value]="'ok'"> Ok </mat-option>
-                  <mat-option [value]="'pending'"> Pending </mat-option>
-                  <mat-option [value]="'no'"> No </mat-option>
-                </mat-select>
-              </div>
-            </div>
-            <div class="col-12 col-md-2">
-              <div class="doctor-submit">
-                <button
-                  type="button"
-                  class="btn btn-primary submit-list-form me-2"
-                  (click)="searchData(location_id)"
-                >
-                  Search
-                </button>
-              </div>
-            </div>
-            <div class="col-12 col-md-1">
-              <div class="doctor-submit">
-                <button
-                  type="button"
-                  class="btn btn-outline-primary submit-list-form me-2"
-                  (click)="PageSize()"
-                >
-                  <img src="assets/img/icons/re-fresh.svg" alt="" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
+      <app-log-notas-search
+        [insurances]="insurances"
+        [patients]="patients"
+        (refresh)="onRefresh()"
+        (search)="onFilter($event)"
+      ></app-log-notas-search>
       <!-- search -->
 
       <div class="table-responsive">
@@ -163,8 +51,8 @@
                 <td><span class="badge badge-success">RBT</span></td>
                 <td>
                   <span *ngIf="data?.rbt">
-                    <a [routerLink]="['/note-rbt/view/', data.rbt.id]">
-                      {{ data.rbt?.session_date | date:'shortDate'  }}
+                    <a [routerLink]="[routes.noteRbt.view, data.rbt.id]">
+                      {{ data.rbt?.session_date | date : "shortDate" }}
                     </a>
                   </span>
                   <i
@@ -217,7 +105,7 @@
                 </td>
                 <td>
                   <span *ngIf="data.rbt">{{
-                    data.rbt?.total_hours ?? "N/A" 
+                    data.rbt?.total_hours ?? "N/A"
                   }}</span>
                 </td>
 
@@ -378,8 +266,8 @@
 
                 <td>
                   <span *ngIf="data?.bcba">
-                    <a [routerLink]="['/note-bcba/view/', data.bcba?.id]">
-                      {{ data.bcba?.session_date | date:'shortDate' }}
+                    <a [routerLink]="[routes.noteBcba.noteBcba, data.bcba?.id]">
+                      {{ data.bcba?.session_date | date : "shortDate" }}
                     </a>
                   </span>
 

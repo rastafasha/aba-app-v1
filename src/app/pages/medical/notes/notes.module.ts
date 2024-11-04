@@ -16,6 +16,7 @@ import { NoteRbtComponent } from './note-rbt/note-rbt.component';
 import { NotesByClientComponent } from './notes-by-client/notes-by-client.component';
 import { NotesComponent } from './notes.component';
 import { NotesRoutingModule } from './notes.routing';
+import { LayoutModule } from '../../../layout/layout.module';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { NotesRoutingModule } from './notes.routing';
     SharedModule,
     ComponentsModule,
     PipesModule,
+    LayoutModule,
   ],
 })
 export class NotesModule {}

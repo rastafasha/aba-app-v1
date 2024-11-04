@@ -9,6 +9,7 @@ import { DoctorService } from '../../doctors/service/doctor.service';
 import { PatientMService } from '../../patient-m/service/patient-m.service';
 import { NoteRbtService } from '../services/note-rbt.service';
 import { AppUser } from 'src/app/shared/models/users.models';
+import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 
 @Component({
   selector: 'app-edit-note-rbt',
@@ -142,6 +143,9 @@ export class EditNoteRbtComponent implements OnInit {
   pa_assessmentsgroup: any = null;
   cpt_code: any = null;
   provider: any = null;
+
+  paServices: PaService[] = [];
+  selectedPaService: PaService | null = null;
 
   constructor(
     private bipService: BipService,
@@ -317,12 +321,19 @@ export class EditNoteRbtComponent implements OnInit {
         this.selectedValueTimeOut2
       );
 
+      const noteServiceId = resp.noteRbt.pa_service_id;
+      if (this.paServices?.length && noteServiceId) {
+        this.selectedPaService =
+          this.paServices.find((service) => service.id === noteServiceId) ||
+          null;
+      }
+
       this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED =
         this.note_selected.provider_signature;
       this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED =
         this.note_selected.supervisor_signature;
       console.log(this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED);
-      this.getProfileBip();
+      this.getProfileBip(noteServiceId);
     });
   }
 
@@ -333,7 +344,11 @@ export class EditNoteRbtComponent implements OnInit {
     return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
   }
 
-  getProfileBip() {
+  getProfileBip(noteServiceId?: number) {
+    console.log('Getting profile BIP:', {
+      noteServiceId,
+      availableServices: this.paServices,
+    });
     this.bipService
       .getBipProfilePatient_id(this.patient_id)
       .subscribe((resp) => {
@@ -349,19 +364,40 @@ export class EditNoteRbtComponent implements OnInit {
         this.pos = resp.patient.pos_covered;
         this.diagnosis_code = this.client_selected.patient.diagnosis_code;
 
-        this.pa_assessments = resp.patient.pa_assessments;
-        const jsonObj = JSON.parse(this.pa_assessments) || '';
-        this.pa_assessmentsgroup = jsonObj;
-        // this.n_un = this.pa_assessmentsgroup[0].n_units;
-        // this.unitsAsignated = this.pa_assessmentsgroup.n_units;
-        // console.log(this.pa_assessments);
-        console.log(this.pa_assessmentsgroup);
+        this.paServices = resp.patient.pa_services;
+        if (noteServiceId) {
+          this.setPaService(noteServiceId);
+        }
       });
   }
 
-  selectCpt(event: any) {
+  onPaServiceSelect(event: any) {
+    const service = event.value;
+    if (service) {
+      this.selectedValueCode = service.cpt;
+    }
+  }
+
+  private setPaService(noteServiceId: number) {
+    console.log('Setting PA Service:', {
+      noteServiceId,
+      availableServices: this.paServices,
+    });
+
+    if (this.paServices?.length && noteServiceId) {
+      this.selectedPaService =
+        this.paServices.find((service) => service.id === noteServiceId) || null;
+
+      console.log('Selected PA Service:', this.selectedPaService);
+
+      if (this.selectedPaService) {
+        this.selectedValueCode = this.selectedPaService.cpt;
+      }
+    }
+  }
+
+  selectCpt(event) {
     event = this.selectedValueCode;
-    // this.getCPtLißst(this.selectedValueCode);
     console.log(event);
   }
 
@@ -376,7 +412,7 @@ export class EditNoteRbtComponent implements OnInit {
       });
   }
 
-  selectSpecialist(event: any) {
+  selectSpecialist(event) {
     event = this.selectedValueProviderName;
     this.specialistData(this.selectedValueProviderName);
   }
@@ -471,7 +507,7 @@ export class EditNoteRbtComponent implements OnInit {
       // this.services = resp.services;
     });
   }
-  selectFirmaSpecialistRbt(event: any) {
+  selectFirmaSpecialistRbt(event) {
     event = this.selectedValueRBT;
     this.speciaFirmaDataRbt(this.selectedValueRBT);
   }
@@ -487,7 +523,7 @@ export class EditNoteRbtComponent implements OnInit {
       });
   }
 
-  selectFirmaSpecialistBcba(event: any) {
+  selectFirmaSpecialistBcba(event) {
     event = this.selectedValueBCBA;
     this.speciaFirmaDataBcba(this.selectedValueBCBA);
   }
@@ -615,7 +651,7 @@ export class EditNoteRbtComponent implements OnInit {
   }
 
   //funcion para la primera imagen.. funciona
-  loadFile($event: any) {
+  loadFile($event) {
     if ($event.target.files[0].type.indexOf('image')) {
       this.text_validation = 'Solamente pueden ser archivos de tipo imagen';
       return;
@@ -628,7 +664,7 @@ export class EditNoteRbtComponent implements OnInit {
       (this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED = reader.result);
   }
 
-  loadFileSignature($event: any) {
+  loadFileSignature($event) {
     if ($event.target.files[0].type.indexOf('image')) {
       this.text_validation = 'Solamente pueden ser archivos de tipo imagen';
       return;
@@ -653,6 +689,11 @@ export class EditNoteRbtComponent implements OnInit {
     //   this.text_validation = 'Las contraseña debe ser igual';
     //   return;
     // }
+    if (!this.selectedPaService) {
+      this.text_validation = 'Please select a service';
+      Swal.fire('Warning', this.text_validation, 'warning');
+      return;
+    }
 
     const formData = new FormData();
     formData.append('patient_id', this.patient_id);
@@ -743,6 +784,8 @@ export class EditNoteRbtComponent implements OnInit {
         this.next_session_is_scheduled_for
       );
     }
+    formData.append('pa_service_id', this.selectedPaService.id.toString());
+    formData.append('cpt_code', this.selectedPaService.cpt);
 
     // if(this.FILE_SIGNATURE_RBT ){
     //   formData.append('imagen', this.FILE_SIGNATURE_RBT);

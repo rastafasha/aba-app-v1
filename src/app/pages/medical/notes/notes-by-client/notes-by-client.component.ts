@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/core/auth/auth.service';
 import { AppUser } from 'src/app/shared/models/users.models';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { NoteRbtService } from '../services/note-rbt.service';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 declare var $: any;
 @Component({
   selector: 'app-notes-by-client',
@@ -14,6 +15,7 @@ declare var $: any;
   styleUrls: ['./notes-by-client.component.scss'],
 })
 export class NotesByClientComponent implements OnInit {
+  routes = AppRoutes;
   patient_id: any;
   patientId: any;
   doctor_id: any;
@@ -65,7 +67,6 @@ export class NotesByClientComponent implements OnInit {
     //  this.getNotesByPatient();
     this.getTableData();
 
-    this.doctorService.getUserRoles();
     // const USER = localStorage.getItem("user");
     // this.user = JSON.parse(USER ? USER: '');
     // this.doctor_id = this.user.id;

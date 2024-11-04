@@ -49,7 +49,7 @@
                     <div class="col-lg-4 col-md-4 d-flex align-items-center">
                       <div class="follow-btn-group">
                         <a
-                          [routerLink]="['/note-bcba/edit/', note_id]"
+                          [routerLink]="[routes.noteBcba.edit, note_id]"
                           *ngIf="
                             note_selected.status === 'pending' ||
                             note_selected.status === 'no'

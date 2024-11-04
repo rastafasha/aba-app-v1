@@ -75,6 +75,7 @@ const components = [
     NgxEditorModule,
     FullCalendarModule,
     HttpClientModule,
+    MaterialModule,
     MatSortModule,
     FormsModule,
     ReactiveFormsModule,

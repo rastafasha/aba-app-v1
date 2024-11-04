@@ -6,7 +6,7 @@
         <div class="col-sm-12">
           <ul class="breadcrumb">
             <li class="breadcrumb-item" *ngIf="role === 'SUPERADMIN'">
-              <a routerLink="/location/list">Locations </a>
+              <a [routerLink]="routes.location.list">Locations </a>
             </li>
             <li class="breadcrumb-item" *ngIf="role === 'SUPERADMIN'">
               <i class="feather icon-chevron-right"></i>

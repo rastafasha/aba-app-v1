@@ -12,21 +12,23 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
         <div class="row">
           <ng-container *ngFor="let replacement of replacements; let i = index">
             <div class="col-xs-12 col-sm-3 graphic-value">
-              <div class="tope_replacement">
-                <div class="title">
-                  <h4 class="label">{{replacement.goal}}</h4>
-                  <p class="text-center">
+              <div class="tope_replacement" style="height: 160px">
+                <div class="title" style="height: 120px">
+                  <h4 class="label" style="height: 55px; overflow: hidden" [tooltip]="replacement.goal">{{replacement.goal}}</h4>
+                  <div class="text-center" style="font-size: 18px;">
                     {{(replacement.number_of_correct_response * 100 / replacement.total_trials) | number:'1.0-0'}}%
-                  </p>
+                  </div>
                 </div>
-                <div class="targetsect">
+                <div class="targetsect" *ngIf="target">
                   <h4 class="label">Target:</h4>
                   <p class="text-center">
-                    <span class="badge bg-success">{{target}}</span>
+                    <span class="badge bg-success">{{ target }}</span>
                   </p>
                 </div>
+                <b><span *ngIf="!target && replacement.target" style="font-size: 20px;"> Target: </span> </b>
+                <span *ngIf="!target && replacement.target" style="font-size: 20px;">{{replacement.target }}</span>
               </div>
-              <label for="">Total Trials:</label>
+              <label for="" class="mt-2">Total Trials:</label>
               <input class="form-control"
                      name="total_trials"
                      [(ngModel)]="replacement.total_trials"
@@ -34,7 +36,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
                      min="0"
                      required
                      [ngClass]="{'is-valid': replacement.total_trials > 0, 'is-invalid': replacement.total_trials <= 0 || replacement.total_trials === undefined}">
-              <label for="">Correct response</label>
+              <label for="" class="mt-1">Correct response</label>
               <input class="form-control"
                      name="number_of_correct_response"
                      [(ngModel)]="replacement.number_of_correct_response"
@@ -44,6 +46,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
                      required
                      [ngClass]="{'is-valid': isValidCorrectResponse(replacement), 'is-invalid': !isValidCorrectResponse(replacement)}">
             </div>
+              <hr *ngIf="(i+1)%4==0" class="mt-4 mb-4">
           </ng-container>
         </div>
       </form>

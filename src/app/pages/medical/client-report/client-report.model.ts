@@ -1,3 +1,9 @@
+import { NoteBcba, NoteRbt } from 'src/app/shared/models/notes.model';
+import {
+  LocationApi,
+  LocationInsurance,
+} from '../location/models/locations.model';
+
 export class ClientReportModel {
   pa_assessments: any = [];
   pa_assessmentsgroup: any = [];
@@ -84,4 +90,16 @@ export class ClientReportModel {
   unitPrizeCptRbt: any;
   bcbaCptCode: string;
   rbtCptCode: string;
+}
+
+export interface ClientReportConfig {
+  insurances: LocationInsurance[];
+}
+
+export interface ClientReportByLocation {
+  noteRbts: NoteRbt[];
+  noteBcbas: NoteBcba[];
+  location: LocationApi;
+  totalPages: number;
+  arrayPages: number[];
 }

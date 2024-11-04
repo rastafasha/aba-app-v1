@@ -4,13 +4,6 @@
     <div class="page-header">
       <div class="row">
         <div class="col-sm-12">
-          <!-- <ul class="breadcrumb">
-                      <li class="breadcrumb-item"><a routerLink="/">Dashboard </a></li>
-                      <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
-                      <li class="breadcrumb-item active"><a routerLink="/patients/list">Client List </a></li>
-                      <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
-                        <li class="breadcrumb-item active">Clients Log Report</li>
-                    </ul> -->
           <div class="doctor-submit text-start">
             <button class="btn btn-primary btn-sm" (click)="goBack()">
               Back
@@ -112,7 +105,6 @@
                         /></a>
                       </div>
                       <div class="add-group">
-                        <!-- <a routerLink="/patients/add" class="btn btn-primary add-pluss ms-2" *ngIf="isPermission('register_patient')"><img src="assets/img/icons/plus.svg" alt=""></a> -->
                         <a
                           href="javascript:;"
                           (click)="PageSize()"
@@ -350,7 +342,7 @@
                       </div>
                     </td>
                     <td>
-                      <a [routerLink]="['/patients/profile/', data.id]">
+                      <a [routerLink]="[routes.patients.profile, data.id]">
                         <!-- {{data.first_name + ' ' + (data.last_name ? data.last_name: '')}} -->
                         {{ data.first_name }}
                       </a>
@@ -396,7 +388,7 @@
                     <td>{{ data.oop }}</td>
                     <td>
                       <a
-                        [routerLink]="['/patients/list/edit/', data.id]"
+                        [routerLink]="[routes.patients.listEdit, data.id]"
                         fragment="benefits"
                       >
                         benefits

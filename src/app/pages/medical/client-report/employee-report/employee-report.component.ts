@@ -12,8 +12,8 @@ import { NoteRbtService } from '../../notes/services/note-rbt.service';
 import { ClientReportModel } from '../client-report.model';
 import { ClientReportService } from '../client-report.service';
 import { AppUser } from 'src/app/shared/models/users.models';
-
-declare var $: any;
+import { AppRoutes } from 'src/app/shared/routes/routes';
+import { LocationInsurance } from '../../location/models/locations.model';
 
 export interface InsuranceCptPrizeResponse {
   unit_prize: number;
@@ -33,6 +33,7 @@ export interface NoteRbt {
   styleUrls: ['./employee-report.component.scss'],
 })
 export class EmployeeReportComponent implements OnInit {
+  routes = AppRoutes;
   searchDataDoctor = '';
   date_start: any;
   date_end: any;
@@ -73,11 +74,10 @@ export class EmployeeReportComponent implements OnInit {
   cpt: any;
   n_units: any;
   pa_number: any;
-  insurances = [];
+  insurances: LocationInsurance[] = [];
   insurance_id: any;
   insuranceiddd: any;
   insurer_name: any;
-  sponsors = [];
   modifiers = [];
   noteRbt: any;
   pos_covered = [];
@@ -180,7 +180,6 @@ export class EmployeeReportComponent implements OnInit {
     this.billedbcba = false;
     this.paybcba = false;
 
-    this.doctorService.getUserRoles();
     this.user = this.authService.user as AppUser;
     this.getTableData();
   }
@@ -201,9 +200,7 @@ export class EmployeeReportComponent implements OnInit {
 
   getConfig() {
     this.clientReportService.config().subscribe((resp) => {
-      // console.log(resp);
       this.insurances = resp.insurances;
-      this.sponsors = resp.doctors;
     });
   }
 
@@ -573,7 +570,7 @@ export class EmployeeReportComponent implements OnInit {
     this.week_total_units = totalUnits;
   }
 
-  onPaginateChange(event: any) {
+  onPaginateChange(event) {
     this.skip = event.pageIndex * this.pageSize;
     this.totalDataClientReport += this.getPageTotal();
     this.getTableDataGeneral();

@@ -1,6 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { url_servicios } from 'src/app/config/config';
+import {
+  ClientReportByLocation,
+  ClientReportConfig,
+} from './client-report.model';
+import { tap } from 'rxjs';
+import { LocationLogFilter } from '../location/models/locations.model';
 
 @Injectable({
   providedIn: 'root',
@@ -61,7 +67,7 @@ export class ClientReportService {
 
   config() {
     const URL = url_servicios + '/client_report/config';
-    return this.http.get<any>(URL);
+    return this.http.get<ClientReportConfig>(URL);
   }
   getClientReport(id: any) {
     const URL = url_servicios + '/client_report/show/' + id;
@@ -109,29 +115,21 @@ export class ClientReportService {
   }
 
   getAllClientReportByLocation(
-    location_id = '',
-    page = 1,
-    date_start = '',
-    date_end = '',
-    noteType?: string
+    location_id: number,
+    queryParams: Partial<LocationLogFilter>
   ) {
-    let LINK = '';
+    const paramsNotNull: { [key: string]: string | number } = {};
+    Object.keys(queryParams).forEach((key) => {
+      if (queryParams[key]) {
+        paramsNotNull[key] = `${queryParams[key]}`;
+      }
+    });
+    const params = new HttpParams({
+      fromObject: paramsNotNull,
+    }).toString();
 
-    if (date_start) {
-      LINK += '&date_start=' + date_start;
-    }
-    if (date_end) {
-      LINK += '&date_end=' + date_end;
-    }
-    if (noteType) LINK += `&noteType=${noteType}`;
-    const URL =
-      url_servicios +
-      '/client_report/bylocation/' +
-      location_id +
-      '/?page=' +
-      page +
-      LINK;
-    return this.http.get<any>(URL);
+    const URL = `${url_servicios}/client_report/bylocation/${location_id}?${params}`;
+    return this.http.get<ClientReportByLocation>(URL);
   }
 
   getAllClientReportEmployeeByPatient(

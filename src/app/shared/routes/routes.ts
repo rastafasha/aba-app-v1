@@ -153,10 +153,5 @@ export class AppRoutes {
 export const lastRoutes = (route: string, deep = 1, extra = ''): string => {
   const routes = route.split('/');
   const path = routes.slice(routes.length - deep);
-  return trace(path.join('/') + extra);
+  return path.join('/') + extra;
 };
-
-function trace(args: string): string {
-  console.log(args);
-  return args;
-}

@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { AppUser } from 'src/app/shared/models/users.models';
 import { NoteBcbaService } from '../services/note-bcba.service';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 declare var $: any;
 @Component({
   selector: 'app-note-bcba-by-client',
@@ -12,6 +13,7 @@ declare var $: any;
   styleUrls: ['./note-bcba-by-client.component.scss'],
 })
 export class NoteBcbaByClientComponent {
+  routes = AppRoutes;
   patient_id: any;
   patientId: any;
   doctor_id: any;

@@ -11,6 +11,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { BipListComponent } from './bip-list/bip-list.component';
 import { BipProfileComponent } from './bip-profile/bip-profile.component';
 import { ComponentsModule } from './components/components.module';
+import { LayoutModule } from '../../../layout/layout.module';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { ComponentsModule } from './components/components.module';
     RouterModule,
     SharedModule,
     ComponentsModule,
+    LayoutModule,
   ],
 })
 export class BipModule {}
