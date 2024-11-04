@@ -240,14 +240,14 @@
                                 </div>
                                 <div class="col-12 col-md-6 col-xl-4">
                                     <div class="form-group local-forms">
-                                        <label >Session Length Total<span class="login-danger">*</span></label>
-                                        <input readonly class="form-control" name="session_length_total" [(ngModel)]="session_length_total" type="text"  >
+                                        <label >Morning Session Length Total<span class="login-danger">*</span></label>
+                                        <input readonly class="form-control" name="session_length_morning_total" [(ngModel)]="session_length_morning_total" type="text"  >
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-xl-4">
                                     <div class="form-group local-forms">
                                         <label >Session Length Total<span class="login-danger">*</span></label>
-                                        <input class="form-control" name="session_length_total2" [(ngModel)]="session_length_total2" type="text"  >
+                                        <input class="form-control" name="session_length_afternon_total" [(ngModel)]="session_length_afternon_total" type="text"  >
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-xl-4">
@@ -259,215 +259,8 @@
                             </div>
                             <!-- paciente -->
                         </form>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>CPT <span class="login-danger">*</span></label>
-                    <mat-select
-                      [(ngModel)]="selectedValueCode"
-                      name="cpt_code"
-                      [ngModelOptions]="{ standalone: true }"
-                      class="form-control select"
-                      placeholder="Select Code"
-                      (selectionChange)="selectCpt($event)"
-                    >
-                      <mat-option
-                        *ngFor="let data of pa_assessmentsgroup; let i = index"
-                        [value]="data.cpt"
-                      >
-                        {{ data.cpt }} | {{ data.provider }}
-                      </mat-option>
-                    </mat-select>
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label
-                      >Units Asigned <span class="login-danger">*</span></label
-                    >
-                    <mat-select
-                      [(ngModel)]="selectedValueCode"
-                      name="n_units"
-                      disable
-                      [ngModelOptions]="{ standalone: true }"
-                      class="form-control select"
-                      placeholder="Select Code"
-                    >
-                      <mat-option
-                        *ngFor="let data of pa_assessmentsgroup"
-                        disable
-                        [value]="data.cpt"
-                      >
-                        {{ data.n_units }}
-                      </mat-option>
-                    </mat-select>
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>Date <span class="login-danger">*</span></label>
-                    <input
-                      class="form-control datetimepicker"
-                      autocomplete="false"
-                      name="session_date"
-                      [(ngModel)]="session_date"
-                      type="text"
-                      matInput
-                      [matDatepicker]="pickerSesDate"
-                    />
-                    <mat-datepicker #pickerSesDate></mat-datepicker>
-                    <mat-datepicker-toggle
-                      matIconSuffix
-                      [for]="pickerSesDate"
-                    ></mat-datepicker-toggle>
-                  </div>
-                </div>
-                <div class="clear"></div>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <h5 class="mb-3">Morning Session</h5>
-                    <div class="row">
-                      <div class="col-xs-12 col-sm-6">
-                        <div class="form-group local-forms">
-                          <label
-                            >Time In <span class="login-danger">*</span></label
-                          >
-                          <input
-                            [value]="selectedValueTimeIn"
-                            [ngxTimepicker]="toggleTimepicker"
-                            readonly
-                            [format]="24"
-                            class="form-control"
-                            [(ngModel)]="selectedValueTimeIn"
-                            name="time_in"
-                          />
-                          <!-- <ngx-material-timepicker-toggle matSuffix [for]="toggleTimepicker"></ngx-material-timepicker-toggle> -->
-                          <ngx-material-timepicker
-                            (timeChanged)="hourTimeInSelected($event)"
-                            #toggleTimepicker
-                          ></ngx-material-timepicker>
-                        </div>
-                      </div>
-                      <!-- [max]="'12:00'" -->
-                      <div class="col-xs-12 col-sm-6">
-                        <div class="form-group local-forms">
-                          <label
-                            >Time Out <span class="login-danger">*</span></label
-                          >
-                          <input
-                            [ngxTimepicker]="toggleTimepicker2"
-                            readonly
-                            [value]="selectedValueTimeOut"
-                            [(ngModel)]="selectedValueTimeOut"
-                            [format]="24"
-                            class="form-control"
-                            name="time_out"
-                          />
-                          <!-- <ngx-material-timepicker-toggle [for]="toggleTimepicker2"></ngx-material-timepicker-toggle> -->
-                          <ngx-material-timepicker
-                            (timeChanged)="hourTimeOutSelected($event)"
-                            #toggleTimepicker2
-                          ></ngx-material-timepicker>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-xs-12 col-sm-6">
-                    <h5 class="mb-3">Afternoon Session</h5>
-                    <div class="row">
-                      <!-- [min]="'12:00'" -->
-                      <div class="col-xs-12 col-sm-6">
-                        <div class="form-group local-forms">
-                          <label
-                            >Time In<span class="login-danger">*</span></label
-                          >
-                          <input
-                            [ngxTimepicker]="toggleTimepicker3"
-                            readonly
-                            [value]="selectedValueTimeIn2"
-                            [(ngModel)]="selectedValueTimeIn2"
-                            [format]="24"
-                            class="form-control"
-                            name="time_in2"
-                          />
-                          <!-- <ngx-material-timepicker-toggle [for]="toggleTimepicker3"></ngx-material-timepicker-toggle> -->
-                          <ngx-material-timepicker
-                            (timeChanged)="hourTimeIn2Selected($event)"
-                            #toggleTimepicker3
-                          ></ngx-material-timepicker>
-                        </div>
-                      </div>
-
-                      <!-- [min]="'12:00'" -->
-                      <div class="col-xs-12 col-sm-6">
-                        <div class="form-group local-forms">
-                          <label
-                            >Time Out <span class="login-danger">*</span></label
-                          >
-                          <input
-                            [ngxTimepicker]="toggleTimepicker4"
-                            readonly
-                            [value]="selectedValueTimeOut2"
-                            [(ngModel)]="selectedValueTimeOut2"
-                            [format]="24"
-                            class="form-control"
-                            name="time_out2"
-                          />
-                          <!-- <ngx-material-timepicker-toggle [for]="toggleTimepicker4"></ngx-material-timepicker-toggle> -->
-                          <ngx-material-timepicker
-                            (timeChanged)="hourTimeOut2Selected($event)"
-                            #toggleTimepicker4
-                          ></ngx-material-timepicker>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label
-                      >Session Length Total<span class="login-danger"
-                        >*</span
-                      ></label
-                    >
-                    <input
-                      readonly
-                      class="form-control"
-                      name="session_length_total"
-                      [(ngModel)]="session_length_total"
-                      type="text"
-                    />
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label
-                      >Session Length Total<span class="login-danger"
-                        >*</span
-                      ></label
-                    >
-                    <input
-                      class="form-control"
-                      name="session_length_total2"
-                      [(ngModel)]="session_length_total2"
-                      type="text"
-                    />
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label
-                      >environmental changes<span class="login-danger"
-                        >*</span
-                      ></label
-                    >
-                    <input
-                      class="form-control"
-                      name="environmental_changes"
-                      [(ngModel)]="environmental_changes"
-                      type="text"
-                    />
-                  </div>
-                </div>
+                
+                
                 <!-- paciente -->
               </div>
           </div>
