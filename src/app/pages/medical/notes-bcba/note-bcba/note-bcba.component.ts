@@ -417,8 +417,7 @@ export class NoteBcbaComponent {
       !this.rbt_training_goals ||
       !this.caregivers_training_goals ||
       !this.meet_with_client_at ||
-      !this.session_date ||
-      !this.note_description
+      !this.session_date 
     ) {
       this.text_validation = 'All Fields (*) are required';
       return;
@@ -450,7 +449,7 @@ export class NoteBcbaComponent {
 
     formData.append('provider_name', this.doctor_id);
     formData.append('supervisor_name', this.selectedValueBCBA);
-    formData.append('note_description', this.note_description);
+    // formData.append('note_description', this.note_description);
     formData.append('insuranceId', this.insuranceId);// id del seguro preferiblemente que solo agarre la data al crear
 
 

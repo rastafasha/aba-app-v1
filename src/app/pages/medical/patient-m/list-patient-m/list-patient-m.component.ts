@@ -446,16 +446,16 @@ export class ListPatientMComponent implements OnInit {
         onClick: () =>
           this.router.navigate([AppRoutes.noteBcba.list, patient.patient_id]),
       },
-      {
-        title: 'Log Report',
-        icon: 'fa fa-check-circle',
-        buttonClass: 'btn-outline-warning',
-        onClick: () =>
-          this.router.navigate([
-            AppRoutes.clientReport.byClient,
-            patient.patient_id,
-          ]),
-      },
+      // {
+      //   title: 'Log Report',
+      //   icon: 'fa fa-check-circle',
+      //   buttonClass: 'btn-outline-warning',
+      //   onClick: () =>
+      //     this.router.navigate([
+      //       AppRoutes.clientReport.byClient,
+      //       patient.patient_id,
+      //     ]),
+      // },
     ];
     const filteredActions = allActions.filter((action) =>
       this.canShowAction(action, patient)
