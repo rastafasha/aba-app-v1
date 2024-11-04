@@ -65,8 +65,8 @@ export class EditNoteRbtComponent implements OnInit {
   time_out = '';
   time_in2 = '';
   time_out2 = '';
-  session_length_total = '';
-  session_length_total2 = '';
+  session_length_morning_total = '';
+  session_length_afternon_total = '';
   environmental_changes = '';
 
   sumary_note = '';
@@ -303,8 +303,8 @@ export class EditNoteRbtComponent implements OnInit {
           ).toISOString()
         : '';
 
-      this.session_length_total = this.note_selected.session_length_total;
-      this.session_length_total2 = this.note_selected.session_length_total2;
+      this.session_length_morning_total = this.note_selected.session_length_morning_total;
+      this.session_length_afternon_total = this.note_selected.session_length_afternon_total;
 
       console.log('Setting:', this.formatTime(this.note_selected.time_in));
       this.selectedValueTimeIn = this.formatTime(this.note_selected.time_in);
@@ -443,14 +443,14 @@ export class EditNoteRbtComponent implements OnInit {
   }
 
   private recalculateSessionLength() {
-    this.session_length_total =
+    this.session_length_morning_total =
       this.selectedValueTimeIn && this.selectedValueTimeOut
         ? this.calculateSessionLength(
             this.selectedValueTimeIn,
             this.selectedValueTimeOut
           )
         : '00:00';
-    this.session_length_total2 =
+    this.session_length_afternon_total =
       this.selectedValueTimeIn2 && this.selectedValueTimeOut2
         ? this.calculateSessionLength(
             this.selectedValueTimeIn2,
