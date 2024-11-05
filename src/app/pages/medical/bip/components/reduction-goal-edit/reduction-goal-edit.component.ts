@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
 import { GoalService } from '../../service/goal.service';
 import { AppUser } from 'src/app/shared/models/users.models';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
 @Component({
   selector: 'app-reduction-goal-edit',
@@ -87,7 +88,8 @@ export class ReductionGoalEditComponent {
   constructor(
     private bipService: BipService,
     private goalService: GoalService,
-    private ativatedRoute: ActivatedRoute
+    private ativatedRoute: ActivatedRoute,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -99,9 +101,8 @@ export class ReductionGoalEditComponent {
     });
 
     this.ativatedRoute.params.subscribe(({ id }) => this.getBip()); // se solicita la info del perfil del bip
-    const USER = localStorage.getItem('user'); // se solicita el usuario logueado
-    this.user = JSON.parse(USER ? USER : ''); //  si no hay un usuario en el localstorage retorna un objeto vacio
-    this.doctor_id = this.user.id; //se asigna el doctor logueado a este campo para poderlo enviar en los
+    this.user = this.authService.user as AppUser;
+    this.doctor_id = this.user?.id; //se asigna el doctor logueado a este campo para poderlo enviar en los
     this.getGoalsMaladaptives();
   }
 
@@ -119,7 +120,10 @@ export class ReductionGoalEditComponent {
   //obtenemos los maladaptives iniciales para poder relacionarlos con los goals
   getGoalsMaladaptives() {
     this.goalService
-      .listMaladaptivesGoals(this.maladap.maladaptive_behavior, this.patient_id)
+      .listMaladaptivesGoals(
+        this.maladap?.maladaptive_behavior,
+        this.patient_id
+      )
       .subscribe((resp) => {
         console.log(resp);
         //  this.bip_selectedIdd = resp.goalsmaladaptive.data[0].bip_id;
@@ -186,7 +190,7 @@ export class ReductionGoalEditComponent {
     if (this.golsto) {
       this.golsto.push({
         index: this.golsto.length + 1,
-        maladaptive: this.maladap.maladaptive_behavior,
+        maladaptive: this.maladap?.maladaptive_behavior,
         sto: this.sto,
         status_sto: this.status_sto,
         status_sto_edit: this.status_sto,
@@ -198,7 +202,7 @@ export class ReductionGoalEditComponent {
       this.golsto = [
         {
           index: 1, // initial index
-          maladaptive: this.maladap.maladaptive_behavior,
+          maladaptive: this.maladap?.maladaptive_behavior,
           sto: this.sto,
           status_sto: this.status_sto,
           status_sto_edit: this.status_sto,
@@ -367,7 +371,7 @@ export class ReductionGoalEditComponent {
     const data = {
       id: this.goalmaladaptiveid,
       bip_id: this.bip_selectedIdd,
-      maladaptive: this.maladap.maladaptive_behavior,
+      maladaptive: this.maladap?.maladaptive_behavior,
       patient_id: this.patient_id,
       current_status: this.current_status,
       goalstos: this.golsto,

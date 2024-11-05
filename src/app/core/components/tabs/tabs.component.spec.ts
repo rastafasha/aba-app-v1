@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TabsComponent } from './tabs.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('TabsComponent', () => {
   let component: TabsComponent;
@@ -8,9 +10,9 @@ describe('TabsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TabsComponent ]
-    })
-    .compileComponents();
+      declarations: [TabsComponent],
+      imports: [SharedModule, RouterTestingModule],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TabsComponent);
     component = fixture.componentInstance;

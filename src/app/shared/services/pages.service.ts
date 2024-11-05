@@ -11,6 +11,7 @@ export class PageService {
     window.scrollTo(0, 0);
   }
   closeMenuSidebar() {
+    if (!$) return;
     $('.sidebar').addClass('cerrar');
     $('.menu-opened').remove('menu-opened');
   }

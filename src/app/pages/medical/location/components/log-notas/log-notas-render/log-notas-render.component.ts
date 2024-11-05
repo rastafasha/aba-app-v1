@@ -8,13 +8,12 @@ import {
 import { NoteBcba } from 'src/app/shared/models/note-bcba';
 import { NoteRbt } from 'src/app/shared/models/note-rbt';
 import { AppRoutes } from 'src/app/shared/routes/routes';
+import { environment } from 'src/environments/environment';
 import {
   Insurance,
   InsuranceModifier,
-  LocationInsurance,
   LocationPatient,
 } from '../../../models/locations.model';
-import { environment } from 'src/environments/environment';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -24,7 +23,7 @@ import { environment } from 'src/environments/environment';
   encapsulation: ViewEncapsulation.None,
 })
 export class LogNotasRenderComponent {
-  @Input() note: NoteRbt | NoteBcba = null;
+  @Input() note: NoteRbt | NoteBcba;
   @Input() insurances: Insurance[] = [];
   @Input() patients: LocationPatient[] = [];
   @Input() modifiers: InsuranceModifier[] = [];
@@ -44,7 +43,7 @@ export class LogNotasRenderComponent {
   // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
   ngOnInit() {
     // This is only for testing purposes
-    if (!environment.production) {
+    if (!environment.production && this.note) {
       this.note.insurance_id = this.insurances?.[0]?.id ?? 1;
     }
   }

@@ -4,6 +4,7 @@ import { AppUser } from 'src/app/shared/models/users.models';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
 @Component({
   selector: 'app-bip-form',
@@ -156,7 +157,8 @@ export class BipFormComponent implements OnInit {
 
   constructor(
     private bipService: BipService,
-    private ativatedRoute: ActivatedRoute
+    private ativatedRoute: ActivatedRoute,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -168,9 +170,8 @@ export class BipFormComponent implements OnInit {
     this.getProfileBip(); // se pide el perfil del paciente por el bip relacionado
 
     this.ativatedRoute.params.subscribe(({ id }) => this.getBip()); //se pide el id del bip creado para traer la info necesaria
-    const USER = localStorage.getItem('user'); // se solicita el usuario logueado
-    this.user = JSON.parse(USER ? USER : ''); //  si no hay un usuario en el localstorage retorna un objeto vacio
-    this.doctor_id = this.user.id; //se asigna el doctor logueado a este campo para poderlo enviar en los
+    this.user = this.authService.user as AppUser;
+    this.doctor_id = this.user?.id; //se asigna el doctor logueado a este campo para poderlo enviar en los
 
     this.accesstoSensories = [];
   }

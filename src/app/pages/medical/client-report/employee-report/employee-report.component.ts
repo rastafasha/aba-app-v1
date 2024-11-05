@@ -171,7 +171,6 @@ export class EmployeeReportComponent implements OnInit {
     this.ativatedRoute.params.subscribe((resp) => {
       this.patient_id = resp['patient_id'];
       this.patientId = resp['patient_id'];
-      console.log(this.patient_id);
     });
 
     this.getConfig();
@@ -181,7 +180,7 @@ export class EmployeeReportComponent implements OnInit {
     this.paybcba = false;
 
     this.user = this.authService.user as AppUser;
-    this.getTableData();
+    if (this.user) this.getTableData();
   }
 
   goBack() {
@@ -189,10 +188,10 @@ export class EmployeeReportComponent implements OnInit {
   }
 
   isPermission(permission: string) {
-    if (this.user.roles.includes('SUPERADMIN')) {
+    if (this.user?.roles?.includes('SUPERADMIN')) {
       return true;
     }
-    if (this.user.permissions.includes(permission)) {
+    if (this.user?.permissions?.includes(permission)) {
       return true;
     }
     return false;
@@ -222,7 +221,6 @@ export class EmployeeReportComponent implements OnInit {
         this.noteType
       )
       .subscribe((resp) => {
-        console.log('todo', resp);
         const pa = resp.arrayPages;
         // const pa = [1,2,3,4,5,6,7,8,9,10]
         this.pageNumberArray = [];

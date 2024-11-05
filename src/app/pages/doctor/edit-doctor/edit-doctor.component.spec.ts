@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditDoctorComponent } from './edit-doctor.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('EditDoctorComponent', () => {
   let component: EditDoctorComponent;
@@ -8,9 +10,9 @@ describe('EditDoctorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditDoctorComponent ]
-    })
-    .compileComponents();
+      imports: [SharedModule, RouterTestingModule],
+      declarations: [EditDoctorComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(EditDoctorComponent);
     component = fixture.componentInstance;
