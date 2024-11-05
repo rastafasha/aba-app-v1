@@ -241,7 +241,7 @@ export class EditNoteRbtComponent implements OnInit {
   }
 
   getNote() {
-    this.noteRbtService.getNote(this.note_id).subscribe((resp) => {
+    this.noteRbtService.get(this.note_id).subscribe((resp) => {
       console.log('Response from getNote:', resp);
 
       this.target = resp.target;
@@ -819,8 +819,8 @@ export class EditNoteRbtComponent implements OnInit {
       );
     }
 
-    this.noteRbtService.editNote(formData, this.note_selectedId).subscribe(
-      (resp: any) => {
+    this.noteRbtService.update(formData as any, this.note_selectedId).subscribe(
+      (resp) => {
         // console.log(resp);
 
         if (resp.message === 403) {

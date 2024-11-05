@@ -194,7 +194,7 @@ export class NoteBcbaEditComponent implements OnInit {
   }
 
   getNote() {
-    this.noteBcbaService.getNote(this.note_id).subscribe((resp) => {
+    this.noteBcbaService.get(this.note_id).subscribe((resp) => {
       console.log('respuesta de getNote', resp);
       this.note_selected = resp.noteBcba;
       this.note_selectedId = resp.noteBcba.id;
@@ -522,7 +522,7 @@ export class NoteBcbaEditComponent implements OnInit {
     }
 
     this.noteBcbaService
-      .editNote(formData, this.note_selectedId)
+      .update(formData as any, this.note_selectedId)
       .subscribe((resp) => {
         // console.log(resp);
 

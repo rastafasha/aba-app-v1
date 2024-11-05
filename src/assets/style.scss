@@ -944,6 +944,11 @@ table.table {
       }
     }
   }
+  &:disabled {
+    background-color: $background-color_7;
+    border-color: transparent;
+    color: $color_16;
+  }
 }
 .btn-primary.active {
   background-color: $background-color_8;
@@ -12811,4 +12816,26 @@ Specials
 
 .form-select-long {
   min-width: max-content;
+}
+
+table.sticky-first,
+table.sticky-last {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+table.sticky-first {
+  tr > th:first-child,
+  tr > td:first-child {
+    position: sticky;
+    left: 0;
+  }
+}
+
+table.sticky-last {
+  tr > th:last-child,
+  tr > td:last-child {
+    position: sticky;
+    right: -12px;
+  }
 }

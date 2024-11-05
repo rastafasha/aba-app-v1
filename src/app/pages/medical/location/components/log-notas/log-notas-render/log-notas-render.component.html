@@ -6,8 +6,9 @@
       'bg-success': note.type === 'rbt',
       'bg-primary': note.type === 'bcba'
     }"
-    >{{ note.type | uppercase }}</span
   >
+    {{ note.type | uppercase }}
+  </span>
 </td>
 <!-- Date -->
 <td>
@@ -38,7 +39,7 @@
     class="form-control form-select-solid form-select-long fw-bolder"
     name="status"
     [(ngModel)]="note.status"
-    (change)="onStatusChange()"
+    (ngModelChange)="hasChanges = true"
     placeholder="status"
   >
     <option>-- Select --</option>
@@ -67,9 +68,9 @@
 <td>
   <span>{{ (note.time_out2 | transformToDate) ?? "-" }}</span>
 </td>
-<!-- Total Hours 2 -->
+<!-- Total Hours -->
 <td>
-  <span>{{ note.total_hours ?? "-" }}</span>
+  <span>{{ note.session_length_total ?? "-" }}</span>
 </td>
 <!-- Cpt Code -->
 <td>
@@ -79,14 +80,19 @@
 </td>
 <!-- Insurer Name -->
 <td>
-  <span>
-    {{ (insurances | arrayFilter : "id" : note.insurance_id)?.[0]?.insurer_name }}
-  </span>
+  <a
+    *ngIf="note.insurance_id"
+    [routerLink]="[routes.insurance.view, note.insurance_id]"
+  >
+    <span>
+      {{ (insurances | arrayFilter : "id" : note.insurance_id)?.[0]?.insurer_name }}
+    </span>
+  </a>
 </td>
-<!-- Insurer Id (Code) -->
+<!-- Insurer Key (Code) -->
 <td>
   <span>
-    {{ note.insuranceId }}
+    {{ note.insurance_key }}
   </span>
 </td>
 
@@ -108,7 +114,7 @@
     name="md"
     style="width: 9ch; text-overflow: ellipsis"
     [(ngModel)]="note.md"
-    (change)="isSelectedModifier()"
+    (ngModelChange)="hasChanges = true"
   >
     <option>-- Select --</option>
     <option *ngFor="let item of modifiers" [value]="item.value">
@@ -124,7 +130,7 @@
     style="width: 9ch; text-overflow: ellipsis"
     name="md2"
     [(ngModel)]="note.md2"
-    (change)="isSelectedModifier2()"
+    (ngModelChange)="hasChanges = true"
   >
     <option>-- Select --</option>
     <option *ngFor="let item of modifiers" [value]="item.value">
@@ -157,12 +163,7 @@
 <td>
   <div class="note-checkit">
     <label class="custom_check">
-      <input
-        type="checkbox"
-        name="billed"
-        [(ngModel)]="note.billed"
-        (change)="isCheckedBilled()"
-      />
+      <input type="checkbox" name="billed" [(ngModel)]="note.billed" />
       <span class="checkmark" value="false"></span>
     </label>
   </div>
@@ -170,12 +171,7 @@
 <td>
   <div class="note-checkit">
     <label class="custom_check">
-      <input
-        type="checkbox"
-        name="pay"
-        [(ngModel)]="note.pay"
-        (change)="isCheckedPay()"
-      />
+      <input type="checkbox" name="pay" [(ngModel)]="note.pay" />
       <span class="checkmark" value="false"></span>
     </label>
   </div>
@@ -183,14 +179,13 @@
 
 <!-- <td>{{note.created_at | date }}</td> -->
 
-<td class="text-end">
-  <div class="doctor-submit text-end">
-    <button
-      type="button"
-      class="btn btn-primary submit-form me-2"
-      (click)="onSave()"
-    >
-      Save
-    </button>
-  </div>
+<td class="save-cell">
+  <button
+    type="button"
+    class="btn btn-primary submit-form me-2"
+    (click)="onSave()"
+    [disabled]="!hasChanges"
+  >
+    Save
+  </button>
 </td>

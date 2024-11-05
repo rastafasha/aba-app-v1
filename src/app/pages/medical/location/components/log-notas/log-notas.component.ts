@@ -56,20 +56,9 @@ export class LogNotasComponent implements OnInit {
 
   weekTotalHours = ':';
   weekTotalUnits = 0;
-  unitPrize = 0;
-  unitPrizeCpt = 0;
-  xe = 0;
-  xp = 0;
-
-  md: string;
-  md2: string;
-  mdbcba: string;
-  md2bcba: string;
 
   private npi: any;
   private provider: any;
-  unitPrizeCptBcba: any;
-  unitPrizeCptRbt: any;
 
   patients: LocationPatient[];
 
@@ -218,8 +207,8 @@ export class LogNotasComponent implements OnInit {
     ).pipe(
       tap((result: InsuranceCptPrizeResponse[]) => {
         console.log('Precios unidad', result);
-        this.unitPrizeCptBcba = result[0].unit_prize;
-        this.unitPrizeCptRbt = result[1].unit_prize;
+        const unitPrizeCptBcba = result[0].unit_prize;
+        const unitPrizeCptRbt = result[1].unit_prize;
       })
     );
   }
@@ -231,7 +220,7 @@ export class LogNotasComponent implements OnInit {
 
     const array = this.clientReport_generals;
     for (const report of array) {
-      hours_group.push(report.total_hours);
+      hours_group.push(report.session_length_total);
       units_group.push(report.total_units);
     }
     // obtenemos el total de las horas en un rango de 7 dias  atras
@@ -282,7 +271,9 @@ export class LogNotasComponent implements OnInit {
     );
     let minutes = 0;
     this.clientReportList.forEach((element) => {
-      const [horas, minutos] = element.total_hours.split(':').map(Number);
+      const [horas, minutos] = element.session_length_total
+        .split(':')
+        .map(Number);
       minutes += horas * 60 + minutos;
     });
     const horasTotales = Math.floor(minutes / 60);
@@ -297,228 +288,16 @@ export class LogNotasComponent implements OnInit {
     this.weekTotalUnits = totalUnits;
   }
 
-  selectUser(biilling) {
-    this.billing_selected = biilling;
-  }
+  onSave(data: NoteRbt | NoteBcba) {
+    const update$ =
+      data.type === 'rbt'
+        ? this.noteRbtService.update(data as NoteRbt, data.id)
+        : this.noteBCbaService.update(data as NoteBcba, data.id);
 
-  addXp(value) {
-    this.xp = value;
-    // console.log(this.xp);
-  }
-
-  isSelectedModifier(value: string) {
-    this.md = value;
-    // console.log(this.md);
-  }
-
-  isSelectedModifierBcba(value: string) {
-    this.mdbcba = value;
-    // console.log(this.mdbcba);
-  }
-
-  isSelectedModifier2(value: string) {
-    this.md2 = value;
-    // console.log(this.md2);
-  }
-
-  isSelectedModifier2Bcba(value: string) {
-    this.md2bcba = value;
-    // console.log(this.md2bcba);
-  }
-
-  isCheckedBilled() {
-    // this.billed = !this.billed;
-    // console.log(this.billed);
-    // if ( event.target.checked ) {
-    // }
-  }
-  isCheckedBilledBcba() {
-    // this.billedbcba = !this.billedbcba;
-    // console.log(this.billedbcba);
-  }
-
-  isCheckedPay() {
-    // this.pay = !this.pay;
-    // console.log(this.pay);
-    // if ( event.target.checked ) {
-    // }
-  }
-  isCheckedPayBcba() {
-    // this.paybcba = !this.paybcba;
-    // console.log(this.paybcba);
-  }
-
-  save(data: any) {
-    let note_rbt_id: any = null;
-    let note_bcba_id: any = null;
-
-    if (data.rbt.id) {
-      note_rbt_id = data.rbt.id;
-    }
-
-    if (data.bcba.id) {
-      note_bcba_id = data.bcba.id;
-    }
-
-    const VALUE = {
-      session_date: data.rbt.session_date,
-      pos: data.pos,
-      total_hours: data.total_hours,
-      cpt_code: data.rbt.cpt_code,
-      md: this.md,
-      md2: this.md2,
-      mdbcba: this.mdbcba,
-      md2bcba: this.md2bcba,
-      xe: this.xp,
-
-      // charges: data.session_units_total * this.unitPrize,
-      chargesrbt: data.rbt.session_units_total * this.unitPrize,
-      chargesbcba: data.bcba.session_units_total * this.unitPrize,
-      // total_units: this.n_units,
-      total_units: data.bcba.session_units_total
-        ? data.rbt.session_units_total
-        : null,
-      pa_number: this.pa_number,
-
-      patient_id: this.patient_id,
-      insurer_id: this.insurance_id,
-      npi: this.npi,
-      note_rbt_id: note_rbt_id,
-      note_bcba_id: note_bcba_id,
-      billed: data.rbt.billed,
-      pay: data.rbt.pay,
-      billedbcba: data.bcba.billedbcba,
-      paybcba: data.bcba.paybcba,
-    };
-    const VALUE2 = {
-      session_date: data.rbt.session_date,
-      cpt_code: data.rbt.cpt_code,
-      pos: data.rbt.pos,
-      pa_number: this.pa_number,
-      total_hours: data.rbt.total_hours,
-      billed: data.rbt.billed,
-      pay: data.rbt.pay,
-      md: data.rbt.md,
-      md2: data.rbt.md2,
-      note_rbt_id: data.rbt.id,
-      total_units: data.rbt.session_units_total,
-      sponsor_id: data.rbt.provider_name_g,
-      chargesrbt: data.rbt.session_units_total * this.unitPrize,
-      // noterbt_id: data.id,
-    };
-    const VALUE3 = {
-      session_date: data.bcba.session_date,
-      cpt_code: data.bcba.cpt_code,
-      pos: data.bcba.meet_with_client_at,
-      billedbcba: data.bcba.billedbcba,
-      paybcba: data.bcba.paybcba,
-      mdbcba: data.bcba.mdbcba,
-      md2bcba: data.bcba.md2bcba,
-      note_bcba_id: data.bcba.id,
-      total_units: data.bcba.session_units_total,
-      total_hours: data.bcba.total_hours,
-      sponsor_id: data.bcba.provider_name_g,
-      chargesbcba: data.bcba.session_units_total * this.unitPrize,
-      // noterbt_id: data.id,
-    };
-    // if(this.md2.value === 'XE' ||this.md.value ==='XE')
-    //   this.xe= data.total_units * this.unitPrize * this.xe,
-
-    // console.log(VALUE);
-
-    const totalValue = [VALUE, VALUE2, VALUE3];
-
-    if (this.billing_selected) {
-      //si  tiene bip se agrega a la informacion de la consulta
-
-      this.clientReportService
-        .udpate(VALUE, this.billing_selected)
-        .subscribe((resp) => {
-          // console.log(resp);
-          // this.text_success = 'Bip Updated'
-          Swal.fire('Updated', `Bip Updated successfully!`, 'success');
-          this.ngOnInit();
-        });
-      this.noteRbtService
-        .noteUpdateModifier(VALUE2, data.rbt.id)
-        .subscribe((resp) => {
-          // console.log(resp);
-        });
-      this.noteBCbaService
-        .noteBCBAUpdateModifier(VALUE3, data.bcba.id)
-        .subscribe((resp) => {
-          // console.log(resp);
-        });
-    } else {
-      //crear
-      this.clientReportService.create(VALUE).subscribe((resp) => {
-        // console.log(resp);
-        // this.text_success = 'Se guardó la informacion de la cita médica'
-        Swal.fire('Updated', `Added successfully!`, 'success');
-        this.ngOnInit();
-      });
-
-      this.noteRbtService
-        .noteUpdateModifier(VALUE2, data.rbt.id)
-        .subscribe((resp) => {
-          // console.log(resp);
-        });
-      this.noteBCbaService
-        .noteBCBAUpdateModifier(VALUE3, data.bcba.id)
-        .subscribe((resp) => {
-          // console.log(resp);
-        });
-    }
-  }
-
-  cambiarStatus(data: any) {
-    const VALUE = data.status;
-    // console.log(VALUE);
-
-    this.noteRbtService.updateStatus(data, data.id).subscribe((resp) => {
-      // console.log(resp);
-      // Swal.fire('Updated', `Added successfully!`, 'success');
-      this.ngOnInit();
+    update$.subscribe(() => {
+      console.log('Se actualizo la notificacion');
+      Swal.fire('Updated', `Saved successfully!`, 'success');
+      this.onRefresh();
     });
-  }
-
-  cambiarStatusBcba(data: any) {
-    const VALUE = data.status;
-    console.log(VALUE);
-
-    this.noteBCbaService.updateStatus(data, data.id).subscribe((resp) => {
-      // console.log(resp);
-      // Swal.fire('Updated', `Added successfully!`, 'success');
-      this.ngOnInit();
-    });
-  }
-
-  selectInsurance(event) {
-    this.insuranceData(this.selectedValueInsurer);
-  }
-
-  insuranceData(selectedValueInsurer) {
-    this.insuranceService
-      .showInsurance(selectedValueInsurer)
-      .subscribe((resp) => {
-        console.log(resp);
-        this.insurer_name = resp.insurer_name;
-        // this.notes = resp.notes;
-        // this.services = resp.services;
-        this.provider = resp.services[0].provider;
-      });
-  }
-
-  selectPatient(event) {
-    event = this.selectedValueInsurer;
-    this.insuranceData(this.selectedValueInsurer);
-  }
-
-  private PatientData(selectedValuePatient) {
-    this.patientService
-      .getPatientByPatientId(selectedValuePatient)
-      .subscribe((resp) => {
-        console.log(resp);
-      });
   }
 }

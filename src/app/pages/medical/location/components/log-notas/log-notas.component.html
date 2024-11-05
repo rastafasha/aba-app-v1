@@ -14,7 +14,7 @@
         <table
           matSort
           (matSortChange)="sortData($event)"
-          class="table table-striped border-0 custom-table comman-table datatable mb-0"
+          class="table table-striped border-0 custom-table comman-table datatable mb-0 sticky-last"
         >
           <thead>
             <tr>
@@ -50,6 +50,7 @@
                   [note]="data"
                   [insurances]="insurances"
                   [patients]="patients"
+                  (save)="onSave($event)"
                 ></tr>
               </ng-container>
             </ng-container>
@@ -70,7 +71,8 @@
       <app-log-notas-total
         [weekTotalHours]="weekTotalHours"
         [weekTotalUnits]="weekTotalUnits"
-      ></app-log-notas-total>
+      >
+      </app-log-notas-total>
     </div>
   </div>
 </div>

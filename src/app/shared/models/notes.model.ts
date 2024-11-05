@@ -16,7 +16,7 @@ export interface NoteRbt {
   time_out: string;
   time_in2: string;
   time_out2: string;
-  total_hours: string;
+  session_length_total: string;
   total_units: string;
   cpt_code: string;
   xp: number;
@@ -25,16 +25,16 @@ export interface NoteRbt {
   unidades_sesion_1: number;
   unidades_sesion_2: number;
   session_units_total: number;
-  billed: number;
-  pay: number;
+  billed: boolean;
+  pay: boolean;
   status: string;
   created_at: string;
-  insuranceId: string;
+  insurance_key: string;
 }
 
 export interface NoteBcba {
   type: 'bcba';
-  insuranceId: string;
+  insurance_key: string;
   insurance_id?: number;
   id: number;
   patient_id: string;
@@ -43,7 +43,7 @@ export interface NoteBcba {
   provider_name: string;
   session_date: string;
   tecnico: Tecnico;
-  total_hours: string;
+  session_length_total: string;
   total_units: string;
   supervisor_id: number;
   supervisor_name: string;
@@ -53,8 +53,8 @@ export interface NoteBcba {
   xp: number;
   md: string;
   md2: string;
-  billed: number;
-  pay: number;
+  billed: boolean;
+  pay: boolean;
   meet_with_client_at: string;
   unidades_sesion_1: number;
   unidades_sesion_2: number;
@@ -99,7 +99,7 @@ export class NoteRbtBuilder implements NoteRbt {
   time_out: string;
   time_in2: string;
   time_out2: string;
-  total_hours: string;
+  session_length_total: string;
   total_units: string;
   cpt_code: string;
   xp: number;
@@ -108,51 +108,51 @@ export class NoteRbtBuilder implements NoteRbt {
   unidades_sesion_1: number;
   unidades_sesion_2: number;
   session_units_total: number;
-  billed: number;
-  pay: number;
+  billed: boolean;
+  pay: boolean;
   status: string;
   created_at: string;
-  insuranceId: string;
+  insurance_key: string;
 
-  constructor(rbt: Partial<NoteRbt> = {}) {
+  constructor(data: Partial<NoteRbt> = {}) {
     this.type = 'rbt';
-    this.id = rbt.id || 0;
-    this.patient_id = rbt.patient_id || '';
-    this.bip_id = rbt.bip_id || 0;
-    this.supervisor_id = rbt.supervisor_id || 0;
-    this.supervisor_name = rbt.supervisor_name || '';
-    this.supervisor = rbt.supervisor || ({} as Supervisor);
+    this.id = data.id || 0;
+    this.patient_id = data.patient_id || '';
+    this.bip_id = data.bip_id || 0;
+    this.supervisor_id = data.supervisor_id || 0;
+    this.supervisor_name = data.supervisor_name || '';
+    this.supervisor = data.supervisor || ({} as Supervisor);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.tecnico_id = rbt.tecnico_id || (rbt as any).tecnicoRbt_id || 0;
+    this.tecnico_id = data.tecnico_id || (data as any).tecnicoRbt_id || 0;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.tecnico = rbt.tecnico || (rbt as any).tecnicoRbt || ({} as Tecnico);
-    this.pos = rbt.pos || '';
-    this.session_date = rbt.session_date || '';
-    this.meet_with_client_at = rbt.meet_with_client_at || '';
-    this.time_in = rbt.time_in || '';
-    this.time_out = rbt.time_out || '';
-    this.time_in2 = rbt.time_in2 || '';
-    this.time_out2 = rbt.time_out2 || '';
-    this.total_hours = rbt.total_hours || '0';
-    this.total_units = rbt.total_units || '0';
-    this.cpt_code = rbt.cpt_code || '';
-    this.xp = rbt.xp || 0;
-    this.md = rbt.md || '';
-    this.md2 = rbt.md2 || '';
-    this.unidades_sesion_1 = rbt.unidades_sesion_1 || 0;
-    this.unidades_sesion_2 = rbt.unidades_sesion_2 || 0;
-    this.session_units_total = rbt.session_units_total || 0;
-    this.billed = rbt.billed || 0;
-    this.pay = rbt.pay || 0;
-    this.status = rbt.status || '';
-    this.created_at = rbt.created_at || new Date().toISOString();
-    this.insuranceId = rbt.insuranceId || '';
+    this.tecnico = data.tecnico || (data as any).tecnicoRbt || ({} as Tecnico);
+    this.pos = data.pos || '';
+    this.session_date = data.session_date || '';
+    this.meet_with_client_at = data.meet_with_client_at || '';
+    this.time_in = data.time_in || '';
+    this.time_out = data.time_out || '';
+    this.time_in2 = data.time_in2 || '';
+    this.time_out2 = data.time_out2 || '';
+    this.session_length_total = data.session_length_total || '0';
+    this.total_units = data.total_units || '0';
+    this.cpt_code = data.cpt_code || '';
+    this.xp = data.xp || 0;
+    this.md = data.md || '';
+    this.md2 = data.md2 || '';
+    this.unidades_sesion_1 = data.unidades_sesion_1 || 0;
+    this.unidades_sesion_2 = data.unidades_sesion_2 || 0;
+    this.session_units_total = data.session_units_total || 0;
+    this.billed = data.billed || false;
+    this.pay = data.pay || false;
+    this.status = data.status || '';
+    this.created_at = data.created_at || new Date().toISOString();
+    this.insurance_key = data.insurance_key || (data as any).insuranceId || '';
   }
 }
 
 export class NoteBcbaBuilder implements NoteBcba {
   type: 'bcba';
-  insuranceId: string;
+  insurance_key: string;
   insurance_id?: number;
   id: number;
   patient_id: string;
@@ -161,7 +161,7 @@ export class NoteBcbaBuilder implements NoteBcba {
   provider_name: string;
   session_date: string;
   tecnico: Tecnico;
-  total_hours: string;
+  session_length_total: string;
   total_units: string;
   supervisor_id: number;
   supervisor_name: string;
@@ -171,8 +171,8 @@ export class NoteBcbaBuilder implements NoteBcba {
   xp: number;
   md: string;
   md2: string;
-  billed: number;
-  pay: number;
+  billed: boolean;
+  pay: boolean;
   meet_with_client_at: string;
   unidades_sesion_1: number;
   unidades_sesion_2: number;
@@ -186,43 +186,44 @@ export class NoteBcbaBuilder implements NoteBcba {
   time_out?: string;
   time_out2?: string;
 
-  constructor(bcba: Partial<NoteBcba> = {}) {
+  constructor(data: Partial<NoteBcba> = {}) {
+    console.log(data);
     this.type = 'bcba';
-    this.insuranceId = bcba.insuranceId || '';
-    this.insurance_id = bcba.insurance_id || 0;
-    this.id = bcba.id || 0;
-    this.patient_id = bcba.patient_id || '';
-    this.bip_id = bcba.bip_id || 0;
-    this.cpt_code = bcba.cpt_code || '';
-    this.provider_name = bcba.provider_name || '';
-    this.session_date = bcba.session_date || '';
-    this.tecnico = bcba.tecnico || ({} as Tecnico);
-    this.total_hours = bcba.total_hours || '0';
-    this.total_units = bcba.total_units || '0';
-    this.supervisor_id = bcba.supervisor_id || 0;
-    this.supervisor_name = bcba.supervisor_name || '';
-    this.supervisor = bcba.supervisor || ({} as Supervisor);
-    this.aba_supervisor = bcba.aba_supervisor || 0;
-    this.abasupervisor = bcba.abasupervisor || ({} as Supervisor);
-    this.xp = bcba.xp || 0;
+    this.insurance_key = data.insurance_key || (data as any).insuranceId || '';
+    this.insurance_id = data.insurance_id || 0;
+    this.id = data.id || 0;
+    this.patient_id = data.patient_id || '';
+    this.bip_id = data.bip_id || 0;
+    this.cpt_code = data.cpt_code || '';
+    this.provider_name = data.provider_name || '';
+    this.session_date = data.session_date || '';
+    this.tecnico = data.tecnico || ({} as Tecnico);
+    this.session_length_total = data.session_length_total || '0';
+    this.total_units = data.total_units || '0';
+    this.supervisor_id = data.supervisor_id || 0;
+    this.supervisor_name = data.supervisor_name || '';
+    this.supervisor = data.supervisor || ({} as Supervisor);
+    this.aba_supervisor = data.aba_supervisor || 0;
+    this.abasupervisor = data.abasupervisor || ({} as Supervisor);
+    this.xp = data.xp || 0;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.md = bcba.md || (bcba as any).mdbcba || '';
+    this.md = data.md || (data as any).mdbcba || '';
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.md2 = bcba.md2 || (bcba as any).md2bcba || null;
+    this.md2 = data.md2 || (data as any).md2bcba || null;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.billed = bcba.billed || (bcba as any).billedbcba || 0;
+    this.billed = data.billed || (data as any).billedbcba || false;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.pay = bcba.pay || (bcba as any).paybcba || 0;
-    this.meet_with_client_at = bcba.meet_with_client_at || '';
-    this.unidades_sesion_1 = bcba.unidades_sesion_1 || 0;
-    this.unidades_sesion_2 = bcba.unidades_sesion_2 || 0;
-    this.session_units_total = bcba.session_units_total || 0;
-    this.status = bcba.status || '';
-    this.created_at = bcba.created_at || new Date().toISOString();
-    this.time_in = bcba.time_in || '';
-    this.time_in2 = bcba.time_in2 || '';
-    this.time_out = bcba.time_out || '';
-    this.time_out2 = bcba.time_out2 || '';
+    this.pay = data.pay || (data as any).paybcba || false;
+    this.meet_with_client_at = data.meet_with_client_at || '';
+    this.unidades_sesion_1 = data.unidades_sesion_1 || 0;
+    this.unidades_sesion_2 = data.unidades_sesion_2 || 0;
+    this.session_units_total = data.session_units_total || 0;
+    this.status = data.status || '';
+    this.created_at = data.created_at || new Date().toISOString();
+    this.time_in = data.time_in || '';
+    this.time_in2 = data.time_in2 || '';
+    this.time_out = data.time_out || '';
+    this.time_out2 = data.time_out2 || '';
   }
 }
 

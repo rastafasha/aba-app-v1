@@ -208,7 +208,7 @@ export class NotesByClientComponent implements OnInit {
     this.note_selected = note;
   }
   deleteRol() {
-    this.noteRbtService.deleteNote(this.note_selected.id).subscribe((resp) => {
+    this.noteRbtService.delete(this.note_selected.id).subscribe((resp) => {
       // console.log(resp);
 
       if (resp.message === 403) {

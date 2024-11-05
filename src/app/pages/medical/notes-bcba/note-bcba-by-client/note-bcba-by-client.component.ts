@@ -198,7 +198,7 @@ export class NoteBcbaByClientComponent {
     this.note_selected = note;
   }
   deleteRol() {
-    this.noteBcbaService.deleteNote(this.note_selected.id).subscribe((resp) => {
+    this.noteBcbaService.delete(this.note_selected.id).subscribe((resp) => {
       // console.log(resp);
 
       if (resp.message === 403) {

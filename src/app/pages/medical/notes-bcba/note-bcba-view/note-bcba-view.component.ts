@@ -178,7 +178,7 @@ export class NoteBcbaViewComponent implements OnInit {
   }
 
   getNote() {
-    this.noteBcbaService.getNote(this.note_id).subscribe((resp) => {
+    this.noteBcbaService.get(this.note_id).subscribe((resp) => {
       console.log(resp);
       this.note_selected = resp.noteBcba;
       this.note_selectedId = resp.noteBcba.id;

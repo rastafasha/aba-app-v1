@@ -735,7 +735,7 @@ export class NoteRbtComponent implements OnInit {
       console.log(key + ': ' + value);
     });
 
-    this.noteRbtService.createNote(formData).subscribe(
+    this.noteRbtService.create(formData).subscribe(
       (resp: any) => {
         if (resp.message === 403) {
           this.text_validation = resp.message_text;

@@ -24,9 +24,10 @@ export class LogNotasRenderComponent {
   @Input() insurances: LocationInsurance[] = [];
   @Input() patients: LocationPatient[] = [];
   @Input() unitPrice = 10;
-  @Output() statusChange = new EventEmitter<NoteRbt | NoteBcba>();
   @Output() save = new EventEmitter<NoteRbt | NoteBcba>();
+
   routes = AppRoutes;
+  hasChanges = false;
 
   readonly statusOptions = ['pending', 'ok'];
   readonly modifiers = [
@@ -42,23 +43,6 @@ export class LogNotasRenderComponent {
     { value: 'TS', description: 'Reassessment', porcent: 0.1 },
     { value: '95', description: 'Telehealth (only AETNA)', porcent: 0.3 },
   ];
-
-  onStatusChange(): void {
-    this.statusChange.emit(this.note);
-  }
-  isSelectedModifier(): void {
-    //
-  }
-  isSelectedModifier2(): void {
-    //
-  }
-
-  isCheckedBilled() {
-    //
-  }
-  isCheckedPay() {
-    //
-  }
 
   onSave() {
     this.save.emit(this.note);

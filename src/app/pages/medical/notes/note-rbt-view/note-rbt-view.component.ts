@@ -159,7 +159,7 @@ export class NoteRbtViewComponent implements OnInit {
   }
 
   getNote() {
-    this.noteRbtService.getNote(this.note_id).subscribe((resp) => {
+    this.noteRbtService.get(this.note_id).subscribe((resp) => {
       console.log(resp);
       this.note_selected = resp.noteRbt;
       this.note_selectedId = resp.noteRbt.id;

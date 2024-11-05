@@ -1,35 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 import { url_servicios } from 'src/app/config/config';
+import { NoteBcba } from 'src/app/shared/models/notes.model';
+import { NoteService } from '../../notes/services/note.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class NoteBcbaService {
-  constructor(public http: HttpClient) {}
-
-  listNotes() {
-    const URL = url_servicios + '/note_bcba';
-    return this.http.get<any>(URL);
-  }
-
-  getNote(client_id: any) {
-    const URL = url_servicios + '/note_bcba/show/' + client_id;
-    return this.http.get<any>(URL);
-  }
-  createNote(data) {
-    const URL = url_servicios + '/note_bcba/store';
-    return this.http.post<any>(URL, data);
-  }
-
-  editNote(data: any, client_id: any) {
-    const URL = url_servicios + '/note_bcba/update/' + client_id;
-    return this.http.post<any>(URL, data);
-  }
-  deleteNote(patient_id: any) {
-    const URL = url_servicios + '/note_bcba/destroy/' + patient_id;
-    return this.http.delete<any>(URL);
+export class NoteBcbaService extends NoteService<NoteBcba> {
+  constructor(public http: HttpClient) {
+    super(http, url_servicios + '/note_bcba');
   }
 
   showNotebyPatient(patient_id: any) {

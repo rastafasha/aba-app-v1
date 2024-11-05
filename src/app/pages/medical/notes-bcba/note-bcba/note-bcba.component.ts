@@ -451,8 +451,7 @@ export class NoteBcbaComponent {
     formData.append('provider_name', this.doctor_id);
     formData.append('supervisor_name', this.selectedValueBCBA);
     formData.append('note_description', this.note_description);
-    formData.append('insuranceId', this.insuranceId);// id del seguro preferiblemente que solo agarre la data al crear
-
+    formData.append('insuranceId', this.insuranceId); // id del seguro preferiblemente que solo agarre la data al crear
 
     formData.append(
       'rbt_training_goals',
@@ -515,7 +514,7 @@ export class NoteBcbaComponent {
     //   formData.append('imagenn', this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED);
     // }
 
-    this.noteBcbaService.createNote(formData).subscribe((resp) => {
+    this.noteBcbaService.create(formData).subscribe((resp) => {
       // console.log(resp);
 
       if (resp.message === 403) {
