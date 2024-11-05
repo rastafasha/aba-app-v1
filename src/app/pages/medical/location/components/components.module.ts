@@ -6,7 +6,8 @@ import { LogNotasSearchComponent } from './log-notas/log-notas-search/log-notas-
 import { LogNotasTotalComponent } from './log-notas/log-notas-total/log-notas-total.component';
 import { LogNotasComponent } from './log-notas/log-notas.component';
 import { SpecialistLocationComponent } from './specialist-location/specialist-location.component';
-import { LogNotasSessionTotalPipe } from './log-notas/log-notas-session-total/log-notas-session-total.pipe';
+import { LogNotasSessionTotalPipe } from './log-notas/pipes/log-notas-session-total.pipe';
+import { LogNotasUnitPricePipe } from './log-notas/pipes/log-notas-unit-price.pipe';
 
 const components = [
   LogNotasComponent,
@@ -20,6 +21,7 @@ const components = [
     LogNotasTotalComponent,
     LogNotasRenderComponent,
     LogNotasSessionTotalPipe,
+    LogNotasUnitPricePipe,
   ],
   exports: [...components],
   imports: [SharedModule],

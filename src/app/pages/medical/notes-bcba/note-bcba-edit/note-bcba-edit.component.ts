@@ -6,8 +6,8 @@ import { GoalService } from '../../bip/service/goal.service';
 import { PatientMService } from '../../patient-m/service/patient-m.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import Swal from 'sweetalert2';
-import { NoteBcbaService } from '../services/note-bcba.service';
-import { InsuranceService } from '../../insurance/service/insurance.service';
+import { NoteBcbaService } from '../../../../core/services/note-bcba.service';
+import { InsuranceService } from '../../../../core/services/insurance.service';
 import { Location } from '@angular/common';
 import { AppUser } from 'src/app/shared/models/users.models';
 
@@ -37,7 +37,7 @@ export class NoteBcbaEditComponent implements OnInit {
   selectedValueProviderName!: string;
   selectedValueMaladaptive!: string;
   selectedValueRendering!: string;
-  selectedValueAba!: string;
+  selectedValueAba!: number;
   selectedValueCode!: string;
   option_selected = 0;
 
@@ -194,7 +194,7 @@ export class NoteBcbaEditComponent implements OnInit {
   }
 
   getNote() {
-    this.noteBcbaService.get(this.note_id).subscribe((resp) => {
+    this.noteBcbaService.getNote(this.note_id).subscribe((resp) => {
       console.log('respuesta de getNote', resp);
       this.note_selected = resp.noteBcba;
       this.note_selectedId = resp.noteBcba.id;
@@ -307,7 +307,7 @@ export class NoteBcbaEditComponent implements OnInit {
   }
 
   insuranceData() {
-    this.insuranceService.showInsurance(this.insurer_id).subscribe((resp) => {
+    this.insuranceService.get(this.insurer_id).subscribe((resp) => {
       // console.log(resp);
       this.insurer_name = resp.insurer_name;
       // this.notes = resp.notes;
@@ -472,7 +472,7 @@ export class NoteBcbaEditComponent implements OnInit {
       formData.append('rendering_provider', this.selectedValueRendering);
     }
     if (this.selectedValueAba) {
-      formData.append('aba_supervisor', this.selectedValueAba);
+      formData.append('aba_supervisor', this.selectedValueAba.toString());
     }
     if (this.selectedValueCode) {
       formData.append('cpt_code', this.selectedValueCode);

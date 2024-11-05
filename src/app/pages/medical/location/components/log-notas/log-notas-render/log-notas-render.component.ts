@@ -5,12 +5,16 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
-import { NoteBcba, NoteRbt } from 'src/app/shared/models/notes.model';
+import { NoteBcba } from 'src/app/shared/models/note-bcba';
+import { NoteRbt } from 'src/app/shared/models/note-rbt';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import {
+  Insurance,
+  InsuranceModifier,
   LocationInsurance,
   LocationPatient,
 } from '../../../models/locations.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -21,30 +25,27 @@ import {
 })
 export class LogNotasRenderComponent {
   @Input() note: NoteRbt | NoteBcba = null;
-  @Input() insurances: LocationInsurance[] = [];
+  @Input() insurances: Insurance[] = [];
   @Input() patients: LocationPatient[] = [];
-  @Input() unitPrice = 10;
+  @Input() modifiers: InsuranceModifier[] = [];
   @Output() save = new EventEmitter<NoteRbt | NoteBcba>();
 
   routes = AppRoutes;
   hasChanges = false;
+  unitPrice = 10;
 
   readonly statusOptions = ['pending', 'ok'];
-  readonly modifiers = [
-    { value: 'HM', description: 'RBT', porcent: 0.9 },
-    {
-      value: 'XE',
-      description: '2 sessions same day, same provider, different POS',
-      porcent: 0.5,
-    },
-    { value: 'XP', description: 'RBT overlap Not reimbursed', porcent: 0 },
-    { value: 'HO', description: 'BCBA', porcent: 0.3 },
-    { value: 'GT', description: 'Telehealth', porcent: 0.2 },
-    { value: 'TS', description: 'Reassessment', porcent: 0.1 },
-    { value: '95', description: 'Telehealth (only AETNA)', porcent: 0.3 },
-  ];
 
   onSave() {
+    if (!this.hasChanges) return;
     this.save.emit(this.note);
+  }
+
+  // eslint-disable-next-line @angular-eslint/use-lifecycle-interface
+  ngOnInit() {
+    // This is only for testing purposes
+    if (!environment.production) {
+      this.note.insurance_id = this.insurances?.[0]?.id ?? 1;
+    }
   }
 }

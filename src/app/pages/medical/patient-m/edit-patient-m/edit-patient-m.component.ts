@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppUser } from 'src/app/shared/models/users.models';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
-import { InsuranceService } from '../../insurance/service/insurance.service';
+import { InsuranceService } from '../../../../core/services/insurance.service';
 import { PatientMService } from '../service/patient-m.service';
 import {
   CreatePaServiceDto,
@@ -238,7 +238,7 @@ export class EditPatientMComponent implements OnInit {
   locations = [];
   insurances = [];
   notes = [];
-  insurer_name = [];
+  insurer_name: string;
   assesstmentlists = [];
   services_code = [];
   services = [];
@@ -490,12 +490,10 @@ export class EditPatientMComponent implements OnInit {
           (user) => user.roles[0].name === 'BCBA'
         );
 
-        this.insuranceService
-          .showInsurance(this.insurance_id)
-          .subscribe((resp) => {
-            this.insuranceiddd = resp.id;
-            this.insurer_name = resp.insurer_name;
-          });
+        this.insuranceService.get(this.insurance_id).subscribe((resp) => {
+          this.insuranceiddd = resp.id;
+          this.insurer_name = resp.insurer_name;
+        });
       });
   }
 
@@ -647,14 +645,12 @@ export class EditPatientMComponent implements OnInit {
   }
   //recibe el id y muestra la lista
   insuranceData(selectedValueInsurer) {
-    this.insuranceService
-      .showInsurance(selectedValueInsurer)
-      .subscribe((resp) => {
-        console.log('desde el insurer seleccionado', resp);
-        this.services = resp.services;
-        this.code = resp.services.code;
-        this.provider = resp.services.provider;
-      });
+    this.insuranceService.get(selectedValueInsurer).subscribe((resp) => {
+      console.log('desde el insurer seleccionado', resp);
+      this.services = resp.services;
+      this.code = resp.services[0].code;
+      this.provider = resp.services[0].provider;
+    });
   }
 
   selectProviderCpt(event: any) {

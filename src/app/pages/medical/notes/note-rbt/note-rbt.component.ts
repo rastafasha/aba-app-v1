@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { BipService } from '../../bip/service/bip.service';
 import { GoalService } from '../../bip/service/goal.service';
-import { NoteRbtService } from '../services/note-rbt.service';
+import { NoteRbtService } from '../../../../core/services/note-rbt.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import Swal from 'sweetalert2';
 import { Location } from '@angular/common';

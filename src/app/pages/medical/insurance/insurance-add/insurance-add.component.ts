@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import { InsuranceService } from '../service/insurance.service';
+import { InsuranceService } from '../../../../core/services/insurance.service';
 import { Location } from '@angular/common';
 import { PageService } from 'src/app/shared/services/pages.service';
 
@@ -92,7 +92,7 @@ export class InsuranceAddComponent {
       notes: this.notes,
     };
 
-    this.insuranceService.storeInsurance(data).subscribe((resp) => {
+    this.insuranceService.create(data).subscribe((resp) => {
       // console.log(resp);
 
       if (resp.message === 403) {

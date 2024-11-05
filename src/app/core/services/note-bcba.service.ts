@@ -1,16 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { url_servicios } from 'src/app/config/config';
-import { NoteBcba } from 'src/app/shared/models/notes.model';
-import { NoteService } from '../../notes/services/note.service';
+import { NoteBcba } from 'src/app/shared/models/note-bcba';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class NoteBcbaService extends NoteService<NoteBcba> {
+export class NoteBcbaService extends ApiService<NoteBcba> {
   constructor(public http: HttpClient) {
     super(http, url_servicios + '/note_bcba');
+  }
+
+  getNote(id: number) {
+    return this.get(id) as unknown as Observable<{
+      rbt_training_goals: any;
+      caregiver_goals: any;
+      noteBcba: NoteBcba;
+    }>;
   }
 
   showNotebyPatient(patient_id: any) {

@@ -29,7 +29,6 @@
               <th mat-sort-header="totalHours">Total Hours</th>
               <th mat-sort-header="cpt">CPT</th>
               <th mat-sort-header="insurance">Insurance</th>
-              <th mat-sort-header="insurerId">Insurer ID</th>
               <th mat-sort-header="client_name">Client Name</th>
               <th mat-sort-header="md">Modifier 1</th>
               <th mat-sort-header="md2">Modifier 2</th>
@@ -48,8 +47,9 @@
                 <tr
                   appNotasRender
                   [note]="data"
-                  [insurances]="insurances"
+                  [insurances]="insurancesFull"
                   [patients]="patients"
+                  [modifiers]="modifiers"
                   (save)="onSave($event)"
                 ></tr>
               </ng-container>

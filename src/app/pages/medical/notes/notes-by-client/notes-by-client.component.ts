@@ -6,7 +6,7 @@ import { finalize } from 'rxjs';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { AppUser } from 'src/app/shared/models/users.models';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import { NoteRbtService } from '../services/note-rbt.service';
+import { NoteRbtService } from '../../../../core/services/note-rbt.service';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 declare var $: any;
 @Component({

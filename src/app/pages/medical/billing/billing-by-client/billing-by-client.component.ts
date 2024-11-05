@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import { InsuranceService } from '../../insurance/service/insurance.service';
+import { InsuranceService } from '../../../../core/services/insurance.service';
 import { PatientMService } from '../../patient-m/service/patient-m.service';
 import { BillingService } from '../billing.service';
 import { AppUser } from 'src/app/shared/models/users.models';
@@ -156,13 +156,11 @@ export class BillingByClientComponent {
       // console.log(this.insurance_id);
       this.sponsors = resp.doctors;
 
-      this.insuranceService
-        .showInsurance(this.insurance_id)
-        .subscribe((resp) => {
-          this.insuranceiddd = resp.id;
+      this.insuranceService.get(this.insurance_id).subscribe((resp) => {
+        this.insuranceiddd = resp.id;
 
-          this.insurer_name = resp.insurer_name;
-        });
+        this.insurer_name = resp.insurer_name;
+      });
 
       // this.doctorService.showDoctor(this.sponsor_id).subscribe((resp:any)=>{
       //   console.log(resp);

@@ -85,15 +85,9 @@
     [routerLink]="[routes.insurance.view, note.insurance_id]"
   >
     <span>
-      {{ (insurances | arrayFilter : "id" : note.insurance_id)?.[0]?.insurer_name }}
+      {{ (insurances | arrayFind : "id" : note.insurance_id)?.insurer_name }}
     </span>
   </a>
-</td>
-<!-- Insurer Key (Code) -->
-<td>
-  <span>
-    {{ note.insurance_key }}
-  </span>
 </td>
 
 <!-- patient_name -->
@@ -117,9 +111,14 @@
     (ngModelChange)="hasChanges = true"
   >
     <option>-- Select --</option>
-    <option *ngFor="let item of modifiers" [value]="item.value">
-      {{ item.value | uppercase }} : {{ item.description }}
-    </option>
+    <ng-container *ngFor="let item of modifiers">
+      <option
+        *ngIf="item.type === 'all' || item.type === note.type"
+        [value]="item.value"
+      >
+        {{ item.value | uppercase }} : {{ item.description }}
+      </option>
+    </ng-container>
   </select>
 </td>
 
@@ -133,9 +132,14 @@
     (ngModelChange)="hasChanges = true"
   >
     <option>-- Select --</option>
-    <option *ngFor="let item of modifiers" [value]="item.value">
-      {{ item.value | uppercase }} : {{ item.description }}
-    </option>
+    <ng-container *ngFor="let item of modifiers">
+      <option
+        *ngIf="item.type === 'all' || item.type === note.type"
+        [value]="item.value"
+      >
+        {{ item.value | uppercase }} : {{ item.description }}
+      </option>
+    </ng-container>
   </select>
 </td>
 
@@ -146,11 +150,25 @@
 
 <!-- unitPrize -->
 
-<td>{{ unitPrice | currency }}</td>
+<td>
+  {{
+    note.cpt_code
+      | logNotasUnitPrice : note.insurance_id : insurances
+      | currency
+  }}
+</td>
 
 <!-- session_units_total -->
 <td>
-  {{ note | logNotasSessionTotal : unitPrice : modifiers | currency }}
+  {{
+    note.session_units_total
+      | logNotasSessionTotal
+        : note.md
+        : note.md2
+        : (note.cpt_code | logNotasUnitPrice : note.insurance_id : insurances)
+        : modifiers
+      | currency
+  }}
 </td>
 <!-- Tecnico -->
 <td>
@@ -163,7 +181,12 @@
 <td>
   <div class="note-checkit">
     <label class="custom_check">
-      <input type="checkbox" name="billed" [(ngModel)]="note.billed" />
+      <input
+        type="checkbox"
+        name="billed"
+        [(ngModel)]="note.billed"
+        (ngModelChange)="hasChanges = true"
+      />
       <span class="checkmark" value="false"></span>
     </label>
   </div>
@@ -171,7 +194,12 @@
 <td>
   <div class="note-checkit">
     <label class="custom_check">
-      <input type="checkbox" name="pay" [(ngModel)]="note.pay" />
+      <input
+        type="checkbox"
+        name="pay"
+        [(ngModel)]="note.pay"
+        (ngModelChange)="hasChanges = true"
+      />
       <span class="checkmark" value="false"></span>
     </label>
   </div>

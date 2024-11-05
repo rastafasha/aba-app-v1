@@ -1,29 +1,23 @@
 import { Component, OnInit } from '@angular/core';
+import { Sort } from '@angular/material/sort';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, forkJoin, map, tap } from 'rxjs';
-import {
-  isNoteBcba,
-  isNoteRbt,
-  NoteBcba,
-  NoteRbt,
-} from 'src/app/shared/models/notes.model';
+import { TableUtilsService } from 'src/app/shared/components/table/table-utils.service';
+import { NoteBcba } from 'src/app/shared/models/note-bcba';
+import { NoteRbt } from 'src/app/shared/models/note-rbt';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
 import { ClientReportService } from '../../../client-report/client-report.service';
-import { InsuranceCptPrizeResponse } from '../../../client-report/report-by-client/report-by-client.component';
-import { InsuranceService } from '../../../insurance/service/insurance.service';
-import { NoteBcbaService } from '../../../notes-bcba/services/note-bcba.service';
-import { NoteRbtService } from '../../../notes/services/note-rbt.service';
-import { PatientMService } from '../../../patient-m/service/patient-m.service';
+import { NoteBcbaService } from '../../../../../core/services/note-bcba.service';
+import { NoteRbtService } from '../../../../../core/services/note-rbt.service';
 import {
-  LocationApi,
+  Insurance,
+  InsuranceModifier,
   LocationInsurance,
   LocationLogFilter,
   LocationPatient,
 } from '../../models/locations.model';
 import { LocationService } from '../../services/location.service';
-import { TableUtilsService } from 'src/app/shared/components/table/table-utils.service';
-import { Sort } from '@angular/material/sort';
+import { InsuranceService } from '../../../../../core/services/insurance.service';
 
 @Component({
   selector: 'app-log-notas',
@@ -32,48 +26,31 @@ import { Sort } from '@angular/material/sort';
 })
 export class LogNotasComponent implements OnInit {
   routes = AppRoutes;
-
-  private patient_id: number;
-  private location_id: number;
-  private billing_selected: any;
-
-  private clientReport_generals: (NoteRbt | NoteBcba)[];
-  private clientReportList: (NoteRbt | NoteBcba)[];
-
+  // pages
   pageSize = 50;
   total = 0;
   skip = 0;
   currentPage = 1;
-
-  insurances: LocationInsurance[] = [];
-
-  private pa_number: number;
-  private insurance_id: number;
-  private insurer_name: string;
-  private noteRbts: NoteRbt[];
-  private noteBcbas: NoteBcba[];
+  // data
   notes: (NoteRbt | NoteBcba)[];
+  patients: LocationPatient[];
+  insurances: LocationInsurance[] = [];
+  insurancesFull: Insurance[] = [];
 
+  modifiers: InsuranceModifier[] = [];
+  // totals
   weekTotalHours = ':';
   weekTotalUnits = 0;
-
-  private npi: any;
-  private provider: any;
-
-  patients: LocationPatient[];
-
-  selectedValueInsurer!: string;
-  selectedValuePatient!: string;
-  location_selected: LocationApi;
+  // private
+  private location_id: number;
 
   constructor(
     private ativatedRoute: ActivatedRoute,
     private clientReportService: ClientReportService,
-    private insuranceService: InsuranceService,
-    private patientService: PatientMService,
     private noteRbtService: NoteRbtService,
     private noteBCbaService: NoteBcbaService,
     private locationService: LocationService,
+    private insuranceService: InsuranceService,
     private tableUtilsService: TableUtilsService
   ) {}
 
@@ -85,8 +62,9 @@ export class LogNotasComponent implements OnInit {
   }
 
   onRefresh() {
-    this.getLocation();
-    this.getConfig();
+    this.getLocationAndPatients();
+    this.getInsurances();
+    this.getModifiers();
     this.getTableData();
   }
 
@@ -94,21 +72,28 @@ export class LogNotasComponent implements OnInit {
     this.getTableData(1, filter);
   }
 
-  getLocation() {
+  getLocationAndPatients() {
     this.locationService.getLocation(this.location_id).subscribe((resp) => {
-      this.location_selected = resp.location;
       this.patients = resp.patients;
     });
   }
 
-  getConfig() {
+  getInsurances() {
     this.clientReportService.config().subscribe((resp) => {
       this.insurances = resp.insurances;
+      this.insuranceService.listData().subscribe((items) => {
+        this.insurancesFull = items.insurances.data;
+      });
+    });
+  }
+
+  getModifiers() {
+    this.insuranceService.getModifiers().subscribe((items) => {
+      this.modifiers = items;
     });
   }
 
   getTableData(page = 1, filter: Partial<LocationLogFilter> = {}): void {
-    this.clientReportList = [];
     this.currentPage = page;
 
     this.clientReportService
@@ -135,82 +120,14 @@ export class LogNotasComponent implements OnInit {
             (note) => note.status === filter.status_type
           );
 
-        this.noteRbts = combineNotes.filter(isNoteRbt);
-        this.noteBcbas = combineNotes.filter(isNoteBcba);
-
         this.notes = combineNotes.sort((a, b) =>
           a.session_date > b.session_date ? -1 : 1
         );
 
         this.total = combineNotes.length;
-        this.clientReport_generals = [...this.noteRbts, ...this.noteBcbas];
 
         this.getTableDataGeneral();
       });
-  }
-
-  // funcion para obtener el valor de la unidad del cpt
-  getPrizeCptNoteRbt(cptCode: string) {
-    this.getPrizeCptNote(
-      this.insurer_name,
-      cptCode,
-      this.noteRbts[0].cpt_code,
-      this.provider
-    ).subscribe((result) => {
-      return result;
-    });
-  }
-
-  getUnitPrizes(
-    insurerName: string,
-    bcbaCptCode: string,
-    rbtCptCode: string,
-    provider: any
-  ): Observable<InsuranceCptPrizeResponse[]> {
-    const bcbaObservable = this.insuranceService.showInsuranceCptPrize(
-      insurerName,
-      bcbaCptCode,
-      provider
-    );
-    const rbtObservable = this.insuranceService.showInsuranceCptPrize(
-      insurerName,
-      rbtCptCode,
-      provider
-    );
-
-    return forkJoin([bcbaObservable, rbtObservable]).pipe(
-      map(
-        ([bcbaResponse, rbtResponse]: [
-          InsuranceCptPrizeResponse,
-          InsuranceCptPrizeResponse
-        ]) => {
-          return [
-            { unit_prize: bcbaResponse.unit_prize },
-            { unit_prize: rbtResponse.unit_prize },
-          ];
-        }
-      )
-    );
-  }
-
-  getPrizeCptNote(
-    insurer_name: string,
-    bcbaCptCode: string,
-    rbtCptCode: string,
-    provider: any
-  ): Observable<InsuranceCptPrizeResponse[]> {
-    return this.getUnitPrizes(
-      insurer_name,
-      bcbaCptCode,
-      rbtCptCode,
-      provider
-    ).pipe(
-      tap((result: InsuranceCptPrizeResponse[]) => {
-        console.log('Precios unidad', result);
-        const unitPrizeCptBcba = result[0].unit_prize;
-        const unitPrizeCptRbt = result[1].unit_prize;
-      })
-    );
   }
 
   extractDataHours() {
@@ -218,7 +135,7 @@ export class LogNotasComponent implements OnInit {
     const hours_group: string[] = [];
     const units_group: string[] = [];
 
-    const array = this.clientReport_generals;
+    const array = this.notes;
     for (const report of array) {
       hours_group.push(report.session_length_total);
       units_group.push(report.total_units);
@@ -265,12 +182,12 @@ export class LogNotasComponent implements OnInit {
 
   calculateUnitsAndHours() {
     // console.log('notas rbt',this.clientReportList)
-    const totalUnits = this.clientReportList.reduce(
+    const totalUnits = this.notes.reduce(
       (total, objeto) => total + objeto.session_units_total,
       0
     );
     let minutes = 0;
-    this.clientReportList.forEach((element) => {
+    this.notes.forEach((element) => {
       const [horas, minutos] = element.session_length_total
         .split(':')
         .map(Number);
@@ -294,10 +211,17 @@ export class LogNotasComponent implements OnInit {
         ? this.noteRbtService.update(data as NoteRbt, data.id)
         : this.noteBCbaService.update(data as NoteBcba, data.id);
 
-    update$.subscribe(() => {
-      console.log('Se actualizo la notificacion');
-      Swal.fire('Updated', `Saved successfully!`, 'success');
-      this.onRefresh();
+    update$.subscribe({
+      next: () => {
+        console.log('se actualizo la nota');
+        Swal.fire('Updated', `Saved successfully!`, 'success');
+        this.onRefresh();
+      },
+      error: (err) => {
+        console.log('no se actualizo la nota');
+        Swal.fire('Error', `Don't update!`, 'error');
+        this.onRefresh();
+      },
     });
   }
 }

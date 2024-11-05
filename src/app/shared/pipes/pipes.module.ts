@@ -10,9 +10,11 @@ import { GetPrizeCptNotePipe } from './prize-cpt.pipe';
 import { RoleFilterPipe } from './roles-filter.pipe';
 import { SecureResourceUrlPipe } from './secure-resource-url.pipe';
 import { TransformToDatePipe } from './transform-to-date.pipe';
+import { ArrayFindPipe } from './array-find.pipe';
 
 const components = [
   ArrayFilterPipe,
+  ArrayFindPipe,
   SecureResourceUrlPipe,
   TransformToDatePipe,
   RoleFilterPipe,

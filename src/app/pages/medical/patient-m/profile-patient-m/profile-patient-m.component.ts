@@ -9,7 +9,7 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
 import { environment } from 'src/environments/environment';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import { InsuranceService } from '../../insurance/service/insurance.service';
+import { InsuranceService } from '../../../../core/services/insurance.service';
 import { PatientMService } from '../service/patient-m.service';
 import { AppUser } from 'src/app/shared/models/users.models';
 import { map, switchMap } from 'rxjs';
@@ -130,13 +130,11 @@ export class ProfilePatientMComponent implements OnInit {
         resp.insurances.length > 0 ? resp.insurances[0].id : '';
       this.locations = resp.locations;
 
-      this.insuranceService
-        .showInsurance(this.insurance_id)
-        .subscribe((resp) => {
-          // console.log(resp);
-          this.insuranceiddd = resp.id;
-          this.insurer_name = resp.insurer_name;
-        });
+      this.insuranceService.get(this.insurance_id).subscribe((resp) => {
+        // console.log(resp);
+        this.insuranceiddd = resp.id;
+        this.insurer_name = resp.insurer_name;
+      });
     });
   }
 

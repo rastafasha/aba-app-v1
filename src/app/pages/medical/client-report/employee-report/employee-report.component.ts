@@ -6,9 +6,9 @@ import { forkJoin, map, Observable, tap } from 'rxjs';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import Swal from 'sweetalert2';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import { InsuranceService } from '../../insurance/service/insurance.service';
-import { NoteBcbaService } from '../../notes-bcba/services/note-bcba.service';
-import { NoteRbtService } from '../../notes/services/note-rbt.service';
+import { InsuranceService } from '../../../../core/services/insurance.service';
+import { NoteBcbaService } from '../../../../core/services/note-bcba.service';
+import { NoteRbtService } from '../../../../core/services/note-rbt.service';
 import { ClientReportModel } from '../client-report.model';
 import { ClientReportService } from '../client-report.service';
 import { AppUser } from 'src/app/shared/models/users.models';
@@ -337,7 +337,7 @@ export class EmployeeReportComponent implements OnInit {
 
   getInsurer() {
     //sacamos los detalles insurance seleccionado
-    this.insuranceService.showInsurance(this.insurance_id).subscribe(
+    this.insuranceService.get(this.insurance_id).subscribe(
       (resp: any) => {
         console.log('insurer', resp);
         this.insuranceiddd = resp.id;

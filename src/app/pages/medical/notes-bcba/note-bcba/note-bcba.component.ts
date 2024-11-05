@@ -5,8 +5,8 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
 import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import { InsuranceService } from '../../insurance/service/insurance.service';
-import { NoteBcbaService } from '../services/note-bcba.service';
+import { InsuranceService } from '../../../../core/services/insurance.service';
+import { NoteBcbaService } from '../../../../core/services/note-bcba.service';
 import { AppUser } from 'src/app/shared/models/users.models';
 
 @Component({
@@ -239,7 +239,7 @@ export class NoteBcbaComponent {
   }
 
   insuranceData() {
-    this.insuranceService.showInsurance(this.insurer_id).subscribe((resp) => {
+    this.insuranceService.get(this.insurer_id).subscribe((resp) => {
       console.log(resp);
       this.insurer_name = resp.insurer_name;
       // this.notes = resp.notes;

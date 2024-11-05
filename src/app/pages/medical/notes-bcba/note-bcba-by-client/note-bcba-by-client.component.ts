@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { AppUser } from 'src/app/shared/models/users.models';
-import { NoteBcbaService } from '../services/note-bcba.service';
+import { NoteBcbaService } from '../../../../core/services/note-bcba.service';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 declare var $: any;
 @Component({

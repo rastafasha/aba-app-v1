@@ -7,7 +7,7 @@ import { BipService } from '../../bip/service/bip.service';
 import { GoalService } from '../../bip/service/goal.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { PatientMService } from '../../patient-m/service/patient-m.service';
-import { NoteRbtService } from '../services/note-rbt.service';
+import { NoteRbtService } from '../../../../core/services/note-rbt.service';
 import { AppUser } from 'src/app/shared/models/users.models';
 import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 
@@ -241,7 +241,7 @@ export class EditNoteRbtComponent implements OnInit {
   }
 
   getNote() {
-    this.noteRbtService.get(this.note_id).subscribe((resp) => {
+    this.noteRbtService.getNote(this.note_id).subscribe((resp) => {
       console.log('Response from getNote:', resp);
 
       this.target = resp.target;

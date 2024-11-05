@@ -2,15 +2,26 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { url_servicios } from 'src/app/config/config';
-import { NoteService } from './note.service';
-import { NoteRbt } from 'src/app/shared/models/notes.model';
+import { ApiService } from './api.service';
+import { NoteRbt } from 'src/app/shared/models/note-rbt';
 
 @Injectable({
   providedIn: 'root',
 })
-export class NoteRbtService extends NoteService<NoteRbt> {
+export class NoteRbtService extends ApiService<NoteRbt> {
   constructor(public http: HttpClient) {
     super(http, url_servicios + '/note_rbt');
+  }
+
+  getNote(id: number) {
+    const URL = this.endpoint + '/show/' + id;
+    return this.http.get<{
+      target: number;
+      replacements: string;
+      maladaptives: string;
+      interventions: any;
+      noteRbt: NoteRbt;
+    }>(URL);
   }
 
   createReplacementNote(data) {

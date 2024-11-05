@@ -1,16 +1,14 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs';
 import { url_servicios } from 'src/app/config/config';
+import { LocationLogFilter } from '../location/models/locations.model';
 import {
   ClientReportByLocation,
   ClientReportConfig,
 } from './client-report.model';
-import { map, tap } from 'rxjs';
-import { LocationLogFilter } from '../location/models/locations.model';
-import {
-  NoteBcbaBuilder,
-  NoteRbtBuilder,
-} from 'src/app/shared/models/notes.model';
+import { NoteRbtBuilder } from 'src/app/shared/models/note-rbt';
+import { NoteBcbaBuilder } from 'src/app/shared/models/note-bcba';
 
 @Injectable({
   providedIn: 'root',
