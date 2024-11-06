@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SimpleLayoutComponent } from './simple-layout.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-fdescribe('SimpleLayoutComponent', () => {
+describe('SimpleLayoutComponent', () => {
   let component: SimpleLayoutComponent;
   let fixture: ComponentFixture<SimpleLayoutComponent>;
 

@@ -98,7 +98,7 @@
                         {{ data.insurer_name }}
                       </a>
                     </td>
-                    <td>{{ data.created_at | date }}</td>
+                    <td>{{ data.created_at | date : "shortDate"  }}</td>
 
                     <td class="text-end">
                       <div class="dropdown dropdown-action">

@@ -6,8 +6,8 @@ import { GoalService } from '../../bip/service/goal.service';
 import { PatientMService } from '../../patient-m/service/patient-m.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import Swal from 'sweetalert2';
-import { NoteBcbaService } from '../services/note-bcba.service';
-import { InsuranceService } from '../../insurance/service/insurance.service';
+import { NoteBcbaService } from '../../../../core/services/note-bcba.service';
+import { InsuranceService } from '../../../../core/services/insurance.service';
 import { Location } from '@angular/common';
 import { AppUser } from 'src/app/shared/models/users.models';
 
@@ -37,7 +37,7 @@ export class NoteBcbaEditComponent implements OnInit {
   selectedValueProviderName!: string;
   selectedValueMaladaptive!: string;
   selectedValueRendering!: string;
-  selectedValueAba!: string;
+  selectedValueAba!: number;
   selectedValueCode!: string;
   option_selected = 0;
 
@@ -307,7 +307,7 @@ export class NoteBcbaEditComponent implements OnInit {
   }
 
   insuranceData() {
-    this.insuranceService.showInsurance(this.insurer_id).subscribe((resp) => {
+    this.insuranceService.get(this.insurer_id).subscribe((resp) => {
       // console.log(resp);
       this.insurer_name = resp.insurer_name;
       // this.notes = resp.notes;
@@ -472,7 +472,7 @@ export class NoteBcbaEditComponent implements OnInit {
       formData.append('rendering_provider', this.selectedValueRendering);
     }
     if (this.selectedValueAba) {
-      formData.append('aba_supervisor', this.selectedValueAba);
+      formData.append('aba_supervisor', this.selectedValueAba.toString());
     }
     if (this.selectedValueCode) {
       formData.append('cpt_code', this.selectedValueCode);
@@ -486,9 +486,9 @@ export class NoteBcbaEditComponent implements OnInit {
     if (this.selectedValueBCBA) {
       formData.append('supervisor_name', this.selectedValueBCBA);
     }
-    if (this.note_description) {
-      formData.append('note_description', this.note_description);
-    }
+    // if (this.note_description) {
+    //   formData.append('note_description', this.note_description);
+    // }
     if (this.rbt_training_goals) {
       formData.append(
         'rbt_training_goals',
@@ -522,7 +522,7 @@ export class NoteBcbaEditComponent implements OnInit {
     }
 
     this.noteBcbaService
-      .editNote(formData, this.note_selectedId)
+      .update(formData as any, this.note_selectedId)
       .subscribe((resp) => {
         // console.log(resp);
 

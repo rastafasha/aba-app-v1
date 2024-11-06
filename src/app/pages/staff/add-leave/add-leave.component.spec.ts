@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddLeaveComponent } from './add-leave.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('AddLeaveComponent', () => {
   let component: AddLeaveComponent;
@@ -8,9 +10,9 @@ describe('AddLeaveComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddLeaveComponent ]
-    })
-    .compileComponents();
+      declarations: [AddLeaveComponent],
+      imports: [SharedModule, RouterTestingModule],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AddLeaveComponent);
     component = fixture.componentInstance;

@@ -8,38 +8,26 @@
             <button class="btn btn-primary btn-sm" (click)="goBack()">
               Back
             </button>
-            <a
+            <!-- <a
               class="btn btn-primary btn-sm"
               *ngIf="user.roles[0] === 'SUPERADMIN'"
               [routerLink]="[routes.clientReport.byClient, patientId]"
               >Go To Log Report</a
-            >
+            > -->
           </div>
         </div>
       </div>
     </div>
     <!-- /Page Header -->
+    
+    <div class="page-table-header mb-2">
+      <div class="col">
+        <div class="doctor-table-blk">
+          <h3>Rbt Notes : {{patient_id}}</h3>
 
-    <!-- Page Header -->
-    <div class="page-header">
-      <div class="row">
-        <div class="col-sm-12">
-          <div class="doctor-submit text-start">
-            <button class="btn btn-primary btn-sm" (click)="goBack()">
-              Back
-            </button>
-            <a
-              class="btn btn-primary btn-sm"
-              *ngIf="user.roles[0] === 'SUPERADMIN'"
-              [routerLink]="[routes.clientReport.byClient, patientId]"
-              >Go To Log Report</a
-            >
-          </div>
         </div>
       </div>
     </div>
-    <!-- /Table Header -->
-
     <div class="table-responsive">
       <!-- Skeleton loader -->
       <app-skeleton-loader
@@ -71,7 +59,7 @@
           <tr *ngFor="let data of notesPatientList">
             <td>
               <a [routerLink]="[routes.noteRbt.view, data.id]">
-                {{ data.session_date | date }}
+                {{ data.session_date | date : "shortDate" }}
               </a>
               <i
                 class="fa bg-primary indicador"
@@ -84,12 +72,12 @@
                 [tooltip]="data.status"
               ></i>
             </td>
-            <td>{{ data.next_session_is_scheduled_for | date }}</td>
+            <td>{{ data.next_session_is_scheduled_for | date : "shortDate" }}</td>
             <td>{{ data.session_length_total }}</td>
             <td>{{ data.session_length_total2 }}</td>
 
-            <td>{{ data.created_at | date }}</td>
-            <td>{{ data.updated_at | date }}</td>
+            <td>{{ data.created_at | date : "shortDate" }}</td>
+            <td>{{ data.updated_at | date : "shortDate" }}</td>
 
             <td class="text-end">
               <div class="dropdown dropdown-action">

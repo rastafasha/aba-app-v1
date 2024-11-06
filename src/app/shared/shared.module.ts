@@ -21,6 +21,7 @@ import { NgxBootstrapModule } from './ngx-bootstrap/ngx-bootstrap.module';
 import { NoInfoComponent } from './no-info/no-info.component';
 import { PipesModule } from './pipes/pipes.module';
 import { PageService } from './services/pages.service';
+import { TableModule } from './components/table/table.module';
 
 const components = [
   NoInfoComponent,
@@ -85,6 +86,7 @@ const components = [
     ActionButtonComponent,
     ActionModalComponent,
     PipesModule,
+    TableModule,
   ],
   providers: [DataService, PageService],
 })

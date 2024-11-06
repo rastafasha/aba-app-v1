@@ -4,6 +4,7 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 import { BipService } from '../../service/bip.service';
 import { GoalService } from '../../service/goal.service';
 import { AppUser } from 'src/app/shared/models/users.models';
+import { AuthService } from 'src/app/core/auth/auth.service';
 @Component({
   selector: 'app-reduction-goal-form',
   templateUrl: './reduction-goal-form.component.html',
@@ -87,7 +88,8 @@ export class ReductionGoalFormComponent {
   constructor(
     private bipService: BipService,
     private goalService: GoalService,
-    private ativatedRoute: ActivatedRoute
+    private ativatedRoute: ActivatedRoute,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -99,9 +101,8 @@ export class ReductionGoalFormComponent {
     });
 
     this.ativatedRoute.params.subscribe(({ id }) => this.getBip()); // se solicita la info del perfil del bip
-    const USER = localStorage.getItem('user'); // se solicita el usuario logueado
-    this.user = JSON.parse(USER ? USER : ''); //  si no hay un usuario en el localstorage retorna un objeto vacio
-    this.doctor_id = this.user.id; //se asigna el doctor logueado a este campo para poderlo enviar en los
+    this.user = this.authService.user as AppUser; //
+    this.doctor_id = this.user?.id; //se asigna el doctor logueado a este campo para poderlo enviar en los
   }
 
   //obtenemos el perfil  del paciente por el id de la ruta
@@ -137,7 +138,7 @@ export class ReductionGoalFormComponent {
     this.goalService.getGoalbyPatientId(patient_id).subscribe((resp) => {
       console.log('goals by patientid', resp);
       this.goalReductions =
-        resp.goalReductionPatientIds.data[0] == ''
+        resp.goalReductionPatientIds.data[0] === ''
           ? []
           : resp.goalReductionPatientIds.data;
       this.goalReductionId =

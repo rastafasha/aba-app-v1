@@ -1,35 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { url_servicios } from 'src/app/config/config';
+import { NoteBcba } from 'src/app/shared/models/note-bcba';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class NoteBcbaService {
-  constructor(public http: HttpClient) {}
-
-  listNotes() {
-    const URL = url_servicios + '/note_bcba';
-    return this.http.get<any>(URL);
+export class NoteBcbaService extends ApiService<NoteBcba> {
+  constructor(public http: HttpClient) {
+    super(http, url_servicios + '/note_bcba');
   }
 
-  getNote(client_id: any) {
-    const URL = url_servicios + '/note_bcba/show/' + client_id;
-    return this.http.get<any>(URL);
-  }
-  createNote(data) {
-    const URL = url_servicios + '/note_bcba/store';
-    return this.http.post<any>(URL, data);
-  }
-
-  editNote(data: any, client_id: any) {
-    const URL = url_servicios + '/note_bcba/update/' + client_id;
-    return this.http.post<any>(URL, data);
-  }
-  deleteNote(patient_id: any) {
-    const URL = url_servicios + '/note_bcba/destroy/' + patient_id;
-    return this.http.delete<any>(URL);
+  getNote(id: number) {
+    return this.get(id) as unknown as Observable<{
+      rbt_training_goals: any;
+      caregiver_goals: any;
+      noteBcba: NoteBcba;
+    }>;
   }
 
   showNotebyPatient(patient_id: any) {

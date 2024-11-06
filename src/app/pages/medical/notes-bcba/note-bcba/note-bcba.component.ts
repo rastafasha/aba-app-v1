@@ -5,8 +5,8 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
 import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import { InsuranceService } from '../../insurance/service/insurance.service';
-import { NoteBcbaService } from '../services/note-bcba.service';
+import { InsuranceService } from '../../../../core/services/insurance.service';
+import { NoteBcbaService } from '../../../../core/services/note-bcba.service';
 import { AppUser } from 'src/app/shared/models/users.models';
 
 @Component({
@@ -239,7 +239,7 @@ export class NoteBcbaComponent {
   }
 
   insuranceData() {
-    this.insuranceService.showInsurance(this.insurer_id).subscribe((resp) => {
+    this.insuranceService.get(this.insurer_id).subscribe((resp) => {
       console.log(resp);
       this.insurer_name = resp.insurer_name;
       // this.notes = resp.notes;
@@ -417,8 +417,7 @@ export class NoteBcbaComponent {
       !this.rbt_training_goals ||
       !this.caregivers_training_goals ||
       !this.meet_with_client_at ||
-      !this.session_date ||
-      !this.note_description
+      !this.session_date
     ) {
       this.text_validation = 'All Fields (*) are required';
       return;
@@ -450,9 +449,8 @@ export class NoteBcbaComponent {
 
     formData.append('provider_name', this.doctor_id);
     formData.append('supervisor_name', this.selectedValueBCBA);
-    formData.append('note_description', this.note_description);
-    formData.append('insuranceId', this.insuranceId);// id del seguro preferiblemente que solo agarre la data al crear
-
+    // formData.append('note_description', this.note_description);
+    formData.append('insuranceId', this.insuranceId); // id del seguro preferiblemente que solo agarre la data al crear
 
     formData.append(
       'rbt_training_goals',
@@ -515,7 +513,7 @@ export class NoteBcbaComponent {
     //   formData.append('imagenn', this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED);
     // }
 
-    this.noteBcbaService.createNote(formData).subscribe((resp) => {
+    this.noteBcbaService.create(formData).subscribe((resp) => {
       // console.log(resp);
 
       if (resp.message === 403) {

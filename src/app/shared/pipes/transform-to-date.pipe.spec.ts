@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { TransformToDatePipe } from './transform-to-date.pipe';
 
-fdescribe('TransformToDatePipe', () => {
+describe('TransformToDatePipe', () => {
   let pipe: TransformToDatePipe;
   const time = '2345';
 
