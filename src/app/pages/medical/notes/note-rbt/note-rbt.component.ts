@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { BipService } from '../../bip/service/bip.service';
 import { GoalService } from '../../bip/service/goal.service';
-import { NoteRbtService } from '../services/note-rbt.service';
+import { NoteRbtService } from '../../../../core/services/note-rbt.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import Swal from 'sweetalert2';
 import { Location } from '@angular/common';
@@ -663,7 +663,7 @@ export class NoteRbtComponent implements OnInit {
     formData.forEach((value, key) => {
     });
 
-    this.noteRbtService.createNote(formData).subscribe(
+    this.noteRbtService.create(formData).subscribe(
       (resp: any) => {
         if (resp.message === 403) {
           this.text_validation = resp.message_text;

@@ -1,6 +1,6 @@
 export interface LocationApi {
   location_id: number;
-  id: number | string;
+  id: number;
   created_at: string | number | Date;
   zip: number;
   phone1: string;
@@ -51,6 +51,34 @@ export interface LocationPatient {
 export interface LocationInsurance {
   insurer_name: string;
   id: number;
+}
+
+export interface Insurance {
+  id: number;
+  insurer_name: string;
+  services: InsuranceService[];
+  notes: InsuranceNote[];
+  created_at: string;
+}
+
+export interface InsuranceService {
+  code: string;
+  provider: string;
+  hourly_fee: number;
+  unit_prize: number;
+  description: string;
+  max_allowed: string;
+}
+
+export interface InsuranceNote {
+  note: string;
+}
+
+export interface InsuranceModifier {
+  value: string;
+  description: string;
+  type: 'rbt' | 'bcba' | 'all';
+  multiplier: number;
 }
 
 export interface LocationApiResponse<T> {

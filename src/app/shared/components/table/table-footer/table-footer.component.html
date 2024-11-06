@@ -1,0 +1,44 @@
+<div class="table_footer">
+  <div class="col-sm-12 col-md-5">
+    <div class="dataTables_info">
+      Showing {{ 1 + pageSize * (page - 1) }} to
+      {{ pageSize * page | min : total }} of {{ total }} entries
+    </div>
+  </div>
+
+  <div class="col-sm-12 col-md-7">
+    <div class="pagination_section">
+      <ul class="pagination">
+        <li
+          class="page-item"
+          [ngClass]="{
+            disabled: page === 1
+          }"
+        >
+          <a (click)="onChangePage(1)" class="page-link" tabindex="-1">
+            First
+          </a>
+        </li>
+
+        <li
+          class="page-item"
+          [class.active]="item === page"
+          *ngFor="let item of total | pages : pageSize : page : 1"
+        >
+          <a (click)="onChangePage(item)" class="page-link">
+            {{ item }}
+          </a>
+        </li>
+
+        <li
+          class="page-item"
+          [ngClass]="{
+            disabled: page === (total / pageSize | ceil)
+          }"
+        >
+          <a (click)="onChangePage(-1)" class="page-link"> Last </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -137,9 +137,9 @@ describe('AuthService', () => {
       req.flush(auth);
     });
 
-    it('should handle login failure and return undefined', () => {
+    it('should handle login failure and return false', () => {
       service.login('john&#64;example.com', 'password').subscribe((result) => {
-        expect(result).toBeUndefined();
+        expect(result).toBeFalse();
       });
 
       const req = httpMock.expectOne(AUTH_URLS.login);

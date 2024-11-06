@@ -1,12 +1,14 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs';
 import { url_servicios } from 'src/app/config/config';
+import { LocationLogFilter } from '../location/models/locations.model';
 import {
   ClientReportByLocation,
   ClientReportConfig,
 } from './client-report.model';
-import { tap } from 'rxjs';
-import { LocationLogFilter } from '../location/models/locations.model';
+import { NoteRbtBuilder } from 'src/app/shared/models/note-rbt';
+import { NoteBcbaBuilder } from 'src/app/shared/models/note-bcba';
 
 @Injectable({
   providedIn: 'root',
@@ -129,7 +131,15 @@ export class ClientReportService {
     }).toString();
 
     const URL = `${url_servicios}/client_report/bylocation/${location_id}?${params}`;
-    return this.http.get<ClientReportByLocation>(URL);
+    return this.http.get<ClientReportByLocation>(URL).pipe(
+      map((response) => {
+        response.noteRbts =
+          response.noteRbts?.map((item) => new NoteRbtBuilder(item)) ?? [];
+        response.noteBcbas =
+          response.noteBcbas?.map((item) => new NoteBcbaBuilder(item)) ?? [];
+        return response;
+      })
+    );
   }
 
   getAllClientReportEmployeeByPatient(

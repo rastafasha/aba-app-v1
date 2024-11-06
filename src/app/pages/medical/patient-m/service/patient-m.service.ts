@@ -85,13 +85,13 @@ export class PatientMService {
     return this.http.delete<any>(URL);
   }
 
-  showPatientProfile(client_id: any) {
+  showPatientProfile(client_id: number) {
     const URL = url_servicios + '/patients/profile/' + client_id;
     return this.http.get<any>(URL);
   }
-  getPatientByPatientid(patient_id: any) {
+  getPatientByPatientId(patient_id: number) {
     const URL = url_servicios + '/patients/shobypatientid/' + patient_id;
-    return this.http.get<any>(URL);
+    return this.http.get<{ doctor: any; patient: any }>(URL);
   }
 
   listConfig(location_id: any): Observable<any> {

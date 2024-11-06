@@ -5,7 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { SidebarComponent } from './sidebar.component';
 
-fdescribe('SidebarComponent', () => {
+describe('SidebarComponent', () => {
   let component: SidebarComponent;
   let fixture: ComponentFixture<SidebarComponent>;
 

@@ -1,17 +1,20 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, Query } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { url_servicios } from 'src/app/config/config';
 import {
   LocationApi,
   LocationApiResponse,
   LocationViewApiResponse,
 } from '../models/locations.model';
+import { ApiService } from 'src/app/core/services/api.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class LocationService {
-  constructor(public http: HttpClient) {}
+export class LocationService extends ApiService<LocationApi> {
+  constructor(protected http: HttpClient) {
+    super(http, url_servicios + '/location');
+  }
 
   listAppointmentPays(
     page = 1,
@@ -50,7 +53,7 @@ export class LocationService {
     return this.http.get<LocationApiResponse<LocationApi[]>>(URL);
   }
 
-  listLocationPatients(search: any, status: any, location_id: any) {
+  listLocationPatients(search: any, status: any, location_id: number) {
     let LINK = '?T=';
     if (search) {
       LINK += '&search=' + search;
@@ -80,12 +83,12 @@ export class LocationService {
     const URL = url_servicios + '/location/show/' + location_id;
     return this.http.get<LocationViewApiResponse>(URL);
   }
-  editLocation(data: any, location_id: any) {
+  editLocation(data: any, location_id: number) {
     const URL = url_servicios + '/location/update/' + location_id;
     return this.http.post<any>(URL, data);
   }
 
-  deleteLocation(location_id: any) {
+  deleteLocation(location_id: number) {
     const URL = url_servicios + '/roles/destroy/' + location_id;
     return this.http.delete<any>(URL);
   }
