@@ -369,6 +369,23 @@ export class EditNoteRbtComponent implements OnInit {
           this.setPaService(noteServiceId);
         }
       });
+
+      this.getReplacementsByPatientId();
+
+  }
+
+  getReplacementsByPatientId() {
+    this.noteRbtService
+      .showReplacementbyPatient(this.patient_id)
+      .subscribe((resp) => {
+        this.replacementGoals = [];
+        resp['replacementGoals'].forEach(element => {
+          const goalSto = JSON.parse(element.goalstos).find(item => item.sustitution_status_sto_edit === 'inprogress')
+          if (!!goalSto) {
+            this.replacementGoals.push({...element, target: goalSto.target})
+          }
+        });
+      });
   }
 
   onPaServiceSelect(event: any) {
