@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { RoleFilterPipe } from './roles-filter.pipe';
 
-fdescribe('RoleFilterPipe', () => {
+describe('RoleFilterPipe', () => {
   let pipe: RoleFilterPipe;
 
   beforeEach(() => {

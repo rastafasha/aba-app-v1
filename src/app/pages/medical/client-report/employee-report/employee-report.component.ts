@@ -6,9 +6,9 @@ import { forkJoin, map, Observable, tap } from 'rxjs';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import Swal from 'sweetalert2';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import { InsuranceService } from '../../insurance/service/insurance.service';
-import { NoteBcbaService } from '../../notes-bcba/services/note-bcba.service';
-import { NoteRbtService } from '../../notes/services/note-rbt.service';
+import { InsuranceService } from '../../../../core/services/insurance.service';
+import { NoteBcbaService } from '../../../../core/services/note-bcba.service';
+import { NoteRbtService } from '../../../../core/services/note-rbt.service';
 import { ClientReportModel } from '../client-report.model';
 import { ClientReportService } from '../client-report.service';
 import { AppUser } from 'src/app/shared/models/users.models';
@@ -171,7 +171,6 @@ export class EmployeeReportComponent implements OnInit {
     this.ativatedRoute.params.subscribe((resp) => {
       this.patient_id = resp['patient_id'];
       this.patientId = resp['patient_id'];
-      console.log(this.patient_id);
     });
 
     this.getConfig();
@@ -181,7 +180,7 @@ export class EmployeeReportComponent implements OnInit {
     this.paybcba = false;
 
     this.user = this.authService.user as AppUser;
-    this.getTableData();
+    if (this.user) this.getTableData();
   }
 
   goBack() {
@@ -189,10 +188,10 @@ export class EmployeeReportComponent implements OnInit {
   }
 
   isPermission(permission: string) {
-    if (this.user.roles.includes('SUPERADMIN')) {
+    if (this.user?.roles?.includes('SUPERADMIN')) {
       return true;
     }
-    if (this.user.permissions.includes(permission)) {
+    if (this.user?.permissions?.includes(permission)) {
       return true;
     }
     return false;
@@ -222,7 +221,6 @@ export class EmployeeReportComponent implements OnInit {
         this.noteType
       )
       .subscribe((resp) => {
-        console.log('todo', resp);
         const pa = resp.arrayPages;
         // const pa = [1,2,3,4,5,6,7,8,9,10]
         this.pageNumberArray = [];
@@ -337,7 +335,7 @@ export class EmployeeReportComponent implements OnInit {
 
   getInsurer() {
     //sacamos los detalles insurance seleccionado
-    this.insuranceService.showInsurance(this.insurance_id).subscribe(
+    this.insuranceService.get(this.insurance_id).subscribe(
       (resp: any) => {
         console.log('insurer', resp);
         this.insuranceiddd = resp.id;

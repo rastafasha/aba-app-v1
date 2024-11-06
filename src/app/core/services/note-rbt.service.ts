@@ -1,58 +1,37 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { url_servicios } from 'src/app/config/config';
+import { ApiService } from './api.service';
+import { NoteRbt } from 'src/app/shared/models/note-rbt';
 
 @Injectable({
   providedIn: 'root',
 })
-export class NoteRbtService {
-  constructor(public http: HttpClient) {}
-
-  listNotes() {
-    const URL = url_servicios + '/note_rbt';
-    return this.http.get<any>(URL);
+export class NoteRbtService extends ApiService<NoteRbt> {
+  constructor(public http: HttpClient) {
+    super(http, url_servicios + '/note_rbt');
   }
 
-  getNote(client_id: any) {
-    const URL = url_servicios + '/note_rbt/show/' + client_id;
-    return this.http.get<any>(URL);
-  }
-  createNote(data) {
-    const URL = url_servicios + '/note_rbt/store';
-    return this.http.post<any>(URL, data).pipe(catchError(this.handleError));
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    let errorMessage = 'An error occurred';
-    if (error.error instanceof ErrorEvent) {
-      // Client-side error
-      errorMessage = error.error.message;
-    } else {
-      // Server-side error
-      errorMessage = error.error.message || error.statusText;
-    }
-    return throwError(() => errorMessage);
+  getNote(id: number) {
+    const URL = this.endpoint + '/show/' + id;
+    return this.http.get<{
+      target: number;
+      replacements: string;
+      maladaptives: string;
+      interventions: any;
+      noteRbt: NoteRbt;
+    }>(URL);
   }
 
   createReplacementNote(data) {
     const URL = url_servicios + '/note_rbt/storeReplacemts';
     return this.http.post<any>(URL, data);
   }
-  editNote(data: any, client_id: any) {
-    const URL = url_servicios + '/note_rbt/update/' + client_id;
-    return this.http.post<any>(URL, data);
-  }
 
   noteUpdateModifier(data: any, client_id: any) {
     const URL = url_servicios + '/note_rbt/update/modifier/' + client_id;
     return this.http.put<any>(URL, data);
-  }
-
-  deleteNote(patient_id: any) {
-    const URL = url_servicios + '/note_rbt/destroy/' + patient_id;
-    return this.http.delete<any>(URL);
   }
 
   showNotebyPatient(patient_id: any) {

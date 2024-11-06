@@ -1,5 +1,4 @@
 <div class="page-wrapper">
-  <<<<<<< ajustes-target-rbt-notes
     <div class="content">
       <!-- Page Header -->
       <div class="page-header">
@@ -9,18 +8,25 @@
               <button class="btn btn-primary btn-sm" (click)="goBack()">
                 Back
               </button>
-              <a
+              <!-- <a
                 class="btn btn-primary btn-sm"
                 *ngIf="user.roles[0] === 'SUPERADMIN'"
                 [routerLink]="[routes.clientReport.byClient, patientId]"
                 >Go To Log Report</a
-              >
+              > -->
             </div>
           </div>
         </div>
       </div>
       <!-- /Table Header -->
+      <div class="page-table-header mb-2">
+        <div class="col">
+          <div class="doctor-table-blk">
+            <h3>BCBA Notes : {{patient_id}}</h3>
   
+          </div>
+        </div>
+      </div>
       <div class="table-responsive">
         <table
           matSort
@@ -44,7 +50,7 @@
             <tr *ngFor="let data of notesPatientList">
               <td>
                 <a [routerLink]="[routes.noteBcba.view, data.id]">
-                  {{ data.session_date | date }}
+                  {{ data.session_date | date : "shortDate" }}
                 </a>
                 <i
                   class="fa bg-primary indicador"
@@ -57,13 +63,13 @@
                   [tooltip]="data.status"
                 ></i>
               </td>
-              <td>{{ data.session_length_total }}</td>
-              <td>{{ data.session_length_total2 }}</td>
+              <td>{{ data.session_length_morning_total }}</td>
+              <td>{{ data.session_length_afternon_total }}</td>
               <td>{{ data.diagnosis_code }}</td>
               <td>{{ data.cpt_code }}</td>
   
-              <td>{{ data.created_at | date }}</td>
-              <td>{{ data.updated_at | date }}</td>
+              <td>{{ data.created_at | date : "shortDate" }}</td>
+              <td>{{ data.updated_at | date : "shortDate" }}</td>
   
               <td class="text-end">
                 <div class="dropdown dropdown-action">

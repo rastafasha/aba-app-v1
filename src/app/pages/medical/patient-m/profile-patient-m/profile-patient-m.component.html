@@ -41,6 +41,7 @@
                               src="{{ avatar }}"
                               class="shadow"
                               [alt]="patient_selected.first_name"
+                              (error)="avatar = './assets/img/no-image.jpg'"
                             />
                           </div>
                         </div>

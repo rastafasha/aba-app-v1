@@ -4,7 +4,7 @@ import { FileSaverService } from 'ngx-filesaver';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import * as XLSX from 'xlsx';
-import { InsuranceService } from '../service/insurance.service';
+import { InsuranceService } from '../../../../core/services/insurance.service';
 import { Location } from '@angular/common';
 import { PageService } from 'src/app/shared/services/pages.service';
 declare var $: any;
@@ -57,7 +57,7 @@ export class InsuranceListComponent {
     this.insuranceList = [];
     this.serialNumberArray = [];
 
-    this.insuranceService.listInsurances().subscribe((resp) => {
+    this.insuranceService.listData().subscribe((resp) => {
       console.log(resp);
 
       this.totalDataInsurance = resp.insurances.data.length;
@@ -86,7 +86,7 @@ export class InsuranceListComponent {
   }
   deleteInsurance() {
     this.insuranceService
-      .deleteInsurance(this.insurance_selected.id)
+      .delete(this.insurance_selected.id)
       .subscribe((resp) => {
         // console.log(resp);
 

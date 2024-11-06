@@ -48,7 +48,6 @@ export class AuthService {
   login(email: string, password: string) {
     return this.http.post<Auth>(AUTH_URLS.login, { email, password }).pipe(
       map((auth) => {
-        console.log(auth);
         return this.setUserToStorage(auth);
       }),
       tap(() => this.getUserFromStorage()),

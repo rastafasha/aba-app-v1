@@ -1,5 +1,4 @@
-
-// developed by Malcolm Cordova @malcolmcordova 
+// developed by Malcolm Cordova @malcolmcordova
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @use "@angular/material" as mat;
@@ -14,12 +13,7 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $aba-angular-primary: mat.define-palette(mat.$indigo-palette);
-$aba-angular-accent: mat.define-palette(
-  mat.$pink-palette,
-  A200,
-  A100,
-  A400
-);
+$aba-angular-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
 $aba-angular-warn: mat.define-palette(mat.$red-palette);
@@ -53,7 +47,8 @@ $aba-angular-theme: mat.define-light-theme(
   .fc .fc-button .fc-icon {
     color: #797979;
   }
-  .fc-header-toolbar.fc-toolbar .fc-button,.fc-header-toolbar.fc-toolbar .fc-button:active {
+  .fc-header-toolbar.fc-toolbar .fc-button,
+  .fc-header-toolbar.fc-toolbar .fc-button:active {
     background-color: #f1f1f1;
     border: 0 none;
     color: #797979;
@@ -64,9 +59,10 @@ $aba-angular-theme: mat.define-light-theme(
     color: #fff;
     text-shadow: none;
   }
-  .fc-header-toolbar.fc-toolbar .fc-button:not(:disabled).fc-button-active:focus,.fc-header-toolbar.fc-toolbar .fc-button:not(:disabled):active:focus,
-  .fc-header-toolbar.fc-toolbar .fc-button:focus
-  {
+  .fc-header-toolbar.fc-toolbar
+    .fc-button:not(:disabled).fc-button-active:focus,
+  .fc-header-toolbar.fc-toolbar .fc-button:not(:disabled):active:focus,
+  .fc-header-toolbar.fc-toolbar .fc-button:focus {
     box-shadow: 0 0 0;
   }
   .fc-button-group.fc .fc-button-primary:not(:disabled).fc-button-active {
@@ -112,7 +108,7 @@ $aba-angular-theme: mat.define-light-theme(
     flex-wrap: wrap;
     display: flex;
     justify-content: space-between;
-}
+  }
 }
 .table_header {
   display: flex;
@@ -221,42 +217,42 @@ ngx-material-timepicker-content {
 }
 
 .login-wrap {
-  background-image: url('assets/img/fondo-autistm-web.jpg');
+  background-image: url("assets/img/fondo-autistm-web.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 @media only screen and (max-width: 768px) {
-	.table_footer {
+  .table_footer {
     flex-wrap: wrap;
     justify-content: center;
   }
-	}
+}
 
-  .detail-personal{
-    margin-bottom: 10px;
-    border-bottom: 1px dashed #ccc;
-    padding-bottom: 10px;
-  }
+.detail-personal {
+  margin-bottom: 10px;
+  border-bottom: 1px dashed #ccc;
+  padding-bottom: 10px;
+}
 
-  .detail-personal h2 {
-    font-size: 14px !important;
+.detail-personal h2 {
+  font-size: 14px !important;
 }
 
 .about-me-list ul li h4 {
   font-size: 13px !important;
 }
 
-.sidebar-overlay.opened, .menu-opened .sidebar-overlay {
+.sidebar-overlay.opened,
+.menu-opened .sidebar-overlay {
   display: none;
 }
 
-
-p{
+p {
   font-size: 14px !important;
 }
 
-.avatarlist{
+.avatarlist {
   width: 55px;
   border-radius: 100px;
   border: 3px solid orange;
@@ -264,7 +260,7 @@ p{
   object-fit: cover;
 }
 
-.avatarlist img{
+.avatarlist img {
   width: 100%;
   height: 100%;
   border-radius: 100px;
@@ -287,7 +283,6 @@ p{
 
 // timepicker
 
-
 // $my-theme: mat.define-light-theme(...);
 
 // timepicker uses these component
@@ -301,20 +296,17 @@ p{
 // timepicker theme
 // @include mat-timepicker.timepicker-theme($aba-angular-theme)
 
-
-.backrgoundimage{
+.backrgoundimage {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
   height: 150px;
 }
-.backrgoundimage img{
+.backrgoundimage img {
   display: flex;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
-  
-
 }

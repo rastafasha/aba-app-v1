@@ -33,6 +33,14 @@ const routes: Routes = [
         path: lastRoutes(AppRoutes.patients.profile, 1, '/:id'),
         component: ProfilePatientMComponent,
       },
+      {
+        path: lastRoutes(
+          AppRoutes.patients.profileByPatientId,
+          1,
+          '/:patient_id'
+        ),
+        component: ProfilePatientMComponent,
+      },
     ],
   },
 ];
