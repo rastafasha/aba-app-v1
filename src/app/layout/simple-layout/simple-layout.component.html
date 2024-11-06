@@ -7,20 +7,24 @@
   }"
 >
   <app-header
+    class="d-print-none"
     [ngClass]="{
       'd-none': sideBarActivePath === false && headerActivePath === false
     }"
   >
   </app-header>
   <app-sidebar
+    class="d-print-none"
     [ngClass]="{
       'd-none': sideBarActivePath === false && headerActivePath === false
     }"
   >
   </app-sidebar>
+  <!--  -->
   <ng-content></ng-content>
+  <!--  -->
   <div
-    class="sidebar-overlay"
+    class="sidebar-overlay d-print-none"
     [ngClass]="{
       opened: mobileSidebar === 'true'
     }"

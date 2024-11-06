@@ -2050,6 +2050,14 @@ table.table {
     padding-bottom: 0;
   }
 }
+@media print {
+  .page-wrapper {
+    left: 0;
+    margin-left: 0;
+    padding-top: 0;
+  }
+}
+
 .login-body {
   display: -webkit-box;
   display: -ms-flexbox;
