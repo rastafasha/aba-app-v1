@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import { InsuranceService } from '../service/insurance.service';
+import { InsuranceService } from '../../../../core/services/insurance.service';
 import Swal from 'sweetalert2';
 import { Location } from '@angular/common';
 import { PageService } from 'src/app/shared/services/pages.service';
@@ -63,7 +63,7 @@ export class InsuranceEditComponent {
   }
 
   getConfig() {
-    this.insuranceService.showInsurance(this.insurance_id).subscribe((resp) => {
+    this.insuranceService.get(this.insurance_id).subscribe((resp) => {
       // console.log(resp);
       this.insurance_selected = resp;
 
@@ -143,7 +143,7 @@ export class InsuranceEditComponent {
     };
 
     this.insuranceService
-      .editInsurance(data, this.insurance_id)
+      .update(data as any, this.insurance_id)
       .subscribe((resp) => {
         // console.log(resp);
 

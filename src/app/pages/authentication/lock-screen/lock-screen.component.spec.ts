@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LockScreenComponent } from './lock-screen.component';
 import { RouterTestingModule } from '@angular/router/testing';
 
-fdescribe('LockScreenComponent', () => {
+describe('LockScreenComponent', () => {
   let component: LockScreenComponent;
   let fixture: ComponentFixture<LockScreenComponent>;
 

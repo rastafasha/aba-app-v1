@@ -8,7 +8,8 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
 import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import { NoteBcbaService } from '../services/note-bcba.service';
+import { NoteBcbaService } from '../../../../core/services/note-bcba.service';
+import { Supervisor } from 'src/app/shared/models/notes.model';
 
 @Component({
   selector: 'app-note-bcba-view',
@@ -130,7 +131,7 @@ export class NoteBcbaViewComponent implements OnInit {
   rbt_training_goals = [];
   rbt_training_goalsgroup: any;
   caregivers_training_goalsgroup: any;
-  aba_supervisor = [];
+  aba_supervisor: number;
 
   location: any;
   birth_date: any;

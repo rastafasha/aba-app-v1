@@ -8,7 +8,7 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
 import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import { NoteRbtService } from '../services/note-rbt.service';
+import { NoteRbtService } from '../../../../core/services/note-rbt.service';
 
 @Component({
   selector: 'app-note-rbt-view',

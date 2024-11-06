@@ -12,6 +12,9 @@ export class PatientsRoutes {
   static get profile(): string {
     return `${baseUrl}/patients/profile`;
   }
+  static get profileByPatientId(): string {
+    return `${baseUrl}/patients/profile-by-patient-id`;
+  }
 
   static get setting(): string {
     return `${baseUrl}/patients/setting`;

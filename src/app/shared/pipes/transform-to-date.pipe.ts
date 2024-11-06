@@ -4,7 +4,8 @@ import * as moment from 'moment';
   name: 'transformToDate',
 })
 export class TransformToDatePipe implements PipeTransform {
-  transform(value: unknown, ...args: unknown[]): unknown {
+  transform(value: unknown): unknown {
+    if (!value) return null;
     return moment(value, 'HHmmss').format('HH:mm A');
   }
 

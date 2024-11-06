@@ -3,7 +3,7 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 import { Router } from '@angular/router';
 import { PatientMService } from '../service/patient-m.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import { InsuranceService } from '../../insurance/service/insurance.service';
+import { InsuranceService } from '../../../../core/services/insurance.service';
 import Swal from 'sweetalert2';
 import { Location } from '@angular/common';
 import { environment } from 'src/environments/environment';
@@ -366,15 +366,13 @@ export class AddPatientMComponent {
   // }
 
   insuranceData(selectedValueInsurer) {
-    this.insuranceService
-      .showInsurance(selectedValueInsurer)
-      .subscribe((resp) => {
-        console.log(resp);
-        this.insurer_name = resp.insurer_name;
-        // this.notes = resp.notes;
-        this.services = resp.services;
-        this.provider = resp.services[0].provider;
-      });
+    this.insuranceService.get(selectedValueInsurer).subscribe((resp) => {
+      console.log(resp);
+      this.insurer_name = resp.insurer_name;
+      // this.notes = resp.notes;
+      this.services = resp.services;
+      this.provider = resp.services[0].provider;
+    });
   }
 
   selectProviderCpt(event) {
