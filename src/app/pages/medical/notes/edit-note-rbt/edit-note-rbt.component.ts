@@ -1,15 +1,13 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
+import { AppUser } from 'src/app/shared/models/users.models';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
-import { BipService } from '../../bip/service/bip.service';
-import { GoalService } from '../../bip/service/goal.service';
-import { DoctorService } from '../../doctors/service/doctor.service';
-import { PatientMService } from '../../patient-m/service/patient-m.service';
 import { NoteRbtService } from '../../../../core/services/note-rbt.service';
-import { AppUser } from 'src/app/shared/models/users.models';
-import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
+import { BipService } from '../../bip/service/bip.service';
+import { DoctorService } from '../../doctors/service/doctor.service';
 
 @Component({
   selector: 'app-edit-note-rbt',
@@ -303,8 +301,10 @@ export class EditNoteRbtComponent implements OnInit {
           ).toISOString()
         : '';
 
-      this.session_length_morning_total = this.note_selected.session_length_morning_total;
-      this.session_length_afternon_total = this.note_selected.session_length_afternon_total;
+      this.session_length_morning_total =
+        this.note_selected.session_length_morning_total;
+      this.session_length_afternon_total =
+        this.note_selected.session_length_afternon_total;
 
       console.log('Setting:', this.formatTime(this.note_selected.time_in));
       this.selectedValueTimeIn = this.formatTime(this.note_selected.time_in);
