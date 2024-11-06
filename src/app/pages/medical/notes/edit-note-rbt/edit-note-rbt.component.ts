@@ -240,8 +240,6 @@ export class EditNoteRbtComponent implements OnInit {
 
   getNote() {
     this.noteRbtService.getNote(this.note_id).subscribe((resp) => {
-      console.log('Response from getNote:', resp);
-
       this.target = resp.target;
       this.note_selected = resp.noteRbt;
       this.note_selectedId = resp.noteRbt.id;
@@ -277,7 +275,6 @@ export class EditNoteRbtComponent implements OnInit {
       this.replacement = resp.replacements; // ?
       const jsonObj2 = JSON.parse(this.replacement) || '';
       this.replacementgroup = jsonObj2;
-      // console.log(this.replacementgroup);
 
       // this.pos = this.note_selected.pos;
       this.environmental_changes = this.note_selected.environmental_changes;
@@ -306,19 +303,11 @@ export class EditNoteRbtComponent implements OnInit {
       this.session_length_afternon_total =
         this.note_selected.session_length_afternon_total;
 
-      console.log('Setting:', this.formatTime(this.note_selected.time_in));
       this.selectedValueTimeIn = this.formatTime(this.note_selected.time_in);
       this.selectedValueTimeOut = this.formatTime(this.note_selected.time_out);
       this.selectedValueTimeIn2 = this.formatTime(this.note_selected.time_in2);
       this.selectedValueTimeOut2 = this.formatTime(
         this.note_selected.time_out2
-      );
-      console.log(
-        'Times updated:',
-        this.selectedValueTimeIn,
-        this.selectedValueTimeOut,
-        this.selectedValueTimeIn2,
-        this.selectedValueTimeOut2
       );
 
       const noteServiceId = resp.noteRbt.pa_service_id;
@@ -332,27 +321,40 @@ export class EditNoteRbtComponent implements OnInit {
         this.note_selected.provider_signature;
       this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED =
         this.note_selected.supervisor_signature;
-      console.log(this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED);
+      this.getReplacementsByPatientId();
       this.getProfileBip(noteServiceId);
     });
   }
 
+  getReplacementsByPatientId() {
+    this.noteRbtService
+      .showReplacementbyPatient(this.patient_id)
+      .subscribe((resp) => {
+        this.replacementGoals = resp['replacementGoals'];
+        this.replacementgroup.forEach(item => {
+          const x = this.replacementGoals.find(goal => goal.goal === item.goal);
+          if(x) {
+            let target = '';
+            JSON.parse(x.goalstos).forEach((sto, index) => {
+              if(sto?.target)
+                target = target === '' ? `${sto.target}` : `${target} - ${sto.target}`;
+            });
+            item['target'] = target;
+          }
+        })
+      });
+  }
+
   private formatTime(timeString: string | null): string {
-    console.log('formatting time: ', timeString);
     if (!timeString) return '';
     const [hours, minutes] = timeString.replace(/ /g, '').split(':');
     return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
   }
 
   getProfileBip(noteServiceId?: number) {
-    console.log('Getting profile BIP:', {
-      noteServiceId,
-      availableServices: this.paServices,
-    });
     this.bipService
       .getBipProfilePatient_id(this.patient_id)
       .subscribe((resp) => {
-        console.log(resp);
         this.client_selected = resp;
 
         this.first_name = this.client_selected.patient.first_name;
@@ -379,16 +381,11 @@ export class EditNoteRbtComponent implements OnInit {
   }
 
   private setPaService(noteServiceId: number) {
-    console.log('Setting PA Service:', {
-      noteServiceId,
-      availableServices: this.paServices,
-    });
 
     if (this.paServices?.length && noteServiceId) {
       this.selectedPaService =
         this.paServices.find((service) => service.id === noteServiceId) || null;
 
-      console.log('Selected PA Service:', this.selectedPaService);
 
       if (this.selectedPaService) {
         this.selectedValueCode = this.selectedPaService.cpt;
@@ -398,14 +395,12 @@ export class EditNoteRbtComponent implements OnInit {
 
   selectCpt(event) {
     event = this.selectedValueCode;
-    console.log(event);
   }
 
   specialistData(selectedValueInsurer) {
     this.doctorService
       .showDoctorProfile(selectedValueInsurer)
       .subscribe((resp) => {
-        console.log(resp);
         this.provider_credential = resp.doctor.certificate_number;
         // this.notes = resp.notes;
         // this.services = resp.services;
@@ -421,7 +416,6 @@ export class EditNoteRbtComponent implements OnInit {
     this.interventionsgroup = [
       this.convertToInterventionsGroup(this.interventionsList),
     ];
-    console.log(this.interventionsgroup);
   }
 
   hourTimeInSelected(value: string) {
@@ -469,7 +463,6 @@ export class EditNoteRbtComponent implements OnInit {
 
   selectMaladaptive(behavior: any) {
     this.maladaptiveSelected = behavior;
-    console.log(behavior);
     // this.maladp_added.push({
     //   maladaptive : behavior
     // })
@@ -477,7 +470,6 @@ export class EditNoteRbtComponent implements OnInit {
 
   selectReplacement(replacemen: any) {
     this.replacementSelected = replacemen;
-    console.log(this.replacementSelected);
     // this.replacement_added.push({
     //   replacement : replacemen
     // })
@@ -538,38 +530,6 @@ export class EditNoteRbtComponent implements OnInit {
     this.maladaptiveSelected = null;
     this.maladaptive_behavior = '';
     this.number_of_occurrences = null;
-  }
-
-  // addReplacement(replacemen, i){
-
-  //   this.replacementSelected = replacemen;
-  //   this.replacementGoals[i] = replacemen;
-  //   if(this.maladaptives.length > 1){
-  //     this.maladaptives.splice(this.maladaptives,1);
-  //   }
-  //   this.replacementSelected = null;
-  //   this.goal = '';
-  //   this.total_trials = null;
-  //   this.number_of_correct_response = null;
-
-  // }
-
-  addReplacement(replacemen) {
-    this.replacementSelected = replacemen;
-    this.replacementGoals.push({
-      goal: this.replacementSelected.goal,
-      total_trials: this.replacementSelected.total_trials,
-      number_of_correct_response:
-        this.replacementSelected.number_of_correct_response,
-      // number_of_correct_response: this.number_of_correct_response ? this.number_of_correct_response :0 ,
-    });
-    if (this.replacementGoals.length > 1) {
-      this.replacementGoals.splice(this.replacementGoals.length, 1);
-    }
-    this.replacementSelected = null;
-    this.goal = '';
-    this.total_trials = null;
-    this.number_of_correct_response = null;
   }
 
   deleteLTOGoal(i: any) {
@@ -635,14 +595,12 @@ export class EditNoteRbtComponent implements OnInit {
 
   cambiarStatus(goalsto: any) {
     // this.status_sto_edit = goalsto;
-    // console.log(this.status_sto_edit.status_sto);
     // let data ={
     //   goalstos: this.golsto,
     //   goalltos: this.gollto,
     // }
     // this.goalService.editGoal(data, this.goalmaladaptiveid).subscribe(
     //   resp =>{
-    //     // console.log(resp);
     //     // this.getTableData();
     //     Swal.fire('Updated', `Goal Updated successfully!`, 'success');
     //     this.ngOnInit();
@@ -821,8 +779,6 @@ export class EditNoteRbtComponent implements OnInit {
 
     this.noteRbtService.update(formData as any, this.note_selectedId).subscribe(
       (resp) => {
-        // console.log(resp);
-
         if (resp.message === 403) {
           this.text_validation = resp.message_text;
           Swal.fire('Warning', this.text_validation, 'warning');
@@ -832,7 +788,6 @@ export class EditNoteRbtComponent implements OnInit {
         }
       },
       (error) => {
-        console.error('Error updating note:', error);
         if (
           error.error &&
           error.error.message &&
@@ -873,8 +828,6 @@ export class EditNoteRbtComponent implements OnInit {
       return;
     }
     this.isGeneratingSummary = true;
-    console.log(this.client_selected.patient, 'patient');
-    console.log(this.maladaptivegroup, 'maladaptives');
     const data = {
       diagnosis: this.diagnosis_code,
       birthDate: this.client_selected.patient?.birth_date
@@ -917,7 +870,6 @@ export class EditNoteRbtComponent implements OnInit {
         this.isGeneratingSummary = false;
       },
       (error) => {
-        console.error('Error generating AI summary:', error);
         Swal.fire(
           'Error',
           'Error generating AI summary. Please ensure you have filled all the required fields.',

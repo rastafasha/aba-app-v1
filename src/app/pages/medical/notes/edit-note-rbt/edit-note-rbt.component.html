@@ -384,7 +384,6 @@
         <div class="card-body">
           <app-replacements
             [(replacements)]="replacementgroup"
-            [target]="target"
             (replacementsChange)="onReplacementsChange($event)"
           >
           </app-replacements>
@@ -522,7 +521,7 @@
             <!-- fin paciente -->
 
             <!-- pruba grafica -->
-            <div class="col-xs-12">
+            <!-- <div class="col-xs-12">
               <div class="card">
                 <div class="card-body">
                   <app-maladaptives
@@ -532,37 +531,9 @@
                   </app-maladaptives>
                 </div>
               </div>
-            </div>
+            </div> -->
             <!-- pruba grafica -->
 
-            <!-- pruba grafica replacements -->
-            <div class="col-xs-12">
-              <div class="card">
-                <div class="card-body">
-                  <app-replacements
-                    [(replacements)]="replacementgroup"
-                    [target]="target"
-                    (replacementsChange)="onReplacementsChange($event)"
-                  >
-                  </app-replacements>
-                </div>
-              </div>
-            </div>
-            <!-- pruba grafica replacements-->
-
-            <!-- interventions -->
-            <div class="col-12">
-              <div class="card">
-                <div class="card-body">
-                  <app-interventions
-                    [interventionsList]="interventionsList"
-                    (interventionsChange)="onInterventionsChange($event)"
-                  >
-                  </app-interventions>
-                </div>
-              </div>
-            </div>
-            <!-- fin interventions -->
 
             <!-- paciente -->
             <div class="col-sm-12">

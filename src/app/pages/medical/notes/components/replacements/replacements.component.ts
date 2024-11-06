@@ -55,7 +55,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 })
 export class ReplacementsComponent {
   @Input() replacements: any[];
-  @Input() target: number;
+  @Input() target: number | string;
   @Output() replacementsChange = new EventEmitter<any[]>();
 
   isValidCorrectResponse(replacement: any): boolean {
