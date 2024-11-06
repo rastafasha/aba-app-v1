@@ -10,6 +10,21 @@ import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { NoteRbtService } from '../../../../core/services/note-rbt.service';
 
+interface NoteIntervention {
+  pairing: boolean;
+  response_block: boolean;
+  DRA: boolean;
+  DRO: boolean;
+  redirection: boolean;
+  errorless_teaching: boolean;
+  NCR: boolean;
+  shaping: boolean;
+  chaining: boolean;
+  token_economy: boolean;
+  extinction: boolean;
+  natural_teaching: boolean;
+}
+
 @Component({
   selector: 'app-note-rbt-view',
   templateUrl: './note-rbt-view.component.html',
@@ -80,18 +95,20 @@ export class NoteRbtViewComponent implements OnInit {
   provider_signature: any;
   supervisor_signature: any;
 
-  pairing: any;
-  response_block: any;
-  DRA: any;
-  DRO: any;
-  redirection: any;
-  errorless_teaching: any;
-  NCR: any;
-  shaping: any;
-  chaining: any;
-  token_economy: any;
-  extinction: any;
-  natural_teaching: any;
+  intervention: NoteIntervention = {
+    chaining: false,
+    DRA: false,
+    DRO: false,
+    errorless_teaching: false,
+    extinction: false,
+    natural_teaching: false,
+    NCR: false,
+    pairing: false,
+    redirection: false,
+    shaping: false,
+    token_economy: false,
+    response_block: false,
+  };
 
   FILE_SIGNATURE_RBT: any;
   IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED: any = 'assets/img/user-06.jpg';
@@ -176,20 +193,7 @@ export class NoteRbtViewComponent implements OnInit {
       const jsonObj = JSON.parse(this.interventions) || '';
       this.interventionsgroup = jsonObj;
       //TODO Remove
-      console.log(this.interventionsgroup);
-
-      this.pairing = this.interventionsgroup[0].pairing;
-      this.response_block = this.interventionsgroup[0].response_block;
-      this.DRA = this.interventionsgroup[0].DRA;
-      this.DRO = this.interventionsgroup[0].DRO;
-      this.redirection = this.interventionsgroup[0].redirection;
-      this.errorless_teaching = this.interventionsgroup[0].errorless_teaching;
-      this.NCR = this.interventionsgroup[0].NCR;
-      this.shaping = this.interventionsgroup[0].shaping;
-      this.chaining = this.interventionsgroup[0].chaining;
-      this.token_economy = this.interventionsgroup[0].token_economy;
-      this.extinction = this.interventionsgroup[0].extinction;
-      this.natural_teaching = this.interventionsgroup[0].natural_teaching;
+      this.intervention = this.interventionsgroup[0];
 
       this.maladaptive = resp.maladaptives;
       const jsonObj1 = JSON.parse(this.maladaptive) || '';

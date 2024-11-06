@@ -355,339 +355,230 @@
                       <div class="col-xs-12">
                         <div class="row">
                           <div class="col-xs-12 col-sm-3">
-                            <div class="form-group">
+                            <div
+                              class="d-flex justify-content-between align-items-center"
+                            >
+                              <span>Pairing</span>
                               <div
-                                class="card-header d-flex justify-content-between align-items-center"
+                                class="d-flex justify-content-between align-items-center"
                               >
-                                <span>Pairing</span>
-                                <div
-                                  class="status-toggle d-flex justify-content-between align-items-center"
-                                >
-                                  <input
-                                    disabled
-                                    type="checkbox"
-                                    id="pairing"
-                                    class="check"
-                                    name="pairing"
-                                    [ngModelOptions]="{ standalone: true }"
-                                    [(ngModel)]="pairing"
-                                  />
-                                  <label
-                                    for="pairing"
-                                    class="checktoggle"
-                                    value="true"
-                                  >
-                                    checkbox</label
-                                  >
-                                </div>
+                                <i
+                                  *ngIf="intervention.pairing"
+                                  class="fa fa-check"
+                                ></i>
+                                <i
+                                  *ngIf="!intervention.pairing"
+                                  class="fa fa-times"
+                                ></i>
                               </div>
                             </div>
                           </div>
                           <div class="col-xs-12 col-sm-3">
-                            <div class="form-group">
+                            <div
+                              class="d-flex justify-content-between align-items-center"
+                            >
+                              <span>Response Block</span>
                               <div
-                                class="card-header d-flex justify-content-between align-items-center"
+                                class="d-flex justify-content-between align-items-center"
                               >
-                                <span>Response Block</span>
-                                <div
-                                  class="status-toggle d-flex justify-content-between align-items-center"
-                                >
-                                  <input
-                                    disabled
-                                    type="checkbox"
-                                    id="response_block"
-                                    class="check"
-                                    name="response_block"
-                                    [ngModelOptions]="{ standalone: true }"
-                                    [(ngModel)]="response_block"
-                                  />
-                                  <label
-                                    for="response_block"
-                                    class="checktoggle"
-                                    value="true"
-                                    >checkbox</label
-                                  >
-                                </div>
+                                <i
+                                  *ngIf="intervention.response_block"
+                                  class="fa fa-check"
+                                ></i>
+                                <i
+                                  *ngIf="!intervention.response_block"
+                                  class="fa fa-times"
+                                ></i>
                               </div>
                             </div>
                           </div>
                           <div class="col-xs-12 col-sm-3">
-                            <div class="form-group">
+                            <div
+                              class="d-flex justify-content-between align-items-center"
+                            >
+                              <span>DRA</span>
                               <div
-                                class="card-header d-flex justify-content-between align-items-center"
+                                class="d-flex justify-content-between align-items-center"
                               >
-                                <span>DRA</span>
-                                <div
-                                  class="status-toggle d-flex justify-content-between align-items-center"
-                                >
-                                  <input
-                                    disabled
-                                    type="checkbox"
-                                    id="DRA"
-                                    class="check"
-                                    name="DRA"
-                                    [ngModelOptions]="{ standalone: true }"
-                                    [(ngModel)]="DRA"
-                                  />
-                                  <label
-                                    for="DRA"
-                                    class="checktoggle"
-                                    value="true"
-                                    >checkbox</label
-                                  >
-                                </div>
+                                <i
+                                  *ngIf="intervention.DRA"
+                                  class="fa fa-check"
+                                ></i>
+                                <i
+                                  *ngIf="!intervention.DRA"
+                                  class="fa fa-times"
+                                ></i>
                               </div>
                             </div>
                           </div>
                           <div class="col-xs-12 col-sm-3">
-                            <div class="form-group">
+                            <div
+                              class="d-flex justify-content-between align-items-center"
+                            >
+                              <span>DRO</span>
                               <div
-                                class="card-header d-flex justify-content-between align-items-center"
+                                class="d-flex justify-content-between align-items-center"
                               >
-                                <span>DRO</span>
-                                <div
-                                  class="status-toggle d-flex justify-content-between align-items-center"
-                                >
-                                  <input
-                                    disabled
-                                    type="checkbox"
-                                    id="DRO"
-                                    class="check"
-                                    name="DRO"
-                                    [ngModelOptions]="{ standalone: true }"
-                                    [(ngModel)]="DRO"
-                                  />
-                                  <label
-                                    for="DRO"
-                                    class="checktoggle"
-                                    value="true"
-                                    >checkbox</label
-                                  >
-                                </div>
+                                <i
+                                  *ngIf="intervention.DRO"
+                                  class="fa fa-check"
+                                ></i>
+                                <i
+                                  *ngIf="!intervention.DRO"
+                                  class="fa fa-times"
+                                ></i>
                               </div>
                             </div>
                           </div>
                           <div class="col-xs-12 col-sm-3">
-                            <div class="form-group">
+                            <div
+                              class="d-flex justify-content-between align-items-center"
+                            >
+                              <span>Redirection</span>
                               <div
-                                class="card-header d-flex justify-content-between align-items-center"
+                                class="d-flex justify-content-between align-items-center"
                               >
-                                <span>Redirection</span>
-                                <div
-                                  class="status-toggle d-flex justify-content-between align-items-center"
-                                >
-                                  <input
-                                    disabled
-                                    type="checkbox"
-                                    id="redirection"
-                                    class="check"
-                                    name="redirection"
-                                    [ngModelOptions]="{ standalone: true }"
-                                    [(ngModel)]="redirection"
-                                  />
-                                  <label
-                                    for="redirection"
-                                    class="checktoggle"
-                                    value="true"
-                                    >checkbox</label
-                                  >
-                                </div>
+                                <i
+                                  *ngIf="intervention.redirection"
+                                  class="fa fa-check"
+                                ></i>
+                                <i
+                                  *ngIf="!intervention.redirection"
+                                  class="fa fa-times"
+                                ></i>
                               </div>
                             </div>
                           </div>
                           <div class="col-xs-12 col-sm-3">
-                            <div class="form-group">
+                            <div
+                              class="d-flex justify-content-between align-items-center"
+                            >
+                              <span>Errorless Teaching</span>
                               <div
-                                class="card-header d-flex justify-content-between align-items-center"
+                                class="d-flex justify-content-between align-items-center"
                               >
-                                <span>Errorless Teaching</span>
-                                <div
-                                  class="status-toggle d-flex justify-content-between align-items-center"
-                                >
-                                  <input
-                                    disabled
-                                    type="checkbox"
-                                    id="errorless_teaching"
-                                    class="check"
-                                    name="errorless_teaching"
-                                    [ngModelOptions]="{ standalone: true }"
-                                    [(ngModel)]="errorless_teaching"
-                                  />
-                                  <label
-                                    for="errorless_teaching"
-                                    class="checktoggle"
-                                    value="true"
-                                    >checkbox</label
-                                  >
-                                </div>
+                                <i
+                                  *ngIf="intervention.errorless_teaching"
+                                  class="fa fa-check"
+                                ></i>
+                                <i
+                                  *ngIf="!intervention.errorless_teaching"
+                                  class="fa fa-times"
+                                ></i>
                               </div>
                             </div>
                           </div>
                           <div class="col-xs-12 col-sm-3">
-                            <div class="form-group">
+                            <div
+                              class="d-flex justify-content-between align-items-center"
+                            >
+                              <span>NCR</span>
                               <div
-                                class="card-header d-flex justify-content-between align-items-center"
+                                class="d-flex justify-content-between align-items-center"
                               >
-                                <span>NCR</span>
-                                <div
-                                  class="status-toggle d-flex justify-content-between align-items-center"
-                                >
-                                  <input
-                                    disabled
-                                    type="checkbox"
-                                    id="NCR"
-                                    class="check"
-                                    name="NCR"
-                                    [ngModelOptions]="{ standalone: true }"
-                                    [(ngModel)]="NCR"
-                                  />
-                                  <label
-                                    for="NCR"
-                                    class="checktoggle"
-                                    value="true"
-                                    >checkbox</label
-                                  >
-                                </div>
+                                <i
+                                  *ngIf="intervention.NCR"
+                                  class="fa fa-check"
+                                ></i>
+                                <i
+                                  *ngIf="!intervention.NCR"
+                                  class="fa fa-times"
+                                ></i>
                               </div>
                             </div>
                           </div>
                           <div class="col-xs-12 col-sm-3">
-                            <div class="form-group">
+                            <div
+                              class="d-flex justify-content-between align-items-center"
+                            >
+                              <span>Shaping</span>
                               <div
-                                class="card-header d-flex justify-content-between align-items-center"
+                                class="d-flex justify-content-between align-items-center"
                               >
-                                <span>Shaping</span>
-                                <div
-                                  class="status-toggle d-flex justify-content-between align-items-center"
-                                >
-                                  <input
-                                    disabled
-                                    type="checkbox"
-                                    id="shaping"
-                                    class="check"
-                                    name="shaping"
-                                    [ngModelOptions]="{ standalone: true }"
-                                    [(ngModel)]="shaping"
-                                  />
-                                  <label
-                                    for="shaping"
-                                    class="checktoggle"
-                                    value="true"
-                                    >checkbox</label
-                                  >
-                                </div>
+                                <i
+                                  *ngIf="intervention.shaping"
+                                  class="fa fa-check"
+                                ></i>
+                                <i
+                                  *ngIf="!intervention.shaping"
+                                  class="fa fa-times"
+                                ></i>
                               </div>
                             </div>
                           </div>
                           <div class="col-xs-12 col-sm-3">
-                            <div class="form-group">
+                            <div
+                              class="d-flex justify-content-between align-items-center"
+                            >
+                              <span>Chaining</span>
                               <div
-                                class="card-header d-flex justify-content-between align-items-center"
+                                class="d-flex justify-content-between align-items-center"
                               >
-                                <span>Chaining</span>
-                                <div
-                                  class="status-toggle d-flex justify-content-between align-items-center"
-                                >
-                                  <input
-                                    disabled
-                                    type="checkbox"
-                                    id="chaining"
-                                    class="check"
-                                    name="chaining"
-                                    [ngModelOptions]="{ standalone: true }"
-                                    [(ngModel)]="chaining"
-                                  />
-                                  <label
-                                    for="chaining"
-                                    class="checktoggle"
-                                    value="true"
-                                    >checkbox</label
-                                  >
-                                </div>
+                                <i
+                                  *ngIf="intervention.chaining"
+                                  class="fa fa-check"
+                                ></i>
+                                <i
+                                  *ngIf="!intervention.chaining"
+                                  class="fa fa-times"
+                                ></i>
                               </div>
                             </div>
                           </div>
                           <div class="col-xs-12 col-sm-3">
-                            <div class="form-group">
+                            <div
+                              class="d-flex justify-content-between align-items-center"
+                            >
+                              <span>Token Economy</span>
                               <div
-                                class="card-header d-flex justify-content-between align-items-center"
+                                class="d-flex justify-content-between align-items-center"
                               >
-                                <span>Token Economy</span>
-                                <div
-                                  class="status-toggle d-flex justify-content-between align-items-center"
-                                >
-                                  <input
-                                    disabled
-                                    type="checkbox"
-                                    id="token_economy"
-                                    class="check"
-                                    name="token_economy"
-                                    [ngModelOptions]="{ standalone: true }"
-                                    [(ngModel)]="token_economy"
-                                  />
-                                  <label
-                                    for="token_economy"
-                                    class="checktoggle"
-                                    value="true"
-                                    >checkbox</label
-                                  >
-                                </div>
+                                <i
+                                  *ngIf="intervention.token_economy"
+                                  class="fa fa-check"
+                                ></i>
+                                <i
+                                  *ngIf="!intervention.token_economy"
+                                  class="fa fa-times"
+                                ></i>
                               </div>
                             </div>
                           </div>
                           <div class="col-xs-12 col-sm-3">
-                            <div class="form-group">
+                            <div
+                              class="d-flex justify-content-between align-items-center"
+                            >
+                              <span>Extinction</span>
                               <div
-                                class="card-header d-flex justify-content-between align-items-center"
+                                class="d-flex justify-content-between align-items-center"
                               >
-                                <span>Extinction</span>
-                                <div
-                                  class="status-toggle d-flex justify-content-between align-items-center"
-                                >
-                                  <input
-                                    disabled
-                                    type="checkbox"
-                                    id="extinction"
-                                    class="check"
-                                    name="extinction"
-                                    [ngModelOptions]="{ standalone: true }"
-                                    [(ngModel)]="extinction"
-                                  />
-                                  <label
-                                    for="extinction"
-                                    class="checktoggle"
-                                    value="true"
-                                    >checkbox</label
-                                  >
-                                </div>
+                                <i
+                                  *ngIf="intervention.extinction"
+                                  class="fa fa-check"
+                                ></i>
+                                <i
+                                  *ngIf="!intervention.extinction"
+                                  class="fa fa-times"
+                                ></i>
                               </div>
                             </div>
                           </div>
                           <div class="col-xs-12 col-sm-3">
-                            <div class="form-group">
+                            <div
+                              class="d-flex justify-content-between align-items-center"
+                            >
+                              <span>Natural Teaching</span>
                               <div
-                                class="card-header d-flex justify-content-between align-items-center"
+                                class="d-flex justify-content-between align-items-center"
                               >
-                                <span>Natural Teaching</span>
-                                <div
-                                  class="status-toggle d-flex justify-content-between align-items-center"
-                                >
-                                  <input
-                                    disabled
-                                    type="checkbox"
-                                    id="natural_teaching"
-                                    class="check"
-                                    name="natural_teaching"
-                                    [ngModelOptions]="{ standalone: true }"
-                                    [(ngModel)]="natural_teaching"
-                                  />
-                                  <label
-                                    for="natural_teaching"
-                                    class="checktoggle"
-                                    value="true"
-                                    >checkbox</label
-                                  >
-                                </div>
+                                <i
+                                  *ngIf="intervention.natural_teaching"
+                                  class="fa fa-check"
+                                ></i>
+                                <i
+                                  *ngIf="!intervention.natural_teaching"
+                                  class="fa fa-times"
+                                ></i>
                               </div>
                             </div>
                           </div>
@@ -768,7 +659,7 @@
                             </p>
                           </div>
                         </div>
-                        <div class="row mt-5">
+                        <div class="row mt-5 page-break-avoid">
                           <div
                             class="col-xs-12 d-flex align-items-center justify-content-center"
                           >
@@ -778,17 +669,18 @@
                                 <img
                                   src="{{
                                     IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED
+                                      | removeString : '/app/public'
                                   }}"
                                   style="
                                     width: 100%;
-                                    height: fit-content;
+                                    height: 100px;
                                     max-height: 100px;
                                   "
                                 />
                               </div>
                               <div class="detail-personal">
                                 <h2 style="margin: 0">Provider name RBT</h2>
-                                <p style="margin-bottom: 15px">
+                                <p style="margin-bottom: 8px">
                                   {{ doctor_selected_full_name_rbt }}
                                 </p>
                                 <h2 style="margin: 0">Signature date</h2>
@@ -801,17 +693,18 @@
                                 <img
                                   src="{{
                                     IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED
+                                      | removeString : '/app/public'
                                   }}"
                                   style="
                                     width: 100%;
-                                    height: fit-content;
+                                    height: 100px;
                                     max-height: 100px;
                                   "
                                 />
                               </div>
                               <div class="detail-personal">
                                 <h2 style="margin: 0">Supervisor name BCBA</h2>
-                                <p style="margin-bottom: 15px">
+                                <p style="margin-bottom: 8px">
                                   {{ doctor_selected_full_name_bcba }}
                                 </p>
                                 <h2 style="margin: 0">Signature date</h2>

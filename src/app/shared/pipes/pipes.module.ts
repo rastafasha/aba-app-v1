@@ -11,6 +11,7 @@ import { RoleFilterPipe } from './roles-filter.pipe';
 import { SecureResourceUrlPipe } from './secure-resource-url.pipe';
 import { TransformToDatePipe } from './transform-to-date.pipe';
 import { ArrayFindPipe } from './array-find.pipe';
+import { RemoveStringPipe } from './remove-string.pipe';
 
 const components = [
   ArrayFilterPipe,
@@ -24,9 +25,10 @@ const components = [
   MaxPipe,
   CeilPipe,
   FloorPipe,
+  RemoveStringPipe,
 ];
 @NgModule({
-  declarations: [...components],
+  declarations: [...components, RemoveStringPipe],
   exports: [...components],
   imports: [CommonModule],
 })
