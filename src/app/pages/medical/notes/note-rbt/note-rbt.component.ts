@@ -167,8 +167,6 @@ export class NoteRbtComponent implements OnInit {
 
   projectedUnits = 0;
 
-  // session_date: Date;
-  // next_session_is_scheduled_for: Date;
 
   constructor(
     private bipService: BipService,
@@ -212,13 +210,12 @@ export class NoteRbtComponent implements OnInit {
   }
 
   goBack() {
-    this.location.back(); // <-- go back to previous location on cancel
+    this.location.back();
   }
 
   getDoctor() {
     this.doctorService.showDoctor(this.doctor_id).subscribe((resp) => {
       this.doctor = resp.user;
-      console.log(this.doctor);
       this.electronic_signature = resp.user.electronic_signature;
       this.full_name = resp.user.full_name;
     });
@@ -226,7 +223,6 @@ export class NoteRbtComponent implements OnInit {
 
   getConfig() {
     this.noteRbtService.listConfigNote().subscribe((resp) => {
-      // console.log(resp);
 
       this.roles_rbt = resp.roles_rbt;
       this.roles_bcba = resp.roles_bcba;
@@ -237,7 +233,6 @@ export class NoteRbtComponent implements OnInit {
 
   getProfileBip() {
     this.bipService.showBipProfile(this.patient_id).subscribe((resp) => {
-      console.log(resp);
       this.client_selected = resp;
 
       this.first_name = this.client_selected.patient.first_name;
@@ -249,21 +244,10 @@ export class NoteRbtComponent implements OnInit {
       this.selectedValueRBT = resp.patient.rbt_id;
       this.selectedValueBCBA = resp.patient.bcba_id;
       this.pos = resp.patient.pos_covered;
-      // this.pos = JSON.parse(resp.patient.pos_covered) ;
-
-      // console.log( this.pos);
       this.diagnosis_code = this.client_selected.patient.diagnosis_code;
 
       this.pa_services = resp.patient.pa_services;
 
-      console.log('Mapped PA Services:', this.pa_services);
-
-      // this.n_un = this.pa_assessmentsgroup[0].n_units;
-      // this.unitsAsignated = this.pa_assessmentsgroup.n_units;
-      // console.log(this.pa_assessments);
-      // console.log(this.pa_assessmentsgroup);
-      // this.cpt = this.pa_assessmentsgroup[0].cpt;
-      // console.log(this.cpt);
 
       this.getMaladaptivesBipByPatientId();
       this.getReplacementsByPatientId();
@@ -285,7 +269,6 @@ export class NoteRbtComponent implements OnInit {
     this.bipService
       .getBipProfilePatient_id(this.patient_id)
       .subscribe((resp) => {
-        // console.log(resp);
         this.maladaptives = resp.maladaptives;
         this.bip_id = resp.id;
       });
@@ -294,11 +277,13 @@ export class NoteRbtComponent implements OnInit {
     this.noteRbtService
       .showReplacementbyPatient(this.patient_id)
       .subscribe((resp) => {
-        console.log(resp);
-        this.replacementGoals = resp.replacementGoals;
-        this.goal = resp.replacementGoals[0].goal;
-        console.log(this.goal);
-        this.getStoInprogressGoal();
+        this.replacementGoals = [];
+        resp['replacementGoals'].forEach(element => {
+          const goalSto = JSON.parse(element.goalstos).find(item => item.sustitution_status_sto_edit === 'inprogress')
+          if (!!goalSto) {
+            this.replacementGoals.push({...element, target: goalSto.target})
+          }
+        });
       });
   }
 
@@ -308,70 +293,28 @@ export class NoteRbtComponent implements OnInit {
     });
   }
 
-  // traer el target de todos los replacements
-  getStoInprogressGoal() {
-    this.goalService.getStobyGoalinProgress(this.goal).subscribe((resp) => {
-      console.log('getStoInprogressGoal', resp);
-      this.stoInprogressGoal = resp.goalstos.in_progress;
-      this.stoInprogressGoal.forEach((element: any) => {
-        this.stoInprogressGoal.push(element);
-      });
-      this.stoInprogressGoal.forEach((element: any) => {
-        this.stoInprogressGoal.push(element);
-      });
-    });
-  }
-
-  getStoInprogressGoal1() {
-    this.goalService.getStobyGoalinProgress(this.goal).subscribe((resp) => {
-      console.log(resp);
-      if (resp && resp.goalstos && resp.goalstos.in_progress) {
-        const inProgress = resp.goalstos.in_progress[this.replacementGoals.id];
-        if (inProgress) {
-          this.stoGoalinProgress = inProgress.sustitution_status_sto;
-          this.target = inProgress.target;
-        } else {
-          console.log(`in_progress[${this.replacementGoals.id}] is undefined`);
-        }
-      } else {
-        console.log(
-          'resp or resp.goalstos or resp.goalstos.in_progress is undefined'
-        );
-      }
-    });
-  }
 
   speciaFirmaDataRbt(selectedValueRBT) {
     this.doctorService.showDoctorProfile(selectedValueRBT).subscribe((resp) => {
-      console.log(resp);
       this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED =
         resp.doctor.electronic_signature;
-      console.log(this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED);
-      // this.notes = resp.notes;
-      // this.services = resp.services;
     });
   }
   selectFirmaSpecialistRbt() {
     this.speciaFirmaDataRbt(this.selectedValueRBT);
-    console.log(this.selectedValueRBT);
   }
 
   speciaFirmaDataBcba(selectedValueBCBA: string) {
     this.doctorService
       .showDoctorProfile(selectedValueBCBA)
       .subscribe((resp) => {
-        console.log(resp);
         this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED =
           resp.doctor.electronic_signature;
-        console.log(this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED);
-        // this.notes = resp.notes;
-        // this.services = resp.services;
       });
   }
 
   selectFirmaSpecialistBcba(event) {
     this.speciaFirmaDataBcba(this.selectedValueBCBA);
-    console.log(this.selectedValueBCBA);
   }
 
   calculateUnitsFromTime(startTime: string, endTime: string): number {
@@ -433,12 +376,10 @@ export class NoteRbtComponent implements OnInit {
   }
 
   hourTimeInSelected(value: string) {
-    console.log('hourTimeInSelected', value);
     this.selectedValueTimeIn = value;
     this.calculateProjectedUnits();
   }
   hourTimeOutSelected(value: string) {
-    console.log('hourTimeOutSelected', value);
     this.selectedValueTimeOut = value;
     this.calculateProjectedUnits();
   }
@@ -453,10 +394,6 @@ export class NoteRbtComponent implements OnInit {
 
   selectMaladaptive(behavior: any) {
     this.maladaptiveSelected = behavior;
-    // console.log(behavior);
-    // this.maladp_added.push({
-    //   maladaptive : behavior
-    // })
   }
 
   isExceedingAvailableUnits(): boolean {
@@ -466,10 +403,6 @@ export class NoteRbtComponent implements OnInit {
 
   selectReplacement(replacemen: any) {
     this.replacementSelected = replacemen;
-    // console.log(this.replacementSelected);
-    // this.replacement_added.push({
-    //   replacement : replacemen
-    // })
   }
 
   back() {
@@ -477,7 +410,6 @@ export class NoteRbtComponent implements OnInit {
     this.maladaptiveSelected = null;
     this.total_trials = null;
     this.number_of_correct_response = null;
-    // this.ngOnInit();
   }
 
   addMaladaptive(behavior, i) {
@@ -512,7 +444,6 @@ export class NoteRbtComponent implements OnInit {
         total_trials: this.replacementSelected.total_trials,
         number_of_correct_response:
           this.replacementSelected.number_of_correct_response,
-        // number_of_correct_response: this.number_of_correct_response ? this.number_of_correct_response :0 ,
       });
       this.replacementGoals.splice(this.replacementGoals, 1);
       Swal.fire(
@@ -521,7 +452,6 @@ export class NoteRbtComponent implements OnInit {
         'success'
       );
       this.replacementSelected = null;
-      this.goal = '';
       this.total_trials = null;
       this.number_of_correct_response = null;
     }
@@ -621,7 +551,6 @@ export class NoteRbtComponent implements OnInit {
       !this.client_response_to_treatment_this_session ||
       !this.progress_noted_this_session_compared_to_previous_session ||
       !this.selectedValueCode
-      // || !this.supervisor_name
     ) {
       this.text_validation = 'All Fields (*) are required';
       Swal.fire('Warning', `Must add less one`, 'warning');
@@ -732,7 +661,6 @@ export class NoteRbtComponent implements OnInit {
     }
 
     formData.forEach((value, key) => {
-      console.log(key + ': ' + value);
     });
 
     this.noteRbtService.create(formData).subscribe(
@@ -774,24 +702,6 @@ export class NoteRbtComponent implements OnInit {
     this.replacementGoals = updatedReplacements;
   }
 
-  //   class Calculadora {
-  //     sumar(num1, num2) {
-  //         return num1 + num2;
-  //     }
-
-  //     restar(num1, num2) {
-  //         return num1 - num2;
-  //     }
-
-  //     dividir(num1, num2) {
-  //         return num1 / num2;
-  //     }
-
-  //     multiplicar(num1, num2) {
-  //         return num1 * num2;
-  //     }
-  // }
-  //
 
   generateAISummary() {
     if (!this.checkDataSufficient()) {
@@ -833,7 +743,6 @@ export class NoteRbtComponent implements OnInit {
         this.isGeneratingSummary = false;
       },
       (error) => {
-        console.error('Error generating AI summary:', error);
         Swal.fire(
           'Error',
           'Error generating AI summary. Please ensure you have filled all the required fields.',
