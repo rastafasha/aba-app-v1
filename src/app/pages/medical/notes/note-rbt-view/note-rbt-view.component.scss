@@ -1,11 +1,23 @@
-.detail-personal{
-    padding-bottom: 0 !important;
+.detail-personal {
+  padding-bottom: 0 !important;
 }
-.detail-personal h2{
-    padding-bottom: 0 !important;
-    margin-bottom: 0 !important;
+.detail-personal h2 {
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
 }
 // .detail-personal p{
 //     padding-bottom: 0 !important;
 //     margin-bottom: 0 !important;
 // }
+
+@media print {
+  .content {
+    padding: 0px;
+  }
+  .card {
+    margin-bottom: 2px !important;
+  }
+  .container {
+    max-width: none !important;
+  }
+}

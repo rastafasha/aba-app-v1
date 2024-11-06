@@ -216,17 +216,6 @@
                   >
                     <i class="fa fa-bars"></i>
                   </button>
-                  <button
-                    class="btn btn-outline-warning"
-                    *ngIf="roles === 'SUPERADMIN' || roles === 'MANAGER'"
-                    [routerLink]="[
-                      routes.clientReport.byClient,
-                      patient.patient_id
-                    ]"
-                    tooltip="Log Report"
-                  >
-                    <i class="fa fa-check-circle"></i>
-                  </button>
                 </span>
               </td>
               <td *ngIf="roles === 'SUPERADMIN'">

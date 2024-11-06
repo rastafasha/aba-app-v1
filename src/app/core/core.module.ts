@@ -5,12 +5,11 @@ import { LayoutModule } from '../layout/layout.module';
 import { SharedModule } from '../shared/shared.module';
 import { AuthService } from './auth/auth.service';
 import { CoreComponent } from './core.component';
-import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
-  declarations: [CoreComponent, ModalComponent],
+  declarations: [CoreComponent],
   imports: [CommonModule, SharedModule, LayoutModule],
-  exports: [CoreComponent, ModalComponent],
+  exports: [CoreComponent],
   providers: [AuthService],
 })
 export class CoreModule {}
