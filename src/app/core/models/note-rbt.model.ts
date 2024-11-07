@@ -1,4 +1,4 @@
-import { NoteBcba } from './note-bcba';
+import { NoteBcba } from './note-bcba.model';
 import { Supervisor, Tecnico } from './notes.model';
 
 export interface NoteRbt {

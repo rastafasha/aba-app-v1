@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
 import { ConsentToTreatmentService } from '../../service/consent-to-treatment.service';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { AppUser } from 'src/app/core/models/users.model';
 @Component({
   selector: 'app-consent-treatment-form',
   templateUrl: './consent-treatment-form.component.html',

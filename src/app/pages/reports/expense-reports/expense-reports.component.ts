@@ -4,9 +4,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DataService } from 'src/app/shared/data/data.service';
 import {
   PageSelection,
-  ApiResultFormat,
+  ApiResponse,
   exponsesreport,
-} from 'src/app/shared/models/models';
+} from 'src/app/core/models';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 interface data {
   value: string;
@@ -44,8 +44,8 @@ export class ExpenseReportsComponent implements OnInit {
     this.expenseReports = [];
     this.serialNumberArray = [];
 
-    this.data.getExpenseReports().subscribe((data: ApiResultFormat) => {
-      this.totalData = data.totalData;
+    this.data.getExpenseReports().subscribe((data: ApiResponse) => {
+      this.totalData = data.total;
       data.data.map((res: exponsesreport, index: number) => {
         const serialNumber = index + 1;
         if (index >= this.skip && serialNumber <= this.limit) {

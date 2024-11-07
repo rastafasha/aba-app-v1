@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { AppUser } from 'src/app/core/models/users.model';
 import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
 import { GoalFamilyEnvolmentService } from '../../service/goal-family-envolment.service';

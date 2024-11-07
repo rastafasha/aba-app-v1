@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { url_servicios } from 'src/app/config/config';
-import { NoteBcba } from 'src/app/shared/models/note-bcba';
+import { NoteBcba } from 'src/app/core/models/note-bcba.model';
 import { ApiService } from './api.service';
 
 @Injectable({

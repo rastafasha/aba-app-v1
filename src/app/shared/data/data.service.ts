@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable, of } from 'rxjs';
-import { ApiResultFormat } from '../models/models';
+import { ApiResponse } from '../../core/models';
 import { doctorsLists } from './doctors-list';
 import { sidebar } from './sidebar.data';
 
@@ -11,207 +11,187 @@ import { sidebar } from './sidebar.data';
 export class DataService {
   constructor(private http: HttpClient) {}
 
-  getDoctorsList(): Observable<ApiResultFormat> {
+  getDoctorsList(): Observable<ApiResponse> {
     return of(JSON.parse(JSON.stringify(doctorsLists)));
   }
 
-  getPatientsList(): Observable<ApiResultFormat> {
-    return this.http.get<ApiResultFormat>('assets/json/doctors-list.json').pipe(
-      map((res: ApiResultFormat) => {
+  getPatientsList(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>('assets/json/doctors-list.json').pipe(
+      map((res: ApiResponse) => {
         return res;
       })
     );
   }
-  getStaffList(): Observable<ApiResultFormat> {
-    return this.http.get<ApiResultFormat>('assets/json/staff-list.json').pipe(
-      map((res: ApiResultFormat) => {
+  getStaffList(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>('assets/json/staff-list.json').pipe(
+      map((res: ApiResponse) => {
         return res;
       })
     );
   }
-  getAppointmentList(): Observable<ApiResultFormat> {
-    return this.http
-      .get<ApiResultFormat>('assets/json/appointment-list.json')
-      .pipe(
-        map((res: ApiResultFormat) => {
-          return res;
-        })
-      );
-  }
-  getStaffHoliday(): Observable<ApiResultFormat> {
-    return this.http
-      .get<ApiResultFormat>('assets/json/staff-holiday.json')
-      .pipe(
-        map((res: ApiResultFormat) => {
-          return res;
-        })
-      );
-  }
-  getSchedule(): Observable<ApiResultFormat> {
-    return this.http.get<ApiResultFormat>('assets/json/schedule.json').pipe(
-      map((res: ApiResultFormat) => {
+  getAppointmentList(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>('assets/json/appointment-list.json').pipe(
+      map((res: ApiResponse) => {
         return res;
       })
     );
   }
-  getInvoices(): Observable<ApiResultFormat> {
-    return this.http.get<ApiResultFormat>('assets/json/invoices.json').pipe(
-      map((res: ApiResultFormat) => {
+  getStaffHoliday(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>('assets/json/staff-holiday.json').pipe(
+      map((res: ApiResponse) => {
         return res;
       })
     );
   }
-  getPayments(): Observable<ApiResultFormat> {
-    return this.http.get<ApiResultFormat>('assets/json/payments.json').pipe(
-      map((res: ApiResultFormat) => {
+  getSchedule(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>('assets/json/schedule.json').pipe(
+      map((res: ApiResponse) => {
         return res;
       })
     );
   }
-  getExpenses(): Observable<ApiResultFormat> {
-    return this.http.get<ApiResultFormat>('assets/json/expenses.json').pipe(
-      map((res: ApiResultFormat) => {
+  getInvoices(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>('assets/json/invoices.json').pipe(
+      map((res: ApiResponse) => {
         return res;
       })
     );
   }
-  getTaxes(): Observable<ApiResultFormat> {
-    return this.http.get<ApiResultFormat>('assets/json/taxes.json').pipe(
-      map((res: ApiResultFormat) => {
+  getPayments(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>('assets/json/payments.json').pipe(
+      map((res: ApiResponse) => {
         return res;
       })
     );
   }
-  getProvidentFund(): Observable<ApiResultFormat> {
-    return this.http
-      .get<ApiResultFormat>('assets/json/provident-fund.json')
-      .pipe(
-        map((res: ApiResultFormat) => {
-          return res;
-        })
-      );
-  }
-  getDepartmentList(): Observable<ApiResultFormat> {
-    return this.http
-      .get<ApiResultFormat>('assets/json/department-list.json')
-      .pipe(
-        map((res: ApiResultFormat) => {
-          return res;
-        })
-      );
-  }
-  getSalary(): Observable<ApiResultFormat> {
-    return this.http.get<ApiResultFormat>('assets/json/salary.json').pipe(
-      map((res: ApiResultFormat) => {
+  getExpenses(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>('assets/json/expenses.json').pipe(
+      map((res: ApiResponse) => {
         return res;
       })
     );
   }
-  getAssetsList(): Observable<ApiResultFormat> {
-    return this.http.get<ApiResultFormat>('assets/json/assets-list.json').pipe(
-      map((res: ApiResultFormat) => {
+  getTaxes(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>('assets/json/taxes.json').pipe(
+      map((res: ApiResponse) => {
         return res;
       })
     );
   }
-  getExpenseReports(): Observable<ApiResultFormat> {
-    return this.http
-      .get<ApiResultFormat>('assets/json/expense-reports.json')
-      .pipe(
-        map((res: ApiResultFormat) => {
-          return res;
-        })
-      );
-  }
-  getInvoiceReports(): Observable<ApiResultFormat> {
-    return this.http
-      .get<ApiResultFormat>('assets/json/invoice-reports.json')
-      .pipe(
-        map((res: ApiResultFormat) => {
-          return res;
-        })
-      );
-  }
-  getAllInvoice(): Observable<ApiResultFormat> {
-    return this.http.get<ApiResultFormat>('assets/json/all-invoice.json').pipe(
-      map((res: ApiResultFormat) => {
+  getProvidentFund(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>('assets/json/provident-fund.json').pipe(
+      map((res: ApiResponse) => {
         return res;
       })
     );
   }
-  getPatientDashboard(): Observable<ApiResultFormat> {
+  getDepartmentList(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>('assets/json/department-list.json').pipe(
+      map((res: ApiResponse) => {
+        return res;
+      })
+    );
+  }
+  getSalary(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>('assets/json/salary.json').pipe(
+      map((res: ApiResponse) => {
+        return res;
+      })
+    );
+  }
+  getAssetsList(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>('assets/json/assets-list.json').pipe(
+      map((res: ApiResponse) => {
+        return res;
+      })
+    );
+  }
+  getExpenseReports(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>('assets/json/expense-reports.json').pipe(
+      map((res: ApiResponse) => {
+        return res;
+      })
+    );
+  }
+  getInvoiceReports(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>('assets/json/invoice-reports.json').pipe(
+      map((res: ApiResponse) => {
+        return res;
+      })
+    );
+  }
+  getAllInvoice(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>('assets/json/all-invoice.json').pipe(
+      map((res: ApiResponse) => {
+        return res;
+      })
+    );
+  }
+  getPatientDashboard(): Observable<ApiResponse> {
     return this.http
-      .get<ApiResultFormat>('assets/json/patient-dashboard.json')
+      .get<ApiResponse>('assets/json/patient-dashboard.json')
       .pipe(
-        map((res: ApiResultFormat) => {
+        map((res: ApiResponse) => {
           return res;
         })
       );
   }
-  getInvoicesPaid(): Observable<ApiResultFormat> {
+  getInvoicesPaid(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>('assets/json/invoices-paid.json').pipe(
+      map((res: ApiResponse) => {
+        return res;
+      })
+    );
+  }
+  getInvoicesOverdue(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>('assets/json/invoices-overdue.json').pipe(
+      map((res: ApiResponse) => {
+        return res;
+      })
+    );
+  }
+  getInvoicesDraft(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>('assets/json/invoices-draft.json').pipe(
+      map((res: ApiResponse) => {
+        return res;
+      })
+    );
+  }
+  getInvoicesCancelled(): Observable<ApiResponse> {
     return this.http
-      .get<ApiResultFormat>('assets/json/invoices-paid.json')
+      .get<ApiResponse>('assets/json/invoices-cancelled.json')
       .pipe(
-        map((res: ApiResultFormat) => {
+        map((res: ApiResponse) => {
           return res;
         })
       );
   }
-  getInvoicesOverdue(): Observable<ApiResultFormat> {
+  getInvoicesRecurring(): Observable<ApiResponse> {
     return this.http
-      .get<ApiResultFormat>('assets/json/invoices-overdue.json')
+      .get<ApiResponse>('assets/json/invoices-recurring.json')
       .pipe(
-        map((res: ApiResultFormat) => {
+        map((res: ApiResponse) => {
           return res;
         })
       );
   }
-  getInvoicesDraft(): Observable<ApiResultFormat> {
-    return this.http
-      .get<ApiResultFormat>('assets/json/invoices-draft.json')
-      .pipe(
-        map((res: ApiResultFormat) => {
-          return res;
-        })
-      );
-  }
-  getInvoicesCancelled(): Observable<ApiResultFormat> {
-    return this.http
-      .get<ApiResultFormat>('assets/json/invoices-cancelled.json')
-      .pipe(
-        map((res: ApiResultFormat) => {
-          return res;
-        })
-      );
-  }
-  getInvoicesRecurring(): Observable<ApiResultFormat> {
-    return this.http
-      .get<ApiResultFormat>('assets/json/invoices-recurring.json')
-      .pipe(
-        map((res: ApiResultFormat) => {
-          return res;
-        })
-      );
-  }
-  getStaffLeave(): Observable<ApiResultFormat> {
-    return this.http.get<ApiResultFormat>('assets/json/staff-leave.json').pipe(
-      map((res: ApiResultFormat) => {
+  getStaffLeave(): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>('assets/json/staff-leave.json').pipe(
+      map((res: ApiResponse) => {
         return res;
       })
     );
   }
   getEvents() {
-    return this.http
-      .get<ApiResultFormat>('assets/json/scheduleevents.json')
-      .pipe(
-        map((res: ApiResultFormat) => {
-          return res;
-        })
-      );
+    return this.http.get<ApiResponse>('assets/json/scheduleevents.json').pipe(
+      map((res: ApiResponse) => {
+        return res;
+      })
+    );
   }
   getDataTables() {
-    return this.http.get<ApiResultFormat>('assets/json/data-tables.json').pipe(
-      map((res: ApiResultFormat) => {
+    return this.http.get<ApiResponse>('assets/json/data-tables.json').pipe(
+      map((res: ApiResponse) => {
         return res;
       })
     );

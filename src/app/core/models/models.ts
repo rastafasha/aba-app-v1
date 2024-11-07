@@ -2,11 +2,7 @@ export interface PageSelection {
   skip: number;
   limit: number;
 }
-export interface ApiResultFormat {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data: any[];
-  totalData: number;
-}
+
 export interface Expenses {
   item: string;
   purchaseFrom: string;
@@ -23,7 +19,7 @@ export interface StaffHolidays {
   day: string;
   description: string;
 }
-export interface staffleave {
+export interface StaffLeave {
   employeeName: string;
   leaveType: string;
   from: number;
@@ -33,7 +29,7 @@ export interface staffleave {
   status: string;
   img: string;
 }
-export interface invoices {
+export interface Invoices {
   invoiceNumber: string;
   patient: string;
   createdDate: number;
@@ -42,7 +38,7 @@ export interface invoices {
   status: string;
   img: string;
 }
-export interface invoicereport {
+export interface InvoiceReport {
   invoiceNumber: string;
   client: string;
   createdDate: number;
@@ -51,7 +47,7 @@ export interface invoicereport {
   status: string;
   img: string;
 }
-export interface invoicescancelled {
+export interface InvoicesCancelled {
   invoiceId: string;
   category: string;
   createdOn: string | number;
@@ -99,7 +95,7 @@ export interface invoicerecurring {
   status: string;
   img: string;
 }
-export interface doctorlist {
+export interface DoctorList {
   name: string;
   department: string;
   specialization: string;

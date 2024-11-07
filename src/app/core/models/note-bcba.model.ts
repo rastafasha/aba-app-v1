@@ -1,5 +1,5 @@
-import { NoteRbt } from './note-rbt';
-import { Tecnico, Supervisor } from './notes.model';
+import { NoteRbt } from './note-rbt.model';
+import { Supervisor, Tecnico } from './notes.model';
 
 export interface NoteBcba {
   summary_note: string;

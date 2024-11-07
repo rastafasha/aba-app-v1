@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import { InsuranceService } from '../../../../core/services/insurance.service';
+import { InsuranceService } from '../../../../core/services/insurances.service';
 import { Location } from '@angular/common';
 import { PageService } from 'src/app/shared/services/pages.service';
 

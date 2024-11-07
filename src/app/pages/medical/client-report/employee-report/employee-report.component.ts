@@ -6,12 +6,12 @@ import { forkJoin, map, Observable, tap } from 'rxjs';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import Swal from 'sweetalert2';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import { InsuranceService } from '../../../../core/services/insurance.service';
-import { NoteBcbaService } from '../../../../core/services/note-bcba.service';
-import { NoteRbtService } from '../../../../core/services/note-rbt.service';
+import { InsuranceService } from '../../../../core/services/insurances.service';
+import { NoteBcbaService } from '../../../../core/services/notes-bcba.service';
+import { NoteRbtService } from '../../../../core/services/notes-rbt.service';
 import { ClientReportModel } from '../client-report.model';
 import { ClientReportService } from '../client-report.service';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { AppUser } from 'src/app/core/models/users.model';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { LocationInsurance } from '../../location/models/locations.model';
 

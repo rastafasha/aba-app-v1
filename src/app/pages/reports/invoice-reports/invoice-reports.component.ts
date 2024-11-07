@@ -2,11 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DataService } from 'src/app/shared/data/data.service';
-import {
-  PageSelection,
-  ApiResultFormat,
-  invoicereport,
-} from 'src/app/shared/models/models';
+import { PageSelection, ApiResponse, InvoiceReport } from 'src/app/core/models';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 interface data {
   value: string;
@@ -19,8 +15,8 @@ interface data {
 export class InvoiceReportsComponent implements OnInit {
   routes = AppRoutes;
   selectedValue!: string;
-  invoiceReports: Array<invoicereport> = [];
-  dataSource!: MatTableDataSource<invoicereport>;
+  invoiceReports: Array<InvoiceReport> = [];
+  dataSource!: MatTableDataSource<InvoiceReport>;
 
   showFilter = false;
   searchDataValue = '';
@@ -44,16 +40,16 @@ export class InvoiceReportsComponent implements OnInit {
     this.invoiceReports = [];
     this.serialNumberArray = [];
 
-    this.data.getInvoiceReports().subscribe((data: ApiResultFormat) => {
-      this.totalData = data.totalData;
-      data.data.map((res: invoicereport, index: number) => {
+    this.data.getInvoiceReports().subscribe((data: ApiResponse) => {
+      this.totalData = data.total;
+      data.data.map((res: InvoiceReport, index: number) => {
         const serialNumber = index + 1;
         if (index >= this.skip && serialNumber <= this.limit) {
           this.invoiceReports.push(res);
           this.serialNumberArray.push(serialNumber);
         }
       });
-      this.dataSource = new MatTableDataSource<invoicereport>(
+      this.dataSource = new MatTableDataSource<InvoiceReport>(
         this.invoiceReports
       );
       this.calculateTotalPages(this.totalData, this.pageSize);

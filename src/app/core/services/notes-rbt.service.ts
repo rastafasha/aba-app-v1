@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { url_servicios } from 'src/app/config/config';
 import { ApiService } from './api.service';
-import { NoteRbt } from 'src/app/shared/models/note-rbt';
+import { NoteRbt } from '../models';
 
 @Injectable({
   providedIn: 'root',
