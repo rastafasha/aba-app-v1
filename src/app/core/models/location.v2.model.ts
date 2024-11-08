@@ -1,4 +1,4 @@
-export class InsuranceV2 {
+export class LocationV2 {
   id: number;
   name: string;
 }

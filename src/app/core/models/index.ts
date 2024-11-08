@@ -4,6 +4,7 @@ export * from './api.v2.model';
 export * from './chart-options.model';
 export * from './doctor.v2.model';
 export * from './insurance.v2.model';
+export * from './location.v2.model';
 export * from './models';
 export * from './note-bcba.model';
 export * from './note-bcba.v2.model';

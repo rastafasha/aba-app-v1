@@ -31,7 +31,6 @@ export class LogNotasRenderComponent {
 
   routes = AppRoutes;
   hasChanges = false;
-  unitPrice = 10;
 
   readonly statusOptions = ['pending', 'ok'];
 
