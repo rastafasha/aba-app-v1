@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {
   InsuranceV2,
+  isNoteBcbaV2,
+  isNoteRbtV2,
   LocationV2,
   NoteBcbaV2,
   NoteRbtV2,
@@ -17,7 +19,8 @@ import {
   NotesRbtV2Service,
   PatientsV2Service,
 } from 'src/app/core/services';
-import { forkJoin } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-logs-reports',
@@ -55,7 +58,7 @@ export class LogsReportsComponent implements OnInit {
   notesRbt: NoteRbtV2[] = null;
   notesBcba: NoteBcbaV2[] = null;
   total = 0;
-  pageSize = 15;
+  pageSize = 30;
   currentPage = 1;
 
   constructor(
@@ -77,8 +80,8 @@ export class LogsReportsComponent implements OnInit {
       this.locationsService.list(),
       this.insurancesService.list(),
       this.patientsService.list(),
-      this.notesRbtService.list(),
-      this.notesBcbaService.list(),
+      this.notesRbtService.list({ per_page: Math.ceil(this.pageSize / 2) }),
+      this.notesBcbaService.list({ per_page: Math.ceil(this.pageSize / 2) }),
     ]).subscribe(([locations, insurances, patients, notesRbt, notesBcba]) => {
       this.locations = locations.data;
       this.insurances = insurances.data;
@@ -90,25 +93,104 @@ export class LogsReportsComponent implements OnInit {
     });
   }
 
-  updateData() {
+  updateData(hadFixData = true) {
+    if (hadFixData) this.fixData();
     this.notes = [...this.notesRbt, ...this.notesBcba].sort((a, b) =>
-      a.session_date > b.session_date ? 1 : -1
+      a.session_date < b.session_date ? 1 : -1
     );
     this.total = this.notes.length;
-    console.log(this.notes);
   }
 
-  onFilter(filter: LogFilter) {
-    throw new Error('Method not implemented.');
+  fixData() {
+    // Agregamos informacion faltante
+    this.notesRbt = this.notesRbt.map((item) => {
+      item.patient_id = !isNaN(item.patient_id)
+        ? item.patient_id
+        : this.patients.find(
+            (patient) => patient.patient_id === item.patient_code
+          )?.id;
+      // falta agregar la informacion del "tecnico"
+      // basa en provider_id o provider_name_g
+
+      return item;
+    });
+    // Agregamos informacion faltante
+    this.notesBcba = this.notesBcba.map((item) => {
+      //patiend_id (id)
+      const patient = this.patients.find(
+        (patient) => patient.patient_id === item.patient_code
+      );
+      item.patient_id = patient?.id;
+      // falta agregar la informacion del "tecnico"
+      // basa en provider_id o provider_name_g
+
+      //insurer
+      item.insurance_id = patient?.insurer_id;
+      return item;
+    });
+  }
+
+  onFilter(filter: Partial<LogFilter>) {
+    forkJoin([
+      this.notesRbtService.list({
+        per_page: Math.ceil(this.pageSize / 2),
+        ...filter,
+      }),
+      this.notesBcbaService.list({
+        per_page: Math.ceil(this.pageSize / 2),
+        ...filter,
+      }),
+    ]).subscribe(([notesRbt, notesBcba]) => {
+      this.notesRbt = notesRbt.data;
+      this.notesBcba = notesBcba.data;
+      this.fixData();
+      let combineNotes = [...this.notesRbt, ...this.notesBcba];
+      if (filter.note_type === 'rbt')
+        combineNotes = combineNotes.filter((note) => note.type === 'rbt');
+      if (filter.note_type === 'bcba')
+        combineNotes = combineNotes.filter((note) => note.type === 'bcba');
+      if (filter.insurance_id)
+        combineNotes = combineNotes.filter(
+          (note) => note.insurance_id === filter.insurance_id
+        );
+      if (filter.patient_id)
+        combineNotes = combineNotes.filter(
+          (note) => note.patient_id === filter.patient_id
+        );
+      if (filter.status_type)
+        combineNotes = combineNotes.filter(
+          (note) => note.status === filter.status_type
+        );
+      this.notesRbt = combineNotes.filter(isNoteRbtV2);
+      this.notesBcba = combineNotes.filter(isNoteBcbaV2);
+      this.updateData(false);
+    });
   }
 
   onSortChange(sort: Sort) {
     this.notes = this.tableUtilsService.orderData(this.notes, sort);
   }
   onPageChange($event: number) {
-    throw new Error('Method not implemented.');
+    // throw new Error('Method not implemented.');
   }
-  onSave($event: NoteRbtV2 | NoteBcbaV2) {
-    throw new Error('Method not implemented.');
+  onSave(data: NoteRbtV2 | NoteBcbaV2) {
+    const update$ = isNoteRbtV2(data)
+      ? this.notesRbtService.update(data, data.id)
+      : isNoteBcbaV2(data)
+      ? this.notesBcbaService.update(data, data.id)
+      : of(null);
+
+    update$.subscribe({
+      next: () => {
+        console.log('se actualizo la nota');
+        Swal.fire('Updated', `Saved successfully!`, 'success');
+        this.onRefresh();
+      },
+      error: (err) => {
+        console.log('no se actualizo la nota', err);
+        Swal.fire('Error', `Can't update!`, 'error');
+        this.onRefresh();
+      },
+    });
   }
 }

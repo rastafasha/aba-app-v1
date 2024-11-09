@@ -37,7 +37,7 @@
             <mat-option
               *ngFor="let location of locations"
               [value]="location.id"
-              >{{ location.name }}</mat-option
+              >{{ location.title }}</mat-option
             >
           </mat-select>
         </div>
@@ -71,7 +71,7 @@
           >
             <mat-option [value]="null"> All </mat-option>
             <mat-option *ngFor="let data of insurances" [value]="data.id">
-              {{ data.name }}
+              {{ data.insurer_name }}
             </mat-option>
           </mat-select>
         </div>
@@ -81,7 +81,7 @@
           <label>Client </label>
           <mat-select
             [(ngModel)]="filter.patient_id"
-            name="insurer"
+            name="patient"
             [ngModelOptions]="{ standalone: true }"
             class="form-control select"
             placeholder="Select Client"

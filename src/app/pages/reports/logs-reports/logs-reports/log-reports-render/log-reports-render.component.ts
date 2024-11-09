@@ -22,7 +22,31 @@ export class LogReportsRenderComponent {
   routes = AppRoutes;
   hasChanges = false;
 
-  readonly statusOptions = ['pending', 'ok'];
+  readonly statusOptions = ['pending', 'ok', 'no'];
+  readonly modifiers = [
+    { value: 'HM', description: 'RBT', type: 'rbt', multiplier: 1 },
+    {
+      value: 'XE',
+      description: '2 sessions same day, same provider, different POS',
+      type: 'all',
+      multiplier: 1,
+    },
+    {
+      value: 'XP',
+      description: 'RBT overlap Not reimbursed',
+      type: 'rbt',
+      multiplier: 0,
+    },
+    { value: 'HO', description: 'BCBA', type: 'bcba', multiplier: 1 },
+    { value: 'GT', description: 'Telehealth', type: 'all', multiplier: 1 },
+    { value: 'TS', description: 'Reassessment', type: 'all', multiplier: 1 },
+    {
+      value: '95',
+      description: 'Telehealth (only AETNA)',
+      type: 'all',
+      multiplier: 1,
+    },
+  ];
 
   onSave() {
     if (!this.hasChanges) return;

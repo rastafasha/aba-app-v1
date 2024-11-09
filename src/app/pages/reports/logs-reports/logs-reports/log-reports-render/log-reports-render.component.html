@@ -92,9 +92,9 @@
 
 <!-- patient_name -->
 <td>
-  <a [routerLink]="[routes.patients.profileByPatientId, note.patient_id]">
+  <a [routerLink]="[routes.patients.profileByPatientId, note.patient_code]">
     <span>
-      {{(patients|arrayFilter:'patient_id': note.patient_id)?.[0]?.full_name}}</span
+      {{(patients|arrayFilter:'id': note.patient_id)?.[0]?.full_name}}</span
     >
   </a>
 </td>
@@ -145,7 +145,7 @@
 
 <!-- session_units_total -->
 <td>
-  {{ note.session_units_total }}
+  {{ note.total_units }}
 </td>
 
 <!-- unitPrize -->
@@ -153,7 +153,7 @@
 <td>
   {{
     note.cpt_code
-      | logNotasUnitPrice : note.insurance_id : insurances
+      | logReportsUnitPrice : note.insurance_id : insurances
       | currency
   }}
 </td>
@@ -161,11 +161,11 @@
 <!-- session_units_total -->
 <td>
   {{
-    note.session_units_total
-      | logNotasSessionTotal
+    note.total_units
+      | logReportsSessionTotal
         : note.md
         : note.md2
-        : (note.cpt_code | logNotasUnitPrice : note.insurance_id : insurances)
+        : (note.cpt_code | logReportsUnitPrice : note.insurance_id : insurances)
         : modifiers
       | currency
   }}

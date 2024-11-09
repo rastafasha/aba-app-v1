@@ -24,6 +24,6 @@ export class NotesRbtV2Service extends ApiV2Service<NoteRbtV2> {
 
   transform(data: unknown): NoteRbtV2 {
     if (!data) return null;
-    return { ...(data as NoteRbtV2), type: 'rbt' };
+    return NoteRbtV2.build(data as object);
   }
 }
