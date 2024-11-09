@@ -9,9 +9,9 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
 import { environment } from 'src/environments/environment';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import { InsuranceService } from '../../../../core/services/insurance.service';
+import { InsuranceService } from '../../../../core/services/insurances.service';
 import { PatientMService } from '../service/patient-m.service';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { AppUser } from 'src/app/core/models/users.model';
 import { map, switchMap } from 'rxjs';
 
 // eslint-disable-next-line no-var

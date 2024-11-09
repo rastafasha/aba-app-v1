@@ -1,5 +1,5 @@
-import { NoteBcba } from 'src/app/shared/models/note-bcba';
-import { NoteRbt } from 'src/app/shared/models/note-rbt';
+import { NoteBcba } from 'src/app/core/models/note-bcba.model';
+import { NoteRbt } from 'src/app/core/models';
 import {
   LocationApi,
   LocationInsurance,

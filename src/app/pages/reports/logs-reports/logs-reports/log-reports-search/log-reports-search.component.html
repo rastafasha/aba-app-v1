@@ -1,0 +1,138 @@
+<div class="staff-search-table">
+  <form>
+    <div class="row search5">
+      <div class="col-12 col-md-3">
+        <div class="form-group local-forms">
+          <label>From </label>
+          <input
+            class="form-control datetimepicker"
+            name="date_start"
+            [(ngModel)]="filter.date_start"
+            type="date"
+          />
+        </div>
+      </div>
+      <div class="col-12 col-md-3">
+        <div class="form-group local-forms">
+          <label>To </label>
+          <input
+            class="form-control datetimepicker"
+            name="date_end"
+            [(ngModel)]="filter.date_end"
+            type="date"
+          />
+        </div>
+      </div>
+      <div class="col-12 col-md-3">
+        <div class="form-group local-forms">
+          <label>Location </label>
+          <mat-select
+            [(ngModel)]="filter.location_id"
+            [ngModelOptions]="{ standalone: true }"
+            class="form-control select"
+            placeholder="Select Location"
+            (selectionChange)="onSearch()"
+          >
+            <mat-option [value]="null"> All </mat-option>
+            <mat-option
+              *ngFor="let location of locations"
+              [value]="location.id"
+              >{{ location.title }}</mat-option
+            >
+          </mat-select>
+        </div>
+      </div>
+      <div class="col-12 col-md-3">
+        <div class="form-group local-forms">
+          <label>Note type </label>
+          <mat-select
+            [(ngModel)]="filter.note_type"
+            [ngModelOptions]="{ standalone: true }"
+            class="form-control select"
+            placeholder="Select Note Type"
+            (selectionChange)="onSearch()"
+          >
+            <mat-option [value]="null"> All </mat-option>
+            <mat-option [value]="'rbt'"> Rbt </mat-option>
+            <mat-option [value]="'bcba'"> Bcba </mat-option>
+          </mat-select>
+        </div>
+      </div>
+      <div class="col-12 col-sm-3">
+        <div class="form-group local-forms">
+          <label>Insurer </label>
+          <mat-select
+            [(ngModel)]="filter.insurance_id"
+            name="insurer"
+            [ngModelOptions]="{ standalone: true }"
+            class="form-control select"
+            placeholder="Select Insurer"
+            (selectionChange)="onSearch()"
+          >
+            <mat-option [value]="null"> All </mat-option>
+            <mat-option *ngFor="let data of insurances" [value]="data.id">
+              {{ data.insurer_name }}
+            </mat-option>
+          </mat-select>
+        </div>
+      </div>
+      <div class="col-12 col-sm-3">
+        <div class="form-group local-forms">
+          <label>Client </label>
+          <mat-select
+            [(ngModel)]="filter.patient_id"
+            name="patient"
+            [ngModelOptions]="{ standalone: true }"
+            class="form-control select"
+            placeholder="Select Client"
+            (selectionChange)="onSearch()"
+          >
+            <mat-option [value]="null"> All </mat-option>
+            <mat-option *ngFor="let data of patients" [value]="data.id">
+              {{ data.first_name }} {{ data.last_name }}
+            </mat-option>
+          </mat-select>
+        </div>
+      </div>
+      <div class="col-12 col-md-3">
+        <div class="form-group local-forms">
+          <label>Status </label>
+          <mat-select
+            [(ngModel)]="filter.status_type"
+            [ngModelOptions]="{ standalone: true }"
+            class="form-control select"
+            placeholder="Select Note Status"
+            (selectionChange)="onSearch()"
+          >
+            <mat-option [value]="null"> All </mat-option>
+            <mat-option [value]="'ok'"> Ok </mat-option>
+            <mat-option [value]="'pending'"> Pending </mat-option>
+            <mat-option [value]="'no'"> No </mat-option>
+          </mat-select>
+        </div>
+      </div>
+      <div class="col-12 col-md-2">
+        <div class="doctor-submit">
+          <button
+            type="button"
+            class="btn btn-primary submit-list-form me-2"
+            (click)="onSearch()"
+          >
+            Search
+          </button>
+        </div>
+      </div>
+      <div class="col-12 col-md-1">
+        <div class="doctor-submit">
+          <button
+            type="button"
+            class="btn btn-outline-primary submit-list-form me-2"
+            (click)="onRefresh()"
+          >
+            <img src="assets/img/icons/re-fresh.svg" alt="" />
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

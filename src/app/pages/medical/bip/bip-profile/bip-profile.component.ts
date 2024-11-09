@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import html2canvas from 'html2canvas';
 import * as jspdf from 'jspdf';
 import { AuthService } from 'src/app/core/auth/auth.service';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { AppUser } from 'src/app/core/models/users.model';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
 import { environment } from 'src/environments/environment';

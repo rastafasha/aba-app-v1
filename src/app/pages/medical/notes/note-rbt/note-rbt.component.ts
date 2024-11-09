@@ -3,12 +3,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { BipService } from '../../bip/service/bip.service';
 import { GoalService } from '../../bip/service/goal.service';
-import { NoteRbtService } from '../../../../core/services/note-rbt.service';
+import { NoteRbtService } from '../../../../core/services/notes-rbt.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import Swal from 'sweetalert2';
 import { Location } from '@angular/common';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { AppUser } from 'src/app/core/models/users.model';
 import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 
 export interface POSModel {
@@ -167,7 +167,6 @@ export class NoteRbtComponent implements OnInit {
 
   projectedUnits = 0;
 
-
   constructor(
     private bipService: BipService,
     private goalService: GoalService,
@@ -223,7 +222,6 @@ export class NoteRbtComponent implements OnInit {
 
   getConfig() {
     this.noteRbtService.listConfigNote().subscribe((resp) => {
-
       this.roles_rbt = resp.roles_rbt;
       this.roles_bcba = resp.roles_bcba;
       this.hours_days = resp.hours;
@@ -247,7 +245,6 @@ export class NoteRbtComponent implements OnInit {
       this.diagnosis_code = this.client_selected.patient.diagnosis_code;
 
       this.pa_services = resp.patient.pa_services;
-
 
       this.getMaladaptivesBipByPatientId();
       this.getReplacementsByPatientId();
@@ -278,10 +275,12 @@ export class NoteRbtComponent implements OnInit {
       .showReplacementbyPatient(this.patient_id)
       .subscribe((resp) => {
         this.replacementGoals = [];
-        resp['replacementGoals'].forEach(element => {
-          const goalSto = JSON.parse(element.goalstos).find(item => item.sustitution_status_sto_edit === 'inprogress')
+        resp['replacementGoals'].forEach((element) => {
+          const goalSto = JSON.parse(element.goalstos).find(
+            (item) => item.sustitution_status_sto_edit === 'inprogress'
+          );
           if (!!goalSto) {
-            this.replacementGoals.push({...element, target: goalSto.target})
+            this.replacementGoals.push({ ...element, target: goalSto.target });
           }
         });
       });
@@ -292,7 +291,6 @@ export class NoteRbtComponent implements OnInit {
       this.provider_credential = resp.doctor.certificate_number;
     });
   }
-
 
   speciaFirmaDataRbt(selectedValueRBT) {
     this.doctorService.showDoctorProfile(selectedValueRBT).subscribe((resp) => {
@@ -660,8 +658,7 @@ export class NoteRbtComponent implements OnInit {
       );
     }
 
-    formData.forEach((value, key) => {
-    });
+    formData.forEach((value, key) => {});
 
     this.noteRbtService.create(formData).subscribe(
       (resp: any) => {
@@ -701,7 +698,6 @@ export class NoteRbtComponent implements OnInit {
   onReplacementsChange(updatedReplacements: any[]) {
     this.replacementGoals = updatedReplacements;
   }
-
 
   generateAISummary() {
     if (!this.checkDataSufficient()) {

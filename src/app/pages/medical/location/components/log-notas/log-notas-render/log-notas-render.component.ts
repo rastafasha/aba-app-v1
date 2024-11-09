@@ -5,8 +5,8 @@ import {
   Output,
   ViewEncapsulation,
 } from '@angular/core';
-import { NoteBcba } from 'src/app/shared/models/note-bcba';
-import { NoteRbt } from 'src/app/shared/models/note-rbt';
+import { NoteBcba } from 'src/app/core/models/note-bcba.model';
+import { NoteRbt } from 'src/app/core/models';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { environment } from 'src/environments/environment';
 import {
@@ -31,7 +31,6 @@ export class LogNotasRenderComponent {
 
   routes = AppRoutes;
   hasChanges = false;
-  unitPrice = 10;
 
   readonly statusOptions = ['pending', 'ok'];
 

@@ -2,11 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DataService } from 'src/app/shared/data/data.service';
-import {
-  PageSelection,
-  ApiResultFormat,
-  staffleave,
-} from 'src/app/shared/models/models';
+import { PageSelection, ApiResponse, StaffLeave } from 'src/app/core/models';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 interface data {
   value: string;
@@ -19,8 +15,8 @@ interface data {
 export class StaffLeaveComponent implements OnInit {
   routes = AppRoutes;
   selectedValue!: string;
-  staffLeave: Array<staffleave> = [];
-  dataSource!: MatTableDataSource<staffleave>;
+  staffLeave: Array<StaffLeave> = [];
+  dataSource!: MatTableDataSource<StaffLeave>;
 
   showFilter = false;
   searchDataValue = '';
@@ -44,16 +40,16 @@ export class StaffLeaveComponent implements OnInit {
     this.staffLeave = [];
     this.serialNumberArray = [];
 
-    this.data.getStaffLeave().subscribe((data: ApiResultFormat) => {
-      this.totalData = data.totalData;
-      data.data.map((res: staffleave, index: number) => {
+    this.data.getStaffLeave().subscribe((data: ApiResponse) => {
+      this.totalData = data.total;
+      data.data.map((res: StaffLeave, index: number) => {
         const serialNumber = index + 1;
         if (index >= this.skip && serialNumber <= this.limit) {
           this.staffLeave.push(res);
           this.serialNumberArray.push(serialNumber);
         }
       });
-      this.dataSource = new MatTableDataSource<staffleave>(this.staffLeave);
+      this.dataSource = new MatTableDataSource<StaffLeave>(this.staffLeave);
       this.calculateTotalPages(this.totalData, this.pageSize);
     });
   }

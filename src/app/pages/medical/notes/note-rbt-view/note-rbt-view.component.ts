@@ -3,12 +3,12 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import html2canvas from 'html2canvas';
 import * as jspdf from 'jspdf';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { AppUser } from 'src/app/core/models/users.model';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
 import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import { NoteRbtService } from '../../../../core/services/note-rbt.service';
+import { NoteRbtService } from '../../../../core/services/notes-rbt.service';
 
 interface NoteIntervention {
   pairing: boolean;
@@ -190,18 +190,27 @@ export class NoteRbtViewComponent implements OnInit {
         this.note_selected.client_response_to_treatment_this_session;
 
       this.interventions = resp.interventions;
-      const jsonObj = JSON.parse(this.interventions) || '';
+      const jsonObj =
+        typeof this.interventions === 'string'
+          ? JSON.parse(this.interventions)
+          : this.interventions;
       this.interventionsgroup = jsonObj;
       //TODO Remove
       this.intervention = this.interventionsgroup[0];
 
       this.maladaptive = resp.maladaptives;
-      const jsonObj1 = JSON.parse(this.maladaptive) || '';
+      const jsonObj1 =
+        typeof this.maladaptive === 'string'
+          ? JSON.parse(this.maladaptive)
+          : this.maladaptive;
       this.maladaptivegroup = jsonObj1;
       // console.log(this.maladaptivegroup);
 
       this.replacement = resp.replacements; // ?
-      const jsonObj2 = JSON.parse(this.replacement) || '';
+      const jsonObj2 =
+        typeof this.replacement === 'string'
+          ? JSON.parse(this.replacement)
+          : this.replacement;
       this.replacementgroup = jsonObj2;
       // console.log(this.replacementgroup);
 
@@ -246,8 +255,6 @@ export class NoteRbtViewComponent implements OnInit {
         this.note_selected.provider_signature;
       this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED =
         this.note_selected.supervisor_signature;
-      console.log(this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED);
-      console.log(this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED);
 
       this.getProfileBip();
       this.getDoctor();

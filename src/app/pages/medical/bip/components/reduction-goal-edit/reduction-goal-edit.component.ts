@@ -4,7 +4,7 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
 import { GoalService } from '../../service/goal.service';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { AppUser } from 'src/app/core/models/users.model';
 import { AuthService } from 'src/app/core/auth/auth.service';
 
 @Component({

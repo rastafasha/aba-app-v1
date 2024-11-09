@@ -2,11 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DataService } from 'src/app/shared/data/data.service';
-import {
-  PageSelection,
-  ApiResultFormat,
-  datatables,
-} from 'src/app/shared/models/models';
+import { PageSelection, ApiResponse, datatables } from 'src/app/core/models';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 
 @Component({
@@ -42,8 +38,8 @@ export class TablesDatatablesComponent implements OnInit {
     this.dataTables = [];
     this.serialNumberArray = [];
 
-    this.data.getDataTables().subscribe((data: ApiResultFormat) => {
-      this.totalData = data.totalData;
+    this.data.getDataTables().subscribe((data: ApiResponse) => {
+      this.totalData = data.total;
       data.data.map((res: datatables, index: number) => {
         const serialNumber = index + 1;
         if (index >= this.skip && serialNumber <= this.limit) {

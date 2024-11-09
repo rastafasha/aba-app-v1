@@ -2,11 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DataService } from 'src/app/shared/data/data.service';
-import {
-  ApiResultFormat,
-  PageSelection,
-  staffList,
-} from 'src/app/shared/models/models';
+import { ApiResponse, PageSelection, staffList } from 'src/app/core/models';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 
 @Component({
@@ -41,8 +37,8 @@ export class StaffListComponent implements OnInit {
     this.staffList = [];
     this.serialNumberArray = [];
 
-    this.data.getStaffList().subscribe((data: ApiResultFormat) => {
-      this.totalData = data.totalData;
+    this.data.getStaffList().subscribe((data: ApiResponse) => {
+      this.totalData = data.total;
       data.data.map((res: staffList, index: number) => {
         const serialNumber = index + 1;
         if (index >= this.skip && serialNumber <= this.limit) {

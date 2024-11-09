@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { BipService } from '../../service/bip.service';
 import { GoalService } from '../../service/goal.service';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { AppUser } from 'src/app/core/models/users.model';
 import { AuthService } from 'src/app/core/auth/auth.service';
 @Component({
   selector: 'app-reduction-goal-form',

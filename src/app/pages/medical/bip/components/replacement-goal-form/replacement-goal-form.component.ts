@@ -4,7 +4,7 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
 import { GoalSustitutionService } from '../../service/goal-sustitution.service';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { AppUser } from 'src/app/core/models/users.model';
 @Component({
   selector: 'app-replacement-goal-form',
   templateUrl: './replacement-goal-form.component.html',

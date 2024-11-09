@@ -3,11 +3,7 @@ import { DataService } from 'src/app/shared/data/data.service';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import {
-  PageSelection,
-  ApiResultFormat,
-  doctorlist,
-} from 'src/app/shared/models/models';
+import { PageSelection, ApiResponse, DoctorList } from 'src/app/core/models';
 
 @Component({
   selector: 'app-doctors-list',
@@ -16,8 +12,8 @@ import {
 })
 export class DoctorsListComponent implements OnInit {
   routes = AppRoutes;
-  doctorsList: Array<doctorlist> = [];
-  dataSource!: MatTableDataSource<doctorlist>;
+  doctorsList: Array<DoctorList> = [];
+  dataSource!: MatTableDataSource<DoctorList>;
 
   showFilter = false;
   searchDataValue = '';
@@ -41,16 +37,16 @@ export class DoctorsListComponent implements OnInit {
     this.doctorsList = [];
     this.serialNumberArray = [];
 
-    this.data.getDoctorsList().subscribe((data: ApiResultFormat) => {
-      this.totalData = data.totalData;
-      data.data.map((res: doctorlist, index: number) => {
+    this.data.getDoctorsList().subscribe((data: ApiResponse) => {
+      this.totalData = data.total;
+      data.data.map((res: DoctorList, index: number) => {
         const serialNumber = index + 1;
         if (index >= this.skip && serialNumber <= this.limit) {
           this.doctorsList.push(res);
           this.serialNumberArray.push(serialNumber);
         }
       });
-      this.dataSource = new MatTableDataSource<doctorlist>(this.doctorsList);
+      this.dataSource = new MatTableDataSource<DoctorList>(this.doctorsList);
       this.calculateTotalPages(this.totalData, this.pageSize);
     });
   }

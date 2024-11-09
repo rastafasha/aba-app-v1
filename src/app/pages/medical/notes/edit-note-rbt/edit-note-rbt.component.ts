@@ -2,10 +2,10 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { AppUser } from 'src/app/core/models/users.model';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
-import { NoteRbtService } from '../../../../core/services/note-rbt.service';
+import { NoteRbtService } from '../../../../core/services/notes-rbt.service';
 import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 
@@ -370,8 +370,7 @@ export class EditNoteRbtComponent implements OnInit {
         }
       });
 
-      this.getReplacementsByPatientId();
-
+    this.getReplacementsByPatientId();
   }
 
   getReplacementsByPatientId() {
@@ -379,10 +378,12 @@ export class EditNoteRbtComponent implements OnInit {
       .showReplacementbyPatient(this.patient_id)
       .subscribe((resp) => {
         this.replacementGoals = [];
-        resp['replacementGoals'].forEach(element => {
-          const goalSto = JSON.parse(element.goalstos).find(item => item.sustitution_status_sto_edit === 'inprogress')
+        resp['replacementGoals'].forEach((element) => {
+          const goalSto = JSON.parse(element.goalstos).find(
+            (item) => item.sustitution_status_sto_edit === 'inprogress'
+          );
           if (!!goalSto) {
-            this.replacementGoals.push({...element, target: goalSto.target})
+            this.replacementGoals.push({ ...element, target: goalSto.target });
           }
         });
       });

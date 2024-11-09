@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DataService } from 'src/app/shared/data/data.service';
-import { SocialLinks } from 'src/app/shared/models/models';
+import { SocialLinks } from 'src/app/core/models';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 
 @Component({

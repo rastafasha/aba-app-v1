@@ -1,0 +1,70 @@
+<div class="page-wrapper">
+  <div class="content">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <!-- search -->
+          <app-log-reports-search
+            [insurances]="insurances"
+            [patients]="patients"
+            [locations]="locations"
+            (refresh)="onRefresh()"
+            (search)="onFilter($event)"
+          ></app-log-reports-search>
+          <!-- search -->
+
+          <div class="table-responsive">
+            <table
+              matSort
+              (matSortChange)="onSortChange($event)"
+              class="table table-striped border-0 custom-table comman-table datatable mb-0 sticky-last"
+            >
+              <thead>
+                <tr>
+                  <th *ngFor="let head of headers" [mat-sort-header]="head.key">
+                    {{ head.name }}
+                  </th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngIf="notes?.length; else noData">
+                  <ng-container *ngFor="let data of notes">
+                    <tr
+                      appLogRender
+                      [note]="data"
+                      [insurances]="insurances"
+                      [patients]="patients"
+                      (save)="onSave($event)"
+                    ></tr>
+                  </ng-container>
+                </ng-container>
+                <!-- No Data -->
+                <ng-template #noData>
+                  <tr>
+                    <td [colSpan]="headers.length">
+                      <div *ngIf="notes?.length === 0">No data available.</div>
+                      <mat-progress-bar
+                        *ngIf="notes === null"
+                        mode="indeterminate"
+                      >
+                      </mat-progress-bar>
+                    </td>
+                  </tr>
+                </ng-template>
+              </tbody>
+            </table>
+            <app-table-footer
+              [(page)]="currentPage"
+              (pageChange)="onPageChange($event)"
+              [total]="total"
+              [pageSize]="pageSize"
+            >
+            </app-table-footer>
+          </div>
+          <app-log-reports-summary> </app-log-reports-summary>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

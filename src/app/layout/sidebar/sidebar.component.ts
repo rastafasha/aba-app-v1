@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { DataService } from 'src/app/shared/data/data.service';
-import { MenuItem, SideBarData } from 'src/app/shared/models/models';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { MenuItem, SideBarData } from 'src/app/core/models';
+import { AppUser } from 'src/app/core/models/users.model';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { SideBarService } from 'src/app/shared/side-bar/side-bar.service';
 

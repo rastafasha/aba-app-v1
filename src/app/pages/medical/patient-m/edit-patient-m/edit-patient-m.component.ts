@@ -2,10 +2,10 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { AppUser } from 'src/app/core/models/users.model';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
-import { InsuranceService } from '../../../../core/services/insurance.service';
+import { InsuranceService } from '../../../../core/services/insurances.service';
 import { PatientMService } from '../service/patient-m.service';
 import {
   CreatePaServiceDto,

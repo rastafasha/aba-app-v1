@@ -4,7 +4,7 @@ import { FileSaverService } from 'ngx-filesaver';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import * as XLSX from 'xlsx';
-import { InsuranceService } from '../../../../core/services/insurance.service';
+import { InsuranceService } from '../../../../core/services/insurances.service';
 import { Location } from '@angular/common';
 import { PageService } from 'src/app/shared/services/pages.service';
 declare var $: any;

@@ -8,7 +8,7 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 import * as XLSX from 'xlsx';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { BillingService } from '../billing.service';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { AppUser } from 'src/app/core/models/users.model';
 import { PageService } from 'src/app/shared/services/pages.service';
 
 declare var $: any;

@@ -204,6 +204,20 @@ export const sidebar = [
           // },
         ],
       },
+      {
+        menuValue: 'Reports',
+        hasSubRoute: true,
+        showSubRoute: false,
+        base: 'reports',
+        img: 'assets/img/icons/menu-icon-02.svg',
+        subMenus: [
+          {
+            menuValue: 'Logs',
+            route: AppRoutes.reports.logs,
+            base: AppRoutes.reports.reports,
+          },
+        ],
+      },
       // {
       //   menuValue: 'Bip (Roles)',
       //   hasSubRoute: true,

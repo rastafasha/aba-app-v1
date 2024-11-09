@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppRoutes } from 'src/app/shared/routes/routes';
-import { InsuranceService } from '../../../../core/services/insurance.service';
+import { InsuranceService } from '../../../../core/services/insurances.service';
 import { LocationService } from '../services/location.service';
 import Swal from 'sweetalert2';
 import { Location } from '@angular/common';

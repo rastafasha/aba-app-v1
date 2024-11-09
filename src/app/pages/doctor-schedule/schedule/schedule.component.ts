@@ -2,11 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DataService } from 'src/app/shared/data/data.service';
-import {
-  PageSelection,
-  ApiResultFormat,
-  schedule,
-} from 'src/app/shared/models/models';
+import { PageSelection, ApiResponse, schedule } from 'src/app/core/models';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 
 @Component({
@@ -42,8 +38,8 @@ export class ScheduleComponent implements OnInit {
     this.schedule = [];
     this.serialNumberArray = [];
 
-    this.data.getSchedule().subscribe((data: ApiResultFormat) => {
-      this.totalData = data.totalData;
+    this.data.getSchedule().subscribe((data: ApiResponse) => {
+      this.totalData = data.total;
       data.data.map((res: schedule, index: number) => {
         const serialNumber = index + 1;
         if (index >= this.skip && serialNumber <= this.limit) {

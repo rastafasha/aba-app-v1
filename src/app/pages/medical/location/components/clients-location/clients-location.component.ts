@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import { LocationService } from '../../services/location.service';
 import { DoctorService } from '../../../doctors/service/doctor.service';
 import { PatientMService } from '../../../patient-m/service/patient-m.service';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { AppUser } from 'src/app/core/models/users.model';
 import { PageService } from 'src/app/shared/services/pages.service';
 
 @Component({

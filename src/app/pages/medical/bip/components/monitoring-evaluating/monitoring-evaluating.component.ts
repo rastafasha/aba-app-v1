@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
 import { MonitoringEvaluatingService } from '../../service/monitoring-evaluating.service';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { AppUser } from 'src/app/core/models/users.model';
 
 @Component({
   selector: 'app-monitoring-evaluating',
