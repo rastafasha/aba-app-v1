@@ -103,7 +103,7 @@ export class LogsReportsComponent implements OnInit {
 
   fixData() {
     // Agregamos informacion faltante
-    this.notesRbt = this.notesRbt.map((item) => {
+    this.notesRbt = this.notesRbt?.map((item) => {
       item.patient_id = !isNaN(item.patient_id)
         ? item.patient_id
         : this.patients.find(
@@ -115,7 +115,7 @@ export class LogsReportsComponent implements OnInit {
       return item;
     });
     // Agregamos informacion faltante
-    this.notesBcba = this.notesBcba.map((item) => {
+    this.notesBcba = this.notesBcba?.map((item) => {
       //patiend_id (id)
       const patient = this.patients.find(
         (patient) => patient.patient_id === item.patient_code
@@ -128,6 +128,8 @@ export class LogsReportsComponent implements OnInit {
       item.insurance_id = patient?.insurer_id;
       return item;
     });
+    this.notesRbt ??= [];
+    this.notesBcba ??= [];
   }
 
   onFilter(filter: Partial<LogFilter>) {
