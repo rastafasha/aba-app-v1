@@ -37,6 +37,7 @@ import { MockInterceptor } from './mocks/mock.interceptor';
     }),
   ],
   providers: [
+    HttpClientModule,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: MockInterceptor,
