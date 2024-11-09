@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ApiV2Service } from './api.v2.service';
-import { InsuranceV2, ListParameters, ListResponse } from '../models';
-import { url_servicios } from 'src/app/config/config';
+import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import { url_servicios } from 'src/app/config/config';
+import { InsuranceV2, ListParameters, ListResponse } from '../models';
+import { ApiV2Service } from './api.v2.service';
 
 @Injectable({ providedIn: 'root' })
 export class InsurancesV2Service extends ApiV2Service<InsuranceV2> {
