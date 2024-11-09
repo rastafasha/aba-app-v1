@@ -77,6 +77,11 @@ const routes: Routes = [
             (m) => m.ClientReportModule
           ),
       },
+      {
+        path: 'reports',
+        loadChildren: () =>
+          import('./reports/reports.module').then((m) => m.ReportsModule),
+      },
       // EXTRAS
       {
         path: lastRoutes(AppRoutes.dashboard.dashboard),
@@ -122,6 +127,13 @@ const routes: Routes = [
         loadChildren: () =>
           import('./staff/staff.module').then((m) => m.StaffModule),
       },
+
+      {
+        path: lastRoutes(AppRoutes.claims.claims),
+        loadChildren: () =>
+          import('./claims/claims.module').then((m) => m.ClaimsModule),
+      },
+
       /*
       {
         path: 'appointments',
@@ -168,11 +180,7 @@ const routes: Routes = [
         loadChildren: () =>
           import('./assets/assets.module').then((m) => m.AssetsModule),
       },
-      {
-        path: 'reports',
-        loadChildren: () =>
-          import('./reports/reports.module').then((m) => m.ReportsModule),
-      },
+     
       {
         path: 'invoice',
         loadChildren: () =>

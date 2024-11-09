@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
 import { GoalFamilyEnvolmentService } from '../../service/goal-family-envolment.service';
 import { DeEscalationTechniqueService } from '../../service/de-escalation-technique.service';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { AppUser } from 'src/app/core/models/users.model';
 
 @Component({
   selector: 'app-de-escalation-tecniques',

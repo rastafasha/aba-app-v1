@@ -4,9 +4,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { finalize } from 'rxjs';
 import { AuthService } from 'src/app/core/auth/auth.service';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { AppUser } from 'src/app/core/models/users.model';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import { NoteRbtService } from '../../../../core/services/note-rbt.service';
+import { NoteRbtService } from '../../../../core/services/notes-rbt.service';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 declare var $: any;
 @Component({

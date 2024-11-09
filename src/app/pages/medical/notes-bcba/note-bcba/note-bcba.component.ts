@@ -5,9 +5,9 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
 import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import { InsuranceService } from '../../../../core/services/insurance.service';
-import { NoteBcbaService } from '../../../../core/services/note-bcba.service';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { InsuranceService } from '../../../../core/services/insurances.service';
+import { NoteBcbaService } from '../../../../core/services/notes-bcba.service';
+import { AppUser } from 'src/app/core/models/users.model';
 
 @Component({
   selector: 'app-note-bcba',

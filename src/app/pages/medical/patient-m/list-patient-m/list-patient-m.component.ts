@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { FileSaverService } from 'ngx-filesaver';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { ActionModalComponent } from 'src/app/shared/components/action-modal/action-modal.component';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { AppUser } from 'src/app/core/models/users.model';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
 import Swal from 'sweetalert2';

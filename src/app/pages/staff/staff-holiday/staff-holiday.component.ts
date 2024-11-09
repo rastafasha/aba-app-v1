@@ -2,11 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import {
-  PageSelection,
-  ApiResultFormat,
-  StaffHolidays,
-} from 'src/app/shared/models/models';
+import { PageSelection, ApiResponse, StaffHolidays } from 'src/app/core/models';
 import { DataService } from 'src/app/shared/data/data.service';
 
 @Component({
@@ -42,8 +38,8 @@ export class StaffHolidayComponent implements OnInit {
     this.staffHoliday = [];
     this.serialNumberArray = [];
 
-    this.data.getStaffHoliday().subscribe((data: ApiResultFormat) => {
-      this.totalData = data.totalData;
+    this.data.getStaffHoliday().subscribe((data: ApiResponse) => {
+      this.totalData = data.total;
       data.data.map((res: StaffHolidays, index: number) => {
         const serialNumber = index + 1;
         if (index >= this.skip && serialNumber <= this.limit) {

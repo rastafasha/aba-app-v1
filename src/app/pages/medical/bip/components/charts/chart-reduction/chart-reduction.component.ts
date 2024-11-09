@@ -18,12 +18,12 @@ import {
   ChartComponent,
 } from 'ng-apexcharts';
 import { DataService } from 'src/app/shared/data/data.service';
-import { PatientDashboard } from 'src/app/shared/models/models';
+import { PatientDashboard } from 'src/app/core/models';
 
 import { ActivatedRoute } from '@angular/router';
 import { BipService } from '../../../service/bip.service';
 import { GraphicReductionService } from '../../../service/graphic-reduction.service';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { AppUser } from 'src/app/core/models/users.model';
 interface data {
   value: string;
 }

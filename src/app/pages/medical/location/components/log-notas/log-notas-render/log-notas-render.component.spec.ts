@@ -5,7 +5,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LogNotasUnitPricePipe } from '../pipes/log-notas-unit-price.pipe';
 import { LogNotasSessionTotalPipe } from '../pipes/log-notas-session-total.pipe';
-import { NoteRbt } from 'src/app/shared/models/note-rbt';
+import { NoteRbt } from 'src/app/core/models';
 
 xdescribe('LogNotasRenderComponent', () => {
   let component: LogNotasRenderComponent;

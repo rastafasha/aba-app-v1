@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/core/auth/auth.service';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { SideBarService } from 'src/app/shared/side-bar/side-bar.service';
 import { environment } from 'src/environments/environment';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { AppUser } from 'src/app/core/models/users.model';
 
 @Component({
   selector: 'app-header',

@@ -1,0 +1,219 @@
+<!-- Type -->
+<td>
+  <span
+    class="badge"
+    [ngClass]="{
+      'bg-success': note.type === 'rbt',
+      'bg-primary': note.type === 'bcba'
+    }"
+  >
+    {{ note.type | uppercase }}
+  </span>
+</td>
+<!-- Date -->
+<td>
+  <span>
+    <a
+      [routerLink]="[
+        note.type === 'rbt' ? routes.noteRbt.view : routes.noteBcba.view,
+        note.id
+      ]"
+    >
+      {{ note.session_date | date : "shortDate" }}
+    </a>
+  </span>
+  <i
+    class="fa bg-success indicador"
+    *ngIf="note.status === 'ok'"
+    [tooltip]="note.status"
+  ></i>
+  <i
+    class="fa bg-warning indicador"
+    *ngIf="note.status === 'pending'"
+    [tooltip]="note.status"
+  ></i>
+</td>
+<!-- Status -->
+<td>
+  <select
+    class="form-control form-select-solid form-select-long fw-bolder"
+    name="status"
+    [(ngModel)]="note.status"
+    (ngModelChange)="hasChanges = true"
+    placeholder="status"
+  >
+    <option>-- Select --</option>
+    <option *ngFor="let status of statusOptions" [value]="status">
+      {{ status | titlecase }}
+    </option>
+  </select>
+</td>
+<!-- Pos -->
+<td>
+  {{ note.meet_with_client_at ?? "-" }}
+</td>
+<!-- Time In -->
+<td>
+  <span> {{ (note.time_in | transformToDate) ?? "-" }}</span>
+</td>
+<!-- Time Out -->
+<td>
+  <span>{{ (note.time_out | transformToDate) ?? "-" }}</span>
+</td>
+<!-- Time In 2 -->
+<td>
+  <span>{{ (note.time_in2 | transformToDate) ?? "-" }}</span>
+</td>
+<!-- Time Out 2 -->
+<td>
+  <span>{{ (note.time_out2 | transformToDate) ?? "-" }}</span>
+</td>
+<!-- Total Hours -->
+<td>
+  <span>{{ note.session_length_total ?? "-" }}</span>
+</td>
+<!-- Cpt Code -->
+<td>
+  <span>
+    {{ note.cpt_code }}
+  </span>
+</td>
+<!-- Insurer Name -->
+<td>
+  <a
+    *ngIf="note.insurance_id"
+    [routerLink]="[routes.insurance.view, note.insurance_id]"
+  >
+    <span>
+      {{ (insurances | arrayFind : "id" : note.insurance_id)?.insurer_name }}
+    </span>
+  </a>
+</td>
+
+<!-- patient_name -->
+<td>
+  <a [routerLink]="[routes.patients.profileByPatientId, note.patient_code]">
+    <span>
+      {{(patients|arrayFilter:'id': note.patient_id)?.[0]?.full_name}}</span
+    >
+  </a>
+</td>
+
+<!-- modificadores  -->
+
+<!-- modificadores Medicaid 1 -->
+<td>
+  <select
+    class="form-control form-select-solid fw-bolder"
+    name="md"
+    style="width: 9ch; text-overflow: ellipsis"
+    [(ngModel)]="note.md"
+    (ngModelChange)="hasChanges = true"
+  >
+    <option>-- Select --</option>
+    <ng-container *ngFor="let item of modifiers">
+      <option
+        *ngIf="item.type === 'all' || item.type === note.type"
+        [value]="item.value"
+      >
+        {{ item.value | uppercase }} : {{ item.description }}
+      </option>
+    </ng-container>
+  </select>
+</td>
+
+<!-- modificadores Medicaid 2 -->
+<td>
+  <select
+    class="form-control form-select-solid fw-bolder"
+    style="width: 9ch; text-overflow: ellipsis"
+    name="md2"
+    [(ngModel)]="note.md2"
+    (ngModelChange)="hasChanges = true"
+  >
+    <option>-- Select --</option>
+    <ng-container *ngFor="let item of modifiers">
+      <option
+        *ngIf="item.type === 'all' || item.type === note.type"
+        [value]="item.value"
+      >
+        {{ item.value | uppercase }} : {{ item.description }}
+      </option>
+    </ng-container>
+  </select>
+</td>
+
+<!-- session_units_total -->
+<td>
+  {{ note.total_units }}
+</td>
+
+<!-- unitPrize -->
+
+<td>
+  {{
+    note.cpt_code
+      | logReportsUnitPrice : note.insurance_id : insurances
+      | currency
+  }}
+</td>
+
+<!-- session_units_total -->
+<td>
+  {{
+    note.total_units
+      | logReportsSessionTotal
+        : note.md
+        : note.md2
+        : (note.cpt_code | logReportsUnitPrice : note.insurance_id : insurances)
+        : modifiers
+      | currency
+  }}
+</td>
+<!-- Tecnico -->
+<td>
+  <span>
+    {{ note.tecnico?.name }}
+    {{ note.tecnico?.surname }}
+  </span>
+</td>
+
+<td>
+  <div class="note-checkit">
+    <label class="custom_check">
+      <input
+        type="checkbox"
+        name="billed"
+        [(ngModel)]="note.billed"
+        (ngModelChange)="hasChanges = true"
+      />
+      <span class="checkmark" value="false"></span>
+    </label>
+  </div>
+</td>
+<td>
+  <div class="note-checkit">
+    <label class="custom_check">
+      <input
+        type="checkbox"
+        name="pay"
+        [(ngModel)]="note.pay"
+        (ngModelChange)="hasChanges = true"
+      />
+      <span class="checkmark" value="false"></span>
+    </label>
+  </div>
+</td>
+
+<!-- <td>{{note.created_at | date }}</td> -->
+
+<td class="save-cell">
+  <button
+    type="button"
+    class="btn btn-primary submit-form me-2"
+    (click)="onSave()"
+    [disabled]="!hasChanges"
+  >
+    Save
+  </button>
+</td>

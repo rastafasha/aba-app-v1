@@ -5,7 +5,7 @@ import { url_media } from 'src/app/config/config';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { LocationService } from '../services/location.service';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { AppUser } from 'src/app/core/models/users.model';
 import { PageService } from 'src/app/shared/services/pages.service';
 import { AuthService } from 'src/app/core/auth/auth.service';
 

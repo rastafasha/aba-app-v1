@@ -3,13 +3,13 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 import { Router } from '@angular/router';
 import { PatientMService } from '../service/patient-m.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import { InsuranceService } from '../../../../core/services/insurance.service';
+import { InsuranceService } from '../../../../core/services/insurances.service';
 import Swal from 'sweetalert2';
 import { Location } from '@angular/common';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { PageService } from 'src/app/shared/services/pages.service';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { AppUser } from 'src/app/core/models/users.model';
 
 export interface ResponseBackend {
   users: User[];

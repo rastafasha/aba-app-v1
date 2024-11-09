@@ -5,7 +5,7 @@ import { BipService } from '../service/bip.service';
 import { PatientMService } from '../../patient-m/service/patient-m.service';
 import { GoalService } from '../service/goal.service';
 import { Location } from '@angular/common';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { AppUser } from 'src/app/core/models/users.model';
 
 @Component({
   selector: 'app-bip-attention',

@@ -6,7 +6,7 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 import { DoctorService } from '../service/doctor.service';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { AppUser } from 'src/app/core/models/users.model';
 import { PageService } from 'src/app/shared/services/pages.service';
 
 const url_servicios = environment.url_servicios;

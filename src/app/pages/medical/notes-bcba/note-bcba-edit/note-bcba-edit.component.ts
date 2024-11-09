@@ -6,10 +6,10 @@ import { GoalService } from '../../bip/service/goal.service';
 import { PatientMService } from '../../patient-m/service/patient-m.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import Swal from 'sweetalert2';
-import { NoteBcbaService } from '../../../../core/services/note-bcba.service';
-import { InsuranceService } from '../../../../core/services/insurance.service';
+import { NoteBcbaService } from '../../../../core/services/notes-bcba.service';
+import { InsuranceService } from '../../../../core/services/insurances.service';
 import { Location } from '@angular/common';
-import { AppUser } from 'src/app/shared/models/users.models';
+import { AppUser } from 'src/app/core/models/users.model';
 
 @Component({
   selector: 'app-note-bcba-edit',

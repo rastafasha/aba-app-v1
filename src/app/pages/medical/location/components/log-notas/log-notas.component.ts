@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { ActivatedRoute } from '@angular/router';
 import { TableUtilsService } from 'src/app/shared/components/table/table-utils.service';
-import { NoteBcba } from 'src/app/shared/models/note-bcba';
-import { NoteRbt } from 'src/app/shared/models/note-rbt';
+import { NoteBcba } from 'src/app/core/models/note-bcba.model';
+import { NoteRbt } from 'src/app/core/models';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
 import { ClientReportService } from '../../../client-report/client-report.service';
-import { NoteBcbaService } from '../../../../../core/services/note-bcba.service';
-import { NoteRbtService } from '../../../../../core/services/note-rbt.service';
+import { NoteBcbaService } from '../../../../../core/services/notes-bcba.service';
+import { NoteRbtService } from '../../../../../core/services/notes-rbt.service';
 import {
   Insurance,
   InsuranceModifier,
@@ -17,7 +17,7 @@ import {
   LocationPatient,
 } from '../../models/locations.model';
 import { LocationService } from '../../services/location.service';
-import { InsuranceService } from '../../../../../core/services/insurance.service';
+import { InsuranceService } from '../../../../../core/services/insurances.service';
 
 @Component({
   selector: 'app-log-notas',

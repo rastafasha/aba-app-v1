@@ -204,6 +204,20 @@ export const sidebar = [
           // },
         ],
       },
+      {
+        menuValue: 'Reports',
+        hasSubRoute: true,
+        showSubRoute: false,
+        base: 'reports',
+        img: 'assets/img/icons/menu-icon-02.svg',
+        subMenus: [
+          {
+            menuValue: 'Logs',
+            route: AppRoutes.reports.logs,
+            base: AppRoutes.reports.reports,
+          },
+        ],
+      },
       // {
       //   menuValue: 'Bip (Roles)',
       //   hasSubRoute: true,
@@ -693,6 +707,15 @@ export const sidebar = [
       //   base: 'settings',
       //   subMenus: [],
       // },
+      {
+        menuValue: 'Claims',
+        route: AppRoutes.claims.claims,
+        hasSubRoute: false,
+        showSubRoute: false,
+        img: 'assets/img/icons/menu-icon-16.svg',
+        base: AppRoutes.claims.claims,
+        subMenus: [],
+      }
     ],
   },
 ];

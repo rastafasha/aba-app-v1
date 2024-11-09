@@ -5,12 +5,9 @@ import { DataService } from 'src/app/shared/data/data.service';
 import {
   ChartData,
   ChartOptions,
-} from 'src/app/shared/models/chart-options.model';
-import {
-  RecentPatients,
-  UpcomingAppointments,
-} from 'src/app/shared/models/models';
-import { AppUser } from 'src/app/shared/models/users.models';
+} from 'src/app/core/models/chart-options.model';
+import { RecentPatients, UpcomingAppointments } from 'src/app/core/models';
+import { AppUser } from 'src/app/core/models/users.model';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
 import { DashboardService } from '../service/dashboard.service';
