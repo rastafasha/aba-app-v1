@@ -33,6 +33,7 @@ import { SettingsRoutes } from './settings.routes';
 import { SpecialitiesRoutes } from './specialities.routes';
 import { StaffRoutes } from './staff.routes';
 import { TablesRoutes } from './tables.routes';
+import { ClaimsRoutes } from './claims.routes';
 
 export const baseUrl = '';
 
@@ -147,6 +148,10 @@ export class AppRoutes {
   }
   static get clientReport(): typeof ClientReportRoutes {
     return ClientReportRoutes;
+  }
+
+  static get claims(): typeof ClaimsRoutes {
+    return ClaimsRoutes;
   }
 }
 

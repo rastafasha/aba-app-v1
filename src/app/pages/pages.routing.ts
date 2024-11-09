@@ -128,6 +128,12 @@ const routes: Routes = [
           import('./staff/staff.module').then((m) => m.StaffModule),
       },
 
+      {
+        path: lastRoutes(AppRoutes.claims.claims),
+        loadChildren: () =>
+          import('./claims/claims.module').then((m) => m.ClaimsModule),
+      },
+
       /*
       {
         path: 'appointments',
