@@ -693,6 +693,15 @@ export const sidebar = [
       //   base: 'settings',
       //   subMenus: [],
       // },
+      {
+        menuValue: 'Claims',
+        route: AppRoutes.claims.claims,
+        hasSubRoute: false,
+        showSubRoute: false,
+        img: 'assets/img/icons/menu-icon-16.svg',
+        base: AppRoutes.claims.claims,
+        subMenus: [],
+      }
     ],
   },
 ];

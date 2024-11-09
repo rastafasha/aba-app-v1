@@ -1,0 +1,88 @@
+<div class="page-wrapper">
+  <div class="content">
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="doctor-submit text-start">
+            <button class="btn btn-primary btn-sm" (click)="goBack()">
+              Back
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Claims List -->
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="card card-table show-entire">
+          <div class="card-body">
+            <!-- Table Header -->
+            <div class="page-table-header mb-2">
+              <div class="row align-items-center">
+                <div class="col">
+                  <div class="doctor-table-blk">
+                    <h3>Claims List</h3>
+                    <div class="doctor-search-blk">
+                      <div class="add-group">
+                        <a href="javascript:;" (click)="loadClaims()" class="btn btn-primary add-pluss ms-2">
+                          <img src="assets/img/icons/re-fresh.svg" alt="Reload" />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Skeleton loader -->
+            <app-skeleton-loader *ngIf="isLoading" [rows]="5" [columns]="4"></app-skeleton-loader>
+
+            <!-- Claims Table -->
+            <div *ngIf="!isLoading" class="table-responsive">
+              <table class="table border-0 custom-table comman-table datatable mb-0">
+                <thead>
+                  <tr>
+                    <th>File Name</th>
+                    <th>Status</th>
+                    <th>Created At</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let claim of claims">
+                    <td>{{ claim.filename }}</td>
+                    <td>
+                      <span class="badge"
+                            [ngClass]="{
+                              'bg-warning': claim.status === 'pending',
+                              'bg-success': claim.status === 'sent',
+                              'bg-danger': claim.status === 'rejected'
+                            }">
+                        {{ claim.status }}
+                      </span>
+                    </td>
+                    <td>{{ claim.createdAt | date:'short' }}</td>
+                    <td>
+                      <button *ngIf="claim.status === 'pending'"
+                              class="btn btn-primary btn-sm"
+                              (click)="sendClaim(claim)">
+                        Send
+                      </button>
+                        <i *ngIf="claim.status === 'sent'" class="fas fa-check-circle text-success"></i>
+                      <button class="btn btn-sm ml-2 btn-primary"
+                              (click)="downloadClaim(claim)">
+                        <i class="fas fa-download"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
