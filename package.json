@@ -9,7 +9,7 @@
     "start:local": "ng serve --configuration local",
     "start:truelocal": "ng serve --configuration truelocal",
     "build": "npm run build:prod",
-    "build:dev": "ng build --config uration development --base-href https://aba-dev.malcolmcordova.com/",
+    "build:dev": "ng build --configuration development --base-href https://aba-dev.malcolmcordova.com/",
     "build:prod": "ng build --configuration production --base-href https://abatherapy.malcolmcordova.com/",
     "build:local": "ng build --configuration local --base-href /",
     "build:truelocal": "ng build --configuration truelocal --base-href /",

@@ -10,7 +10,7 @@ Nuestro flujo de trabajo sigue el modelo Gitflow para la gestión de ramas y des
 - **feature/***: Cada nueva funcionalidad o ajuste se desarrolla en una rama `feature/` a partir de `develop`. Una vez completada la funcionalidad, se envía un Pull Request (PR) a `develop`.
 
 #### Flujo de trabajo:
-1. Crear una rama `feature/*` para la nueva funcionalidad.
+1. Crear una rama `feature/*` para la nueva funcionalidad (a partir de `main`).
 2. Hacer un **PR** de la rama `feature/*` a `develop` para realizar las pruebas.
 3. Una vez aprobadas y testeadas las funcionalidades en `develop`, realizar un **PR** a `main` y añadir un **Tag** para marcar la versión de lanzamiento.
 
@@ -101,3 +101,8 @@ src/
 │   └── app.component.ts
 │
 └── assets/
+
+-----------------------------
+# TODO:
+Remove md1, md2 y usar solo CODE (as string)
+En servicios en insurers

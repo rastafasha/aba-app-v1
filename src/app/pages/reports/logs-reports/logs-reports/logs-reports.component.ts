@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Sort } from '@angular/material/sort';
+import { forkJoin, of } from 'rxjs';
 import {
   InsuranceV2,
   isNoteBcbaV2,
@@ -8,10 +10,6 @@ import {
   NoteRbtV2,
   PatientV2,
 } from 'src/app/core/models';
-import { LogFilter } from '../models/log-filter.model';
-import { Sort } from '@angular/material/sort';
-import { TableUtilsService } from 'src/app/shared/components/table/table-utils.service';
-import { TableHeader } from 'src/app/shared/components/table/models';
 import {
   InsurancesV2Service,
   LocationsV2Service,
@@ -19,8 +17,10 @@ import {
   NotesRbtV2Service,
   PatientsV2Service,
 } from 'src/app/core/services';
-import { forkJoin, of } from 'rxjs';
+import { TableHeader } from 'src/app/shared/components/table/models';
+import { TableUtilsService } from 'src/app/shared/components/table/table-utils.service';
 import Swal from 'sweetalert2';
+import { LogFilter } from '../models/log-filter.model';
 
 @Component({
   selector: 'app-logs-reports',
@@ -103,7 +103,7 @@ export class LogsReportsComponent implements OnInit {
 
   fixData() {
     // Agregamos informacion faltante
-    this.notesRbt = this.notesRbt.map((item) => {
+    this.notesRbt = this.notesRbt?.map((item) => {
       item.patient_id = !isNaN(item.patient_id)
         ? item.patient_id
         : this.patients.find(
@@ -115,7 +115,7 @@ export class LogsReportsComponent implements OnInit {
       return item;
     });
     // Agregamos informacion faltante
-    this.notesBcba = this.notesBcba.map((item) => {
+    this.notesBcba = this.notesBcba?.map((item) => {
       //patiend_id (id)
       const patient = this.patients.find(
         (patient) => patient.patient_id === item.patient_code
@@ -128,6 +128,8 @@ export class LogsReportsComponent implements OnInit {
       item.insurance_id = patient?.insurer_id;
       return item;
     });
+    this.notesRbt ??= [];
+    this.notesBcba ??= [];
   }
 
   onFilter(filter: Partial<LogFilter>) {
