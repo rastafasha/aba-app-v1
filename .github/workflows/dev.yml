@@ -23,7 +23,7 @@ jobs:
     - name: Building
       run: npm run build:dev
     - name: Testing
-      run: npm run test:dev
+      run: npm run test:prod
     - name: Deploying
       uses: SamKirkland/FTP-Deploy-Action@4.3.3
       with:
