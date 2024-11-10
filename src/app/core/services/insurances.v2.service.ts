@@ -20,7 +20,7 @@ export class InsurancesV2Service extends ApiV2Service<InsuranceV2> {
     return super.list(options).pipe(
       map((response) => ({
         ...response,
-        data: response.data.map((data) => this.transform(data)),
+        data: response?.data?.map((data) => this.transform(data)),
       }))
     );
   }
