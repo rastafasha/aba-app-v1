@@ -12836,7 +12836,7 @@ table.sticky-first {
   tr > th:first-child,
   tr > td:first-child {
     position: sticky;
-    left: 0;
+    left: -12px;
   }
 }
 

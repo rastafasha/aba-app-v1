@@ -18,9 +18,11 @@ export class LogReportsRenderComponent {
   @Input() insurances: InsuranceV2[] = [];
   @Input() patients: PatientV2[] = [];
   @Output() save = new EventEmitter<NoteRbtV2 | NoteBcbaV2>();
+  @Output() selectNote = new EventEmitter<boolean>();
 
   routes = AppRoutes;
   hasChanges = false;
+  isSelected = false;
 
   readonly statusOptions = ['pending', 'ok', 'no'];
   readonly modifiers = [
@@ -51,5 +53,9 @@ export class LogReportsRenderComponent {
   onSave() {
     if (!this.hasChanges) return;
     this.save.emit(this.note);
+  }
+
+  onSelect(event) {
+    this.selectNote.emit(event);
   }
 }
