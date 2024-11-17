@@ -1,10 +1,13 @@
 import { NoteRbtV2 } from './note.rbt.v2.model';
+import { ProviderV2 } from './provider.v2.model';
 
 export class NoteBcbaV2 {
   type: 'bcba';
   id: number;
   bip_id: number;
-  patient_id: number;
+  client_id: number;
+  patient_id: string;
+
   doctor_id: number;
   patient_code: string;
   provider_signature: string;
@@ -36,17 +39,14 @@ export class NoteBcbaV2 {
   cpt_code: string;
   diagnosis_code: string;
   rendering_provider: number;
-  rendering: Rendering;
-  tecnico: TecnicoV2;
-
-  supervisor: SupervisorV2;
+  provider: ProviderV2;
+  supervisor: ProviderV2;
   billed: boolean;
   pay: boolean;
   bcba: string;
   md: string;
   md2: string;
   meet_with_client_at: string;
-  provider: number;
   status: 'pending' | 'ok' | 'no';
 
   created_at: string | Date;
@@ -58,7 +58,8 @@ export class NoteBcbaV2 {
     type: 'bcba',
     id: Number(data['id']),
     bip_id: Number(data['bip_id']),
-    patient_id: Number(data['patient_id']),
+    patient_id: data['patient_id'],
+    client_id: Number(data['client_id']),
     patient_code: String(data['patient_id']),
     doctor_id: Number(data['doctor_id']),
     note_description: String(data['note_description']),
@@ -71,20 +72,18 @@ export class NoteBcbaV2 {
     cpt_code: String(data['cpt_code']),
     diagnosis_code: String(data['diagnosis_code']),
     rendering_provider: Number(data['rendering_provider']),
-    rendering: RenderingBuilder(data['rendering']),
     provider_signature: String(data['provider_signature']),
     provider_name: Number(data['provider_name']),
-    tecnico: TecnicoV2Builder(data['tecnico']),
     supervisor_signature: String(data['supervisor_signature']),
     supervisor_name: Number(data['supervisor_name']),
-    supervisor: SupervisorV2Builder(data['supervisor']),
+    supervisor: data['supervisor'],
     billed: Boolean(data['billedbcba']) ?? Boolean(data['billed']),
     pay: Boolean(data['paybcba']) ?? Boolean(data['pay']),
     bcba: String(data['bcba']),
     md: String(data['mdbcba']) ?? String(data['md']),
     md2: String(data['md2bcba']) ?? String(data['md2']),
     meet_with_client_at: data['meet_with_client_at'] as string,
-    provider: Number(data['provider']),
+    provider: data['provider'],
     status: (String(data['status']) as 'pending') ?? 'pending',
     location_id: Number(data['location_id']),
     pos: data['pos']?.toString() ?? null,
@@ -112,37 +111,8 @@ export interface Rendering {
   npi: string;
 }
 
-export interface TecnicoV2 {
-  name: string;
-  surname: string;
-  npi: string;
-}
-
-export interface SupervisorV2 {
-  name: string;
-  surname: string;
-  npi: string;
-}
 const CaregiverGoalsBuilder = (data: object): CaregiverGoals => data;
 const RbtTrainingGoalsBuilder = (data: object): RbtTrainingGoals => data;
-const RenderingBuilder = (data: object): Rendering => ({
-  ...data,
-  name: String(data['name']),
-  npi: String(data['npi']),
-  surname: String(data['surname']),
-});
-const TecnicoV2Builder = (data: object): TecnicoV2 => ({
-  ...data,
-  name: String(data['name']),
-  npi: String(data['npi']),
-  surname: String(data['surname']),
-});
-const SupervisorV2Builder = (data: object): SupervisorV2 => ({
-  ...data,
-  name: String(data['name']),
-  npi: String(data['npi']),
-  surname: String(data['surname']),
-});
 
 export function isNoteBcbaV2(data: NoteRbtV2 | NoteBcbaV2): data is NoteBcbaV2 {
   return data?.type === 'bcba';

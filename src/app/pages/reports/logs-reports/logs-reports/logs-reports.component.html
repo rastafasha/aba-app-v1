@@ -17,12 +17,20 @@
             <table
               matSort
               (matSortChange)="onSortChange($event)"
-              class="table table-striped border-0 custom-table comman-table datatable mb-0 sticky-last"
+              class="table table-striped border-0 custom-table comman-table datatable mb-0 sticky-last sticky-first"
             >
               <thead>
                 <tr>
+                  <th>
+                    <input
+                      type="checkbox"
+                      [(ngModel)]="isAllSelected"
+                      [indeterminate]="isSomeSelected && !isAllSelected"
+                    />
+                  </th>
+
                   <th *ngFor="let head of headers" [mat-sort-header]="head.key">
-                    {{ head.name }}
+                    {{ head.value }}
                   </th>
                   <th></th>
                 </tr>
@@ -36,6 +44,7 @@
                       [insurances]="insurances"
                       [patients]="patients"
                       (save)="onSave($event)"
+                      (selectNote)="onSelectNote($event)"
                     ></tr>
                   </ng-container>
                 </ng-container>
@@ -54,14 +63,14 @@
                 </ng-template>
               </tbody>
             </table>
-            <app-table-footer
-              [(page)]="currentPage"
-              (pageChange)="onPageChange($event)"
-              [total]="total"
-              [pageSize]="pageSize"
-            >
-            </app-table-footer>
           </div>
+          <app-table-footer
+            [(page)]="currentPage"
+            (pageChange)="onPageChange($event)"
+            [total]="total"
+            [pageSize]="pageSize"
+          >
+          </app-table-footer>
           <app-log-reports-summary> </app-log-reports-summary>
         </div>
       </div>

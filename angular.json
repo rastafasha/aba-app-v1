@@ -102,7 +102,7 @@
             },
             "development": {
               "serviceWorker": false,
-              "optimization": true,
+              "optimization": false,
               "outputHashing": "none",
               "sourceMap": true,
               "namedChunks": false,

@@ -1,6 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { CreateResponse, ListParameters, ListResponse } from '../models';
-import { catchError, of } from 'rxjs';
+import {
+  ApiV2Response,
+  CreateResponse,
+  ListParameters,
+  ListResponse,
+} from '../models';
+import { catchError, map, of } from 'rxjs';
 
 export class ApiV2Service<T> {
   constructor(protected http: HttpClient, protected endpoint: string) {}
@@ -8,14 +13,17 @@ export class ApiV2Service<T> {
   list(options: ListParameters = { per_page: 15 }) {
     const params = new HttpParams({ fromObject: options });
     const URL = this.endpoint;
-    return this.http
-      .get<ListResponse<T>>(URL, { params })
-      .pipe(catchError(() => of({ data: null } as ListResponse<T>)));
+    return this.http.get<ApiV2Response<ListResponse<T>>>(URL, { params }).pipe(
+      catchError(() => of({ data: null } as ApiV2Response<ListResponse<T>>)),
+      map((response) => response.data.data)
+    );
   }
 
   get(id: number) {
     const URL = this.endpoint + '/' + id;
-    return this.http.get<T>(URL);
+    return this.http
+      .get<ApiV2Response<T>>(URL)
+      .pipe(map((response) => response.data));
   }
 
   create(data) {
@@ -24,6 +32,7 @@ export class ApiV2Service<T> {
   }
 
   update(data: T, id: number) {
+    console.log(data);
     const URL = this.endpoint + '/' + id;
     return this.http.put<void>(URL, data);
   }
