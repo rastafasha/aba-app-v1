@@ -43,7 +43,6 @@ export class ClaimsService {
       .pipe(
         map((response) => {
           const data = response.data.data;
-          console.log(data, 'data');
           return data.map((claim) => ({
             id: claim['id'] as number,
             filename: (claim['filename'] || 'unknown.dat') as string,
