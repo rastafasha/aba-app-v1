@@ -26,6 +26,8 @@
                       type="checkbox"
                       [(ngModel)]="isAllSelected"
                       [indeterminate]="isSomeSelected && !isAllSelected"
+                      (ngModelChange)="onSelectAll($event)"
+                      aria-label="Select all"
                     />
                   </th>
 
@@ -37,41 +39,40 @@
               </thead>
               <tbody>
                 <ng-container *ngIf="notes?.length; else noData">
-                  <ng-container *ngFor="let data of notes">
-                    <tr
-                      appLogRender
-                      [note]="data"
-                      [insurances]="insurances"
-                      [patients]="patients"
-                      (save)="onSave($event)"
-                      (selectNote)="onSelectNote($event)"
-                    ></tr>
-                  </ng-container>
+                  <tr
+                    *ngFor="let data of notes; trackBy: trackByNoteId"
+                    appLogRender
+                    [note]="data"
+                    [insurances]="insurances"
+                    [patients]="patients"
+                    (save)="onSave($event)"
+                    [selected]="selectedNotes.has(data)"
+                    (selectedChange)="onSelectNote(data, $event)"
+                  ></tr>
                 </ng-container>
-                <!-- No Data -->
-                <ng-template #noData>
-                  <tr>
-                    <td [colSpan]="headers.length">
-                      <div *ngIf="notes?.length === 0">No data available.</div>
-                      <mat-progress-bar
-                        *ngIf="notes === null"
-                        mode="indeterminate"
-                      >
-                      </mat-progress-bar>
-                    </td>
-                  </tr>
-                </ng-template>
               </tbody>
             </table>
+
+            <!-- No Data -->
+            <ng-template #noData>
+              <div *ngIf="notes?.length === 0" class="no-data-message">
+                No data available.
+              </div>
+              <mat-progress-bar
+                *ngIf="notes === null"
+                mode="indeterminate"
+              ></mat-progress-bar>
+            </ng-template>
           </div>
+
           <app-table-footer
             [(page)]="currentPage"
             (pageChange)="onPageChange($event)"
-            [total]="total"
+            [total]="totalItems"
             [pageSize]="pageSize"
           >
           </app-table-footer>
-          <app-log-reports-summary> </app-log-reports-summary>
+          <app-log-reports-summary></app-log-reports-summary>
         </div>
       </div>
     </div>

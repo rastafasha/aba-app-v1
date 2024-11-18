@@ -1,6 +1,6 @@
 export class InsuranceV2 {
   id: number;
-  insurer_name: string;
+  name: string;
   services: InsuranceV2Service[];
   notes: InsuranceV2Notes[];
   payer_id: number;
@@ -13,25 +13,25 @@ export class InsuranceV2 {
   updated_at: string | Date;
   deleted_at: string | Date;
 
-  static build = (data: object): InsuranceV2 => ({
+  static build = (data: Partial<InsuranceV2>): InsuranceV2 => ({
     ...data,
-    services: (data['services'] as object[]).map((serviceData) =>
+    services: (data.services as object[]).map((serviceData) =>
       InsuranceV2Service.build(serviceData)
     ),
-    notes: (data['notes'] as object[]).map((notesData) =>
+    notes: (data.notes as object[]).map((notesData) =>
       InsuranceV2Notes.build(notesData)
     ),
-    payer_id: Number(data['payer_id']),
-    created_at: new Date(data['created_at']),
-    updated_at: new Date(data['updated_at']),
-    deleted_at: data['deleted_at'] ? new Date(data['deleted_at']) : null,
-    id: Number(data['id']),
-    insurer_name: data['insurer_name'] as string,
-    street: data['street'] as string,
-    street2: data['street2'] as string,
-    city: data['city'] as string,
-    state: data['state'] as string,
-    zip: Number(data['zip']),
+    payer_id: Number(data.payer_id),
+    created_at: new Date(data.created_at),
+    updated_at: new Date(data.updated_at),
+    deleted_at: data.deleted_at ? new Date(data.deleted_at) : null,
+    id: Number(data.id),
+    name: data.name as string,
+    street: data.street as string,
+    street2: data.street2 as string,
+    city: data.city as string,
+    state: data.state as string,
+    zip: Number(data.zip),
   });
 }
 

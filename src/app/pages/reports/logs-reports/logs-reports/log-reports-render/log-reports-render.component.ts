@@ -7,6 +7,7 @@ import {
 } from 'src/app/core/models';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 
+type Note = NoteRbtV2 | NoteBcbaV2;
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'tr[appLogRender]',
@@ -14,15 +15,15 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
   styleUrls: ['./log-reports-render.component.scss'],
 })
 export class LogReportsRenderComponent {
-  @Input() note: NoteRbtV2 | NoteBcbaV2;
+  @Input() note: Note;
   @Input() insurances: InsuranceV2[] = [];
   @Input() patients: PatientV2[] = [];
-  @Output() save = new EventEmitter<NoteRbtV2 | NoteBcbaV2>();
-  @Output() selectNote = new EventEmitter<boolean>();
+  @Input() selected = false;
+  @Output() selectedChange = new EventEmitter<boolean>();
+  @Output() save = new EventEmitter<Note>();
 
   routes = AppRoutes;
   hasChanges = false;
-  isSelected = false;
 
   readonly statusOptions = ['pending', 'ok', 'no'];
   readonly modifiers = [
@@ -55,7 +56,8 @@ export class LogReportsRenderComponent {
     this.save.emit(this.note);
   }
 
-  onSelect(event) {
-    this.selectNote.emit(event);
+  onSelect($event: boolean) {
+    this.selected = $event;
+    this.selectedChange.emit(this.selected);
   }
 }
