@@ -1,0 +1,13 @@
+<a
+  *ngFor="let button of options.buttons"
+  type="button"
+  (click)="onExport(button)"
+  class="me-2"
+>
+  <span>{{ button.title }}</span>
+  <img
+    [src]="'assets/img/icons/' + button.type + '.svg'"
+    [alt]="button.alt || button.type"
+    [title]="button.title || button.alt"
+  />
+</a>

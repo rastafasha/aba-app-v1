@@ -6,6 +6,7 @@ import { LocationV2 } from './location.v2.model';
 import { NoteRbtV2 } from './note.rbt.v2.model';
 import { ProviderV2 } from './provider.v2.model';
 
+type NoteStatus = 'pending' | 'ok' | 'no';
 export class NoteBcbaV2 {
   type: 'bcba';
   id: number;
@@ -51,7 +52,7 @@ export class NoteBcbaV2 {
   md: string;
   md2: string;
   meet_with_client_at: string;
-  status: 'pending' | 'ok' | 'no';
+  status: NoteStatus;
 
   created_at: string | Date;
   updated_at: string | Date;
@@ -89,7 +90,7 @@ export class NoteBcbaV2 {
       md2: StringOrNullOrUndefined(data.md2),
       meet_with_client_at: data.meet_with_client_at as string,
       provider: data.provider,
-      status: (StringOrNullOrUndefined(data.status) as 'pending') ?? 'pending',
+      status: (StringOrNullOrUndefined(data.status) as NoteStatus) ?? 'pending',
       location_id: NumberOrNullOrUndefined(data.location_id),
       pos: StringOrNullOrUndefined(data.pos),
       session_date: StringOrNullOrUndefined(data.session_date),

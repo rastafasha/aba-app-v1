@@ -1,6 +1,8 @@
 //@index('./*.ts', f => `export * from '${f.path}';`)
-export * from './NumberOrNull';
-export * from './StringOrNull';
+export * from './DateOrNullOrUndefined';
+export * from './NumberOrNullOrUndefined';
+export * from './StringOrNullOrUndefined';
+//@endindex
 
 export function compareObjects(obj1: object, obj2: object): object {
   const differences: object = {};

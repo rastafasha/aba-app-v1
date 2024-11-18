@@ -1,3 +1,4 @@
+import { KeyValue } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { forkJoin, of } from 'rxjs';
@@ -20,7 +21,10 @@ import {
 import { TableUtilsService } from 'src/app/shared/components/table/table-utils.service';
 import Swal from 'sweetalert2';
 import { LogFilter } from '../models/log-filter.model';
-import { KeyValue } from '@angular/common';
+import { LogReportsDownloadOptions } from './log-reports-download/LogReportsDownloadOptions';
+import { LogReportsUseCasesService } from '../log-reports-use-cases.service';
+import { AppRoutes } from 'src/app/shared/routes/routes';
+import { Router } from '@angular/router';
 
 type Note = NoteRbtV2 | NoteBcbaV2;
 
@@ -69,8 +73,20 @@ export class LogsReportsComponent implements OnInit {
   isSomeSelected = false;
   selectedNotes: Set<Note> = new Set<Note>();
 
+  downloadOptions: LogReportsDownloadOptions = {
+    buttons: [
+      {
+        title: 'Generate Claim',
+        type: 'forward',
+        alt: 'Generate Claim',
+      },
+    ],
+  };
+
   constructor(
+    private router: Router,
     private tableUtilsService: TableUtilsService,
+    private logReportsUseCases: LogReportsUseCasesService,
     private insurancesService: InsurancesV2Service,
     private patientsService: PatientsV2Service,
     private notesRbtService: NotesRbtV2Service,
@@ -209,6 +225,27 @@ export class LogsReportsComponent implements OnInit {
         this.loadData();
       },
     });
+  }
+
+  onExport() {
+    const rbtExports = Array.from(this.selectedNotes.values())
+      .filter(isNoteRbtV2)
+      .map((note) => note.id);
+    const bcbaExports = Array.from(this.selectedNotes.values())
+      .filter(isNoteBcbaV2)
+      .map((note) => note.id);
+    const filname = new Date().toISOString().replace('T', '_') + '.dat';
+    this.logReportsUseCases
+      .generateClaim(rbtExports, bcbaExports, filname)
+      .subscribe({
+        next: () => {
+          Swal.fire('Updated', `Claim generated successfully!`, 'success');
+          this.router.navigate([AppRoutes.claims.claims]);
+        },
+        error: () => {
+          Swal.fire('Error', `Claim Error, try again`, 'error');
+        },
+      });
   }
 
   trackByNoteId(_: number, note: Note): string {

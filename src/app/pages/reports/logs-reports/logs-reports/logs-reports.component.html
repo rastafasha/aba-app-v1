@@ -11,8 +11,17 @@
             (refresh)="onRefresh()"
             (search)="onFilter($event)"
           ></app-log-reports-search>
-          <!-- search -->
+          <!-- /search -->
+          <!-- Download -->
+          <div class="col-auto text-end float-end ms-auto download-grp">
+            <app-log-reports-download
+              [options]="downloadOptions"
+              (export)="onExport()"
+            >
+            </app-log-reports-download>
+          </div>
 
+          <!-- Table -->
           <div class="table-responsive">
             <table
               matSort
