@@ -11,13 +11,9 @@ export class LogReportsUnitPricePipe implements PipeTransform {
     insurances: InsuranceV2[]
   ): number {
     const insurance = insurances?.find((i) => i.id === insurance_id);
-    if (insurance) {
-      const service = insurance.services.find((s) => s.code === cpt);
-      if (service) {
-        return service.unit_price;
-      }
-      return null;
-    }
-    return null;
+    if (!insurance) return null;
+    const service = insurance.services.find((s) => s.code === cpt);
+    if (!service) return null;
+    return service.unit_price;
   }
 }

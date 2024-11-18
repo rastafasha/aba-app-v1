@@ -8,6 +8,7 @@ import { LogReportsSummaryComponent } from './logs-reports/log-reports-summary/l
 import { LogsReportsComponent } from './logs-reports/logs-reports.component';
 import { LogReportsUnitPricePipe } from './pipes/log-reports-unit-price.pipe';
 import { LogReportsSessionTotalPipe } from './pipes/log-reports-session-total.pipe';
+import { LogReportsDownloadComponent } from './logs-reports/log-reports-download/log-reports-download.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { LogReportsSessionTotalPipe } from './pipes/log-reports-session-total.pi
     LogReportsRenderComponent,
     LogReportsUnitPricePipe,
     LogReportsSessionTotalPipe,
+    LogReportsDownloadComponent,
   ],
   imports: [SharedModule, CoreModule, LogsReportsRoutingModule],
 })

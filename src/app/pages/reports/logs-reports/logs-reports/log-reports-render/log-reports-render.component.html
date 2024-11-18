@@ -2,7 +2,7 @@
 <td class="check-cell">
   <input
     type="checkbox"
-    [(ngModel)]="isSelected"
+    [(ngModel)]="selected"
     (ngModelChange)="onSelect($event)"
   />
 </td>
@@ -56,11 +56,31 @@
     </option>
   </select>
 </td>
-<!-- Tecnico -->
+<!-- Provider -->
 <td>
   <a [routerLink]="[routes.doctors.profile, note.provider?.id]">
     {{ note.provider?.name }}
     {{ note.provider?.surname }}
+  </a>
+</td>
+
+<!-- patient_name -->
+<td>
+  <a [routerLink]="[routes.patients.profileByPatientId, note.patient_code]">
+    <span>
+      {{ (patients | arrayFind : "id" : note.client_id)?.full_name }}
+    </span>
+  </a>
+</td>
+<!-- Insurer Name -->
+<td>
+  <a
+    *ngIf="note.insurance_id"
+    [routerLink]="[routes.insurance.view, note.insurance_id]"
+  >
+    <span>
+      {{ (insurances | arrayFind : "id" : note.insurance_id)?.name }}
+    </span>
   </a>
 </td>
 <!-- Pos -->
@@ -92,26 +112,6 @@
   <span>
     {{ note.cpt_code }}
   </span>
-</td>
-<!-- Insurer Name -->
-<td>
-  <a
-    *ngIf="note.insurance_id"
-    [routerLink]="[routes.insurance.view, note.insurance_id]"
-  >
-    <span>
-      {{ (insurances | arrayFind : "id" : note.insurance_id)?.insurer_name }}
-    </span>
-  </a>
-</td>
-
-<!-- patient_name -->
-<td>
-  <a [routerLink]="[routes.patients.profileByPatientId, note.patient_code]">
-    <span>
-      {{ (patients | arrayFind : "id" : note.client_id)?.full_name }}</span
-    >
-  </a>
 </td>
 
 <!-- modificadores  -->
@@ -205,8 +205,8 @@
     <label class="custom_check">
       <input
         type="checkbox"
-        name="pay"
-        [(ngModel)]="note.pay"
+        name="paid"
+        [(ngModel)]="note.paid"
         (ngModelChange)="hasChanges = true"
       />
       <span class="checkmark" value="false"></span>
@@ -214,8 +214,7 @@
   </div>
 </td>
 
-<!-- <td>{{note.created_at | date }}</td> -->
-
+<!-- Save -->
 <td class="save-cell">
   <button
     type="button"

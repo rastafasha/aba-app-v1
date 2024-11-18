@@ -5,25 +5,33 @@ import {
   ListParameters,
   ListResponse,
 } from '../models';
-import { catchError, map, of } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 
-export class ApiV2Service<T> {
+export abstract class RepositoryV2Service<T> {
   constructor(protected http: HttpClient, protected endpoint: string) {}
 
-  list(options: ListParameters = { per_page: 15 }) {
+  list(
+    options: ListParameters = { per_page: 15 }
+  ): Observable<ListResponse<T>> {
     const params = new HttpParams({ fromObject: options });
     const URL = this.endpoint;
     return this.http.get<ApiV2Response<ListResponse<T>>>(URL, { params }).pipe(
-      catchError(() => of({ data: null } as ApiV2Response<ListResponse<T>>)),
-      map((response) => response.data.data)
+      catchError(() =>
+        of({ data: null, status: 'error' } as ApiV2Response<ListResponse<T>>)
+      ),
+      map((response) => ({
+        ...response.data,
+        data: response.data.data.map((item) => this.transform(item)),
+      }))
     );
   }
 
-  get(id: number) {
+  get(id: number): Observable<ApiV2Response<T>> {
     const URL = this.endpoint + '/' + id;
-    return this.http
-      .get<ApiV2Response<T>>(URL)
-      .pipe(map((response) => response.data));
+    return this.http.get<ApiV2Response<T>>(URL).pipe(
+      catchError(() => of({ data: null, status: 'error' } as ApiV2Response<T>)),
+      map((response) => ({ ...response, data: this.transform(response.data) }))
+    );
   }
 
   create(data) {
@@ -41,4 +49,6 @@ export class ApiV2Service<T> {
     const URL = this.endpoint + '/' + id;
     return this.http.delete<void>(URL);
   }
+
+  abstract transform(data: unknown): T;
 }

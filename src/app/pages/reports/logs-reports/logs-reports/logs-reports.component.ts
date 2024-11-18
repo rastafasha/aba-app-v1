@@ -1,3 +1,4 @@
+import { KeyValue } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { forkJoin, of } from 'rxjs';
@@ -20,9 +21,13 @@ import {
 import { TableUtilsService } from 'src/app/shared/components/table/table-utils.service';
 import Swal from 'sweetalert2';
 import { LogFilter } from '../models/log-filter.model';
-import { KeyValue } from '@angular/common';
+import { LogReportsDownloadOptions } from './log-reports-download/LogReportsDownloadOptions';
+import { LogReportsUseCasesService } from '../log-reports-use-cases.service';
+import { AppRoutes } from 'src/app/shared/routes/routes';
+import { Router } from '@angular/router';
 
-type Note = (NoteRbtV2 | NoteBcbaV2) & { charges: number; units: number };
+type Note = NoteRbtV2 | NoteBcbaV2;
+
 @Component({
   selector: 'app-logs-reports',
   templateUrl: './logs-reports.component.html',
@@ -34,6 +39,8 @@ export class LogsReportsComponent implements OnInit {
     { key: 'session_date', value: 'Date of Note' },
     { key: 'status', value: 'Status' },
     { key: 'provider', value: 'Provider' },
+    { key: 'patient_id', value: 'Client Name' },
+    { key: 'insurance_id', value: 'Insurance' },
     { key: 'pos', value: 'POS' },
     { key: 'time_in', value: 'Time in (M)' },
     { key: 'time_out', value: 'Time Out (M)' },
@@ -41,58 +48,66 @@ export class LogsReportsComponent implements OnInit {
     { key: 'time_out2', value: 'Time Out (A)' },
     { key: 'total_hours', value: 'Total Hours' },
     { key: 'cpt_code', value: 'CPT' },
-    { key: 'insurance_id', value: 'Insurance' },
-    { key: 'patient_id', value: 'Client Name' },
     { key: 'md', value: 'Modifier 1' },
     { key: 'md2', value: 'Modifier 2' },
     { key: 'total_units', value: 'Total Units' },
-    { key: 'units', value: 'Units Price' },
-    { key: 'charges', value: 'Charges' },
+    { key: 'bip_id', value: 'Units Price' },
+    { key: 'total_minutes', value: 'Charges' },
     { key: 'billed', value: 'Billed' },
-    { key: 'pay', value: 'Pay' },
+    { key: 'paid', value: 'Paid' },
   ];
 
-  notes: (NoteRbtV2 | NoteBcbaV2)[] = null;
-  insurances: InsuranceV2[] = null;
-  patients: PatientV2[] = null;
-  locations: LocationV2[] = null;
-  notesRbt: NoteRbtV2[] = null;
-  notesBcba: NoteBcbaV2[] = null;
-  total = 0;
-  pageSize = 30;
+  notes: Note[] = [];
+  insurances: InsuranceV2[] = [];
+  patients: PatientV2[] = [];
+  locations: LocationV2[] = [];
+  notesRbt: NoteRbtV2[] = [];
+  notesBcba: NoteBcbaV2[] = [];
+
   currentPage = 1;
+  pageSize = 30;
+  totalItems = 0;
+  currentFilter: Partial<LogFilter> = {};
+
   isAllSelected = false;
   isSomeSelected = false;
+  selectedNotes: Set<Note> = new Set<Note>();
+
+  downloadOptions: LogReportsDownloadOptions = {
+    buttons: [
+      {
+        title: 'Generate Claim',
+        type: 'forward',
+        alt: 'Generate Claim',
+      },
+    ],
+  };
 
   constructor(
+    private router: Router,
     private tableUtilsService: TableUtilsService,
+    private logReportsUseCases: LogReportsUseCasesService,
     private insurancesService: InsurancesV2Service,
     private patientsService: PatientsV2Service,
     private notesRbtService: NotesRbtV2Service,
     private notesBcbaService: NotesBcbaV2Service,
     private locationsService: LocationsV2Service
-  ) {
-    //
-  }
+  ) {}
 
   ngOnInit() {
     this.onRefresh();
   }
+
   onRefresh() {
     forkJoin([
       this.locationsService.list(),
       this.insurancesService.list(),
       this.patientsService.list(),
-      this.notesRbtService.list({ per_page: Math.ceil(this.pageSize / 2) }),
-      this.notesBcbaService.list({ per_page: Math.ceil(this.pageSize / 2) }),
-    ]).subscribe(([locations, insurances, patients, notesRbt, notesBcba]) => {
-      this.locations = locations;
-      this.insurances = insurances;
-      this.patients = patients;
-      this.patients = patients;
-      this.notesRbt = notesRbt;
-      this.notesBcba = notesBcba;
-      this.updateData();
+    ]).subscribe(([locations, insurances, patients]) => {
+      this.locations = locations.data;
+      this.insurances = insurances.data;
+      this.patients = patients.data;
+      this.loadData();
     });
   }
 
@@ -101,51 +116,61 @@ export class LogsReportsComponent implements OnInit {
     this.notes = [...this.notesRbt, ...this.notesBcba].sort((a, b) =>
       a.session_date < b.session_date ? 1 : -1
     );
-    this.total = this.notes.length;
   }
 
   fixData() {
-    // Agregamos informacion faltante
-    this.notesRbt = this.notesRbt?.map((item) => {
-      const patient = this.patients.find(
-        (patient) => patient.patient_id === item.patient_code
-      );
-      item.insurance_id = !isNaN(item.insurance_id)
-        ? item.insurance_id
-        : patient?.insurer_id;
-      return item;
-    });
-    // Agregamos informacion faltante
-    this.notesBcba = this.notesBcba?.map((item) => {
-      //patiend_id (id)
-      const patient = this.patients.find(
-        (patient) => patient.patient_id === item.patient_code
-      );
-      // falta agregar la informacion del "tecnico"
-      // basa en provider_id o provider_name_g
-      //insurer
-      item.insurance_id = patient?.insurer_id;
-      return item;
-    });
-    this.notesRbt ??= [];
-    this.notesBcba ??= [];
+    this.notesRbt =
+      this.notesRbt?.map((item) => {
+        const patient = this.patients.find(
+          (patient) => patient.patient_id === item.patient_code
+        );
+        item.insurance_id = !isNaN(item.insurance_id)
+          ? item.insurance_id
+          : patient?.insurer_id;
+        return item;
+      }) ?? [];
+    this.notesBcba =
+      this.notesBcba?.map((item) => {
+        const patient = this.patients.find(
+          (patient) => patient.patient_id === item.patient_code
+        );
+        item.insurance_id = patient?.insurer_id;
+        return item;
+      }) ?? [];
   }
 
   onFilter(filter: Partial<LogFilter>) {
+    this.currentFilter = filter;
+    this.currentPage = 1;
+    this.loadData();
+  }
+
+  onSortChange(sort: Sort) {
+    this.notes = this.tableUtilsService.orderData(this.notes, sort);
+  }
+
+  onPageChange(page: number) {
+    this.currentPage = page;
+    this.loadData();
+  }
+
+  private loadData() {
+    const filter = {
+      ...this.currentFilter,
+      page: this.currentPage,
+      per_page: this.pageSize,
+    };
+
     forkJoin([
-      this.notesRbtService.list({
-        per_page: Math.ceil(this.pageSize / 2),
-        ...filter,
-      }),
-      this.notesBcbaService.list({
-        per_page: Math.ceil(this.pageSize / 2),
-        ...filter,
-      }),
+      this.notesRbtService.list(filter),
+      this.notesBcbaService.list(filter),
     ]).subscribe(([notesRbt, notesBcba]) => {
-      this.notesRbt = notesRbt;
-      this.notesBcba = notesBcba;
-      this.fixData();
+      this.notesRbt = notesRbt.data;
+      this.notesBcba = notesBcba.data;
+      this.totalItems = notesRbt.total + notesBcba.total;
+
       let combineNotes = [...this.notesRbt, ...this.notesBcba];
+
       if (filter.note_type === 'rbt')
         combineNotes = combineNotes.filter((note) => note.type === 'rbt');
       if (filter.note_type === 'bcba')
@@ -162,26 +187,27 @@ export class LogsReportsComponent implements OnInit {
         combineNotes = combineNotes.filter(
           (note) => note.status === filter.status_type
         );
+
       this.notesRbt = combineNotes.filter(isNoteRbtV2);
       this.notesBcba = combineNotes.filter(isNoteBcbaV2);
       this.updateData(false);
     });
   }
 
-  onSortChange(sort: Sort) {
-    this.notes = this.tableUtilsService.orderData(this.notes, sort);
-  }
-  onPageChange($event: number) {
-    // throw new Error('Method not implemented.');
+  onSelectAll($event: boolean) {
+    if ($event) this.selectedNotes = new Set<Note>(this.notes);
+    else this.selectedNotes = new Set<Note>();
+
+    this.isAllSelected = $event;
+    this.isSomeSelected = $event;
   }
 
-  onSelectAll($event) {
-    console.log($event);
+  onSelectNote(note: Note, add: boolean) {
+    add ? this.selectedNotes.add(note) : this.selectedNotes.delete(note);
+    this.isAllSelected = this.selectedNotes.size === this.notes.length;
+    this.isSomeSelected = this.selectedNotes.size > 0;
   }
 
-  onSelectNote($event) {
-    console.log($event);
-  }
   onSave(data: NoteRbtV2 | NoteBcbaV2) {
     const update$ = isNoteRbtV2(data)
       ? this.notesRbtService.update(data, data.id)
@@ -191,15 +217,38 @@ export class LogsReportsComponent implements OnInit {
 
     update$.subscribe({
       next: () => {
-        console.log('se actualizo la nota');
         Swal.fire('Updated', `Saved successfully!`, 'success');
-        this.onRefresh();
+        this.loadData();
       },
-      error: (err) => {
-        console.log('no se actualizo la nota', err);
+      error: () => {
         Swal.fire('Error', `Can't update!`, 'error');
-        this.onRefresh();
+        this.loadData();
       },
     });
+  }
+
+  onExport() {
+    const rbtExports = Array.from(this.selectedNotes.values())
+      .filter(isNoteRbtV2)
+      .map((note) => note.id);
+    const bcbaExports = Array.from(this.selectedNotes.values())
+      .filter(isNoteBcbaV2)
+      .map((note) => note.id);
+    const filname = new Date().toISOString().replace('T', '_') + '.dat';
+    this.logReportsUseCases
+      .generateClaim(rbtExports, bcbaExports, filname)
+      .subscribe({
+        next: () => {
+          Swal.fire('Updated', `Claim generated successfully!`, 'success');
+          this.router.navigate([AppRoutes.claims.claims]);
+        },
+        error: () => {
+          Swal.fire('Error', `Claim Error, try again`, 'error');
+        },
+      });
+  }
+
+  trackByNoteId(_: number, note: Note): string {
+    return note.id + note.type;
   }
 }

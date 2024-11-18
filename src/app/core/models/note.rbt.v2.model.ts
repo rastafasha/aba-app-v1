@@ -42,7 +42,7 @@ export class NoteRbtV2 {
   next_session_is_scheduled_for: string | Date;
 
   billed: boolean;
-  pay: boolean;
+  paid: boolean;
   status: 'pending' | 'ok' | 'no';
   cpt_code: string;
   location_id: number;
@@ -111,7 +111,7 @@ export class NoteRbtV2 {
       supervisor_signature: String(data['supervisor_signature']),
       supervisor_name: Number(data['supervisor_name']),
       billed: Boolean(data['billed']),
-      pay: Boolean(data['pay']),
+      paid: Boolean(data['paid']),
       status: (String(data['status']) as 'pending') ?? 'pending',
       cpt_code: String(data['cpt_code']),
       location_id: Number(data['location_id']),
