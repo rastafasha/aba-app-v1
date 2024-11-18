@@ -1,10 +1,12 @@
 import { NoteBcbaV2 } from './note-bcba.v2.model';
+import { ProviderV2 } from './provider.v2.model';
 
 export class NoteRbtV2 {
   type: 'rbt';
   id: number;
   bip_id: number;
-  patient_id: number;
+  patient_id: string;
+  client_id: number;
   patient_code: string;
   doctor_id: number;
 
@@ -40,20 +42,21 @@ export class NoteRbtV2 {
   next_session_is_scheduled_for: string | Date;
 
   billed: boolean;
-  pay: boolean;
+  paid: boolean;
   status: 'pending' | 'ok' | 'no';
   cpt_code: string;
   location_id: number;
   md: string;
   md2: string;
-  provider: number;
+  supervisor: ProviderV2;
+  provider: ProviderV2;
   created_at: string | Date;
   updated_at: string | Date;
   deleted_at: string | Date;
   pos: string;
   //
   insurance_id: number;
-  tecnico: { name: string; surname: number };
+  tecnico: ProviderV2;
 
   static build = (data: object): NoteRbtV2 => {
     const note = {
@@ -61,13 +64,14 @@ export class NoteRbtV2 {
       type: 'rbt' as const,
       id: Number(data['id']),
       doctor_id: Number(data['doctor_id']),
-      patient_id: Number(data['patient_id']),
+      patient_id: data['patient_id'],
+      client_id: Number(data['client_id']),
       patient_code: data['patient_code']
         ? String(data['patient_code'])
         : String(data['patient_id']),
       bip_id: Number(data['bip_id']),
       provider_name_g: Number(data['provider_name_g']),
-      provider_id: Number(data['provider_name_g']), //PUT ATTENTION HERE
+      provider_id: Number(data['provider_id']),
       provider_credential:
         data['provider_credential'] && data['provider_credential'] !== 'null'
           ? String(data['provider_credential'])
@@ -107,18 +111,19 @@ export class NoteRbtV2 {
       supervisor_signature: String(data['supervisor_signature']),
       supervisor_name: Number(data['supervisor_name']),
       billed: Boolean(data['billed']),
-      pay: Boolean(data['pay']),
+      paid: Boolean(data['paid']),
       status: (String(data['status']) as 'pending') ?? 'pending',
       cpt_code: String(data['cpt_code']),
       location_id: Number(data['location_id']),
       md: String(data['md']),
       md2: String(data['md2']),
-      provider: Number(data['provider']),
+      provider: data['provider'],
+      supervisor: data['supervisor'],
       created_at: String(data['created_at']),
       updated_at: String(data['updated_at']),
       deleted_at: String(data['deleted_at']),
       //
-      insurance_id: undefined,
+      insurance_id: Number(data['insurance_id']),
       tecnico: undefined,
     };
     // Post Work
@@ -127,9 +132,6 @@ export class NoteRbtV2 {
     note.total_hours = this.calculateTotalHours(data);
     note.total_minutes = this.calculateTotalMinutes(data);
     note.total_units = this.calculateTotalUnits(data);
-    // Data Base's Fixes
-    note.insurance_id = Number(data['pa_service_id']);
-
     return note;
   };
   static calculateSessionLength(data: object): string {

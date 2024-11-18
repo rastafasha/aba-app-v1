@@ -12,4 +12,5 @@ export * from './note-rbt.model';
 export * from './note.rbt.v2.model';
 export * from './notes.model';
 export * from './patient.v2.model';
+export * from './provider.v2.model';
 export * from './users.model';

@@ -4,6 +4,11 @@ export interface CreateResponse<T> {
   message: string;
 }
 
+export interface ApiV2Response<T> {
+  status: 'success' | 'error';
+  data: T;
+}
+
 export interface ListResponse<T> {
   data: T[];
   status: string;

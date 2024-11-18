@@ -1,10 +1,19 @@
+import {
+  NumberOrNullOrUndefined,
+  StringOrNullOrUndefined,
+} from 'src/app/shared/utils';
+import { LocationV2 } from './location.v2.model';
 import { NoteRbtV2 } from './note.rbt.v2.model';
+import { ProviderV2 } from './provider.v2.model';
 
+type NoteStatus = 'pending' | 'ok' | 'no';
 export class NoteBcbaV2 {
   type: 'bcba';
   id: number;
   bip_id: number;
-  patient_id: number;
+  client_id: number;
+  patient_id: string;
+
   doctor_id: number;
   patient_code: string;
   provider_signature: string;
@@ -17,8 +26,7 @@ export class NoteBcbaV2 {
   time_out: string;
   time_in2: string;
   time_out2: string;
-  session_length_total: string;
-  session_length_total2: string;
+  session_length_total: number;
   total_hours: string;
   total_minutes: number;
   total_units: number;
@@ -28,7 +36,7 @@ export class NoteBcbaV2 {
   note_description: string;
   caregiver_goals: CaregiverGoals;
   rbt_training_goals: RbtTrainingGoals;
-  location: string;
+  location: LocationV2;
   location_id: number;
   summary_note: string;
   birth_date: string | Date;
@@ -36,113 +44,77 @@ export class NoteBcbaV2 {
   cpt_code: string;
   diagnosis_code: string;
   rendering_provider: number;
-  rendering: Rendering;
-  tecnico: TecnicoV2;
-
-  supervisor: SupervisorV2;
+  provider: ProviderV2;
+  supervisor: ProviderV2;
   billed: boolean;
-  pay: boolean;
+  paid: boolean;
   bcba: string;
   md: string;
   md2: string;
   meet_with_client_at: string;
-  provider: number;
-  status: 'pending' | 'ok' | 'no';
+  status: NoteStatus;
 
   created_at: string | Date;
   updated_at: string | Date;
   //
   insurance_id: number;
-  static build = (data: object): NoteBcbaV2 => ({
-    ...data,
-    type: 'bcba',
-    id: Number(data['id']),
-    bip_id: Number(data['bip_id']),
-    patient_id: Number(data['patient_id']),
-    patient_code: String(data['patient_id']),
-    doctor_id: Number(data['doctor_id']),
-    note_description: String(data['note_description']),
-    caregiver_goals: CaregiverGoalsBuilder(data['caregiver']),
-    rbt_training_goals: RbtTrainingGoalsBuilder(data['rbt_training_goals']),
-    location: String(data['location']),
-    summary_note: String(data['summary_note']),
-    birth_date: String(data['birth_date']),
-    aba_supervisor: Number(data['aba_supervisor']),
-    cpt_code: String(data['cpt_code']),
-    diagnosis_code: String(data['diagnosis_code']),
-    rendering_provider: Number(data['rendering_provider']),
-    rendering: RenderingBuilder(data['rendering']),
-    provider_signature: String(data['provider_signature']),
-    provider_name: Number(data['provider_name']),
-    tecnico: TecnicoV2Builder(data['tecnico']),
-    supervisor_signature: String(data['supervisor_signature']),
-    supervisor_name: Number(data['supervisor_name']),
-    supervisor: SupervisorV2Builder(data['supervisor']),
-    billed: Boolean(data['billedbcba']) ?? Boolean(data['billed']),
-    pay: Boolean(data['paybcba']) ?? Boolean(data['pay']),
-    bcba: String(data['bcba']),
-    md: String(data['mdbcba']) ?? String(data['md']),
-    md2: String(data['md2bcba']) ?? String(data['md2']),
-    meet_with_client_at: data['meet_with_client_at'] as string,
-    provider: Number(data['provider']),
-    status: (String(data['status']) as 'pending') ?? 'pending',
-    location_id: Number(data['location_id']),
-    pos: data['pos']?.toString() ?? null,
-    session_date: String(data['session_date']),
-    time_in: data['time_in'] ? String(data['time_in']) : null,
-    time_out: data['time_out'] ? String(data['time_out']) : null,
-    time_in2: data['time_in2'] ? String(data['time_in2']) : null,
-    time_out2: data['time_out2'] ? String(data['time_out2']) : null,
-    session_length_total: String(data['session_length_total']),
-    session_length_total2: String(data['session_length_total2']),
-    total_hours: String(data['total_hours']),
-    total_minutes: Number(data['total_minutes']),
-    total_units: Number(data['total_units']),
-    created_at: String(data['created_at']),
-    updated_at: String(data['updated_at']),
-    insurance_id: undefined,
-  });
+  constructor(data: Partial<NoteBcbaV2>) {
+    const note: NoteBcbaV2 = {
+      ...data,
+      type: 'bcba',
+      id: NumberOrNullOrUndefined(data.id),
+      bip_id: NumberOrNullOrUndefined(data.bip_id),
+      patient_id: data.patient_id,
+      client_id: NumberOrNullOrUndefined(data.client_id),
+      patient_code: StringOrNullOrUndefined(data.patient_id),
+      doctor_id: NumberOrNullOrUndefined(data.doctor_id),
+      note_description: StringOrNullOrUndefined(data.note_description),
+      caregiver_goals: CaregiverGoalsBuilder(data.caregiver_goals),
+      rbt_training_goals: RbtTrainingGoalsBuilder(data.rbt_training_goals),
+      location: new LocationV2(data.location),
+      summary_note: StringOrNullOrUndefined(data.summary_note),
+      birth_date: StringOrNullOrUndefined(data.birth_date),
+      aba_supervisor: NumberOrNullOrUndefined(data.aba_supervisor),
+      cpt_code: StringOrNullOrUndefined(data.cpt_code),
+      diagnosis_code: StringOrNullOrUndefined(data.diagnosis_code),
+      rendering_provider: NumberOrNullOrUndefined(data.rendering_provider),
+      provider_signature: StringOrNullOrUndefined(data.provider_signature),
+      provider_name: NumberOrNullOrUndefined(data.provider_name),
+      supervisor_signature: StringOrNullOrUndefined(data.supervisor_signature),
+      supervisor_name: NumberOrNullOrUndefined(data.supervisor_name),
+      supervisor: data.supervisor,
+      billed: Boolean(data.billed),
+      paid: Boolean(data.paid),
+      bcba: StringOrNullOrUndefined(data.bcba),
+      md: StringOrNullOrUndefined(data.md),
+      md2: StringOrNullOrUndefined(data.md2),
+      meet_with_client_at: data.meet_with_client_at as string,
+      provider: data.provider,
+      status: (StringOrNullOrUndefined(data.status) as NoteStatus) ?? 'pending',
+      location_id: NumberOrNullOrUndefined(data.location_id),
+      pos: StringOrNullOrUndefined(data.pos),
+      session_date: StringOrNullOrUndefined(data.session_date),
+      time_in: StringOrNullOrUndefined(data.time_in),
+      time_out: StringOrNullOrUndefined(data.time_out),
+      time_in2: StringOrNullOrUndefined(data.time_in2),
+      time_out2: StringOrNullOrUndefined(data.time_out2),
+      session_length_total: NumberOrNullOrUndefined(data.session_length_total),
+      total_hours: StringOrNullOrUndefined(data.total_hours),
+      total_minutes: NumberOrNullOrUndefined(data.total_minutes),
+      total_units: NumberOrNullOrUndefined(data.total_units),
+      created_at: StringOrNullOrUndefined(data.created_at),
+      updated_at: StringOrNullOrUndefined(data.updated_at),
+      insurance_id: NumberOrNullOrUndefined(data.insurance_id),
+    };
+    return note;
+  }
 }
 
-export type CaregiverGoals = object;
-export type RbtTrainingGoals = object;
-export interface Rendering {
-  name: string;
-  surname: string;
-  npi: string;
-}
+export type CaregiverGoals = object[];
+export type RbtTrainingGoals = object[];
 
-export interface TecnicoV2 {
-  name: string;
-  surname: string;
-  npi: string;
-}
-
-export interface SupervisorV2 {
-  name: string;
-  surname: string;
-  npi: string;
-}
-const CaregiverGoalsBuilder = (data: object): CaregiverGoals => data;
-const RbtTrainingGoalsBuilder = (data: object): RbtTrainingGoals => data;
-const RenderingBuilder = (data: object): Rendering => ({
-  ...data,
-  name: String(data['name']),
-  npi: String(data['npi']),
-  surname: String(data['surname']),
-});
-const TecnicoV2Builder = (data: object): TecnicoV2 => ({
-  ...data,
-  name: String(data['name']),
-  npi: String(data['npi']),
-  surname: String(data['surname']),
-});
-const SupervisorV2Builder = (data: object): SupervisorV2 => ({
-  ...data,
-  name: String(data['name']),
-  npi: String(data['npi']),
-  surname: String(data['surname']),
-});
+const CaregiverGoalsBuilder = (data: object[]): CaregiverGoals => data;
+const RbtTrainingGoalsBuilder = (data: object[]): RbtTrainingGoals => data;
 
 export function isNoteBcbaV2(data: NoteRbtV2 | NoteBcbaV2): data is NoteBcbaV2 {
   return data?.type === 'bcba';

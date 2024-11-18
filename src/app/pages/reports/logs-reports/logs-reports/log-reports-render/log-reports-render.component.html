@@ -1,3 +1,11 @@
+<!-- Id -->
+<td class="check-cell">
+  <input
+    type="checkbox"
+    [(ngModel)]="selected"
+    (ngModelChange)="onSelect($event)"
+  />
+</td>
 <!-- Type -->
 <td>
   <span
@@ -48,6 +56,33 @@
     </option>
   </select>
 </td>
+<!-- Provider -->
+<td>
+  <a [routerLink]="[routes.doctors.profile, note.provider?.id]">
+    {{ note.provider?.name }}
+    {{ note.provider?.surname }}
+  </a>
+</td>
+
+<!-- patient_name -->
+<td>
+  <a [routerLink]="[routes.patients.profileByPatientId, note.patient_code]">
+    <span>
+      {{ (patients | arrayFind : "id" : note.client_id)?.full_name }}
+    </span>
+  </a>
+</td>
+<!-- Insurer Name -->
+<td>
+  <a
+    *ngIf="note.insurance_id"
+    [routerLink]="[routes.insurance.view, note.insurance_id]"
+  >
+    <span>
+      {{ (insurances | arrayFind : "id" : note.insurance_id)?.name }}
+    </span>
+  </a>
+</td>
 <!-- Pos -->
 <td>
   {{ note.meet_with_client_at ?? "-" }}
@@ -78,26 +113,6 @@
     {{ note.cpt_code }}
   </span>
 </td>
-<!-- Insurer Name -->
-<td>
-  <a
-    *ngIf="note.insurance_id"
-    [routerLink]="[routes.insurance.view, note.insurance_id]"
-  >
-    <span>
-      {{ (insurances | arrayFind : "id" : note.insurance_id)?.insurer_name }}
-    </span>
-  </a>
-</td>
-
-<!-- patient_name -->
-<td>
-  <a [routerLink]="[routes.patients.profileByPatientId, note.patient_code]">
-    <span>
-      {{(patients|arrayFilter:'id': note.patient_id)?.[0]?.full_name}}</span
-    >
-  </a>
-</td>
 
 <!-- modificadores  -->
 
@@ -110,7 +125,7 @@
     [(ngModel)]="note.md"
     (ngModelChange)="hasChanges = true"
   >
-    <option>-- Select --</option>
+    <option [value]="null">-- Select --</option>
     <ng-container *ngFor="let item of modifiers">
       <option
         *ngIf="item.type === 'all' || item.type === note.type"
@@ -131,7 +146,7 @@
     [(ngModel)]="note.md2"
     (ngModelChange)="hasChanges = true"
   >
-    <option>-- Select --</option>
+    <option [value]="null">-- Select --</option>
     <ng-container *ngFor="let item of modifiers">
       <option
         *ngIf="item.type === 'all' || item.type === note.type"
@@ -170,14 +185,7 @@
       | currency
   }}
 </td>
-<!-- Tecnico -->
-<td>
-  <span>
-    {{ note.tecnico?.name }}
-    {{ note.tecnico?.surname }}
-  </span>
-</td>
-
+<!-- Billed -->
 <td>
   <div class="note-checkit">
     <label class="custom_check">
@@ -191,13 +199,14 @@
     </label>
   </div>
 </td>
+<!-- Pay -->
 <td>
   <div class="note-checkit">
     <label class="custom_check">
       <input
         type="checkbox"
-        name="pay"
-        [(ngModel)]="note.pay"
+        name="paid"
+        [(ngModel)]="note.paid"
         (ngModelChange)="hasChanges = true"
       />
       <span class="checkmark" value="false"></span>
@@ -205,8 +214,7 @@
   </div>
 </td>
 
-<!-- <td>{{note.created_at | date }}</td> -->
-
+<!-- Save -->
 <td class="save-cell">
   <button
     type="button"

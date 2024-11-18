@@ -1,13 +1,13 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AppUser } from 'src/app/core/models/users.model';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
-import { BipService } from '../../bip/service/bip.service';
-import { DoctorService } from '../../doctors/service/doctor.service';
 import { InsuranceService } from '../../../../core/services/insurances.service';
 import { NoteBcbaService } from '../../../../core/services/notes-bcba.service';
-import { AppUser } from 'src/app/core/models/users.model';
+import { BipService } from '../../bip/service/bip.service';
+import { DoctorService } from '../../doctors/service/doctor.service';
 
 @Component({
   selector: 'app-note-bcba',
@@ -28,10 +28,10 @@ export class NoteBcbaComponent {
   selectedValueProvider!: string;
   selectedValueRBT!: string;
   selectedValueBCBA!: string;
-  selectedValueTimeIn: any = 0;
-  selectedValueTimeOut: any = 0;
-  selectedValueTimeIn2: any = 0;
-  selectedValueTimeOut2: any = 0;
+  selectedValueTimeIn = '';
+  selectedValueTimeOut = '';
+  selectedValueTimeIn2 = '';
+  selectedValueTimeOut2 = '';
   selectedValueProviderName!: string;
   selectedValueMaladaptive!: string;
   selectedValueRendering!: string;
@@ -39,12 +39,12 @@ export class NoteBcbaComponent {
   selectedValueCode!: string;
   option_selected = 0;
 
-  client_id: any;
-  patient_id: any;
-  doctor_id: any;
+  client_id: string | number;
+  patient_id: string | number;
+  doctor_id: string | number;
   patient_selected: any;
   client_selected: any;
-  bip_id: any;
+  bip_id: string | number;
   user: AppUser;
 
   first_name = '';
@@ -254,16 +254,19 @@ export class NoteBcbaComponent {
         console.log(resp);
         this.familiEnvolments = resp.familiEnvolments;
         this.caregivers_training_goals =
-          resp.familiEnvolments.data[0].caregivers_training_goals;
+          resp.familiEnvolments.data?.[0]?.caregivers_training_goals ?? [];
         this.monitoringEvaluatingPatientIds =
           resp.monitoringEvaluatingPatientIds;
         this.rbt_training_goals =
-          resp.monitoringEvaluatingPatientIds.data[0].rbt_training_goals;
+          resp.monitoringEvaluatingPatientIds.data?.[0]?.rbt_training_goals ??
+          [];
 
         this.pa_assessments = resp.pa_assessments;
+        /*
         const jsonObj = JSON.parse(this.pa_assessments) || '';
         this.pa_assessmentsgroup = jsonObj;
-        this.n_un = this.pa_assessmentsgroup[0].n_units;
+        this.n_un = this.pa_assessmentsgroup?.[0]?.n_units;
+        */
         // this.unitsAsignated = this.pa_assessmentsgroup.n_units;
         console.log(this.pa_assessmentsgroup);
         // this.cpt = this.pa_assessmentsgroup[0].cpt;
@@ -435,19 +438,19 @@ export class NoteBcbaComponent {
     const formData = new FormData();
     formData.append('summary_note', this.summary_note);
 
-    formData.append('patient_id', this.patient_id);
-    formData.append('doctor_id', this.doctor_id);
-    formData.append('bip_id', this.bip_id);
+    formData.append('patient_id', this.patient_id + '');
+    formData.append('doctor_id', this.doctor_id + '');
+    formData.append('bip_id', this.bip_id + '');
 
     formData.append('diagnosis_code', this.diagnosis_code);
     formData.append('location', this.location);
     formData.append('birth_date', this.birth_date);
 
-    formData.append('rendering_provider', this.doctor_id);
+    formData.append('rendering_provider', this.doctor_id + '');
     formData.append('aba_supervisor', this.selectedValueAba);
     formData.append('cpt_code', this.selectedValueCode);
 
-    formData.append('provider_name', this.doctor_id);
+    formData.append('provider_name', this.doctor_id + '');
     formData.append('supervisor_name', this.selectedValueBCBA);
     // formData.append('note_description', this.note_description);
     formData.append('insuranceId', this.insuranceId); // id del seguro preferiblemente que solo agarre la data al crear
