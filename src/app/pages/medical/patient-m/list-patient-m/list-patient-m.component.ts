@@ -13,6 +13,9 @@ import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
 import { BipService } from '../../bip/service/bip.service';
 import { PatientMService } from '../service/patient-m.service';
+import { LocationsV2Service, PatientsV2Service } from 'src/app/core/services';
+import { LocationV2, PatientV2 } from 'src/app/core/models';
+import { HttpErrorResponse } from '@angular/common/http';
 
 declare var $: any;
 @Component({
@@ -23,9 +26,12 @@ declare var $: any;
 export class ListPatientMComponent implements OnInit {
   isLoading = true;
   routes = AppRoutes;
+  locations: LocationV2[] = [];
 
-  patientList = [];
-  dataSource!: MatTableDataSource<any>;
+  patientList: PatientV2[] = [];
+  patients: PatientV2[] = [];
+
+  dataSource!: MatTableDataSource<PatientV2>;
 
   showFilter = false;
   searchDataValue = '';
@@ -42,33 +48,34 @@ export class ListPatientMComponent implements OnInit {
   pageSelection = [];
   totalPages = 0;
 
-  patient_generals = [];
-  patient_id: any;
-  patientid: any;
-  patient_selected: any;
-  text_validation: any;
+  patient_generals: PatientV2[] = [];
+  private patient_id: number;
+  private patient_selected: PatientV2;
+  private text_validation: string;
   user: AppUser;
   roles: string;
   permissions = [];
   maladaptives = [];
-  doctorPatientList = [];
   locationPatientList = [];
-  search: any = null;
-  status: any = null;
-  location_id: any;
+  search: string;
+  status: string;
+  location_id: number;
 
   constructor(
     private pageService: PageService,
-    private patientService: PatientMService,
+    // private patientService: PatientMService,
+    private patientService: PatientsV2Service,
+    private locationsService: LocationsV2Service,
+    private location: Location,
     private fileSaver: FileSaverService,
     private authService: AuthService,
     private bipService: BipService,
-    private location: Location,
     private dialog: MatDialog,
     private router: Router
   ) {}
   ngOnInit() {
     this.pageService.onInitPage();
+    this.getLocations();
     this.getTableData();
 
     this.user = this.authService.user as AppUser;
@@ -76,27 +83,10 @@ export class ListPatientMComponent implements OnInit {
     this.location_id = this.user.location_id;
 
     this.user = this.authService.user as AppUser;
-    this.getPatiensByDoctor();
   }
 
   goBack() {
     this.location.back(); // <-- go back to previous location on cancel
-  }
-
-  getPatiensByDoctor() {
-    this.patientService.getPatientsByDoctor(this.user.id).subscribe((resp) => {
-      // console.log(resp);
-      this.doctorPatientList = resp.patients.data;
-    });
-    this.getPatiensByLocation();
-  }
-  getPatiensByLocation() {
-    this.patientService
-      .getPatientByLocations(this.location_id)
-      .subscribe((resp) => {
-        // console.log(resp);
-        this.locationPatientList = resp.patients.data;
-      });
   }
 
   isMaladaptiveBip() {
@@ -122,29 +112,32 @@ export class ListPatientMComponent implements OnInit {
     this.serialNumberArray = [];
 
     this.patientService
-      .listPatients(this.search, this.status, this.location_id)
-      .subscribe(
-        (resp: any) => {
-          this.totalDatapatient = resp.patients.data.length;
-          this.patient_generals = resp.patients.data;
-          this.patientid = resp.patients.data.id;
-          this.patient_id = resp.patients.data.patient_id;
+      .list({
+        per_page: 15,
+        // search: this.search,
+        // status: this.status,
+        // location: this.location_id,
+      })
+      .subscribe({
+        next: (resp) => {
+          this.totalDatapatient = resp.data.length;
+          this.patientList = resp.data;
+          this.patient_generals = resp.data;
           this.getTableDataGeneral();
           this.isLoading = false;
-          //  this.isMaladaptiveBip();
         },
-        (error) => {
+        error: (error) => {
           console.error('Error fetching data:', error);
           this.isLoading = false;
-        }
-      );
+        },
+      });
   }
 
   getTableDataGeneral() {
     this.patientList = [];
     this.serialNumberArray = [];
 
-    this.patient_generals.map((res: any, index: number) => {
+    this.patient_generals.map((res: PatientV2, index: number) => {
       const serialNumber = index + 1;
       if (index >= this.skip && serialNumber <= this.limit) {
         this.patientList.push(res);
@@ -158,29 +151,26 @@ export class ListPatientMComponent implements OnInit {
     this.patient_selected = patient;
   }
   deleteRol() {
-    this.patientService
-      .deletePatient(this.patient_selected.id)
-      .subscribe((resp) => {
-        // console.log(resp);
+    this.patientService.delete(this.patient_selected.id).subscribe({
+      next: (resp) => {
+        const INDEX = this.patientList.findIndex(
+          (item) => item.id === this.patient_selected.id
+        );
+        if (INDEX !== -1) {
+          this.patientList.splice(INDEX, 1);
 
-        if (resp.message === 403) {
-          this.text_validation = resp.message_text;
-        } else {
-          const INDEX = this.patientList.findIndex(
-            (item: any) => item.id === this.patient_selected.id
-          );
-          if (INDEX !== -1) {
-            this.patientList.splice(INDEX, 1);
-
-            $('#delete_patient').hide();
-            $('#delete_patient').removeClass('show');
-            $('.modal-backdrop').remove();
-            $('body').removeClass();
-            $('body').removeAttr('style');
-            this.patient_selected = null;
-          }
+          $('#delete_patient').hide();
+          $('#delete_patient').removeClass('show');
+          $('.modal-backdrop').remove();
+          $('body').removeClass();
+          $('body').removeAttr('style');
+          this.patient_selected = null;
         }
-      });
+      },
+      error: (err: HttpErrorResponse) => {
+        this.text_validation = err.error.message;
+      },
+    });
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -191,7 +181,7 @@ export class ListPatientMComponent implements OnInit {
 
   searchDataDoct(value: any): void {
     this.dataSource.filter = value.trim().toLowerCase();
-    this.doctorPatientList = this.dataSource.filteredData;
+    this.patients = this.dataSource.filteredData;
   }
   searchDataLocation(value: any): void {
     this.dataSource.filter = value.trim().toLowerCase();
@@ -215,7 +205,7 @@ export class ListPatientMComponent implements OnInit {
   }
 
   sortDataDoctor(sort: any) {
-    const data = this.doctorPatientList.slice();
+    const data = this.patients.slice();
 
     if (!sort.active || sort.direction === '') {
       this.patientList = data;
@@ -280,7 +270,6 @@ export class ListPatientMComponent implements OnInit {
     this.skip = 0;
     this.currentPage = 1;
     this.getTableDataGeneral();
-    this.getPatiensByLocation();
     this.searchDataValue = '';
   }
 
@@ -383,14 +372,13 @@ export class ListPatientMComponent implements OnInit {
     const VALUE = data.status;
     // console.log(VALUE);
 
-    this.patientService.updateStatus(data, data.id).subscribe((resp) => {
-      // console.log(resp);
+    this.patientService.update(data, data.id).subscribe((resp) => {
       Swal.fire('Updated', `Client Status Updated successfully!`, 'success');
       this.getTableData();
     });
   }
 
-  openActionModal(patient: any) {
+  openActionModal(patient) {
     const actions = this.getActionsForPatient(patient);
     console.log('Actions before opening modal:', actions);
     this.dialog.open(ActionModalComponent, {
@@ -484,5 +472,11 @@ export class ListPatientMComponent implements OnInit {
       default:
         return false;
     }
+  }
+
+  getLocations() {
+    this.locationsService.list().subscribe((resp) => {
+      this.locations = resp.data;
+    });
   }
 }

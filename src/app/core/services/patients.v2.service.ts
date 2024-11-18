@@ -12,6 +12,6 @@ export class PatientsV2Service extends RepositoryV2Service<PatientV2> {
 
   transform(data: unknown): PatientV2 {
     if (!data) return null;
-    return PatientV2.build(data as object);
+    return new PatientV2(data as Partial<PatientV2>);
   }
 }

@@ -1,3 +1,5 @@
+import { NumberOrNullOrUndefined } from 'src/app/shared/utils';
+
 export class PatientV2 {
   id: number;
   first_name: string;
@@ -9,10 +11,12 @@ export class PatientV2 {
   //
   insurer_id: number;
 
-  static build(data: object): PatientV2 {
+  constructor(data: Partial<PatientV2>) {
+    console.log(data);
     return {
       ...data,
-      full_name: `${data['first_name']} ${data['last_name']}`,
+      id: NumberOrNullOrUndefined(data.id),
+      full_name: `${data.first_name} ${data.last_name}`,
     } as PatientV2;
   }
 }
