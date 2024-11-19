@@ -140,30 +140,30 @@
                                                 <tr *ngFor="let monito of training_goals; let i = index">
 
                                                     <td>
-                                                        {{monito.lto}}
+                                                        {{monito?.lto}}
                                                     </td>
 
 
                                                     <td>
                                                         <!-- {{goalsto.status_sto}} -->
                                                         <span class="badge bg-success"
-                                                            *ngIf="monito.status === 'inprogress'">In progress</span>
+                                                            *ngIf="monito?.status === 'inprogress'">In progress</span>
                                                         <span class="badge bg-success"
-                                                            *ngIf="monito.status === 'initiated'">Initiated</span>
+                                                            *ngIf="monito?.status === 'initiated'">Initiated</span>
                                                         <span class="badge bg-primary"
-                                                            *ngIf="monito.status === 'mastered'">Mastered</span>
+                                                            *ngIf="monito?.status === 'mastered'">Mastered</span>
                                                         <span class="badge bg-warning"
-                                                            *ngIf="monito.status === 'on hold'">On Hold</span>
+                                                            *ngIf="monito?.status === 'on hold'">On Hold</span>
                                                         <span class="badge bg-danger"
-                                                            *ngIf="monito.status === 'discontinued'">Discontinued</span>
+                                                            *ngIf="monito?.status === 'discontinued'">Discontinued</span>
                                                         <span class="badge bg-warning"
-                                                            *ngIf="monito.status === 'maintenance'">Maintenance</span>
+                                                            *ngIf="monito?.status === 'maintenance'">Maintenance</span>
                                                     </td>
                                                     <td>
-                                                        {{monito.date | date}}
+                                                        {{monito?.date | date}}
                                                     </td>
                                                     <td>
-                                                        {{monito.end_date | date}}
+                                                        {{monito?.end_date | date}}
                                                     </td>
                                                     <td>
                                                         <button class="btn btn-outline-success btn-sm" (click)="seleccionarParaEdit(monito)" 
@@ -177,7 +177,7 @@
                                                         <div class="modal-dialog modal-dialog-centered modal-lg">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title" id="modalEscape">{{gollto_edit?.lto}}</h5>
+                                                                    <h5 class="modal-title" id="modalEscape">{{gollto_edit.lto}}</h5>
                                                                     <a href="javascript:void(0);"  data-bs-dismiss="modal" aria-label="Close" class="btn btn-white me-1"
                                                                         >Close</a>
                                                                 </div>
