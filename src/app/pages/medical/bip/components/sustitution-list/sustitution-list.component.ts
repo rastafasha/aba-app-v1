@@ -106,8 +106,8 @@ export class SustitutionListComponent implements OnInit {
   goalSelectedId: any;
   newGoaladd: any;
 
-  golsto_edit = null;
-  gollto_edit = null;
+  golsto_edit : any = {};
+  gollto_edit : any = {};
 
   constructor(
     private bipService: BipService,

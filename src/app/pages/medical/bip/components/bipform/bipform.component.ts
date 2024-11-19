@@ -33,10 +33,10 @@ export class BipFormComponent implements OnInit {
   name_medical: any;
   uso: any;
 
-  client_id: any;
-  id: any;
-  patient_id: any;
-  doctor_id: any;
+  client_id: number;
+  id: number;
+  patient_id: number;
+  doctor_id: number;
   user: AppUser;
 
   type_of_assessment: any;
@@ -205,7 +205,7 @@ export class BipFormComponent implements OnInit {
   getBip() {
     if (this.patient_id !== null && this.patient_id !== undefined) {
       this.bipService.getBipByUser(this.patient_id).subscribe((resp) => {
-        // console.log(resp);
+        console.log(resp);
 
         this.bip_selected = resp; //asigamos una variable a la respuesta
         this.bip_selectedid = resp.bip.id; //obtenemos de nuevo el bip pero para verificar si es actualizar o crear en la funcion
@@ -227,6 +227,7 @@ export class BipFormComponent implements OnInit {
         this.weakneses = this.bip_selected.bip.weakneses;
 
         this.documents = this.bip_selected.documents_reviewed;
+        
         this.maladaptives = this.bip_selected.maladaptives;
         this.maladaptive_behavior = this.bip_selected.maladaptives[0].title;
 

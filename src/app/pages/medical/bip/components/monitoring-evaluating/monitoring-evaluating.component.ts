@@ -22,7 +22,7 @@ export class MonitoringEvaluatingComponent {
   decription: any;
   status: any;
   rbt_training_goals = [];
-  training_goals = [];
+  training_goals: any[] = [];
   monitoring_status_sto_edit = [];
 
   client_id: any;
@@ -41,9 +41,10 @@ export class MonitoringEvaluatingComponent {
   monitorid: any;
   lto_edit: any;
 
-  gollto_edit: any;
+  gollto_edit: any = {};
 
   current_status: any;
+  
 
   constructor(
     private bipService: BipService,
@@ -86,8 +87,6 @@ export class MonitoringEvaluatingComponent {
     if (this.patient_id !== null && this.patient_id !== undefined) {
       this.bipService.getBipByUser(this.patient_id).subscribe((resp) => {
         // console.log('bip',resp);
-
-        this.bip_selected = resp; //convertimos la respuesta en un variable
         this.bip_selected = resp; //convertimos la respuesta en un variable
         this.bip_selectedId = resp.id; //convertimos la respuesta en un variable
         this.bip_selectedIdd = this.bip_selected.bip.id; //convertimos la respuesta en un variable
@@ -104,9 +103,14 @@ export class MonitoringEvaluatingComponent {
       .subscribe((resp) => {
         // console.log('goals sustition by patientid',resp);
         this.monitorings = resp.monitoringEvaluatingPatientIds.data;
+        if (this.monitorings.length > 0) {
+          this.training_goals = this.monitorings[0].rbt_training_goals || []; // Ensure it's an array
+      } else {
+          this.training_goals = []; // Fallback to an empty array
+      }
         this.monitoringtid = resp.monitoringEvaluatingPatientIds.data[0].id;
-        this.training_goals =
-          resp.monitoringEvaluatingPatientIds.data[0].rbt_training_goals;
+        // this.training_goals =
+        //   resp.monitoringEvaluatingPatientIds.data[0].rbt_training_goals;
         this.client_id_monitorings =
           resp.monitoringEvaluatingPatientIds.data[0].client_id;
       });
