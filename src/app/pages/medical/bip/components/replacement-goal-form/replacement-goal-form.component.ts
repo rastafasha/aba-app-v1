@@ -106,8 +106,8 @@ export class ReplacementGoalFormComponent {
   goalSelectedId: any;
   newGoaladd: any;
 
-  golsto_edit: any;
-  gollto_edit: any;
+  golsto_edit: any = {};
+  gollto_edit: any = {};
 
   constructor(
     private bipService: BipService,
