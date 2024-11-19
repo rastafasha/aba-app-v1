@@ -1,7 +1,7 @@
 import { KeyValue } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Sort } from '@angular/material/sort';
-import { forkJoin, of } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import {
   InsuranceV2,
   isNoteBcbaV2,
@@ -209,7 +209,7 @@ export class LogsReportsComponent implements OnInit {
   }
 
   onSave(data: NoteRbtV2 | NoteBcbaV2) {
-    const update$ = isNoteRbtV2(data)
+    const update$: Observable<unknown> = isNoteRbtV2(data)
       ? this.notesRbtService.update(data, data.id)
       : isNoteBcbaV2(data)
       ? this.notesBcbaService.update(data, data.id)

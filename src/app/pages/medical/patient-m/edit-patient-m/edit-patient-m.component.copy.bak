@@ -20,7 +20,7 @@
     <!-- Form -->
     <form class="row" *ngIf="patient">
       <!-- patient -->
-      <div class="col-sm-12">
+      <div class="col-sm-12" [formGroup]="form">
         <div class="card">
           <div class="card-body">
             <form autocomplete="off">
@@ -30,12 +30,11 @@
                     <h4>Client Edit: {{ patient.patient_id }}</h4>
                   </div>
                 </div>
-                <!-- First Name  -->
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label>
-                      First Name <span class="login-danger">*</span>
-                    </label>
+                      First Name <span class="login-danger">*</span></label
+                    >
                     <input
                       class="form-control"
                       autocomplete="off"
@@ -45,29 +44,25 @@
                     />
                   </div>
                 </div>
-                <!-- Last Name -->
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label>Last Name <span class="login-danger">*</span></label>
                     <input
                       class="form-control"
                       autocomplete="off"
                       name="last_name"
-                      formControlName="last_name"
+                      [(ngModel)]="last_name"
                       type="text"
                     />
                   </div>
                 </div>
-                <!-- Birth day -->
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>
-                      Birth day <span class="login-danger">*</span>
-                    </label>
+                  <div class="form-group local-forms">
+                    <label>Birth day <span class="login-danger">*</span></label>
                     <input
                       class="form-control datetimepicker"
                       name="birth_date"
-                      formControlName="birth_date"
+                      [(ngModel)]="birth_date"
                       type="text"
                       matInput
                       [matDatepicker]="picker"
@@ -79,127 +74,119 @@
                     ></mat-datepicker-toggle>
                   </div>
                 </div>
-                <!-- Age -->
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label>Age <span class="login-danger">*</span></label>
                     <input
                       class="form-control"
                       autocomplete="off"
                       name="age"
-                      formControlName="age"
+                      [(ngModel)]="age"
                       type="number"
                     />
                   </div>
                 </div>
-                <!-- Gender -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group select-gender">
-                    <label class="gen-label">
-                      Gender<span class="login-danger">*</span>
-                    </label>
-                    <div class="form-check-inline" [formGroup]="form">
+                    <label class="gen-label"
+                      >Gender<span class="login-danger">*</span></label
+                    >
+                    <div class="form-check-inline">
                       <label class="form-check-label">
                         <input
                           type="radio"
                           name="gender"
                           [value]="1"
-                          formControlName="gender"
+                          [(ngModel)]="gender"
                           class="form-check-input"
                         />Male
                       </label>
                     </div>
-                    <div class="form-check-inline" [formGroup]="form">
+                    <div class="form-check-inline">
                       <label class="form-check-label">
                         <input
                           type="radio"
                           name="gender"
                           [value]="2"
-                          formControlName="gender"
+                          [(ngModel)]="gender"
                           class="form-check-input"
                         />Female
                       </label>
                     </div>
                   </div>
                 </div>
-                <!-- Patient ID -->
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>
-                      Patient ID <span class="login-danger">*</span>
-                    </label>
+                  <div class="form-group local-forms">
+                    <label
+                      >Patient ID <span class="login-danger">*</span></label
+                    >
                     <input
                       class="form-control"
                       autocomplete="off"
                       name="patient_id"
-                      formControlName="patient_id"
+                      [(ngModel)]="patient_id"
                       type="text"
                     />
                   </div>
                 </div>
-                <!-- Education -->
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label>Education <span class="login-danger">*</span></label>
                     <input
                       class="form-control"
                       autocomplete="off"
                       name="education"
-                      formControlName="education"
+                      [(ngModel)]="education"
                       type="text"
                     />
                   </div>
                 </div>
-                <!-- Profession -->
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>
-                      Profession <span class="login-danger">*</span>
-                    </label>
+                  <div class="form-group local-forms">
+                    <label
+                      >Profession <span class="login-danger">*</span></label
+                    >
                     <input
                       class="form-control"
                       autocomplete="off"
                       name="profession"
-                      formControlName="profession"
+                      [(ngModel)]="profession"
                       type="text"
                     />
                   </div>
                 </div>
-                <!-- School Name -->
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>
-                      School Name <span class="login-danger">*</span>
-                    </label>
+                  <div class="form-group local-forms">
+                    <label
+                      >School Name <span class="login-danger">*</span></label
+                    >
                     <input
                       class="form-control"
                       autocomplete="off"
                       name="school_name"
-                      formControlName="school_name"
+                      [(ngModel)]="school_name"
                       type="text"
                     />
                   </div>
                 </div>
-                <!-- School Number -->
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>
-                      School Number <span class="login-danger">*</span>
-                    </label>
+                  <div class="form-group local-forms">
+                    <label
+                      >School Number <span class="login-danger">*</span></label
+                    >
                     <input
                       class="form-control"
                       autocomplete="off"
                       name="school_number"
-                      formControlName="school_number"
+                      [(ngModel)]="school_number"
                       type="text"
                     />
                   </div>
                 </div>
-                <!-- Parent/Guardian Name -->
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>
-                      Parent/Guardian Name<span class="login-danger"
+                  <div class="form-group local-forms">
+                    <label
+                      >Parent/Guardian Name<span class="login-danger"
                         >*</span
                       ></label
                     >
@@ -207,14 +194,13 @@
                       class="form-control"
                       autocomplete="off"
                       name="parent_guardian_name"
-                      formControlName="parent_guardian_name"
+                      [(ngModel)]="parent_guardian_name"
                       type="text"
                     />
                   </div>
                 </div>
-                <!-- Relationship -->
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label
                       >Relationship <span class="login-danger">*</span></label
                     >
@@ -222,56 +208,55 @@
                       class="form-control"
                       autocomplete="off"
                       name="relationship"
-                      formControlName="relationship"
+                      [(ngModel)]="relationship"
                       type="text"
                     />
                   </div>
                 </div>
-                <!-- Language -->
+
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>Language <span class="login-danger">*</span></label>
+                  <div class="form-group local-forms">
+                    <label>Languange <span class="login-danger">*</span></label>
                     <input
                       class="form-control"
                       autocomplete="off"
                       name="language"
-                      formControlName="language"
+                      [(ngModel)]="language"
                       type="text"
                     />
                   </div>
                 </div>
-                <!-- Cell Phone -->
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>
-                      Cell Phone <span class="login-danger">*</span></label
+                  <div class="form-group local-forms">
+                    <label
+                      >Cell Phone <span class="login-danger">*</span></label
                     >
                     <input
                       class="form-control"
                       autocomplete="off"
                       name="phone"
-                      formControlName="phone"
+                      [(ngModel)]="phone"
                       type="text"
                     />
                   </div>
                 </div>
-                <!-- Home Phone -->
+
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>
-                      Home Phone <span class="login-danger">*</span></label
+                  <div class="form-group local-forms">
+                    <label
+                      >Home Phone <span class="login-danger">*</span></label
                     >
                     <input
                       class="form-control"
                       autocomplete="off"
                       name="home_phone"
-                      formControlName="home_phone"
+                      [(ngModel)]="home_phone"
                       type="text"
                     />
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label
                       >Work Phone <span class="login-danger">*</span></label
                     >
@@ -279,74 +264,74 @@
                       class="form-control"
                       autocomplete="off"
                       name="work_phone"
-                      formControlName="work_phone"
+                      [(ngModel)]="work_phone"
                       type="text"
                     />
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label>Email <span class="login-danger">*</span></label>
                     <input
                       class="form-control"
                       autocomplete="off"
                       name="email"
-                      formControlName="email"
+                      [(ngModel)]="email"
                       type="email"
                     />
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label>City <span class="login-danger">*</span></label>
                     <input
                       class="form-control"
                       autocomplete="off"
                       name="city"
-                      formControlName="city"
+                      [(ngModel)]="city"
                       type="text"
                     />
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label>ZIP <span class="login-danger">*</span></label>
                     <input
                       class="form-control"
                       autocomplete="off"
                       name="zip"
-                      formControlName="zip"
+                      [(ngModel)]="zip"
                       type="text"
                     />
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label>State <span class="login-danger">*</span></label>
                     <input
                       class="form-control"
                       autocomplete="off"
                       name="state"
-                      formControlName="state"
+                      [(ngModel)]="state"
                       type="text"
                     />
                   </div>
                 </div>
                 <div class="col-12 col-md-6">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label>Address <span class="login-danger">*</span></label>
                     <textarea
                       class="form-control"
                       autocomplete="off"
                       name="address"
-                      formControlName="address"
+                      [(ngModel)]="address"
                       rows="3"
                       cols="30"
                     ></textarea>
                   </div>
                 </div>
                 <div class="col-12 col-md-6">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label
                       >Special Notes<span class="login-danger">*</span></label
                     >
@@ -354,38 +339,38 @@
                       class="form-control"
                       autocomplete="off"
                       name="special_note"
-                      formControlName="special_note"
+                      [(ngModel)]="special_note"
                       rows="3"
                       cols="30"
                     ></textarea>
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label>Diagnosis <span class="login-danger">*</span></label>
                     <input
                       class="form-control"
                       autocomplete="off"
                       name="diagnosis_code"
-                      formControlName="diagnosis_code"
+                      [(ngModel)]="diagnosis_code"
                       type="text"
                     />
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label>Schedule <span class="login-danger">*</span></label>
                     <input
                       class="form-control"
                       autocomplete="off"
                       name="schedule"
-                      formControlName="schedule"
+                      [(ngModel)]="schedule"
                       type="text"
                     />
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label
                       >Summer Schedule
                       <span class="login-danger">*</span></label
@@ -394,18 +379,19 @@
                       class="form-control"
                       autocomplete="off"
                       name="summer_schedule"
-                      formControlName="summer_schedule"
+                      [(ngModel)]="summer_schedule"
                       type="text"
                     />
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-6">
                   <div class="form-group local-top-form">
-                    <label class="local-top">
-                      Picture (Max Size: 2Mb, jpg,png)<span class="login-danger"
+                    <label class="local-top"
+                      >Picture (Max Size: 2Mb, jpg,png)<span
+                        class="login-danger"
                         >*</span
-                      >
-                    </label>
+                      ></label
+                    >
                     <div class="settings-btn upload-files-avator">
                       <input
                         type="file"
@@ -418,21 +404,24 @@
                       <label for="file" class="upload">Choose File</label>
                     </div>
                   </div>
-                  <div *ngIf="patient.avatar">
-                    <img [src]="patient.avatar" style="width: 250px" alt="" />
+                  <div *ngIf="IMAGE_PREVISUALIZA">
+                    <img
+                      [src]="IMAGE_PREVISUALIZA"
+                      style="width: 250px"
+                      alt=""
+                    />
                   </div>
                 </div>
-                <!-- Location -->
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>
-                      Location <span class="login-danger">*</span>
-                    </label>
+                  <div class="form-group local-forms">
+                    <label>Location <span class="login-danger">*</span></label>
 
                     <mat-select
-                      formControlName="location_id"
+                      [(ngModel)]="selectedValueLocation"
                       name="location"
+                      [ngModelOptions]="{ standalone: true }"
                       class="form-control select"
+                      (ngModelChange)="selectCategory($event)"
                       placeholder="Select Location"
                     >
                       <mat-option
@@ -445,12 +434,51 @@
                   </div>
                 </div>
 
+                <div class="col-12" *ngIf="valid_form">
+                  <div class="form-group row" *ngIf="valid_form_success">
+                    <div class="col-md-12">
+                      <div
+                        class="alert alert-success alert-dismissible fade show"
+                        role="alert"
+                      >
+                        <strong>Success!</strong> The Patient has been
+                        registered.
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="alert"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true"> </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row" *ngIf="text_validation">
+                    <div class="col-md-12">
+                      <div
+                        class="alert alert-danger alert-dismissible fade show"
+                        role="alert"
+                      >
+                        <strong>!</strong> {{ text_validation }}.
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="alert"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true"> </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div class="col-12">
                   <div class="doctor-submit text-end">
                     <button
                       type="button"
                       class="btn btn-primary submit-form me-2"
-                      (click)="onSave()"
+                      (click)="save()"
                     >
                       Save
                     </button>
@@ -474,78 +502,19 @@
                     <h4>Add Specialist</h4>
                   </div>
                 </div>
-                <!-- RBT -->
+
                 <div class="col-12 col-md-3">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label>RBT <span class="login-danger">*</span></label>
                     <mat-select
-                      formControlName="rbt_home_id"
+                      [(ngModel)]="selectedValue_rbt"
                       name="selectedValue_rbt"
-                      class="form-control select"
-                      placeholder="Select Specialist"
-                    >
-                      <mat-option *ngFor="let data of rbts" [value]="data.id">
-                        {{ data.full_name }}
-                      </mat-option>
-                    </mat-select>
-                  </div>
-                </div>
-                <div class="col-12 col-md-3">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>RBT 2 <span class="login-danger">*</span></label>
-                    <mat-select
-                      formControlName="rbt2_school_id"
-                      name="selectedValue_rbt2"
-                      class="form-control select"
-                      placeholder="Select Specialist"
-                    >
-                      <mat-option *ngFor="let data of rbts" [value]="data.id">
-                        {{ data.full_name }}
-                      </mat-option>
-                    </mat-select>
-                  </div>
-                </div>
-                <div class="col-12 col-md-3">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>BCBA <span class="login-danger">*</span></label>
-                    <mat-select
-                      formControlName="bcba_home_id"
-                      name="selectedValue_bcba"
-                      class="form-control select"
-                      placeholder="Select Specialist"
-                    >
-                      <mat-option *ngFor="let data of bcbas" [value]="data.id">
-                        {{ data.full_name }}
-                      </mat-option>
-                    </mat-select>
-                  </div>
-                </div>
-                <div class="col-12 col-md-3">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>BCBA 2<span class="login-danger">*</span></label>
-                    <mat-select
-                      formControlName="bcba2_school_id"
-                      name="selectedValue_bcba2"
-                      class="form-control select"
-                      placeholder="Select Specialist"
-                    >
-                      <mat-option *ngFor="let data of bcbas" [value]="data.id">
-                        {{ data.full_name }}
-                      </mat-option>
-                    </mat-select>
-                  </div>
-                </div>
-                <div class="col-12 col-md-3">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>Manager<span class="login-danger">*</span></label>
-                    <mat-select
-                      formControlName="clin_director_id"
-                      name="selectedValue_clind"
+                      [ngModelOptions]="{ standalone: true }"
                       class="form-control select"
                       placeholder="Select Specialist"
                     >
                       <mat-option
-                        *ngFor="let data of providers"
+                        *ngFor="let data of roles_rbt"
                         [value]="data.id"
                       >
                         {{ data.full_name }}
@@ -553,18 +522,126 @@
                     </mat-select>
                   </div>
                 </div>
-
-                <div class="col-12">
-                  <div class="doctor-submit text-end">
-                    <button
-                      type="button"
-                      class="btn btn-primary submit-form me-2"
-                      (click)="onSave()"
+                <div class="col-12 col-md-3">
+                  <div class="form-group local-forms">
+                    <label>RBT 2 <span class="login-danger">*</span></label>
+                    <mat-select
+                      [(ngModel)]="selectedValue_rbt2"
+                      name="selectedValue_rbt2"
+                      [ngModelOptions]="{ standalone: true }"
+                      class="form-control select"
+                      placeholder="Select Specialist"
                     >
-                      Save
-                    </button>
+                      <mat-option
+                        *ngFor="let data of roles_rbt"
+                        [value]="data.id"
+                      >
+                        {{ data.full_name }}
+                      </mat-option>
+                    </mat-select>
                   </div>
                 </div>
+                <div class="col-12 col-md-3">
+                  <div class="form-group local-forms">
+                    <label>BCBA <span class="login-danger">*</span></label>
+                    <mat-select
+                      [(ngModel)]="selectedValue_bcba"
+                      name="selectedValue_bcba"
+                      [ngModelOptions]="{ standalone: true }"
+                      class="form-control select"
+                      placeholder="Select Specialist"
+                    >
+                      <mat-option
+                        *ngFor="let data of roles_bcba"
+                        [value]="data.id"
+                      >
+                        {{ data.full_name }}
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+                <div class="col-12 col-md-3">
+                  <div class="form-group local-forms">
+                    <label>BCBA 2<span class="login-danger">*</span></label>
+                    <mat-select
+                      [(ngModel)]="selectedValue_bcba2"
+                      name="selectedValue_bcba2"
+                      [ngModelOptions]="{ standalone: true }"
+                      class="form-control select"
+                      placeholder="Select Specialist"
+                    >
+                      <mat-option
+                        *ngFor="let data of roles_bcba"
+                        [value]="data.id"
+                      >
+                        {{ data.full_name }}
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+                <div class="col-12 col-md-3">
+                  <div class="form-group local-forms">
+                    <label>Manager<span class="login-danger">*</span></label>
+                    <mat-select
+                      [(ngModel)]="selectedValue_clind"
+                      name="selectedValue_clind"
+                      [ngModelOptions]="{ standalone: true }"
+                      class="form-control select"
+                      placeholder="Select Specialist"
+                    >
+                      <mat-option
+                        *ngFor="let data of specialists"
+                        [value]="data.id"
+                      >
+                        {{ data.full_name }}
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+                <div class="col-12" *ngIf="valid_form">
+                  <div class="form-group row" *ngIf="valid_form_success">
+                    <div class="col-md-12">
+                      <div
+                        class="alert alert-success alert-dismissible fade show"
+                        role="alert"
+                      >
+                        <strong>Success!</strong> The Patient has been
+                        registered.
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="alert"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true"> </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group row" *ngIf="text_validation">
+                    <div class="col-md-12">
+                      <div
+                        class="alert alert-danger alert-dismissible fade show"
+                        role="alert"
+                      >
+                        <strong>!</strong> {{ text_validation }}.
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="alert"
+                          aria-label="Close"
+                        >
+                          <span aria-hidden="true"> </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="col-12">
+                                    <div class="doctor-submit text-end">
+                                        <button type="button" class="btn btn-primary submit-form me-2" (click)="save()">Save</button>
+                                    </div>
+                                </div> -->
               </div>
             </form>
           </div>
@@ -584,65 +661,66 @@
                   </div>
                 </div>
                 <div class="col-12 col-sm-4">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label>Insurer <span class="login-danger">*</span></label>
                     <!-- name="insurer" -->
                     <mat-select
-                      formControlName="insurer_id"
+                      [(ngModel)]="selectedValueInsurer"
                       name="insurer_id"
+                      [ngModelOptions]="{ standalone: true }"
                       class="form-control select"
+                      (selectionChange)="selectInsurance($event)"
                       placeholder="Select Insurer"
                     >
                       <mat-option
-                        *ngFor="let insurer of insurances"
-                        [value]="insurer?.id"
+                        *ngFor="let insuran of insurances"
+                        [value]="insuran.id"
                       >
-                        {{ insurer.name }}
+                        {{ insuran.insurer_name }}
                       </mat-option>
                     </mat-select>
                   </div>
                 </div>
-                <!-- <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>
-                      Insurance Id <span class="login-danger">*</span>
-                    </label>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label
+                      >Insurance Id <span class="login-danger">*</span></label
+                    >
                     <input
                       class="form-control"
                       autocomplete="off"
                       name="insuranceId"
-                      [disabled]="true"
-                      [value]="insurerSelected?."
+                      [(ngModel)]="insuranceId"
                       type="text"
                     />
                   </div>
-                </div> -->
+                </div>
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label>Equhl Id<span class="login-danger">*</span></label>
                     <input
                       class="form-control"
                       autocomplete="off"
                       name="eqhlid"
-                      formControlName="eqhlid"
+                      [(ngModel)]="eqhlid"
                       type="text"
                     />
                   </div>
                 </div>
                 <!-- <div class="col-12 col-md-6 col-xl-4">
-                                    <div class="form-group local-forms" [formGroup]="form">
+                                    <div class="form-group local-forms">
                                         <label >Insurer Secundary</label>
-                                        <input class="form-control" autocomplete="off" name="insurer_secundary" formControlName="insurer_secundary" type="text"  >
+                                        <input class="form-control" autocomplete="off" name="insurer_secundary" [(ngModel)]="insurer_secundary" type="text"  >
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-xl-4">
-                                    <div class="form-group local-forms" [formGroup]="form">
+                                    <div class="form-group local-forms">
                                         <label >Insurance Id Secundary</label>
-                                        <input class="form-control" autocomplete="off" name="insuranceId_secundary" formControlName="insuranceId_secundary" type="text"  >
+                                        <input class="form-control" autocomplete="off" name="insuranceId_secundary" [(ngModel)]="insuranceId_secundary" type="text"  >
                                     </div>
                                 </div> -->
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label
                       >Elegibility date<span class="login-danger"
                         >*</span
@@ -651,7 +729,7 @@
                     <input
                       class="form-control datetimepicker"
                       name="elegibility_date"
-                      formControlName="elegibility_date"
+                      [(ngModel)]="elegibility_date"
                       type="text"
                       matInput
                       [matDatepicker]="picker2"
@@ -665,7 +743,7 @@
                 </div>
 
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label
                       >POS Covered<span class="login-danger">*</span></label
                     >
@@ -688,7 +766,7 @@
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label
                       >Deductible Individual I/F<span class="login-danger"
                         >*</span
@@ -698,25 +776,25 @@
                       class="form-control"
                       autocomplete="off"
                       name="deductible_individual_I_F"
-                      formControlName="deductible_individual_I_F"
+                      [(ngModel)]="deductible_individual_I_F"
                       type="text"
                     />
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label>Balance<span class="login-danger">*</span></label>
                     <input
                       class="form-control"
                       autocomplete="off"
                       name="balance"
-                      formControlName="balance"
+                      [(ngModel)]="balance"
                       type="text"
                     />
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label
                       >Coinsurance<span class="login-danger">*</span></label
                     >
@@ -724,37 +802,37 @@
                       class="form-control"
                       autocomplete="off"
                       name="coinsurance"
-                      formControlName="coinsurance"
+                      [(ngModel)]="coinsurance"
                       type="text"
                     />
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label>Copayments<span class="login-danger">*</span></label>
                     <input
                       class="form-control"
                       autocomplete="off"
                       name="copayments"
-                      formControlName="copayments"
+                      [(ngModel)]="copayments"
                       type="text"
                     />
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label>OOP<span class="login-danger">*</span></label>
                     <input
                       class="form-control"
                       autocomplete="off"
                       name="oop"
-                      formControlName="oop"
+                      [(ngModel)]="oop"
                       type="text"
                     />
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label
                       >Patient Control #<span class="login-danger"
                         >*</span
@@ -764,7 +842,7 @@
                       class="form-control"
                       autocomplete="off"
                       name="patient_control"
-                      formControlName="patient_control"
+                      [(ngModel)]="patient_control"
                       type="text"
                     />
                   </div>
@@ -880,7 +958,7 @@
                     <button
                       type="button"
                       class="btn btn-primary submit-form me-2"
-                      (click)="onSave()"
+                      (click)="save()"
                     >
                       Save
                     </button>
@@ -904,12 +982,12 @@
                   </div>
                 </div>
                 <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label>Welcome<span class="login-danger">*</span></label>
                     <select
                       class="form-control form-select-solid fw-bolder"
                       name="welcome"
-                      formControlName="welcome"
+                      [(ngModel)]="welcome"
                     >
                       <option>-- Select --</option>
                       <option value="waiting">Waiting</option>
@@ -924,12 +1002,12 @@
                   </div>
                 </div>
                 <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label>Consent<span class="login-danger">*</span></label>
                     <select
                       class="form-control form-select-solid fw-bolder"
                       name="consent"
-                      formControlName="consent"
+                      [(ngModel)]="consent"
                     >
                       <option>-- Select --</option>
                       <option value="waiting">Waiting</option>
@@ -944,14 +1022,14 @@
                   </div>
                 </div>
                 <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label
                       >Insurance Card<span class="login-danger">*</span></label
                     >
                     <select
                       class="form-control form-select-solid fw-bolder"
                       name="insurance_card"
-                      formControlName="insurance_card"
+                      [(ngModel)]="insurance_card"
                     >
                       <option>-- Select --</option>
                       <option value="waiting">Waiting</option>
@@ -966,14 +1044,14 @@
                   </div>
                 </div>
                 <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label
                       >Eligibility<span class="login-danger">*</span></label
                     >
                     <select
                       class="form-control form-select-solid fw-bolder"
                       name="eligibility"
-                      formControlName="eligibility"
+                      [(ngModel)]="eligibility"
                     >
                       <option>-- Select --</option>
                       <option value="waiting">Waiting</option>
@@ -988,12 +1066,12 @@
                   </div>
                 </div>
                 <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label>MNL<span class="login-danger">*</span></label>
                     <select
                       class="form-control form-select-solid fw-bolder"
                       name="mnl"
-                      formControlName="mnl"
+                      [(ngModel)]="mnl"
                     >
                       <option>-- Select --</option>
                       <option value="waiting">Waiting</option>
@@ -1008,12 +1086,12 @@
                   </div>
                 </div>
                 <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label>Referral<span class="login-danger">*</span></label>
                     <select
                       class="form-control form-select-solid fw-bolder"
                       name="referral"
-                      formControlName="referral"
+                      [(ngModel)]="referral"
                     >
                       <option>-- Select --</option>
                       <option value="waiting">Waiting</option>
@@ -1028,12 +1106,12 @@
                   </div>
                 </div>
                 <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label>ADOS<span class="login-danger">*</span></label>
                     <select
                       class="form-control form-select-solid fw-bolder"
                       name="ados"
-                      formControlName="ados"
+                      [(ngModel)]="ados"
                     >
                       <option>-- Select --</option>
                       <option value="waiting">Waiting</option>
@@ -1048,12 +1126,12 @@
                   </div>
                 </div>
                 <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label>iep<span class="login-danger">*</span></label>
                     <select
                       class="form-control form-select-solid fw-bolder"
                       name="iep"
-                      formControlName="iep"
+                      [(ngModel)]="iep"
                     >
                       <option>-- Select --</option>
                       <option value="waiting">Waiting</option>
@@ -1068,14 +1146,14 @@
                   </div>
                 </div>
                 <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label
                       >ASD Diagnosis<span class="login-danger">*</span></label
                     >
                     <select
                       class="form-control form-select-solid fw-bolder"
                       name="asd_diagnosis"
-                      formControlName="asd_diagnosis"
+                      [(ngModel)]="asd_diagnosis"
                     >
                       <option>-- Select --</option>
                       <option value="waiting">Waiting</option>
@@ -1090,12 +1168,12 @@
                   </div>
                 </div>
                 <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label>CDE<span class="login-danger">*</span></label>
                     <select
                       class="form-control form-select-solid fw-bolder"
                       name="cde"
-                      formControlName="cde"
+                      [(ngModel)]="cde"
                     >
                       <option>-- Select --</option>
                       <option value="waiting">Waiting</option>
@@ -1110,12 +1188,12 @@
                   </div>
                 </div>
                 <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label>Submitted<span class="login-danger">*</span></label>
                     <select
                       class="form-control form-select-solid fw-bolder"
                       name="submitted"
-                      formControlName="submitted"
+                      [(ngModel)]="submitted"
                     >
                       <option>-- Select --</option>
                       <option value="waiting">Waiting</option>
@@ -1130,12 +1208,12 @@
                   </div>
                 </div>
                 <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms" [formGroup]="form">
+                  <div class="form-group local-forms">
                     <label>Interview<span class="login-danger">*</span></label>
                     <select
                       class="form-control form-select-solid fw-bolder"
                       name="interview"
-                      formControlName="interview"
+                      [(ngModel)]="interview"
                     >
                       <option>-- Select --</option>
                       <option value="pending">Pending</option>
@@ -1191,7 +1269,7 @@
                     <button
                       type="button"
                       class="btn btn-primary submit-form me-2"
-                      (click)="onSave()"
+                      (click)="save()"
                     >
                       Save
                     </button>
@@ -1208,7 +1286,7 @@
       <div class="col-sm-12">
         <div class="card">
           <div class="card-body">
-            <form (ngSubmit)="addPaService()">
+            <form #paForm="ngForm" (ngSubmit)="addPaService()">
               <div class="row">
                 <div class="col-12">
                   <div class="card-box">
@@ -1218,35 +1296,41 @@
                       <!-- PA Service Form -->
                       <div class="row align-items-center mb-4">
                         <div class="col-12 col-md-6 col-xl-4">
-                          <div
-                            class="form-group local-forms"
-                            [formGroup]="paForm"
-                          >
+                          <div class="form-group local-forms">
                             <label>
                               PA Service Name
                               <span class="login-danger">*</span></label
                             >
                             <input
                               class="form-control"
-                              formControlName="pa_services"
+                              [(ngModel)]="newPaService.pa_services"
                               name="pa_services"
                               required
+                              #nameInput="ngModel"
                               type="text"
                             />
+                            <div
+                              *ngIf="
+                                nameInput.invalid &&
+                                (nameInput.dirty || nameInput.touched)
+                              "
+                              class="text-danger"
+                            >
+                              <small *ngIf="nameInput.errors?.['required']">
+                                Name is required</small
+                              >
+                            </div>
                           </div>
                         </div>
 
                         <div class="col-12 col-md-6 col-xl-4">
-                          <div
-                            class="form-group local-forms"
-                            [formGroup]="paForm"
-                          >
+                          <div class="form-group local-forms">
                             <label>
                               CPT Code
                               <span class="login-danger">*</span></label
                             >
                             <mat-select
-                              formControlName="cpt"
+                              [(ngModel)]="newPaService.cpt"
                               name="cpt"
                               required
                               class="form-control select"
@@ -1264,17 +1348,14 @@
                         </div>
 
                         <div class="col-12 col-md-6 col-xl-4">
-                          <div
-                            class="form-group local-forms"
-                            [formGroup]="paForm"
-                          >
+                          <div class="form-group local-forms">
                             <label>
                               Number of Units
                               <span class="login-danger">*</span></label
                             >
                             <input
                               class="form-control"
-                              formControlName="n_units"
+                              [(ngModel)]="newPaService.n_units"
                               name="n_units"
                               required
                               type="number"
@@ -1284,17 +1365,14 @@
                         </div>
 
                         <div class="col-12 col-md-6 col-xl-4">
-                          <div
-                            class="form-group local-forms"
-                            [formGroup]="paForm"
-                          >
+                          <div class="form-group local-forms">
                             <label>
                               Start Date
                               <span class="login-danger">*</span></label
                             >
                             <input
                               class="form-control"
-                              formControlName="start_date"
+                              [(ngModel)]="newPaService.start_date"
                               name="start_date"
                               required
                               type="date"
@@ -1303,17 +1381,14 @@
                         </div>
 
                         <div class="col-12 col-md-6 col-xl-4">
-                          <div
-                            class="form-group local-forms"
-                            [formGroup]="paForm"
-                          >
+                          <div class="form-group local-forms">
                             <label>
                               End Date
                               <span class="login-danger">*</span></label
                             >
                             <input
                               class="form-control"
-                              formControlName="end_date"
+                              [(ngModel)]="newPaService.end_date"
                               name="end_date"
                               required
                               type="date"
@@ -1401,9 +1476,9 @@
                           multiple="true"
                           (change)="processFile($event)"
                         />
-                        <label class="custom-file-label" for="customFile">
-                          Select file(s)
-                        </label>
+                        <label class="custom-file-label" for="customFile"
+                          >Select file(s)</label
+                        >
                       </div>
                     </div>
                     <div class="row align-items-center">
@@ -1412,9 +1487,9 @@
                         <div class="card-header pt-7">
                           <!--begin::Title-->
                           <h3 class="card-title align-items-start flex-column">
-                            <span class="card-label fw-bolder text-dark">
-                              File list
-                            </span>
+                            <span class="card-label fw-bolder text-dark"
+                              >File list</span
+                            >
                           </h3>
                           <div class="card-toolbar"></div>
                         </div>
@@ -1546,9 +1621,9 @@
                       <div class="card-header pt-7">
                         <!--begin::Title-->
                         <h3 class="card-title align-items-start flex-column">
-                          <span class="card-label fw-bolder text-dark">
-                            Files Added List
-                          </span>
+                          <span class="card-label fw-bolder text-dark"
+                            >Files Added List</span
+                          >
                         </h3>
                         <div class="card-toolbar"></div>
                       </div>
@@ -1588,10 +1663,8 @@
                                       {{ FILE.name_file }}</a
                                     >
                                     <br />
-                                    <span
-                                      class="text-gray-400 fw-bolder sizeee"
-                                    >
-                                      Size:
+                                    <span class="text-gray-400 fw-bolder sizeee"
+                                      >Size:
                                       <a
                                         href="#"
                                         onclick="return false;"
@@ -1667,4 +1740,6 @@
       <!-- fin Files -->
     </form>
   </div>
+  <pre>{{ patient | json }}</pre>
+  <pre>{{ locations | json }}</pre>
 </div>

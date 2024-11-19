@@ -6,22 +6,27 @@ import {
   CreatePaServiceDto,
   PaService,
   PaServiceResponse,
-  PaServicesResponse
+  PaServicesResponse,
 } from 'src/app/shared/interfaces/pa-service.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PaServiceService {
   constructor(private http: HttpClient) {}
 
-  getPatientPaServices(patientId: string): Observable<PaServicesResponse> {
+  getPatientPaServices(
+    patientId: string | number
+  ): Observable<PaServicesResponse> {
     return this.http.get<PaServicesResponse>(
       `${url_servicios}/patients/${patientId}/pa-services`
     );
   }
 
-  createPaService(patientId: string, paService: CreatePaServiceDto): Observable<PaServiceResponse> {
+  createPaService(
+    patientId: string | number,
+    paService: CreatePaServiceDto
+  ): Observable<PaServiceResponse> {
     return this.http.post<PaServiceResponse>(
       `${url_servicios}/patients/${patientId}/pa-services`,
       paService
@@ -29,7 +34,7 @@ export class PaServiceService {
   }
 
   updatePaService(
-    patientId: string,
+    patientId: string | number,
     paServiceId: number,
     paService: Partial<PaService>
   ): Observable<PaServiceResponse> {
@@ -39,8 +44,11 @@ export class PaServiceService {
     );
   }
 
-  deletePaService(patientId: string, paServiceId: number): Observable<{message: string}> {
-    return this.http.delete<{message: string}>(
+  deletePaService(
+    patientId: string | number,
+    paServiceId: number
+  ): Observable<{ message: string }> {
+    return this.http.delete<{ message: string }>(
       `${url_servicios}/patients/${patientId}/pa-services/${paServiceId}`
     );
   }

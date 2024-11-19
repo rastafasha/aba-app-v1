@@ -1,21 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { url_servicios } from 'src/app/config/config';
+import { DoctorV2 } from 'src/app/core/models';
 import { AppUser } from 'src/app/core/models/users.model';
 
+type ListResponse = {
+  users: { data: DoctorV2[] };
+};
 @Injectable({
   providedIn: 'root',
 })
 export class DoctorService {
-  private user: AppUser;
   roles = [];
   permissions = [];
 
   constructor(public http: HttpClient) {}
 
-  listDoctors() {
+  list() {
     const URL = url_servicios + '/doctors';
-    return this.http.get<any>(URL);
+    return this.http.get<ListResponse>(URL);
   }
 
   listConfig() {

@@ -9,6 +9,7 @@ import { PageService } from 'src/app/shared/services/pages.service';
 import * as XLSX from 'xlsx';
 import { BipService } from '../../bip/service/bip.service';
 import { PatientMService } from '../service/patient-m.service';
+import { PatientV2 } from 'src/app/core/models';
 
 declare var $: any;
 @Component({
@@ -47,7 +48,7 @@ export class ClientLogReportComponent implements OnInit {
   roles: string;
   permissions = [];
   maladaptives = [];
-  doctorPatientList = [];
+  doctorPatientList: PatientV2[] = [];
   pa_assessmentgroup = [];
   paAssestment: any;
   paAssestments = [];
@@ -86,7 +87,7 @@ export class ClientLogReportComponent implements OnInit {
   getPatiensByDoctor() {
     this.patientService.getPatientsByDoctor(this.user.id).subscribe((resp) => {
       // console.log(resp);
-      this.doctorPatientList = resp.patients;
+      this.doctorPatientList = resp.data.data;
     });
   }
 

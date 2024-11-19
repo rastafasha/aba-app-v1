@@ -1,4 +1,4 @@
-export interface PaService {
+export class PaService {
   id?: number;
   patient_id?: number;
   pa_services: string;
@@ -9,8 +9,10 @@ export interface PaService {
   end_date: string;
   created_at?: string;
   updated_at?: string;
+  constructor(data: Partial<PaService>) {
+    Object.assign(this, data);
+  }
 }
-
 
 export interface PaServiceResponse {
   pa_service: PaService;

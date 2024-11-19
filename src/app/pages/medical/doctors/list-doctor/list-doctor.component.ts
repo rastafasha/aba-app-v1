@@ -39,7 +39,7 @@ export class ListDoctorComponent implements OnInit {
   doctor_generals = [];
   doctorEmployeesList = [];
   role: string;
-  doctor_id: any;
+  doctor_id: number;
   doctor_selected: any;
   text_validation: any;
   user: AppUser;
@@ -90,12 +90,12 @@ export class ListDoctorComponent implements OnInit {
     this.doctorList = [];
     this.serialNumberArray = [];
 
-    this.doctorService.listDoctors().subscribe((resp) => {
+    this.doctorService.list().subscribe((resp) => {
       // console.log(resp);
 
       this.totalDatadoctor = resp.users.data.length;
       this.doctor_generals = resp.users.data;
-      this.doctor_id = resp.users.id;
+      this.doctor_id = resp.users.data[0]?.id;
       this.getTableDataGeneral();
     });
   }

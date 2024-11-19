@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import {
+  ApiResponse,
   ApiV2Response,
   CreateResponse,
   ListParameters,
@@ -40,9 +41,13 @@ export abstract class RepositoryV2Service<T> {
   }
 
   update(data: T, id: number) {
-    console.log(data);
     const URL = this.endpoint + '/' + id;
-    return this.http.put<void>(URL, data);
+    return this.http.put<ApiResponse<T>>(URL, this.untransform(data)).pipe(
+      map((response) => ({
+        ...response,
+        data: this.transform(response.data),
+      }))
+    );
   }
 
   delete(id: number) {
@@ -50,5 +55,8 @@ export abstract class RepositoryV2Service<T> {
     return this.http.delete<void>(URL);
   }
 
+  untransform(data: T): unknown {
+    return data as unknown;
+  }
   abstract transform(data: unknown): T;
 }
