@@ -7,6 +7,38 @@ import { GoalService } from '../service/goal.service';
 import { Location } from '@angular/common';
 import { AppUser } from 'src/app/core/models/users.model';
 
+interface Patient {
+  id: number;
+  patient_id: string;
+  location_id: number;
+  first_name: string;
+  last_name: string;
+  phone: string;
+  parent_guardian_name: string;
+  relationship: string;
+  address: string;
+  age: number;
+  birth_date: string; // Se puede cambiar a Date si se prefiere manejar como objeto Date
+  pos_covered: string[];
+  pa_assessments: string; // Si se desea, se puede cambiar a un objeto que represente la estructura del JSON
+  pa_services: PaService[];
+  diagnosis_code: string;
+  insurer_id: number;
+  insuranceId: string | null; // Puede ser string o null
+}
+
+interface PaService {
+  id: number;
+  pa_services: string;
+  cpt: string;
+  n_units: number;
+  available_units: number;
+  start_date: string; // Se puede cambiar a Date si se prefiere manejar como objeto Date
+  end_date: string; // Se puede cambiar a Date si se prefiere manejar como objeto Date
+}
+
+
+
 @Component({
   selector: 'app-bip-attention',
   templateUrl: './bip-attention.component.html',
@@ -90,11 +122,15 @@ export class BipAttentionComponent implements OnInit {
   }
 
   optionSelected(value: number) {
+    if(!this.maladaptives){
+      return
+    }
     this.option_selected = value;
+
   }
 
   getProfileBip() {
-    this.bipService.showBipProfile(this.patient_id).subscribe((resp) => {
+    this.bipService.showBipProfile(this.patient_id).subscribe((resp:Patient) => {
       // console.log(resp);
       this.client_selected = resp;
 

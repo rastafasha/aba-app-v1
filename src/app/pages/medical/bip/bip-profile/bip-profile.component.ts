@@ -176,7 +176,7 @@ export class BipProfileComponent implements OnInit {
           (this.documents = this.bip_selected.documents_reviewed);
         // console.log(this.documents);
         this.maladaptives = this.bip_selected.maladaptives;
-        this.maladaptive_behavior = this.bip_selected.maladaptives[0].title;
+        this.maladaptive_behavior = this.bip_selected.maladaptives?.[0].title;
 
         // console.log(this.maladaptives);
         // console.log(this.maladaptive_behavior);
@@ -189,11 +189,11 @@ export class BipProfileComponent implements OnInit {
         // this.interventions =this.bip_selected.interventions;
 
         this.analyst_signature =
-          this.bip_selected.consent_to_treatment[0].analyst_signature;
+          this.bip_selected.consent_to_treatment.analyst_signature;
         this.analyst_signature_date =
-          this.bip_selected.consent_to_treatment[0].analyst_signature_date;
+          this.bip_selected.consent_to_treatment.analyst_signature_date;
         this.parent_guardian_signature =
-          this.bip_selected.consent_to_treatment[0].parent_guardian_signature;
+          this.bip_selected.consent_to_treatment.parent_guardian_signature;
 
         const imageData =
           'data:image/png;base64,' + btoa(this.parent_guardian_signature);
@@ -202,29 +202,29 @@ export class BipProfileComponent implements OnInit {
         // this.parent_guardian_signature = imageData;
 
         this.parent_guardian_signature_date =
-          this.bip_selected.consent_to_treatment[0].parent_guardian_signature_date;
+          this.bip_selected.consent_to_treatment.parent_guardian_signature_date;
         this.reduction_goals = this.bip_selected.reduction_goal;
         this.reduction_goals_goalltos =
-          this.bip_selected.reduction_goal[0].goalltos;
+          this.bip_selected.reduction_goal[0]?.goalltos;
         this.reduction_goals_goalstos =
-          this.bip_selected.reduction_goal[0].goalstos;
+          this.bip_selected.reduction_goal[0]?.goalstos;
         this.sustitution_goal = this.bip_selected.sustitution_goal;
         this.sustitution_goal_ltos =
-          this.bip_selected.sustitution_goal[0].goalltos;
+          this.bip_selected.sustitution_goal[0]?.goalltos;
         this.sustitution_goal_stos =
-          this.bip_selected.sustitution_goal[0].goalstos;
+          this.bip_selected.sustitution_goal[0]?.goalstos;
         this.family_envolment =
-          this.bip_selected.family_envolment[0].caregivers_training_goals;
+          this.bip_selected.family_envolment[0]?.caregivers_training_goals;
 
         this.monitoring_evalutating = this.bip_selected.monitoring_evalutating;
         this.monitoring_evalutating_goals =
-          this.bip_selected.monitoring_evalutating[0].rbt_training_goals;
+          this.bip_selected.monitoring_evalutating[0]?.rbt_training_goals;
         this.generalization_training =
           this.bip_selected.generalization_training;
         this.transition_fading_plans =
-          this.bip_selected.generalization_training[0].transition_fading_plans;
+          this.bip_selected.generalization_training[0]?.transition_fading_plans;
         this.de_escalation_techniques =
-          this.bip_selected.de_escalation_technique[0].recomendation_lists;
+          this.bip_selected.de_escalation_technique[0]?.recomendation_lists;
 
         this.hypothesis_based_intervention =
           this.bip_selected.hypothesis_based_intervention;
@@ -253,15 +253,16 @@ export class BipProfileComponent implements OnInit {
           this.bip_selected.phiysical_and_medical_status;
 
         this.caregiver_requirements_for_prevention_of_crisis =
-          this.bip_selected.crisis_plan[0].caregiver_requirements_for_prevention_of_crisis;
+          this.bip_selected.crisis_plan[0]?.caregiver_requirements_for_prevention_of_crisis;
         this.crisis_description =
-          this.bip_selected.crisis_plan[0].crisis_description;
-        this.crisis_note = this.bip_selected.crisis_plan[0].crisis_note;
+          this.bip_selected.crisis_plan[0]?.crisis_description;
+          console.log(this.crisis_description);
+        this.crisis_note = this.bip_selected.crisis_plan[0]?.crisis_note;
         this.crisis_plan = this.bip_selected.crisis_plan[0];
-        this.risk_factors = this.bip_selected.crisis_plan[0].risk_factors;
-
+        this.risk_factors = this.bip_selected.crisis_plan[0]?.risk_factors;
+        /*
         const jsonObj =
-          JSON.parse(this.reduction_goals_goalstos.toString()) || '';
+        JSON.parse(this.reduction_goals_goalstos.toString()) || '';
         this.reduction_goals_goalstos = jsonObj;
         // console.log(this.reduction_goals_goalstos);
 
@@ -297,57 +298,57 @@ export class BipProfileComponent implements OnInit {
         const jsonObj7 = JSON.parse(this.risk_factors) || '';
         this.risk_factors = jsonObj7;
         // console.log(this.risk_factors);
-
-        this.other = this.risk_factors[0].other;
+            */
+        this.other = this.risk_factors?.[0].other;
         // console.log(this.other);
-        this.do_not_apply = this.risk_factors[0].do_not_apply;
-        this.elopement = this.risk_factors[0].elopement;
-        this.assaultive_behavior = this.risk_factors[0].assaultive_behavior;
-        this.aggression = this.risk_factors[0].aggression;
+        this.do_not_apply = this.risk_factors[0]?.do_not_apply;
+        this.elopement = this.risk_factors[0]?.elopement;
+        this.assaultive_behavior = this.risk_factors[0]?.assaultive_behavior;
+        this.aggression = this.risk_factors[0]?.aggression;
         this.self_injurious_behavior =
-          this.risk_factors[0].self_injurious_behavior;
+          this.risk_factors[0]?.self_injurious_behavior;
         this.sexually_offending_behavior =
-          this.risk_factors[0].sexually_offending_behavior;
-        this.fire_setting = this.risk_factors[0].fire_setting;
+          this.risk_factors[0]?.sexually_offending_behavior;
+        this.fire_setting = this.risk_factors[0]?.fire_setting;
         this.current_substance_abuse =
-          this.risk_factors[0].current_substance_abuse;
-        this.impulsive_behavior = this.risk_factors[0].impulsive_behavior;
-        this.psychotic_symptoms = this.risk_factors[0].psychotic_symptoms;
+          this.risk_factors[0]?.current_substance_abuse;
+        this.impulsive_behavior = this.risk_factors[0]?.impulsive_behavior;
+        this.psychotic_symptoms = this.risk_factors[0]?.psychotic_symptoms;
         this.self_mutilation_cutting =
-          this.risk_factors[0].self_mutilation_cutting;
+          this.risk_factors[0]?.self_mutilation_cutting;
         this.caring_for_ill_family_recipient =
-          this.risk_factors[0].caring_for_ill_family_recipient;
+          this.risk_factors[0]?.caring_for_ill_family_recipient;
         this.current_family_violence =
-          this.risk_factors[0].current_family_violence;
+          this.risk_factors[0]?.current_family_violence;
         this.dealing_with_significant =
-          this.risk_factors[0].dealing_with_significant;
+          this.risk_factors[0]?.dealing_with_significant;
         this.prior_psychiatric_inpatient_admission =
-          this.risk_factors[0].prior_psychiatric_inpatient_admission;
+          this.risk_factors[0]?.prior_psychiatric_inpatient_admission;
 
-        this.suicidality_added = resp.bip.crisis_plan[0].suicidalities;
+        this.suicidality_added = resp.bip.crisis_plan[0]?.suicidalities;
         const jsonObj8 = JSON.parse(this.suicidality_added) || '';
         this.suicidality_added = jsonObj8;
         // console.log(this.suicidality_added);
 
-        this.not_present = this.suicidality_added[0].not_present;
-        this.ideation = this.suicidality_added[0].ideation;
-        this.plan = this.suicidality_added[0].plan;
-        this.means = this.suicidality_added[0].means;
-        this.prior_attempt = this.suicidality_added[0].prior_attempt;
+        this.not_present = this.suicidality_added[0]?.not_present;
+        this.ideation = this.suicidality_added[0]?.ideation;
+        this.plan = this.suicidality_added[0]?.plan;
+        this.means = this.suicidality_added[0]?.means;
+        this.prior_attempt = this.suicidality_added[0]?.prior_attempt;
 
-        this.homicidality_added = resp.bip.crisis_plan[0].homicidalities;
+        this.homicidality_added = resp.bip.crisis_plan[0]?.homicidalities;
         const jsonObj9 = JSON.parse(this.homicidality_added) || '';
         this.homicidality_added = jsonObj9;
         // console.log(this.homicidality_added);
 
         this.not_present_homicidality =
-          this.homicidality_added[0].not_present_homicidality;
+          this.homicidality_added[0]?.not_present_homicidality;
         this.ideation_homicidality =
-          this.homicidality_added[0].ideation_homicidality;
-        this.plan_homicidality = this.homicidality_added[0].plan_homicidality;
-        this.means_homicidality = this.homicidality_added[0].means_homicidality;
+          this.homicidality_added[0]?.ideation_homicidality;
+        this.plan_homicidality = this.homicidality_added[0]?.plan_homicidality;
+        this.means_homicidality = this.homicidality_added[0]?.means_homicidality;
         this.prior_attempt_homicidality =
-          this.homicidality_added[0].prior_attempt_homicidality;
+          this.homicidality_added[0]?.prior_attempt_homicidality;
       });
   }
 

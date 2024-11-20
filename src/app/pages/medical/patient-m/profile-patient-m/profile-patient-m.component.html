@@ -386,7 +386,7 @@
                         <div class="col-xl-3 col-md-6">
                           <div class="detail-personal">
                             <h2>Birth Day</h2>
-                            <h3>{{ patient_selected.birth_date }}</h3>
+                            <h3>{{ patient_selected.birth_date | date : "shortDate"  }}</h3>
                           </div>
                         </div>
                         <div class="col-xl-3 col-md-6">
@@ -417,7 +417,7 @@
                           <div class="detail-personal">
                             <h2>Elegibility date</h2>
                             <h3>
-                              {{ patient_selected.elegibility_date | date }}
+                              {{ patient_selected.elegibility_date | date : "shortDate"  }}
                             </h3>
                           </div>
                         </div>
@@ -674,33 +674,7 @@
                   <ng-container *ngIf="option_selected === 4">
                     <div class="activity scrooldiv">
                       <div class="activity-box">
-                        <!-- <ul class="activity-list">
-                                                    <ng-container *ngFor="let appointment of appointments">
-                                                        <li>
-                                                            <div class="activity-user">
-                                                                <a [routerLink]="routes.profile.profile" [attr.title]="appointment.doctor.full_name" data-bs-toggle="tooltip" class="avatar">
-                                                                    <img [attr.alt]="appointment.doctor.full_name" [src]="appointment.doctor.avatar" class="img-fluid rounded-circle">
-                                                                </a>
-                                                            </div>
-                                                            <div class="activity-content timeline-group-blk">
-                                                                <div class="timeline-group flex-shrink-0">
-                                                                    <h4>{{appointment.date_appointment_format}}</h4>
-                                                                    <span class="time">{{appointment.format_hour_start+' - '+appointment.format_hour_end}}</span>
-                                                                </div>
-                                                                <div class="comman-activitys flex-grow-1">
-                                                                    <h3>{{appointment.doctor.full_name}} <span> <br>
-                                                                        Monto de la Cita: {{appointment.amount | currency}}  </span></h3>
-                                                                    <p *ngIf="appointment.appointment_attention">Diagnostico: {{appointment.appointment_attention.description}}</p>
-                                                                    <ng-container *ngIf="!appointment.appointment_attention">
-                                                                        <button class="custom-badge status-pink">Diagnostico: Pendiente</button>
-                                                                    </ng-container>
-
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </ng-container>
-
-                                                </ul> -->
+                        
                       </div>
                     </div>
                   </ng-container>
@@ -824,97 +798,7 @@
                 </div>
               </div>
               <!-- Benefits -->
-              <!-- Intake -->
-              <!-- <div class="card">
-                                <div class="card-header">
-                                    <h4 class="card-title ">Intake</h4>
-                                </div>
-                                <div class="card-body p-0 ">
-                                    <div class="personal-list-out">
-                                        <div class="container">
-                                            <div class="row">
-
-                                                <div class="col-xl-3 col-md-6">
-                                                    <div class="detail-personal">
-                                                        <h2>Welcome </h2>
-                                                        <h3>{{patient_selected.welcome}}</h3>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-md-6">
-                                                    <div class="detail-personal">
-                                                        <h2>Consent </h2>
-                                                        <h3>{{patient_selected.consent}}</h3>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-md-6">
-                                                    <div class="detail-personal">
-                                                        <h2>Insurance Card</h2>
-                                                        <h3>{{patient_selected.insurance_card}}</h3>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-md-6">
-                                                    <div class="detail-personal">
-                                                        <h2>Eligibility</h2>
-
-                                                        <h3>{{patient_selected.eligibility}}</h3>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-md-6">
-                                                    <div class="detail-personal">
-                                                        <h2>MNL</h2>
-                                                        <h3>{{patient_selected.mnl}}</h3>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-md-6">
-                                                    <div class="detail-personal">
-                                                        <h2>Referral</h2>
-                                                        <h3>{{patient_selected.referral}}</h3>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-md-6">
-                                                    <div class="detail-personal">
-                                                        <h2>ADOS</h2>
-                                                        <h3>{{patient_selected.ados}}</h3>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-md-6">
-                                                    <div class="detail-personal">
-                                                        <h2>iep</h2>
-                                                        <h3>{{patient_selected.iep}}</h3>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-md-6">
-                                                    <div class="detail-personal">
-                                                        <h2>ASD Diagnosis</h2>
-                                                        <h3>{{patient_selected.asd_diagnosis}}</h3>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-md-6">
-                                                    <div class="detail-personal">
-                                                        <h2>CDE</h2>
-                                                        <h3>{{patient_selected.cde}}</h3>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-md-6">
-                                                    <div class="detail-personal">
-                                                        <h2>Submitted</h2>
-                                                        <h3>{{patient_selected.submitted}}</h3>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-md-6">
-                                                    <div class="detail-personal">
-                                                        <h2>Interview</h2>
-                                                        <h3>{{patient_selected.Interview}}</h3>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div> -->
-              <!-- Intake -->
+             
               <!-- PAs -->
               <div class="card">
                 <div class="card-header">
@@ -923,46 +807,7 @@
                 <div class="card-body p-0">
                   <div class="personal-list-out">
                     <div class="container">
-                      <!-- <div class="row">
-                                                <div class="col-xl-3 col-md-6">
-                                                    <div class="detail-personal">
-                                                        <h2>PA Assessment</h2>
-                                                        <h3>{{patient_selected.pa_assessment}}</h3>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-md-6">
-                                                    <div class="detail-personal">
-                                                        <h2>Patient Assesment Start Date </h2>
-                                                        <h3>{{patient_selected.pa_assessment_start_date}}</h3>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-md-6">
-                                                    <div class="detail-personal">
-                                                        <h2>Patient Assesment End Date</h2>
-                                                        <h3>{{patient_selected.pa_assessment_end_date}}</h3>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-md-6">
-                                                    <div class="detail-personal">
-                                                        <h2>PA Services</h2>
-                                                        <h3>{{patient_selected.pa_services}}</h3>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-md-6">
-                                                    <div class="detail-personal">
-                                                        <h2>Patient Services Start Date</h2>
-                                                        <h3>{{patient_selected.pa_services_start_date}}</h3>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-3 col-md-6">
-                                                    <div class="detail-personal">
-                                                        <h2>Patient Services End Date</h2>
-                                                        <h3>{{patient_selected.pa_services_end_date}}</h3>
-                                                    </div>
-                                                </div>
-
-
-                                            </div> -->
+                      
 
                       <div class="col-xs-12">
                         <div class="table-responsive">
@@ -1033,7 +878,7 @@
                                       font-weight: 500;
                                     "
                                   >
-                                    {{ pa_asses.pa_services_end_date | date }}
+                                    {{ pa_asses.pa_services_end_date | date : "shortDate"  }}
                                   </h3>
                                 </td>
                                 <td>

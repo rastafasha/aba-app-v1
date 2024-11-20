@@ -142,8 +142,8 @@ export class ReductionGoalFormComponent {
           ? []
           : resp.goalReductionPatientIds.data;
       this.goalReductionId =
-        resp.goalReductionPatientIds.data[0].id || undefined;
-      this.client_id_goal = resp.goalReductionPatientIds.data[0].client_id;
+        resp.goalReductionPatientIds.data[0]?.id || undefined;
+      this.client_id_goal = resp.goalReductionPatientIds.data[0]?.client_id;
     });
   }
 
