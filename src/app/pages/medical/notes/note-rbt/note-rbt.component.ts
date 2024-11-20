@@ -531,7 +531,7 @@ export class NoteRbtComponent implements OnInit {
     );
   }
 
-  save() {
+  save() {debugger
     this.text_validation = '';
     if (!this.selectedPaService) {
       this.text_validation = 'Please select a service';

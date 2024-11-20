@@ -107,15 +107,15 @@ export class DeEscalationTecniquesComponent {
         // console.log('goals sustition by patientid',resp);
         this.deEscalalationsTechs = resp.deEscalationTechniquePatientIds.data;
         this.deEscalalationsTechid =
-          resp.deEscalationTechniquePatientIds.data[0].id;
+          resp.deEscalationTechniquePatientIds.data[0]?.id;
         this.description =
-          resp.deEscalationTechniquePatientIds.data[0].description;
+          resp.deEscalationTechniquePatientIds.data[0]?.description;
         this.deEscalationopts =
-          resp.deEscalationTechniquePatientIds.data[0].recomendation_lists;
+          resp.deEscalationTechniquePatientIds.data[0]?.recomendation_lists;
         this.service_recomendation =
-          resp.deEscalationTechniquePatientIds.data[0].service_recomendation;
+          resp.deEscalationTechniquePatientIds.data[0]?.service_recomendation;
         this.client_id_deEscalalationsTechs =
-          resp.deEscalationTechniquePatientIds.data[0].client_id;
+          resp.deEscalationTechniquePatientIds.data[0]?.client_id;
         // this.goals = resp.goalReductionPatientIds;
         // console.log(this.goals);
       });

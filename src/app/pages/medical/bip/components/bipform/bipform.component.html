@@ -1,5 +1,6 @@
 <!-- other -->
 <div class="col-sm-12">
+  <!-- <pre>{{ this.bip_selected  | json}}</pre> -->
   <div class="card">
     <div class="card-body">
       <form autocomplete="false">
@@ -69,7 +70,7 @@
                         <tbody>
                           <tr *ngFor="let document of documents; let i = index">
                             <td>
-                              {{ document.document_title }}
+                              {{ document }}
                             </td>
                             <td>
                               <button

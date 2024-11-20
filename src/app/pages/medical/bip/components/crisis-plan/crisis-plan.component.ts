@@ -125,7 +125,7 @@ export class CrisisPlanComponent {
       .subscribe((resp) => {
         console.log('goals sustition by patientid',resp);
         this.crisisPlans = resp.crisiPlanPatientIds.data;
-        this.crisisplanId = resp.crisiPlanPatientIds.data[0].id;
+        this.crisisplanId = resp.crisiPlanPatientIds.data[0]?.id;
         //risk list
         this.risk_factors = resp.crisiPlanPatientIds.data[0].risk_factors;
         this.other = resp.crisiPlanPatientIds.data[0].risk_factors[0].other;

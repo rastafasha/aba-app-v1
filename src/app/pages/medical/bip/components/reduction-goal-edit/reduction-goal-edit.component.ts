@@ -79,8 +79,8 @@ export class ReductionGoalEditComponent {
   goals = [];
   goalReductions = [];
 
-  golsto_edit: any;
-  gollto_edit: any;
+  golsto_edit: any = {};
+  gollto_edit: any = {};
 
   goalmaladaptive_clientId: any;
   goalReductionId: any;

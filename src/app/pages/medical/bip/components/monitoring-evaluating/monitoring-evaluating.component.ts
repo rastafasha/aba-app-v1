@@ -108,11 +108,11 @@ export class MonitoringEvaluatingComponent {
       } else {
           this.training_goals = []; // Fallback to an empty array
       }
-        this.monitoringtid = resp.monitoringEvaluatingPatientIds.data[0].id;
+        this.monitoringtid = resp.monitoringEvaluatingPatientIds.data[0]?.id;
         // this.training_goals =
         //   resp.monitoringEvaluatingPatientIds.data[0].rbt_training_goals;
         this.client_id_monitorings =
-          resp.monitoringEvaluatingPatientIds.data[0].client_id;
+          resp.monitoringEvaluatingPatientIds.data[0]?.client_id;
       });
   }
 
