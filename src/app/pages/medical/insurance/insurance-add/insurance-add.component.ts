@@ -15,7 +15,7 @@ export class InsuranceAddComponent {
   routes = AppRoutes;
   selectedValue!: string;
 
-  insurer_name = '';
+  name = '';
   notes = [];
   note: any;
 
@@ -26,6 +26,13 @@ export class InsuranceAddComponent {
   unit_prize: any;
   hourly_fee: any;
   max_allowed: any;
+
+  city:string;
+  state:string;
+  street:string;
+  street2:string;
+  zip:string;
+  payer_id:number;
 
   valid_form = false;
   valid_form_success = false;
@@ -81,13 +88,18 @@ export class InsuranceAddComponent {
 
   save() {
     this.text_validation = '';
-    if (!this.insurer_name || !this.services) {
+    if (!this.name || !this.services) {
       this.text_validation = 'Los campos con * son obligatorios';
       return;
     }
 
     const data = {
-      insurer_name: this.insurer_name,
+      name: this.name,
+      city: this.city,
+      state: this.state,
+      street: this.street,
+      street2: this.street2,
+      zip: this.zip,
       services: this.services,
       notes: this.notes,
     };

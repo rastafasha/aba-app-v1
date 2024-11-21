@@ -21,6 +21,14 @@ export class InsuranceEditComponent {
   notes = [];
   note: any;
 
+  city:string;
+  state:string;
+  street:string;
+  street2:string;
+  zip:string;
+  payer_id:number;
+
+
   services = [];
   insurance_edit: any;
   note_edit: string;
@@ -64,12 +72,18 @@ export class InsuranceEditComponent {
 
   getConfig() {
     this.insuranceService.get(this.insurance_id).subscribe((resp) => {
-      // console.log(resp);
       this.insurance_selected = resp;
-
-      this.name = this.insurance_selected.name;
-      this.notes = this.insurance_selected.notes;
-      this.services = this.insurance_selected.services;
+      
+      this.name = this.insurance_selected.insurance.name;
+      // console.log(this.name);
+      this.city = this.insurance_selected.insurance.city;
+      this.state = this.insurance_selected.insurance.state;
+      this.street = this.insurance_selected.insurance.street;
+      this.street2 = this.insurance_selected.insurance.street2;
+      this.zip = this.insurance_selected.insurance.zip;
+      this.payer_id = this.insurance_selected.insurance.payer_id;
+      this.notes = this.insurance_selected.insurance.notes;
+      this.services = this.insurance_selected.insurance.services;
     });
   }
 
@@ -138,6 +152,12 @@ export class InsuranceEditComponent {
 
     const data = {
       name: this.name,
+      city: this.city,
+      state: this.state,
+      street: this.street,
+      street2: this.street2,
+      zip: this.zip,
+      payer_id: this.payer_id,
       services: this.services,
       notes: this.notes,
     };
