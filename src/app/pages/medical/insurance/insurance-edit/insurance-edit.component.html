@@ -32,8 +32,8 @@
                       >
                       <input
                         class="form-control"
-                        name="insurer_name"
-                        [(ngModel)]="insurer_name"
+                        name="name"
+                        [(ngModel)]="name"
                         type="text"
                       />
                     </div>
@@ -247,7 +247,7 @@
                                         class="modal-title"
                                         id="exampleModalLabel"
                                       >
-                                        {{ serv.name_file }}
+                                        {{ serv.name }}
                                       </h5>
                                       <a
                                         href="javascript:void(0);"
@@ -273,7 +273,7 @@
                                                 class="form-control"
                                                 name="code"
                                                 [(ngModel)]="
-                                                  maladaptive_edit.code
+                                                  serv.code
                                                 "
                                                 type="text"
                                               />
@@ -311,7 +311,7 @@
                                                 class="form-control"
                                                 name="unit_prize"
                                                 [(ngModel)]="
-                                                  maladaptive_edit.unit_prize
+                                                 serv.unit_prize
                                                 "
                                                 type="text"
                                               />
@@ -329,7 +329,7 @@
                                               >
                                               <h5 style="padding: 10px">
                                                 {{
-                                                  maladaptive_edit.unit_prize *
+                                                  serv.unit_prize *
                                                     4 | currency
                                                 }}
                                               </h5>
@@ -348,7 +348,7 @@
                                                 class="form-control"
                                                 name="description"
                                                 [(ngModel)]="
-                                                  maladaptive_edit.description
+                                                  serv.description
                                                 "
                                                 rows="3"
                                                 cols="30"
@@ -368,7 +368,7 @@
                                                 class="form-control"
                                                 name="max_allowed"
                                                 [(ngModel)]="
-                                                  maladaptive_edit.max_allowed
+                                                  serv.max_allowed
                                                 "
                                                 rows="3"
                                                 cols="30"
@@ -381,7 +381,7 @@
                                                 class="btn btn-primary btn-sm"
                                                 (click)="
                                                   cambiarStatus(
-                                                    maladaptive_edit,
+                                                    insurance_edit,
                                                     i
                                                   )
                                                 "

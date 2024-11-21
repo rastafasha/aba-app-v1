@@ -16,20 +16,20 @@ export class InsuranceEditComponent {
   selectedValue!: string;
   option_selected = 1;
 
-  insurer_name = '';
+  name = '';
 
   notes = [];
   note: any;
 
   services = [];
-  maladaptive_edit: any;
-  note_edit: any;
-  code: any;
-  provider: any;
-  description: any;
-  unit_prize: any;
-  hourly_fee: any;
-  max_allowed: any;
+  insurance_edit: any;
+  note_edit: string;
+  code: string;
+  provider: string;
+  description: string;
+  unit_prize: number;
+  hourly_fee: number;
+  max_allowed: string;
 
   insurance_id: any;
   insurance_selected: any;
@@ -64,10 +64,10 @@ export class InsuranceEditComponent {
 
   getConfig() {
     this.insuranceService.get(this.insurance_id).subscribe((resp) => {
-      // console.log(resp);
+      console.log(resp);
       this.insurance_selected = resp;
 
-      this.insurer_name = this.insurance_selected.insurer_name;
+      this.name = this.insurance_selected.name;
       this.notes = this.insurance_selected.notes;
       this.services = this.insurance_selected.services;
     });
@@ -89,8 +89,8 @@ export class InsuranceEditComponent {
     this.code = '';
     this.provider = '';
     this.description = '';
-    this.unit_prize = '';
-    this.hourly_fee = '';
+    this.unit_prize = 0;
+    this.hourly_fee = 0;
     this.max_allowed = '';
   }
 
@@ -109,7 +109,7 @@ export class InsuranceEditComponent {
   }
 
   cambiarStatus(serv: any, i: number) {
-    this.maladaptive_edit = serv;
+    this.insurance_edit = serv;
     Swal.fire(
       'Updated',
       `Updated item List successfully, if you finish the list, now press button save!`,
@@ -117,8 +117,8 @@ export class InsuranceEditComponent {
     );
   }
   seleccionarParaEdit(serv: any, i: number) {
-    this.maladaptive_edit = serv;
-    // console.log(this.maladaptive_edit);
+    this.insurance_edit = serv;
+    // console.log(this.insurance_edit);
   }
   cambiarNote(note: any, i: number) {
     this.note_edit = note;
@@ -131,13 +131,13 @@ export class InsuranceEditComponent {
 
   save() {
     this.text_validation = '';
-    if (!this.insurer_name || !this.services) {
+    if (!this.name || !this.services) {
       this.text_validation = 'Los campos con * son obligatorios';
       return;
     }
 
     const data = {
-      insurer_name: this.insurer_name,
+      name: this.name,
       services: this.services,
       notes: this.notes,
     };
@@ -156,7 +156,14 @@ export class InsuranceEditComponent {
         }
       });
   }
+  
   closeReload() {
-    throw new Error('Method not implemented');
+    // // throw new Error('Method not implemented');
+    // this.code = '';
+    // this.provider = '';
+    // this.description = '';
+    // this.unit_prize = 0;
+    // this.hourly_fee = 0;
+    // this.max_allowed = '';
   }
 }
