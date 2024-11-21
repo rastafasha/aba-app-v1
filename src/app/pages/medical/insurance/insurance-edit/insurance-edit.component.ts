@@ -64,7 +64,7 @@ export class InsuranceEditComponent {
 
   getConfig() {
     this.insuranceService.get(this.insurance_id).subscribe((resp) => {
-      console.log(resp);
+      // console.log(resp);
       this.insurance_selected = resp;
 
       this.name = this.insurance_selected.name;
