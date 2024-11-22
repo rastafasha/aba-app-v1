@@ -11,6 +11,8 @@ export * from './note-bcba.v2.model';
 export * from './note-rbt.model';
 export * from './note.rbt.v2.model';
 export * from './notes.model';
+export * from './pa-service.v2.model';
 export * from './patient.v2.model';
+export * from './pos-covered-v2-model';
 export * from './provider.v2.model';
 export * from './users.model';

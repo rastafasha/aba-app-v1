@@ -1,10 +1,10 @@
-import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 import {
+  BooleanOrNullOrUndefined,
   DateOrNullOrUndefined,
   NumberOrNullOrUndefined,
   StringOrNullOrUndefined,
 } from 'src/app/shared/utils';
-import { BooleanOrNullOrUndefined } from 'src/app/shared/utils/BooleanOrNullOrUndefined';
+import { PaServiceV2 } from './pa-service.v2.model';
 
 export class PatientV2 {
   id: number;
@@ -77,14 +77,14 @@ export class PatientV2 {
   pay: boolean;
 
   //
-  pa_services: PaService[];
+  pa_services: PaServiceV2[];
   pa_assessments: string;
   compayment_per_visit: string;
   insurer_secundary: string;
   //
-  created_at: Date;
-  updated_at: Date;
-  delete_at: Date;
+  created_at?: Date;
+  updated_at?: Date;
+  deleted_at?: Date;
 
   constructor(data: Partial<PatientV2>) {
     const result: PatientV2 = {
@@ -154,7 +154,7 @@ export class PatientV2 {
       interview: StringOrNullOrUndefined(data.interview),
 
       pa_services: data.pa_services
-        ? data.pa_services.map((service) => new PaService(service))
+        ? data.pa_services?.map((service) => new PaServiceV2(service))
         : [],
       pa_assessments: StringOrNullOrUndefined(data.pa_assessments),
       compayment_per_visit: StringOrNullOrUndefined(data.compayment_per_visit),
@@ -171,7 +171,7 @@ export class PatientV2 {
 
       created_at: DateOrNullOrUndefined(data.created_at),
       updated_at: DateOrNullOrUndefined(data.updated_at),
-      delete_at: DateOrNullOrUndefined(data.delete_at),
+      deleted_at: DateOrNullOrUndefined(data.deleted_at),
     };
     return result;
   }

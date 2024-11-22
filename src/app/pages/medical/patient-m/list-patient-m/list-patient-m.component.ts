@@ -49,9 +49,9 @@ export class ListPatientMComponent implements OnInit {
   totalPages = 0;
 
   patient_generals: PatientV2[] = [];
-  private patient_id: number;
-  private patient_selected: PatientV2;
-  private text_validation: string;
+  patient_id: number;
+  patient_selected: PatientV2;
+  text_validation: string;
   user: AppUser;
   roles: string;
   permissions = [];

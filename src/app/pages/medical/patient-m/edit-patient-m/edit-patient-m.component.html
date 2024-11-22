@@ -18,8 +18,8 @@
     </div>
     <!-- /Page Header -->
     <!-- Form -->
-    <form class="row" *ngIf="patient">
-      <!-- patient -->
+    <form class="row" *ngIf="patient" autocomplete="off">
+      <!-- Patient -->
       <div class="col-sm-12">
         <div class="card">
           <div class="card-body">
@@ -402,24 +402,27 @@
                 <div class="col-12 col-md-6 col-xl-6">
                   <div class="form-group local-top-form">
                     <label class="local-top">
-                      Picture (Max Size: 2Mb, jpg,png)<span class="login-danger"
-                        >*</span
-                      >
+                      Picture (Max Size: 2Mb, jpg,png)
+                      <span class="login-danger">*</span>
                     </label>
                     <div class="settings-btn upload-files-avator">
                       <input
                         type="file"
                         accept="image/*"
                         name="image"
-                        id="file"
-                        (change)="loadFile($event)"
+                        id="picture"
+                        (change)="onLoadPicture($event)"
                         class="hide-input"
                       />
-                      <label for="file" class="upload">Choose File</label>
+                      <label for="picture" class="upload">Choose File</label>
                     </div>
                   </div>
-                  <div *ngIf="patient.avatar">
-                    <img [src]="patient.avatar" style="width: 250px" alt="" />
+                  <div>
+                    <img
+                      [src]="patient.avatar ?? defaultAvatar"
+                      style="width: 250px"
+                      alt=""
+                    />
                   </div>
                 </div>
                 <!-- Location -->
@@ -461,7 +464,6 @@
           </div>
         </div>
       </div>
-      <!-- fin patient -->
 
       <!-- Specialists -->
       <div class="col-sm-12">
@@ -570,984 +572,700 @@
           </div>
         </div>
       </div>
-      <!-- fin Specialist -->
-      <div id="benefits" style="height: 50px"></div>
-      <!-- benefits -->
+
+      <!-- Benefits -->
       <div class="col-sm-12">
         <div class="card">
           <div class="card-body">
-            <form autocomplete="off">
-              <div class="row">
-                <div class="col-12">
-                  <div class="form-heading">
-                    <h4>Benefits</h4>
-                  </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-heading">
+                  <h4>Benefits</h4>
                 </div>
-                <div class="col-12 col-sm-4">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>Insurer <span class="login-danger">*</span></label>
-                    <!-- name="insurer" -->
-                    <mat-select
-                      formControlName="insurer_id"
-                      name="insurer_id"
-                      class="form-control select"
-                      placeholder="Select Insurer"
+              </div>
+              <div class="col-12 col-sm-4">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>Insurer <span class="login-danger">*</span></label>
+                  <!-- name="insurer" -->
+                  <mat-select
+                    formControlName="insurer_id"
+                    name="insurer_id"
+                    class="form-control select"
+                    placeholder="Select Insurer"
+                  >
+                    <mat-option
+                      *ngFor="let insurer of insurances"
+                      [value]="insurer?.id"
                     >
-                      <mat-option
-                        *ngFor="let insurer of insurances"
-                        [value]="insurer?.id"
-                      >
-                        {{ insurer.name }}
-                      </mat-option>
-                    </mat-select>
-                  </div>
+                      {{ insurer.name }}
+                    </mat-option>
+                  </mat-select>
                 </div>
-                <!-- <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>
-                      Insurance Id <span class="login-danger">*</span>
-                    </label>
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="insuranceId"
-                      [disabled]="true"
-                      [value]="insurerSelected?."
-                      type="text"
-                    />
-                  </div>
-                </div> -->
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>Equhl Id<span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="eqhlid"
-                      formControlName="eqhlid"
-                      type="text"
-                    />
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>Equhl Id<span class="login-danger">*</span></label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="eqhlid"
+                    formControlName="eqhlid"
+                    type="text"
+                  />
                 </div>
-                <!-- <div class="col-12 col-md-6 col-xl-4">
-                                    <div class="form-group local-forms" [formGroup]="form">
-                                        <label >Insurer Secundary</label>
-                                        <input class="form-control" autocomplete="off" name="insurer_secundary" formControlName="insurer_secundary" type="text"  >
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-6 col-xl-4">
-                                    <div class="form-group local-forms" [formGroup]="form">
-                                        <label >Insurance Id Secundary</label>
-                                        <input class="form-control" autocomplete="off" name="insuranceId_secundary" formControlName="insuranceId_secundary" type="text"  >
-                                    </div>
-                                </div> -->
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label
-                      >Elegibility date<span class="login-danger"
-                        >*</span
-                      ></label
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label
+                    >Elegibility date<span class="login-danger">*</span></label
+                  >
+                  <input
+                    class="form-control datetimepicker"
+                    name="elegibility_date"
+                    formControlName="elegibility_date"
+                    type="text"
+                    matInput
+                    [matDatepicker]="picker2"
+                  />
+                  <mat-datepicker #picker2></mat-datepicker>
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="picker2"
+                  ></mat-datepicker-toggle>
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>POS Covered<span class="login-danger">*</span></label>
+                  <mat-select
+                    multiple
+                    class="form-control select"
+                    formControlName="pos_covered"
+                    placeholder="Select"
+                  >
+                    <mat-option
+                      *ngFor="let data of posCoveredOptions"
+                      [value]="data.code"
                     >
-                    <input
-                      class="form-control datetimepicker"
-                      name="elegibility_date"
-                      formControlName="elegibility_date"
-                      type="text"
-                      matInput
-                      [matDatepicker]="picker2"
-                    />
-                    <mat-datepicker #picker2></mat-datepicker>
-                    <mat-datepicker-toggle
-                      matIconSuffix
-                      [for]="picker2"
-                    ></mat-datepicker-toggle>
-                  </div>
+                      {{ data.name }}
+                    </mat-option>
+                  </mat-select>
                 </div>
-
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label
-                      >POS Covered<span class="login-danger">*</span></label
-                    >
-
-                    <mat-select
-                      multiple="multiple"
-                      [(ngModel)]="selectedValuePosCovered"
-                      [ngModelOptions]="{ standalone: true }"
-                      class="form-control select"
-                      (ngModelChange)="selectPOS($event)"
-                      placeholder="Select"
-                    >
-                      <mat-option
-                        *ngFor="let data of poscoveredList"
-                        [value]="data.name"
-                      >
-                        {{ data.name }}
-                      </mat-option>
-                    </mat-select>
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>
+                    Deductible Individual I/F<span class="login-danger">*</span>
+                  </label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="deductible_individual_I_F"
+                    formControlName="deductible_individual_I_F"
+                    type="text"
+                  />
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label
-                      >Deductible Individual I/F<span class="login-danger"
-                        >*</span
-                      ></label
-                    >
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="deductible_individual_I_F"
-                      formControlName="deductible_individual_I_F"
-                      type="text"
-                    />
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>Balance<span class="login-danger">*</span></label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="balance"
+                    formControlName="balance"
+                    type="text"
+                  />
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>Balance<span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="balance"
-                      formControlName="balance"
-                      type="text"
-                    />
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>Coinsurance<span class="login-danger">*</span></label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="coinsurance"
+                    formControlName="coinsurance"
+                    type="text"
+                  />
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label
-                      >Coinsurance<span class="login-danger">*</span></label
-                    >
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="coinsurance"
-                      formControlName="coinsurance"
-                      type="text"
-                    />
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>Copayments<span class="login-danger">*</span></label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="copayments"
+                    formControlName="copayments"
+                    type="text"
+                  />
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>Copayments<span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="copayments"
-                      formControlName="copayments"
-                      type="text"
-                    />
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>OOP<span class="login-danger">*</span></label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="oop"
+                    formControlName="oop"
+                    type="text"
+                  />
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>OOP<span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="oop"
-                      formControlName="oop"
-                      type="text"
-                    />
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label
+                    >Patient Control #<span class="login-danger">*</span></label
+                  >
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="patient_control"
+                    formControlName="patient_control"
+                    type="text"
+                  />
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label
-                      >Patient Control #<span class="login-danger"
-                        >*</span
-                      ></label
-                    >
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="patient_control"
-                      formControlName="patient_control"
-                      type="text"
-                    />
-                  </div>
-                </div>
-
-                <div class="col-12 col-md-2">
-                  <div class="form-group">
+              </div>
+              <div class="col-12 col-md-2">
+                <div class="form-group">
+                  <div
+                    class="card-header d-flex justify-content-between align-items-center"
+                  >
+                    <h5 class="card-title">Telehealth</h5>
                     <div
-                      _ngcontent-rhp-c92=""
-                      class="card-header d-flex justify-content-between align-items-center"
+                      [formGroup]="form"
+                      class="status-toggle d-flex justify-content-between align-items-center"
                     >
-                      <h5 _ngcontent-rhp-c92="" class="card-title">
-                        Telehealth
-                      </h5>
-                      <div
-                        _ngcontent-rhp-c92=""
-                        class="status-toggle d-flex justify-content-between align-items-center"
-                      >
-                        <input
-                          _ngcontent-rhp-c92=""
-                          type="checkbox"
-                          id="telehealth"
-                          class="check"
-                          name="telehealth"
-                          [ngModelOptions]="{ standalone: true }"
-                          [(ngModel)]="telehealth"
-                        />
-                        <label
-                          _ngcontent-rhp-c92=""
-                          for="telehealth"
-                          class="checktoggle"
-                          value="true"
-                          >checkbox</label
-                        >
-                      </div>
+                      <input
+                        type="checkbox"
+                        id="telehealth"
+                        class="check"
+                        name="telehealth"
+                        formControlName="telehealth"
+                      />
+                      <label for="telehealth" class="checktoggle" value="true">
+                        checkbox
+                      </label>
                     </div>
-                  </div>
-                </div>
-                <div class="col-12 col-md-2">
-                  <div class="form-group">
-                    <div
-                      _ngcontent-rhp-c92=""
-                      class="card-header d-flex justify-content-between align-items-center"
-                    >
-                      <h5 _ngcontent-rhp-c92="" class="card-title">Pay</h5>
-                      <div
-                        _ngcontent-rhp-c92=""
-                        class="status-toggle d-flex justify-content-between align-items-center"
-                      >
-                        <input
-                          _ngcontent-rhp-c92=""
-                          type="checkbox"
-                          id="pay"
-                          class="check"
-                          name="pay"
-                          [ngModelOptions]="{ standalone: true }"
-                          [(ngModel)]="pay"
-                        />
-                        <label
-                          _ngcontent-rhp-c92=""
-                          for="pay"
-                          class="checktoggle"
-                          value="true"
-                          >checkbox</label
-                        >
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-12" *ngIf="valid_form">
-                  <div class="form-group row" *ngIf="valid_form_success">
-                    <div class="col-md-12">
-                      <div
-                        class="alert alert-success alert-dismissible fade show"
-                        role="alert"
-                      >
-                        <strong>Success!</strong> The Patient has been
-                        registered.
-                        <button
-                          type="button"
-                          class="btn-close"
-                          data-bs-dismiss="alert"
-                          aria-label="Close"
-                        >
-                          <span aria-hidden="true"> </span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row" *ngIf="text_validation">
-                    <div class="col-md-12">
-                      <div
-                        class="alert alert-danger alert-dismissible fade show"
-                        role="alert"
-                      >
-                        <strong>!</strong> {{ text_validation }}.
-                        <button
-                          type="button"
-                          class="btn-close"
-                          data-bs-dismiss="alert"
-                          aria-label="Close"
-                        >
-                          <span aria-hidden="true"> </span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-12">
-                  <div class="doctor-submit text-end">
-                    <button
-                      type="button"
-                      class="btn btn-primary submit-form me-2"
-                      (click)="onSave()"
-                    >
-                      Save
-                    </button>
                   </div>
                 </div>
               </div>
-            </form>
+              <div class="col-12 col-md-2">
+                <div class="form-group">
+                  <div
+                    class="card-header d-flex justify-content-between align-items-center"
+                  >
+                    <h5 class="card-title">Pay</h5>
+                    <div
+                      [formGroup]="form"
+                      class="status-toggle d-flex justify-content-between align-items-center"
+                    >
+                      <input
+                        type="checkbox"
+                        id="pay"
+                        class="check"
+                        name="pay"
+                        formControlName="pay"
+                      />
+                      <label for="pay" class="checktoggle" value="true">
+                        checkbox
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="doctor-submit text-end">
+                  <button
+                    type="button"
+                    class="btn btn-primary submit-form me-2"
+                    (click)="onSave()"
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <!-- fin benefits -->
+
       <!-- Intake -->
       <div class="col-sm-12">
         <div class="card">
           <div class="card-body">
-            <form autocomplete="off">
-              <div class="row">
-                <div class="col-12">
-                  <div class="form-heading">
-                    <h4>Intake</h4>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>Welcome<span class="login-danger">*</span></label>
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="welcome"
-                      formControlName="welcome"
-                    >
-                      <option>-- Select --</option>
-                      <option value="waiting">Waiting</option>
-                      <option value="requested">Requested</option>
-                      <option value="reviewing">Reviewing</option>
-                      <option value="psycho eval">Psycho Eval</option>
-                      <option value="need new">Need New</option>
-                      <option value="2 insurance">2 insurance</option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>Consent<span class="login-danger">*</span></label>
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="consent"
-                      formControlName="consent"
-                    >
-                      <option>-- Select --</option>
-                      <option value="waiting">Waiting</option>
-                      <option value="requested">Requested</option>
-                      <option value="reviewing">Reviewing</option>
-                      <option value="psycho eval">Psycho Eval</option>
-                      <option value="need new">Need New</option>
-                      <option value="2 insurance">2 insurance</option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label
-                      >Insurance Card<span class="login-danger">*</span></label
-                    >
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="insurance_card"
-                      formControlName="insurance_card"
-                    >
-                      <option>-- Select --</option>
-                      <option value="waiting">Waiting</option>
-                      <option value="requested">Requested</option>
-                      <option value="reviewing">Reviewing</option>
-                      <option value="psycho eval">Psycho Eval</option>
-                      <option value="need new">Need New</option>
-                      <option value="2 insurance">2 insurance</option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label
-                      >Eligibility<span class="login-danger">*</span></label
-                    >
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="eligibility"
-                      formControlName="eligibility"
-                    >
-                      <option>-- Select --</option>
-                      <option value="waiting">Waiting</option>
-                      <option value="requested">Requested</option>
-                      <option value="reviewing">Reviewing</option>
-                      <option value="psycho eval">Psycho Eval</option>
-                      <option value="need new">Need New</option>
-                      <option value="2 insurance">2 insurance</option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>MNL<span class="login-danger">*</span></label>
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="mnl"
-                      formControlName="mnl"
-                    >
-                      <option>-- Select --</option>
-                      <option value="waiting">Waiting</option>
-                      <option value="requested">Requested</option>
-                      <option value="reviewing">Reviewing</option>
-                      <option value="psycho eval">Psycho Eval</option>
-                      <option value="need new">Need New</option>
-                      <option value="2 insurance">2 insurance</option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>Referral<span class="login-danger">*</span></label>
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="referral"
-                      formControlName="referral"
-                    >
-                      <option>-- Select --</option>
-                      <option value="waiting">Waiting</option>
-                      <option value="requested">Requested</option>
-                      <option value="reviewing">Reviewing</option>
-                      <option value="psycho eval">Psycho Eval</option>
-                      <option value="need new">Need New</option>
-                      <option value="2 insurance">2 insurance</option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>ADOS<span class="login-danger">*</span></label>
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="ados"
-                      formControlName="ados"
-                    >
-                      <option>-- Select --</option>
-                      <option value="waiting">Waiting</option>
-                      <option value="requested">Requested</option>
-                      <option value="reviewing">Reviewing</option>
-                      <option value="psycho eval">Psycho Eval</option>
-                      <option value="need new">Need New</option>
-                      <option value="2 insurance">2 insurance</option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>iep<span class="login-danger">*</span></label>
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="iep"
-                      formControlName="iep"
-                    >
-                      <option>-- Select --</option>
-                      <option value="waiting">Waiting</option>
-                      <option value="requested">Requested</option>
-                      <option value="reviewing">Reviewing</option>
-                      <option value="psycho eval">Psycho Eval</option>
-                      <option value="need new">Need New</option>
-                      <option value="2 insurance">2 insurance</option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label
-                      >ASD Diagnosis<span class="login-danger">*</span></label
-                    >
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="asd_diagnosis"
-                      formControlName="asd_diagnosis"
-                    >
-                      <option>-- Select --</option>
-                      <option value="waiting">Waiting</option>
-                      <option value="requested">Requested</option>
-                      <option value="reviewing">Reviewing</option>
-                      <option value="psycho eval">Psycho Eval</option>
-                      <option value="need new">Need New</option>
-                      <option value="2 insurance">2 insurance</option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>CDE<span class="login-danger">*</span></label>
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="cde"
-                      formControlName="cde"
-                    >
-                      <option>-- Select --</option>
-                      <option value="waiting">Waiting</option>
-                      <option value="requested">Requested</option>
-                      <option value="reviewing">Reviewing</option>
-                      <option value="psycho eval">Psycho Eval</option>
-                      <option value="need new">Need New</option>
-                      <option value="2 insurance">2 insurance</option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>Submitted<span class="login-danger">*</span></label>
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="submitted"
-                      formControlName="submitted"
-                    >
-                      <option>-- Select --</option>
-                      <option value="waiting">Waiting</option>
-                      <option value="requested">Requested</option>
-                      <option value="reviewing">Reviewing</option>
-                      <option value="psycho eval">Psycho Eval</option>
-                      <option value="need new">Need New</option>
-                      <option value="2 insurance">2 insurance</option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>Interview<span class="login-danger">*</span></label>
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="interview"
-                      formControlName="interview"
-                    >
-                      <option>-- Select --</option>
-                      <option value="pending">Pending</option>
-                      <option value="send">Send</option>
-                      <option value="receive">Receive</option>
-                      <option value="no apply">No Apply</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="col-12" *ngIf="valid_form">
-                  <div class="form-group row" *ngIf="valid_form_success">
-                    <div class="col-md-12">
-                      <div
-                        class="alert alert-success alert-dismissible fade show"
-                        role="alert"
-                      >
-                        <strong>Success!</strong> The Patient has been
-                        registered.
-                        <button
-                          type="button"
-                          class="btn-close"
-                          data-bs-dismiss="alert"
-                          aria-label="Close"
-                        >
-                          <span aria-hidden="true"> </span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group row" *ngIf="text_validation">
-                    <div class="col-md-12">
-                      <div
-                        class="alert alert-danger alert-dismissible fade show"
-                        role="alert"
-                      >
-                        <strong>!</strong> {{ text_validation }}.
-                        <button
-                          type="button"
-                          class="btn-close"
-                          data-bs-dismiss="alert"
-                          aria-label="Close"
-                        >
-                          <span aria-hidden="true"> </span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-12">
-                  <div class="doctor-submit text-end">
-                    <button
-                      type="button"
-                      class="btn btn-primary submit-form me-2"
-                      (click)="onSave()"
-                    >
-                      Save
-                    </button>
-                  </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-heading">
+                  <h4>Intake</h4>
                 </div>
               </div>
-            </form>
+              <div class="col-12 col-sm-3">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>Welcome<span class="login-danger">*</span></label>
+                  <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="welcome"
+                    formControlName="welcome"
+                  >
+                    <option [value]="null">Select</option>
+                    <option
+                      *ngFor="let option of intakenOptions"
+                      [value]="option.value"
+                    >
+                      {{ option.key }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>Consent<span class="login-danger">*</span></label>
+                  <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="consent"
+                    formControlName="consent"
+                  >
+                    <option [value]="null">Select</option>
+                    <option
+                      *ngFor="let option of intakenOptions"
+                      [value]="option.value"
+                    >
+                      {{ option.key }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label
+                    >Insurance Card<span class="login-danger">*</span></label
+                  >
+                  <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="insurance_card"
+                    formControlName="insurance_card"
+                  >
+                    <option [value]="null">Select</option>
+                    <option
+                      *ngFor="let option of intakenOptions"
+                      [value]="option.value"
+                    >
+                      {{ option.key }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>Eligibility<span class="login-danger">*</span></label>
+                  <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="eligibility"
+                    formControlName="eligibility"
+                  >
+                    <option [value]="null">Select</option>
+                    <option
+                      *ngFor="let option of intakenOptions"
+                      [value]="option.value"
+                    >
+                      {{ option.key }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>MNL<span class="login-danger">*</span></label>
+                  <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="mnl"
+                    formControlName="mnl"
+                  >
+                    <option [value]="null">Select</option>
+                    <option
+                      *ngFor="let option of intakenOptions"
+                      [value]="option.value"
+                    >
+                      {{ option.key }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>Referral<span class="login-danger">*</span></label>
+                  <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="referral"
+                    formControlName="referral"
+                  >
+                    <option [value]="null">Select</option>
+                    <option
+                      *ngFor="let option of intakenOptions"
+                      [value]="option.value"
+                    >
+                      {{ option.key }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>ADOS<span class="login-danger">*</span></label>
+                  <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="ados"
+                    formControlName="ados"
+                  >
+                    <option [value]="null">Select</option>
+                    <option
+                      *ngFor="let option of intakenOptions"
+                      [value]="option.value"
+                    >
+                      {{ option.key }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>iep<span class="login-danger">*</span></label>
+                  <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="iep"
+                    formControlName="iep"
+                  >
+                    <option [value]="null">Select</option>
+                    <option
+                      *ngFor="let option of intakenOptions"
+                      [value]="option.value"
+                    >
+                      {{ option.key }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label
+                    >ASD Diagnosis<span class="login-danger">*</span></label
+                  >
+                  <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="asd_diagnosis"
+                    formControlName="asd_diagnosis"
+                  >
+                    <option [value]="null">Select</option>
+                    <option
+                      *ngFor="let option of intakenOptions"
+                      [value]="option.value"
+                    >
+                      {{ option.key }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>CDE<span class="login-danger">*</span></label>
+                  <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="cde"
+                    formControlName="cde"
+                  >
+                    <option [value]="null">Select</option>
+                    <option
+                      *ngFor="let option of intakenOptions"
+                      [value]="option.value"
+                    >
+                      {{ option.key }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>Submitted<span class="login-danger">*</span></label>
+                  <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="submitted"
+                    formControlName="submitted"
+                  >
+                    <option [value]="null">Select</option>
+                    <option
+                      *ngFor="let option of intakenOptions"
+                      [value]="option.value"
+                    >
+                      {{ option.key }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>Interview<span class="login-danger">*</span></label>
+                  <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="interview"
+                    formControlName="interview"
+                  >
+                    <option [value]="null">Select</option>
+                    <option value="pending">Pending</option>
+                    <option value="send">Send</option>
+                    <option value="receive">Receive</option>
+                    <option value="no apply">No Apply</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="doctor-submit text-end">
+                  <button
+                    type="button"
+                    class="btn btn-primary submit-form me-2"
+                    (click)="onSave()"
+                  >
+                    Save
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <!-- fin Intake -->
 
       <!-- PAs -->
       <div class="col-sm-12">
         <div class="card">
           <div class="card-body">
-            <form (ngSubmit)="addPaService()">
-              <div class="row">
-                <div class="col-12">
-                  <div class="card-box">
-                    <div class="card-block">
-                      <h3 class="card-title">PAs</h3>
+            <div class="row">
+              <div class="col-12">
+                <div class="card-box">
+                  <div class="card-block">
+                    <h3 class="card-title">PAs</h3>
 
-                      <!-- PA Service Form -->
-                      <div class="row align-items-center mb-4">
-                        <div class="col-12 col-md-6 col-xl-4">
-                          <div
-                            class="form-group local-forms"
-                            [formGroup]="paForm"
+                    <!-- PA Service Form -->
+                    <div class="row align-items-center mb-4">
+                      <div class="col-12 col-md-6 col-xl-4">
+                        <!-- PA Service Name -->
+                        <div
+                          class="form-group local-forms"
+                          [formGroup]="paForm"
+                        >
+                          <label>
+                            PA Service Name
+                            <span class="login-danger">*</span></label
                           >
-                            <label>
-                              PA Service Name
-                              <span class="login-danger">*</span></label
-                            >
-                            <input
-                              class="form-control"
-                              formControlName="pa_services"
-                              name="pa_services"
-                              required
-                              type="text"
-                            />
-                          </div>
+                          <input
+                            class="form-control"
+                            formControlName="pa_services"
+                            name="pa_services"
+                            required
+                            type="text"
+                          />
                         </div>
+                      </div>
 
-                        <div class="col-12 col-md-6 col-xl-4">
-                          <div
-                            class="form-group local-forms"
-                            [formGroup]="paForm"
+                      <div class="col-12 col-md-6 col-xl-4">
+                        <div
+                          class="form-group local-forms"
+                          [formGroup]="paForm"
+                        >
+                          <label>
+                            CPT Code
+                            <span class="login-danger">*</span></label
                           >
-                            <label>
-                              CPT Code
-                              <span class="login-danger">*</span></label
+                          <mat-select
+                            formControlName="cpt"
+                            name="cpt"
+                            required
+                            class="form-control select"
+                            placeholder="Select Code"
+                          >
+                            <mat-option
+                              *ngFor="
+                                let data of (
+                                  insurances
+                                  | arrayFind : 'id' : form.value.insurer_id
+                                )?.services
+                              "
+                              [value]="data.code"
                             >
-                            <mat-select
-                              formControlName="cpt"
-                              name="cpt"
-                              required
-                              class="form-control select"
-                              placeholder="Select Code"
-                              (selectionChange)="selectProviderCpt($event)"
-                            >
-                              <mat-option
-                                *ngFor="let data of services"
-                                [value]="data.code"
+                              {{ data.code }} | {{ data.provider }}
+                            </mat-option>
+                          </mat-select>
+                        </div>
+                      </div>
+                      <!-- Number of Units -->
+                      <div class="col-12 col-md-6 col-xl-4">
+                        <div
+                          class="form-group local-forms"
+                          [formGroup]="paForm"
+                        >
+                          <label>
+                            Number of Units
+                            <span class="login-danger">*</span></label
+                          >
+                          <input
+                            class="form-control"
+                            formControlName="n_units"
+                            name="n_units"
+                            required
+                            type="number"
+                            min="0"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-12 col-md-6 col-xl-4">
+                        <div
+                          class="form-group local-forms"
+                          [formGroup]="paForm"
+                        >
+                          <label>
+                            Start Date
+                            <span class="login-danger">*</span></label
+                          >
+                          <input
+                            class="form-control datetimepicker"
+                            name="start_date"
+                            formControlName="start_date"
+                            type="text"
+                            matInput
+                            [matDatepicker]="start_date_picker"
+                          />
+                          <mat-datepicker #start_date_picker></mat-datepicker>
+                          <mat-datepicker-toggle
+                            matIconSuffix
+                            [for]="start_date_picker"
+                          >
+                          </mat-datepicker-toggle>
+                        </div>
+                      </div>
+
+                      <div class="col-12 col-md-6 col-xl-4">
+                        <div
+                          class="form-group local-forms"
+                          [formGroup]="paForm"
+                        >
+                          <label>
+                            End Date
+                            <span class="login-danger">*</span></label
+                          >
+                          <input
+                            class="form-control datetimepicker"
+                            name="end_date"
+                            formControlName="end_date"
+                            type="text"
+                            matInput
+                            [matDatepicker]="end_date_picker"
+                          />
+                          <mat-datepicker #end_date_picker></mat-datepicker>
+                          <mat-datepicker-toggle
+                            matIconSuffix
+                            [for]="end_date_picker"
+                          >
+                          </mat-datepicker-toggle>
+                        </div>
+                      </div>
+
+                      <div class="col-12 text-end">
+                        <button
+                          type="submit"
+                          class="btn btn-primary me-2"
+                          [disabled]="paForm.invalid"
+                          (click)="onAddPaService()"
+                        >
+                          Add PA Service
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- PA Services Table -->
+                    <div class="table-responsive">
+                      <table class="table table-striped mb-0">
+                        <thead>
+                          <tr>
+                            <th>Name</th>
+                            <th>CPT Code</th>
+                            <th>Units</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let paService of patient.pa_services">
+                            <td>{{ paService.pa_services }}</td>
+                            <td>{{ paService.cpt }}</td>
+                            <td>{{ paService.n_units }}</td>
+                            <td>{{ paService.start_date | date }}</td>
+                            <td>{{ paService.end_date | date }}</td>
+                            <td>
+                              <button
+                                type="button"
+                                class="btn btn-sm btn-danger"
+                                (click)="onDeletePaService(paService)"
                               >
-                                {{ data.code }} | {{ data.provider }}
-                              </mat-option>
-                            </mat-select>
-                          </div>
-                        </div>
-
-                        <div class="col-12 col-md-6 col-xl-4">
-                          <div
-                            class="form-group local-forms"
-                            [formGroup]="paForm"
-                          >
-                            <label>
-                              Number of Units
-                              <span class="login-danger">*</span></label
-                            >
-                            <input
-                              class="form-control"
-                              formControlName="n_units"
-                              name="n_units"
-                              required
-                              type="number"
-                              min="0"
-                            />
-                          </div>
-                        </div>
-
-                        <div class="col-12 col-md-6 col-xl-4">
-                          <div
-                            class="form-group local-forms"
-                            [formGroup]="paForm"
-                          >
-                            <label>
-                              Start Date
-                              <span class="login-danger">*</span></label
-                            >
-                            <input
-                              class="form-control"
-                              formControlName="start_date"
-                              name="start_date"
-                              required
-                              type="date"
-                            />
-                          </div>
-                        </div>
-
-                        <div class="col-12 col-md-6 col-xl-4">
-                          <div
-                            class="form-group local-forms"
-                            [formGroup]="paForm"
-                          >
-                            <label>
-                              End Date
-                              <span class="login-danger">*</span></label
-                            >
-                            <input
-                              class="form-control"
-                              formControlName="end_date"
-                              name="end_date"
-                              required
-                              type="date"
-                            />
-                          </div>
-                        </div>
-
-                        <div class="col-12 text-end">
-                          <button
-                            type="submit"
-                            class="btn btn-primary me-2"
-                            [disabled]="paForm.invalid"
-                          >
-                            Add PA Service
-                          </button>
-                        </div>
-                      </div>
-
-                      <!-- PA Services Table -->
-                      <div class="table-responsive">
-                        <table class="table table-striped mb-0">
-                          <thead>
-                            <tr>
-                              <th>Name</th>
-                              <th>CPT Code</th>
-                              <th>Units</th>
-                              <th>Start Date</th>
-                              <th>End Date</th>
-                              <th>Actions</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr *ngFor="let paService of paServices">
-                              <td>{{ paService.pa_services }}</td>
-                              <td>{{ paService.cpt }}</td>
-                              <td>{{ paService.n_units }}</td>
-                              <td>{{ paService.start_date | date }}</td>
-                              <td>{{ paService.end_date | date }}</td>
-                              <td>
-                                <button
-                                  type="button"
-                                  class="btn btn-sm btn-danger"
-                                  (click)="deletePaService(paService)"
-                                >
-                                  <i class="fas fa-trash"></i>
-                                </button>
-                              </td>
-                            </tr>
-                            <tr *ngIf="paServices.length === 0">
-                              <td colspan="6" class="text-center">
-                                No PA services found
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
+                                <i class="fas fa-trash"></i>
+                              </button>
+                            </td>
+                          </tr>
+                          <tr *ngIf="patient.pa_services.length === 0">
+                            <td colspan="6" class="text-center">
+                              No PA services found
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 </div>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
-
-      <!-- fin PAs -->
 
       <!-- Files -->
       <div class="col-sm-12">
         <div class="card">
           <div class="card-body">
-            <form autocomplete="off">
-              <div class="row align-items-center">
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6">
-                    <div class="col-xl-12">
-                      <label class="form-label">Upload Files: *</label>
-                    </div>
-                    <div class="col-5">
-                      <div class="custom-file">
+            <div class="row align-items-center">
+              <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                  <div class="col-xl-12">
+                    <label class="form-label">Upload Files: *</label>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group local-top-form">
+                      <label class="local-top">
+                        Upload File (Max Size: 2Mb, any type)
+                        <span class="login-danger">*</span>
+                      </label>
+                      <div class="settings-btn upload-files-avator">
                         <input
                           type="file"
-                          class="custom-file-input"
-                          id="customFile"
-                          multiple="true"
-                          (change)="processFile($event)"
+                          name="file"
+                          id="file"
+                          (change)="onLoadFile($event)"
+                          class="hide-input"
                         />
-                        <label class="custom-file-label" for="customFile">
-                          Select file(s)
-                        </label>
-                      </div>
-                    </div>
-                    <div class="row align-items-center">
-                      <div class="card card-flush">
-                        <!--begin::Header-->
-                        <div class="card-header pt-7">
-                          <!--begin::Title-->
-                          <h3 class="card-title align-items-start flex-column">
-                            <span class="card-label fw-bolder text-dark">
-                              File list
-                            </span>
-                          </h3>
-                          <div class="card-toolbar"></div>
-                        </div>
-                        <!--end::Header-->
-                        <!--begin::Body-->
-                        <div class="card-body">
-                          <!--begin::Scroll-->
-                          <div class="hover-scroll-overlay-y pe-6 me-n6">
-                            <ng-container
-                              *ngFor="let FILE of FILES; let i = index"
-                            >
-                              <!--begin::Item-->
-                              <div
-                                class="rounded border-gray-300 border-1 border-gray-300 border-dashed px-7 py-3 mb-6"
-                              >
-                                <!--begin::Info-->
-                                <div class="d-flex flex-stack mb-3">
-                                  <!--begin::Wrapper-->
-                                  <div class="me-3">
-                                    <!--begin::Icon-->
-
-                                    <img
-                                      src="assets/svg/doc.svg"
-                                      class="w-50px ms-n1 me-1"
-                                      alt=""
-                                    />
-                                    <!--end::Icon-->
-                                    <!--begin::Title-->
-                                    <a
-                                      href="#"
-                                      onclick="return false;"
-                                      class="text-gray-800 text-hover-primary fw-bolder"
-                                      >{{ FILE.name }}</a
-                                    >
-                                    <!--end::Title-->
-                                  </div>
-                                  <!--end::Wrapper-->
-                                </div>
-                                <!--end::Info-->
-                                <!--begin::Customer-->
-                                <div class="d-flex flex-stack">
-                                  <!--begin::Name-->
-                                  <span class="text-gray-400 fw-bolder"
-                                    >Size:
-                                    <a
-                                      href="#"
-                                      onclick="return false;"
-                                      class="text-gray-800 text-hover-primary fw-bolder"
-                                      >{{ FILE.size }} Kb.</a
-                                    ></span
-                                  >
-                                  <!--end::Name-->
-                                  <!--begin::Label-->
-                                  <span class="badge badge-light-success"
-                                    >Active</span
-                                  >
-                                  <button
-                                    class="btn btn-danger btn-sm"
-                                    (click)="deleteDocument(i)"
-                                  >
-                                    x
-                                  </button>
-                                  <!--end::Label-->
-                                </div>
-                                <!--end::Customer-->
-                              </div>
-                              <!--end::Item-->
-                            </ng-container>
-                          </div>
-                          <!--end::Scroll-->
-                        </div>
-                        <!--end::Body-->
-                      </div>
-                      <!-- validaciones -->
-                      <div class="form-group row" *ngIf="text_success">
-                        <div class="col-12">
-                          <div
-                            class="alert alert-success alert-dismissible fade show"
-                            role="alert"
-                          >
-                            <strong>Exito!</strong>{{ text_success }}.
-                            <button
-                              type="button"
-                              class="btn-close"
-                              data-bs-dismiss="alert"
-                              aria-label="Close"
-                            >
-                              <span aria-hidden="true"> </span>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="form-group row" *ngIf="text_validation">
-                        <div class="col-12">
-                          <div
-                            class="alert alert-warning alert-dismissible fade show"
-                            role="alert"
-                          >
-                            <strong>!</strong> {{ text_validation }}.
-                            <button
-                              type="button"
-                              class="btn-close"
-                              data-bs-dismiss="alert"
-                              aria-label="Close"
-                            >
-                              <span aria-hidden="true"> </span>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- validaciones -->
-                      <div class="col-12">
-                        <div class="doctor-submit text-end">
-                          <button
-                            type="button"
-                            class="btn btn-primary submit-form me-2"
-                            (click)="saveFiles()"
-                          >
-                            Add Files
-                          </button>
-                        </div>
+                        <label for="file" class="upload">Choose File</label>
                       </div>
                     </div>
                   </div>
-                  <div class="col-xs-12 col-sm-6">
+                  <div class="row align-items-center">
                     <div class="card card-flush">
                       <!--begin::Header-->
                       <div class="card-header pt-7">
                         <!--begin::Title-->
                         <h3 class="card-title align-items-start flex-column">
                           <span class="card-label fw-bolder text-dark">
-                            Files Added List
+                            File list
                           </span>
                         </h3>
                         <div class="card-toolbar"></div>
@@ -1557,114 +1275,203 @@
                       <div class="card-body">
                         <!--begin::Scroll-->
                         <div class="hover-scroll-overlay-y pe-6 me-n6">
-                          <div class="col-xs-6">
-                            <ng-container *ngFor="let FILE of FilesAdded">
-                              <div class="filesAdded">
+                          <ng-container
+                            *ngFor="let file of files; let i = index"
+                          >
+                            <!--begin::Item-->
+                            <div
+                              class="rounded border-gray-300 border-1 border-gray-300 border-dashed px-7 py-3 mb-6"
+                            >
+                              <!--begin::Info-->
+                              <div class="d-flex flex-stack mb-3">
                                 <!--begin::Wrapper-->
-                                <div class="files">
+                                <div class="me-3">
+                                  <!--begin::Icon-->
+
+                                  <img
+                                    src="assets/svg/doc.svg"
+                                    class="w-50px ms-n1 me-1"
+                                    alt=""
+                                  />
+                                  <!--end::Icon-->
+                                  <!--begin::Title-->
                                   <a
-                                    href="javascript:void(0);"
-                                    (click)="selectDoc(FILE)"
-                                    data-bs-toggle="modal"
-                                    [attr.data-bs-target]="
-                                      '#view-doc-' + FILE.id
-                                    "
+                                    href="#"
+                                    onclick="return false;"
+                                    class="text-gray-800 text-hover-primary fw-bolder"
+                                    >{{ file.name }}</a
                                   >
-                                    <img
-                                      src="assets/svg/doc.svg"
-                                      class="w-50px ms-n1 me-1 filesvg"
-                                      alt=""
-                                    />
-                                  </a>
-                                  <div class="infofile">
-                                    <a
-                                      href="javascript:void(0);"
-                                      (click)="selectDoc(FILE)"
-                                      data-bs-toggle="modal"
-                                      [attr.data-bs-target]="
-                                        '#view-doc-' + FILE.id
-                                      "
-                                    >
-                                      {{ FILE.name_file }}</a
-                                    >
-                                    <br />
-                                    <span
-                                      class="text-gray-400 fw-bolder sizeee"
-                                    >
-                                      Size:
-                                      <a
-                                        href="#"
-                                        onclick="return false;"
-                                        class="text-gray-800 text-hover-primary fw-bolder"
-                                        >{{ FILE.size }} Kb.</a
-                                      ></span
-                                    >
-                                  </div>
-                                  <button
-                                    class="btn btn-danger btn-sm"
-                                    (click)="deleteFile(FILE)"
-                                  >
-                                    x
-                                  </button>
+                                  <!--end::Title-->
                                 </div>
                                 <!--end::Wrapper-->
                               </div>
                               <!--end::Info-->
-                              <!-- modal -->
-
-                              <div
-                                [attr.id]="'view-doc-' + FILE.id"
-                                class="modal add-modal"
-                                role="dialog"
-                              >
-                                <div
-                                  class="modal-dialog modal-dialog-centered modal-lg"
+                              <!--begin::Customer-->
+                              <div class="d-flex flex-stack">
+                                <!--begin::Name-->
+                                <span class="text-gray-400 fw-bolder"
+                                  >Size:
+                                  <a
+                                    href="#"
+                                    onclick="return false;"
+                                    class="text-gray-800 text-hover-primary fw-bolder"
+                                    >{{ file.size }} Kb.</a
+                                  ></span
                                 >
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h5
-                                        class="modal-title"
-                                        id="exampleModalLabel"
-                                      >
-                                        {{ FILE.name_file }}
-                                      </h5>
-                                      <a
-                                        href="javascript:void(0);"
-                                        (click)="closeReload()"
-                                        class="btn btn-white me-1"
-                                        data-bs-dismiss="modal"
-                                        >Close</a
-                                      >
-                                    </div>
-                                    <div class="modal-body text-center">
-                                      <embed
-                                        [src]="getDocumentIframe(FILE.file)"
-                                        class="pdf-content"
-                                      />
-                                      <!-- <div class="m-t-20">
-                                                                                                            <a href="javascript:void(0);" (click)="closeReload()" class="btn btn-white me-1" data-bs-dismiss="modal">Close</a>
-                                                                                                        </div> -->
-                                    </div>
-                                  </div>
-                                </div>
+                                <!--end::Name-->
+                                <!--begin::Label-->
+                                <span class="badge badge-light-success">
+                                  Active
+                                </span>
+                                <button
+                                  class="btn btn-danger btn-sm"
+                                  (click)="onDeleteDocument(i)"
+                                >
+                                  x
+                                </button>
+                                <!--end::Label-->
                               </div>
-
-                              <!-- modal -->
-                            </ng-container>
-                          </div>
+                              <!--end::Customer-->
+                            </div>
+                            <!--end::Item-->
+                          </ng-container>
                         </div>
                         <!--end::Scroll-->
                       </div>
                       <!--end::Body-->
                     </div>
+
+                    <!-- validaciones -->
+                    <div class="col-12">
+                      <div class="doctor-submit text-end">
+                        <button
+                          type="button"
+                          class="btn btn-primary submit-form me-2"
+                          (click)="onSaveFiles()"
+                        >
+                          Add Files
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                  <div class="card card-flush">
+                    <!--begin::Header-->
+                    <div class="card-header pt-7">
+                      <!--begin::Title-->
+                      <h3 class="card-title align-items-start flex-column">
+                        <span class="card-label fw-bolder text-dark">
+                          Files Added List
+                        </span>
+                      </h3>
+                      <div class="card-toolbar"></div>
+                    </div>
+                    <!--end::Header-->
+                    <!--begin::Body-->
+                    <div class="card-body">
+                      <!--begin::Scroll-->
+                      <div class="hover-scroll-overlay-y pe-6 me-n6">
+                        <div class="col-xs-6">
+                          <ng-container *ngFor="let doc of documents">
+                            <div class="filesAdded">
+                              <!--begin::Wrapper-->
+                              <div class="files">
+                                <a
+                                  href="javascript:void(0);"
+                                  (click)="onSelectDoc(doc)"
+                                  data-bs-toggle="modal"
+                                  [attr.data-bs-target]="'#view-doc-' + doc.id"
+                                >
+                                  <img
+                                    src="assets/svg/doc.svg"
+                                    class="w-50px ms-n1 me-1 filesvg"
+                                    alt=""
+                                  />
+                                </a>
+                                <div class="infofile">
+                                  <a
+                                    (click)="onSelectDoc(doc)"
+                                    data-bs-toggle="modal"
+                                    [attr.data-bs-target]="
+                                      '#view-doc-' + doc.id
+                                    "
+                                  >
+                                    {{ doc.name_file }}</a
+                                  >
+                                  <br />
+                                  <span class="text-gray-400 fw-bolder sizeee">
+                                    Size:
+                                    <a
+                                      class="text-gray-800 text-hover-primary fw-bolder"
+                                    >
+                                      {{ doc.size }} Kb.
+                                    </a>
+                                  </span>
+                                </div>
+                                <button
+                                  class="btn btn-danger btn-sm"
+                                  (click)="onDeleteFile(doc)"
+                                >
+                                  x
+                                </button>
+                              </div>
+                              <!--end::Wrapper-->
+                            </div>
+                            <!--end::Info-->
+                            <!-- modal -->
+
+                            <div
+                              [attr.id]="'view-doc-' + doc.id"
+                              class="modal add-modal"
+                              role="dialog"
+                            >
+                              <div
+                                class="modal-dialog modal-dialog-centered modal-lg"
+                              >
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5
+                                      class="modal-title"
+                                      id="exampleModalLabel"
+                                    >
+                                      {{ doc.name_file }}
+                                    </h5>
+                                    <a
+                                      (click)="onCloseReload()"
+                                      class="btn btn-white me-1"
+                                      data-bs-dismiss="modal"
+                                    >
+                                      Close
+                                    </a>
+                                  </div>
+                                  <div class="modal-body text-center">
+                                    <embed
+                                      [src]="onGetDocumentIframe(doc.file)"
+                                      class="pdf-content"
+                                    />
+                                    <!-- <div class="m-t-20">
+                                                                                                            <a href="javascript:void(0);" (click)="closeReload()" class="btn btn-white me-1" data-bs-dismiss="modal">Close</a>
+                                                                                                        </div> -->
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <!-- modal -->
+                          </ng-container>
+                        </div>
+                      </div>
+                      <!--end::Scroll-->
+                    </div>
+                    <!--end::Body-->
                   </div>
                 </div>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
-      <!-- fin Files -->
     </form>
   </div>
 </div>

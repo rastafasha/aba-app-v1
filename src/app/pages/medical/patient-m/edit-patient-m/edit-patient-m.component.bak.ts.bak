@@ -42,7 +42,7 @@ export interface Service {
 
 @Component({
   selector: 'app-edit-patient-m',
-  templateUrl: './edit-patient-m.component.html',
+  templateUrl: './edit-patient-m.component.bak.html',
   styleUrls: ['./edit-patient-m.component.scss'],
 })
 export class EditPatientMComponent implements OnInit {
@@ -777,7 +777,7 @@ export class EditPatientMComponent implements OnInit {
     this.valid_form_success = false;
     this.text_validation = '';
 
-    this.patientsUseCases.storeLaboratory(formData).subscribe((resp) => {
+    this.patientsService.storeLaboratory(formData).subscribe((resp) => {
       // console.log(resp);
       if (resp.message === 403) {
         this.text_validation = resp.message_text;

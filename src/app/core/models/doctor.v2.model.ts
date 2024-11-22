@@ -2,8 +2,8 @@ export class DoctorRoleV2 {
   id: number;
   name: string;
   guard_name: string;
-  created_at: Date;
-  updated_at: Date;
+  created_at?: Date;
+  updated_at?: Date;
 }
 export class DoctorV2 {
   id: number;
@@ -58,5 +58,5 @@ export class DoctorV2 {
   caqh_bcbas_only: string;
   contract_type: string;
   salary: string;
-  created_at: Date;
+  created_at?: Date;
 }
