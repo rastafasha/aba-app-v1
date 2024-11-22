@@ -124,10 +124,21 @@ export class GeneralizationTrainingComponent {
   }
 
   addDocument() {
-    this.generalizations.push({
-      phase: this.phase,
-      description: this.description,
-    });
+
+    if (this.generalizations) {
+      this.generalizations.push({
+        phase: this.phase,
+        description: this.description,
+      });
+    } else {
+      this.generalizations = [
+        {
+          phase: this.phase,
+          description: this.description,
+        },
+      ];
+    }
+
     this.phase = '';
     this.description = '';
   }

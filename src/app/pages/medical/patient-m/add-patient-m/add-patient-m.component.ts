@@ -566,10 +566,10 @@ export class AddPatientMComponent {
     formData.append('submitted', this.submitted);
     formData.append('eligibility', this.eligibility);
 
-    // formData.append('rbt_home_id', this.selectedValue_rbt);
-    // formData.append('rbt2_school_id', this.selectedValue_rbt2);
-    // formData.append('bcba_home_id', this.selectedValue_bcba);
-    // formData.append('bcba2_school_id', this.selectedValue_bcba2);
+    formData.append('rbt_home_id', this.selectedValue_rbt);
+    formData.append('rbt2_school_id', this.selectedValue_rbt2);
+    formData.append('bcba_home_id', this.selectedValue_bcba);
+    formData.append('bcba2_school_id', this.selectedValue_bcba2);
     formData.append('clin_director_id', this.selectedValue_clind);
 
     if (this.eqhlid) {

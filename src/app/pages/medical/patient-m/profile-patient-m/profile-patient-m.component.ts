@@ -35,9 +35,7 @@ export class ProfilePatientMComponent implements OnInit {
   money_of_appointments = 0;
   num_appointment_pendings = 0;
   patient_selected: any;
-  appointment_pendings = [];
-  appointments = [];
-  pa_assessments: string;
+  
 
   text_success = '';
   text_validation = '';
@@ -150,10 +148,6 @@ export class ProfilePatientMComponent implements OnInit {
           );
     consulta$.subscribe((resp) => {
       console.log(resp);
-      this.appointments = resp.appointments ?? [];
-      this.num_appointment = resp.num_appointment ?? 0;
-      this.money_of_appointments = resp.money_of_appointments ?? 0;
-      this.num_appointment_pendings = resp.num_appointment_pendings ?? 0;
       this.patient_selected = resp.patient;
       this.patient_id = resp.patient.patient_id;
       this.avatar = resp.patient.avatar;
@@ -162,11 +156,8 @@ export class ProfilePatientMComponent implements OnInit {
       this.bcba_id = resp.patient.bcba_home_id;
       this.bcba2_id = resp.patient.bcba2_school_id;
       this.clin_director_id = resp.patient.clin_director_id;
-      // this.appointment_pendings= resp.appointment_pendings.data;
-      this.pa_assessmentss = resp.pa_assessments;
-      const jsonObj = JSON.parse(this.pa_assessmentss.toString()) || '';
-      this.pa_assessmentgroup = jsonObj;
-
+      
+      
       this.patientService
         .getLaboratoryByPatient(this.patient_id)
         .subscribe((resp) => {
