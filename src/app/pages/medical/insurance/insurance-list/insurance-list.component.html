@@ -95,7 +95,7 @@
                   <tr *ngFor="let data of insuranceList">
                     <td>
                       <a [routerLink]="[routes.insurance.view, data.id]">
-                        {{ data.insurer_name }}
+                        {{ data.name }}
                       </a>
                     </td>
                     <td>{{ data.created_at | date : "shortDate"  }}</td>

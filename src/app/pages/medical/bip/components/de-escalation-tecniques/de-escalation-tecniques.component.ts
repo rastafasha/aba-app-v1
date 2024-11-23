@@ -27,7 +27,7 @@ export class DeEscalationTecniquesComponent {
 
   caregivers_training_goals = [];
   deEscalationopts = [];
-  escalation_edit: any;
+  escalation_edit: any = {};
 
   client_id: any;
   user: AppUser;
@@ -45,6 +45,8 @@ export class DeEscalationTecniquesComponent {
   client_id_deEscalalationsTechs: any;
   deEscalalationsTechid: any;
   goalFamilyid: any;
+
+  
 
   constructor(
     private bipService: BipService,
@@ -88,8 +90,6 @@ export class DeEscalationTecniquesComponent {
     if (this.patient_id !== null && this.patient_id !== undefined) {
       this.bipService.getBipByUser(this.patient_id).subscribe((resp) => {
         // console.log('bip',resp);
-
-        this.bip_selected = resp; //convertimos la respuesta en un variable
         this.bip_selected = resp; //convertimos la respuesta en un variable
         this.bip_selectedId = resp.id; //convertimos la respuesta en un variable
         this.bip_selectedIdd = this.bip_selected.bip.id; //convertimos la respuesta en un variable
@@ -107,15 +107,15 @@ export class DeEscalationTecniquesComponent {
         // console.log('goals sustition by patientid',resp);
         this.deEscalalationsTechs = resp.deEscalationTechniquePatientIds.data;
         this.deEscalalationsTechid =
-          resp.deEscalationTechniquePatientIds.data[0].id;
+          resp.deEscalationTechniquePatientIds.data[0]?.id;
         this.description =
-          resp.deEscalationTechniquePatientIds.data[0].description;
+          resp.deEscalationTechniquePatientIds.data[0]?.description;
         this.deEscalationopts =
-          resp.deEscalationTechniquePatientIds.data[0].recomendation_lists;
+          resp.deEscalationTechniquePatientIds.data[0]?.recomendation_lists;
         this.service_recomendation =
-          resp.deEscalationTechniquePatientIds.data[0].service_recomendation;
+          resp.deEscalationTechniquePatientIds.data[0]?.service_recomendation;
         this.client_id_deEscalalationsTechs =
-          resp.deEscalationTechniquePatientIds.data[0].client_id;
+          resp.deEscalationTechniquePatientIds.data[0]?.client_id;
         // this.goals = resp.goalReductionPatientIds;
         // console.log(this.goals);
       });

@@ -6,6 +6,124 @@ import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
 import { AuthService } from 'src/app/core/auth/auth.service';
 
+
+interface Doctor {
+  id: number;
+  full_name: string;
+  avatar: string | null;
+}
+
+interface AssestmentConductedOption {
+  index: number;
+  assestment_title: string;
+  assestment_status: string;
+}
+
+interface AssestmentEvaluationSetting {
+  index: number;
+  other: string;
+  tangible: string;
+  activities: string;
+}
+
+interface PrevalentSettingEventAndAtecedent {
+  index: number;
+  prevalent_setting_event_and_atecedent: string;
+  behavior: string;
+  hypothesized_functions: string;
+}
+
+interface Intervention {
+  index: number;
+  titleIntervention: string;
+  descriptionIntervention: string;
+}
+
+interface Tangible {
+  index: number;
+  preventive_strategies: string;
+  manager_strategies: string;
+}
+
+interface Attention {
+  index: number;
+  preventive_strategies_a: string;
+  replacement_skills_a: string;
+  manager_strategies_a: string;
+}
+
+interface Escape {
+  index: number;
+  preventive_strategies_e: string;
+  replacement_skills_e: string;
+  manager_strategies_e: string;
+}
+
+interface Sensory {
+  index: number;
+  preventive_strategies_s: string;
+  replacement_skills_s: string;
+  manager_strategies_s: string;
+}
+
+interface BIP {
+  id: number;
+  type_of_assessment: number;
+  doctor_id: number;
+  doctor: Doctor;
+  patient_id: string;
+  background_information: string;
+  previus_treatment_and_result: string;
+  current_treatment_and_progress: string;
+  education_status: string;
+  phisical_and_medical_status: string;
+  assestment_conducted: string;
+  strengths: string;
+  weakneses: string;
+  documents_reviewed: string[];
+  maladaptives: any; // or specific type if known
+  assestment_conducted_options: AssestmentConductedOption[];
+  assestmentEvaluationSettings: AssestmentEvaluationSetting[];
+  prevalent_setting_event_and_atecedents: PrevalentSettingEventAndAtecedent[];
+  interventions: Intervention[];
+  goal_stos: any; // or specific type if known
+  goal_ltos: any; // or specific type if known
+  hypothesis_based_intervention: string;
+  tangibles: Tangible[];
+  attention: Attention[];
+  escape: Escape[];
+  sensory: Sensory[];
+  phiysical_and_medical: string;
+  phiysical_and_medical_status: any[]; // specify type if known
+  reduction_goal: any[]; // specify type if known
+  sustitution_goal: any[]; // specify type if known
+  family_envolment: any[]; // specify type if known
+  monitoring_evalutating: any[]; // specify type if known
+  generalization_training: any[]; // specify type if known
+  crisis_plan: any[]; // specify type if known
+  de_escalation_technique: any[]; // specify type if known
+  consent_to_treatment: any[]; // specify type if known
+  created_at: string; // date string
+}
+
+interface PatientBIP {
+  patient_id: string;
+  bip: BIP;
+  type_of_assessment: number;
+  documents_reviewed: string[];
+  maladaptives: any[]; // specify type if known
+  assestment_conducted_options: AssestmentConductedOption[];
+  prevalent_setting_event_and_atecedents: PrevalentSettingEventAndAtecedent[];
+  interventions: Intervention[];
+  assestmentEvaluationSettings: AssestmentEvaluationSetting[];
+  tangibles: Tangible[];
+  attention: Attention[];
+  escape: Escape[];
+  sensory: Sensory[];
+  phiysical_and_medical_status: any[]; // specify type if known
+}
+
+
 @Component({
   selector: 'app-bip-form',
   templateUrl: './bipform.component.html',
@@ -33,10 +151,10 @@ export class BipFormComponent implements OnInit {
   name_medical: any;
   uso: any;
 
-  client_id: any;
-  id: any;
-  patient_id: any;
-  doctor_id: any;
+  client_id: number;
+  id: number;
+  patient_id: number;
+  doctor_id: number;
   user: AppUser;
 
   type_of_assessment: any;
@@ -54,9 +172,8 @@ export class BipFormComponent implements OnInit {
   reduction = [];
   maladaptive = [];
 
-  documents = [];
-  document_title: any;
-  document_status: any;
+  documents :string [] = [];
+  document_title: string;
 
   //maladaptives
 
@@ -69,15 +186,15 @@ export class BipFormComponent implements OnInit {
   initial_interesting: any;
   current_intensity: any;
 
-  maladaptive_edit: any;
-  medication_edit: any;
-  evaluation_edit: any;
-  prevalent_edit: any;
-  sensory_edit: any;
-  escape_edit: any;
-  intervention_edit: any;
-  atention_edit: any;
-  tangible_edit: any;
+  maladaptive_edit: any = {};
+  medication_edit: any = {};
+  evaluation_edit: any = {};
+  prevalent_edit: any = {};
+  sensory_edit: any = {};
+  escape_edit: any = {};
+  intervention_edit: any = {};
+  atention_edit: any = {};
+  tangible_edit: any = {};
 
   //assestments
   assesstments = [];
@@ -205,7 +322,7 @@ export class BipFormComponent implements OnInit {
   getBip() {
     if (this.patient_id !== null && this.patient_id !== undefined) {
       this.bipService.getBipByUser(this.patient_id).subscribe((resp) => {
-        // console.log(resp);
+        console.log(resp);
 
         this.bip_selected = resp; //asigamos una variable a la respuesta
         this.bip_selectedid = resp.bip.id; //obtenemos de nuevo el bip pero para verificar si es actualizar o crear en la funcion
@@ -227,8 +344,10 @@ export class BipFormComponent implements OnInit {
         this.weakneses = this.bip_selected.bip.weakneses;
 
         this.documents = this.bip_selected.documents_reviewed;
+        console.log(this.documents);
+        
         this.maladaptives = this.bip_selected.maladaptives;
-        this.maladaptive_behavior = this.bip_selected.maladaptives[0].title;
+        this.maladaptive_behavior = this.bip_selected.maladaptives?.[0].title;
 
         this.assesstments = this.bip_selected.assestment_conducted_options;
         this.assesstmentsDocuments =
@@ -258,9 +377,7 @@ export class BipFormComponent implements OnInit {
   //manejo de listas para json
 
   addDocument() {
-    this.documents.push({
-      document_title: this.document_title,
-    });
+    this.documents.push(this.document_title);
     this.document_title = '';
   }
 

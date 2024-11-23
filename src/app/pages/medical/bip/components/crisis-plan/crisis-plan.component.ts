@@ -25,7 +25,7 @@ export class CrisisPlanComponent {
   bip_selectedIdd: any;
   maladaptives: any;
 
-  risk_added: any;
+  risk_factors: any;
   do_not_apply: any;
   elopement: any;
   assaultive_behavior: any;
@@ -43,14 +43,14 @@ export class CrisisPlanComponent {
   prior_psychiatric_inpatient_admission: any;
   other: any;
 
-  suicidality_added: any;
+  suicidalities: any;
   not_present: any;
   ideation: any;
   plan: any;
   means: any;
   prior_attempt: any;
 
-  homicidality_added: any;
+  homicidalities: any;
   not_present_homicidality: any;
   ideation_homicidality: any;
   plan_homicidality: any;
@@ -123,11 +123,11 @@ export class CrisisPlanComponent {
     this.crisisPlanService
       .getCrisisPlanbyPatientId(patient_id)
       .subscribe((resp) => {
-        // console.log('goals sustition by patientid',resp);
+        console.log('goals sustition by patientid',resp);
         this.crisisPlans = resp.crisiPlanPatientIds.data;
-        this.crisisplanId = resp.crisiPlanPatientIds.data[0].id;
+        this.crisisplanId = resp.crisiPlanPatientIds.data[0]?.id;
         //risk list
-        this.risk_added = resp.crisiPlanPatientIds.data[0].risk_factors;
+        this.risk_factors = resp.crisiPlanPatientIds.data[0].risk_factors;
         this.other = resp.crisiPlanPatientIds.data[0].risk_factors[0].other;
         this.do_not_apply =
           resp.crisiPlanPatientIds.data[0].risk_factors[0].do_not_apply;
@@ -160,7 +160,7 @@ export class CrisisPlanComponent {
         this.prior_psychiatric_inpatient_admission =
           resp.crisiPlanPatientIds.data[0].risk_factors[0].prior_psychiatric_inpatient_admission;
 
-        this.suicidality_added = resp.crisiPlanPatientIds.data[0].suicidalities;
+        this.suicidalities = resp.crisiPlanPatientIds.data[0].suicidalities;
         this.not_present =
           resp.crisiPlanPatientIds.data[0].suicidalities[0].not_present;
         this.ideation =
@@ -170,7 +170,7 @@ export class CrisisPlanComponent {
         this.prior_attempt =
           resp.crisiPlanPatientIds.data[0].suicidalities[0].prior_attempt;
 
-        this.homicidality_added =
+        this.homicidalities =
           resp.crisiPlanPatientIds.data[0].homicidalities;
         this.not_present_homicidality =
           resp.crisiPlanPatientIds.data[0].homicidalities[0].not_present_homicidality;
@@ -188,35 +188,62 @@ export class CrisisPlanComponent {
         this.caregiver_requirements_for_prevention_of_crisis =
           resp.crisiPlanPatientIds.data[0].caregiver_requirements_for_prevention_of_crisis;
         this.crisis_note = resp.crisiPlanPatientIds.data[0].crisis_note;
-        this.client_id_crisisPlans = resp.crisiPlanPatientIds.data[0].client_id;
+        this.client_id_crisisPlans = resp.crisiPlanPatientIds.data[0].id;
         // this.goals = resp.goalReductionPatientIds;
         // console.log(this.goals);
       });
   }
 
   addRisk() {
-    this.risk_added.push({
-      do_not_apply: this.do_not_apply,
-      elopement: this.elopement,
-      assaultive_behavior: this.assaultive_behavior,
-      aggression: this.aggression,
-      self_injurious_behavior: this.self_injurious_behavior,
-      sexually_offending_behavior: this.sexually_offending_behavior,
-      fire_setting: this.fire_setting,
-      current_substance_abuse: this.current_substance_abuse,
-      impulsive_behavior: this.impulsive_behavior,
-      psychotic_symptoms: this.psychotic_symptoms,
-      self_mutilation_cutting: this.self_mutilation_cutting,
-      caring_for_ill_family_recipient: this.caring_for_ill_family_recipient,
-      current_family_violence: this.current_family_violence,
-      dealing_with_significant: this.dealing_with_significant,
-      prior_psychiatric_inpatient_admission:
-        this.prior_psychiatric_inpatient_admission,
-      other: this.other,
-    });
+
+    if (this.risk_factors) {
+      this.risk_factors.push({
+        do_not_apply: this.do_not_apply,
+        elopement: this.elopement,
+        assaultive_behavior: this.assaultive_behavior,
+        aggression: this.aggression,
+        self_injurious_behavior: this.self_injurious_behavior,
+        sexually_offending_behavior: this.sexually_offending_behavior,
+        fire_setting: this.fire_setting,
+        current_substance_abuse: this.current_substance_abuse,
+        impulsive_behavior: this.impulsive_behavior,
+        psychotic_symptoms: this.psychotic_symptoms,
+        self_mutilation_cutting: this.self_mutilation_cutting,
+        caring_for_ill_family_recipient: this.caring_for_ill_family_recipient,
+        current_family_violence: this.current_family_violence,
+        dealing_with_significant: this.dealing_with_significant,
+        prior_psychiatric_inpatient_admission:
+          this.prior_psychiatric_inpatient_admission,
+        other: this.other,
+      });
+    } else {
+      this.risk_factors = [
+        {
+          do_not_apply: this.do_not_apply,
+          elopement: this.elopement,
+          assaultive_behavior: this.assaultive_behavior,
+          aggression: this.aggression,
+          self_injurious_behavior: this.self_injurious_behavior,
+          sexually_offending_behavior: this.sexually_offending_behavior,
+          fire_setting: this.fire_setting,
+          current_substance_abuse: this.current_substance_abuse,
+          impulsive_behavior: this.impulsive_behavior,
+          psychotic_symptoms: this.psychotic_symptoms,
+          self_mutilation_cutting: this.self_mutilation_cutting,
+          caring_for_ill_family_recipient: this.caring_for_ill_family_recipient,
+          current_family_violence: this.current_family_violence,
+          dealing_with_significant: this.dealing_with_significant,
+          prior_psychiatric_inpatient_admission:
+            this.prior_psychiatric_inpatient_admission,
+          other: this.other,
+        },
+      ];
+    }
+    console.log(this.risk_factors);
+
     //si existe un elemento actualiza ese elemento en la lista
-    if (this.risk_added.length > 1) {
-      this.risk_added.splice(this.risk_added, 1);
+    if (this.risk_factors.length > 0) {
+      this.risk_factors.splice(this.risk_factors, 1);
       Swal.fire('Updated', `Risk option added!`, 'success');
     } else {
       Swal.fire('Warning', `Must add less one`, 'warning');
@@ -224,40 +251,69 @@ export class CrisisPlanComponent {
   }
 
   deleteRisk(i: any) {
-    this.risk_added.splice(i, 1);
+    this.risk_factors.splice(i, 1);
   }
 
   addSuicidality() {
-    this.suicidality_added.push({
-      not_present: this.not_present,
-      ideation: this.ideation,
-      plan: this.plan,
-      means: this.means,
-      prior_attempt: this.prior_attempt,
-    });
+
+    if (this.suicidalities) {
+      this.suicidalities.push({
+        not_present: this.not_present,
+        ideation: this.ideation,
+        plan: this.plan,
+        means: this.means,
+        prior_attempt: this.prior_attempt,
+      });
+    } else {
+      this.suicidalities = [
+        {
+          not_present: this.not_present,
+          ideation: this.ideation,
+          plan: this.plan,
+          means: this.means,
+          prior_attempt: this.prior_attempt,
+        },
+      ];
+    }
+    console.log(this.suicidalities);
     //si existe un elemento actualiza ese elemento en la lista
-    if (this.suicidality_added.length > 1) {
-      this.suicidality_added.splice(this.suicidality_added, 1);
+    if (this.suicidalities.length > 0) {
+      this.suicidalities.splice(this.suicidalities, 1);
       Swal.fire('Updated', `Suicidality option added!`, 'success');
     } else {
       Swal.fire('Warning', `Must add less one`, 'warning');
     }
+    
   }
 
   deleteSuicidality(i: any) {
-    this.suicidality_added.splice(i, 1);
+    this.suicidalities.splice(i, 1);
   }
   addHomicidality() {
-    this.homicidality_added.push({
-      not_present_homicidality: this.not_present_homicidality,
+
+    if (this.homicidalities) {
+      this.homicidalities.push({
+        not_present_homicidality: this.not_present_homicidality,
       ideation_homicidality: this.ideation_homicidality,
       plan_homicidality: this.plan_homicidality,
       means_homicidality: this.means_homicidality,
       prior_attempt_homicidality: this.prior_attempt_homicidality,
-    });
+      });
+    } else {
+      this.homicidalities = [
+        {
+          not_present_homicidality: this.not_present_homicidality,
+      ideation_homicidality: this.ideation_homicidality,
+      plan_homicidality: this.plan_homicidality,
+      means_homicidality: this.means_homicidality,
+      prior_attempt_homicidality: this.prior_attempt_homicidality,
+        },
+      ];
+    }
+    console.log(this.homicidalities);
     //si existe un elemento actualiza ese elemento en la lista
-    if (this.homicidality_added.length > 1) {
-      this.homicidality_added.splice(this.homicidality_added, 1);
+    if (this.homicidalities.length > 0) {
+      this.homicidalities.splice(this.homicidalities, 1);
       Swal.fire('Updated', `Homicidality option added!`, 'success');
     } else {
       Swal.fire('Warning', `Must add less one`, 'warning');
@@ -265,10 +321,10 @@ export class CrisisPlanComponent {
   }
 
   deleteHomicidality(i: any) {
-    this.homicidality_added.splice(i, 1);
+    this.homicidalities.splice(i, 1);
   }
 
-  save() {
+  save() {debugger
     this.text_validation = '';
     // if(!this.crisis_description || !this.crisis_note || !this.caregiver_requirements_for_prevention_of_crisis){
     //   this.text_validation = 'All Fields (*) are required';
@@ -279,17 +335,16 @@ export class CrisisPlanComponent {
       id: this.crisisplanId,
       bip_id: this.bip_selectedIdd,
       patient_id: this.patient_id,
-      client_id: this.client_id,
       crisis_description: this.crisis_description,
       crisis_note: this.crisis_note,
       caregiver_requirements_for_prevention_of_crisis:
         this.caregiver_requirements_for_prevention_of_crisis,
-      risk_factors: this.risk_added,
-      suicidalities: this.suicidality_added,
-      homicidalities: this.homicidality_added,
+      risk_factors: this.risk_factors,
+      suicidalities: this.suicidalities,
+      homicidalities: this.homicidalities,
     };
 
-    if (this.client_id_crisisPlans && this.crisisplanId) {
+    if (this.crisisplanId) {
       this.crisisPlanService
         .editCrisisPlan(data, this.crisisplanId)
         .subscribe((resp) => {

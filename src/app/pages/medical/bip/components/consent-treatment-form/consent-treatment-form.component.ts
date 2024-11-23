@@ -101,27 +101,27 @@ export class ConsentTreatmentFormComponent {
         // console.log('goals sustition by patientid',resp);
         this.consentToTreatments = resp.consentToTreatmentPatientIds.data[0];
         this.consentToTreatmentid =
-          resp.consentToTreatmentPatientIds.data[0].id;
+          resp.consentToTreatmentPatientIds.data[0]?.id;
         // console.log(this.consentToTreatments);
 
         this.client_id_consentToTreatment =
-          resp.consentToTreatmentPatientIds.data[0].client_id;
+          resp.consentToTreatmentPatientIds.data[0]?.client_id;
 
         // this.parent_guardian_signature_date = this.consentToTreatments.parent_guardian_signature_date ? new Date(this.consentToTreatments.parent_guardian_signature_date).toISOString(): '';
         this.parent_guardian_signature_date =
-          this.consentToTreatments.parent_guardian_signature_date;
+          this.consentToTreatments?.parent_guardian_signature_date;
         // console.log(this.parent_guardian_signature_date);
 
         this.IMAGE_PREVISUALIZA_SIGNATURE_ANAYST_CREATED =
-          this.consentToTreatments.analyst_signature;
+          this.consentToTreatments?.analyst_signature;
 
         // this.analyst_signature_date = this.consentToTreatments.analyst_signature_date ? new Date(this.consentToTreatments.analyst_signature_date).toISOString(): '';
         this.analyst_signature_date =
-          this.consentToTreatments.analyst_signature_date;
+          this.consentToTreatments?.analyst_signature_date;
         // console.log(this.analyst_signature_date);
 
         this.IMAGE_PREVISUALIZA_SIGNATURE_PARENT_CREATED =
-          this.consentToTreatments.parent_guardian_signature;
+          this.consentToTreatments?.parent_guardian_signature;
       });
   }
 

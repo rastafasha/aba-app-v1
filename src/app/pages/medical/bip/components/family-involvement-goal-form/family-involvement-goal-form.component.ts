@@ -41,7 +41,7 @@ export class FamilyInvolvementGoalFormComponent implements OnInit {
   client_id_goalFamilyEnvolments: any;
   goalFamilyEnvolmentid: any;
   goalFamilyid: any;
-  selectedCaregiver: any;
+  selectedCaregiver: any = {};
 
   constructor(
     private bipService: BipService,
@@ -100,12 +100,12 @@ export class FamilyInvolvementGoalFormComponent implements OnInit {
       .subscribe((resp) => {
         // console.log('goals sustition by patientid',resp);
         this.goalFamilyEnvolments = resp.familiEnvolmentPatientIds.data;
-        this.goalFamilyEnvolmentid = resp.familiEnvolmentPatientIds.data[0].id;
+        this.goalFamilyEnvolmentid = resp.familiEnvolmentPatientIds.data[0]?.id;
         this.caregivers =
-          resp.familiEnvolmentPatientIds.data[0].caregivers_training_goals;
+          resp.familiEnvolmentPatientIds.data[0]?.caregivers_training_goals;
         // this.client_id_goalFamilyEnvolments = resp.familiEnvolmentPatientIds.data[0].caregivers_training_goals.client_id;
         this.client_id_goalFamilyEnvolments =
-          resp.familiEnvolmentPatientIds.data[0].client_id;
+          resp.familiEnvolmentPatientIds.data[0]?.client_id;
       });
   }
 

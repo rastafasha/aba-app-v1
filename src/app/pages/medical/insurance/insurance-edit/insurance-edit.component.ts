@@ -16,20 +16,28 @@ export class InsuranceEditComponent {
   selectedValue!: string;
   option_selected = 1;
 
-  insurer_name = '';
+  name = '';
 
   notes = [];
   note: any;
 
+  city:string;
+  state:string;
+  street:string;
+  street2:string;
+  zip:string;
+  payer_id:number;
+
+
   services = [];
-  maladaptive_edit: any;
-  note_edit: any;
-  code: any;
-  provider: any;
-  description: any;
-  unit_prize: any;
-  hourly_fee: any;
-  max_allowed: any;
+  insurance_edit: any;
+  note_edit: string;
+  code: string;
+  provider: string;
+  description: string;
+  unit_prize: number;
+  hourly_fee: number;
+  max_allowed: string;
 
   insurance_id: any;
   insurance_selected: any;
@@ -64,12 +72,18 @@ export class InsuranceEditComponent {
 
   getConfig() {
     this.insuranceService.get(this.insurance_id).subscribe((resp) => {
-      // console.log(resp);
       this.insurance_selected = resp;
-
-      this.insurer_name = this.insurance_selected.insurer_name;
-      this.notes = this.insurance_selected.notes;
-      this.services = this.insurance_selected.services;
+      
+      this.name = this.insurance_selected.insurance.name;
+      // console.log(this.name);
+      this.city = this.insurance_selected.insurance.city;
+      this.state = this.insurance_selected.insurance.state;
+      this.street = this.insurance_selected.insurance.street;
+      this.street2 = this.insurance_selected.insurance.street2;
+      this.zip = this.insurance_selected.insurance.zip;
+      this.payer_id = this.insurance_selected.insurance.payer_id;
+      this.notes = this.insurance_selected.insurance.notes;
+      this.services = this.insurance_selected.insurance.services;
     });
   }
 
@@ -89,8 +103,8 @@ export class InsuranceEditComponent {
     this.code = '';
     this.provider = '';
     this.description = '';
-    this.unit_prize = '';
-    this.hourly_fee = '';
+    this.unit_prize = 0;
+    this.hourly_fee = 0;
     this.max_allowed = '';
   }
 
@@ -109,7 +123,7 @@ export class InsuranceEditComponent {
   }
 
   cambiarStatus(serv: any, i: number) {
-    this.maladaptive_edit = serv;
+    this.insurance_edit = serv;
     Swal.fire(
       'Updated',
       `Updated item List successfully, if you finish the list, now press button save!`,
@@ -117,8 +131,8 @@ export class InsuranceEditComponent {
     );
   }
   seleccionarParaEdit(serv: any, i: number) {
-    this.maladaptive_edit = serv;
-    // console.log(this.maladaptive_edit);
+    this.insurance_edit = serv;
+    // console.log(this.insurance_edit);
   }
   cambiarNote(note: any, i: number) {
     this.note_edit = note;
@@ -131,13 +145,19 @@ export class InsuranceEditComponent {
 
   save() {
     this.text_validation = '';
-    if (!this.insurer_name || !this.services) {
+    if (!this.name || !this.services) {
       this.text_validation = 'Los campos con * son obligatorios';
       return;
     }
 
     const data = {
-      insurer_name: this.insurer_name,
+      name: this.name,
+      city: this.city,
+      state: this.state,
+      street: this.street,
+      street2: this.street2,
+      zip: this.zip,
+      payer_id: this.payer_id,
       services: this.services,
       notes: this.notes,
     };
@@ -156,7 +176,14 @@ export class InsuranceEditComponent {
         }
       });
   }
+  
   closeReload() {
-    throw new Error('Method not implemented');
+    // // throw new Error('Method not implemented');
+    // this.code = '';
+    // this.provider = '';
+    // this.description = '';
+    // this.unit_prize = 0;
+    // this.hourly_fee = 0;
+    // this.max_allowed = '';
   }
 }

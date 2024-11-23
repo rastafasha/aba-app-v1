@@ -126,7 +126,7 @@
                     <div class="col-xl-3 col-md-6">
                       <div class="detail-personal">
                         <h2>Birth Day</h2>
-                        <p>{{ patient_selected.birth_date }}</p>
+                        <p>{{ patient_selected.birth_date| date : "shortDate" }}</p>
                       </div>
                     </div>
                     <div class="col-xl-3 col-md-6">
@@ -190,12 +190,7 @@
                           <p>{{ doc.document_title }}</p>
                         </div>
                       </div>
-                      <div class="col-xs-12 col-sm-6">
-                        <div class="detail-personal">
-                          <h2>Document Status</h2>
-                          <p>{{ doc.document_status }}</p>
-                        </div>
-                      </div>
+                      
                     </ng-container>
                   </div>
                 </div>
