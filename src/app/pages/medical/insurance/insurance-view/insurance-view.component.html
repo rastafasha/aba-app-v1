@@ -24,6 +24,58 @@
                     <h4>Insurance Detail: {{ insurer_name }}</h4>
                   </div>
                 </div>
+                <div class="personal-list-out">
+                  <div class="row">
+                    <div class="col-xl-3 col-md-6">
+                      <div class="detail-personal">
+                        <h2>is self subscriber</h2>
+                        <h3>{{ insurance_selected.is_self_subscriber  }}</h3>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                      <div class="detail-personal">
+                        <h2>Payer id</h2>
+                        <h3>
+                          {{ insurance_selected.payer_id }}
+                        </h3>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                      <div class="detail-personal">
+                        <h2>City</h2>
+                        <h3>
+                          {{ insurance_selected.city }}
+                        </h3>
+                      </div>
+                    </div>
+                    
+                    <div class="col-xl-3 col-md-6">
+                      <div class="detail-personal">
+                        <h2>state</h2>
+                        <h3>{{ insurance_selected.state }}</h3>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                      <div class="detail-personal">
+                        <h2>street</h2>
+                        <h3>{{ insurance_selected.street }}</h3>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                      <div class="detail-personal">
+                        <h2>street2</h2>
+                        <h3>{{ insurance_selected.street2 }}</h3>
+                      </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6">
+                      <div class="detail-personal">
+                        <h2>zip</h2>
+                        <h3>{{ insurance_selected.zip }}</h3>
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
 
                 <div class="row align-items-center">
                   <!-- <div class="col-12">

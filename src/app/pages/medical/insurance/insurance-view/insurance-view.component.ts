@@ -60,11 +60,11 @@ export class InsuranceViewComponent {
   }
 
   getConfig() {
-    this.insuranceService.get(this.insurance_id).subscribe((resp) => {
+    this.insuranceService.get(this.insurance_id).subscribe((resp:any) => {
       // console.log(resp);
-      this.insurance_selected = resp;
+      this.insurance_selected = resp.insurance;
 
-      this.insurer_name = this.insurance_selected.insurer_name;
+      this.insurer_name = this.insurance_selected.name;
       this.notes = this.insurance_selected.notes;
       this.services = this.insurance_selected.services;
     });
