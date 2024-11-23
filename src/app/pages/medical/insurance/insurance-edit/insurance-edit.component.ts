@@ -27,6 +27,7 @@ export class InsuranceEditComponent {
   street2:string;
   zip:string;
   payer_id:number;
+  is_self_subscriber:boolean;
 
 
   services = [];
@@ -82,6 +83,7 @@ export class InsuranceEditComponent {
       this.street2 = this.insurance_selected.insurance.street2;
       this.zip = this.insurance_selected.insurance.zip;
       this.payer_id = this.insurance_selected.insurance.payer_id;
+      this.is_self_subscriber = this.insurance_selected.insurance.is_self_subscriber;
       this.notes = this.insurance_selected.insurance.notes;
       this.services = this.insurance_selected.insurance.services;
     });
@@ -158,6 +160,7 @@ export class InsuranceEditComponent {
       street2: this.street2,
       zip: this.zip,
       payer_id: this.payer_id,
+      is_self_subscriber: this.is_self_subscriber,
       services: this.services,
       notes: this.notes,
     };

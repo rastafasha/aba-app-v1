@@ -33,6 +33,7 @@ export class InsuranceAddComponent {
   street2:string;
   zip:string;
   payer_id:number;
+  is_self_subscriber:boolean;
 
   valid_form = false;
   valid_form_success = false;
@@ -100,6 +101,7 @@ export class InsuranceAddComponent {
       street: this.street,
       street2: this.street2,
       zip: this.zip,
+      is_self_subscriber: this.is_self_subscriber,
       services: this.services,
       notes: this.notes,
     };
