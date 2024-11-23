@@ -47,6 +47,7 @@ export class InsuranceV2Service {
   type: 'rbt' | 'bcba' | 'all' = 'all'; //TODO
   multiplier = 1; //TODO
   static build = (data: object): InsuranceV2Service => {
+    if (!data) return null;
     const codes = data['code'].split(' ');
 
     const result = {

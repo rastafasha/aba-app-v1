@@ -20,6 +20,7 @@ export class LocationV2 {
   deleted_at: string | Date;
 
   constructor(data: Partial<LocationV2>) {
+    if (!data) return null;
     const location: LocationV2 = {
       ...data,
       id: NumberOrNullOrUndefined(data.id),

@@ -10,6 +10,7 @@ import {
   NoteBcbaV2,
   NoteRbtV2,
   PatientV2,
+  ProviderV2,
 } from 'src/app/core/models';
 import {
   InsurancesV2Service,
@@ -25,6 +26,7 @@ import { LogReportsDownloadOptions } from './log-reports-download/LogReportsDown
 import { LogReportsUseCasesService } from '../log-reports-use-cases.service';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { Router } from '@angular/router';
+import { ProviderV2Service } from 'src/app/core/services/providers.v2.service';
 
 type Note = NoteRbtV2 | NoteBcbaV2;
 
@@ -38,7 +40,7 @@ export class LogsReportsComponent implements OnInit {
     { key: 'type', value: 'Type of Note' },
     { key: 'session_date', value: 'Date of Note' },
     { key: 'status', value: 'Status' },
-    { key: 'provider', value: 'Provider' },
+    { key: 'provider_id', value: 'Provider' },
     { key: 'patient_id', value: 'Client Name' },
     { key: 'insurance_id', value: 'Insurance' },
     { key: 'pos', value: 'POS' },
@@ -60,6 +62,7 @@ export class LogsReportsComponent implements OnInit {
   notes: Note[] = [];
   insurances: InsuranceV2[] = [];
   patients: PatientV2[] = [];
+  providers: ProviderV2[] = [];
   locations: LocationV2[] = [];
   notesRbt: NoteRbtV2[] = [];
   notesBcba: NoteBcbaV2[] = [];
@@ -89,6 +92,7 @@ export class LogsReportsComponent implements OnInit {
     private logReportsUseCases: LogReportsUseCasesService,
     private insurancesService: InsurancesV2Service,
     private patientsService: PatientsV2Service,
+    private providersService: ProviderV2Service,
     private notesRbtService: NotesRbtV2Service,
     private notesBcbaService: NotesBcbaV2Service,
     private locationsService: LocationsV2Service
@@ -103,10 +107,12 @@ export class LogsReportsComponent implements OnInit {
       this.locationsService.list(),
       this.insurancesService.list(),
       this.patientsService.list(),
-    ]).subscribe(([locations, insurances, patients]) => {
+      this.providersService.list(),
+    ]).subscribe(([locations, insurances, patients, providers]) => {
       this.locations = locations.data;
       this.insurances = insurances.data;
       this.patients = patients.data;
+      this.providers = providers.data;
       this.loadData();
     });
   }

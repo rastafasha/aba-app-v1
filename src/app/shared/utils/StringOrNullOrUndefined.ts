@@ -34,3 +34,7 @@ StringOrNullOrUndefinedFunction.prototype =
   StringOrNullOrUndefinedClass.prototype;
 export const StringOrNullOrUndefined: StringOrNullOrUndefinedConstructor =
   StringOrNullOrUndefinedFunction;
+
+export function isString(value: any): value is string {
+  return typeof value === 'string';
+}
