@@ -1,6 +1,7 @@
 import {
   BooleanOrNullOrUndefined,
   DateOrNullOrUndefined,
+  isString,
   NumberOrNullOrUndefined,
   StringOrNullOrUndefined,
 } from 'src/app/shared/utils';
@@ -87,6 +88,11 @@ export class PatientV2 {
   deleted_at?: Date;
 
   constructor(data: Partial<PatientV2>) {
+    // some wireds issues
+    if (isString(data.pos_covered)) {
+      data.pos_covered = data.pos_covered.replace('"', '').split(',');
+    }
+
     const result: PatientV2 = {
       ...data,
       id: NumberOrNullOrUndefined(data.id),
@@ -128,9 +134,7 @@ export class PatientV2 {
 
       eqhlid: StringOrNullOrUndefined(data.eqhlid),
       elegibility_date: StringOrNullOrUndefined(data.elegibility_date),
-      pos_covered: data.pos_covered
-        ? data.pos_covered.map(StringOrNullOrUndefined)
-        : [],
+      pos_covered: data.pos_covered?.map(StringOrNullOrUndefined) ?? [],
       deductible_individual_I_F: StringOrNullOrUndefined(
         data.deductible_individual_I_F
       ),

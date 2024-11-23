@@ -59,4 +59,11 @@ export class DoctorV2 {
   contract_type: string;
   salary: string;
   created_at?: Date;
+  /**
+   *
+   */
+  constructor(data: Partial<DoctorV2>) {
+    if (!data) return null;
+    Object.assign(this, data);
+  }
 }

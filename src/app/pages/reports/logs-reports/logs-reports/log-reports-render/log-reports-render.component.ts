@@ -4,6 +4,7 @@ import {
   NoteBcbaV2,
   NoteRbtV2,
   PatientV2,
+  ProviderV2,
 } from 'src/app/core/models';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 
@@ -18,6 +19,7 @@ export class LogReportsRenderComponent {
   @Input() note: Note;
   @Input() insurances: InsuranceV2[] = [];
   @Input() patients: PatientV2[] = [];
+  @Input() providers: ProviderV2[] = [];
   @Input() selected = false;
   @Output() selectedChange = new EventEmitter<boolean>();
   @Output() save = new EventEmitter<Note>();

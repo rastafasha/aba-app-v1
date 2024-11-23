@@ -1,11 +1,14 @@
+import {
+  NumberOrNullOrUndefined,
+  StringOrNullOrUndefined,
+} from 'src/app/shared/utils';
 import { NoteBcbaV2 } from './note-bcba.v2.model';
-import { ProviderV2 } from './provider.v2.model';
 
 export class NoteRbtV2 {
   type: 'rbt';
   id: number;
   bip_id: number;
-  patient_id: string;
+  patient_id: number;
   client_id: number;
   patient_code: string;
   doctor_id: number;
@@ -17,15 +20,16 @@ export class NoteRbtV2 {
   provider_name: number;
   supervisor_signature: string;
   supervisor_name: number;
+  supervisor_id: number;
 
   session_date: string | Date;
   time_in: string;
   time_out: string;
   time_in2: string;
   time_out2: string;
-  session_length_total: string;
-  session_length_total2: string;
-  total_hours: string;
+  session_length_total: number;
+  session_length_total2: number;
+  total_hours: number;
   total_minutes: number;
   total_units: number;
 
@@ -33,6 +37,7 @@ export class NoteRbtV2 {
   maladaptives: Maladaptives;
   replacements: Replacements;
   interventions: Interventions;
+  summary_note: string;
   meet_with_client_at: string;
   client_appeared: string;
   as_evidenced_by: string;
@@ -48,112 +53,120 @@ export class NoteRbtV2 {
   location_id: number;
   md: string;
   md2: string;
-  supervisor: ProviderV2;
-  provider: ProviderV2;
   created_at: string | Date;
   updated_at: string | Date;
   deleted_at: string | Date;
   pos: string;
+  pa_service_id: number;
   //
   insurance_id: number;
-  tecnico: ProviderV2;
 
-  static build = (data: object): NoteRbtV2 => {
-    const note = {
+  constructor(data: Partial<NoteRbtV2>) {
+    if (!data) return null;
+    const result = {
       ...data,
       type: 'rbt' as const,
-      id: Number(data['id']),
-      doctor_id: Number(data['doctor_id']),
-      patient_id: data['patient_id'],
-      client_id: Number(data['client_id']),
-      patient_code: data['patient_code']
-        ? String(data['patient_code'])
-        : String(data['patient_id']),
-      bip_id: Number(data['bip_id']),
-      provider_name_g: Number(data['provider_name_g']),
-      provider_id: Number(data['provider_id']),
+      id: NumberOrNullOrUndefined(data.id),
+      doctor_id: NumberOrNullOrUndefined(data.doctor_id),
+      patient_id: NumberOrNullOrUndefined(data.patient_id),
+      client_id:
+        NumberOrNullOrUndefined(data.client_id) ??
+        NumberOrNullOrUndefined(data.patient_id),
+      patient_code: data.patient_code
+        ? StringOrNullOrUndefined(data.patient_code)
+        : StringOrNullOrUndefined(data.patient_id),
+      bip_id: NumberOrNullOrUndefined(data.bip_id),
+      provider_name_g: NumberOrNullOrUndefined(data.provider_name_g),
+      provider_id: NumberOrNullOrUndefined(data.provider_id),
       provider_credential:
-        data['provider_credential'] && data['provider_credential'] !== 'null'
-          ? String(data['provider_credential'])
+        data.provider_credential && data.provider_credential !== 'null'
+          ? StringOrNullOrUndefined(data.provider_credential)
           : null,
-      pos: String(data['pos']),
-      session_date: String(data['session_date']),
-      time_in: data['time_in'] ? String(data['time_in']) : null,
-      time_out: data['time_out'] ? String(data['time_out']) : null,
-      time_in2: data['time_in2'] ? String(data['time_in2']) : null,
-      time_out2: data['time_out2'] ? String(data['time_out2']) : null,
-      session_length_total: this.calculateSessionLength(data),
-      session_length_total2: this.calculateSessionLength2(data),
-      total_hours: this.calculateTotalHours(data),
-      total_minutes: this.calculateTotalMinutes(data),
-      total_units: this.calculateTotalUnits(data),
-      environmental_changes: String(data['environmental_changes']),
-      maladaptives: Object(data['maladaptives']),
-      replacements: Object(data['replacements']),
-      interventions: Object(data['interventions']),
-      meet_with_client_at: String(data['meet_with_client_at']),
-      client_appeared: String(data['client_appeared']),
-      as_evidenced_by: String(data['as_evidenced_by']),
-      rbt_modeled_and_demonstrated_to_caregiver: String(
-        data['rbt_modeled_and_demonstrated_to_caregiver']
+      pos: StringOrNullOrUndefined(data.pos),
+      pa_service_id: NumberOrNullOrUndefined(data.pa_service_id),
+
+      session_date: StringOrNullOrUndefined(data.session_date),
+      time_in: StringOrNullOrUndefined(data.time_in),
+      time_out: StringOrNullOrUndefined(data.time_out),
+      time_in2: StringOrNullOrUndefined(data.time_in2),
+      time_out2: StringOrNullOrUndefined(data.time_out2),
+      session_length_total: NoteRbtV2.calculateSessionLength(data),
+      session_length_total2: NoteRbtV2.calculateSessionLength2(data),
+      total_hours: NoteRbtV2.calculateTotalHours(data),
+      total_minutes: NoteRbtV2.calculateTotalMinutes(data),
+      total_units: NoteRbtV2.calculateTotalUnits(data),
+      environmental_changes: StringOrNullOrUndefined(
+        data.environmental_changes
       ),
-      client_response_to_treatment_this_session: String(
-        data['client_response_to_treatment_this_session']
+      maladaptives: Object(data.maladaptives),
+      replacements: Object(data.replacements),
+      interventions: Object(data.interventions),
+      summary_note: StringOrNullOrUndefined(data.summary_note),
+      meet_with_client_at: StringOrNullOrUndefined(data.meet_with_client_at),
+      client_appeared: StringOrNullOrUndefined(data.client_appeared),
+      as_evidenced_by: StringOrNullOrUndefined(data.as_evidenced_by),
+      rbt_modeled_and_demonstrated_to_caregiver: StringOrNullOrUndefined(
+        data.rbt_modeled_and_demonstrated_to_caregiver
       ),
-      progress_noted_this_session_compared_to_previous_session: String(
-        data['progress_noted_this_session_compared_to_previous_session']
+      client_response_to_treatment_this_session: StringOrNullOrUndefined(
+        data.client_response_to_treatment_this_session
       ),
-      next_session_is_scheduled_for: String(
-        data['next_session_is_scheduled_for']
+      progress_noted_this_session_compared_to_previous_session:
+        StringOrNullOrUndefined(
+          data.progress_noted_this_session_compared_to_previous_session
+        ),
+      next_session_is_scheduled_for: StringOrNullOrUndefined(
+        data.next_session_is_scheduled_for
       ),
-      provider_signature: String(data['provider_signature']),
-      provider_name: Number(data['provider_name']),
-      supervisor_signature: String(data['supervisor_signature']),
-      supervisor_name: Number(data['supervisor_name']),
-      billed: Boolean(data['billed']),
-      paid: Boolean(data['paid']),
-      status: (String(data['status']) as 'pending') ?? 'pending',
-      cpt_code: String(data['cpt_code']),
-      location_id: Number(data['location_id']),
-      md: String(data['md']),
-      md2: String(data['md2']),
-      provider: data['provider'],
-      supervisor: data['supervisor'],
-      created_at: String(data['created_at']),
-      updated_at: String(data['updated_at']),
-      deleted_at: String(data['deleted_at']),
+      provider_signature: StringOrNullOrUndefined(data.provider_signature),
+      provider_name: NumberOrNullOrUndefined(data.provider_name),
+      supervisor_signature: StringOrNullOrUndefined(data.supervisor_signature),
+      supervisor_name: NumberOrNullOrUndefined(data.supervisor_name),
+      supervisor_id: NumberOrNullOrUndefined(data.supervisor_id),
+      billed: Boolean(data.billed),
+      paid: Boolean(data.paid),
+      status: (StringOrNullOrUndefined(data.status) as 'pending') ?? 'pending',
+      cpt_code: StringOrNullOrUndefined(data.cpt_code),
+      location_id: NumberOrNullOrUndefined(data.location_id),
+      md: StringOrNullOrUndefined(data.md),
+      md2: StringOrNullOrUndefined(data.md2),
+
+      created_at: StringOrNullOrUndefined(data.created_at),
+      updated_at: StringOrNullOrUndefined(data.updated_at),
+      deleted_at: StringOrNullOrUndefined(data.deleted_at),
       //
-      insurance_id: Number(data['insurance_id']),
-      tecnico: undefined,
+      insurance_id: NumberOrNullOrUndefined(data.insurance_id),
     };
     // Post Work
-    note.session_length_total = this.calculateSessionLength(data);
-    note.session_length_total2 = this.calculateSessionLength2(data);
-    note.total_hours = this.calculateTotalHours(data);
-    note.total_minutes = this.calculateTotalMinutes(data);
-    note.total_units = this.calculateTotalUnits(data);
-    return note;
-  };
-  static calculateSessionLength(data: object): string {
-    if (data['session_length_total'])
-      return String(data['session_length_total']);
-    return 0 + '';
+    result.session_length_total = NoteRbtV2.calculateSessionLength(data);
+    result.session_length_total2 = NoteRbtV2.calculateSessionLength2(data);
+    result.total_hours = NoteRbtV2.calculateTotalHours(data);
+    result.total_minutes = NoteRbtV2.calculateTotalMinutes(data);
+    result.total_units = NoteRbtV2.calculateTotalUnits(data);
+    console.log(result);
+    return result;
   }
-  static calculateSessionLength2(data: object): string {
-    if (data['session_length_total2'])
-      return String(data['session_length_total2']);
-    return 0 + '';
-  }
-  static calculateTotalHours(data: object): string {
-    if (data['total_hours']) return String(data['total_hours']);
-    return 0 + '';
-  }
-  static calculateTotalMinutes(data: object): number {
-    if (data['total_minutes']) return Number(data['total_minutes']);
+
+  static calculateSessionLength(data: Partial<NoteRbtV2>): number {
+    if (data.session_length_total)
+      return NumberOrNullOrUndefined(data.session_length_total);
     return 0;
   }
-  static calculateTotalUnits(data: object): number {
-    if (data['total_units']) return Number(data['total_units']);
+  static calculateSessionLength2(data: Partial<NoteRbtV2>): number {
+    if (data.session_length_total2)
+      return NumberOrNullOrUndefined(data.session_length_total2);
+    return 0;
+  }
+  static calculateTotalHours(data: Partial<NoteRbtV2>): number {
+    if (data.total_hours) return NumberOrNullOrUndefined(data.total_hours);
+    return 0;
+  }
+  static calculateTotalMinutes(data: Partial<NoteRbtV2>): number {
+    if (data.total_minutes) return NumberOrNullOrUndefined(data.total_minutes);
+    return 0;
+  }
+  static calculateTotalUnits(data: Partial<NoteRbtV2>): number {
+    if (data.total_units) return NumberOrNullOrUndefined(data.total_units);
     return 0;
   }
 }
