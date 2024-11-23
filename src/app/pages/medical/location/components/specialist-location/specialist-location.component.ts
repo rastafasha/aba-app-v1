@@ -130,12 +130,12 @@ export class SpecialistLocationComponent implements OnInit {
 
       this.total = resp.specialists.length;
 
-      this.doctorService.listDoctors().subscribe((resp) => {
+      this.doctorService.list().subscribe((resp) => {
         // console.log(resp);
 
         this.totalDatadoctor = resp.users.data.length;
         this.doctor_generals = resp.users.data;
-        this.doctor_id = resp.users.id;
+        this.doctor_id = resp.users.data[0]?.id;
         this.getTableDataGeneralSpecialist();
       });
     });

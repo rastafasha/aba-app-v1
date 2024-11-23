@@ -94,7 +94,7 @@ export class ChartReplacementComponent {
   maladaptive: any;
   patient_id: any;
   client_id: any;
-  created_at: Date;
+  created_at?: Date;
   session_date = [];
   replacements = [];
   session_dates = [];

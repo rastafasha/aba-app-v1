@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/core/auth/auth.service';
 import { AppUser } from 'src/app/core/models/users.model';
 import { AppRoutes } from 'src/app/shared/routes/routes';
+import { LoginUseCasesService } from './login-use-cases.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +17,6 @@ export class LoginComponent implements OnInit {
   user: AppUser;
 
   roles: string[] = [];
-  errors: any = null;
 
   form: FormGroup;
 
@@ -32,7 +31,7 @@ export class LoginComponent implements OnInit {
   }
 
   constructor(
-    private auth: AuthService,
+    private loginUseCases: LoginUseCasesService,
     private router: Router,
     private fb: FormBuilder
   ) {
@@ -44,16 +43,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUser();
-  }
-
-  getUser() {
-    if (!this.auth.user) {
-      this.user = null;
-      return;
-    }
-    this.user = this.auth.user as AppUser;
-    this.getUserRol();
+    this.loginUseCases.init();
   }
 
   togglePassword() {
@@ -64,42 +54,15 @@ export class LoginComponent implements OnInit {
     if (!this.form.valid) return;
     this.error = false;
     const { email, password } = this.form.value;
-    this.auth.login(email ?? '', password ?? '').subscribe({
+    this.loginUseCases.submit(email, password).subscribe({
       next: (resp) => {
         if (resp) {
-          this.getUser();
+          this.loginUseCases.getUser();
         } else {
           this.error = true;
         }
       },
       error: (error) => console.log(error),
     });
-  }
-
-  getUserRol() {
-    const mainRole = this.user?.roles?.[0];
-    if (!mainRole) {
-      return;
-    }
-
-    switch (mainRole) {
-      case 'SUPERADMIN':
-        this.router.navigate([AppRoutes.dashboard.admin]);
-        break;
-      // solo tiene una locacion pero se comporta como superadmin
-      case 'MANAGER':
-        // this.router.navigate([AppRoutes.dashboard.admin]);
-        this.router.navigate([AppRoutes.location.view, this.user.location_id]);
-        break;
-      //roles secundarios son multilocation
-      case 'BCBA':
-        this.router.navigate([AppRoutes.doctors.profile, this.user.id]);
-        break;
-      case 'RBT':
-        this.router.navigate([AppRoutes.doctors.profile, this.user.id]);
-        break;
-      default:
-        break;
-    }
   }
 }

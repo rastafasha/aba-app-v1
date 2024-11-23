@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { Router } from '@angular/router';
 import { PatientMService } from '../service/patient-m.service';
@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { PageService } from 'src/app/shared/services/pages.service';
 import { AppUser } from 'src/app/core/models/users.model';
+import { PatientsUseCasesService } from '../service/patients-use-cases.service';
 
 export interface ResponseBackend {
   users: User[];
@@ -38,7 +39,7 @@ const url_servicios = environment.url_servicios;
   templateUrl: './add-patient-m.component.html',
   styleUrls: ['./add-patient-m.component.scss'],
 })
-export class AddPatientMComponent {
+export class AddPatientMComponent implements OnInit {
   routes = AppRoutes;
   patient_id: any;
   selectedValueLocation!: number;
@@ -261,6 +262,7 @@ export class AddPatientMComponent {
   text_validation: any = null;
 
   constructor(
+    private patientsUseCasesService: PatientsUseCasesService,
     private patientService: PatientMService,
     private pageService: PageService,
     private insuranceService: InsuranceService,

@@ -3,14 +3,15 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { url_servicios } from 'src/app/config/config';
 import { AuthService } from 'src/app/core/auth/auth.service';
+import { ApiResponse, ListResponse, PatientV2 } from 'src/app/core/models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PatientMService {
-  constructor(public http: HttpClient, authService: AuthService) {}
+  constructor(public http: HttpClient) {}
 
-  listConfigPatients(
+  listWithConfig(
     page = 1,
     patient_id = '',
     name_patient = '',
@@ -27,7 +28,7 @@ export class PatientMService {
       LINK += '&email_patient=' + email_patient;
     }
     const URL = url_servicios + '/patients?page=' + page + LINK;
-    return this.http.get<any>(URL);
+    return this.http.get<ApiResponse<ListResponse<PatientV2>>>(URL);
   }
 
   // listPatients(){
@@ -36,7 +37,7 @@ export class PatientMService {
   //   return this.http.get<any>(URL, {headers:headers});
   // }
 
-  listPatients(search: any, status: any, location_id: any) {
+  list(search: any, status: any, location_id: number) {
     let LINK = '?T=';
     if (search) {
       LINK += '&search=' + search;
@@ -49,7 +50,7 @@ export class PatientMService {
     }
 
     const URL = url_servicios + '/patients' + LINK;
-    return this.http.get<any>(URL);
+    return this.http.get<ApiResponse<ListResponse<PatientV2>>>(URL);
     // return this.http.get<any>(URL, {headers: headers}).pipe(
     //   finalize(()=> this.isLoadingSubject.next(false))
     // )
@@ -61,12 +62,12 @@ export class PatientMService {
   }
 
   getPatient(client_id: any) {
-    const URL = url_servicios + '/patients/show/' + client_id;
-    return this.http.get<any>(URL);
+    const URL = url_servicios + '/patients/' + client_id;
+    return this.http.get<ApiResponse<PatientV2>>(URL);
   }
   getPatientsByDoctor(doctor_id: any) {
     const URL = url_servicios + '/patients/byDoctor/' + doctor_id;
-    return this.http.get<any>(URL);
+    return this.http.get<ApiResponse<ListResponse<PatientV2>>>(URL);
   }
   createPatient(data) {
     const URL = url_servicios + '/patients/store';
