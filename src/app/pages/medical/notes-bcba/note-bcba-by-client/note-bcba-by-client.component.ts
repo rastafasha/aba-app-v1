@@ -1,18 +1,19 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { AppUser } from 'src/app/core/models/users.model';
 import { NoteBcbaService } from '../../../../core/services/notes-bcba.service';
 import { AppRoutes } from 'src/app/shared/routes/routes';
+import { NotesBcbaV2Service, PatientsV2Service } from 'src/app/core/services';
 declare var $: any;
 @Component({
   selector: 'app-note-bcba-by-client',
   templateUrl: './note-bcba-by-client.component.html',
   styleUrls: ['./note-bcba-by-client.component.scss'],
 })
-export class NoteBcbaByClientComponent {
+export class NoteBcbaByClientComponent implements OnInit {
   routes = AppRoutes;
   patient_id: any;
   patientId: any;
@@ -45,6 +46,8 @@ export class NoteBcbaByClientComponent {
   constructor(
     private ativatedRoute: ActivatedRoute,
     private noteBcbaService: NoteBcbaService,
+    private patientService: PatientsV2Service,
+    private notesBcbaV2Service: NotesBcbaV2Service,
     private locations: Location,
     private authService: AuthService
   ) {}
@@ -55,9 +58,8 @@ export class NoteBcbaByClientComponent {
       this.patient_id = resp['id'];
 
       // this.patient_id= resp.patient_id;
-      // console.log(this.client_id);
+      // console.log(this.patient_id);
     });
-    this.getNotesByPatient();
     this.getTableData();
 
     const USER = localStorage.getItem('user');
@@ -80,26 +82,22 @@ export class NoteBcbaByClientComponent {
     return false;
   }
 
-  getNotesByPatient() {
-    this.noteBcbaService
-      .showNotebyPatient(this.patient_id)
-      .subscribe((resp) => {
-        console.log(resp);
-      });
-  }
 
   private getTableData(): void {
     this.notesPatientList = [];
     this.serialNumberArray = [];
 
-    this.noteBcbaService
-      .showNotebyPatient(this.patient_id)
+    this.notesBcbaV2Service
+      .list({
+        per_page: 15,
+        patient_identifier: this.patient_id,
+      })
       .subscribe((resp) => {
         console.log(resp);
 
-        this.totalDataNotepatient = resp.noteBcbas.data.length;
-        this.notespatient_generals = resp.noteBcbas.data;
-        this.patientId = resp.noteBcbas.data[0].patient_id;
+        this.totalDataNotepatient = resp.total;
+        this.notespatient_generals = resp.data;
+        this.patientId = resp.data[0].patient_id;
         this.getTableDataGeneral();
       });
   }

@@ -29,7 +29,11 @@ import { LayoutModule } from '../../../layout/layout.module';
     ReplacementsComponent,
     InterventionsComponent,
   ],
-  exports: [NotesComponent, NoteRbtComponent, NotesByClientComponent],
+  exports: [
+    NotesComponent,
+    NoteRbtComponent,
+    NotesByClientComponent,
+  ],
   imports: [
     CommonModule,
     NotesRoutingModule,

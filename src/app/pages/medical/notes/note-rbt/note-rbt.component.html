@@ -124,7 +124,7 @@
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
-                      >Service & CPT <span class="login-danger">*</span></label
+                      >CPT Code <span class="login-danger">*</span></label
                     >
                     <mat-select
                       [(ngModel)]="selectedPaService"
@@ -137,37 +137,17 @@
                         *ngFor="let service of pa_services"
                         [value]="service"
                       >
-                        {{ service.pa_services }} ({{ service.cpt }})
+                        ({{ service.cpt }})
                       </mat-option>
                     </mat-select>
                   </div>
                 </div>
 
-                <div class="col-12 col-md-6 col-xl-4" *ngIf="selectedPaService">
-                  <div class="form-group local-forms">
-                    <label class="mb-2">Available Units</label>
-                    <div class="units-container">
-                      <div class="units-wrapper">
-                        <div class="progress-container">
-                          <div
-                            class="progress-bar"
-                            [style.width.%]="
-                              ((selectedPaService.n_units -
-                                selectedPaService.available_units) /
-                                selectedPaService.n_units) *
-                              100
-                            "
-                          ></div>
-                        </div>
-                        <div class="units-text">
-                          {{ selectedPaService.available_units }}/{{
-                            selectedPaService.n_units
-                          }}
-                          units
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <app-units-display
+                    [service]="selectedPaService" 
+                    [newUnits]="projectedUnits">
+                  </app-units-display>
                 </div>
                 <!--  fin units -->
 

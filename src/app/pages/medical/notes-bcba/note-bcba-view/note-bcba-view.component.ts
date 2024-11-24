@@ -34,7 +34,7 @@ export class NoteBcbaViewComponent implements OnInit {
   selectedValueProviderName!: string;
   selectedValueMaladaptive!: string;
   selectedValueAba!: string;
-  selectedValueRendering!: string;
+  selectedValueRendering!: number;
 
   client_id: any;
   doctor_id: any;
@@ -180,10 +180,10 @@ export class NoteBcbaViewComponent implements OnInit {
 
   getNote() {
     this.noteBcbaService.getNote(this.note_id).subscribe((resp) => {
-      console.log(resp);
+      console.log(resp, 'resp');
       this.note_selected = resp.noteBcba;
       this.note_selectedId = resp.noteBcba.id;
-      this.patient_id = this.note_selected.patient_id;
+      this.patient_id = this.note_selected.patient_identifier;
       this.bip_id = this.note_selected.bip_id;
       this.location = this.note_selected.location;
       // this.birth_date = this.note_selected.birth_date;
@@ -219,8 +219,8 @@ export class NoteBcbaViewComponent implements OnInit {
       this.rbt_training_goals = jsonObj1;
       console.log(this.rbt_training_goals);
 
-      this.aba_supervisor = resp.noteBcba.aba_supervisor;
-      this.selectedValueRendering = resp.noteBcba.rendering_provider;
+      this.aba_supervisor = resp.noteBcba.supervisor_id;
+      this.selectedValueRendering = resp.noteBcba.provider_id;
 
       this.selectedValueProviderName = this.note_selected.provider_name_g;
       this.selectedValueRBT = this.note_selected.provider_name;

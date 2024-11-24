@@ -4,6 +4,7 @@ export class PaService {
   pa_services: string;
   cpt: string;
   n_units: number;
+  spent_units: number;
   available_units?: number;
   start_date: string;
   end_date: string;
