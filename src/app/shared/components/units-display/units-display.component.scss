@@ -1,0 +1,64 @@
+.units-container {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.progress-container {
+    height: 20px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar {
+    height: 100%;
+    position: absolute;
+    transition: width 0.3s ease;
+
+    &.used {
+        background-color: #007bff;
+
+        &.exceeding {
+            background-color: #dc3545;
+        }
+    }
+
+    &.projected {
+        background-color: rgba(0, 123, 255, 0.3);
+        background-image: repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 10px,
+            rgba(0, 123, 255, 0.5) 10px,
+            rgba(0, 123, 255, 0.5) 20px
+        );
+        left: 0;
+
+        &.exceeding {
+            background-color: rgba(255, 0, 0, 0.3);
+            background-image: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255, 0, 0, 0.5) 10px,
+                rgba(255, 0, 0, 0.5) 20px
+            );
+        }
+    }
+}
+
+.units-text {
+    margin-top: 5px;
+    font-size: 14px;
+
+    .projected-units {
+        color: #007bff;
+        margin-left: 8px;
+
+        &.exceeding {
+            color: red;
+        }
+    }
+}

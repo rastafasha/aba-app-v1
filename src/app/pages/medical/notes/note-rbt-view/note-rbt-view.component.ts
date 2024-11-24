@@ -176,10 +176,10 @@ export class NoteRbtViewComponent implements OnInit {
 
   getNote() {
     this.noteRbtService.getNote(this.note_id).subscribe((resp) => {
-      console.log(resp);
       this.note_selected = resp.noteRbt;
+      console.log('noteRbt', this.note_selected);
       this.note_selectedId = resp.noteRbt.id;
-      this.patient_id = this.note_selected.patient_id;
+      this.patient_id = this.note_selected.patient_identifier;
       this.bip_id = this.note_selected.bip_id;
       this.statusNote = this.note_selected.status;
 
@@ -245,7 +245,7 @@ export class NoteRbtViewComponent implements OnInit {
       this.selectedValueTimeIn2 = this.note_selected.time_out;
       this.selectedValueTimeOut2 = this.note_selected.time_out2;
 
-      this.selectedValueProviderName = this.note_selected.provider_name_g;
+      this.selectedValueProviderName = this.note_selected.provider_id;
       this.provider_name = this.note_selected.provider_name;
 
       this.selectedValueRBT = this.note_selected.provider_name;

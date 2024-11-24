@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppUser } from 'src/app/core/models/users.model';
 import { AppRoutes } from 'src/app/shared/routes/routes';
@@ -8,13 +8,14 @@ import { InsuranceService } from '../../../../core/services/insurances.service';
 import { NoteBcbaService } from '../../../../core/services/notes-bcba.service';
 import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
+import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 
 @Component({
   selector: 'app-note-bcba',
   templateUrl: './note-bcba.component.html',
   styleUrls: ['./note-bcba.component.scss'],
 })
-export class NoteBcbaComponent {
+export class NoteBcbaComponent implements OnInit {
   routes = AppRoutes;
   summary_note = '';
   isGeneratingSummary = false;
@@ -144,11 +145,12 @@ export class NoteBcbaComponent {
   electronic_signature: any;
   doctor: any;
   full_name: any;
-  unitsAsignated: any;
-  n_un: number;
-  location_id: number;
   patientLocation_id: number;
   insuranceId: string;
+
+  pa_services: PaService[] = [];
+  selectedPaService: PaService | null = null;
+  projectedUnits = 0;
 
   constructor(
     private bipService: BipService,
@@ -204,13 +206,13 @@ export class NoteBcbaComponent {
 
   getProfileBip() {
     this.bipService.showBipProfile(this.patient_id).subscribe((resp) => {
-      console.log(resp);
       this.client_selected = resp.patient;
 
       this.first_name = this.client_selected.first_name;
       this.last_name = this.client_selected.last_name;
       this.patient_id = this.client_selected.patient_id;
-      this.insuranceId = this.client_selected.insuranceId;
+      this.client_id = this.client_selected.id;
+      this.insuranceId = this.client_selected.insurer_id;
       this.patientLocation_id = this.client_selected.location_id;
       this.pos = this.client_selected.pos_covered;
       // this.pos = JSON.parse(resp.patient.pos_covered) ;
@@ -235,6 +237,7 @@ export class NoteBcbaComponent {
       this.getReplacementsByPatientId();
       this.getMaladaptivesBipByPatientId();
       this.insuranceData();
+      this.pa_services = resp.patient.pa_services;
     });
   }
 
@@ -323,11 +326,6 @@ export class NoteBcbaComponent {
     console.log('selectedValueAba', this.selectedValueAba);
   }
 
-  selectCpt(event) {
-    event = this.selectedValueCode;
-    this.getCPtList(this.selectedValueCode);
-    console.log(this.selectedValueCode);
-  }
 
   speciaFirmaData(selectedValueRBT) {
     this.doctorService.showDoctorProfile(selectedValueRBT).subscribe((resp) => {
@@ -365,15 +363,19 @@ export class NoteBcbaComponent {
 
   hourTimeInSelected(value: string) {
     this.selectedValueTimeIn = value;
+    this.calculateProjectedUnits();
   }
   hourTimeOutSelected(value: string) {
     this.selectedValueTimeOut = value;
+    this.calculateProjectedUnits();
   }
   hourTimeIn2Selected(value: string) {
     this.selectedValueTimeIn2 = value;
+    this.calculateProjectedUnits();
   }
   hourTimeOut2Selected(value: string) {
     this.selectedValueTimeOut2 = value;
+    this.calculateProjectedUnits();
   }
 
   updateCaregiverGoal(index: number) {
@@ -430,15 +432,15 @@ export class NoteBcbaComponent {
       return;
     }
 
-    // if(this.password !== this.password_confirmation  ){
-    //   this.text_validation = 'Las contraseña debe ser igual';
-    //   return;
-    // }
+    if (!this.selectedPaService) {
+      this.text_validation = 'Please select a service';
+      return;
+    }
 
     const formData = new FormData();
     formData.append('summary_note', this.summary_note);
 
-    formData.append('patient_id', this.patient_id + '');
+    formData.append('patient_id', this.client_id + '');
     formData.append('doctor_id', this.doctor_id + '');
     formData.append('bip_id', this.bip_id + '');
 
@@ -447,13 +449,16 @@ export class NoteBcbaComponent {
     formData.append('birth_date', this.birth_date);
 
     formData.append('rendering_provider', this.doctor_id + '');
-    formData.append('aba_supervisor', this.selectedValueAba);
-    formData.append('cpt_code', this.selectedValueCode);
+    formData.append('provider_id', this.doctor_id + '');
+    formData.append('supervisor_id', this.selectedValueAba + '');
+    formData.append('aba_supervisor', this.selectedValueAba + '');
+    formData.append('pa_service_id', this.selectedPaService.id.toString());
+    formData.append('cpt_code', this.selectedPaService.cpt);
 
     formData.append('provider_name', this.doctor_id + '');
     formData.append('supervisor_name', this.selectedValueBCBA);
     // formData.append('note_description', this.note_description);
-    formData.append('insuranceId', this.insuranceId); // id del seguro preferiblemente que solo agarre la data al crear
+    formData.append('insurance_id', this.insuranceId); // id del seguro preferiblemente que solo agarre la data al crear
 
     formData.append(
       'rbt_training_goals',
@@ -622,7 +627,7 @@ export class NoteBcbaComponent {
     );
     if (!allRbtGoalsValid) return false;
 
-    if (!this.note_description) return false;
+    // if (!this.note_description) return false;
 
     return true;
   }
@@ -640,5 +645,55 @@ export class NoteBcbaComponent {
       default:
         return 'Unknown';
     }
+  }
+
+  onPaServiceSelect(event: any) {
+    const service = event.value;
+    if (service) {
+      this.selectedValueCode = service.cpt;
+    }
+  }
+
+  calculateUnitsFromTime(startTime: string, endTime: string): number {
+    if (!startTime || !endTime) return 0;
+
+    const start = this.parseTime(startTime);
+    const end = this.parseTime(endTime);
+
+    if (!start || !end) return 0;
+
+    const durationMinutes = (end.getTime() - start.getTime()) / (1000 * 60);
+    return Math.ceil(durationMinutes / 15);
+  }
+
+  parseTime(timeStr: string): Date | null {
+    if (!timeStr) return null;
+
+    const [hours, minutes] = timeStr.split(':').map(Number);
+    const date = new Date();
+    date.setHours(hours, minutes, 0, 0);
+    return date;
+  }
+
+  calculateProjectedUnits(): void {
+    let totalUnits = 0;
+
+    if (this.selectedValueTimeIn && this.selectedValueTimeOut) {
+      const morningUnits = this.calculateUnitsFromTime(
+        this.selectedValueTimeIn,
+        this.selectedValueTimeOut
+      );
+      totalUnits += morningUnits;
+    }
+
+    if (this.selectedValueTimeIn2 && this.selectedValueTimeOut2) {
+      const afternoonUnits = this.calculateUnitsFromTime(
+        this.selectedValueTimeIn2,
+        this.selectedValueTimeOut2
+      );
+      totalUnits += afternoonUnits;
+    }
+
+    this.projectedUnits = totalUnits;
   }
 }

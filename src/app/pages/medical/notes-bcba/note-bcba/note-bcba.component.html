@@ -125,54 +125,30 @@
                     </mat-select>
                   </div>
                 </div>
-                <div class="col-12 col-md-3">
+                <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
-                    <label>CPT <span class="login-danger">*</span></label>
+                    <label>CPT Code <span class="login-danger">*</span></label>
                     <mat-select
-                      [(ngModel)]="selectedValueCode"
-                      name="code"
-                      [ngModelOptions]="{ standalone: true }"
+                      [(ngModel)]="selectedPaService"
+                      name="pa_service"
+                      (selectionChange)="onPaServiceSelect($event)"
                       class="form-control select"
-                      placeholder="Select Code"
-                      (selectionChange)="selectCpt($event)"
+                      placeholder="Select Service"
                     >
                       <mat-option
-                        *ngFor="let data of pa_assessmentsgroup; let i = index"
-                        [value]="data.cpt"
+                        *ngFor="let service of pa_services"
+                        [value]="service"
                       >
-                        {{ data.cpt }} | {{ data.provider }}
+                        ({{ service.cpt }})
                       </mat-option>
                     </mat-select>
                   </div>
                 </div>
-                <div class="col-12 col-md-3">
-                  <div class="form-group local-forms">
-                    <label
-                      >Units Asigned <span class="login-danger">*</span></label
-                    >
-                    <!-- <input class="form-control" name="n_units" disabled
-                                            [(ngModel)]="unitsAsignated" type="text" > -->
-                    <!-- {{n_un}} -->
-                    <!-- <mat-option *ngFor="let data of pa_assessmentsgroup, let i=index;">
-                                            </mat-option> -->
-                    <!-- {{unitsAsignated}} -->
-                    <mat-select
-                      [(ngModel)]="selectedValueCode"
-                      name="n_units"
-                      disable
-                      [ngModelOptions]="{ standalone: true }"
-                      class="form-control select"
-                      placeholder="Select Code"
-                    >
-                      <mat-option
-                        *ngFor="let data of pa_assessmentsgroup"
-                        disable
-                        [value]="data.cpt"
-                      >
-                        {{ data.n_units }}
-                      </mat-option>
-                    </mat-select>
-                  </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <app-units-display
+                    [service]="selectedPaService" 
+                    [newUnits]="projectedUnits">
+                  </app-units-display>
                 </div>
                 <div class="col-12 col-md-3">
                   <div class="form-group local-forms">

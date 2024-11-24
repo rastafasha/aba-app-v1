@@ -19,6 +19,7 @@ export interface NoteBcba {
   supervisor_id: number;
   supervisor_name: string;
   supervisor: Supervisor;
+  provider_id: number;
   aba_supervisor: number;
   abasupervisor: Supervisor;
   xp: number;
@@ -118,6 +119,7 @@ export class NoteBcbaBuilder implements NoteBcba {
     this.rendering_provider = data.rendering_provider || '';
     this.summary_note = data.summary_note || '';
   }
+  provider_id: number;
 }
 
 export function isNoteBcba(note: NoteRbt | NoteBcba): note is NoteBcba {

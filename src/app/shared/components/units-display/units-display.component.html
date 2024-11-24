@@ -1,0 +1,30 @@
+<div class="form-group local-forms">
+    <label class="mb-2">Units Usage</label>
+    <div class="units-container">
+        <div class="units-wrapper">
+            <div class="progress-container">
+                <!-- Used units bar -->
+                <div class="progress-bar" 
+                    [style.width.%]="usedUnitsPercentage" 
+                    [class.used]="true"
+                    [class.exceeding]="isExceedingLimit">
+                </div>
+                <!-- Projected units bar (if newUnits provided) -->
+                <div *ngIf="newUnits" class="progress-bar projected" 
+                    [style.left.%]="usedUnitsPercentage"
+                    [style.width.%]="projectedUnitsPercentage"
+                    [class.exceeding]="isExceedingLimit">
+                </div>
+            </div>
+            <div class="units-text" *ngIf="service">
+                {{ service?.spent_units }}/{{ service?.n_units }} units
+                <span *ngIf="newUnits" class="projected-units" [class.exceeding]="isExceedingLimit">
+                    (+ {{ newUnits }} units)
+                </span>
+            </div>
+            <div class="units-text" *ngIf="!service">
+                Please select a CPT Code
+            </div>
+        </div>
+    </div>
+</div>

@@ -8,6 +8,7 @@ import { AppUser } from 'src/app/core/models/users.model';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { NoteRbtService } from '../../../../core/services/notes-rbt.service';
 import { AppRoutes } from 'src/app/shared/routes/routes';
+import { NotesRbtV2Service } from 'src/app/core/services';
 declare var $: any;
 @Component({
   selector: 'app-notes-by-client',
@@ -50,6 +51,7 @@ export class NotesByClientComponent implements OnInit {
 
   constructor(
     private ativatedRoute: ActivatedRoute,
+    private notesRbtV2Service: NotesRbtV2Service,
     private noteRbtService: NoteRbtService,
     private doctorService: DoctorService,
     private location: Location,
@@ -87,28 +89,25 @@ export class NotesByClientComponent implements OnInit {
     return false;
   }
 
-  getNotesByPatient() {
-    this.noteRbtService.showNotebyPatient(this.patient_id).subscribe((resp) => {
-      console.log(resp);
-    });
-  }
-
   private getTableData(): void {
     this.isLoading = true;
     this.notesPatientList = [];
     this.serialNumberArray = [];
 
-    this.noteRbtService
-      .showNotebyPatient(this.patient_id)
+    this.notesRbtV2Service
+      .list({
+        per_page: 15,
+        patient_identifier: this.patient_id,
+      })
       .pipe(
         finalize(() => {
           this.isLoading = false; // Set loading to false when request completes
         })
       )
       .subscribe((resp) => {
-        this.totalDataNotepatient = resp.note_rbts.data.length;
-        this.notespatient_generals = resp.note_rbts.data;
-        this.patientId = resp.note_rbts.data[0].patient_id;
+        this.totalDataNotepatient = resp.total;
+        this.notespatient_generals = resp.data;
+        this.patientId = resp.data[0].patient_id;
         console.log(this.patientId);
         this.getTableDataGeneral();
       });
@@ -211,8 +210,8 @@ export class NotesByClientComponent implements OnInit {
     this.noteRbtService.delete(this.note_selected.id).subscribe((resp) => {
       // console.log(resp);
 
-      if (resp.message === 403) {
-        this.text_validation = resp.message_text;
+      if (resp?.message === 403) {
+        this.text_validation = resp?.message_text || '';
       } else {
         const INDEX = this.notesPatientList.findIndex(
           (item) => item.id === this.note_selected.id

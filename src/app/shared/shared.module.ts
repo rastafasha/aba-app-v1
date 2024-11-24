@@ -21,12 +21,14 @@ import { NgxBootstrapModule } from './ngx-bootstrap/ngx-bootstrap.module';
 import { NoInfoComponent } from './no-info/no-info.component';
 import { PipesModule } from './pipes/pipes.module';
 import { PageService } from './services/pages.service';
+import { UnitsDisplayComponent } from './components/units-display/units-display.component';
 
 const components = [
   NoInfoComponent,
   SkeletonLoaderComponent,
   ActionButtonComponent,
   ActionModalComponent,
+  UnitsDisplayComponent
 ];
 
 @NgModule({

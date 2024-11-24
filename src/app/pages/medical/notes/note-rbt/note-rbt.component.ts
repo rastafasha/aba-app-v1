@@ -244,6 +244,7 @@ export class NoteRbtComponent implements OnInit {
       this.pos = resp.patient.pos_covered;
       this.diagnosis_code = this.client_selected.patient.diagnosis_code;
 
+      console.log(resp.patient.pa_services);
       this.pa_services = resp.patient.pa_services;
 
       this.getMaladaptivesBipByPatientId();
@@ -279,7 +280,7 @@ export class NoteRbtComponent implements OnInit {
           const goalSto = JSON.parse(element.goalstos).find(
             (item) => item.sustitution_status_sto_edit === 'inprogress'
           );
-          if (!!goalSto) {
+          if (goalSto) {
             this.replacementGoals.push({ ...element, target: goalSto.target });
           }
         });
@@ -531,6 +532,7 @@ export class NoteRbtComponent implements OnInit {
     );
   }
 
+  // eslint-disable-next-line no-debugger
   save() {debugger
     this.text_validation = '';
     if (!this.selectedPaService) {
@@ -658,7 +660,7 @@ export class NoteRbtComponent implements OnInit {
       );
     }
 
-    formData.forEach((value, key) => {});
+    // formData.forEach((value, key) => {});
 
     this.noteRbtService.create(formData).subscribe(
       (resp: any) => {
