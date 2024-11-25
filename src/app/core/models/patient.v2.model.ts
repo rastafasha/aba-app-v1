@@ -17,6 +17,9 @@ export class PatientV2 {
   status: string;
 
   insurer_id: number;
+  insurer_secondary_id: number;
+  insurance_identifier: string;
+  insurance_secondary_identifier: string;
   birth_date: Date;
   age: number;
   gender: number;
@@ -42,8 +45,6 @@ export class PatientV2 {
   schedule: string;
   summer_schedule: string;
   location_id: number;
-
-  insuranceId: string;
 
   eqhlid: string;
   elegibility_date: string;
@@ -105,6 +106,11 @@ export class PatientV2 {
       birth_date: DateOrNullOrUndefined(data.birth_date),
       patient_id: StringOrNullOrUndefined(data.patient_id),
       insurer_id: NumberOrNullOrUndefined(data.insurer_id),
+      insurer_secondary_id: NumberOrNullOrUndefined(data.insurer_secondary_id),
+      insurance_identifier: StringOrNullOrUndefined(data.insurance_identifier),
+      insurance_secondary_identifier: StringOrNullOrUndefined(
+        data.insurance_secondary_identifier
+      ),
       language: StringOrNullOrUndefined(data.language),
       city: StringOrNullOrUndefined(data.city),
       email: StringOrNullOrUndefined(data.email),
@@ -129,8 +135,6 @@ export class PatientV2 {
       schedule: StringOrNullOrUndefined(data.schedule),
       summer_schedule: StringOrNullOrUndefined(data.summer_schedule),
       location_id: NumberOrNullOrUndefined(data.location_id),
-
-      insuranceId: StringOrNullOrUndefined(data.insuranceId),
 
       eqhlid: StringOrNullOrUndefined(data.eqhlid),
       elegibility_date: StringOrNullOrUndefined(data.elegibility_date),
