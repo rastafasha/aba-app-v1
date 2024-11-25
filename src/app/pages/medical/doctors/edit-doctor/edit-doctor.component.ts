@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AppRoutes } from 'src/app/shared/routes/routes';
-import { DoctorService } from '../service/doctor.service';
-import Swal from 'sweetalert2';
 import { Location } from '@angular/common';
-import * as moment from 'moment';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { DoctorV2 } from 'src/app/core/models';
 import { AppUser } from 'src/app/core/models/users.model';
+import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
+import Swal from 'sweetalert2';
+import { DoctorService } from '../service/doctor.service';
 @Component({
   selector: 'app-edit-doctor',
   templateUrl: './edit-doctor.component.html',
@@ -14,7 +14,7 @@ import { PageService } from 'src/app/shared/services/pages.service';
 })
 export class EditDoctorComponent implements OnInit {
   routes = AppRoutes;
-  selectedValue!: string;
+  selectedValue!: number;
   selectedValueLocation!: number;
 
   name = '';
@@ -25,8 +25,6 @@ export class EditDoctorComponent implements OnInit {
   password_confirmation = '';
   birth_date = '';
   gender = 1;
-  education = '';
-  designation = '';
   address = '';
 
   currently_pay_through_company = '';
@@ -40,8 +38,8 @@ export class EditDoctorComponent implements OnInit {
   dob = '';
   ss_number = '';
 
-  date_of_hire = '';
-  start_pay = '';
+  date_of_hire: Date;
+  initial_pay: number = null;
   driver_license_expiration = '';
 
   cpr_every_2_years = '';
@@ -89,7 +87,7 @@ export class EditDoctorComponent implements OnInit {
   locations_selected: number[] = [];
 
   doctor_id: any;
-  doctor_selected: any;
+  doctor_selected: DoctorV2;
   user: AppUser;
 
   constructor(
@@ -155,8 +153,6 @@ export class EditDoctorComponent implements OnInit {
       this.surname = this.doctor_selected.surname;
       this.phone = this.doctor_selected.phone;
       this.email = this.doctor_selected.email;
-      this.education = this.doctor_selected.education;
-      this.designation = this.doctor_selected.designation;
       this.gender = this.doctor_selected.gender;
       this.address = this.doctor_selected.address;
       this.IMAGE_PREVISUALIZA = this.doctor_selected.avatar;
@@ -181,32 +177,7 @@ export class EditDoctorComponent implements OnInit {
 
       // }
 
-      this.start_pay = this.doctor_selected.start_pay;
-
-      if (this.date_of_hire) {
-        this.date_of_hire = new Date(
-          this.doctor_selected.date_of_hire
-        ).toISOString();
-      } else {
-        this.date_of_hire = this.doctor_selected.date_of_hire;
-      }
-
-      if (this.driver_license_expiration) {
-        this.driver_license_expiration = new Date(
-          this.doctor_selected.driver_license_expiration
-        ).toISOString();
-      } else {
-        this.driver_license_expiration =
-          this.doctor_selected.driver_license_expiration;
-      }
-      if (this.bacb_license_expiration) {
-        this.bacb_license_expiration = new Date(
-          this.doctor_selected.bacb_license_expiration
-        ).toISOString();
-      } else {
-        this.bacb_license_expiration =
-          this.doctor_selected.bacb_license_expiration;
-      }
+      this.initial_pay = this.doctor_selected.start_pay;
 
       this.cpr_every_2_years = this.doctor_selected.cpr_every_2_years;
       this.background_every_5_years =
@@ -303,7 +274,7 @@ export class EditDoctorComponent implements OnInit {
     }
 
     if (this.selectedValue) {
-      formData.append('role_id', this.selectedValue);
+      formData.append('role_id', this.selectedValue + '');
     }
     if (this.address) {
       formData.append('address', this.address);
@@ -341,10 +312,10 @@ export class EditDoctorComponent implements OnInit {
       formData.append('ss_number', this.ss_number);
     }
     if (this.date_of_hire) {
-      formData.append('date_of_hire', this.date_of_hire);
+      formData.append('date_of_hire', this.date_of_hire.toISOString());
     }
-    if (this.start_pay) {
-      formData.append('start_pay', this.start_pay);
+    if (this.initial_pay) {
+      formData.append('start_pay', this.initial_pay + '');
     }
     if (this.driver_license_expiration) {
       formData.append(
@@ -473,9 +444,8 @@ export class EditDoctorComponent implements OnInit {
       formData.append('locations_selected', this.user.location_id.toString());
     }
 
-    this.doctorService
-      .editDoctor(formData, this.doctor_id)
-      .subscribe((resp) => {
+    this.doctorService.editDoctor(formData, this.doctor_id).subscribe(
+      (resp) => {
         if (resp.message === 403) {
           this.text_validation = resp.message_text;
         } else {
@@ -483,6 +453,12 @@ export class EditDoctorComponent implements OnInit {
           Swal.fire('Updated', ` Employee Has updated`, 'success');
           this.ngOnInit();
         }
-      });
+      },
+      (error) => {
+        console.error(error);
+        Swal.fire('Error', ` Employee Can't be updated`, 'error');
+        this.ngOnInit();
+      }
+    );
   }
 }

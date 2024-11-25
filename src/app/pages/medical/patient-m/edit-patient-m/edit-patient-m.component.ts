@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import {
   DoctorV2,
@@ -76,6 +81,9 @@ export class EditPatientMComponent implements OnInit {
       status: this.fb.control(''),
       patient_id: this.fb.control(''),
       insurer_id: this.fb.control(0),
+      insurer_secondary_id: this.fb.control(0),
+      insurance_identifier: this.fb.control(''),
+      insurance_secondary_identifier: this.fb.control(''),
       birth_date: this.fb.control(null as Date),
       age: this.fb.control(0),
       gender: this.fb.control(0),
@@ -89,7 +97,7 @@ export class EditPatientMComponent implements OnInit {
       phone: this.fb.control(''),
       home_phone: this.fb.control(''),
       work_phone: this.fb.control(''),
-      email: this.fb.control(''),
+      email: this.fb.control('', { validators: [Validators.email] }),
       city: this.fb.control(''),
       zip: this.fb.control(''),
       state: this.fb.control(''),
@@ -99,7 +107,6 @@ export class EditPatientMComponent implements OnInit {
       schedule: this.fb.control(''),
       summer_schedule: this.fb.control(''),
       location_id: this.fb.control(0),
-      insuranceId: this.fb.control(''),
       eqhlid: this.fb.control(''),
       elegibility_date: this.fb.control(''),
       pos_covered: this.fb.control<string[]>([]),

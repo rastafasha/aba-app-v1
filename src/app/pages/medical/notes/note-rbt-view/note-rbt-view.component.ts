@@ -1,14 +1,14 @@
 import { Location } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import html2canvas from 'html2canvas';
 import * as jspdf from 'jspdf';
 import { AppUser } from 'src/app/core/models/users.model';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
+import { NoteRbtService } from '../../../../core/services/notes-rbt.service';
 import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import { NoteRbtService } from '../../../../core/services/notes-rbt.service';
+import { NoteRbtV2, Replacements } from 'src/app/core/models';
 
 interface NoteIntervention {
   pairing: boolean;
@@ -38,22 +38,22 @@ export class NoteRbtViewComponent implements OnInit {
   patient_id: any;
   // option_selected:number = 0;
 
-  selectedValueProvider!: string;
-  selectedValueRBT!: string;
-  selectedValueBCBA!: string;
-  selectedValueTimeIn!: number;
-  selectedValueTimeOut!: number;
-  selectedValueTimeIn2!: number;
-  selectedValueTimeOut2!: number;
-  selectedValueProviderName!: string;
-  selectedValueMaladaptive!: string;
+  selectedValueProvider;
+  selectedValueRBT;
+  selectedValueBCBA;
+  selectedValueTimeIn;
+  selectedValueTimeOut;
+  selectedValueTimeIn2;
+  selectedValueTimeOut2;
+  selectedValueProviderName;
+  selectedValueMaladaptive;
 
   client_id: any;
   doctor_id: any;
   doctor_selected: any;
   patient_selected: any;
   client_selected: any;
-  note_selected: any;
+  note_selected: NoteRbtV2;
   bip_id: any;
   user: AppUser;
 
@@ -69,9 +69,9 @@ export class NoteRbtViewComponent implements OnInit {
   time_out = '';
   time_in2 = '';
   time_out2 = '';
-  session_length_total = '';
-  session_length_total2 = '';
-  environmental_changes = '';
+  session_length_total;
+  session_length_total2;
+  environmental_changes;
 
   sumary_note = '';
   meet_with_client_at = '';
@@ -81,15 +81,15 @@ export class NoteRbtViewComponent implements OnInit {
   client_response_to_treatment_this_session = '';
   progress_noted_this_session_compared_to_previous_session = '';
   next_session_is_scheduled_for = '';
-  provider_name = '';
-  supervisor_name = '';
+  provider_name;
+  supervisor_name;
 
   number_of_occurrences = 0;
   number_of_correct_responses = 0;
   total_trials = 0;
   number_of_correct_response = 0;
   maladaptive = '';
-  replacement = '';
+  replacements: Replacements;
   maladaptive_behavior = '';
   interventions: any;
   provider_signature: any;
@@ -132,7 +132,7 @@ export class NoteRbtViewComponent implements OnInit {
   maladaptives = [];
   replacementGoals = [];
   intervention_added = [];
-  replacements = [];
+
   interventionsgroup = [];
 
   maladaptivegroup = [];
@@ -176,10 +176,10 @@ export class NoteRbtViewComponent implements OnInit {
 
   getNote() {
     this.noteRbtService.getNote(this.note_id).subscribe((resp) => {
-      this.note_selected = resp.noteRbt;
+      this.note_selected = resp.noteRbt as unknown as NoteRbtV2;
       console.log('noteRbt', this.note_selected);
       this.note_selectedId = resp.noteRbt.id;
-      this.patient_id = this.note_selected.patient_identifier;
+      this.patient_id = this.note_selected.patient_id;
       this.bip_id = this.note_selected.bip_id;
       this.statusNote = this.note_selected.status;
 
@@ -206,15 +206,9 @@ export class NoteRbtViewComponent implements OnInit {
       this.maladaptivegroup = jsonObj1;
       // console.log(this.maladaptivegroup);
 
-      this.replacement = resp.replacements; // ?
-      const jsonObj2 =
-        typeof this.replacement === 'string'
-          ? JSON.parse(this.replacement)
-          : this.replacement;
-      this.replacementgroup = jsonObj2;
-      // console.log(this.replacementgroup);
+      this.replacements = this.note_selected.replacements; // ?
 
-      this.pos = this.note_selected.pos_covered;
+      this.pos = this.note_selected.pos;
 
       this.environmental_changes = this.note_selected.environmental_changes;
       this.meet_with_client_at = this.note_selected.meet_with_client_at;
@@ -223,7 +217,7 @@ export class NoteRbtViewComponent implements OnInit {
 
       this.rbt_modeled_and_demonstrated_to_caregiver =
         this.note_selected.rbt_modeled_and_demonstrated_to_caregiver;
-      this.replacement = this.note_selected.replacement;
+      this.replacements = this.note_selected.replacements;
 
       // this.session_date = this.note_selected.session_date;
       this.session_date = this.note_selected.session_date
