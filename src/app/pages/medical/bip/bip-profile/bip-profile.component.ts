@@ -142,6 +142,10 @@ export class BipProfileComponent implements OnInit {
     this.location.back(); // <-- go back to previous location on cancel
   }
 
+  print() {
+    window.print();
+    }
+
   isPermission(permission: string) {
     if (this.user.roles.includes('SUPERADMIN')) {
       return true;
