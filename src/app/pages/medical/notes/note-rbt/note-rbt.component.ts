@@ -44,9 +44,10 @@ export class NoteRbtComponent implements OnInit {
   option_selected = 0;
   isGeneratingSummary = false;
 
-  client_id: any;
-  patient_id: any;
-  doctor_id: any;
+  client_id: number;
+  patient_id: string;
+  patientId: number;
+  doctor_id: number;
   patient_selected: any;
   client_selected: any;
   bip_id: any;
@@ -236,6 +237,7 @@ export class NoteRbtComponent implements OnInit {
       this.first_name = this.client_selected.patient.first_name;
       this.last_name = this.client_selected.patient.last_name;
       this.patient_id = resp.patient.patient_id;
+      this.patientId = resp.patient.id;
       this.insuranceId = resp.patient.insuranceId;
       this.patientLocation_id = resp.patient.location_id;
       this.selectedValueProviderName = resp.patient.rbt_id;
@@ -576,20 +578,20 @@ export class NoteRbtComponent implements OnInit {
     }
 
     const formData = new FormData();
-    formData.append('patient_id', this.patient_id);
-    formData.append('doctor_id', this.doctor_id);
+    formData.append('patient_id', this.patientId+'');
+    formData.append('doctor_id', this.doctor_id+'');
     formData.append('bip_id', this.bip_id);
     formData.append('first_name', this.first_name);
     formData.append('last_name', this.last_name);
     formData.append('diagnosis_code', this.diagnosis_code);
     formData.append('provider_credential', this.provider_credential);
     formData.append('location_id', this.patientLocation_id);
-    // formData.append('insuranceId', this.insuranceId); // id del seguro preferiblemente que solo agarre la data al crear
+    formData.append('insurance_identifier', this.insuranceId); // id del seguro preferiblemente que solo agarre la data al crear
 
     formData.append('session_date', this.session_date);
 
-    formData.append('provider_name_g', this.doctor_id);
-    formData.append('provider_name', this.doctor_id);
+    formData.append('provider_name_g', this.doctor_id+'');
+    formData.append('provider_name', this.doctor_id+'');
     formData.append('supervisor_name', this.selectedValueBCBA);
     formData.append('cpt_code', this.selectedValueCode);
 

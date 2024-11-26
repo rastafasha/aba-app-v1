@@ -65,7 +65,7 @@
 
 <!-- patient_name -->
 <td>
-  <a [routerLink]="[routes.patients.profileByPatientId, note.patient_code]">
+  <a [routerLink]="[routes.patients.profileByPatientId, note.patient_id]">
     <span>
       {{ (patients | arrayFind : "id" : note.client_id)?.full_name }}
     </span>

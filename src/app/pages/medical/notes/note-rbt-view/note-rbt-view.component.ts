@@ -89,6 +89,7 @@ export class NoteRbtViewComponent implements OnInit {
   total_trials = 0;
   number_of_correct_response = 0;
   maladaptive = '';
+  replacement :any;
   replacements: Replacements;
   maladaptive_behavior = '';
   interventions: any;
@@ -133,7 +134,7 @@ export class NoteRbtViewComponent implements OnInit {
   replacementGoals = [];
   intervention_added = [];
 
-  interventionsgroup = [];
+  interventionsgroup;
 
   maladaptivegroup = [];
   replacementgroup = [];
@@ -177,9 +178,9 @@ export class NoteRbtViewComponent implements OnInit {
   getNote() {
     this.noteRbtService.getNote(this.note_id).subscribe((resp) => {
       this.note_selected = resp.noteRbt as unknown as NoteRbtV2;
-      console.log('noteRbt', this.note_selected);
+      // console.log('noteRbt', this.note_selected);
       this.note_selectedId = resp.noteRbt.id;
-      this.patient_id = this.note_selected.patient_id;
+      this.patient_id = this.note_selected.patient_identifier;
       this.bip_id = this.note_selected.bip_id;
       this.statusNote = this.note_selected.status;
 
@@ -206,7 +207,15 @@ export class NoteRbtViewComponent implements OnInit {
       this.maladaptivegroup = jsonObj1;
       // console.log(this.maladaptivegroup);
 
-      this.replacements = this.note_selected.replacements; // ?
+
+      this.replacement = this.note_selected.replacements;
+      const jsonObj2 =
+        typeof this.replacement === 'string'
+          ? JSON.parse(this.replacement)
+          : this.replacement;
+      this.replacementgroup = jsonObj2;
+      // console.log(this.replacementgroup);
+
 
       this.pos = this.note_selected.pos;
 
@@ -217,7 +226,6 @@ export class NoteRbtViewComponent implements OnInit {
 
       this.rbt_modeled_and_demonstrated_to_caregiver =
         this.note_selected.rbt_modeled_and_demonstrated_to_caregiver;
-      this.replacements = this.note_selected.replacements;
 
       // this.session_date = this.note_selected.session_date;
       this.session_date = this.note_selected.session_date

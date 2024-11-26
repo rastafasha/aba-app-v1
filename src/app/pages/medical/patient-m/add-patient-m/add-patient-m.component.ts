@@ -86,7 +86,7 @@ export class AddPatientMComponent implements OnInit {
   insuranceId: any;
   insurer_secundary: any;
   insuranceId_secundary: any;
-  elegibility_date: any;
+  elegibility_date= '';
   pos_covered: any;
   deductible_individual_I_F: any;
   balance: any;
@@ -504,6 +504,9 @@ export class AddPatientMComponent implements OnInit {
     }
 
     // this.valid_form = false;
+    
+    // const elegibility_date = this.elegibility_date.toISOString().split('T')[0];
+    // const birthDate = this.birth_date.toISOString().split('T')[0];
     const formData = new FormData();
 
     formData.append('first_name', this.first_name);
@@ -535,7 +538,9 @@ export class AddPatientMComponent implements OnInit {
     formData.append('insuranceId', this.insuranceId);
     // formData.append('insurer_secundary', this.insurer_secundary);
     // formData.append('insuranceId_secundary', this.insuranceId_secundary);
+    
     formData.append('elegibility_date', this.elegibility_date);
+    // formData.append('elegibility_date', this.elegibility_date.toDateString());
     // formData.append('pos_covered', this.pos_covered);
     formData.append(
       'deductible_individual_I_F',
@@ -587,9 +592,12 @@ export class AddPatientMComponent implements OnInit {
     if (this.interview) {
       formData.append('interview', this.interview);
     }
+    
 
     if (this.birth_date) {
-      formData.append('birth_date', this.birth_date);
+     
+formData.append('birth_date', this.birth_date);
+      // formData.append('birth_date', this.birth_date.toDateString());
     }
     if (this.email) {
       formData.append('email', this.email);
