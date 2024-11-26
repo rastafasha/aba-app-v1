@@ -84,6 +84,7 @@ export class AddPatientMComponent implements OnInit {
 
   insurer: any;
   insuranceId: any;
+  insurance_identifier: any;
   insurer_secundary: any;
   insuranceId_secundary: any;
   elegibility_date= '';
@@ -535,7 +536,7 @@ export class AddPatientMComponent implements OnInit {
     formData.append('special_note', this.special_note);
 
     formData.append('insurer_id', this.selectedValueInsurer);
-    formData.append('insuranceId', this.insuranceId);
+    formData.append('insurance_identifier', this.insurance_identifier);
     // formData.append('insurer_secundary', this.insurer_secundary);
     // formData.append('insuranceId_secundary', this.insuranceId_secundary);
     

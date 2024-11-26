@@ -172,7 +172,7 @@ export class BipFormComponent implements OnInit {
   reduction = [];
   maladaptive = [];
 
-  documents :string [] = [];
+  documents = [];
   document_title: string;
 
   //maladaptives
@@ -377,7 +377,20 @@ export class BipFormComponent implements OnInit {
   //manejo de listas para json
 
   addDocument() {
-    this.documents.push(this.document_title);
+    if (this.documents) {
+      this.documents.push({
+        index: this.documents.length + 1,
+        title: this.document_title,
+      });
+    } else {
+      this.documents = [
+        {
+          index: 1, // initial index
+          title: this.document_title,
+        },
+      ];
+    }
+
     this.document_title = '';
   }
 

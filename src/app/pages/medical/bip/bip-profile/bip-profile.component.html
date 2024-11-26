@@ -55,27 +55,7 @@
                       </div>
                     </div>
                     <div class="col-lg-4 col-md-4 d-flex align-items-center">
-                      <!-- <div class="follow-group">
-                                                <div class="doctor-follows">
-                                                    <h5>Patient ID</h5>
-                                                    <h4>{{patient_selected.patient_id}}</h4>
-                                                </div>
-                                                <div class="doctor-follows">
-                                                    <h5>diagnosis_code</h5>
-                                                    <h4>{{patient_selected.diagnosis_code}}</h4>
-                                                </div>
-                                                <div class="doctor-follows">
-                                                    <h5>Status</h5>
-                                                    <h4>{{status}}</h4>
-                                                    <span class="badge bg-primary"
-                                                        *ngIf="patient_selected.status === 'pending'">Pendig</span>
-                                                    <span class="badge bg-success"
-                                                        *ngIf="patient_selected.status === 'yes'">Yes</span>
-                                                    <span class="badge bg-dark"
-                                                        *ngIf="patient_selected.status === 'no'">No</span>
-
-                                                </div>
-                                            </div> -->
+                   
                     </div>
                     <div class="col-lg-4 col-md-4 d-flex align-items-center">
                       <div class="follow-btn-group">
@@ -91,7 +71,6 @@
                         >
                           Save PDF
                         </button>
-                        <!-- <button type="submit" class="btn btn-info message-btns">Message</button> -->
                       </div>
                     </div>
                   </div>
@@ -180,14 +159,14 @@
                     <h4>Documents Reviewed</h4>
                   </div>
                   <div class="row">
-                    <div *ngIf="!documents || documents === null">
+                    <div *ngIf="!documents || documents.length === 0">
                       <app-no-info></app-no-info>
                     </div>
-                    <ng-container *ngFor="let doc of documents">
+                    <ng-container *ngFor="let document of documents; let i = index">
                       <div class="col-xs-12 col-sm-6">
                         <div class="detail-personal">
                           <h2>Document Title</h2>
-                          <p>{{ doc.document_title }}</p>
+                          <p>{{ document.title }}</p>
                         </div>
                       </div>
                       
@@ -199,6 +178,7 @@
           </div>
         </div>
         <!-- documents Reviewed end-->
+
         <!-- Background Information-->
         <div class="row">
           <div class="col-12">
@@ -1129,8 +1109,8 @@
                                     </ng-container> -->
                   <div
                     *ngIf="
-                      !monitoring_evalutating_goals ||
-                      monitoring_evalutating_goals === null
+                      !monitoring_evalutating ||
+                      monitoring_evalutating === null
                     "
                   >
                     <app-no-info></app-no-info>
@@ -1451,6 +1431,7 @@
             </div>
           </div>
         </div>
+        
         <!-- behavior asistant end-->
 
         <!-- Generalization Training-->
@@ -2675,6 +2656,7 @@
           </div>
         </div>
         <!-- Consent to Treatment end-->
+         
       </div>
     </div>
   </div>

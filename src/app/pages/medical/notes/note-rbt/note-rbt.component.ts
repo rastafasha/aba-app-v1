@@ -144,6 +144,7 @@ export class NoteRbtComponent implements OnInit {
   location_id: number;
   patientLocation_id: any;
   insuranceId: string;
+  insurance_identifier: string;
 
   intervention_added = [];
   interventionsSelected = {};
