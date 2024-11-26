@@ -171,6 +171,10 @@ export class NoteBcbaViewComponent implements OnInit {
   goBack() {
     this.locations.back(); // <-- go back to previous location on cancel
   }
+  print() {
+    window.print();
+    }
+
 
   getConfig() {
     this.noteBcbaService.listConfigNote().subscribe((resp) => {

@@ -169,6 +169,10 @@ export class NoteRbtViewComponent implements OnInit {
     this.location.back(); // <-- go back to previous location on cancel
   }
 
+  print() {
+    window.print();
+    }
+
   getConfig() {
     this.noteRbtService.listConfigNote().subscribe((resp) => {
       console.log(resp);
