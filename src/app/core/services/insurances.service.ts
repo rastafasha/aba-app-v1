@@ -56,6 +56,11 @@ export class InsuranceService extends ApiService<Insurance> {
     return this.http.get<any>(URL);
   }
 
+  getServicesId(id:number) {
+    const URL = url_servicios + '/insurance/show/'+ id;
+    return this.http.get<any>(URL);
+  }
+
   getModifiers(): Observable<InsuranceModifier[]> {
     return of([
       { value: 'HM', description: 'RBT', type: 'rbt', multiplier: 1 },

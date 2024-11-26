@@ -55,7 +55,8 @@ export class ProfilePatientMComponent implements OnInit {
   roles_rbt: any;
   roles_bcba: any;
   insuranceiddd: any;
-  insurer_name: any;
+  insurer_name: string;
+  insurer_name_secondary: string;
 
   rbt_id: any;
   rbt2_id: any;
@@ -80,6 +81,8 @@ export class ProfilePatientMComponent implements OnInit {
 
   doctor_id: any;
   location_id: any;
+  insurer_id: number;
+  insurer_secondary_id: number;
 
   constructor(
     private patientService: PatientMService,
@@ -125,17 +128,17 @@ export class ProfilePatientMComponent implements OnInit {
 
   getConfig() {
     this.patientService.listConfig(this.location_id).subscribe((resp) => {
-      this.specialists = resp.specialists;
-      this.insurances = resp.insurances;
+      // this.specialists = resp.specialists;
+      // this.insurances = resp.insurances;
       this.insurance_id =
         resp.insurances.length > 0 ? resp.insurances[0].id : '';
       this.locations = resp.locations;
 
-      this.insuranceService.get(this.insurance_id).subscribe((resp) => {
-        // console.log(resp);
-        this.insuranceiddd = resp.id;
-        this.insurer_name = resp.insurer_name;
-      });
+      // this.insuranceService.get(this.insurance_id).subscribe((resp) => {
+      //   // console.log(resp);
+      //   this.insuranceiddd = resp.id;
+      //   // this.insurer_name = resp.insurer_name;
+      // });
     });
   }
 
@@ -150,7 +153,7 @@ export class ProfilePatientMComponent implements OnInit {
             )
           );
     consulta$.subscribe((resp) => {
-      console.log(resp);
+      // console.log(resp);
       this.patient_selected = resp.patient;
       this.patient_id = resp.patient.patient_id;
       this.avatar = resp.patient.avatar;
@@ -159,6 +162,8 @@ export class ProfilePatientMComponent implements OnInit {
       this.bcba_id = resp.patient.bcba_home_id;
       this.bcba2_id = resp.patient.bcba2_school_id;
       this.clin_director_id = resp.patient.clin_director_id;
+      this.insurer_id = resp.patient.insurer_id;
+      this.insurer_secondary_id = resp.patient.insurer_secondary_id;
       
       
       this.patientService
@@ -173,6 +178,8 @@ export class ProfilePatientMComponent implements OnInit {
       this.getDoctorBcba();
       this.getDoctorBcba2();
       this.getDoctorDirector();
+      this.getInsurer()
+      this.getInsurerSecundary()
     });
   }
 
@@ -209,6 +216,19 @@ export class ProfilePatientMComponent implements OnInit {
       // console.log(resp);
       this.doctor_selected_clin_director = resp.user;
       this.doctor_selected_full_name_clin_director = resp.user.full_name;
+    });
+  }
+
+  getInsurer() {
+    this.insuranceService.getServicesId(this.insurer_id).subscribe((resp) => {
+      // console.log(resp);
+      this.insurer_name = resp.insurance.name;
+    });
+  }
+
+  getInsurerSecundary() {
+    this.insuranceService.getServicesId(this.insurer_secondary_id).subscribe((resp) => {
+      this.insurer_name_secondary = resp.insurance.name;
     });
   }
 
