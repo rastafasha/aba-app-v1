@@ -166,60 +166,60 @@
           *ngIf="role === 'SUPERADMIN'"
           class="dropdown-item"
           [routerLink]="[routes.doctors.profile, user.id]"
-          >Mi Perfil</a
+          >Profile</a
         >
         <a
           *ngIf="role === 'MANAGER'"
           class="dropdown-item"
           [routerLink]="[routes.doctors.profile, user.id]"
-          >Mi Perfil</a
+          >Profile</a
         >
         <a
           *ngIf="role === 'DOCTOR'"
           class="dropdown-item"
           [routerLink]="[routes.doctors.profile, user.id]"
-          >Mi Perfil</a
+          >Profile</a
         >
         <a
           *ngIf="role === 'LM'"
           class="dropdown-item"
           [routerLink]="[routes.doctors.profile, user.id]"
-          >Mi Perfil</a
+          >Profile</a
         >
         <a
           *ngIf="role === 'BCBA'"
           class="dropdown-item"
           [routerLink]="[routes.doctors.profile, user.id]"
-          >Mi Perfil</a
+          >Profile</a
         >
         <a
           *ngIf="role === 'RBT'"
           class="dropdown-item"
           [routerLink]="[routes.doctors.profile, user.id]"
-          >Mi Perfil</a
+          >Profile</a
         >
 
         <a
           *ngIf="role === 'SUPERADMIN'"
           class="dropdown-item"
           [routerLink]="[routes.doctors.listEdit, user.id]"
-          >Editar Perfil</a
+          >Edit Profile</a
         >
         <a
           *ngIf="role === 'MANAGER'"
           class="dropdown-item"
           [routerLink]="[routes.doctors.listEdit, user.id]"
-          >Editar Perfil</a
+          >Edit Profile</a
         >
         <a
           *ngIf="role === 'DOCTOR'"
           class="dropdown-item"
           [routerLink]="[routes.doctors.listEdit, user.id]"
-          >Editar Perfil</a
+          >Edit Profile</a
         >
 
         <a class="dropdown-item" style="cursor: pointer" (click)="logout()"
-          >Salir</a
+          >Logout</a
         >
       </div>
     </li>
