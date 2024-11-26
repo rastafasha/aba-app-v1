@@ -8,7 +8,9 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of, tap } from 'rxjs';
 import {
+  ApiResponse,
   ApiV2Response,
+  CreateResponse,
   DoctorV2,
   InsuranceV2,
   LocationV2,
@@ -209,7 +211,13 @@ export class EditPatientMComponent implements OnInit {
 
   onSave() {
     if (this.form.invalid) return;
-    this.patientsService.update(this.form.getRawValue(), this.id).subscribe({
+    const action$: Observable<
+      CreateResponse<PatientV2> | ApiResponse<PatientV2>
+    > = this.id
+      ? this.patientsService.update(this.form.getRawValue(), this.id)
+      : this.patientsService.create(this.form.getRawValue());
+
+    action$.subscribe({
       next: (resp) => {
         Swal.fire('Updated', `Saved successfully!`, 'success');
         this.patient = resp.data;
