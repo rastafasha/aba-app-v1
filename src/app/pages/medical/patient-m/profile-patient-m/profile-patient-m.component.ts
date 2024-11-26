@@ -109,6 +109,9 @@ export class ProfilePatientMComponent implements OnInit {
   goBack() {
     this.location.back(); // <-- go back to previous location on cancel
   }
+  print() {
+    window.print();
+    }
 
   isPermission(permission: string) {
     if (this.user.roles.includes('SUPERADMIN')) {

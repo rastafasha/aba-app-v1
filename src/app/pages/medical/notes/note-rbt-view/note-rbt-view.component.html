@@ -114,6 +114,12 @@
                         </div>
                         <div class="col-xl-3 col-sm-6 col-lg-3">
                           <div class="detail-personal">
+                            <h2>Insurance Id</h2>
+                            <p>{{ patient_selected.insuranceId }}</p>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 col-lg-3">
+                          <div class="detail-personal">
                             <h2>Provider Name</h2>
                             <p>{{ doctor_selected_full_name }}</p>
                           </div>
@@ -681,7 +687,7 @@
                               <div class="detail-personal">
                                 <h2 style="margin: 0">Provider name RBT</h2>
                                 <p style="margin-bottom: 8px">
-                                  {{ doctor_selected_full_name_rbt }}
+                                  {{ doctor_selected_full_name }}
                                 </p>
                                 <h2 style="margin: 0">Signature date</h2>
                                 <p>{{ note_selected.session_date | date }}</p>

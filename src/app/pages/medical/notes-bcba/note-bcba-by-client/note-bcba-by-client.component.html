@@ -20,10 +20,34 @@
       </div>
       <!-- /Table Header -->
       <div class="page-table-header mb-2">
-        <div class="col">
-          <div class="doctor-table-blk">
-            <h3>BCBA Notes : {{patient_id}}</h3>
-  
+        <div class="card">
+          <div class="card-body">
+            <div class="col">
+              <div class="doctor-table-blk">
+                <h3>BCBA Notes : {{patient_id}}</h3>
+                <div class="doctor-search-blk">
+                  <!-- <div class="top-nav-search table-search-blk">
+                    <input
+                      class="form-control"
+                      placeholder="Search here"
+                      [(ngModel)]="searchDataValue"
+                      (ngModelChange)="searchData(searchDataValue)"
+                    />
+                    <a class="btn"
+                      ><img src="assets/img/icons/search-normal.svg" alt=""
+                    /></a>
+                  </div> -->
+                  <div class="add-group">
+                    <a
+                      [routerLink]="[routes.noteBcba.add, patient_id]"
+                      class="btn btn-primary add-pluss ms-2"
+                      *ngIf="isPermission('register_patient')"
+                      ><img src="assets/img/icons/plus.svg" alt=""
+                    /></a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

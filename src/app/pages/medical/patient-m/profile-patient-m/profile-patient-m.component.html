@@ -94,7 +94,7 @@
                         >
                         <button
                           class="btn btn-info follow-btns"
-                          (click)="convertToPdf()"
+                          (click)="print()"
                         >
                           Save PDF
                         </button>
@@ -195,6 +195,10 @@
                       <li>
                         <h4>Submitted</h4>
                         <span>{{ patient_selected.submitted }}</span>
+                      </li>
+                      <li>
+                        <h4>interview</h4>
+                        <span>{{ patient_selected.interview }}</span>
                       </li>
                     </ul>
                   </div>

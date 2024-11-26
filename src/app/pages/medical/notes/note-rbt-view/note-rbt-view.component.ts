@@ -125,6 +125,7 @@ export class NoteRbtViewComponent implements OnInit {
   note_id: any;
   note_selectedId: any;
   statusNote: any;
+  insurance_identifier: string;
 
   roles_rbt = [];
   roles_bcba = [];
@@ -182,7 +183,7 @@ export class NoteRbtViewComponent implements OnInit {
   getNote() {
     this.noteRbtService.getNote(this.note_id).subscribe((resp) => {
       this.note_selected = resp.noteRbt as unknown as NoteRbtV2;
-      // console.log('noteRbt', this.note_selected);
+      console.log('noteRbt', this.note_selected);
       this.note_selectedId = resp.noteRbt.id;
       this.patient_id = this.note_selected.patient_identifier;
       this.bip_id = this.note_selected.bip_id;
@@ -190,6 +191,7 @@ export class NoteRbtViewComponent implements OnInit {
 
       this.provider_credential = this.note_selected.provider_credential;
       this.as_evidenced_by = this.note_selected.as_evidenced_by;
+      // this.insurance_identifier = this.note_selected.insurance_identifier;
       this.client_appeared = this.note_selected.client_appeared;
       this.client_response_to_treatment_this_session =
         this.note_selected.client_response_to_treatment_this_session;
