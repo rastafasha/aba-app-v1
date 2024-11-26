@@ -48,6 +48,7 @@ export class NoteRbtComponent implements OnInit {
   patient_id: string;
   patientId: number;
   doctor_id: number;
+  insurer_id: number;
   patient_selected: any;
   client_selected: any;
   bip_id: any;
@@ -239,7 +240,9 @@ export class NoteRbtComponent implements OnInit {
       this.last_name = this.client_selected.patient.last_name;
       this.patient_id = resp.patient.patient_id;
       this.patientId = resp.patient.id;
-      this.insuranceId = resp.patient.insuranceId;
+      this.insurer_id = resp.patient.insurer_id;
+      this.insurance_identifier = resp.patient.insurance_identifier;
+      console.log(resp);
       this.patientLocation_id = resp.patient.location_id;
       this.selectedValueProviderName = resp.patient.rbt_id;
       this.selectedValueRBT = resp.patient.rbt_id;
@@ -536,7 +539,7 @@ export class NoteRbtComponent implements OnInit {
   }
 
   // eslint-disable-next-line no-debugger
-  save() {debugger
+  save() {
     this.text_validation = '';
     if (!this.selectedPaService) {
       this.text_validation = 'Please select a service';
@@ -587,7 +590,8 @@ export class NoteRbtComponent implements OnInit {
     formData.append('diagnosis_code', this.diagnosis_code);
     formData.append('provider_credential', this.provider_credential);
     formData.append('location_id', this.patientLocation_id);
-    formData.append('insurance_identifier', this.insuranceId); // id del seguro preferiblemente que solo agarre la data al crear
+    formData.append('insurance_id', this.insurer_id+''); // id del seguro preferiblemente que solo agarre la data al crear
+    formData.append('insurance_identifier', this.insurance_identifier); // id del seguro preferiblemente que solo agarre la data al crear
 
     formData.append('session_date', this.session_date);
 
