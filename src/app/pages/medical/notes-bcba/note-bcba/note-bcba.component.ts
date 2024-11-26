@@ -454,6 +454,7 @@ export class NoteBcbaComponent implements OnInit {
     formData.append('aba_supervisor', this.selectedValueAba + '');
     formData.append('pa_service_id', this.selectedPaService.id.toString());
     formData.append('cpt_code', this.selectedPaService.cpt);
+    formData.append('meet_with_client_at', this.meet_with_client_at);
 
     formData.append('provider_name', this.doctor_id + '');
     formData.append('supervisor_name', this.selectedValueBCBA);
