@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { url_servicios } from 'src/app/config/config';
+import { fromIsoToDate } from 'src/app/shared/utils';
 import { PatientV2 } from '../models';
 import { RepositoryV2Service } from './repository.v2.service';
 
@@ -18,10 +19,8 @@ export class PatientsV2Service extends RepositoryV2Service<PatientV2> {
   override untransform(data: PatientV2): unknown {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const result: any = { ...data };
-    result.birth_date = data?.birth_date?.toISOString().split('T')[0];
-    result.elegibility_date = data?.elegibility_date
-      ?.toISOString()
-      .split('T')[0];
+    result.birth_date = fromIsoToDate(data?.birth_date);
+    result.elegibility_date = fromIsoToDate(data?.elegibility_date);
     delete result.created_at;
     delete result.updated_at;
     delete result.delete_at;
