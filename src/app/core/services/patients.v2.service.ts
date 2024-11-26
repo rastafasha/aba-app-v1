@@ -24,6 +24,9 @@ export class PatientsV2Service extends RepositoryV2Service<PatientV2> {
     result.birth_date = !data.birth_date
       ? null
       : data.birth_date.toISOString().split('T')[0];
+    result.elegibility_date = !data.elegibility_date
+      ? null
+      : data.elegibility_date.toISOString().split('T')[0];
     delete result.created_at;
     delete result.updated_at;
     delete result.delete_at;

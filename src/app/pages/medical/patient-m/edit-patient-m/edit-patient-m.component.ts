@@ -6,7 +6,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Observable, of, tap } from 'rxjs';
 import {
+  ApiV2Response,
   DoctorV2,
   InsuranceV2,
   LocationV2,
@@ -20,15 +22,14 @@ import {
   PatientsV2Service,
 } from 'src/app/core/services';
 import { AppRoutes } from 'src/app/shared/routes/routes';
+import { compareObjects } from 'src/app/shared/utils';
+import Swal from 'sweetalert2';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { PatientsUseCasesService } from '../service/patients-use-cases.service';
-import Swal from 'sweetalert2';
-import { tap } from 'rxjs';
 import {
   DEFAULT_AVATAR,
   INTAKEN_OPTIONS,
 } from './edit-patient-m.component.const';
-import { compareObjects } from 'src/app/shared/utils';
 
 type PatientV2FormControls = {
   [T in keyof PatientV2]: AbstractControl<PatientV2[T]>;
@@ -108,7 +109,7 @@ export class EditPatientMComponent implements OnInit {
       summer_schedule: this.fb.control(''),
       location_id: this.fb.control(0),
       eqhlid: this.fb.control(''),
-      elegibility_date: this.fb.control(''),
+      elegibility_date: this.fb.control(new Date()),
       pos_covered: this.fb.control<string[]>([]),
       deductible_individual_I_F: this.fb.control(''),
       balance: this.fb.control(''),
@@ -194,7 +195,14 @@ export class EditPatientMComponent implements OnInit {
   }
 
   onRefresh(): void {
-    this.patientsService.get(this.id).subscribe((resp) => {
+    const get$ = this.id
+      ? this.patientsService.get(this.id)
+      : (of({
+          data: new PatientV2({}),
+          total: 1,
+          status: 'success',
+        }) as Observable<ApiV2Response<PatientV2>>);
+    get$.subscribe((resp) => {
       this.updateData(resp.data);
     });
   }

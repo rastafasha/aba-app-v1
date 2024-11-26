@@ -1,5 +1,6 @@
 import {
   BooleanOrNullOrUndefined,
+  compareObjects,
   DateOrNullOrUndefined,
   isString,
   NumberOrNullOrUndefined,
@@ -47,7 +48,7 @@ export class PatientV2 {
   location_id: number;
 
   eqhlid: string;
-  elegibility_date: string;
+  elegibility_date: Date;
   pos_covered: string[];
   deductible_individual_I_F: string;
   balance: string;
@@ -93,9 +94,8 @@ export class PatientV2 {
     if (isString(data.pos_covered)) {
       data.pos_covered = data.pos_covered.replace('"', '').split(',');
     }
-
     const result: PatientV2 = {
-      ...data,
+      // ...data,
       id: NumberOrNullOrUndefined(data.id),
       first_name: StringOrNullOrUndefined(data.first_name),
       last_name: StringOrNullOrUndefined(data.last_name),
@@ -137,7 +137,7 @@ export class PatientV2 {
       location_id: NumberOrNullOrUndefined(data.location_id),
 
       eqhlid: StringOrNullOrUndefined(data.eqhlid),
-      elegibility_date: StringOrNullOrUndefined(data.elegibility_date),
+      elegibility_date: DateOrNullOrUndefined(data.elegibility_date),
       pos_covered: data.pos_covered?.map(StringOrNullOrUndefined) ?? [],
       deductible_individual_I_F: StringOrNullOrUndefined(
         data.deductible_individual_I_F
@@ -181,6 +181,7 @@ export class PatientV2 {
       updated_at: DateOrNullOrUndefined(data.updated_at),
       deleted_at: DateOrNullOrUndefined(data.deleted_at),
     };
+    console.table(compareObjects(data, result));
     return result;
   }
 }

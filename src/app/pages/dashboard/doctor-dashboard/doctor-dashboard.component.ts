@@ -7,7 +7,16 @@ import {
 import { AppUser } from 'src/app/core/models/users.model';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
-import { DashboardService } from '../service/dashboard.service';
+import {
+  DashboardDoctorYear,
+  DashboardService,
+} from '../service/dashboard.service';
+import { DoctorV2 } from 'src/app/core/models';
+import {
+  CHART_OPTIONS_1,
+  CHART_OPTIONS_2,
+  CHART_OPTIONS_3,
+} from './doctor-dashboard.const';
 
 @Component({
   selector: 'app-doctor-dashboard',
@@ -17,13 +26,13 @@ import { DashboardService } from '../service/dashboard.service';
 export class DoctorDashboardComponent implements OnInit {
   routes = AppRoutes;
   @ViewChild('chart') chart!: ChartComponent;
-  chartOptionsOne: Partial<ChartOptions>;
+  chartOptionsIncome: Partial<ChartOptions>;
   chartOptionsTwo: Partial<ChartOptions>;
   chartOptionsThree: Partial<ChartOptions>;
-  selectedValue = new Date().getFullYear().toString();
+  currentYear = new Date().getFullYear();
 
-  doctors = [];
-  doctor_id: any;
+  doctors: DoctorV2[] = [];
+  doctor_id: number;
 
   appointments = [];
   num_appointments_current = 0;
@@ -50,153 +59,9 @@ export class DoctorDashboardComponent implements OnInit {
     private dashboardService: DashboardService,
     private pageService: PageService
   ) {
-    this.chartOptionsOne = {
-      chart: {
-        height: 200,
-        type: 'line',
-        toolbar: {
-          show: false,
-        },
-      },
-      grid: {
-        show: true,
-        xaxis: {
-          lines: {
-            show: false,
-          },
-        },
-        yaxis: {
-          lines: {
-            show: true,
-          },
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        curve: 'smooth',
-      },
-      series: [],
-      xaxis: {
-        categories: [], //['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-      },
-    };
-    this.chartOptionsTwo = {
-      chart: {
-        height: 250,
-        width: 330,
-        type: 'donut',
-        toolbar: {
-          show: false,
-        },
-      },
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: '50%',
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-
-      series: [44, 55],
-      labels: ['Male', 'Female'],
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            chart: {
-              width: 200,
-            },
-            legend: {
-              position: 'bottom',
-            },
-          },
-        },
-      ],
-      legend: {
-        position: 'bottom',
-      },
-    };
-    this.chartOptionsThree = {
-      chart: {
-        height: 230,
-        type: 'bar',
-        stacked: false,
-        toolbar: {
-          show: false,
-        },
-      },
-      grid: {
-        show: true,
-        xaxis: {
-          lines: {
-            show: false,
-          },
-        },
-        yaxis: {
-          lines: {
-            show: true,
-          },
-        },
-      },
-      responsive: [
-        {
-          breakpoint: 480,
-          options: {
-            legend: {
-              position: 'bottom',
-              offsetX: -10,
-              offsetY: 0,
-            },
-          },
-        },
-      ],
-      plotOptions: {
-        bar: {
-          horizontal: false,
-          columnWidth: '55%',
-        },
-      },
-      dataLabels: {
-        enabled: false,
-      },
-      stroke: {
-        show: true,
-        width: 6,
-        colors: ['transparent'],
-      },
-      series: [
-        {
-          name: 'Low',
-          color: '#D5D7ED',
-          data: [20, 30, 41, 67, 22, 43, 40, 10, 30, 20, 40],
-        },
-        {
-          name: 'High',
-          color: '#2E37A4',
-          data: [13, 23, 20, 8, 13, 27, 30, 25, 10, 15, 20],
-        },
-      ],
-      xaxis: {
-        categories: [
-          'Jan',
-          'Feb',
-          'Mar',
-          'Apr',
-          'May',
-          'Jun',
-          'Jul',
-          'Aug',
-          'Sep',
-          'Oct',
-          'Nov',
-          'Dec',
-        ],
-      },
-    };
+    this.chartOptionsIncome = JSON.parse(JSON.stringify(CHART_OPTIONS_1));
+    this.chartOptionsTwo = JSON.parse(JSON.stringify(CHART_OPTIONS_2));
+    this.chartOptionsThree = JSON.parse(JSON.stringify(CHART_OPTIONS_3));
   }
 
   ngOnInit(): void {
@@ -210,111 +75,54 @@ export class DoctorDashboardComponent implements OnInit {
 
   getDoctors() {
     this.dashboardService.getConfigDashboard().subscribe((resp) => {
-      // console.log(resp);
       this.doctors = resp.doctors;
     });
   }
 
-  dashboardDoctor() {
-    const data = {
-      doctor_id: this.doctor_id,
-    };
-    this.dashboardService.dashboardDoctor(data).subscribe((resp) => {
-      // console.log(resp);
+  dashboardDoctor(doctor_id: number) {
+    this.dashboardService.dashboardDoctor({ doctor_id }).subscribe((resp) => {
+      console.log(resp);
 
-      this.appointments = resp.appointments?.data;
+      // no encuentro este dato
+      this.appointments = [];
 
-      this.num_appointments_current = resp.num_appointments_current;
-      this.num_appointments_before = resp.num_appointments_before;
+      this.num_appointments_current = resp.num_bips_attention_current;
+      this.num_appointments_before = resp.num_bips_attention_before;
       this.porcentaje_d = resp.porcentaje_d;
 
-      this.num_appointments_attention_current =
-        resp.num_appointments_attention_current;
-      this.num_appointments_attention_before =
-        resp.num_appointments_attention_before;
+      this.num_appointments_attention_current = resp.num_bips_attention_current;
+      this.num_appointments_attention_before = resp.num_bips_attention_before;
       this.porcentaje_da = resp.porcentaje_da;
 
-      this.num_appointments_total_pay_current =
-        resp.num_appointments_total_pay_current;
-      this.num_appointments_total_pay_before =
-        resp.num_appointments_total_pay_before;
-      this.porcentaje_dtp = resp.porcentaje_dtp;
+      this.num_appointments_total_pay_current = 0;
+      // resp.num_appointments_total_pay_current;
+      this.num_appointments_total_pay_before = 0;
+      // resp.num_appointments_total_pay_before;
+      this.porcentaje_dtp = 0;
+      // resp.porcentaje_dtp;
 
-      this.num_appointments_total_pending_current =
-        resp.num_appointments_total_pending_current;
-      this.num_appointments_total_pending_before =
-        resp.num_appointments_total_pending_before;
-      this.porcentaje_dtpn = resp.porcentaje_dtpn;
+      this.num_appointments_total_pending_current = 0;
+      //  resp.num_appointments_total_pending_current;
+      this.num_appointments_total_pending_before = 0;
+      // resp.num_appointments_total_pending_before;
+      this.porcentaje_dtpn = 0;
+      //  resp.porcentaje_dtpn;
     });
   }
-  dashboardDoctorYear() {
+  dashboardDoctorYear(doctor_id: number, year: number): void {
     const data = {
-      year: this.selectedValue,
-      doctor_id: this.doctor_id,
+      year,
+      doctor_id,
     };
     this.query_income_year = null;
     this.query_n_appointment_year = null;
     this.query_n_appointment_year_before = null;
     this.dashboardService.dashboardDoctorYear(data).subscribe((resp) => {
-      // console.log(resp);
+      console.log(resp);
+      this.setChartOptionsIncome(resp);
 
       //start
-      this.query_income_year = resp.query_income_year ?? [];
-      const data_income = [];
-      this.query_income_year.forEach((element) => {
-        data_income.push(element.income);
-      });
-
-      this.chartOptionsOne = {
-        chart: {
-          height: 200,
-          type: 'line',
-          toolbar: {
-            show: false,
-          },
-        },
-        grid: {
-          show: true,
-          xaxis: {
-            lines: {
-              show: false,
-            },
-          },
-          yaxis: {
-            lines: {
-              show: true,
-            },
-          },
-        },
-        dataLabels: {
-          enabled: false,
-        },
-        stroke: {
-          curve: 'smooth',
-        },
-        series: [
-          {
-            name: 'Income',
-            color: '#2E37A4',
-            data: data_income,
-          },
-        ],
-        xaxis: {
-          categories: resp.months_name,
-        },
-      };
-
-      // this.chartOptionsOne.xaxis.categories = resp.months_name
-      // this.chartOptionsOne.series = [
-      //   {
-      //     name: 'Income',
-      //     color: '#2E37A4',
-      //     data: data_income,
-      //   },
-      // ]
-      //end
-
-      //start
+      /*
       this.query_patient_by_genders = resp.query_patients_by_gender ?? [];
       const data_by_gender = [];
 
@@ -326,9 +134,8 @@ export class DoctorDashboardComponent implements OnInit {
       this.chartOptionsTwo.series = data_by_gender;
       //end
       //start
-      this.query_n_appointment_year = resp.query_n_appointment_year ?? [];
-      this.query_n_appointment_year_before =
-        resp.query_n_appointment_year_before ?? [];
+      this.query_n_appointment_year = []; // resp.query_n_appointment_year ?? [];
+      this.query_n_appointment_year_before = []; //        resp.query_n_appointment_year_before ?? [];
 
       const n_appointment_year = [];
       this.query_n_appointment_year.forEach((item) => {
@@ -389,12 +196,12 @@ export class DoctorDashboardComponent implements OnInit {
         },
         series: [
           {
-            name: parseInt(this.selectedValue) + '',
+            name: this.currentYear + '',
             color: '#2E37A4',
             data: n_appointment_year,
           },
           {
-            name: parseInt(this.selectedValue) - 1 + '',
+            name: this.currentYear - 1 + '',
 
             color: '#D5D7ED',
             data: n_appointment_year_before,
@@ -405,16 +212,74 @@ export class DoctorDashboardComponent implements OnInit {
         },
       };
       //end
+      */
     });
   }
 
-  selectDoctor() {
-    this.dashboardDoctor();
-    this.dashboardDoctorYear();
+  setChartOptionsIncome(resp: DashboardDoctorYear) {
+    //start
+    this.query_income_year = resp.query_patients_by_gender ?? [];
+    const data_income = [];
+    this.query_income_year.forEach((element) => {
+      data_income.push(element.income);
+    });
+
+    this.chartOptionsIncome = {
+      chart: {
+        height: 200,
+        type: 'line',
+        toolbar: {
+          show: false,
+        },
+      },
+      grid: {
+        show: true,
+        xaxis: {
+          lines: {
+            show: false,
+          },
+        },
+        yaxis: {
+          lines: {
+            show: true,
+          },
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        curve: 'smooth',
+      },
+      series: [
+        {
+          name: 'Income',
+          color: '#2E37A4',
+          data: data_income,
+        },
+      ],
+      xaxis: {
+        categories: resp.months_name,
+      },
+    };
+
+    this.chartOptionsIncome.xaxis.categories = resp.months_name;
+    this.chartOptionsIncome.series = [
+      {
+        name: 'Income',
+        color: '#2E37A4',
+        data: data_income,
+      },
+    ];
   }
 
-  selectedYear() {
-    this.dashboardDoctorYear();
+  selectDoctor(doctor_id: number) {
+    this.dashboardDoctor(doctor_id);
+    this.dashboardDoctorYear(doctor_id, this.currentYear);
+  }
+
+  selectedYear(year: number) {
+    this.dashboardDoctorYear(this.doctor_id, year);
   }
 
   selecedList: ChartData[] = [

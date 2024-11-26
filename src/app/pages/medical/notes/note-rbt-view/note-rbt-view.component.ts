@@ -231,8 +231,10 @@ export class NoteRbtViewComponent implements OnInit {
           ).toISOString()
         : '';
 
-      this.session_length_total = this.note_selected.session_length_total;
-      this.session_length_total2 = this.note_selected.session_length_total2;
+      this.session_length_total =
+        this.note_selected.session_length_morning_total;
+      this.session_length_total2 =
+        this.note_selected.session_length_afternon_total;
 
       this.selectedValueTimeIn = this.note_selected.time_in;
       this.selectedValueTimeOut = this.note_selected.time_in2;
