@@ -739,9 +739,7 @@ export class EditNoteRbtComponent implements OnInit {
     if (this.meet_with_client_at) {
       formData.append('meet_with_client_at', this.meet_with_client_at);
     }
-    if (this.selectedValueProviderName) {
-      formData.append('provider_name_g', this.selectedValueProviderName);
-    }
+    
 
     if (this.selectedValueTimeIn) {
       formData.append(
@@ -772,14 +770,16 @@ export class EditNoteRbtComponent implements OnInit {
       formData.append('environmental_changes', this.environmental_changes);
     }
     if (this.selectedValueProviderName) {
-      formData.append('provider_name_g', this.selectedValueProviderName);
+      formData.append('provider_id', this.selectedValueProviderName);
     }
+    
     if (this.selectedValueRBT) {
       formData.append('provider_name', this.selectedValueRBT);
     }
     if (this.selectedValueBCBA) {
-      formData.append('supervisor_name', this.selectedValueBCBA);
+      formData.append('supervisor_id', this.selectedValueBCBA);
     }
+
     if (this.replacementgroup) {
       formData.append('replacements', JSON.stringify(this.replacementgroup));
     }
