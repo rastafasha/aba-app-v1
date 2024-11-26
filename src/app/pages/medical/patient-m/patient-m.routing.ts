@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PatientMComponent } from './patient-m.component';
-import { AddPatientMComponent } from './add-patient-m/add-patient-m.component';
-import { ListPatientMComponent } from './list-patient-m/list-patient-m.component';
-import { EditPatientMComponent } from './edit-patient-m/edit-patient-m.component';
-import { ProfilePatientMComponent } from './profile-patient-m/profile-patient-m.component';
-import { ClientLogReportComponent } from './client-log-report/client-log-report.component';
 import { AppRoutes, lastRoutes } from 'src/app/shared/routes/routes';
+import { ClientLogReportComponent } from './client-log-report/client-log-report.component';
+import { EditPatientMComponent } from './edit-patient-m/edit-patient-m.component';
+import { ListPatientMComponent } from './list-patient-m/list-patient-m.component';
+import { PatientMComponent } from './patient-m.component';
+import { ProfilePatientMComponent } from './profile-patient-m/profile-patient-m.component';
 
 const routes: Routes = [
   {
@@ -15,7 +14,7 @@ const routes: Routes = [
     children: [
       {
         path: lastRoutes(AppRoutes.patients.add),
-        component: AddPatientMComponent,
+        component: EditPatientMComponent,
       },
       {
         path: lastRoutes(AppRoutes.patients.list),
