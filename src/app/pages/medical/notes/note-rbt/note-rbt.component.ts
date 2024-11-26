@@ -584,7 +584,7 @@ export class NoteRbtComponent implements OnInit {
     formData.append('diagnosis_code', this.diagnosis_code);
     formData.append('provider_credential', this.provider_credential);
     formData.append('location_id', this.patientLocation_id);
-    formData.append('insuranceId', this.insuranceId); // id del seguro preferiblemente que solo agarre la data al crear
+    // formData.append('insuranceId', this.insuranceId); // id del seguro preferiblemente que solo agarre la data al crear
 
     formData.append('session_date', this.session_date);
 
