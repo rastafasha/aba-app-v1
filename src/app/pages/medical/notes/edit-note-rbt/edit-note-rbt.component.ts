@@ -123,7 +123,7 @@ export class EditNoteRbtComponent implements OnInit {
   porcentage_diario: any;
   location_id: number;
   patientLocation_id: any;
-  insuranceId: any;
+  insurer_id: any;
 
   roles_rbt = [];
   roles_bcba = [];
@@ -363,7 +363,8 @@ export class EditNoteRbtComponent implements OnInit {
         this.last_name = this.client_selected.patient.last_name;
         this.patient_id = resp.patient.patient_id;
         this.patientId = resp.patient.id;
-        this.insuranceId = resp.patient.insuranceId;
+        this.insurer_id = resp.patient.insurer_id;
+        this.insurance_identifier = resp.patient.insurance_identifier;
         this.patientLocation_id = resp.patient.location_id;
 
         // this.pos = JSON.parse(resp.patient.pos_covered) ;
@@ -735,6 +736,8 @@ export class EditNoteRbtComponent implements OnInit {
     formData.append('session_date', this.session_date);
 
     formData.append('location_id', this.patientLocation_id);
+
+    formData.append('insurance_id', this.insurer_id+'');
 
     if (this.meet_with_client_at) {
       formData.append('meet_with_client_at', this.meet_with_client_at);
