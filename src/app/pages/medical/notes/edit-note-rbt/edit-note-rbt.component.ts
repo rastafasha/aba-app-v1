@@ -44,12 +44,14 @@ export class EditNoteRbtComponent implements OnInit {
 
   client_id: any;
   patient_id: any;
+  patientId: any;
   doctor_id: any;
   patient_selected: any;
   client_selected: any;
   note_selected: any;
-  bip_id: any;
   user: AppUser;
+  bip_id: any;
+  insurance_identifier: any;
 
   first_name = '';
   last_name = '';
@@ -121,6 +123,7 @@ export class EditNoteRbtComponent implements OnInit {
   porcentage_diario: any;
   location_id: number;
   patientLocation_id: any;
+  insuranceId: any;
 
   roles_rbt = [];
   roles_bcba = [];
@@ -245,8 +248,9 @@ export class EditNoteRbtComponent implements OnInit {
       this.target = resp.target;
       this.note_selected = resp.noteRbt;
       this.note_selectedId = resp.noteRbt.id;
-      this.patient_id = this.note_selected.patient_id;
+      this.patient_id = this.note_selected.patient_identifier;
       this.bip_id = this.note_selected.bip_id;
+      this.insurance_identifier = this.note_selected.insurance_identifier;
 
       this.provider_credential = this.note_selected.provider_credential;
       this.as_evidenced_by = this.note_selected.as_evidenced_by;
@@ -358,6 +362,8 @@ export class EditNoteRbtComponent implements OnInit {
         this.first_name = this.client_selected.patient.first_name;
         this.last_name = this.client_selected.patient.last_name;
         this.patient_id = resp.patient.patient_id;
+        this.patientId = resp.patient.id;
+        this.insuranceId = resp.patient.insuranceId;
         this.patientLocation_id = resp.patient.location_id;
 
         // this.pos = JSON.parse(resp.patient.pos_covered) ;
@@ -382,7 +388,7 @@ export class EditNoteRbtComponent implements OnInit {
           const goalSto = JSON.parse(element.goalstos).find(
             (item) => item.sustitution_status_sto_edit === 'inprogress'
           );
-          if (!!goalSto) {
+          if (!goalSto) {
             this.replacementGoals.push({ ...element, target: goalSto.target });
           }
         });
@@ -714,7 +720,7 @@ export class EditNoteRbtComponent implements OnInit {
     }
 
     const formData = new FormData();
-    formData.append('patient_id', this.patient_id);
+    formData.append('patient_id', this.patientId);
     formData.append('doctor_id', this.selectedValueProviderName);
     formData.append('bip_id', this.bip_id);
     formData.append('first_name', this.first_name);
