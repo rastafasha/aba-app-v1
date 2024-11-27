@@ -48,6 +48,8 @@ export class BipProfileComponent implements OnInit {
   escape :any = [];
   sensory :any = [];
   caregivers_training_goals :any = [];
+  consent_to_treatment :any = [];
+
 
   bip_selected: any = {};
   patient_selected: any = {};
@@ -61,7 +63,8 @@ export class BipProfileComponent implements OnInit {
   monitoring_evalutating: any[] = [];
   monitoring_evalutating_goals: any[] = [];
   generalization_training: any[] = [];
-  transition_fading_plans: any[] = [];
+  transition_fading_plans: any= [];
+  rbt_training_goals: any= [];
   
   analyst_signature: any = '';
   analyst_signature_date = '';
@@ -76,40 +79,40 @@ export class BipProfileComponent implements OnInit {
   text_validation = '';
 
   crisis_plan: string;
-  risk_added: string;
-  risk_factors: any;
-  do_not_apply: any;
-  elopement: any;
-  assaultive_behavior: any;
-  aggression: any;
-  self_injurious_behavior: any;
-  sexually_offending_behavior: any;
-  fire_setting: any;
-  current_substance_abuse: any;
-  impulsive_behavior: any;
-  psychotic_symptoms: any;
-  self_mutilation_cutting: any;
-  caring_for_ill_family_recipient: any;
-  current_family_violence: any;
-  dealing_with_significant: any;
-  prior_psychiatric_inpatient_admission: any;
-  other: any;
+  risk_added: any = [];
+  risk_factors: boolean;
+  do_not_apply: boolean;
+  elopement: boolean;
+  assaultive_behavior: boolean;
+  aggression: boolean;
+  self_injurious_behavior: boolean;
+  sexually_offending_behavior: boolean;
+  fire_setting: boolean;
+  current_substance_abuse: boolean;
+  impulsive_behavior: boolean;
+  psychotic_symptoms: boolean;
+  self_mutilation_cutting: boolean;
+  caring_for_ill_family_recipient: boolean;
+  current_family_violence: boolean;
+  dealing_with_significant: boolean;
+  prior_psychiatric_inpatient_admission: boolean;
+  other: string;
 
-  suicidality_added: any;
-  not_present: any;
-  ideation: any;
-  plan: any;
-  means: any;
-  prior_attempt: any;
+  suicidality_added:any = [];
+  not_present: boolean;
+  ideation: boolean;
+  plan: boolean;
+  means: boolean;
+  prior_attempt: boolean;
 
-  homicidality_added: any;
-  not_present_homicidality: any;
-  ideation_homicidality: any;
-  plan_homicidality: any;
-  means_homicidality: any;
-  prior_attempt_homicidality: any;
+  homicidality_added: any = [];
+  not_present_homicidality: boolean;
+  ideation_homicidality: boolean;
+  plan_homicidality: boolean;
+  means_homicidality: boolean;
+  prior_attempt_homicidality: boolean;
   user: AppUser;
-  patientId: any;
+  patientId: string;
   roles = [];
   permissions = [];
   preescribing_physician: any;
@@ -163,61 +166,88 @@ export class BipProfileComponent implements OnInit {
       .getBipProfilePatientPdf_id(this.patient_id)
       .subscribe((resp) => {
         console.log(resp);
-        this.bip_selected = resp.bip;
-        this.maladaptives = resp.maladaptives;
         this.patient_selected = resp.patient ? resp.patient : null;
         this.patientId = this.patient_selected.patient_id;
 
+        // ------Bip
 
+        this.bip_selected = resp.bip;
         
-        // console.log(this.other);
+        this.maladaptives = resp.maladaptives;
+        
 
-       /*this.do_not_apply = this.risk_factors[0]?.do_not_apply;
-        this.elopement = this.risk_factors[0]?.elopement;
-        this.assaultive_behavior = this.risk_factors[0]?.assaultive_behavior;
-        this.aggression = this.risk_factors[0]?.aggression;
+        this.rbt_training_goals = resp.bip.monitoring_evalutating?.[0]?.rbt_training_goals;
+        // const jsonObj84 = JSON.parse(this.rbt_training_goals) || '';
+        // this.rbt_training_goals = jsonObj84;
+
+        // console.log(this.rbt_training_goals);
+
+        // ------consent_to_treatment
+        this.consent_to_treatment = resp.bip.consent_to_treatment[0];
+        this.analyst_signature = resp.bip.consent_to_treatment[0].analyst_signature;
+        this.parent_guardian_signature = resp.bip.consent_to_treatment[0].parent_guardian_signature;
+        // ------consent_to_treatment
+        
+        this.generalization_training = resp.bip.generalization_training[0];
+        this.transition_fading_plans = resp.bip.generalization_training?.[0]?.transition_fading_plans;
+
+        // ------Crisis Plans
+
+        this.risk_added = resp.bip.crisis_plan?.[0]?.risk_factors;
+        const jsonObj82 = JSON.parse(this.risk_added) || '';
+        this.risk_added = jsonObj82;
+
+       this.do_not_apply = this.risk_added?.[0]?.do_not_apply;
+        this.elopement = this.risk_added?.[0]?.elopement;
+        this.assaultive_behavior = this.risk_added?.[0]?.assaultive_behavior;
+        this.aggression = this.risk_added?.[0]?.aggression;
         this.self_injurious_behavior =
-          this.risk_factors[0]?.self_injurious_behavior;
+          this.risk_added?.[0]?.self_injurious_behavior;
         this.sexually_offending_behavior =
-          this.risk_factors[0]?.sexually_offending_behavior;
-        this.fire_setting = this.risk_factors[0]?.fire_setting;
+          this.risk_added?.[0]?.sexually_offending_behavior;
+        this.fire_setting = this.risk_added?.[0]?.fire_setting;
         this.current_substance_abuse =
-          this.risk_factors[0]?.current_substance_abuse;
-        this.impulsive_behavior = this.risk_factors[0]?.impulsive_behavior;
-        this.psychotic_symptoms = this.risk_factors[0]?.psychotic_symptoms;
+          this.risk_added?.[0]?.current_substance_abuse;
+        this.impulsive_behavior = this.risk_added?.[0]?.impulsive_behavior;
+        this.psychotic_symptoms = this.risk_added?.[0]?.psychotic_symptoms;
         this.self_mutilation_cutting =
-          this.risk_factors[0]?.self_mutilation_cutting;
+          this.risk_added?.[0]?.self_mutilation_cutting;
         this.caring_for_ill_family_recipient =
-          this.risk_factors[0]?.caring_for_ill_family_recipient;
+          this.risk_added?.[0]?.caring_for_ill_family_recipient;
         this.current_family_violence =
-          this.risk_factors[0]?.current_family_violence;
+          this.risk_added?.[0]?.current_family_violence;
         this.dealing_with_significant =
-          this.risk_factors[0]?.dealing_with_significant;
+          this.risk_added?.[0]?.dealing_with_significant;
         this.prior_psychiatric_inpatient_admission =
-          this.risk_factors[0]?.prior_psychiatric_inpatient_admission;
+          this.risk_added?.[0]?.prior_psychiatric_inpatient_admission;
+        this.other =
+          this.risk_added?.[0]?.other;
 
-        this.suicidality_added = resp.bip.crisis_plan[0]?.suicidalities;
+        this.suicidality_added = resp.bip.crisis_plan?.[0]?.suicidalities;
         const jsonObj8 = JSON.parse(this.suicidality_added) || '';
         this.suicidality_added = jsonObj8;
 
-        this.not_present = this.suicidality_added[0]?.not_present;
-        this.ideation = this.suicidality_added[0]?.ideation;
-        this.plan = this.suicidality_added[0]?.plan;
-        this.means = this.suicidality_added[0]?.means;
-        this.prior_attempt = this.suicidality_added[0]?.prior_attempt;
+        this.not_present = this.suicidality_added?.[0]?.not_present;
+        this.ideation = this.suicidality_added?.[0]?.ideation;
+        this.plan = this.suicidality_added?.[0]?.plan;
+        this.means = this.suicidality_added?.[0]?.means;
+        this.prior_attempt = this.suicidality_added?.[0]?.prior_attempt;
 
-        this.homicidality_added = resp.bip.crisis_plan[0]?.homicidalities;
+        this.homicidality_added = resp.bip.crisis_plan?.[0]?.homicidalities;
         const jsonObj9 = JSON.parse(this.homicidality_added) || '';
         this.homicidality_added = jsonObj9;
 
         this.not_present_homicidality =
-          this.homicidality_added[0]?.not_present_homicidality;
+          this.homicidality_added?.[0]?.not_present_homicidality;
         this.ideation_homicidality =
-          this.homicidality_added[0]?.ideation_homicidality;
-        this.plan_homicidality = this.homicidality_added[0]?.plan_homicidality;
-        this.means_homicidality = this.homicidality_added[0]?.means_homicidality;
+          this.homicidality_added?.[0]?.ideation_homicidality;
+        this.plan_homicidality = this.homicidality_added?.[0]?.plan_homicidality;
+        this.means_homicidality = this.homicidality_added?.[0]?.means_homicidality;
         this.prior_attempt_homicidality =
-          this.homicidality_added[0]?.prior_attempt_homicidality;*/
+          this.homicidality_added?.[0]?.prior_attempt_homicidality;
+
+          // ------Crisis Plans
+
       });
   }
 
