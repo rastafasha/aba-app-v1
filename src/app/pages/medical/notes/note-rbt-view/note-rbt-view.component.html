@@ -13,8 +13,9 @@
       </div>
     </div>
     <!-- /Page Header -->
+    <!-- *ngIf="patient_selected" -->
     <div class="row" id="contentToConvert" #contentToConvert>
-      <div class="col-sm-12" *ngIf="patient_selected">
+      <div class="col-sm-12" >
         <div class="card">
           <div class="card-body">
             <div class="row">
@@ -64,7 +65,7 @@
                         >
                         <button
                           class="btn btn-info follow-btns"
-                          (click)="convertToPdf()"
+                          (click)="print()"
                         >
                           Save PDF
                         </button>
@@ -109,6 +110,12 @@
                           <div class="detail-personal">
                             <h2>POS</h2>
                             <p>{{ note_selected.pos }}</p>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 col-lg-3">
+                          <div class="detail-personal">
+                            <h2>Insurance Id</h2>
+                            <p>{{ patient_selected.insurance_identifier }}</p>
                           </div>
                         </div>
                         <div class="col-xl-3 col-sm-6 col-lg-3">
@@ -680,7 +687,7 @@
                               <div class="detail-personal">
                                 <h2 style="margin: 0">Provider name RBT</h2>
                                 <p style="margin-bottom: 8px">
-                                  {{ doctor_selected_full_name_rbt }}
+                                  {{ doctor_selected_full_name }}
                                 </p>
                                 <h2 style="margin: 0">Signature date</h2>
                                 <p>{{ note_selected.session_date | date }}</p>

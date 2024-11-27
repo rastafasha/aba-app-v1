@@ -12,6 +12,14 @@ import { PageService } from 'src/app/shared/services/pages.service';
 import { AppUser } from 'src/app/core/models/users.model';
 import { PatientsUseCasesService } from '../service/patients-use-cases.service';
 
+/** Principios SOLID
+ * Single reposonsablity: que la cosa, haga una sola cosa y bien
+ * O
+ * L
+ * I
+ * D
+ */
+
 export interface ResponseBackend {
   users: User[];
   doctores: any[];
@@ -19,6 +27,7 @@ export interface ResponseBackend {
   location: any;
   insurances: any[];
 }
+
 export interface User {
   id: string;
   full_name: string;
@@ -33,7 +42,6 @@ export interface Service {
   // Add other service properties here
 }
 
-const url_servicios = environment.url_servicios;
 @Component({
   selector: 'app-add-patient-m',
   templateUrl: './add-patient-m.component.html',
@@ -76,9 +84,10 @@ export class AddPatientMComponent implements OnInit {
 
   insurer: any;
   insuranceId: any;
+  insurance_identifier: any;
   insurer_secundary: any;
   insuranceId_secundary: any;
-  elegibility_date: any;
+  elegibility_date= '';
   pos_covered: any;
   deductible_individual_I_F: any;
   balance: any;
@@ -268,7 +277,7 @@ export class AddPatientMComponent implements OnInit {
     private insuranceService: InsuranceService,
     private router: Router,
     private locationBack: Location,
-    private http: HttpClient
+    private useCases: PatientsUseCasesService
   ) {}
 
   ngOnInit(): void {
@@ -295,17 +304,9 @@ export class AddPatientMComponent implements OnInit {
   }
 
   checkEmailExistence(): void {
-    this.http
-      .get<any>(`${url_servicios}/doctors/check-email-exist/${this.email}`)
-      .subscribe((response) => {
-        this.emailExists = response.exist.email;
-        console.log(this.emailExists);
-        if (this.emailExists === null) {
-          this.emailExists = false;
-        } else {
-          this.emailExists = true;
-        }
-      });
+    this.useCases
+      .checkEmailExistense(this.email)
+      .subscribe((result) => (this.emailExists = result));
   }
 
   getPoscoveredList() {
@@ -504,6 +505,9 @@ export class AddPatientMComponent implements OnInit {
     }
 
     // this.valid_form = false;
+    
+    // const elegibility_date = this.elegibility_date.toISOString().split('T')[0];
+    // const birthDate = this.birth_date.toISOString().split('T')[0];
     const formData = new FormData();
 
     formData.append('first_name', this.first_name);
@@ -532,10 +536,12 @@ export class AddPatientMComponent implements OnInit {
     formData.append('special_note', this.special_note);
 
     formData.append('insurer_id', this.selectedValueInsurer);
-    formData.append('insuranceId', this.insuranceId);
+    formData.append('insurance_identifier', this.insurance_identifier);
     // formData.append('insurer_secundary', this.insurer_secundary);
     // formData.append('insuranceId_secundary', this.insuranceId_secundary);
+    
     formData.append('elegibility_date', this.elegibility_date);
+    // formData.append('elegibility_date', this.elegibility_date.toDateString());
     // formData.append('pos_covered', this.pos_covered);
     formData.append(
       'deductible_individual_I_F',
@@ -587,9 +593,12 @@ export class AddPatientMComponent implements OnInit {
     if (this.interview) {
       formData.append('interview', this.interview);
     }
+    
 
     if (this.birth_date) {
-      formData.append('birth_date', this.birth_date);
+     
+formData.append('birth_date', this.birth_date);
+      // formData.append('birth_date', this.birth_date.toDateString());
     }
     if (this.email) {
       formData.append('email', this.email);

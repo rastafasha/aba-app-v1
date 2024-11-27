@@ -6,7 +6,7 @@ export class NoteRbtRoutes {
   }
 
   static get add(): string {
-    return `${baseUrl}/note-rbt/add`;
+    return `${baseUrl}/note-rbt/`;
   }
 
   static get edit(): string {

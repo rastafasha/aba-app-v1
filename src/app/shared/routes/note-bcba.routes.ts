@@ -10,7 +10,7 @@ export class NoteBcbaRoutes {
   }
 
   static get add(): string {
-    return `${baseUrl}/note-bcba/add`;
+    return `${baseUrl}/note-bcba/`;
   }
 
   static get edit(): string {

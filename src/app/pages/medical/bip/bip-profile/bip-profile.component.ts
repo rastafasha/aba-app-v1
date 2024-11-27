@@ -142,6 +142,10 @@ export class BipProfileComponent implements OnInit {
     this.location.back(); // <-- go back to previous location on cancel
   }
 
+  print() {
+    window.print();
+    }
+
   isPermission(permission: string) {
     if (this.user.roles.includes('SUPERADMIN')) {
       return true;
@@ -163,6 +167,9 @@ export class BipProfileComponent implements OnInit {
 
         this.type_of_assessment = this.bip_selected.type_of_assessment;
 
+        this.documents = this.bip_selected.documents_reviewed;
+        console.log(this.documents);
+
         (this.background_information =
           this.bip_selected.background_information),
           (this.previus_treatment_and_result =
@@ -173,8 +180,7 @@ export class BipProfileComponent implements OnInit {
           (this.phisical_and_medical_status =
             this.bip_selected.phisical_and_medical_status),
           (this.assestment_conducted = this.bip_selected.assestment_conducted),
-          (this.documents = this.bip_selected.documents_reviewed);
-        // console.log(this.documents);
+          
         this.maladaptives = this.bip_selected.maladaptives;
         this.maladaptive_behavior = this.bip_selected.maladaptives?.[0].title;
 
@@ -213,12 +219,15 @@ export class BipProfileComponent implements OnInit {
           this.bip_selected.sustitution_goal[0]?.goalltos;
         this.sustitution_goal_stos =
           this.bip_selected.sustitution_goal[0]?.goalstos;
+
         this.family_envolment =
           this.bip_selected.family_envolment[0]?.caregivers_training_goals;
 
+          console.log(Array.isArray(this.monitoring_evalutating_goals)); // Should log true if it's an array
         this.monitoring_evalutating = this.bip_selected.monitoring_evalutating;
         this.monitoring_evalutating_goals =
           this.bip_selected.monitoring_evalutating[0]?.rbt_training_goals;
+          console.log(this.monitoring_evalutating_goals);
         this.generalization_training =
           this.bip_selected.generalization_training;
         this.transition_fading_plans =
@@ -256,7 +265,7 @@ export class BipProfileComponent implements OnInit {
           this.bip_selected.crisis_plan[0]?.caregiver_requirements_for_prevention_of_crisis;
         this.crisis_description =
           this.bip_selected.crisis_plan[0]?.crisis_description;
-          console.log(this.crisis_description);
+          // console.log(this.crisis_description);
         this.crisis_note = this.bip_selected.crisis_plan[0]?.crisis_note;
         this.crisis_plan = this.bip_selected.crisis_plan[0];
         this.risk_factors = this.bip_selected.crisis_plan[0]?.risk_factors;
@@ -301,7 +310,7 @@ export class BipProfileComponent implements OnInit {
             */
         this.other = this.risk_factors?.[0].other;
         // console.log(this.other);
-        this.do_not_apply = this.risk_factors[0]?.do_not_apply;
+       this.do_not_apply = this.risk_factors[0]?.do_not_apply;
         this.elopement = this.risk_factors[0]?.elopement;
         this.assaultive_behavior = this.risk_factors[0]?.assaultive_behavior;
         this.aggression = this.risk_factors[0]?.aggression;

@@ -44,6 +44,7 @@ export class NoteBcbaEditComponent implements OnInit {
   client_id: any;
   doctor_id: any;
   patient_id: any;
+  patientid: any;
   patientLocation_id: any;
   patient_selected: any;
   client_selected: any;
@@ -198,7 +199,7 @@ export class NoteBcbaEditComponent implements OnInit {
       console.log('respuesta de getNote', resp);
       this.note_selected = resp.noteBcba;
       this.note_selectedId = resp.noteBcba.id;
-      this.patient_id = this.note_selected.patient_id;
+      this.patient_id = this.note_selected.patient_identifier;
       this.bip_id = this.note_selected.bip_id;
       this.location = this.note_selected.location;
       // this.birth_date = this.note_selected.birth_date;
@@ -281,6 +282,7 @@ export class NoteBcbaEditComponent implements OnInit {
         this.first_name = this.client_selected.patient.first_name;
         this.last_name = this.client_selected.patient.last_name;
         this.patient_id = resp.patient.patient_id;
+        this.patientid = resp.patient.id;
         this.patientLocation_id = resp.patient.location_id;
         this.insurer_id = resp.patient.insurer_id;
         // this.pos = JSON.parse(resp.patient.pos_covered) ;
