@@ -159,10 +159,10 @@
                     <h4>Documents Reviewed</h4>
                   </div>
                   <div class="row">
-                    <div *ngIf="!documents || documents.length === 0">
+                    <div *ngIf="!bip_selected.documents_reviewed || bip_selected.documents_reviewed.length === 0">
                       <app-no-info></app-no-info>
                     </div>
-                    <ng-container *ngFor="let document of documents; let i = index">
+                    <ng-container *ngFor="let document of bip_selected.documents_reviewed; let i = index">
                       <div class="col-xs-12 col-sm-6">
                         <div class="detail-personal">
                           <h2>Document Title</h2>
@@ -245,15 +245,15 @@
                         </div>
                         <div
                           *ngIf="
-                            !phiysical_and_medical_status ||
-                            phiysical_and_medical_status === null
+                            !bip_selected.phiysical_and_medical_status ||
+                            bip_selected.phiysical_and_medical_status === null
                           "
                         >
                           <app-no-info></app-no-info>
                         </div>
                         <ng-container
                           *ngFor="
-                            let medication of phiysical_and_medical_status
+                            let medication of bip_selected.phiysical_and_medical_status
                           "
                         >
                           <div class="col-xs-12 col-sm-3">
@@ -366,10 +366,15 @@
                     <h4>Assessments Conducted</h4>
                   </div>
                   <div class="row">
-                    <div *ngIf="!assesstments || assesstments === null">
+                    <div *ngIf="!bip_selected.assestment_conducted_options || bip_selected.assestment_conducted_options === null">
                       <app-no-info></app-no-info>
                     </div>
-                    <ng-container *ngFor="let assesst of assesstments">
+                    <div class="col-xs-12 ">
+                      <div class="detail-personal">
+                        <p>{{ bip_selected.assestment_conducted}}</p>
+                      </div>
+                    </div>
+                    <ng-container *ngFor="let assesst of bip_selected.assestment_conducted_options">
                       <div class="col-xs-12 col-sm-6">
                         <div class="detail-personal">
                           <h2>Assessments title</h2>
@@ -393,14 +398,14 @@
                   <div class="row">
                     <div
                       *ngIf="
-                        !assestmentEvaluationSettings ||
-                        assestmentEvaluationSettings === null
+                        !bip_selected.assestmentEvaluationSettings ||
+                        bip_selected.assestmentEvaluationSettings === null
                       "
                     >
                       <app-no-info></app-no-info>
                     </div>
                     <ng-container
-                      *ngFor="let evaluationSt of assestmentEvaluationSettings"
+                      *ngFor="let evaluationSt of bip_selected.assestmentEvaluationSettings"
                     >
                       <div class="col-xs-12 col-sm-6">
                         <div class="detail-personal">
@@ -441,15 +446,15 @@
                   <div class="row">
                     <div
                       *ngIf="
-                        !prevalent_setting_event_and_atecedents ||
-                        prevalent_setting_event_and_atecedents === null
+                        !bip_selected.prevalent_setting_event_and_atecedents ||
+                        bip_selected.prevalent_setting_event_and_atecedents === null
                       "
                     >
                       <app-no-info></app-no-info>
                     </div>
                     <ng-container
                       *ngFor="
-                        let prevalent of prevalent_setting_event_and_atecedents
+                        let prevalent of bip_selected.prevalent_setting_event_and_atecedents
                       "
                     >
                       <div class="col-xs-12 col-sm-4">
@@ -503,9 +508,9 @@
                       <h4>Tangibles</h4>
                     </div>
 
-                    <ng-container *ngFor="let access of accesstoTangibles">
+                    <ng-container *ngFor="let access of bip_selected.tangibles">
                       <div
-                        *ngIf="!accesstoTangibles || accesstoTangibles === null"
+                        *ngIf="!tangibles || tangibles === null"
                       >
                         <app-no-info></app-no-info>
                       </div>
@@ -532,10 +537,10 @@
                       <h4>Attention</h4>
                     </div>
 
-                    <ng-container *ngFor="let access of accesstoAttention">
+                    <ng-container *ngFor="let access of bip_selected.attention">
                       <div
                         *ngIf="
-                          !accesstoAttention || accesstoAttention === 'null'
+                          !attention || attention === 'null'
                         "
                       >
                         <app-no-info></app-no-info>
@@ -564,8 +569,8 @@
                       <h4>Escape</h4>
                     </div>
 
-                    <ng-container *ngFor="let access of accesstoEscape">
-                      <div *ngIf="!accesstoEscape || accesstoEscape === 'null'">
+                    <ng-container *ngFor="let access of bip_selected.escape">
+                      <div *ngIf="!escape || escape === 'null'">
                         <app-no-info></app-no-info>
                       </div>
                       <div class="col-xs-12 col-sm-4">
@@ -592,8 +597,8 @@
                       <h4>Sensory</h4>
                     </div>
 
-                    <ng-container *ngFor="let access of accesstoSensory">
-                      <div *ngIf="!accesstoSensory || accesstoSensory === null">
+                    <ng-container *ngFor="let access of bip_selected.sensory">
+                      <div *ngIf="!sensory || sensory === null">
                         <app-no-info></app-no-info>
                       </div>
                       <div class="col-xs-12 col-sm-4">
@@ -719,7 +724,7 @@
                   </div>
                   <div class="row">
                     <ng-container
-                      *ngFor="let item of interventions; let i = index"
+                      *ngFor="let item of bip_selected.interventions; let i = index"
                     >
                       <div class="col-xs-12 col-sm-6">
                         <h4>{{ item.titleIntervention }}</h4>
@@ -745,10 +750,10 @@
                   </div>
 
                   <div class="row">
-                    <div *ngIf="!reduction_goals || reduction_goals === null">
+                    <div *ngIf="!bip_selected.reduction_goal || bip_selected.reduction_goal === null">
                       <app-no-info></app-no-info>
                     </div>
-                    <ng-container *ngFor="let item of reduction_goals">
+                    <ng-container *ngFor="let item of bip_selected.reduction_goal">
                       <div class="col-xs-12 col-sm-4">
                         <div class="detail-personal">
                           <h2>Goal</h2>
@@ -769,14 +774,14 @@
                       </div>
                       <div
                         *ngIf="
-                          !reduction_goals_goalstos ||
-                          reduction_goals_goalstos === null
+                          !bip_selected.reduction_goal.goalstos ||
+                          bip_selected.reduction_goal.goalstos === null
                         "
                       >
                         <app-no-info></app-no-info>
                       </div>
                       <ng-container
-                        *ngFor="let item of reduction_goals_goalstos"
+                        *ngFor="let item of bip_selected.reduction_goal.goalstos"
                       >
                         <div class="row">
                           <div class="col-xs-12 col-sm-3">
@@ -825,10 +830,10 @@
                     <h4>Replacement Goals</h4>
                   </div>
                   <div class="row">
-                    <div *ngIf="!sustitution_goal || sustitution_goal === null">
+                    <div *ngIf="!bip_selected.sustitution_goal || bip_selected.sustitution_goal === null">
                       <app-no-info></app-no-info>
                     </div>
-                    <ng-container *ngFor="let item of sustitution_goal">
+                    <ng-container *ngFor="let item of bip_selected.sustitution_goal">
                       <div class="col-xs-12 bg-gray">
                         <div class="row">
                           <div class="col-xs-12 col-sm-4">
@@ -858,7 +863,7 @@
                         </div>
                       </div>
                       <hr />
-                      <ng-container *ngFor="let item of sustitution_goal_stos">
+                      <ng-container *ngFor="let item of bip_selected.sustitution_goal.goalstos">
                         <div class="row">
                           <p style="font-size: 1.2rem; padding: 20px 10px">
                             Goal Sto
@@ -898,7 +903,7 @@
                         </div>
                         <hr />
                       </ng-container>
-                      <ng-container *ngFor="let item of sustitution_goal_ltos">
+                      <ng-container *ngFor="let item of bip_selected.sustitution_goal.goalltos">
                         <div class="row">
                           <p style="font-size: 1.2rem; padding: 20px 10px">
                             Goal Lto
@@ -1004,10 +1009,10 @@
                       caregivers to ensure proper program implementation."
                     </p>
                   </div>
-                  <div *ngIf="!family_envolment || family_envolment === null">
+                  <div *ngIf="!bip_selected.family_envolment || bip_selected.family_envolment === null">
                     <app-no-info></app-no-info>
                   </div>
-                  <ng-container *ngFor="let item of family_envolment">
+                  <ng-container *ngFor="let item of bip_selected.family_envolment?.[0]?.caregivers_training_goals">
                     <div class="row">
                       <div class="col-xs-12 col-sm-4">
                         <div class="detail-personal">
@@ -1089,36 +1094,10 @@
                       <li>Use of reinforcement</li>
                     </ol>
                   </div>
-                  <!-- <ng-container *ngFor="let item of monitoring_evalutating">
-                                        <div class="row">
-                                            <div class="col-xs-12 col-sm-3">
-                                                <div class="detail-personal">
-                                                    <h2>treatment fidelity</h2>
-                                                    <p>{{item.treatment_fidelity}}</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-3">
-                                                <div class="detail-personal">
-                                                    <h2>created_at  </h2>
-                                                    <p>{{item.created_at | date }}</p>
-                                                </div>
-                                            </div>
 
-
-                                        </div>
-                                    </ng-container> -->
-                  <!-- <div
-                    *ngIf="
-                      !monitoring_evalutating ||
-                      monitoring_evalutating === null
-                    "
-                  >
-                    <app-no-info></app-no-info>
-                  </div> -->
-
-                  <div *ngIf="monitoring_evalutating_goals && monitoring_evalutating_goals.length > 0">
+                  <div *ngIf="bip_selected.monitoring_evalutating?.[0]?.rbt_training_goals ">
                     <ng-container
-                    *ngFor="let item of monitoring_evalutating_goals"
+                    *ngFor="let item of bip_selected.monitoring_evalutating?.[0]?.rbt_training_goals"
                   >
                     <div class="row">
                       <p>RBT Training Goals</p>
@@ -1129,24 +1108,12 @@
                         </div>
                       </div>
 
-                      <!-- <div class="col-xs-12 col-sm-3">
-                                                <div class="detail-personal">
-                                                    <h2>goal</h2>
-                                                    <p>{{item.goal}}</p>
-                                                </div>
-                                            </div> -->
                       <div class="col-xs-12 col-sm-6">
                         <div class="detail-personal">
                           <h2>status</h2>
                           <p>{{ item.status }}</p>
                         </div>
                       </div>
-                      <!-- <div class="col-xs-12 col-sm-3">
-                                                <div class="detail-personal">
-                                                    <h2>current status</h2>
-                                                    <p>{{item.current_status}}</p>
-                                                </div>
-                                            </div> -->
                       <div class="col-xs-12 col-sm-6">
                         <div class="detail-personal">
                           <h2>date</h2>
@@ -1164,7 +1131,7 @@
           </div>
         </div>
         <!-- Monitoring Evaluating end-->
-        <!-- behavior asistant -->
+        <!-- behavior asistant (only text) -->
         <div class="row">
           <div class="col-12">
             <div class="card-box">
@@ -1515,13 +1482,13 @@
                   </div>
                   <div
                     *ngIf="
-                      !generalization_training ||
-                      generalization_training === null
+                      !transition_fading_plans ||
+                      transition_fading_plans === null
                     "
                   >
                     <app-no-info></app-no-info>
                   </div>
-                  <ng-container *ngFor="let item of generalization_training">
+                  <ng-container *ngFor="let item of bip_selected.generalization_training">
                     <div class="row">
                       <div class="col-xs-12">
                         <div class="detail-personal">
@@ -1531,7 +1498,7 @@
                       </div>
                     </div>
                   </ng-container>
-                  <ng-container *ngFor="let item of transition_fading_plans">
+                  <ng-container *ngFor="let item of bip_selected.generalization_training?.[0]?.transition_fading_plans">
                     <div class="row">
                       <div class="col-xs-12 col-sm-6">
                         <div class="detail-personal">
@@ -1567,20 +1534,20 @@
                     <div class="col-xs-12">
                       <div class="detail-personal">
                         <h2>crisis description</h2>
-                        <p>{{ crisis_description }}</p>
+                        <p>{{ bip_selected.crisis_plan?.[0]?.crisis_description }}</p>
                       </div>
                     </div>
                     <div class="col-xs-12">
                       <div class="detail-personal">
                         <h2>crisis note</h2>
-                        <p>{{ crisis_note }}</p>
+                        <p>{{ bip_selected.crisis_plan?.[0]?.crisis_note }}</p>
                       </div>
                     </div>
                     <div class="col-xs-12">
                       <div class="detail-personal">
                         <h2>Caregiver Requirements for Prevention of Crisis</h2>
                         <p>
-                          {{ caregiver_requirements_for_prevention_of_crisis }}
+                          {{ bip_selected.crisis_plan?.[0]?.caregiver_requirements_for_prevention_of_crisis }}
                         </p>
                       </div>
                     </div>
@@ -2555,13 +2522,13 @@
                   </div>
                   <div
                     *ngIf="
-                      !de_escalation_techniques ||
-                      de_escalation_techniques === null
+                      !bip_selected.de_escalation_technique ||
+                      bip_selected.de_escalation_technique === null
                     "
                   >
                     <app-no-info></app-no-info>
                   </div>
-                  <ng-container *ngFor="let item of de_escalation_techniques">
+                  <ng-container *ngFor="let item of bip_selected.de_escalation_technique?.[0]?.recomendation_lists">
                     <div class="row">
                       <div class="col-xs-12 col-sm-3">
                         <div class="detail-personal">
@@ -2629,7 +2596,7 @@
                     <div class="col-xs-12 col-sm-3">
                       <div class="detail-personal">
                         <h2>Analyst Signature date</h2>
-                        <p>{{ analyst_signature_date | date }}</p>
+                        <p>{{ consent_to_treatment.analyst_signature_date | date }}</p>
                       </div>
                     </div>
                     <div class="col-xs-12 col-sm-3">
@@ -2650,7 +2617,7 @@
                     <div class="col-xs-12 col-sm-3">
                       <div class="detail-personal">
                         <h2>Guardian Signature day</h2>
-                        <p>{{ parent_guardian_signature_date | date }}</p>
+                        <p>{{ consent_to_treatment.parent_guardian_signature_date | date }}</p>
                       </div>
                     </div>
                   </div>
