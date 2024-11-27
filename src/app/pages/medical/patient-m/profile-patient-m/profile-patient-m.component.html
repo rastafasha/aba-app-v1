@@ -797,12 +797,12 @@
                             <h2>Pay</h2>
                             <span
                               class="badge bg-success"
-                              *ngIf="patient_selected.pay === 'true'"
+                              *ngIf="patient_selected.pay === true"
                               >true</span
                             >
                             <span
                               class="badge bg-danger"
-                              *ngIf="patient_selected.pay === 'false'"
+                              *ngIf="patient_selected.pay === false"
                               >false</span
                             >
                             <!-- <h3>{{patient_selected.pay}}</h3> -->
@@ -852,7 +852,17 @@
                                 </th>
                                 <th>
                                   <h2 style="font-size: 12px; font-weight: 500">
-                                    n Units Asigned
+                                    Units Asigned
+                                  </h2>
+                                </th>
+                                <th>
+                                  <h2 style="font-size: 12px; font-weight: 500">
+                                    Units Aviable
+                                  </h2>
+                                </th>
+                                <th>
+                                  <h2 style="font-size: 12px; font-weight: 500">
+                                     Spent Units
                                   </h2>
                                 </th>
                               </tr>
@@ -860,7 +870,7 @@
                             <tbody>
                               <tr
                                 *ngFor="
-                                  let pa_asses of pa_assessmentgroup;
+                                  let pa_asses of pa_servicesgroup;
                                   let i = index
                                 "
                               >
@@ -883,7 +893,7 @@
                                       font-weight: 500;
                                     "
                                   >
-                                    {{ pa_asses.pa_services_start_date | date }}
+                                    {{ pa_asses.start_date | date }}
                                   </h3>
                                 </td>
                                 <td>
@@ -894,7 +904,7 @@
                                       font-weight: 500;
                                     "
                                   >
-                                    {{ pa_asses.pa_services_end_date | date : "shortDate"  }}
+                                    {{ pa_asses.end_date | date : "shortDate"  }}
                                   </h3>
                                 </td>
                                 <td>
@@ -917,6 +927,28 @@
                                     "
                                   >
                                     {{ pa_asses.n_units }}
+                                  </h3>
+                                </td>
+                                <td>
+                                  <h3
+                                    style="
+                                      font-size: 12px;
+                                      color: rgba(51, 53, 72, 0.5);
+                                      font-weight: 500;
+                                    "
+                                  >
+                                    {{ pa_asses.n_units }}
+                                  </h3>
+                                </td>
+                                <td>
+                                  <h3
+                                    style="
+                                      font-size: 12px;
+                                      color: rgba(51, 53, 72, 0.5);
+                                      font-weight: 500;
+                                    "
+                                  >
+                                    {{ pa_asses.spent_units }}
                                   </h3>
                                 </td>
                               </tr>
