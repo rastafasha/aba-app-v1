@@ -1482,8 +1482,8 @@
                   </div>
                   <div
                     *ngIf="
-                      !bip_selected.generalization_training?.[0]?.transition_fading_plans ||
-                      bip_selected.generalization_training?.[0]?.transition_fading_plans === null
+                      !transition_fading_plans ||
+                      transition_fading_plans === null
                     "
                   >
                     <app-no-info></app-no-info>
@@ -1580,9 +1580,9 @@
                                 class="check"
                                 name="do_not_apply"
                                 disabled="true"
-                                [checked]="bip_selected.crisis_plan?.[0]?.risk_factors.do_not_apply === true"
+                                [checked]="do_not_apply === true"
                                 [ngModelOptions]="{ standalone: true }"
-                                [(ngModel)]="bip_selected.crisis_plan?.[0]?.risk_factors.do_not_apply"
+                                [(ngModel)]="do_not_apply"
                               />
                               <label
                                 _ngcontent-rhp-c92=""
@@ -1617,7 +1617,7 @@
                                 name="elopement"
                                 disabled="true"
                                 [ngModelOptions]="{ standalone: true }"
-                                [(ngModel)]="bip_selected.crisis_plan?.[0]?.risk_factors.elopement"
+                                [(ngModel)]="elopement"
                               />
                               <label
                                 _ngcontent-rhp-c92=""
@@ -1652,7 +1652,7 @@
                                 name="assaultive_behavior"
                                 disabled="true"
                                 [ngModelOptions]="{ standalone: true }"
-                                [(ngModel)]="bip_selected.crisis_plan?.[0]?.risk_factors.assaultive_behavior"
+                                [(ngModel)]="assaultive_behavior"
                               />
                               <label
                                 _ngcontent-rhp-c92=""
@@ -1687,7 +1687,7 @@
                                 name="aggression"
                                 disabled="true"
                                 [ngModelOptions]="{ standalone: true }"
-                                [(ngModel)]="bip_selected.crisis_plan?.[0]?.risk_factors.aggression"
+                                [(ngModel)]="aggression"
                               />
                               <label
                                 _ngcontent-rhp-c92=""
@@ -1721,7 +1721,7 @@
                                 class="check"
                                 name="self_injurious_behavior"
                                 [ngModelOptions]="{ standalone: true }"
-                                [(ngModel)]="bip_selected.crisis_plan?.[0]?.risk_factors.self_injurious_behavior"
+                                [(ngModel)]="self_injurious_behavior"
                               />
                               <label
                                 _ngcontent-rhp-c92=""
@@ -1755,7 +1755,7 @@
                                 class="check"
                                 name="sexually_offending_behavior"
                                 [ngModelOptions]="{ standalone: true }"
-                                [(ngModel)]="bip_selected.crisis_plan?.[0]?.risk_factors.sexually_offending_behavior"
+                                [(ngModel)]="sexually_offending_behavior"
                               />
                               <label
                                 _ngcontent-rhp-c92=""
@@ -1789,7 +1789,7 @@
                                 class="check"
                                 name="fire_setting"
                                 [ngModelOptions]="{ standalone: true }"
-                                [(ngModel)]="bip_selected.crisis_plan?.[0]?.risk_factors.fire_setting"
+                                [(ngModel)]="fire_setting"
                               />
                               <label
                                 _ngcontent-rhp-c92=""
@@ -1823,7 +1823,7 @@
                                 class="check"
                                 name="current_substance_abuse"
                                 [ngModelOptions]="{ standalone: true }"
-                                [(ngModel)]="bip_selected.crisis_plan?.[0]?.risk_factors.current_substance_abuse"
+                                [(ngModel)]="current_substance_abuse"
                               />
                               <label
                                 _ngcontent-rhp-c92=""
@@ -1857,7 +1857,7 @@
                                 class="check"
                                 name="impulsive_behavior"
                                 [ngModelOptions]="{ standalone: true }"
-                                [(ngModel)]="bip_selected.crisis_plan?.[0]?.risk_factors.impulsive_behavior"
+                                [(ngModel)]="impulsive_behavior"
                               />
                               <label
                                 _ngcontent-rhp-c92=""
@@ -1891,7 +1891,7 @@
                                 class="check"
                                 name="psychotic_symptoms"
                                 [ngModelOptions]="{ standalone: true }"
-                                [(ngModel)]="bip_selected.crisis_plan?.[0]?.risk_factors.psychotic_symptoms"
+                                [(ngModel)]="psychotic_symptoms"
                               />
                               <label
                                 _ngcontent-rhp-c92=""
@@ -1925,7 +1925,7 @@
                                 class="check"
                                 name="self_mutilation_cutting"
                                 [ngModelOptions]="{ standalone: true }"
-                                [(ngModel)]="bip_selected.crisis_plan?.[0]?.risk_factors.self_mutilation_cutting"
+                                [(ngModel)]="self_mutilation_cutting"
                               />
                               <label
                                 _ngcontent-rhp-c92=""
@@ -1959,7 +1959,7 @@
                                 class="check"
                                 name="caring_for_ill_family_recipient"
                                 [ngModelOptions]="{ standalone: true }"
-                                [(ngModel)]="bip_selected.crisis_plan?.[0]?.risk_factors.caring_for_ill_family_recipient"
+                                [(ngModel)]="caring_for_ill_family_recipient"
                               />
                               <label
                                 _ngcontent-rhp-c92=""
@@ -1993,7 +1993,7 @@
                                 class="check"
                                 name="current_family_violence"
                                 [ngModelOptions]="{ standalone: true }"
-                                [(ngModel)]="bip_selected.crisis_plan?.[0]?.risk_factors.current_family_violence"
+                                [(ngModel)]="current_family_violence"
                               />
                               <label
                                 _ngcontent-rhp-c92=""
@@ -2028,7 +2028,7 @@
                                 class="check"
                                 name="dealing_with_significant"
                                 [ngModelOptions]="{ standalone: true }"
-                                [(ngModel)]="bip_selected.crisis_plan?.[0]?.risk_factors.dealing_with_significant"
+                                [(ngModel)]="dealing_with_significant"
                               />
                               <label
                                 _ngcontent-rhp-c92=""
@@ -2064,7 +2064,7 @@
                                 name="prior_psychiatric_inpatient_admission"
                                 [ngModelOptions]="{ standalone: true }"
                                 [(ngModel)]="
-                                  bip_selected.crisis_plan?.[0]?.risk_factors.prior_psychiatric_inpatient_admission
+                                  prior_psychiatric_inpatient_admission
                                 "
                               />
                               <label
@@ -2087,7 +2087,7 @@
                             disabled
                             class="form-control"
                             name="other"
-                            [(ngModel)]="bip_selected.crisis_plan?.[0]?.risk_factors.other"
+                            [(ngModel)]="other"
                             type="text"
                           />
                         </div>
@@ -2118,7 +2118,7 @@
                                 name="not_present"
                                 disabled="true"
                                 [ngModelOptions]="{ standalone: true }"
-                                [(ngModel)]="bip_selected.crisis_plan?.[0]?.suicidalities.not_present"
+                                [(ngModel)]="not_present"
                               />
                               <label
                                 _ngcontent-rhp-c92=""
@@ -2151,7 +2151,7 @@
                                 class="check"
                                 name="ideation"
                                 [ngModelOptions]="{ standalone: true }"
-                                [(ngModel)]="bip_selected.crisis_plan?.[0]?.suicidalities.ideation"
+                                [(ngModel)]="ideation"
                               />
                               <label
                                 _ngcontent-rhp-c92=""
@@ -2184,7 +2184,7 @@
                                 class="check"
                                 name="plan"
                                 [ngModelOptions]="{ standalone: true }"
-                                [(ngModel)]="bip_selected.crisis_plan?.[0]?.suicidalities.plan"
+                                [(ngModel)]="plan"
                               />
                               <label
                                 _ngcontent-rhp-c92=""
@@ -2217,7 +2217,7 @@
                                 class="check"
                                 name="means"
                                 [ngModelOptions]="{ standalone: true }"
-                                [(ngModel)]="bip_selected.crisis_plan?.[0]?.suicidalities.means"
+                                [(ngModel)]="means"
                               />
                               <label
                                 _ngcontent-rhp-c92=""
@@ -2250,7 +2250,7 @@
                                 class="check"
                                 name="prior_attempt"
                                 [ngModelOptions]="{ standalone: true }"
-                                [(ngModel)]="bip_selected.crisis_plan?.[0]?.suicidalities.prior_attempt"
+                                [(ngModel)]="prior_attempt"
                               />
                               <label
                                 _ngcontent-rhp-c92=""
@@ -2288,7 +2288,7 @@
                                 class="check"
                                 name="not_present_homicidality"
                                 [ngModelOptions]="{ standalone: true }"
-                                [(ngModel)]="bip_selected.crisis_plan?.[0]?.homicidalities.not_present_homicidality"
+                                [(ngModel)]="not_present_homicidality"
                               />
                               <label
                                 _ngcontent-rhp-c92=""
@@ -2321,7 +2321,7 @@
                                 class="check"
                                 name="ideation_homicidality"
                                 [ngModelOptions]="{ standalone: true }"
-                                [(ngModel)]="bip_selected.crisis_plan?.[0]?.homicidalities.ideation_homicidality"
+                                [(ngModel)]="ideation_homicidality"
                               />
                               <label
                                 _ngcontent-rhp-c92=""
@@ -2354,7 +2354,7 @@
                                 class="check"
                                 name="plan_homicidality"
                                 [ngModelOptions]="{ standalone: true }"
-                                [(ngModel)]="bip_selected.crisis_plan?.[0]?.homicidalities.plan_homicidality"
+                                [(ngModel)]="plan_homicidality"
                               />
                               <label
                                 _ngcontent-rhp-c92=""
@@ -2388,7 +2388,7 @@
                                 disabled="true"
                                 name="means_homicidality"
                                 [ngModelOptions]="{ standalone: true }"
-                                [(ngModel)]="bip_selected.crisis_plan?.[0]?.homicidalities.means_homicidality"
+                                [(ngModel)]="means_homicidality"
                               />
                               <label
                                 _ngcontent-rhp-c92=""
@@ -2422,7 +2422,7 @@
                                 disabled="true"
                                 name="prior_attempt_homicidality"
                                 [ngModelOptions]="{ standalone: true }"
-                                [(ngModel)]="bip_selected.crisis_plan?.[0]?.homicidalities.prior_attempt_homicidality"
+                                [(ngModel)]="prior_attempt_homicidality"
                               />
                               <label
                                 _ngcontent-rhp-c92=""
@@ -2596,7 +2596,7 @@
                     <div class="col-xs-12 col-sm-3">
                       <div class="detail-personal">
                         <h2>Analyst Signature date</h2>
-                        <p>{{ bip_selected.consent_to_treatment?.[0]?.analyst_signature_date | date }}</p>
+                        <p>{{ consent_to_treatment.analyst_signature_date | date }}</p>
                       </div>
                     </div>
                     <div class="col-xs-12 col-sm-3">
@@ -2617,7 +2617,7 @@
                     <div class="col-xs-12 col-sm-3">
                       <div class="detail-personal">
                         <h2>Guardian Signature day</h2>
-                        <p>{{ bip_selected.consent_to_treatment?.[0]?.parent_guardian_signature_date | date }}</p>
+                        <p>{{ consent_to_treatment.parent_guardian_signature_date | date }}</p>
                       </div>
                     </div>
                   </div>
