@@ -177,10 +177,12 @@ export class BipProfileComponent implements OnInit {
         
 
         this.rbt_training_goals = resp.bip.monitoring_evalutating?.[0]?.rbt_training_goals;
-        // const jsonObj84 = JSON.parse(this.rbt_training_goals) || '';
-        // this.rbt_training_goals = jsonObj84;
 
-        // console.log(this.rbt_training_goals);
+        this.caregivers_training_goals = resp.bip.family_envolment?.[0]?.caregivers_training_goals;
+        const jsonObj84 = JSON.parse(this.caregivers_training_goals) || '';
+        this.caregivers_training_goals = jsonObj84;
+
+        console.log(this.caregivers_training_goals);
 
         // ------consent_to_treatment
         this.consent_to_treatment = resp.bip.consent_to_treatment[0];
