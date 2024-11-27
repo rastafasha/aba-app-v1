@@ -15,55 +15,55 @@ export class CrisisPlanComponent {
   text_validation = '';
   text_success = '';
 
-  client_id: any;
+  client_id: number;
   user: AppUser;
-  doctor_id: any;
+  doctor_id: number;
   client_selected: any;
   patient_id: any;
   bip_selected: any;
-  bip_selectedId: any;
-  bip_selectedIdd: any;
+  bip_selectedId: number;
+  bip_selectedIdd: number;
   maladaptives: any;
 
-  risk_factors: any;
-  do_not_apply: any;
-  elopement: any;
-  assaultive_behavior: any;
-  aggression: any;
-  self_injurious_behavior: any;
-  sexually_offending_behavior: any;
-  fire_setting: any;
-  current_substance_abuse: any;
-  impulsive_behavior: any;
-  psychotic_symptoms: any;
-  self_mutilation_cutting: any;
-  caring_for_ill_family_recipient: any;
-  current_family_violence: any;
-  dealing_with_significant: any;
-  prior_psychiatric_inpatient_admission: any;
-  other: any;
+  risk_factors: any = [];
+  do_not_apply: boolean;
+  elopement: boolean;
+  assaultive_behavior: boolean;
+  aggression: boolean;
+  self_injurious_behavior: boolean;
+  sexually_offending_behavior: boolean;
+  fire_setting: boolean;
+  current_substance_abuse: boolean;
+  impulsive_behavior: boolean;
+  psychotic_symptoms: boolean;
+  self_mutilation_cutting: boolean;
+  caring_for_ill_family_recipient: boolean;
+  current_family_violence: boolean;
+  dealing_with_significant: boolean;
+  prior_psychiatric_inpatient_admission: boolean;
+  other: string;
 
-  suicidalities: any;
+  suicidalities:any = [];
   not_present: any;
   ideation: any;
   plan: any;
   means: any;
   prior_attempt: any;
 
-  homicidalities: any;
-  not_present_homicidality: any;
-  ideation_homicidality: any;
-  plan_homicidality: any;
-  means_homicidality: any;
-  prior_attempt_homicidality: any;
+  homicidalities: any = [];
+  not_present_homicidality: boolean;
+  ideation_homicidality: boolean;
+  plan_homicidality: boolean;
+  means_homicidality: boolean;
+  prior_attempt_homicidality: boolean;
 
   crisisPlans = [];
   caregiver_requirements_for_prevention_of_crisis = [];
-  crisisplanId: any;
-  crisis_description: any;
-  crisis_note: any;
-  client_id_crisisPlans: any;
-  crisisid: any;
+  crisisplanId: number;
+  crisis_description: string;
+  crisis_note: string;
+  client_id_crisisPlans: number;
+  crisisid: number;
 
   constructor(
     private bipService: BipService,
@@ -243,7 +243,7 @@ export class CrisisPlanComponent {
 
     //si existe un elemento actualiza ese elemento en la lista
     if (this.risk_factors.length > 0) {
-      this.risk_factors.splice(this.risk_factors, 1);
+      // this.risk_factors.splice(this.risk_factors, 1);
       Swal.fire('Updated', `Risk option added!`, 'success');
     } else {
       Swal.fire('Warning', `Must add less one`, 'warning');
@@ -278,7 +278,7 @@ export class CrisisPlanComponent {
     console.log(this.suicidalities);
     //si existe un elemento actualiza ese elemento en la lista
     if (this.suicidalities.length > 0) {
-      this.suicidalities.splice(this.suicidalities, 1);
+      // this.suicidalities.splice(this.suicidalities, 1);
       Swal.fire('Updated', `Suicidality option added!`, 'success');
     } else {
       Swal.fire('Warning', `Must add less one`, 'warning');
@@ -290,7 +290,7 @@ export class CrisisPlanComponent {
     this.suicidalities.splice(i, 1);
   }
   addHomicidality() {
-
+    
     if (this.homicidalities) {
       this.homicidalities.push({
         not_present_homicidality: this.not_present_homicidality,
@@ -313,7 +313,7 @@ export class CrisisPlanComponent {
     console.log(this.homicidalities);
     //si existe un elemento actualiza ese elemento en la lista
     if (this.homicidalities.length > 0) {
-      this.homicidalities.splice(this.homicidalities, 1);
+      // this.homicidalities.splice(this.homicidalities, 1);
       Swal.fire('Updated', `Homicidality option added!`, 'success');
     } else {
       Swal.fire('Warning', `Must add less one`, 'warning');
@@ -324,7 +324,7 @@ export class CrisisPlanComponent {
     this.homicidalities.splice(i, 1);
   }
 
-  save() {debugger
+  save() {
     this.text_validation = '';
     // if(!this.crisis_description || !this.crisis_note || !this.caregiver_requirements_for_prevention_of_crisis){
     //   this.text_validation = 'All Fields (*) are required';

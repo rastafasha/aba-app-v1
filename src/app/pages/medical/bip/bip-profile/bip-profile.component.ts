@@ -223,9 +223,11 @@ export class BipProfileComponent implements OnInit {
         this.family_envolment =
           this.bip_selected.family_envolment[0]?.caregivers_training_goals;
 
+          console.log(Array.isArray(this.monitoring_evalutating_goals)); // Should log true if it's an array
         this.monitoring_evalutating = this.bip_selected.monitoring_evalutating;
         this.monitoring_evalutating_goals =
           this.bip_selected.monitoring_evalutating[0]?.rbt_training_goals;
+          console.log(this.monitoring_evalutating_goals);
         this.generalization_training =
           this.bip_selected.generalization_training;
         this.transition_fading_plans =

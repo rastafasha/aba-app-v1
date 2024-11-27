@@ -1107,15 +1107,17 @@
 
                                         </div>
                                     </ng-container> -->
-                  <div
+                  <!-- <div
                     *ngIf="
                       !monitoring_evalutating ||
                       monitoring_evalutating === null
                     "
                   >
                     <app-no-info></app-no-info>
-                  </div>
-                  <ng-container
+                  </div> -->
+
+                  <div *ngIf="monitoring_evalutating_goals && monitoring_evalutating_goals.length > 0">
+                    <ng-container
                     *ngFor="let item of monitoring_evalutating_goals"
                   >
                     <div class="row">
@@ -1154,6 +1156,8 @@
                     </div>
                     <hr />
                   </ng-container>
+                  </div>
+                  
                 </div>
               </div>
             </div>
