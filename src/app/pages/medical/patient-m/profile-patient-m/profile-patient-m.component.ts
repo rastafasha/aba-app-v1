@@ -14,6 +14,11 @@ import { PatientMService } from '../service/patient-m.service';
 import { AppUser } from 'src/app/core/models/users.model';
 import { map, switchMap } from 'rxjs';
 
+import {
+  PatientV2,
+} from 'src/app/core/models';
+import { PatientsV2Service } from 'src/app/core/services/patients.v2.service';
+import { PaServiceService } from '../service/pa-service.service';
 // eslint-disable-next-line no-var
 declare var $: any;
 
@@ -27,6 +32,7 @@ export class ProfilePatientMComponent implements OnInit {
   @ViewChild('contentToConvert') contentToConvert!: ElementRef;
   patient_id: number;
   client_id: number;
+  patientV2: PatientV2;
 
   patientProfile: any[];
   option_selected = 1;
@@ -41,7 +47,7 @@ export class ProfilePatientMComponent implements OnInit {
   text_validation = '';
 
   imagenSerUrl = environment.url_media;
-  pa_assessmentgroup = [];
+  pa_servicesgroup = [];
   pa_assessmentss = [];
 
   FILES = [];
@@ -92,7 +98,9 @@ export class ProfilePatientMComponent implements OnInit {
     private insuranceService: InsuranceService,
     private _sanitizer: DomSanitizer,
     private authService: AuthService,
-    private location: Location
+    private location: Location,
+    private patientVsService: PatientsV2Service,
+    private paSerService: PaServiceService,
   ) {}
 
   ngOnInit(): void {
@@ -103,7 +111,7 @@ export class ProfilePatientMComponent implements OnInit {
       this.patient_id = resp['patient_id'];
       this.getPatient();
     });
-    this.getConfig();
+    // this.getConfig();
     this.user = this.authService.user as AppUser;
     this.doctor_id = this.user.id;
     this.location_id = this.user.location_id;
@@ -126,7 +134,7 @@ export class ProfilePatientMComponent implements OnInit {
     return false;
   }
 
-  getConfig() {
+  /*getConfig() {
     this.patientService.listConfig(this.location_id).subscribe((resp) => {
       // this.specialists = resp.specialists;
       // this.insurances = resp.insurances;
@@ -140,20 +148,20 @@ export class ProfilePatientMComponent implements OnInit {
       //   // this.insurer_name = resp.insurer_name;
       // });
     });
-  }
+  }*/
 
   getPatient() {
     const consulta$ = this.client_id
       ? this.patientService.showPatientProfile(this.client_id)
-      : this.patientService
-          .getPatientByPatientId(this.patient_id)
+      : this.patientVsService
+          .list()
           .pipe(
             switchMap((resp) =>
-              this.patientService.showPatientProfile(resp.patient.id)
+              this.patientVsService.get(this.client_id)
             )
           );
     consulta$.subscribe((resp) => {
-      // console.log(resp);
+      console.log(resp);
       this.patient_selected = resp.patient;
       this.patient_id = resp.patient.patient_id;
       this.avatar = resp.patient.avatar;
@@ -179,7 +187,8 @@ export class ProfilePatientMComponent implements OnInit {
       this.getDoctorBcba2();
       this.getDoctorDirector();
       this.getInsurer()
-      this.getInsurerSecundary()
+      this.getInsurerSecundary();
+      this.getPaServices();
     });
   }
 
@@ -229,6 +238,12 @@ export class ProfilePatientMComponent implements OnInit {
   getInsurerSecundary() {
     this.insuranceService.getServicesId(this.insurer_secondary_id).subscribe((resp) => {
       this.insurer_name_secondary = resp.insurance.name;
+    });
+  }
+  getPaServices() {
+    this.paSerService.getPatientPaServices(this.patient_id).subscribe((resp) => {
+      this.pa_servicesgroup = resp.pa_services;
+      console.log(resp);
     });
   }
 
