@@ -341,12 +341,13 @@
                           <p>{{ malad.baseline_date | date }}</p>
                         </div>
                       </div>
-                      <app-chart-reduction
+                      <h2 class="text-center">Grafico</h2>
+                      <!-- <app-chart-reduction
                         [maladaptive_behavior]="malad.maladaptive_behavior"
                         [baseline_date]="malad.baseline_date"
                         [baseline_level]="malad.baseline_level"
                         [initial_interesting]="malad.initial_interesting"
-                      ></app-chart-reduction>
+                      ></app-chart-reduction> -->
                     </ng-container>
                   </div>
                 </div>
@@ -811,7 +812,8 @@
                           </div>
                         </div>
                       </ng-container>
-                      <app-chart-reduction [maladaptive_behavior]="item.maladaptive"  [baseline_date]="item.baseline_date" [baseline_level]="item.baseline_level" [initial_interesting]="item.initial_interesting"></app-chart-reduction>
+                      <h2 class="text-center">Grafico</h2>
+                      <!-- <app-chart-reduction [maladaptive_behavior]="item.maladaptive"  [baseline_date]="item.baseline_date" [baseline_level]="item.baseline_level" [initial_interesting]="item.initial_interesting"></app-chart-reduction> -->
                     </ng-container>
                   </div>
                 </div>
@@ -833,37 +835,37 @@
                     <div *ngIf="!bip_selected.sustitution_goal || bip_selected.sustitution_goal === null">
                       <app-no-info></app-no-info>
                     </div>
-                    <ng-container *ngFor="let item of bip_selected.sustitution_goal">
+                    <ng-container *ngFor="let itemsg of bip_selected.sustitution_goal">
                       <div class="col-xs-12 bg-gray">
                         <div class="row">
                           <div class="col-xs-12 col-sm-4">
                             <div class="detail-personal">
                               <h2>Goal</h2>
-                              <p>{{ item.goal }}</p>
+                              <p>{{ itemsg.goal }}</p>
                             </div>
                           </div>
                           <div class="col-xs-12 col-sm-4">
                             <div class="detail-personal">
                               <h2>Current Status</h2>
-                              <p>{{ item.current_status }}</p>
+                              <p>{{ itemsg.current_status }}</p>
                             </div>
                           </div>
                           <div class="col-xs-12 col-sm-4">
                             <div class="detail-personal">
                               <h2>Created at</h2>
-                              <p>{{ item.created_at | date }}</p>
+                              <p>{{ itemsg.created_at | date }}</p>
                             </div>
                           </div>
                           <div class="col-xs-12">
                             <div class="detail-personal">
                               <h2>Description</h2>
-                              <p>{{ item.description }}</p>
+                              <p>{{ itemsg.description }}</p>
                             </div>
                           </div>
                         </div>
                       </div>
                       <hr />
-                      <ng-container *ngFor="let item of bip_selected.sustitution_goal.goalstos">
+                      <ng-container *ngFor="let itemsgst of bip_selected.sustitution_goal.goalstos">
                         <div class="row">
                           <p style="font-size: 1.2rem; padding: 20px 10px">
                             Goal Sto
@@ -871,39 +873,39 @@
                           <div class="col-xs-12 col-sm-3">
                             <div class="detail-personal">
                               <h2>Sto</h2>
-                              <p>{{ item.sustitution_sto }}</p>
+                              <p>{{ itemsgst.sustitution_sto }}</p>
                             </div>
                           </div>
 
                           <div class="col-xs-12 col-sm-3">
                             <div class="detail-personal">
                               <h2>Target</h2>
-                              <p>{{ item.target }}</p>
+                              <p>{{ itemsgst.target }}</p>
                             </div>
                           </div>
                           <div class="col-xs-12 col-sm-3">
                             <div class="detail-personal">
                               <h2>Sustitution Status</h2>
-                              <p>{{ item.sustitution_status_sto }}</p>
+                              <p>{{ itemsgst.sustitution_status_sto }}</p>
                             </div>
                           </div>
 
                           <div class="col-xs-12 col-sm-3">
                             <div class="detail-personal">
                               <h2>Date</h2>
-                              <p>{{ item.sustitution_date_sto | date }}</p>
+                              <p>{{ itemsgst.sustitution_date_sto | date }}</p>
                             </div>
                           </div>
                           <div class="col-xs-12">
                             <div class="detail-personal">
                               <h2>Description</h2>
-                              <p>{{ item.sustitution_decription_sto }}</p>
+                              <p>{{ itemsgst.sustitution_decription_sto }}</p>
                             </div>
                           </div>
                         </div>
                         <hr />
                       </ng-container>
-                      <ng-container *ngFor="let item of bip_selected.sustitution_goal.goalltos">
+                      <ng-container *ngFor="let itemglt of bip_selected.sustitution_goal.goalltos">
                         <div class="row">
                           <p style="font-size: 1.2rem; padding: 20px 10px">
                             Goal Lto
@@ -911,35 +913,36 @@
                           <div class="col-xs-12 col-sm-3">
                             <div class="detail-personal">
                               <h2>Lto</h2>
-                              <p>{{ item.sustitution_lto }}</p>
+                              <p>{{ itemglt.sustitution_lto }}</p>
                             </div>
                           </div>
 
                           <div class="col-xs-12 col-sm-3">
                             <div class="detail-personal">
                               <h2>sustitution Status</h2>
-                              <p>{{ item.sustitution_status_lto }}</p>
+                              <p>{{ itemglt.sustitution_status_lto }}</p>
                             </div>
                           </div>
                           <div class="col-xs-12 col-sm-3">
                             <div class="detail-personal">
                               <h2>decription</h2>
-                              <p>{{ item.sustitution_decription_lto }}</p>
+                              <p>{{ itemglt.sustitution_decription_lto }}</p>
                             </div>
                           </div>
                           <div class="col-xs-12 col-sm-3">
                             <div class="detail-personal">
                               <h2>date</h2>
-                              <p>{{ item.sustitution_date_lto | date }}</p>
+                              <p>{{ itemglt.sustitution_date_lto | date }}</p>
                             </div>
                           </div>
                         </div>
                         <hr />
                       </ng-container>
-                      <app-chart-replacement
+                      <h2 class="text-center">Grafico</h2>
+                      <!-- <app-chart-replacement
                         [goal]="item.goal"
                         [baseline_d]="item.created_at"
-                      ></app-chart-replacement>
+                      ></app-chart-replacement> -->
                     </ng-container>
                   </div>
                 </div>
@@ -1009,10 +1012,10 @@
                       caregivers to ensure proper program implementation."
                     </p>
                   </div>
-                  <div *ngIf="!bip_selected.family_envolment || bip_selected.family_envolment === null">
+                  <div *ngIf="!caregivers_training_goals || caregivers_training_goals === null">
                     <app-no-info></app-no-info>
                   </div>
-                  <ng-container *ngFor="let item of bip_selected.family_envolment?.[0]?.caregivers_training_goals">
+                  <ng-container *ngFor="let item of caregivers_training_goals">
                     <div class="row">
                       <div class="col-xs-12 col-sm-4">
                         <div class="detail-personal">
@@ -1095,29 +1098,29 @@
                     </ol>
                   </div>
 
-                  <div *ngIf="bip_selected.monitoring_evalutating?.[0]?.rbt_training_goals ">
+                  <div *ngIf="rbt_training_goals ">
                     <ng-container
-                    *ngFor="let item of bip_selected.monitoring_evalutating?.[0]?.rbt_training_goals"
+                    *ngFor="let itemrtg of rbt_training_goals"
                   >
                     <div class="row">
                       <p>RBT Training Goals</p>
                       <div class="col-xs-12">
                         <div class="detail-personal">
                           <h2>lto</h2>
-                          <p>{{ item.lto }}</p>
+                          <p>{{ itemrtg.lto }}</p>
                         </div>
                       </div>
 
                       <div class="col-xs-12 col-sm-6">
                         <div class="detail-personal">
                           <h2>status</h2>
-                          <p>{{ item.status }}</p>
+                          <p>{{ itemrtg.status }}</p>
                         </div>
                       </div>
                       <div class="col-xs-12 col-sm-6">
                         <div class="detail-personal">
                           <h2>date</h2>
-                          <p>{{ item.date | date }}</p>
+                          <p>{{ itemrtg.date | date }}</p>
                         </div>
                       </div>
                     </div>
@@ -1488,28 +1491,27 @@
                   >
                     <app-no-info></app-no-info>
                   </div>
-                  <ng-container *ngFor="let item of bip_selected.generalization_training">
-                    <div class="row">
-                      <div class="col-xs-12">
-                        <div class="detail-personal">
-                          <h2>discharge plan</h2>
-                          <p>{{ item.discharge_plan }}</p>
-                        </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div class="detail-personal">
+                        <h2>discharge plan</h2>
+                        <p>{{ discharge_plan }}</p>
                       </div>
                     </div>
-                  </ng-container>
-                  <ng-container *ngFor="let item of bip_selected.generalization_training?.[0]?.transition_fading_plans">
+                  </div>
+                  
+                  <ng-container *ngFor="let itemtr of transition_fading_plans">
                     <div class="row">
                       <div class="col-xs-12 col-sm-6">
                         <div class="detail-personal">
                           <h2>phase</h2>
-                          <p>{{ item.phase }}</p>
+                          <p>{{ itemtr.phase }}</p>
                         </div>
                       </div>
                       <div class="col-xs-12 col-sm-6">
                         <div class="detail-personal">
                           <h2>description</h2>
-                          <p>{{ item.description }}</p>
+                          <p>{{ itemtr.description }}</p>
                         </div>
                       </div>
                     </div>
@@ -1534,20 +1536,20 @@
                     <div class="col-xs-12">
                       <div class="detail-personal">
                         <h2>crisis description</h2>
-                        <p>{{ bip_selected.crisis_plan?.[0]?.crisis_description }}</p>
+                        <p>{{ crisis_description}}</p>
                       </div>
                     </div>
                     <div class="col-xs-12">
                       <div class="detail-personal">
                         <h2>crisis note</h2>
-                        <p>{{ bip_selected.crisis_plan?.[0]?.crisis_note }}</p>
+                        <p>{{ crisis_note }}</p>
                       </div>
                     </div>
                     <div class="col-xs-12">
                       <div class="detail-personal">
                         <h2>Caregiver Requirements for Prevention of Crisis</h2>
                         <p>
-                          {{ bip_selected.crisis_plan?.[0]?.caregiver_requirements_for_prevention_of_crisis }}
+                          {{ caregiver_requirements_for_prevention_of_crisis }}
                         </p>
                       </div>
                     </div>
@@ -2522,42 +2524,48 @@
                   </div>
                   <div
                     *ngIf="
-                      !bip_selected.de_escalation_technique ||
-                      bip_selected.de_escalation_technique === null
+                      !recomendation_lists ||
+                      recomendation_lists === null
                     "
                   >
                     <app-no-info></app-no-info>
                   </div>
-                  <ng-container *ngFor="let item of bip_selected.de_escalation_technique?.[0]?.recomendation_lists">
+                  <ng-container *ngFor="let itemrl of recomendation_lists">
                     <div class="row">
                       <div class="col-xs-12 col-sm-3">
                         <div class="detail-personal">
                           <h2>cpt</h2>
-                          <p>{{ item.cpt }}</p>
+                          <p>{{ itemrl.cpt }}</p>
+                        </div>
+                      </div>
+                      <div class="col-xs-12 col-sm-3">
+                        <div class="detail-personal">
+                          <h2>nombre</h2>
+                          <p>{{ itemrl.nombre }}</p>
                         </div>
                       </div>
                       <div class="col-xs-12 col-sm-3">
                         <div class="detail-personal">
                           <h2>num units</h2>
-                          <p>{{ item.num_units }}</p>
+                          <p>{{ itemrl.num_units }}</p>
                         </div>
                       </div>
                       <div class="col-xs-12 col-sm-3">
                         <div class="detail-personal">
                           <h2>breakdown per week</h2>
-                          <p>{{ item.breakdown_per_week }}</p>
+                          <p>{{ itemrl.breakdown_per_week }}</p>
                         </div>
                       </div>
                       <div class="col-xs-12 col-sm-3">
                         <div class="detail-personal">
                           <h2>location</h2>
-                          <p>{{ item.location }}</p>
+                          <p>{{ itemrl.location }}</p>
                         </div>
                       </div>
                       <div class="col-xs-12">
                         <div class="detail-personal">
                           <h2>description service</h2>
-                          <p>{{ item.description_service }}</p>
+                          <p>{{ itemrl.description_service }}</p>
                         </div>
                       </div>
                     </div>
