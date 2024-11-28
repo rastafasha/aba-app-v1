@@ -210,15 +210,30 @@ export class EditPatientMComponent implements OnInit {
   onSave() {
     if (this.form.invalid) return;
 
-    this.useCases.savePatient(this.form.getRawValue(), this.id).subscribe({
-      next: (resp) => {
-        Swal.fire('Updated', `Saved successfully!`, 'success');
-        this.patient = resp.data;
-      },
-      error: () => {
-        Swal.fire('Error', `Can't update!`, 'error');
-      },
-    });
+    if(this.id){
+      this.useCases.savePatient(this.form.getRawValue(), this.id).subscribe({
+        next: (resp) => {
+          Swal.fire('Updated', `Saved successfully!`, 'success');
+          this.patient = resp.data;
+        },
+        error: () => {
+          Swal.fire('Error', `Can't update!`, 'error');
+        },
+      });
+      
+    }else{
+      this.useCases.savePatientCreate(this.form.getRawValue()).subscribe({
+        next: (resp) => {
+          Swal.fire('Created', `Saved successfully!`, 'success');
+          this.patient = resp.data;
+          },
+          error: () => {
+            Swal.fire('Error', `Can't create!`, 'error');
+            },
+          });
+
+    }
+
   }
   // PA
 
@@ -240,6 +255,8 @@ export class EditPatientMComponent implements OnInit {
     this.form.patchValue({ pa_services: pa_services_removed });
     this.patient.pa_services = pa_services_removed;
   }
+
+  
 
   //FILE:
   // Aclaraciones
