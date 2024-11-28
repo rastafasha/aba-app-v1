@@ -126,15 +126,6 @@
                       [(ngModel)]="pos"
                       type="text"
                     />
-                    <!-- <select
-                                        class="form-control form-select-solid fw-bolder"
-                                        name="pos" [(ngModel)]="pos" disabled>
-                                        <option>-- Select --</option>
-                                        <option value="03">03 School</option>
-                                        <option value="12">12 Home</option>
-                                        <option value="02">02 Telehealth</option>
-                                        <option value="99">99 Other</option>
-                                          </select> -->
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
@@ -237,7 +228,6 @@
                             [(ngModel)]="selectedValueTimeIn"
                             name="time_in"
                           />
-                          <!-- <ngx-material-timepicker-toggle matSuffix [for]="toggleTimepicker"></ngx-material-timepicker-toggle> -->
                           <ngx-material-timepicker
                             (timeChanged)="hourTimeInSelected($event)"
                             #toggleTimepicker
@@ -259,7 +249,6 @@
                             class="form-control"
                             name="time_out"
                           />
-                          <!-- <ngx-material-timepicker-toggle [for]="toggleTimepicker2"></ngx-material-timepicker-toggle> -->
                           <ngx-material-timepicker
                             (timeChanged)="hourTimeOutSelected($event)"
                             #toggleTimepicker2

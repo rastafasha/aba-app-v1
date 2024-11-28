@@ -180,31 +180,7 @@
                   </div>
                 </div>
                 <!--  fin units -->
-                <!-- <div class="col-12 col-md-6 col-xl-3">
-                  <div class="form-group local-forms">
-                    <label>CPT Code <span class="login-danger">*</span></label>
-                    <mat-select
-                      [(ngModel)]="selectedPaService"
-                      name="pa_service"
-                      (selectionChange)="onPaServiceSelect($event)"
-                      class="form-control select"
-                      placeholder="Select Service"
-                    >
-                      <mat-option
-                        *ngFor="let service of pa_services"
-                        [value]="service"
-                      >
-                        ({{ service.cpt }})
-                      </mat-option>
-                    </mat-select>
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-xl-3">
-                  <app-units-display
-                    [service]="selectedPaService" 
-                    [newUnits]="projectedUnits">
-                  </app-units-display>
-                </div> -->
+                
                 
                 <div class="col-12 col-md-3">
                   <div class="form-group local-forms">
@@ -265,7 +241,6 @@
                             [(ngModel)]="selectedValueTimeIn"
                             name="time_in"
                           />
-                          <!-- <ngx-material-timepicker-toggle matSuffix [for]="toggleTimepicker"></ngx-material-timepicker-toggle> -->
                           <ngx-material-timepicker
                             (timeChanged)="hourTimeInSelected($event)"
                             #toggleTimepicker

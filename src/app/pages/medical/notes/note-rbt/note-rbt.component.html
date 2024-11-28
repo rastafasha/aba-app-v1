@@ -193,15 +193,15 @@
                               <label
                                 >Time In <span class="login-danger">*</span></label
                               >
+                              <!-- max="12:00" -->
                               <input
                                 [value]="selectedValueTimeIn"
                                 [ngxTimepicker]="toggleTimepicker"
                                 readonly
                                 [format]="24"
-                                max="12:00"
                                 class="form-control"
-                                name="time_in"
                                 [(ngModel)]="selectedValueTimeIn"
+                                name="time_in"
                               />
                               <ngx-material-timepicker
                                 (timeChanged)="hourTimeInSelected($event)"
