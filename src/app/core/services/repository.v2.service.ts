@@ -56,6 +56,16 @@ export abstract class RepositoryV2Service<T> {
     );
   }
 
+  updateStatus(data: any, id: number) {
+    const URL = this.endpoint + '/update-status/' + id;
+    return this.http.put<ApiV2Response<T>>(URL, this.untransform(data)).pipe(
+      map((response) => ({
+        ...response,
+        data: this.transform(response.data),
+      }))
+    );
+  }
+
   delete(id: number) {
     const URL = this.endpoint + '/' + id;
     return this.http.delete<void>(URL);

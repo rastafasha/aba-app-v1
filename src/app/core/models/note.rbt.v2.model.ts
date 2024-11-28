@@ -13,6 +13,7 @@ export class NoteRbtV2 {
   client_id: number;
   patient_code: string;
   patient_identifier: string;
+  insurance_identifier: string;
   doctor_id: number;
 
   provider_id: number;
@@ -72,6 +73,7 @@ export class NoteRbtV2 {
       id: NumberOrNullOrUndefined(data.id),
       doctor_id: NumberOrNullOrUndefined(data.doctor_id),
       patient_id: NumberOrNullOrUndefined(data.patient_id),
+      insurance_identifier: StringOrNullOrUndefined(data.insurance_identifier),
       client_id:
         NumberOrNullOrUndefined(data.client_id) ??
         NumberOrNullOrUndefined(data.patient_id),
