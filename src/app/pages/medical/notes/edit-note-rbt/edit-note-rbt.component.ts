@@ -29,9 +29,8 @@ export class EditNoteRbtComponent implements OnInit {
   text_success = '';
   text_validation = '';
 
-  selectedValueProvider!: string;
-  selectedValueRBT!: string;
-  selectedValueBCBA!: string;
+  
+
   selectedValueCode!: string;
   selectedValueTimeIn = '';
   selectedValueTimeOut = '';
@@ -41,6 +40,17 @@ export class EditNoteRbtComponent implements OnInit {
   selectedValueMaladaptive!: string;
   option_selected = 0;
   isGeneratingSummary = false;
+
+  
+
+  selectedValueRBT!: string;
+  selectedValueRenderingProvider!: string;
+  selectedValueProviderRBT_id!: number;
+
+  selectedValueBCBA!: string;
+  selectedValueAbaSupervisor!: string;
+  selectedValueBcba_id!: number;
+
 
   client_id: any;
   patient_id: any;
@@ -260,11 +270,12 @@ export class EditNoteRbtComponent implements OnInit {
 
       this.selectedValueCode = this.note_selected.cpt_code;
 
-      this.selectedValueProviderName = this.note_selected.provider_name_g
-        ? this.note_selected.provider_name_g
-        : null;
-      this.selectedValueRBT = this.note_selected.provider_name;
-      this.selectedValueBCBA = this.note_selected.supervisor_name;
+      this.selectedValueRBT = resp.noteRbt.provider.name;
+      this.selectedValueProviderRBT_id =resp.noteRbt.provider_id;
+      
+      this.selectedValueBCBA = resp.noteRbt.supervisor.name;
+      this.selectedValueBcba_id =resp.noteRbt.supervisor_id;
+      // console.log(this.selectedValueRendering );
 
       this.interventions = resp.interventions;
       const jsonObj = JSON.parse(resp.interventions) || '';
@@ -366,6 +377,8 @@ export class EditNoteRbtComponent implements OnInit {
         this.insurer_id = resp.patient.insurer_id;
         this.insurance_identifier = resp.patient.insurance_identifier;
         this.patientLocation_id = resp.patient.location_id;
+
+        
 
         // this.pos = JSON.parse(resp.patient.pos_covered) ;
         this.pos = resp.patient.pos_covered;
@@ -722,7 +735,7 @@ export class EditNoteRbtComponent implements OnInit {
 
     const formData = new FormData();
     formData.append('patient_id', this.patientId);
-    formData.append('doctor_id', this.selectedValueProviderName);
+    formData.append('doctor_id', this.selectedValueProviderRBT_id+'');
     formData.append('bip_id', this.bip_id);
     formData.append('first_name', this.first_name);
     formData.append('last_name', this.last_name);
@@ -772,15 +785,16 @@ export class EditNoteRbtComponent implements OnInit {
     if (this.environmental_changes) {
       formData.append('environmental_changes', this.environmental_changes);
     }
-    if (this.selectedValueProviderName) {
-      formData.append('provider_id', this.selectedValueProviderName);
+    
+    if (this.selectedValueRenderingProvider) {
+      formData.append('provider_id', this.selectedValueRenderingProvider);
     }
     
-    if (this.selectedValueRBT) {
-      formData.append('provider_name', this.selectedValueRBT);
+    if (this.selectedValueProviderRBT_id) {
+      formData.append('provider_id', this.selectedValueProviderRBT_id+'');
     }
-    if (this.selectedValueBCBA) {
-      formData.append('supervisor_id', this.selectedValueBCBA);
+    if (this.selectedValueBcba_id) {
+      formData.append('supervisor_id', this.selectedValueBcba_id+'');
     }
 
     if (this.replacementgroup) {

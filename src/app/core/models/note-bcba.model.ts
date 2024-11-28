@@ -3,6 +3,7 @@ import { Supervisor, Tecnico } from './notes.model';
 
 export interface NoteBcba {
   
+  
   summary_note: string;
   rendering_provider: string;
   type: 'bcba';
@@ -12,7 +13,7 @@ export interface NoteBcba {
   patient_id: string;
   bip_id: number;
   cpt_code: string;
-  provider: Provider;
+  
   session_date: string;
   tecnico: Tecnico;
   session_length_total: string;
@@ -40,9 +41,12 @@ export interface NoteBcba {
 
   time_out?: string;
   time_out2?: string;
+
+  provider: ProviderBcba;
+  pa_service_id: number;
 }
 
-export interface Provider {
+export interface ProviderBcba {
   id: number;
   name: string;
   surname: string | null;
@@ -58,7 +62,6 @@ export class NoteBcbaBuilder implements NoteBcba {
   patient_id: string;
   bip_id: number;
   cpt_code: string;
-  provider: Provider;
   session_date: string;
   tecnico: Tecnico;
   session_length_total: string;
@@ -80,6 +83,10 @@ export class NoteBcbaBuilder implements NoteBcba {
   status: string;
   created_at: string;
 
+  provider: ProviderBcba;
+  provider_id:number;
+  pa_service_id:number;
+
   time_in?: string;
   time_in2?: string;
 
@@ -92,6 +99,8 @@ export class NoteBcbaBuilder implements NoteBcba {
     this.type = 'bcba';
     this.insurance_key = data.insurance_key || (data as any).insuranceId || '';
     this.insurance_id = data.insurance_id || 0;
+    this.provider_id = data.provider_id || 0;
+    this.pa_service_id = data.pa_service_id || 0;
     this.id = data.id || 0;
     this.patient_id = data.patient_id || '';
     this.bip_id = data.bip_id || 0;
@@ -128,7 +137,6 @@ export class NoteBcbaBuilder implements NoteBcba {
     this.rendering_provider = data.rendering_provider || '';
     this.summary_note = data.summary_note || '';
   }
-  provider_id: number;
 }
 
 export function isNoteBcba(note: NoteRbt | NoteBcba): note is NoteBcba {

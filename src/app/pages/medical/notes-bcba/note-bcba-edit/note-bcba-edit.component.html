@@ -129,7 +129,58 @@
                     </mat-select>
                   </div>
                 </div>
-                <div class="col-12 col-md-6 col-xl-3">
+
+                <!--  units -->
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label
+                      >Service & CPT <span class="login-danger">*</span></label
+                    >
+                    <mat-select
+                      [(ngModel)]="selectedPaService"
+                      name="pa_service"
+                      (selectionChange)="onPaServiceSelect($event)"
+                      class="form-control select"
+                      placeholder="Select Service"
+                    >
+                      <mat-option
+                        *ngFor="let service of pa_services"
+                        [value]="service"
+                      >
+                        {{ service.pa_services }} ({{ service.cpt }})
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-4" *ngIf="selectedPaService">
+                  <div class="form-group local-forms">
+                    <label class="mb-2">Available Units</label>
+                    <div class="units-container">
+                      <div class="units-wrapper">
+                        <div class="progress-container">
+                          <div
+                            class="progress-bar"
+                            [style.width.%]="
+                              ((selectedPaService.n_units -
+                                selectedPaService.available_units) /
+                                selectedPaService.n_units) *
+                              100
+                            "
+                          ></div>
+                        </div>
+                        <div class="units-text">
+                          {{ selectedPaService.available_units }}/{{
+                            selectedPaService.n_units
+                          }}
+                          units
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--  fin units -->
+                <!-- <div class="col-12 col-md-6 col-xl-3">
                   <div class="form-group local-forms">
                     <label>CPT Code <span class="login-danger">*</span></label>
                     <mat-select
@@ -153,7 +204,8 @@
                     [service]="selectedPaService" 
                     [newUnits]="projectedUnits">
                   </app-units-display>
-                </div>
+                </div> -->
+                
                 <div class="col-12 col-md-3">
                   <div class="form-group local-forms">
                     <label
@@ -298,14 +350,14 @@
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
-                      >Session Length Total<span class="login-danger"
+                      >Session Morning Total<span class="login-danger"
                         >*</span
                       ></label
                     >
                     <input
                       class="form-control"
-                      name="session_length_total"
-                      [(ngModel)]="session_length_total"
+                      name="session_length_morning_total"
+                      [(ngModel)]="session_length_morning_total"
                       type="text"
                     />
                   </div>
@@ -313,14 +365,14 @@
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
-                      >Session Length Total<span class="login-danger"
+                      >Session Afternoon Total<span class="login-danger"
                         >*</span
                       ></label
                     >
                     <input
                       class="form-control"
-                      name="session_length_total2"
-                      [(ngModel)]="session_length_total2"
+                      name="session_length_afternon_total"
+                      [(ngModel)]="session_length_afternon_total"
                       type="text"
                     />
                   </div>
@@ -397,13 +449,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let goal of rbt_training_goals; let i = index">
-                    <td>{{ goal.lto }}</td>
+                  <tr *ngFor="let goalr of rbt_training_goals; let i = index">
+                    <td>{{ goalr.lto }}</td>
                     <td>
                       <input
                         class="form-control"
                         type="number"
-                        [(ngModel)]="goal.porcent_of_correct_response"
+                        [(ngModel)]="goalr.porcent_of_correct_response"
                         (ngModelChange)="updateRbtGoal(i)"
                       />
                     </td>
@@ -416,7 +468,7 @@
       </div>
       <!-- fin replacements -->
 
-      <!-- paciente -->
+      <!-- Sumary note -->
       <div class="col-sm-12">
         <div class="card">
           <div class="card-body">
