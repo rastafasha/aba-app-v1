@@ -247,7 +247,7 @@ export class NoteRbtComponent implements OnInit {
       this.patientId = resp.patient.id;
       this.insurer_id = resp.patient.insurer_id;
       this.insurance_identifier = resp.patient.insurance_identifier;
-      console.log(resp);
+      console.log(this.insurance_identifier);
       this.patientLocation_id = resp.patient.location_id;
       this.selectedValueProviderRBT_id = resp.patient.rbt_id;
       this.selectedValueRBT = resp.patient.rbt_id;
@@ -544,7 +544,7 @@ export class NoteRbtComponent implements OnInit {
   }
 
   // eslint-disable-next-line no-debugger
-  save() {
+  save() {debugger
     this.text_validation = '';
     if (!this.selectedPaService) {
       this.text_validation = 'Please select a service';
@@ -608,16 +608,9 @@ export class NoteRbtComponent implements OnInit {
     formData.append('pa_service_id', this.selectedPaService.id.toString());
     formData.append('cpt_code', this.selectedPaService.cpt);
 
-    if (this.selectedValueRenderingProvider) {
-      formData.append('provider_id', this.selectedValueRenderingProvider);
-    }
+    formData.append('provider_id', this.doctor_id+'');
+    formData.append('supervisor_id', this.selectedValueBCBA);
     
-    if (this.selectedValueProviderRBT_id) {
-      formData.append('provider_id', this.selectedValueProviderRBT_id+'');
-    }
-    if (this.selectedValueBcba_id) {
-      formData.append('supervisor_id', this.selectedValueBcba_id+'');
-    }
 
     if (this.selectedValueTimeIn) {
       formData.append(

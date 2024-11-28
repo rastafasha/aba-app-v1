@@ -12,6 +12,8 @@ export class NoteBcbaV2 {
   bip_id: number;
   client_id: number;
   patient_id: number;
+  insurance_identifier: string;
+  patient_identifier: string;
 
   doctor_id: number;
   patient_code: string;
@@ -66,11 +68,13 @@ export class NoteBcbaV2 {
       id: NumberOrNullOrUndefined(data.id),
       bip_id: NumberOrNullOrUndefined(data.bip_id),
       patient_id: NumberOrNullOrUndefined(data.patient_id),
+      insurance_identifier: StringOrNullOrUndefined(data.insurance_identifier),
       client_id:
         NumberOrNullOrUndefined(data.client_id) ??
         NumberOrNullOrUndefined(data.patient_id),
 
       patient_code: StringOrNullOrUndefined(data.patient_id),
+      patient_identifier: StringOrNullOrUndefined(data.patient_identifier),
       doctor_id: NumberOrNullOrUndefined(data.doctor_id),
       note_description: StringOrNullOrUndefined(data.note_description),
       caregiver_goals: CaregiverGoalsBuilder(data.caregiver_goals),
