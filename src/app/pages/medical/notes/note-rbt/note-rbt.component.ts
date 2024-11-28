@@ -31,18 +31,23 @@ export class NoteRbtComponent implements OnInit {
   text_success = '';
   text_validation = '';
 
-  selectedValueProvider!: string;
-  selectedValueRBT!: string;
-  selectedValueBCBA!: string;
   selectedValueTimeIn = '';
   selectedValueTimeOut = '';
   selectedValueTimeIn2 = '';
   selectedValueTimeOut2 = '';
-  selectedValueProviderName!: string;
   selectedValueMaladaptive!: string;
   selectedValueProviderCredential!: string;
   option_selected = 0;
   isGeneratingSummary = false;
+
+
+  selectedValueRBT!: string;
+  selectedValueRenderingProvider!: string;
+  selectedValueProviderRBT_id!: number;
+
+  selectedValueBCBA!: string;
+  selectedValueAbaSupervisor!: string;
+  selectedValueBcba_id!: number;
 
   client_id: number;
   patient_id: string;
@@ -244,7 +249,7 @@ export class NoteRbtComponent implements OnInit {
       this.insurance_identifier = resp.patient.insurance_identifier;
       console.log(resp);
       this.patientLocation_id = resp.patient.location_id;
-      this.selectedValueProviderName = resp.patient.rbt_id;
+      this.selectedValueProviderRBT_id = resp.patient.rbt_id;
       this.selectedValueRBT = resp.patient.rbt_id;
       this.selectedValueBCBA = resp.patient.bcba_id;
       this.pos = resp.patient.pos_covered;
@@ -602,6 +607,17 @@ export class NoteRbtComponent implements OnInit {
 
     formData.append('pa_service_id', this.selectedPaService.id.toString());
     formData.append('cpt_code', this.selectedPaService.cpt);
+
+    if (this.selectedValueRenderingProvider) {
+      formData.append('provider_id', this.selectedValueRenderingProvider);
+    }
+    
+    if (this.selectedValueProviderRBT_id) {
+      formData.append('provider_id', this.selectedValueProviderRBT_id+'');
+    }
+    if (this.selectedValueBcba_id) {
+      formData.append('supervisor_id', this.selectedValueBcba_id+'');
+    }
 
     if (this.selectedValueTimeIn) {
       formData.append(
