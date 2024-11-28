@@ -2,6 +2,7 @@ import { NoteBcba } from './note-bcba.model';
 import { Supervisor, Tecnico } from './notes.model';
 
 export interface NoteRbt {
+  
   pa_service_id: any;
   type: 'rbt';
   insurance_id?: number;
@@ -34,6 +35,15 @@ export interface NoteRbt {
   status: string;
   created_at: string;
   insurance_key: string;
+  provider_id: number;
+  provider: Provider;
+}
+export interface Provider {
+  id: number;
+  name: string;
+  surname: string | null;
+  npi: string | null;
+  electronic_signature: string | null;
 }
 
 export class NoteRbtBuilder implements NoteRbt {
@@ -48,6 +58,7 @@ export class NoteRbtBuilder implements NoteRbt {
   tecnico_id: number;
   tecnico: Tecnico;
   pos: string;
+  
   session_date: string;
   meet_with_client_at: string;
   time_in: string;
@@ -69,11 +80,14 @@ export class NoteRbtBuilder implements NoteRbt {
   created_at: string;
   insurance_key: string;
   pa_service_id: number;
+  provider_id: number;
+  provider: Provider;
 
   constructor(data: Partial<NoteRbt> = {}) {
     this.type = 'rbt';
     this.id = data.id || 0;
     this.patient_id = data.patient_id || '';
+    this.provider_id = data.provider_id || 0;
     this.bip_id = data.bip_id || 0;
     this.supervisor_id = data.supervisor_id || 0;
     this.supervisor_name = data.supervisor_name || '';

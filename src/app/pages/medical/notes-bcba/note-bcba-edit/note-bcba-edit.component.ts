@@ -10,6 +10,9 @@ import { NoteBcbaService } from '../../../../core/services/notes-bcba.service';
 import { InsuranceService } from '../../../../core/services/insurances.service';
 import { Location } from '@angular/common';
 import { AppUser } from 'src/app/core/models/users.model';
+import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
+
+
 
 @Component({
   selector: 'app-note-bcba-edit',
@@ -28,28 +31,34 @@ export class NoteBcbaEditComponent implements OnInit {
   text_validation = '';
 
   selectedValueProvider!: string;
-  selectedValueRBT!: string;
-  selectedValueBCBA!: string;
+  
   selectedValueTimeIn = '';
   selectedValueTimeOut = '';
   selectedValueTimeIn2 = '';
   selectedValueTimeOut2 = '';
-  selectedValueProviderName!: string;
+
+
+
+  selectedValueRBT!: string;
+  selectedValueRenderingProvider!: string;
+  selectedValueProviderRBT_id!: number;
+  
+  selectedValueBCBA!: string;
+  selectedValueAbaSupervisor!: string;
+  selectedValueBcba_id!: number;
+
   selectedValueMaladaptive!: string;
-  selectedValueRendering!: string;
-  selectedValueAba!: number;
   selectedValueCode!: string;
   option_selected = 0;
 
-  client_id: any;
-  doctor_id: any;
-  patient_id: any;
-  patientid: any;
-  patientLocation_id: any;
-  patient_selected: any;
+  client_id: number;
+  doctor_id: number;
+  patient_id: string;
+  patientid: number;
+  patientLocation_id: number;
   client_selected: any;
-  note_selected: any;
-  bip_id: any;
+  note_selected: any = [];
+  bip_id: number;
   user: AppUser;
   first_name = '';
   last_name = '';
@@ -63,8 +72,9 @@ export class NoteBcbaEditComponent implements OnInit {
   time_out = '';
   time_in2 = '';
   time_out2 = '';
+  session_length_morning_total = '';
+  session_length_afternon_total = '';
   session_length_total = '';
-  session_length_total2 = '';
   environmental_changes = '';
 
   sumary_note = '';
@@ -109,14 +119,14 @@ export class NoteBcbaEditComponent implements OnInit {
   IMAGE_PREVISUALIZA_SIGNATURE_BCBA: any;
   IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED: any = 'assets/img/user-06.jpg';
 
-  rbt_id: any;
-  bcba_id: any;
-  maladaptivename: any;
-  replacementName: any;
-  note_rbt_id: any;
+  rbt_id: number;
+  bcba_id: number;
+  maladaptivename: string;
+  replacementName: string;
+  note_rbt_id: number;
   goal: any;
-  note_id: any;
-  note_selectedId: any;
+  note_id: number;
+  note_selectedId: number;
 
   roles_rbt = [];
   roles_bcba = [];
@@ -132,17 +142,20 @@ export class NoteBcbaEditComponent implements OnInit {
   maladaptivegroup = [];
   replacementgroup = [];
 
+  familiEnvolments = [];
+  monitoringEvaluatingPatientIds = [];
+
   maladaptiveSelected: any = null;
   replacementSelected: any = null;
   birth_date: any;
-  cpt: any;
-  note_description: any;
+  cpt: string;
+  note_description: string;
   caregivers_training_goals = [];
   rbt_training_goals = [];
   rbt_training_goalsgroup: any;
   caregivers_training_goalsgroup: any;
   pa_assessmentsgroup = [];
-  pa_assessments: any;
+  pa_assessments: string;
   n_un = [];
 
   location: any;
@@ -152,10 +165,18 @@ export class NoteBcbaEditComponent implements OnInit {
   caregiver_goal: any = null;
   cpt_code: any = null;
 
-  insurer_name: any;
-  services: any;
-  insurer_id: any;
+  insurer_name: any = [];
+  services: any = [];
+  insurer_id: number;
 
+  pa_services: PaService[] = [];
+  selectedPaService: PaService | null = null;
+  projectedUnits = 0;
+  
+  provider: any = [];
+  
+  
+  
   constructor(
     private bipService: BipService,
     private router: Router,
@@ -178,6 +199,8 @@ export class NoteBcbaEditComponent implements OnInit {
     this.user = JSON.parse(USER ? USER : '');
     this.doctor_id = this.user.id;
   }
+
+  
 
   goBack() {
     this.locations.back(); // <-- go back to previous location on cancel
@@ -202,11 +225,7 @@ export class NoteBcbaEditComponent implements OnInit {
       this.patient_id = this.note_selected.patient_identifier;
       this.bip_id = this.note_selected.bip_id;
       this.location = this.note_selected.location;
-      // this.birth_date = this.note_selected.birth_date;
-      this.birth_date = this.note_selected.birth_date
-        ? new Date(this.note_selected.birth_date).toISOString()
-        : '';
-
+      
       this.summary_note = resp.noteBcba.summary_note || '';
 
       this.provider_credential = this.note_selected.provider_credential;
@@ -228,21 +247,23 @@ export class NoteBcbaEditComponent implements OnInit {
       this.rbt_training_goalsgroup = resp.rbt_training_goals;
       const jsonObj1 = JSON.parse(this.rbt_training_goalsgroup) || '';
       this.rbt_training_goals = jsonObj1;
-      // console.log(this.rbt_training_goals);
+      console.log(this.rbt_training_goals);
 
-      this.selectedValueAba = resp.noteBcba.aba_supervisor;
-      this.selectedValueRendering = resp.noteBcba.rendering_provider;
+      this.selectedValueRBT = resp.noteBcba.provider.name;
+      this.selectedValueProviderRBT_id =resp.noteBcba.provider_id;
+      
+      this.selectedValueBCBA = resp.noteBcba.supervisor.name;
+      this.selectedValueBcba_id =resp.noteBcba.supervisor_id;
+      // console.log(this.selectedValueRendering );
 
-      this.selectedValueProviderName = this.note_selected.provider_name_g;
-      this.selectedValueRBT = this.note_selected.provider_name;
-      this.selectedValueBCBA = this.note_selected.supervisor_name;
 
       this.session_date = this.note_selected.session_date
         ? new Date(this.note_selected.session_date).toISOString()
         : '';
 
+      this.session_length_morning_total = this.note_selected.session_length_morning_total;
+      this.session_length_afternon_total = this.note_selected.session_length_afternon_total;
       this.session_length_total = this.note_selected.session_length_total;
-      this.session_length_total2 = this.note_selected.session_length_total2;
 
       // this.selectedValueTimeIn = this.note_selected.time_in;
       // this.selectedValueTimeOut = this.note_selected.time_out;
@@ -255,6 +276,13 @@ export class NoteBcbaEditComponent implements OnInit {
       this.selectedValueTimeOut2 = this.formatTime(
         this.note_selected.time_out2
       );
+
+      const noteServiceId = resp.noteBcba.pa_service_id;
+      if (this.pa_services?.length && noteServiceId) {
+        this.selectedPaService =
+          this.pa_services.find((service) => service.id === noteServiceId) ||
+          null;
+      }
 
       this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED =
         this.note_selected.provider_signature;
@@ -277,18 +305,24 @@ export class NoteBcbaEditComponent implements OnInit {
       .getBipProfilePatient_id(this.patient_id)
       .subscribe((resp) => {
         console.log(resp);
-        this.client_selected = resp;
+        this.client_selected = resp.patient;
 
-        this.first_name = this.client_selected.patient.first_name;
-        this.last_name = this.client_selected.patient.last_name;
-        this.patient_id = resp.patient.patient_id;
-        this.patientid = resp.patient.id;
-        this.patientLocation_id = resp.patient.location_id;
-        this.insurer_id = resp.patient.insurer_id;
-        // this.pos = JSON.parse(resp.patient.pos_covered) ;
-        this.pos = resp.patient.pos_covered;
+        this.first_name = this.client_selected.first_name;
+        this.last_name = this.client_selected.last_name;
+        this.patient_id = this.client_selected.patient_id;
+        this.patientid = this.client_selected.id;
+        this.patientLocation_id = this.client_selected.location_id;
+        this.insurer_id = this.client_selected.insurer_id;
+        // this.pos = JSON.parse(this.client_selected.pos_covered) ;
+        this.pos = this.client_selected.pos_covered;
         this.insuranceData();
         this.getReplacementsByPatientId();
+        this.pa_services = this.client_selected.pa_services;
+
+        this.birth_date = this.client_selected.birth_date
+        ? new Date(this.client_selected.birth_date).toISOString()
+        : '';
+
       });
   }
 
@@ -297,20 +331,31 @@ export class NoteBcbaEditComponent implements OnInit {
       .showReplacementbyPatient(this.patient_id)
       .subscribe((resp) => {
         console.log(resp);
+        this.familiEnvolments = resp.familiEnvolments;
+        this.caregivers_training_goals =
+          resp.familiEnvolments.data?.[0]?.caregivers_training_goals ?? [];
+        this.monitoringEvaluatingPatientIds =
+          resp.monitoringEvaluatingPatientIds;
+        this.rbt_training_goals =
+          resp.monitoringEvaluatingPatientIds.data?.[0]?.rbt_training_goals ??
+          [];
+
         this.pa_assessments = resp.pa_assessments;
+        /*
         const jsonObj = JSON.parse(this.pa_assessments) || '';
         this.pa_assessmentsgroup = jsonObj;
-        this.n_un = this.pa_assessmentsgroup[0].n_units;
+        this.n_un = this.pa_assessmentsgroup?.[0]?.n_units;
+        */
         // this.unitsAsignated = this.pa_assessmentsgroup.n_units;
-        // console.log(this.pa_assessmentsgroup);
-        this.cpt = this.pa_assessmentsgroup[0].cpt;
-        // console.log(this.cpt);
+        console.log(this.pa_assessmentsgroup);
+        // this.cpt = this.pa_assessmentsgroup[0].cpt;
+        console.log(this.cpt);
       });
   }
 
   insuranceData() {
     this.insuranceService.get(this.insurer_id).subscribe((resp) => {
-      // console.log(resp);
+      console.log(resp);
       this.insurer_name = resp.insurer_name;
       // this.notes = resp.notes;
       this.services = resp.services;
@@ -329,21 +374,56 @@ export class NoteBcbaEditComponent implements OnInit {
   }
 
   selectSpecialist(event) {
-    event = this.selectedValueProviderName;
-    this.specialistData(this.selectedValueProviderName);
+    event = this.selectedValueProviderRBT_id;
+    this.specialistData(this.selectedValueProviderRBT_id);
+    console.log(this.selectedValueProviderRBT_id);
+  }
+  selectSpecialistBCBA(event) {
+    event = this.selectedValueBcba_id;
+    this.specialistData(this.selectedValueBcba_id);
+    console.log(this.selectedValueBcba_id);
   }
 
   hourTimeInSelected(value: string) {
     this.selectedValueTimeIn = value;
+    this.recalculateSessionLength();
   }
   hourTimeOutSelected(value: string) {
     this.selectedValueTimeOut = value;
+    this.recalculateSessionLength();
   }
   hourTimeIn2Selected(value: string) {
     this.selectedValueTimeIn2 = value;
+    this.recalculateSessionLength();
   }
   hourTimeOut2Selected(value: string) {
     this.selectedValueTimeOut2 = value;
+    this.recalculateSessionLength();
+  }
+
+  private recalculateSessionLength() {
+    this.session_length_morning_total =
+      this.selectedValueTimeIn && this.selectedValueTimeOut
+        ? this.calculateSessionLength(
+            this.selectedValueTimeIn,
+            this.selectedValueTimeOut
+          )
+        : '00:00';
+    this.session_length_afternon_total =
+      this.selectedValueTimeIn2 && this.selectedValueTimeOut2
+        ? this.calculateSessionLength(
+            this.selectedValueTimeIn2,
+            this.selectedValueTimeOut2
+          )
+        : '00:00';
+  }
+  private calculateSessionLength(timeIn: string, timeOut: string): string {
+    const [hoursIn, minutesIn] = timeIn.split(':').map(Number);
+    const [hoursOut, minutesOut] = timeOut.split(':').map(Number);
+    const totalMinutes = (hoursOut - hoursIn) * 60 + (minutesOut - minutesIn);
+    return `${Math.floor(totalMinutes / 60)
+      .toString()
+      .padStart(2, '0')}:${(totalMinutes % 60).toString().padStart(2, '0')}`;
   }
 
   updateCaregiverGoal(index: number) {
@@ -432,15 +512,16 @@ export class NoteBcbaEditComponent implements OnInit {
     // }
 
     const formData = new FormData();
-    formData.append('patient_id', this.patient_id);
-    formData.append('doctor_id', this.selectedValueRendering);
-    formData.append('bip_id', this.bip_id);
+    formData.append('patient_id', this.patientid+'');
+    formData.append('doctor_id', this.selectedValueProviderRBT_id+'');
+    formData.append('bip_id', this.bip_id+'');
     formData.append('diagnosis_code', this.diagnosis_code);
     formData.append('location', this.location);
     formData.append('birth_date', this.birth_date);
     formData.append('session_date', this.session_date);
     formData.append('location_id', this.patientLocation_id + '');
 
+    
     if (this.summary_note) {
       formData.append('summary_note', this.summary_note);
     }
@@ -470,24 +551,32 @@ export class NoteBcbaEditComponent implements OnInit {
       );
     }
 
-    if (this.selectedValueRendering) {
-      formData.append('rendering_provider', this.selectedValueRendering);
+    if (this.selectedValueRenderingProvider) {
+      formData.append('rendering_provider', this.selectedValueRenderingProvider);
     }
-    if (this.selectedValueAba) {
-      formData.append('aba_supervisor', this.selectedValueAba.toString());
+    if (this.selectedValueAbaSupervisor) {
+      formData.append('aba_supervisor', this.selectedValueAbaSupervisor.toString());
     }
+
+    if (this.selectedValueProviderRBT_id) {
+      formData.append('provider_id', this.selectedValueProviderRBT_id+'');
+    }
+    if (this.selectedValueBcba_id) {
+      formData.append('supervisor_id', this.selectedValueBcba_id+'');
+    }
+
+
     if (this.selectedValueCode) {
       formData.append('cpt_code', this.selectedValueCode);
+    }
+    if (this.selectedPaService) {
+      formData.append('pa_service_id', this.selectedPaService.id.toString());
+    
     }
     if (this.meet_with_client_at) {
       formData.append('meet_with_client_at', this.meet_with_client_at);
     }
-    if (this.selectedValueRBT) {
-      formData.append('provider_name', this.selectedValueRBT);
-    }
-    if (this.selectedValueBCBA) {
-      formData.append('supervisor_name', this.selectedValueBCBA);
-    }
+   
     // if (this.note_description) {
     //   formData.append('note_description', this.note_description);
     // }
@@ -649,4 +738,59 @@ export class NoteBcbaEditComponent implements OnInit {
         return 'Unknown';
     }
   }
+
+
+
+  onPaServiceSelect(event: any) {
+    const service = event.value;
+    if (service) {
+      this.selectedValueCode = service.cpt;
+    }
+  }
+
+  calculateUnitsFromTime(startTime: string, endTime: string): number {
+    if (!startTime || !endTime) return 0;
+
+    const start = this.parseTime(startTime);
+    const end = this.parseTime(endTime);
+
+    if (!start || !end) return 0;
+
+    const durationMinutes = (end.getTime() - start.getTime()) / (1000 * 60);
+    return Math.ceil(durationMinutes / 15);
+  }
+
+  parseTime(timeStr: string): Date | null {
+    if (!timeStr) return null;
+
+    const [hours, minutes] = timeStr.split(':').map(Number);
+    const date = new Date();
+    date.setHours(hours, minutes, 0, 0);
+    return date;
+  }
+
+  calculateProjectedUnits(): void {
+    let totalUnits = 0;
+
+    if (this.selectedValueTimeIn && this.selectedValueTimeOut) {
+      const morningUnits = this.calculateUnitsFromTime(
+        this.selectedValueTimeIn,
+        this.selectedValueTimeOut
+      );
+      totalUnits += morningUnits;
+    }
+
+    if (this.selectedValueTimeIn2 && this.selectedValueTimeOut2) {
+      const afternoonUnits = this.calculateUnitsFromTime(
+        this.selectedValueTimeIn2,
+        this.selectedValueTimeOut2
+      );
+      totalUnits += afternoonUnits;
+    }
+
+    this.projectedUnits = totalUnits;
+  }
+
+
+
 }

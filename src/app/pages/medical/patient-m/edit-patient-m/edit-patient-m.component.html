@@ -1073,8 +1073,11 @@
                 </div>
               </div>
 
+              
+
               <div class="col-12">
                 <div class="doctor-submit text-end">
+                  <input type="hidden" formControlName="id">
                   <button
                     type="button"
                     class="btn btn-primary submit-form me-2"
@@ -1257,6 +1260,7 @@
                             <td>{{ paService.start_date | date }}</td>
                             <td>{{ paService.end_date | date }}</td>
                             <td>
+                              <input type="hidden" formControlName="id">
                               <button
                                 type="button"
                                 class="btn btn-sm btn-danger"

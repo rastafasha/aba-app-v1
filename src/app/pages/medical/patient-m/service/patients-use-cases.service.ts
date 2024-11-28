@@ -37,6 +37,29 @@ export class PatientsUseCasesService {
       // })
     );
   }
+  savePatientCreate(value: PatientV2) {
+    //crear
+    const action$: Observable<
+      CreateResponse<PatientV2> | ApiV2Response<PatientV2>
+    > = this.patientsV2Service.create(value);
+    //
+    return action$.pipe(
+      //crear nuevos pa_services y devolver el patient actualizado
+      switchMap((resp) => {
+        const pa_services = value.pa_services.filter((item) => item.id < 0);
+        if (pa_services.length === 0) {
+          return of(resp);
+        }
+        return combineLatest(
+          pa_services.map((item) => this.paServicesV2Service.create(item))
+        ).pipe(map(() => resp));
+      })
+      // actualizamos la lista de pa_services
+      // switchMap((resp) => {
+      //   return this.paServicesV2Service.list({per_page:0},resp.data.id)
+      // })
+    );
+  }
   checkEmailExistense(email: string) {
     return this.http
       .get<any>(`${url_servicios}/doctors/check-email-exist/${email}`)

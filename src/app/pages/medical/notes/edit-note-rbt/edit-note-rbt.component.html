@@ -86,8 +86,8 @@
                       >Provider Name <span class="login-danger">*</span></label
                     >
                     <mat-select
-                      [(ngModel)]="selectedValueProviderName"
-                      name="provider_name_g"
+                      [(ngModel)]="selectedValueProviderRBT_id"
+                      name="provider_id"
                       [ngModelOptions]="{ standalone: true }"
                       class="form-control select"
                       (selectionChange)="selectSpecialist($event)"
@@ -626,7 +626,7 @@
                 <span class="login-danger">*</span></label
               >
               <mat-select
-                [(ngModel)]="selectedValueRBT"
+                [(ngModel)]="selectedValueProviderRBT_id"
                 name="rbt"
                 [ngModelOptions]="{ standalone: true }"
                 class="form-control select"
@@ -689,7 +689,7 @@
                   <span class="login-danger">*</span></label
                 >
                 <mat-select
-                  [(ngModel)]="selectedValueBCBA"
+                  [(ngModel)]="selectedValueBcba_id"
                   name="bcba"
                   [ngModelOptions]="{ standalone: true }"
                   class="form-control select"
