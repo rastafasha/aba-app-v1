@@ -2,6 +2,7 @@ import { NoteRbt } from './note-rbt.model';
 import { Supervisor, Tecnico } from './notes.model';
 
 export interface NoteBcba {
+  
   summary_note: string;
   rendering_provider: string;
   type: 'bcba';
@@ -11,7 +12,7 @@ export interface NoteBcba {
   patient_id: string;
   bip_id: number;
   cpt_code: string;
-  provider_name: string;
+  provider: Provider;
   session_date: string;
   tecnico: Tecnico;
   session_length_total: string;
@@ -41,6 +42,14 @@ export interface NoteBcba {
   time_out2?: string;
 }
 
+export interface Provider {
+  id: number;
+  name: string;
+  surname: string | null;
+  npi: string | null;
+  electronic_signature: string | null;
+}
+
 export class NoteBcbaBuilder implements NoteBcba {
   type: 'bcba';
   insurance_key: string;
@@ -49,7 +58,7 @@ export class NoteBcbaBuilder implements NoteBcba {
   patient_id: string;
   bip_id: number;
   cpt_code: string;
-  provider_name: string;
+  provider: Provider;
   session_date: string;
   tecnico: Tecnico;
   session_length_total: string;
@@ -87,7 +96,7 @@ export class NoteBcbaBuilder implements NoteBcba {
     this.patient_id = data.patient_id || '';
     this.bip_id = data.bip_id || 0;
     this.cpt_code = data.cpt_code || '';
-    this.provider_name = data.provider_name || '';
+    // this.provider = data.provider || '';
     this.session_date = data.session_date || '';
     this.tecnico = data.tecnico || ({} as Tecnico);
     this.session_length_total = data.session_length_total || '0';
