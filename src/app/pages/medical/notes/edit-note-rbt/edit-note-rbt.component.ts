@@ -451,8 +451,9 @@ export class EditNoteRbtComponent implements OnInit {
   }
 
   selectSpecialist(event) {
-    event = this.selectedValueProviderName;
-    this.specialistData(this.selectedValueProviderName);
+    event = this.selectedValueProviderRBT_id;
+    this.specialistData(this.selectedValueProviderRBT_id);
+    console.log(this.selectedValueProviderRBT_id);
   }
 
   onInterventionsChange(updatedInterventions: any[]) {
