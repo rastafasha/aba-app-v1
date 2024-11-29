@@ -75,6 +75,7 @@ export class EditPatientMComponent implements OnInit {
   ) {
     this.form = this.fb.group<PatientV2FormControls>({
       id: this.fb.control(0),
+      
       first_name: this.fb.control(''),
       last_name: this.fb.control(''),
       full_name: this.fb.control(''),
@@ -82,6 +83,7 @@ export class EditPatientMComponent implements OnInit {
       status: this.fb.control(''),
       patient_id: this.fb.control(''),
       insurer_id: this.fb.control(0),
+      id_patient: this.fb.control(this.id),
       insurer_secondary_id: this.fb.control(0),
       insurance_identifier: this.fb.control(''),
       insurance_secondary_identifier: this.fb.control(''),
@@ -148,8 +150,8 @@ export class EditPatientMComponent implements OnInit {
 
     this.paForm = this.fb.group<PaServiceV2FormControls>({
       id: this.fb.control(0),
-      pa_services: this.fb.control(''), //the name of the service
-      patient_id: this.fb.control(this.id),
+      pa_service: this.fb.control(''), //the name of the service
+      id_patient: this.fb.control(this.id),
       cpt: this.fb.control(null as string),
       n_units: this.fb.control(null as number),
       spent_units: this.fb.control(null as number),
@@ -210,29 +212,17 @@ export class EditPatientMComponent implements OnInit {
   onSave() {
     if (this.form.invalid) return;
 
-    if(this.id){
-      this.useCases.savePatient(this.form.getRawValue(), this.id).subscribe({
-        next: (resp) => {
-          Swal.fire('Updated', `Saved successfully!`, 'success');
-          this.patient = resp.data;
-        },
-        error: () => {
-          Swal.fire('Error', `Can't update!`, 'error');
-        },
-      });
-      
-    }else{
-      this.useCases.savePatientCreate(this.form.getRawValue()).subscribe({
-        next: (resp) => {
-          Swal.fire('Created', `Saved successfully!`, 'success');
-          this.patient = resp.data;
-          },
-          error: () => {
-            Swal.fire('Error', `Can't create!`, 'error');
-            },
-          });
-
-    }
+    this.useCases.savePatient(this.form.getRawValue(), this.id).subscribe({
+      next: (resp) => {
+        Swal.fire('Updated', `Saved successfully!`, 'success');
+        this.patient = resp.data;
+        this.onRefresh();
+      },
+      error: () => {
+        Swal.fire('Error', `Can't update!`, 'error');
+      },
+    });
+    
 
   }
   // PA
@@ -240,7 +230,7 @@ export class EditPatientMComponent implements OnInit {
   onAddPaService() {
     const pa_services = this.patient.pa_services ?? [];
     //podria requerir crear o borrar antes de actualizar
-    this.paForm.patchValue({ patient_id: this.id, id: -pa_services.length });
+    this.paForm.patchValue({ id_patient: this.id, id: -pa_services.length });
     pa_services.push(this.paForm.getRawValue());
     this.form.patchValue({ pa_services });
     this.paForm.reset();

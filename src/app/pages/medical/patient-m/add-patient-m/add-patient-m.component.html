@@ -299,10 +299,10 @@
                   <div class="form-group local-forms">
                     <label>Location <span class="login-danger">*</span></label>
                     <mat-select
-                      formControlName="selectedValueLocation"
-                      name="location"
+                      formControlName="location_id"
+                      name="location_id"
                       class="form-control select"
-                      (ngModelChange)="selectCategory($event)"
+                      (ngModelChange)="selectLocation($event)"
                       placeholder="Select Location"
                     >
                       <mat-option
@@ -393,13 +393,13 @@
       </div>
       <!-- fin paciente -->
       <!-- Specialists -->
-      <div class="col-sm-12" [ngClass]="{ 'disabled-div': !selectedValueLocation }">
+      <div class="col-sm-12" [ngClass]="{ 'disabled-div': !location_id }">
         <div class="card">
           <div class="card-body">
               <div class="row">
                 <div class="col-12">
                   <div class="form-heading">
-                    <h4>Add Specialist <span *ngIf="!selectedValueLocation"> - Select location to enable - </span> </h4>
+                    <h4>Add Specialist <span *ngIf="!location_id"> - Select location to enable - </span> </h4>
                   </div>
                 </div>
 
@@ -407,8 +407,8 @@
                   <div class="form-group local-forms">
                     <label>RBT <span class="login-danger">*</span></label>
                     <mat-select
-                      formControlName="selectedValue_rbt"
-                      name="rbt"
+                      formControlName="rbt_home_id"
+                      name="rbt_home_id"
                       class="form-control select"
                       placeholder="Select Specialist"
                     >
@@ -425,8 +425,8 @@
                   <div class="form-group local-forms">
                     <label>RBT 2 <span class="login-danger">*</span></label>
                     <mat-select
-                      formControlName="selectedValue_rbt2"
-                      name="rbt2"
+                      formControlName="rbt2_school_id"
+                      name="rbt2_school_id"
                       class="form-control select"
                       placeholder="Select Specialist"
                     >
@@ -443,8 +443,8 @@
                   <div class="form-group local-forms">
                     <label>BCBA <span class="login-danger">*</span></label>
                     <mat-select
-                      formControlName="selectedValue_bcba"
-                      name="bcba"
+                      formControlName="bcba_home_id"
+                      name="bcba_home_id"
                       class="form-control select"
                       placeholder="Select Specialist"
                     >
@@ -461,8 +461,8 @@
                   <div class="form-group local-forms">
                     <label>BCBA 2<span class="login-danger">*</span></label>
                     <mat-select
-                      formControlName="selectedValue_bcba2"
-                      name="bcba2"
+                      formControlName="bcba2_school_id"
+                      name="bcba2_school_id"
                       class="form-control select"
                       placeholder="Select Specialist"
                     >
@@ -481,8 +481,8 @@
                       >Local Manager<span class="login-danger">*</span></label
                     >
                     <mat-select
-                      formControlName="selectedValue_clind"
-                      name="clinical_director"
+                      formControlName="clin_director_id"
+                      name="clin_director_id"
                       class="form-control select"
                       placeholder="Select Specialist"
                     >
@@ -510,13 +510,13 @@
                     <h4>Benefits</h4>
                   </div>
                 </div>
-
+                <!-- Insurer -->
                 <div class="col-12 col-sm-4">
                   <div class="form-group local-forms">
                     <label>Insurer <span class="login-danger">*</span></label>
                     <mat-select
-                      formControlName="selectedValueInsurer"
-                      name="insurer"
+                      formControlName="insurer_id"
+                      name="insurer_id"
                       class="form-control select"
                       (selectionChange)="selectInsurance($event)"
                       placeholder="Select Insurer"
@@ -533,17 +533,51 @@
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
-                      >Insurance Id <span class="login-danger">*</span></label
+                      >Insurance ID <span class="login-danger">*</span></label
                     >
                     <input
                       class="form-control"
                       autocomplete="off"
-                      name="insuranceId"
-                      formControlName="insuranceId"
+                      name="insurance_identifier"
+                      formControlName="insurance_identifier"
                       type="text"
                     />
                   </div>
                 </div>
+                <div class="col-12 col-sm-4">
+                  <div class="form-group local-forms">
+                    <label>Insurer Secondary <span class="login-danger">*</span></label>
+                    <mat-select
+                      formControlName="insurer_secondary_id"
+                      name="insurer_secondary_id"
+                      class="form-control select"
+                      (selectionChange)="selectInsurance($event)"
+                      placeholder="Select Insurer"
+                    >
+                      <mat-option
+                        *ngFor="let data of insurances"
+                        [value]="data.id"
+                      >
+                        {{ data.name }}
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label
+                      >Insurance  Secondary ID <span class="login-danger">*</span></label
+                    >
+                    <input
+                      class="form-control"
+                      autocomplete="off"
+                      name="insurance_secondary_identifier"
+                      formControlName="insurance_secondary_identifier"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <!-- Insurer -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label>Equhl Id<span class="login-danger">*</span></label>
@@ -586,7 +620,8 @@
                     >
                     <mat-select
                       multiple="multiple"
-                      formControlName="selectedValuePosCovered"
+                      name="pos_covered"
+                      formControlName="pos_covered"
                       class="form-control select"
                       placeholder="Select"
                     >
@@ -873,7 +908,7 @@
       <!-- fin Intake -->
 
       <!-- PAs -->
-      <div class="col-sm-12" [ngClass]="{'disabled-div': !form.get('selectedValueInsurer').value}">
+      <div class="col-sm-12" [ngClass]="{'disabled-div': !form.get('insurer_id').value}">
         <div class="card">
           <div class="card-body">
               <div class="row">
@@ -883,7 +918,7 @@
                     <div class="card-block">
                       <h3 class="card-title">
                         PAs
-                        <span *ngIf="!form.get('selectedValueInsurer').value"> - Select insurer to enable - </span>
+                        <span *ngIf="!form.get('insurer_id').value"> - Select insurer to enable - </span>
                       </h3>
 
                       <div class="row align-items-center">
@@ -898,8 +933,8 @@
                                 <input
                                   class="form-control"
                                   autocomplete="off"
-                                  name="pa_services"
-                                  formControlName="pa_services"
+                                  name="pa_service"
+                                  formControlName="pa_service"
                                   type="text"
                                 />
                               </div>
@@ -987,9 +1022,9 @@
                                 />
                               </div>
                             </div>
+                            <!-- [disabled]="!enabledPaButton" -->
                             <div class="col-12 mb-3 doctor-submit text-end">
                               <button
-                                [disabled]="!enabledPaButton"
                                 class="btn btn-primary btn-sm"
                                 (click)="addPAAssestment()"
                               >
@@ -1019,7 +1054,7 @@
                                   "
                                 >
                                   <td>
-                                    {{ pa_asses.pa_services }}
+                                    {{ pa_asses.pa_service }}
                                   </td>
                                   <td>
                                     {{ pa_asses.start_date | date }}
@@ -1067,10 +1102,12 @@
                       </div>
                     </div>
                   </div>
+                  <!-- [disabled]="!form.valid" -->
                   <div class="col-12">
                     <div class="doctor-submit text-end">
+                      <input type="hidden" formControlName="id">
                       <button
-                        [disabled]="!form.valid"
+                        
                         type="button"
                         class="btn btn-primary submit-form me-2"
                         (click)="save()"

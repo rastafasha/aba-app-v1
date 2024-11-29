@@ -89,6 +89,7 @@ export class ProfilePatientMComponent implements OnInit {
   location_id: any;
   insurer_id: number;
   insurer_secondary_id: number;
+  patient_ident: number;
 
   constructor(
     private patientService: PatientMService,
@@ -164,6 +165,7 @@ export class ProfilePatientMComponent implements OnInit {
       console.log(resp);
       this.patient_selected = resp.patient;
       this.patient_id = resp.patient.patient_id;
+      this.patient_ident = resp.patient.id;
       this.avatar = resp.patient.avatar;
       this.rbt_id = resp.patient.rbt_home_id;
       this.rbt2_id = resp.patient.rbt2_school_id;
@@ -241,7 +243,7 @@ export class ProfilePatientMComponent implements OnInit {
     });
   }
   getPaServices() {
-    this.paSerService.getPatientPaServices(this.patient_id).subscribe((resp) => {
+    this.paSerService.getPatientPaServices(this.patient_ident).subscribe((resp) => {
       this.pa_servicesgroup = resp.pa_services;
       console.log(resp);
     });
