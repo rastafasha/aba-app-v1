@@ -110,6 +110,7 @@ export class ChartReductionComponent {
   maladaptivess = [];
   existgrfic: any;
   loading: boolean;
+  patient_ident: number;
 
   maladaptivesCol: any[];
   sessions_dates = [];
@@ -167,15 +168,16 @@ export class ChartReductionComponent {
   //traemos la info del paciente o cliente
   getProfileBip() {
     this.bipService.showBipProfile(this.patient_id).subscribe((resp) => {
-      // console.log(resp);
+      console.log(resp);
       this.client_selected = resp; // asignamos el objeto a nuestra variable
       this.patient_id = resp.patient.patient_id;
+      this.patient_ident = resp.patient.id;
       // console.log(this.patient_id);
 
       //traemos la info del usuario
       if (this.client_selected.type !== null) {
         // si hay o no informacion del paciente
-        if (this.client_selected.eligibility == 'yes') {
+        if (this.client_selected.eligibility === 'yes') {
           // si el status es positivo para proceder
           this.patient_id = this.client_selected.patient_id;
         }
@@ -191,7 +193,7 @@ export class ChartReductionComponent {
 
   getGraphicMaladaptive() {
     this.graphicReductionService
-      .listMaladaptivesGraphics(this.maladaptive_behavior, this.patient_id)
+      .listMaladaptivesGraphics(this.maladaptive_behavior, this.patient_ident)
       .subscribe((resp) => {
         // console.log(resp);
 
@@ -224,7 +226,7 @@ export class ChartReductionComponent {
           );
 
           return maladaptiveParsed.find(
-            (item) => item?.maladaptive_behavior == maladaptiveSelected
+            (item) => item?.maladaptive_behavior === maladaptiveSelected
           );
         }
 
@@ -272,7 +274,7 @@ export class ChartReductionComponent {
           const arrayLabelSemanal = [];
           resp.sessions_dates.forEach((sessions_date, index) => {
             if (index > 0) {
-              if (cantidadDeDias == 0) {
+              if (cantidadDeDias === 0) {
                 // labelSemanal = sessions_date.substr(0,10);
                 labelSemanal = sessions_date.session_date
                   .toString()
@@ -282,8 +284,8 @@ export class ChartReductionComponent {
               cantidadDeDias += 1;
 
               if (
-                cantidadDeDias == 7 ||
-                index + 1 == resp.sessions_dates.length
+                cantidadDeDias === 7 ||
+                index + 1 === resp.sessions_dates.length
               ) {
                 // labelSemanal += ' - '+sessions_date.substr(0,10);
                 labelSemanal +=
