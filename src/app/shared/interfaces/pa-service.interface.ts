@@ -1,7 +1,8 @@
 export class PaService {
   id?: number;
-  patient_id?: number;
-  pa_services: string;
+  // patient_id?: number;
+  id_patient?: number;
+  pa_service: string;
   cpt: string;
   n_units: number;
   spent_units: number;
@@ -32,7 +33,7 @@ export interface PaServiceError {
 }
 
 export interface CreatePaServiceDto {
-  pa_services: string;
+  pa_service: string;
   cpt: string;
   n_units: number;
   start_date: string;

@@ -69,6 +69,7 @@ export class AddPatientMComponent implements OnInit {
   roles_doctor: any;
 
   pa_assessments = [];
+  
 
   intakeOptions = [
     {value: "waiting", label: "Waiting"},
@@ -107,6 +108,8 @@ export class AddPatientMComponent implements OnInit {
   FILE_REFERAL: any;
   IMAGE_PREVISUALIZA_REFERAL = 'assets/img/user-06.jpg';
 
+  pa_services = [];
+  pa_service :string;
   insurer_name: any;
   notes = [];
   services = [];
@@ -116,8 +119,8 @@ export class AddPatientMComponent implements OnInit {
   user: AppUser;
   roles = [];
   doctor_id: any;
-  locationId: any;
-  location: any;
+  location: any=[];
+  location_id: number;
   emailExists: boolean;
 
   text_validation: any = null;
@@ -141,7 +144,7 @@ export class AddPatientMComponent implements OnInit {
     const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
     this.doctor_id = this.user.id;
-    this.locationId = this.user.location_id;
+    this.location_id = this.user.location_id;
     this.roles = this.user.roles;
 
     if (this.user.roles[0] === 'MANAGER') {
@@ -152,6 +155,20 @@ export class AddPatientMComponent implements OnInit {
 
   private setForm(): void {
     this.form = this.fb.group({
+      id_patient: [0],
+      id: [0],
+      patient_id: ['', Validators.required],
+      insurer_id: ['', Validators.required],
+      insurer_secondary_id: [''],
+      insurance_identifier: ['', Validators.required],
+      insurance_secondary_identifier: [''],
+      location_id: ['', Validators.required],
+      rbt_home_id: ['', Validators.required],
+      rbt2_school_id: ['', Validators.required],
+      bcba_home_id: ['', Validators.required],
+      bcba2_school_id: ['', Validators.required],
+      clin_director_id: ['', Validators.required],
+      
       first_name: ['',Validators.required],
       last_name: ['',Validators.required],
       parent_guardian_name: ['',Validators.required],
@@ -176,12 +193,9 @@ export class AddPatientMComponent implements OnInit {
       schedule: ['',Validators.required],
       summer_schedule: ['',Validators.required],
       diagnosis_code: ['',Validators.required],
-      patient_id: ['', Validators.required],
-      selectedValueInsurer: ['', Validators.required],
-      insuranceId: ['', Validators.required],
       eqhlid: ['', Validators.required],
       elegibility_date: ['', Validators.required],
-      selectedValuePosCovered: ['', Validators.required],
+      pos_covered: this.fb.control<string[]>([]),
       deductible_individual_I_F: ['', Validators.required],
       balance: ['', Validators.required],
       coinsurance: ['', Validators.required],
@@ -199,13 +213,9 @@ export class AddPatientMComponent implements OnInit {
       cde: ['', Validators.required],
       submitted: ['', Validators.required],
       interview: ['', Validators.required],
-      selectedValueLocation: ['', Validators.required],
-      selectedValue_rbt: ['', Validators.required],
-      selectedValue_rbt2: ['', Validators.required],
-      selectedValue_bcba: ['', Validators.required],
-      selectedValue_bcba2: ['', Validators.required],
-      selectedValue_clind: ['', Validators.required],
-      pa_services: ['', Validators.required],
+      
+      pa_services: ['', this.fb.control<string[]>([]),],
+      pa_service: ['', this.fb.control<string[]>([]),],
       pa_services_start_date: ['', Validators.required],
       pa_services_end_date: ['', Validators.required],
       selectedValueCode: ['', Validators.required],
@@ -235,7 +245,7 @@ export class AddPatientMComponent implements OnInit {
 
   getConfig() {
     this.patientService
-      .listConfig(this.selectedValueLocation)
+      .listConfig(this.location_id)
       .subscribe((resp: ResponseBackend) => {
         this.locations = resp.locations;
         this.location = resp.location;
@@ -251,36 +261,46 @@ export class AddPatientMComponent implements OnInit {
       });
   }
 
-  selectCategory(event) {
+  selectLocation(event) {
     const VALUE = event;
-    this.selectedValueLocation = VALUE;
+    this.location_id = VALUE;
     this.getConfig();
   }
 
-  insuranceData(selectedValueInsurer) {
-    this.insuranceService.get(selectedValueInsurer).subscribe((resp) => {
+  insuranceData(insurer_id) {
+    this.insuranceService.get(insurer_id).subscribe((resp) => {
       this.insurer_name = resp.insurer_name;
       this.services = resp.services;
     });
   }
 
   selectInsurance(event) {
-    this.insuranceData(this.form.value.selectedValueInsurer);
+    this.insuranceData(this.form.value.insurer_id);
+  }
+  insuranceData2(insurer_secondary_id) {
+    this.insuranceService.get(insurer_secondary_id).subscribe((resp) => {
+      this.insurer_name = resp.insurer_name;
+      this.services = resp.services;
+    });
+  }
+
+  selectInsurance2(event) {
+    this.insuranceData2(this.form.value.insurer_secondary_id);
   }
 
   addPAAssestment() {
-    if(!this.enabledPaButton) {
-      this.text_validation = 'Invalid data for PA';
-      return ;
-    }
+    // if(!this.enabledPaButton) {
+    //   this.text_validation = 'Invalid data for PA';
+    //   return ;
+    // }
     this.pa_assessments.push({
-      pa_services: this.form.value.pa_services,
+      pa_service: this.form.value.pa_service,
       start_date: this.form.value.pa_services_start_date.toISOString().split('T')[0],
       end_date: this.form.value.pa_services_end_date.toISOString().split('T')[0],
       cpt: this.form.value.selectedValueCode,
       n_units: this.form.value.n_units || 0,
     });
-    this.form.get('pa_services').setValue(null)
+    this.form.get('pa_service').setValue(null)
     this.form.get('pa_services_start_date').setValue(null);
     this.form.get('pa_services_end_date').setValue(null);
     this.form.get('selectedValueCode').setValue(null);
@@ -335,8 +355,7 @@ export class AddPatientMComponent implements OnInit {
     }
 
     const data = this.mapData();
-
-    this.patientService.createPatient({...data, pa_assessments: this.pa_assessments}).subscribe((resp) => {
+    this.patientService.createPatient({...data, pa_services: this.pa_assessments}).subscribe((resp) => {
       if (resp.message === 403) {
         this.text_validation = resp.message_text;
       } else {
@@ -356,10 +375,10 @@ export class AddPatientMComponent implements OnInit {
 
   public isValidPa(): void {
     this.enabledPaButton = (
-      !!this.form.value.pa_services && this.form.value.pa_services?.trim() != '' &&
+      !!this.form.value.pa_services && this.form.value.pa_services?.trim() !== '' &&
       !!this.form.value.pa_services_start_date &&
       !!this.form.value.pa_services_end_date &&
-      !!this.form.value.selectedValueCode && this.form.value.selectedValueCode.trim() != ''
+      !!this.form.value.selectedValueCode && this.form.value.selectedValueCode.trim() !== ''
     );
   }
 
@@ -384,8 +403,9 @@ export class AddPatientMComponent implements OnInit {
     else {
       this.text_validation = 'Add elegibility date';
     }
-    let pos_covered = JSON.stringify(data?.selectedValuePosCovered);
-    data.pos_covered = pos_covered;
+    // eslint-disable-next-line prefer-const
+    // let pos_covered = JSON.stringify(data?.selectedValuePosCovered);
+    // data.pos_covered = pos_covered;
     return data;
   }
 }
