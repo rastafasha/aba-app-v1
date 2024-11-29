@@ -1,4 +1,5 @@
 import {
+  DateOrNullOrUndefined,
   NumberOrNullOrUndefined,
   StringOrNullOrUndefined,
 } from 'src/app/shared/utils';
@@ -11,6 +12,8 @@ export class NoteRbtV2 {
   patient_id: number;
   client_id: number;
   patient_code: string;
+  patient_identifier: string;
+  insurance_identifier: string;
   doctor_id: number;
 
   provider_id: number;
@@ -27,8 +30,9 @@ export class NoteRbtV2 {
   time_out: string;
   time_in2: string;
   time_out2: string;
-  session_length_total: number;
-  session_length_total2: number;
+  session_length_morning_total: number;
+  session_length_afternon_total: number;
+  session_length_total?: number;
   total_hours: number;
   total_minutes: number;
   total_units: number;
@@ -53,9 +57,9 @@ export class NoteRbtV2 {
   location_id: number;
   md: string;
   md2: string;
-  created_at: string | Date;
-  updated_at: string | Date;
-  deleted_at: string | Date;
+  created_at: Date;
+  updated_at: Date;
+  deleted_at: Date;
   pos: string;
   pa_service_id: number;
   //
@@ -69,11 +73,15 @@ export class NoteRbtV2 {
       id: NumberOrNullOrUndefined(data.id),
       doctor_id: NumberOrNullOrUndefined(data.doctor_id),
       patient_id: NumberOrNullOrUndefined(data.patient_id),
+      insurance_identifier: StringOrNullOrUndefined(data.insurance_identifier),
       client_id:
         NumberOrNullOrUndefined(data.client_id) ??
         NumberOrNullOrUndefined(data.patient_id),
       patient_code: data.patient_code
         ? StringOrNullOrUndefined(data.patient_code)
+        : StringOrNullOrUndefined(data.patient_id),
+      patient_identifier: data.patient_identifier
+        ? StringOrNullOrUndefined(data.patient_identifier)
         : StringOrNullOrUndefined(data.patient_id),
       bip_id: NumberOrNullOrUndefined(data.bip_id),
       provider_name_g: NumberOrNullOrUndefined(data.provider_name_g),
@@ -90,8 +98,8 @@ export class NoteRbtV2 {
       time_out: StringOrNullOrUndefined(data.time_out),
       time_in2: StringOrNullOrUndefined(data.time_in2),
       time_out2: StringOrNullOrUndefined(data.time_out2),
-      session_length_total: NoteRbtV2.calculateSessionLength(data),
-      session_length_total2: NoteRbtV2.calculateSessionLength2(data),
+      session_length_morning_total: NoteRbtV2.calculateSessionLength(data),
+      session_length_afternon_total: NoteRbtV2.calculateSessionLength2(data),
       total_hours: NoteRbtV2.calculateTotalHours(data),
       total_minutes: NoteRbtV2.calculateTotalMinutes(data),
       total_units: NoteRbtV2.calculateTotalUnits(data),
@@ -131,30 +139,35 @@ export class NoteRbtV2 {
       md: StringOrNullOrUndefined(data.md),
       md2: StringOrNullOrUndefined(data.md2),
 
-      created_at: StringOrNullOrUndefined(data.created_at),
-      updated_at: StringOrNullOrUndefined(data.updated_at),
-      deleted_at: StringOrNullOrUndefined(data.deleted_at),
+      created_at: DateOrNullOrUndefined(data.created_at),
+      updated_at: DateOrNullOrUndefined(data.updated_at),
+      deleted_at: DateOrNullOrUndefined(data.deleted_at),
       //
       insurance_id: NumberOrNullOrUndefined(data.insurance_id),
     };
     // Post Work
-    result.session_length_total = NoteRbtV2.calculateSessionLength(data);
-    result.session_length_total2 = NoteRbtV2.calculateSessionLength2(data);
+    result.session_length_morning_total =
+      NoteRbtV2.calculateSessionLength(data);
+    result.session_length_afternon_total =
+      NoteRbtV2.calculateSessionLength2(data);
+    result.session_length_total =
+      result.session_length_morning_total +
+      result.session_length_afternon_total;
+
     result.total_hours = NoteRbtV2.calculateTotalHours(data);
     result.total_minutes = NoteRbtV2.calculateTotalMinutes(data);
     result.total_units = NoteRbtV2.calculateTotalUnits(data);
-    console.log(result);
     return result;
   }
 
   static calculateSessionLength(data: Partial<NoteRbtV2>): number {
-    if (data.session_length_total)
-      return NumberOrNullOrUndefined(data.session_length_total);
+    if (data.session_length_morning_total)
+      return NumberOrNullOrUndefined(data.session_length_morning_total);
     return 0;
   }
   static calculateSessionLength2(data: Partial<NoteRbtV2>): number {
-    if (data.session_length_total2)
-      return NumberOrNullOrUndefined(data.session_length_total2);
+    if (data.session_length_afternon_total)
+      return NumberOrNullOrUndefined(data.session_length_afternon_total);
     return 0;
   }
   static calculateTotalHours(data: Partial<NoteRbtV2>): number {

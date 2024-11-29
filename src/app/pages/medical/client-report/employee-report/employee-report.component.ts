@@ -38,16 +38,17 @@ export class EmployeeReportComponent implements OnInit {
   date_start: any;
   date_end: any;
 
-  patient_id: any;
-  billing_selected: any;
-  sponsor_id: any;
-  noterbt_id: any;
+  patient_id: string;
+  patientID: string;
+  billing_selected: any =[];
+  sponsor_id: number;
+  noterbt_id: number;
   user: AppUser;
 
   clientReport: ClientReportModel;
 
-  clientReportList: any;
-  clientReport_generals: any;
+  clientReportList: any = [];
+  clientReport_generals: any = [];
   dataSource!: MatTableDataSource<any>;
   showFilter = false;
   searchDataValue = '';
@@ -66,27 +67,23 @@ export class EmployeeReportComponent implements OnInit {
 
   roles = [];
   permissions = [];
-  patientID: any;
-  patientId: any;
+  
 
-  pa_assessments: string;
-  pa_assessmentsgroup = [];
-  cpt: any;
-  n_units: any;
-  pa_number: any;
+  cpt: string;
+  n_units: number;
+  pa_number: number;
   insurances: LocationInsurance[] = [];
-  insurance_id: any;
-  insuranceiddd: any;
-  insurer_name: any;
+  insurance_id: number;
+  insuranceiddd: string;
+  insurer_name: string;
   modifiers = [];
-  noteRbt: any;
-  pos_covered = [];
-  pa_assessmentgroup = [];
-  noteBcba: any;
-  patient: any;
+  noteRbt: any = [];
+  pos_covered:any = [];
+  pa_services:any = [];
+  noteBcba: any = [];
 
-  patientName: any;
-  doctor_selected_full_name: any;
+  patientName: string;
+  doctor_selected_full_name: string;
   billing_total = 0;
   week_total_hours: string;
   week_total_units = 0;
@@ -130,10 +127,11 @@ export class EmployeeReportComponent implements OnInit {
   tecnicoRbts: any;
   supervisor: any;
   npi: any;
-  rbt_id: any;
-  rbt2_id: any;
-  bcba_id: any;
-  bcba2_id: any;
+  rbt_id: number;
+  rbt2_id: number;
+  bcba_id: number;
+  bcba2_id: number;
+  doctor_id: number;
   doctor_selected_bcba: any;
   full_name: any;
   doctors: any;
@@ -170,10 +168,10 @@ export class EmployeeReportComponent implements OnInit {
     //
     this.ativatedRoute.params.subscribe((resp) => {
       this.patient_id = resp['patient_id'];
-      this.patientId = resp['patient_id'];
+      this.patientID = resp['patient_id'];
     });
 
-    this.getConfig();
+    // this.getConfig();
     this.billed = false;
     this.pay = false;
     this.billedbcba = false;
@@ -197,11 +195,11 @@ export class EmployeeReportComponent implements OnInit {
     return false;
   }
 
-  getConfig() {
-    this.clientReportService.config().subscribe((resp) => {
-      this.insurances = resp.insurances;
-    });
-  }
+  // getConfig() {
+  //   this.clientReportService.config().subscribe((resp) => {
+  //     this.insurances = resp.insurances;
+  //   });
+  // }
 
   getTableData(page = 1): void {
     this.clientReportList = [];
@@ -214,7 +212,7 @@ export class EmployeeReportComponent implements OnInit {
     this.clientReportService
       .getAllClientReportEmployeeByPatient(
         this.user.id.toString(),
-        this.patientId,
+        this.patientID,
         page,
         this.date_start,
         this.date_end,
@@ -223,6 +221,7 @@ export class EmployeeReportComponent implements OnInit {
       .subscribe((resp) => {
         const pa = resp.arrayPages;
         // const pa = [1,2,3,4,5,6,7,8,9,10]
+        console.log(resp);
         this.pageNumberArray = [];
         if (pa.length > 5) {
           if (this.currentPage > 2 && this.currentPage < pa.length - 2) {
@@ -254,16 +253,18 @@ export class EmployeeReportComponent implements OnInit {
         this.billedbcba = resp.noteBcbas;
         this.paybcba = resp.noteBcbas;
         this.pos_covered = resp.pos_covered;
+        this.pa_services = resp.patient.pa_services;
 
         // obtengo la info resumida de las notas rbt
         this.noteRbt = resp.noteRbts;
 
         // aqui traigo los nombres de los doctores relacionados al paciente
-        this.doctors = resp.doctors;
-        this.supervisor =
-          resp.noteRbts.length > 0 ? resp.noteRbts[0].supervisor : '';
-        this.tecnicoRbts =
-          resp.noteRbts.length > 0 ? resp.noteRbts[0].tecnicoRbts : '';
+        this.doctors = resp.doctor;
+        this.doctor_id = resp.doctor.doctor_id;
+        // this.supervisor =
+        //   resp.noteRbts.length > 0 ? resp.noteRbts[0].supervisor : '';
+        // this.tecnicoRbts =
+        //   resp.noteRbts.length > 0 ? resp.noteRbts[0].tecnicoRbts : '';
 
         this.noteBcba = resp.noteBcbas;
 
@@ -295,30 +296,21 @@ export class EmployeeReportComponent implements OnInit {
         this.bcba_id = resp.patient.bcba_id;
         this.bcba2_id = resp.patient.bcba2_id;
 
-        this.pa_assessments = resp.pa_assessments;
-        const jsonObj = JSON.parse(this.pa_assessments);
 
-        jsonObj.sort((a, b) => {
-          const dateA = new Date(a.pa_services_start_date);
-          const dateB = new Date(b.pa_services_start_date);
-          return dateA.getTime() - dateB.getTime();
-        });
-
-        this.pa_assessmentsgroup = jsonObj;
 
         this.totalDataClientReport = resp.noteRbts.length;
         this.clientReport_generals = resp.noteRbts;
 
         this.patient_id = resp.patient_id;
 
-        for (let i = 0; i < this.pa_assessmentsgroup.length; i++) {
+        for (let i = 0; i < this.pa_services.length; i++) {
           if (
             !this.serialNumberArray.includes(
-              this.pa_assessmentsgroup[i].serial_number
+              this.pa_services[i].serial_number
             )
           ) {
             this.serialNumberArray.push(
-              this.pa_assessmentsgroup[i].serial_number
+              this.pa_services[i].serial_number
             );
           }
           //aqui se agrega pa assestment al total
@@ -352,12 +344,12 @@ export class EmployeeReportComponent implements OnInit {
         console.log('cpt', this.cpt);
 
         // Call getPrizeCptNote with the correct parameters from noterbta list and notebcba list
-        this.getPrizeCptNote(
-          this.insurer_name,
-          this.noteBcba.cpt_code,
-          this.noteRbt.cpt_code,
-          this.provider
-        ).subscribe();
+        // this.getPrizeCptNote(
+        //   this.insurer_name,
+        //   this.noteBcba.cpt_code,
+        //   this.noteRbt.cpt_code,
+        //   this.provider
+        // ).subscribe();
       },
       (error: any) => {
         console.error('Error fetching insurance data:', error);
@@ -438,19 +430,19 @@ export class EmployeeReportComponent implements OnInit {
 
   //trae el nombre del doctor quien hizo la nota rbt
   getDoctorRBT() {
-    this.doctorService.showDoctor(this.tecnicoRbts).subscribe((resp) => {
+    this.doctorService.showDoctor(this.doctor_id).subscribe((resp) => {
       console.log('doctor rbt y location', resp);
       this.doctor_selected = resp.user;
       this.full_name = resp.user.full_name;
     });
   }
   // supervisor del tecnico solo sacamos el npi
-  getDoctorBcba() {
-    this.doctorService.showDoctor(this.supervisor).subscribe((resp) => {
-      console.log('bcba', resp);
-      this.npi = resp.user.npi;
-    });
-  }
+  // getDoctorBcba() {
+  //   this.doctorService.showDoctor(this.supervisor).subscribe((resp) => {
+  //     console.log('bcba', resp);
+  //     this.npi = resp.user.npi;
+  //   });
+  // }
 
   extractDataHours() {
     // recorrer el array de billing_general para extraer la data
@@ -692,126 +684,126 @@ export class EmployeeReportComponent implements OnInit {
     console.log(this.paybcba);
   }
 
-  save(data: any) {
-    let note_rbt_id: any = null;
-    let note_bcba_id: any = null;
+  // save(data: any) {
+  //   let note_rbt_id: any = null;
+  //   let note_bcba_id: any = null;
 
-    if (data.rbt.id) {
-      note_rbt_id = data.rbt.id;
-    }
+  //   if (data.rbt.id) {
+  //     note_rbt_id = data.rbt.id;
+  //   }
 
-    if (data.bcba.id) {
-      note_bcba_id = data.bcba.id;
-    }
+  //   if (data.bcba.id) {
+  //     note_bcba_id = data.bcba.id;
+  //   }
 
-    const VALUE = {
-      session_date: data.rbt.session_date,
-      pos: data.pos,
-      total_hours: data.total_hours,
-      cpt_code: data.rbt.cpt_code,
-      md: this.md,
-      md2: this.md2,
-      mdbcba: this.mdbcba,
-      md2bcba: this.md2bcba,
-      xe: this.xe,
+  //   const VALUE = {
+  //     session_date: data.rbt.session_date,
+  //     pos: data.pos,
+  //     total_hours: data.total_hours,
+  //     cpt_code: data.rbt.cpt_code,
+  //     md: this.md,
+  //     md2: this.md2,
+  //     mdbcba: this.mdbcba,
+  //     md2bcba: this.md2bcba,
+  //     xe: this.xe,
 
-      // charges: data.session_units_total * this.unitPrize,
-      chargesrbt: data.rbt.session_units_total * this.unitPrize,
-      chargesbcba: data.bcba.session_units_total * this.unitPrize,
-      // total_units: this.n_units,
-      total_units: data.bcba.session_units_total
-        ? data.rbt.session_units_total
-        : null,
-      pa_number: this.pa_number,
+  //     // charges: data.session_units_total * this.unitPrize,
+  //     chargesrbt: data.rbt.session_units_total * this.unitPrize,
+  //     chargesbcba: data.bcba.session_units_total * this.unitPrize,
+  //     // total_units: this.n_units,
+  //     total_units: data.bcba.session_units_total
+  //       ? data.rbt.session_units_total
+  //       : null,
+  //     pa_number: this.pa_number,
 
-      patient_id: this.patient_id,
-      insurer_id: this.insurance_id,
-      npi: this.npi,
-      note_rbt_id: note_rbt_id,
-      note_bcba_id: note_bcba_id,
-      billed: data.rbt.billed,
-      pay: data.rbt.pay,
-      billedbcba: data.bcba.billedbcba,
-      paybcba: data.bcba.paybcba,
-    };
-    const VALUE2 = {
-      session_date: data.rbt.session_date,
-      cpt_code: data.rbt.cpt_code,
-      pos: data.rbt.pos,
-      pa_number: this.pa_number,
-      total_hours: data.rbt.total_hours,
-      billed: data.rbt.billed,
-      pay: data.rbt.pay,
-      md: data.rbt.md,
-      md2: data.rbt.md2,
-      note_rbt_id: data.rbt.id,
-      total_units: data.rbt.session_units_total,
-      sponsor_id: data.rbt.provider_name_g,
-      chargesrbt: data.rbt.session_units_total * this.unitPrize,
-      // noterbt_id: data.id,
-    };
-    const VALUE3 = {
-      session_date: data.bcba.session_date,
-      cpt_code: data.bcba.cpt_code,
-      pos: data.bcba.meet_with_client_at,
-      billedbcba: data.bcba.billedbcba,
-      paybcba: data.bcba.paybcba,
-      mdbcba: data.bcba.mdbcba,
-      md2bcba: data.bcba.md2bcba,
-      note_bcba_id: data.bcba.id,
-      total_units: data.bcba.session_units_total,
-      total_hours: data.bcba.total_hours,
-      sponsor_id: data.bcba.provider_name_g,
-      chargesbcba: data.bcba.session_units_total * this.unitPrize,
-      // noterbt_id: data.id,
-    };
-    // if(this.md2.value === 'XE' ||this.md.value ==='XE')
-    //   this.xe= data.total_units * this.unitPrize * this.xe,
+  //     patient_id: this.patient_id,
+  //     insurer_id: this.insurance_id,
+  //     npi: this.npi,
+  //     note_rbt_id: note_rbt_id,
+  //     note_bcba_id: note_bcba_id,
+  //     billed: data.rbt.billed,
+  //     pay: data.rbt.pay,
+  //     billedbcba: data.bcba.billedbcba,
+  //     paybcba: data.bcba.paybcba,
+  //   };
+  //   const VALUE2 = {
+  //     session_date: data.rbt.session_date,
+  //     cpt_code: data.rbt.cpt_code,
+  //     pos: data.rbt.pos,
+  //     pa_number: this.pa_number,
+  //     total_hours: data.rbt.total_hours,
+  //     billed: data.rbt.billed,
+  //     pay: data.rbt.pay,
+  //     md: data.rbt.md,
+  //     md2: data.rbt.md2,
+  //     note_rbt_id: data.rbt.id,
+  //     total_units: data.rbt.session_units_total,
+  //     sponsor_id: data.rbt.provider_name_g,
+  //     chargesrbt: data.rbt.session_units_total * this.unitPrize,
+  //     // noterbt_id: data.id,
+  //   };
+  //   const VALUE3 = {
+  //     session_date: data.bcba.session_date,
+  //     cpt_code: data.bcba.cpt_code,
+  //     pos: data.bcba.meet_with_client_at,
+  //     billedbcba: data.bcba.billedbcba,
+  //     paybcba: data.bcba.paybcba,
+  //     mdbcba: data.bcba.mdbcba,
+  //     md2bcba: data.bcba.md2bcba,
+  //     note_bcba_id: data.bcba.id,
+  //     total_units: data.bcba.session_units_total,
+  //     total_hours: data.bcba.total_hours,
+  //     sponsor_id: data.bcba.provider_name_g,
+  //     chargesbcba: data.bcba.session_units_total * this.unitPrize,
+  //     // noterbt_id: data.id,
+  //   };
+  //   // if(this.md2.value === 'XE' ||this.md.value ==='XE')
+  //   //   this.xe= data.total_units * this.unitPrize * this.xe,
 
-    console.log(VALUE);
+  //   console.log(VALUE);
 
-    const totalValue = [VALUE, VALUE2, VALUE3];
+  //   const totalValue = [VALUE, VALUE2, VALUE3];
 
-    if (this.billing_selected) {
-      //si  tiene bip se agrega a la informacion de la consulta
+  //   if (this.billing_selected) {
+  //     //si  tiene bip se agrega a la informacion de la consulta
 
-      this.clientReportService
-        .udpate(VALUE, this.billing_selected)
-        .subscribe((resp) => {
-          // console.log(resp);
-          // this.text_success = 'Bip Updated'
-          Swal.fire('Updated', `Bip Updated successfully!`, 'success');
-          this.ngOnInit();
-        });
-      this.noteRbtService
-        .noteUpdateModifier(VALUE2, data.rbt.id)
-        .subscribe((resp) => {
-          console.log(resp);
-        });
-      this.noteBCbaService
-        .noteBCBAUpdateModifier(VALUE3, data.bcba.id)
-        .subscribe((resp) => {
-          console.log(resp);
-        });
-    } else {
-      //crear
-      this.clientReportService.create(VALUE).subscribe((resp) => {
-        // console.log(resp);
-        // this.text_success = 'Se guardó la informacion de la cita médica'
-        Swal.fire('Created', `Created successfully!`, 'success');
-        this.ngOnInit();
-      });
+  //     this.clientReportService
+  //       .udpate(VALUE, this.billing_selected)
+  //       .subscribe((resp) => {
+  //         // console.log(resp);
+  //         // this.text_success = 'Bip Updated'
+  //         Swal.fire('Updated', `Bip Updated successfully!`, 'success');
+  //         this.ngOnInit();
+  //       });
+  //     this.noteRbtService
+  //       .noteUpdateModifier(VALUE2, data.rbt.id)
+  //       .subscribe((resp) => {
+  //         console.log(resp);
+  //       });
+  //     this.noteBCbaService
+  //       .noteBCBAUpdateModifier(VALUE3, data.bcba.id)
+  //       .subscribe((resp) => {
+  //         console.log(resp);
+  //       });
+  //   } else {
+  //     //crear
+  //     this.clientReportService.create(VALUE).subscribe((resp) => {
+  //       // console.log(resp);
+  //       // this.text_success = 'Se guardó la informacion de la cita médica'
+  //       Swal.fire('Created', `Created successfully!`, 'success');
+  //       this.ngOnInit();
+  //     });
 
-      this.noteRbtService
-        .noteUpdateModifier(VALUE2, data.rbt.id)
-        .subscribe((resp) => {
-          console.log(resp);
-        });
-      this.noteBCbaService
-        .noteBCBAUpdateModifier(VALUE3, data.bcba.id)
-        .subscribe((resp) => {
-          console.log(resp);
-        });
-    }
-  }
+  //     this.noteRbtService
+  //       .noteUpdateModifier(VALUE2, data.rbt.id)
+  //       .subscribe((resp) => {
+  //         console.log(resp);
+  //       });
+  //     this.noteBCbaService
+  //       .noteBCBAUpdateModifier(VALUE3, data.bcba.id)
+  //       .subscribe((resp) => {
+  //         console.log(resp);
+  //       });
+  //   }
+  // }
 }

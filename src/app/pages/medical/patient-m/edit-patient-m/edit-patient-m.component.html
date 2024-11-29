@@ -583,7 +583,8 @@
                   <h4>Benefits</h4>
                 </div>
               </div>
-              <div class="col-12 col-sm-4">
+
+              <div class="col-12 col-md-6 col-xl-4">
                 <div class="form-group local-forms" [formGroup]="form">
                   <label>Insurer <span class="login-danger">*</span></label>
                   <!-- name="insurer" -->
@@ -602,190 +603,241 @@
                   </mat-select>
                 </div>
               </div>
-            </div>
-            <div class="col-12 col-md-6 col-xl-4">
-              <div class="form-group local-forms" [formGroup]="form">
-                <label>Equhl Id<span class="login-danger">*</span></label>
-                <input
-                  class="form-control"
-                  autocomplete="off"
-                  name="eqhlid"
-                  formControlName="eqhlid"
-                  type="text"
-                />
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>Insurance ID<span class="login-danger">*</span></label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="insurance_identifier"
+                    formControlName="insurance_identifier"
+                    type="text"
+                  />
+                </div>
               </div>
-            </div>
-            <div class="col-12 col-md-6 col-xl-4">
-              <div class="form-group local-forms" [formGroup]="form">
-                <label
-                  >Elegibility date<span class="login-danger">*</span></label
-                >
-                <input
-                  class="form-control datetimepicker"
-                  name="elegibility_date"
-                  formControlName="elegibility_date"
-                  type="text"
-                  matInput
-                  [matDatepicker]="picker2"
-                />
-                <mat-datepicker #picker2></mat-datepicker>
-                <mat-datepicker-toggle
-                  matIconSuffix
-                  [for]="picker2"
-                ></mat-datepicker-toggle>
-              </div>
-            </div>
-            <div class="col-12 col-md-6 col-xl-4">
-              <div class="form-group local-forms" [formGroup]="form">
-                <label>POS Covered<span class="login-danger">*</span></label>
-                <mat-select
-                  multiple
-                  class="form-control select"
-                  formControlName="pos_covered"
-                  placeholder="Select"
-                >
-                  <mat-option
-                    *ngFor="let data of posCoveredOptions"
-                    [value]="data.code"
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label
+                    >Insurer Secondary<span class="login-danger">*</span></label
                   >
-                    {{ data.name }}
-                  </mat-option>
-                </mat-select>
+                  <!-- name="insurer" -->
+                  <mat-select
+                    formControlName="insurer_secondary_id"
+                    name="insurer_id"
+                    class="form-control select"
+                    placeholder="Select Insurer Secondary"
+                  >
+                    <mat-option
+                      *ngFor="let insuran of insurances"
+                      [value]="insuran.id"
+                    >
+                      {{ insuran.name }}
+                    </mat-option>
+                  </mat-select>
+                </div>
               </div>
-            </div>
-            <div class="col-12 col-md-6 col-xl-4">
-              <div class="form-group local-forms" [formGroup]="form">
-                <label>
-                  Deductible Individual I/F<span class="login-danger">*</span>
-                </label>
-                <input
-                  class="form-control"
-                  autocomplete="off"
-                  name="deductible_individual_I_F"
-                  formControlName="deductible_individual_I_F"
-                  type="text"
-                />
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>
+                    Insurance Secondary ID<span class="login-danger">*</span>
+                  </label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="insurance_secondary_identifier"
+                    formControlName="insurance_secondary_identifier"
+                    type="text"
+                  />
+                </div>
               </div>
-            </div>
-            <div class="col-12 col-md-6 col-xl-4">
-              <div class="form-group local-forms" [formGroup]="form">
-                <label>Balance<span class="login-danger">*</span></label>
-                <input
-                  class="form-control"
-                  autocomplete="off"
-                  name="balance"
-                  formControlName="balance"
-                  type="text"
-                />
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label> Equhl Id<span class="login-danger">*</span> </label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="eqhlid"
+                    formControlName="eqhlid"
+                    type="text"
+                  />
+                </div>
               </div>
-            </div>
-            <div class="col-12 col-md-6 col-xl-4">
-              <div class="form-group local-forms" [formGroup]="form">
-                <label>Coinsurance<span class="login-danger">*</span></label>
-                <input
-                  class="form-control"
-                  autocomplete="off"
-                  name="coinsurance"
-                  formControlName="coinsurance"
-                  type="text"
-                />
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>
+                    Elegibility date<span class="login-danger">*</span>
+                  </label>
+                  <input
+                    class="form-control datetimepicker"
+                    name="elegibility_date"
+                    formControlName="elegibility_date"
+                    type="text"
+                    matInput
+                    [matDatepicker]="picker2"
+                  />
+                  <mat-datepicker #picker2></mat-datepicker>
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="picker2"
+                  ></mat-datepicker-toggle>
+                </div>
               </div>
-            </div>
-            <div class="col-12 col-md-6 col-xl-4">
-              <div class="form-group local-forms" [formGroup]="form">
-                <label>Copayments<span class="login-danger">*</span></label>
-                <input
-                  class="form-control"
-                  autocomplete="off"
-                  name="copayments"
-                  formControlName="copayments"
-                  type="text"
-                />
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>
+                    POS Covered<span class="login-danger">*</span>
+                  </label>
+                  <mat-select
+                    multiple
+                    class="form-control select"
+                    formControlName="pos_covered"
+                    placeholder="Select"
+                  >
+                    <mat-option
+                      *ngFor="let data of posCoveredOptions"
+                      [value]="data.code"
+                    >
+                      {{ data.name }}
+                    </mat-option>
+                  </mat-select>
+                </div>
               </div>
-            </div>
-            <div class="col-12 col-md-6 col-xl-4">
-              <div class="form-group local-forms" [formGroup]="form">
-                <label>OOP<span class="login-danger">*</span></label>
-                <input
-                  class="form-control"
-                  autocomplete="off"
-                  name="oop"
-                  formControlName="oop"
-                  type="text"
-                />
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>
+                    Deductible Individual I/F<span class="login-danger">*</span>
+                  </label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="deductible_individual_I_F"
+                    formControlName="deductible_individual_I_F"
+                    type="text"
+                  />
+                </div>
               </div>
-            </div>
-            <div class="col-12 col-md-6 col-xl-4">
-              <div class="form-group local-forms" [formGroup]="form">
-                <label
-                  >Patient Control #<span class="login-danger">*</span></label
-                >
-                <input
-                  class="form-control"
-                  autocomplete="off"
-                  name="patient_control"
-                  formControlName="patient_control"
-                  type="text"
-                />
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>Balance<span class="login-danger">*</span></label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="balance"
+                    formControlName="balance"
+                    type="text"
+                  />
+                </div>
               </div>
-            </div>
-            <div class="col-12 col-md-2">
-              <div class="form-group">
-                <div
-                  class="card-header d-flex justify-content-between align-items-center"
-                >
-                  <h5 class="card-title">Telehealth</h5>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>Coinsurance<span class="login-danger">*</span></label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="coinsurance"
+                    formControlName="coinsurance"
+                    type="text"
+                  />
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>Copayments<span class="login-danger">*</span></label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="copayments"
+                    formControlName="copayments"
+                    type="text"
+                  />
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>OOP<span class="login-danger">*</span></label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="oop"
+                    formControlName="oop"
+                    type="text"
+                  />
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>
+                    Patient Control #<span class="login-danger">*</span>
+                  </label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="patient_control"
+                    formControlName="patient_control"
+                    type="text"
+                  />
+                </div>
+              </div>
+
+              <div class="col-12 col-md-2">
+                <div class="form-group">
                   <div
-                    [formGroup]="form"
-                    class="status-toggle d-flex justify-content-between align-items-center"
+                    class="card-header d-flex justify-content-between align-items-center"
                   >
-                    <input
-                      type="checkbox"
-                      id="telehealth"
-                      class="check"
-                      name="telehealth"
-                      formControlName="telehealth"
-                    />
-                    <label for="telehealth" class="checktoggle" value="true">
-                      checkbox
-                    </label>
+                    <h5 class="card-title">Telehealth</h5>
+                    <div
+                      [formGroup]="form"
+                      class="status-toggle d-flex justify-content-between align-items-center"
+                    >
+                      <input
+                        type="checkbox"
+                        id="telehealth"
+                        class="check"
+                        name="telehealth"
+                        formControlName="telehealth"
+                      />
+                      <label for="telehealth" class="checktoggle" value="true">
+                        checkbox
+                      </label>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="col-12 col-md-2">
-              <div class="form-group">
-                <div
-                  class="card-header d-flex justify-content-between align-items-center"
-                >
-                  <h5 class="card-title">Pay</h5>
+              
+              <div class="col-12 col-md-2">
+                <div class="form-group">
                   <div
-                    [formGroup]="form"
-                    class="status-toggle d-flex justify-content-between align-items-center"
+                    class="card-header d-flex justify-content-between align-items-center"
                   >
-                    <input
-                      type="checkbox"
-                      id="pay"
-                      class="check"
-                      name="pay"
-                      formControlName="pay"
-                    />
-                    <label for="pay" class="checktoggle" value="true">
-                      checkbox
-                    </label>
+                    <h5 class="card-title">Pay</h5>
+                    <div
+                      [formGroup]="form"
+                      class="status-toggle d-flex justify-content-between align-items-center"
+                    >
+                      <input
+                        type="checkbox"
+                        id="pay"
+                        class="check"
+                        name="pay"
+                        formControlName="pay"
+                      />
+                      <label for="pay" class="checktoggle" value="true">
+                        checkbox
+                      </label>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="col-12">
-              <div class="doctor-submit text-end">
-                <button
-                  type="button"
-                  class="btn btn-primary submit-form me-2"
-                  (click)="onSave()"
-                >
-                  Save
-                </button>
+              <div class="col-12">
+                <div class="doctor-submit text-end">
+                  <button
+                    type="button"
+                    class="btn btn-primary submit-form me-2"
+                    (click)="onSave()"
+                  >
+                    Save
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -1021,8 +1073,11 @@
                 </div>
               </div>
 
+              
+
               <div class="col-12">
                 <div class="doctor-submit text-end">
+                  <input type="hidden" formControlName="id">
                   <button
                     type="button"
                     class="btn btn-primary submit-form me-2"
@@ -1205,6 +1260,7 @@
                             <td>{{ paService.start_date | date }}</td>
                             <td>{{ paService.end_date | date }}</td>
                             <td>
+                              <input type="hidden" formControlName="id">
                               <button
                                 type="button"
                                 class="btn btn-sm btn-danger"

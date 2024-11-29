@@ -23,7 +23,7 @@ export class ApiService<T> {
 
   update(data: T, id: number) {
     const URL = this.endpoint + '/update/' + id;
-    return this.http.put<{
+    return this.http.post<{
       message: number;
       message_text: string;
     }>(URL, data);

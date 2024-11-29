@@ -59,7 +59,7 @@
                         >
                         <button
                           class="btn btn-info follow-btns"
-                          (click)="convertToPdf()"
+                          (click)="print()"
                         >
                           Save PDF
                         </button>
@@ -115,7 +115,7 @@
                         <div class="col-xl-3 col-md-3">
                           <div class="detail-personal">
                             <h2>Supervising BCBA</h2>
-                            <p>{{ doctor_selected_full_name_bcba }}</p>
+                            <p>{{ doctor_selected_full_name_supervisor }}</p>
                           </div>
                         </div>
                         <div class="col-xl-3 col-md-3">
@@ -133,13 +133,13 @@
                         <div class="col-xl-3 col-xs-6">
                           <div class="detail-personal">
                             <h2>Modifier</h2>
-                            <p>{{ note_selected.mdbcba }}</p>
+                            <p>{{ note_selected.md }}</p>
                           </div>
                         </div>
                         <div class="col-xl-3 col-xs-6">
                           <div class="detail-personal">
                             <h2>Modifier 2 (optional)</h2>
-                            <p>{{ note_selected.md2bcba }}</p>
+                            <p>{{ note_selected.md2 }}</p>
                           </div>
                         </div>
                         <div class="col-xl-3 col-xs-6">

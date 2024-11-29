@@ -35,3 +35,7 @@ const DateOrNullOrUndefinedFunction: any = function (
 DateOrNullOrUndefinedFunction.prototype = DateOrNullOrUndefinedClass.prototype;
 export const DateOrNullOrUndefined: DateOrNullOrUndefinedConstructor =
   DateOrNullOrUndefinedFunction;
+
+export const fromIsoToDate = (date: Date): string => {
+  return date?.toISOString().split('T')[0];
+};

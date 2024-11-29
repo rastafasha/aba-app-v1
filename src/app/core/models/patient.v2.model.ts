@@ -1,5 +1,6 @@
 import {
   BooleanOrNullOrUndefined,
+  compareObjects,
   DateOrNullOrUndefined,
   isString,
   NumberOrNullOrUndefined,
@@ -17,6 +18,9 @@ export class PatientV2 {
   status: string;
 
   insurer_id: number;
+  insurer_secondary_id: number;
+  insurance_identifier: string;
+  insurance_secondary_identifier: string;
   birth_date: Date;
   age: number;
   gender: number;
@@ -43,10 +47,8 @@ export class PatientV2 {
   summer_schedule: string;
   location_id: number;
 
-  insuranceId: string;
-
   eqhlid: string;
-  elegibility_date: string;
+  elegibility_date: Date;
   pos_covered: string[];
   deductible_individual_I_F: string;
   balance: string;
@@ -92,9 +94,8 @@ export class PatientV2 {
     if (isString(data.pos_covered)) {
       data.pos_covered = data.pos_covered.replace('"', '').split(',');
     }
-
     const result: PatientV2 = {
-      ...data,
+      // ...data,
       id: NumberOrNullOrUndefined(data.id),
       first_name: StringOrNullOrUndefined(data.first_name),
       last_name: StringOrNullOrUndefined(data.last_name),
@@ -105,6 +106,11 @@ export class PatientV2 {
       birth_date: DateOrNullOrUndefined(data.birth_date),
       patient_id: StringOrNullOrUndefined(data.patient_id),
       insurer_id: NumberOrNullOrUndefined(data.insurer_id),
+      insurer_secondary_id: NumberOrNullOrUndefined(data.insurer_secondary_id),
+      insurance_identifier: StringOrNullOrUndefined(data.insurance_identifier),
+      insurance_secondary_identifier: StringOrNullOrUndefined(
+        data.insurance_secondary_identifier
+      ),
       language: StringOrNullOrUndefined(data.language),
       city: StringOrNullOrUndefined(data.city),
       email: StringOrNullOrUndefined(data.email),
@@ -130,10 +136,8 @@ export class PatientV2 {
       summer_schedule: StringOrNullOrUndefined(data.summer_schedule),
       location_id: NumberOrNullOrUndefined(data.location_id),
 
-      insuranceId: StringOrNullOrUndefined(data.insuranceId),
-
       eqhlid: StringOrNullOrUndefined(data.eqhlid),
-      elegibility_date: StringOrNullOrUndefined(data.elegibility_date),
+      elegibility_date: DateOrNullOrUndefined(data.elegibility_date),
       pos_covered: data.pos_covered?.map(StringOrNullOrUndefined) ?? [],
       deductible_individual_I_F: StringOrNullOrUndefined(
         data.deductible_individual_I_F
@@ -177,6 +181,7 @@ export class PatientV2 {
       updated_at: DateOrNullOrUndefined(data.updated_at),
       deleted_at: DateOrNullOrUndefined(data.deleted_at),
     };
+    console.table(compareObjects(data, result));
     return result;
   }
 }

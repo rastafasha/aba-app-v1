@@ -13,6 +13,14 @@ import { PatientsUseCasesService } from '../service/patients-use-cases.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Validators } from 'ngx-editor';
 
+/** Principios SOLID
+ * Single reposonsablity: que la cosa, haga una sola cosa y bien
+ * O
+ * L
+ * I
+ * D
+ */
+
 export interface ResponseBackend {
   users: User[];
   doctores: any[];
@@ -20,6 +28,7 @@ export interface ResponseBackend {
   location: any;
   insurances: any[];
 }
+
 export interface User {
   id: string;
   full_name: string;
@@ -34,7 +43,6 @@ export interface Service {
   // Add other service properties here
 }
 
-const url_servicios = environment.url_servicios;
 @Component({
   selector: 'app-add-patient-m',
   templateUrl: './add-patient-m.component.html',
@@ -122,7 +130,8 @@ export class AddPatientMComponent implements OnInit {
     private router: Router,
     private locationBack: Location,
     private http: HttpClient,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private useCases: PatientsUseCasesService
   ) {}
 
   ngOnInit(): void {
@@ -213,17 +222,9 @@ export class AddPatientMComponent implements OnInit {
   }
 
   checkEmailExistence(): void {
-    const email = this.form.value.email;
-    this.http
-      .get<any>(`${url_servicios}/doctors/check-email-exist/${email}`)
-      .subscribe((response) => {
-        this.emailExists = response.exist.email;
-        if (this.emailExists === null) {
-          this.emailExists = false;
-        } else {
-          this.emailExists = true;
-        }
-      });
+    this.useCases
+      .checkEmailExistense(this.email)
+      .subscribe((result) => (this.emailExists = result));
   }
 
   getPoscoveredList() {

@@ -55,27 +55,7 @@
                       </div>
                     </div>
                     <div class="col-lg-4 col-md-4 d-flex align-items-center">
-                      <!-- <div class="follow-group">
-                                                <div class="doctor-follows">
-                                                    <h5>Patient ID</h5>
-                                                    <h4>{{patient_selected.patient_id}}</h4>
-                                                </div>
-                                                <div class="doctor-follows">
-                                                    <h5>diagnosis_code</h5>
-                                                    <h4>{{patient_selected.diagnosis_code}}</h4>
-                                                </div>
-                                                <div class="doctor-follows">
-                                                    <h5>Status</h5>
-                                                    <h4>{{status}}</h4>
-                                                    <span class="badge bg-primary"
-                                                        *ngIf="patient_selected.status === 'pending'">Pendig</span>
-                                                    <span class="badge bg-success"
-                                                        *ngIf="patient_selected.status === 'yes'">Yes</span>
-                                                    <span class="badge bg-dark"
-                                                        *ngIf="patient_selected.status === 'no'">No</span>
-
-                                                </div>
-                                            </div> -->
+                   
                     </div>
                     <div class="col-lg-4 col-md-4 d-flex align-items-center">
                       <div class="follow-btn-group">
@@ -87,11 +67,10 @@
                         >
                         <button
                           class="btn btn-info follow-btns"
-                          (click)="convertToPdf()"
+                          (click)="print()"
                         >
                           Save PDF
                         </button>
-                        <!-- <button type="submit" class="btn btn-info message-btns">Message</button> -->
                       </div>
                     </div>
                   </div>
@@ -180,14 +159,14 @@
                     <h4>Documents Reviewed</h4>
                   </div>
                   <div class="row">
-                    <div *ngIf="!documents || documents === null">
+                    <div *ngIf="!bip_selected.documents_reviewed || bip_selected.documents_reviewed.length === 0">
                       <app-no-info></app-no-info>
                     </div>
-                    <ng-container *ngFor="let doc of documents">
+                    <ng-container *ngFor="let document of bip_selected.documents_reviewed; let i = index">
                       <div class="col-xs-12 col-sm-6">
                         <div class="detail-personal">
                           <h2>Document Title</h2>
-                          <p>{{ doc.document_title }}</p>
+                          <p>{{ document.title }}</p>
                         </div>
                       </div>
                       
@@ -199,6 +178,7 @@
           </div>
         </div>
         <!-- documents Reviewed end-->
+
         <!-- Background Information-->
         <div class="row">
           <div class="col-12">
@@ -265,15 +245,15 @@
                         </div>
                         <div
                           *ngIf="
-                            !phiysical_and_medical_status ||
-                            phiysical_and_medical_status === null
+                            !bip_selected.phiysical_and_medical_status ||
+                            bip_selected.phiysical_and_medical_status === null
                           "
                         >
                           <app-no-info></app-no-info>
                         </div>
                         <ng-container
                           *ngFor="
-                            let medication of phiysical_and_medical_status
+                            let medication of bip_selected.phiysical_and_medical_status
                           "
                         >
                           <div class="col-xs-12 col-sm-3">
@@ -361,12 +341,13 @@
                           <p>{{ malad.baseline_date | date }}</p>
                         </div>
                       </div>
-                      <app-chart-reduction
+                      <h2 class="text-center">Grafico</h2>
+                      <!-- <app-chart-reduction
                         [maladaptive_behavior]="malad.maladaptive_behavior"
                         [baseline_date]="malad.baseline_date"
                         [baseline_level]="malad.baseline_level"
                         [initial_interesting]="malad.initial_interesting"
-                      ></app-chart-reduction>
+                      ></app-chart-reduction> -->
                     </ng-container>
                   </div>
                 </div>
@@ -386,10 +367,15 @@
                     <h4>Assessments Conducted</h4>
                   </div>
                   <div class="row">
-                    <div *ngIf="!assesstments || assesstments === null">
+                    <div *ngIf="!bip_selected.assestment_conducted_options || bip_selected.assestment_conducted_options === null">
                       <app-no-info></app-no-info>
                     </div>
-                    <ng-container *ngFor="let assesst of assesstments">
+                    <div class="col-xs-12 ">
+                      <div class="detail-personal">
+                        <p>{{ bip_selected.assestment_conducted}}</p>
+                      </div>
+                    </div>
+                    <ng-container *ngFor="let assesst of bip_selected.assestment_conducted_options">
                       <div class="col-xs-12 col-sm-6">
                         <div class="detail-personal">
                           <h2>Assessments title</h2>
@@ -413,14 +399,14 @@
                   <div class="row">
                     <div
                       *ngIf="
-                        !assestmentEvaluationSettings ||
-                        assestmentEvaluationSettings === null
+                        !bip_selected.assestmentEvaluationSettings ||
+                        bip_selected.assestmentEvaluationSettings === null
                       "
                     >
                       <app-no-info></app-no-info>
                     </div>
                     <ng-container
-                      *ngFor="let evaluationSt of assestmentEvaluationSettings"
+                      *ngFor="let evaluationSt of bip_selected.assestmentEvaluationSettings"
                     >
                       <div class="col-xs-12 col-sm-6">
                         <div class="detail-personal">
@@ -461,15 +447,15 @@
                   <div class="row">
                     <div
                       *ngIf="
-                        !prevalent_setting_event_and_atecedents ||
-                        prevalent_setting_event_and_atecedents === null
+                        !bip_selected.prevalent_setting_event_and_atecedents ||
+                        bip_selected.prevalent_setting_event_and_atecedents === null
                       "
                     >
                       <app-no-info></app-no-info>
                     </div>
                     <ng-container
                       *ngFor="
-                        let prevalent of prevalent_setting_event_and_atecedents
+                        let prevalent of bip_selected.prevalent_setting_event_and_atecedents
                       "
                     >
                       <div class="col-xs-12 col-sm-4">
@@ -523,9 +509,9 @@
                       <h4>Tangibles</h4>
                     </div>
 
-                    <ng-container *ngFor="let access of accesstoTangibles">
+                    <ng-container *ngFor="let access of bip_selected.tangibles">
                       <div
-                        *ngIf="!accesstoTangibles || accesstoTangibles === null"
+                        *ngIf="!tangibles || tangibles === null"
                       >
                         <app-no-info></app-no-info>
                       </div>
@@ -552,10 +538,10 @@
                       <h4>Attention</h4>
                     </div>
 
-                    <ng-container *ngFor="let access of accesstoAttention">
+                    <ng-container *ngFor="let access of bip_selected.attention">
                       <div
                         *ngIf="
-                          !accesstoAttention || accesstoAttention === 'null'
+                          !attention || attention === 'null'
                         "
                       >
                         <app-no-info></app-no-info>
@@ -584,8 +570,8 @@
                       <h4>Escape</h4>
                     </div>
 
-                    <ng-container *ngFor="let access of accesstoEscape">
-                      <div *ngIf="!accesstoEscape || accesstoEscape === 'null'">
+                    <ng-container *ngFor="let access of bip_selected.escape">
+                      <div *ngIf="!escape || escape === 'null'">
                         <app-no-info></app-no-info>
                       </div>
                       <div class="col-xs-12 col-sm-4">
@@ -612,8 +598,8 @@
                       <h4>Sensory</h4>
                     </div>
 
-                    <ng-container *ngFor="let access of accesstoSensory">
-                      <div *ngIf="!accesstoSensory || accesstoSensory === null">
+                    <ng-container *ngFor="let access of bip_selected.sensory">
+                      <div *ngIf="!sensory || sensory === null">
                         <app-no-info></app-no-info>
                       </div>
                       <div class="col-xs-12 col-sm-4">
@@ -739,7 +725,7 @@
                   </div>
                   <div class="row">
                     <ng-container
-                      *ngFor="let item of interventions; let i = index"
+                      *ngFor="let item of bip_selected.interventions; let i = index"
                     >
                       <div class="col-xs-12 col-sm-6">
                         <h4>{{ item.titleIntervention }}</h4>
@@ -765,10 +751,10 @@
                   </div>
 
                   <div class="row">
-                    <div *ngIf="!reduction_goals || reduction_goals === null">
+                    <div *ngIf="!bip_selected.reduction_goal || bip_selected.reduction_goal === null">
                       <app-no-info></app-no-info>
                     </div>
-                    <ng-container *ngFor="let item of reduction_goals">
+                    <ng-container *ngFor="let item of bip_selected.reduction_goal">
                       <div class="col-xs-12 col-sm-4">
                         <div class="detail-personal">
                           <h2>Goal</h2>
@@ -789,14 +775,14 @@
                       </div>
                       <div
                         *ngIf="
-                          !reduction_goals_goalstos ||
-                          reduction_goals_goalstos === null
+                          !bip_selected.reduction_goal.goalstos ||
+                          bip_selected.reduction_goal.goalstos === null
                         "
                       >
                         <app-no-info></app-no-info>
                       </div>
                       <ng-container
-                        *ngFor="let item of reduction_goals_goalstos"
+                        *ngFor="let item of bip_selected.reduction_goal.goalstos"
                       >
                         <div class="row">
                           <div class="col-xs-12 col-sm-3">
@@ -826,6 +812,7 @@
                           </div>
                         </div>
                       </ng-container>
+                      <h2 class="text-center">Grafico</h2>
                       <!-- <app-chart-reduction [maladaptive_behavior]="item.maladaptive"  [baseline_date]="item.baseline_date" [baseline_level]="item.baseline_level" [initial_interesting]="item.initial_interesting"></app-chart-reduction> -->
                     </ng-container>
                   </div>
@@ -845,40 +832,40 @@
                     <h4>Replacement Goals</h4>
                   </div>
                   <div class="row">
-                    <div *ngIf="!sustitution_goal || sustitution_goal === null">
+                    <div *ngIf="!bip_selected.sustitution_goal || bip_selected.sustitution_goal === null">
                       <app-no-info></app-no-info>
                     </div>
-                    <ng-container *ngFor="let item of sustitution_goal">
+                    <ng-container *ngFor="let itemsg of bip_selected.sustitution_goal">
                       <div class="col-xs-12 bg-gray">
                         <div class="row">
                           <div class="col-xs-12 col-sm-4">
                             <div class="detail-personal">
                               <h2>Goal</h2>
-                              <p>{{ item.goal }}</p>
+                              <p>{{ itemsg.goal }}</p>
                             </div>
                           </div>
                           <div class="col-xs-12 col-sm-4">
                             <div class="detail-personal">
                               <h2>Current Status</h2>
-                              <p>{{ item.current_status }}</p>
+                              <p>{{ itemsg.current_status }}</p>
                             </div>
                           </div>
                           <div class="col-xs-12 col-sm-4">
                             <div class="detail-personal">
                               <h2>Created at</h2>
-                              <p>{{ item.created_at | date }}</p>
+                              <p>{{ itemsg.created_at | date }}</p>
                             </div>
                           </div>
                           <div class="col-xs-12">
                             <div class="detail-personal">
                               <h2>Description</h2>
-                              <p>{{ item.description }}</p>
+                              <p>{{ itemsg.description }}</p>
                             </div>
                           </div>
                         </div>
                       </div>
                       <hr />
-                      <ng-container *ngFor="let item of sustitution_goal_stos">
+                      <ng-container *ngFor="let itemsgst of bip_selected.sustitution_goal.goalstos">
                         <div class="row">
                           <p style="font-size: 1.2rem; padding: 20px 10px">
                             Goal Sto
@@ -886,39 +873,39 @@
                           <div class="col-xs-12 col-sm-3">
                             <div class="detail-personal">
                               <h2>Sto</h2>
-                              <p>{{ item.sustitution_sto }}</p>
+                              <p>{{ itemsgst.sustitution_sto }}</p>
                             </div>
                           </div>
 
                           <div class="col-xs-12 col-sm-3">
                             <div class="detail-personal">
                               <h2>Target</h2>
-                              <p>{{ item.target }}</p>
+                              <p>{{ itemsgst.target }}</p>
                             </div>
                           </div>
                           <div class="col-xs-12 col-sm-3">
                             <div class="detail-personal">
                               <h2>Sustitution Status</h2>
-                              <p>{{ item.sustitution_status_sto }}</p>
+                              <p>{{ itemsgst.sustitution_status_sto }}</p>
                             </div>
                           </div>
 
                           <div class="col-xs-12 col-sm-3">
                             <div class="detail-personal">
                               <h2>Date</h2>
-                              <p>{{ item.sustitution_date_sto | date }}</p>
+                              <p>{{ itemsgst.sustitution_date_sto | date }}</p>
                             </div>
                           </div>
                           <div class="col-xs-12">
                             <div class="detail-personal">
                               <h2>Description</h2>
-                              <p>{{ item.sustitution_decription_sto }}</p>
+                              <p>{{ itemsgst.sustitution_decription_sto }}</p>
                             </div>
                           </div>
                         </div>
                         <hr />
                       </ng-container>
-                      <ng-container *ngFor="let item of sustitution_goal_ltos">
+                      <ng-container *ngFor="let itemglt of bip_selected.sustitution_goal.goalltos">
                         <div class="row">
                           <p style="font-size: 1.2rem; padding: 20px 10px">
                             Goal Lto
@@ -926,35 +913,36 @@
                           <div class="col-xs-12 col-sm-3">
                             <div class="detail-personal">
                               <h2>Lto</h2>
-                              <p>{{ item.sustitution_lto }}</p>
+                              <p>{{ itemglt.sustitution_lto }}</p>
                             </div>
                           </div>
 
                           <div class="col-xs-12 col-sm-3">
                             <div class="detail-personal">
                               <h2>sustitution Status</h2>
-                              <p>{{ item.sustitution_status_lto }}</p>
+                              <p>{{ itemglt.sustitution_status_lto }}</p>
                             </div>
                           </div>
                           <div class="col-xs-12 col-sm-3">
                             <div class="detail-personal">
                               <h2>decription</h2>
-                              <p>{{ item.sustitution_decription_lto }}</p>
+                              <p>{{ itemglt.sustitution_decription_lto }}</p>
                             </div>
                           </div>
                           <div class="col-xs-12 col-sm-3">
                             <div class="detail-personal">
                               <h2>date</h2>
-                              <p>{{ item.sustitution_date_lto | date }}</p>
+                              <p>{{ itemglt.sustitution_date_lto | date }}</p>
                             </div>
                           </div>
                         </div>
                         <hr />
                       </ng-container>
-                      <app-chart-replacement
+                      <h2 class="text-center">Grafico</h2>
+                      <!-- <app-chart-replacement
                         [goal]="item.goal"
                         [baseline_d]="item.created_at"
-                      ></app-chart-replacement>
+                      ></app-chart-replacement> -->
                     </ng-container>
                   </div>
                 </div>
@@ -1024,10 +1012,10 @@
                       caregivers to ensure proper program implementation."
                     </p>
                   </div>
-                  <div *ngIf="!family_envolment || family_envolment === null">
+                  <div *ngIf="!caregivers_training_goals || caregivers_training_goals === null">
                     <app-no-info></app-no-info>
                   </div>
-                  <ng-container *ngFor="let item of family_envolment">
+                  <ng-container *ngFor="let item of caregivers_training_goals">
                     <div class="row">
                       <div class="col-xs-12 col-sm-4">
                         <div class="detail-personal">
@@ -1109,78 +1097,44 @@
                       <li>Use of reinforcement</li>
                     </ol>
                   </div>
-                  <!-- <ng-container *ngFor="let item of monitoring_evalutating">
-                                        <div class="row">
-                                            <div class="col-xs-12 col-sm-3">
-                                                <div class="detail-personal">
-                                                    <h2>treatment fidelity</h2>
-                                                    <p>{{item.treatment_fidelity}}</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-12 col-sm-3">
-                                                <div class="detail-personal">
-                                                    <h2>created_at  </h2>
-                                                    <p>{{item.created_at | date }}</p>
-                                                </div>
-                                            </div>
 
-
-                                        </div>
-                                    </ng-container> -->
-                  <div
-                    *ngIf="
-                      !monitoring_evalutating_goals ||
-                      monitoring_evalutating_goals === null
-                    "
-                  >
-                    <app-no-info></app-no-info>
-                  </div>
-                  <ng-container
-                    *ngFor="let item of monitoring_evalutating_goals"
+                  <div *ngIf="rbt_training_goals ">
+                    <ng-container
+                    *ngFor="let itemrtg of rbt_training_goals"
                   >
                     <div class="row">
                       <p>RBT Training Goals</p>
                       <div class="col-xs-12">
                         <div class="detail-personal">
                           <h2>lto</h2>
-                          <p>{{ item.lto }}</p>
+                          <p>{{ itemrtg.lto }}</p>
                         </div>
                       </div>
 
-                      <!-- <div class="col-xs-12 col-sm-3">
-                                                <div class="detail-personal">
-                                                    <h2>goal</h2>
-                                                    <p>{{item.goal}}</p>
-                                                </div>
-                                            </div> -->
                       <div class="col-xs-12 col-sm-6">
                         <div class="detail-personal">
                           <h2>status</h2>
-                          <p>{{ item.status }}</p>
+                          <p>{{ itemrtg.status }}</p>
                         </div>
                       </div>
-                      <!-- <div class="col-xs-12 col-sm-3">
-                                                <div class="detail-personal">
-                                                    <h2>current status</h2>
-                                                    <p>{{item.current_status}}</p>
-                                                </div>
-                                            </div> -->
                       <div class="col-xs-12 col-sm-6">
                         <div class="detail-personal">
                           <h2>date</h2>
-                          <p>{{ item.date | date }}</p>
+                          <p>{{ itemrtg.date | date }}</p>
                         </div>
                       </div>
                     </div>
                     <hr />
                   </ng-container>
+                  </div>
+                  
                 </div>
               </div>
             </div>
           </div>
         </div>
         <!-- Monitoring Evaluating end-->
-        <!-- behavior asistant -->
+        <!-- behavior asistant (only text) -->
         <div class="row">
           <div class="col-12">
             <div class="card-box">
@@ -1451,6 +1405,7 @@
             </div>
           </div>
         </div>
+        
         <!-- behavior asistant end-->
 
         <!-- Generalization Training-->
@@ -1530,34 +1485,33 @@
                   </div>
                   <div
                     *ngIf="
-                      !generalization_training ||
-                      generalization_training === null
+                      !transition_fading_plans ||
+                      transition_fading_plans === null
                     "
                   >
                     <app-no-info></app-no-info>
                   </div>
-                  <ng-container *ngFor="let item of generalization_training">
-                    <div class="row">
-                      <div class="col-xs-12">
-                        <div class="detail-personal">
-                          <h2>discharge plan</h2>
-                          <p>{{ item.discharge_plan }}</p>
-                        </div>
+                  <div class="row">
+                    <div class="col-xs-12">
+                      <div class="detail-personal">
+                        <h2>discharge plan</h2>
+                        <p>{{ discharge_plan }}</p>
                       </div>
                     </div>
-                  </ng-container>
-                  <ng-container *ngFor="let item of transition_fading_plans">
+                  </div>
+                  
+                  <ng-container *ngFor="let itemtr of transition_fading_plans">
                     <div class="row">
                       <div class="col-xs-12 col-sm-6">
                         <div class="detail-personal">
                           <h2>phase</h2>
-                          <p>{{ item.phase }}</p>
+                          <p>{{ itemtr.phase }}</p>
                         </div>
                       </div>
                       <div class="col-xs-12 col-sm-6">
                         <div class="detail-personal">
                           <h2>description</h2>
-                          <p>{{ item.description }}</p>
+                          <p>{{ itemtr.description }}</p>
                         </div>
                       </div>
                     </div>
@@ -1582,7 +1536,7 @@
                     <div class="col-xs-12">
                       <div class="detail-personal">
                         <h2>crisis description</h2>
-                        <p>{{ crisis_description }}</p>
+                        <p>{{ crisis_description}}</p>
                       </div>
                     </div>
                     <div class="col-xs-12">
@@ -2570,42 +2524,48 @@
                   </div>
                   <div
                     *ngIf="
-                      !de_escalation_techniques ||
-                      de_escalation_techniques === null
+                      !recomendation_lists ||
+                      recomendation_lists === null
                     "
                   >
                     <app-no-info></app-no-info>
                   </div>
-                  <ng-container *ngFor="let item of de_escalation_techniques">
+                  <ng-container *ngFor="let itemrl of recomendation_lists">
                     <div class="row">
                       <div class="col-xs-12 col-sm-3">
                         <div class="detail-personal">
                           <h2>cpt</h2>
-                          <p>{{ item.cpt }}</p>
+                          <p>{{ itemrl.cpt }}</p>
+                        </div>
+                      </div>
+                      <div class="col-xs-12 col-sm-3">
+                        <div class="detail-personal">
+                          <h2>nombre</h2>
+                          <p>{{ itemrl.nombre }}</p>
                         </div>
                       </div>
                       <div class="col-xs-12 col-sm-3">
                         <div class="detail-personal">
                           <h2>num units</h2>
-                          <p>{{ item.num_units }}</p>
+                          <p>{{ itemrl.num_units }}</p>
                         </div>
                       </div>
                       <div class="col-xs-12 col-sm-3">
                         <div class="detail-personal">
                           <h2>breakdown per week</h2>
-                          <p>{{ item.breakdown_per_week }}</p>
+                          <p>{{ itemrl.breakdown_per_week }}</p>
                         </div>
                       </div>
                       <div class="col-xs-12 col-sm-3">
                         <div class="detail-personal">
                           <h2>location</h2>
-                          <p>{{ item.location }}</p>
+                          <p>{{ itemrl.location }}</p>
                         </div>
                       </div>
                       <div class="col-xs-12">
                         <div class="detail-personal">
                           <h2>description service</h2>
-                          <p>{{ item.description_service }}</p>
+                          <p>{{ itemrl.description_service }}</p>
                         </div>
                       </div>
                     </div>
@@ -2644,7 +2604,7 @@
                     <div class="col-xs-12 col-sm-3">
                       <div class="detail-personal">
                         <h2>Analyst Signature date</h2>
-                        <p>{{ analyst_signature_date | date }}</p>
+                        <p>{{ consent_to_treatment.analyst_signature_date | date }}</p>
                       </div>
                     </div>
                     <div class="col-xs-12 col-sm-3">
@@ -2665,7 +2625,7 @@
                     <div class="col-xs-12 col-sm-3">
                       <div class="detail-personal">
                         <h2>Guardian Signature day</h2>
-                        <p>{{ parent_guardian_signature_date | date }}</p>
+                        <p>{{ consent_to_treatment.parent_guardian_signature_date | date }}</p>
                       </div>
                     </div>
                   </div>
@@ -2675,6 +2635,7 @@
           </div>
         </div>
         <!-- Consent to Treatment end-->
+         
       </div>
     </div>
   </div>

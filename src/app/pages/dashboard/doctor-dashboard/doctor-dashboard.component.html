@@ -21,11 +21,11 @@
     <div class="good-morning-blk">
       <div class="row">
         <div class="col-md-6 d-flex align-items-center">
-          <div style="width: 40%">
+          <div style="width: 40%" class="mx-2">
             <mat-select
               [(ngModel)]="doctor_id"
               class="form-control select"
-              (selectionChange)="selectDoctor()"
+              (selectionChange)="selectDoctor(doctor_id)"
               placeholder="Select Doctor"
             >
               <mat-option *ngFor="let data of doctors" [value]="data.id">
@@ -167,9 +167,9 @@
                             </div> -->
               <div class="form-group mb-0">
                 <mat-select
-                  [(ngModel)]="selectedValue"
+                  [(ngModel)]="currentYear"
                   class="form-control select"
-                  (selectionChange)="selectedYear()"
+                  (selectionChange)="selectedYear(currentYear)"
                   placeholder="2022"
                 >
                   <mat-option
@@ -183,16 +183,16 @@
             </div>
             <div id="apexcharts-area" *ngIf="query_income_year">
               <apx-chart
-                [series]="chartOptionsOne.series"
-                [chart]="chartOptionsOne.chart"
-                [xaxis]="chartOptionsOne.xaxis"
-                [dataLabels]="chartOptionsOne.dataLabels"
-                [grid]="chartOptionsOne.grid"
-                [stroke]="chartOptionsOne.stroke"
-                [title]="chartOptionsOne.title"
-                [markers]="chartOptionsOne.markers"
-                [yaxis]="chartOptionsOne.yaxis"
-                [fill]="chartOptionsOne.fill"
+                [series]="chartOptionsIncome.series"
+                [chart]="chartOptionsIncome.chart"
+                [xaxis]="chartOptionsIncome.xaxis"
+                [dataLabels]="chartOptionsIncome.dataLabels"
+                [grid]="chartOptionsIncome.grid"
+                [stroke]="chartOptionsIncome.stroke"
+                [title]="chartOptionsIncome.title"
+                [markers]="chartOptionsIncome.markers"
+                [yaxis]="chartOptionsIncome.yaxis"
+                [fill]="chartOptionsIncome.fill"
               ></apx-chart>
             </div>
           </div>

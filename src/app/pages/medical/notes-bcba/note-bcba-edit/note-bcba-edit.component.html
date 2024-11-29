@@ -10,7 +10,6 @@
             </button>
           </div>
         </div>
-<<<<<<< ajustes-target-rbt-notes
       </div>
     </div>
     <!-- /Page Header -->
@@ -92,7 +91,7 @@
                       <span class="login-danger">*</span></label
                     >
                     <mat-select
-                      [(ngModel)]="selectedValueRendering"
+                      [(ngModel)]="selectedValueProviderRBT_id"
                       name="rendering_provider"
                       [ngModelOptions]="{ standalone: true }"
                       class="form-control select"
@@ -114,11 +113,11 @@
                       >Aba Supervisor<span class="login-danger">*</span></label
                     >
                     <mat-select
-                      [(ngModel)]="selectedValueAba"
+                      [(ngModel)]="selectedValueBcba_id"
                       name="aba_supervisor"
                       [ngModelOptions]="{ standalone: true }"
                       class="form-control select"
-                      (selectionChange)="selectSpecialist($event)"
+                      (selectionChange)="selectSpecialistBCBA($event)"
                       placeholder="Select Specialist"
                     >
                       <mat-option
@@ -130,48 +129,59 @@
                     </mat-select>
                   </div>
                 </div>
-                <div class="col-12 col-md-3">
-                  <div class="form-group local-forms">
-                    <label>CPT <span class="login-danger">*</span></label>
-                    <mat-select
-                      [(ngModel)]="selectedValueCode"
-                      name="cpt"
-                      [ngModelOptions]="{ standalone: true }"
-                      class="form-control select"
-                      placeholder="Select Code"
-                    >
-                      <mat-option
-                        *ngFor="let data of pa_assessmentsgroup; let i = index"
-                        [value]="data.cpt"
-                      >
-                        {{ data.cpt }} | {{ data.provider }}
-                      </mat-option>
-                    </mat-select>
-                  </div>
-                </div>
-                <div class="col-12 col-md-3">
+
+                <!--  units -->
+                <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
-                      >Units Allowed <span class="login-danger">*</span></label
+                      >Service & CPT <span class="login-danger">*</span></label
                     >
                     <mat-select
-                      [(ngModel)]="selectedValueCode"
-                      name="n_units"
-                      disable
-                      [ngModelOptions]="{ standalone: true }"
+                      [(ngModel)]="selectedPaService"
+                      name="pa_service"
+                      (selectionChange)="onPaServiceSelect($event)"
                       class="form-control select"
-                      placeholder="Select Code"
+                      placeholder="Select Service"
                     >
                       <mat-option
-                        *ngFor="let data of pa_assessmentsgroup"
-                        disable
-                        [value]="data.cpt"
+                        *ngFor="let service of pa_services"
+                        [value]="service"
                       >
-                        {{ data.n_units }}
+                        {{ service.pa_services }} ({{ service.cpt }})
                       </mat-option>
                     </mat-select>
                   </div>
                 </div>
+
+                <div class="col-12 col-md-6 col-xl-4" *ngIf="selectedPaService">
+                  <div class="form-group local-forms">
+                    <label class="mb-2">Available Units</label>
+                    <div class="units-container">
+                      <div class="units-wrapper">
+                        <div class="progress-container">
+                          <div
+                            class="progress-bar"
+                            [style.width.%]="
+                              ((selectedPaService.n_units -
+                                selectedPaService.available_units) /
+                                selectedPaService.n_units) *
+                              100
+                            "
+                          ></div>
+                        </div>
+                        <div class="units-text">
+                          {{ selectedPaService.available_units }}/{{
+                            selectedPaService.n_units
+                          }}
+                          units
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--  fin units -->
+                
+                
                 <div class="col-12 col-md-3">
                   <div class="form-group local-forms">
                     <label
@@ -212,6 +222,7 @@
                   </div>
                 </div>
                 <div class="clear"></div>
+                
                 <div class="row">
                   <div class="col-xs-12 col-sm-6">
                     <h5 class="mb-3">Morning Session</h5>
@@ -230,7 +241,6 @@
                             [(ngModel)]="selectedValueTimeIn"
                             name="time_in"
                           />
-                          <!-- <ngx-material-timepicker-toggle matSuffix [for]="toggleTimepicker"></ngx-material-timepicker-toggle> -->
                           <ngx-material-timepicker
                             (timeChanged)="hourTimeInSelected($event)"
                             #toggleTimepicker
@@ -315,14 +325,14 @@
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
-                      >Session Length Total<span class="login-danger"
+                      >Session Morning Total<span class="login-danger"
                         >*</span
                       ></label
                     >
                     <input
                       class="form-control"
-                      name="session_length_total"
-                      [(ngModel)]="session_length_total"
+                      name="session_length_morning_total"
+                      [(ngModel)]="session_length_morning_total"
                       type="text"
                     />
                   </div>
@@ -330,14 +340,14 @@
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
-                      >Session Length Total<span class="login-danger"
+                      >Session Afternoon Total<span class="login-danger"
                         >*</span
                       ></label
                     >
                     <input
                       class="form-control"
-                      name="session_length_total2"
-                      [(ngModel)]="session_length_total2"
+                      name="session_length_afternon_total"
+                      [(ngModel)]="session_length_afternon_total"
                       type="text"
                     />
                   </div>
@@ -414,13 +424,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let goal of rbt_training_goals; let i = index">
-                    <td>{{ goal.lto }}</td>
+                  <tr *ngFor="let goalr of rbt_training_goals; let i = index">
+                    <td>{{ goalr.lto }}</td>
                     <td>
                       <input
                         class="form-control"
                         type="number"
-                        [(ngModel)]="goal.porcent_of_correct_response"
+                        [(ngModel)]="goalr.porcent_of_correct_response"
                         (ngModelChange)="updateRbtGoal(i)"
                       />
                     </td>
@@ -433,7 +443,7 @@
       </div>
       <!-- fin replacements -->
 
-      <!-- paciente -->
+      <!-- Sumary note -->
       <div class="col-sm-12">
         <div class="card">
           <div class="card-body">
@@ -472,7 +482,7 @@
                       <span class="login-danger">*</span></label
                     >
                     <mat-select
-                      [(ngModel)]="selectedValueRBT"
+                      [(ngModel)]="selectedValueProviderRBT_id"
                       name="rbt"
                       [ngModelOptions]="{ standalone: true }"
                       class="form-control select"
@@ -526,7 +536,7 @@
                         <span class="login-danger">*</span></label
                       >
                       <mat-select
-                        [(ngModel)]="selectedValueBCBA"
+                        [(ngModel)]="selectedValueBcba_id"
                         (selectionChange)="selectFirmaSpecialistBcba($event)"
                         name="bcba"
                         [ngModelOptions]="{ standalone: true }"

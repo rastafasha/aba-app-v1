@@ -387,29 +387,25 @@ export class PatientDashboardComponent implements OnInit {
     this.dashboardService.dashboardDoctor(data).subscribe((resp) => {
       // console.log(resp);
 
-      this.appointments = resp.appointments.data;
+      this.appointments = [];
+      // resp.appointments.data;
 
-      this.num_appointments_current = resp.num_appointments_current;
-      this.num_appointments_before = resp.num_appointments_before;
+      this.num_appointments_current = 0; // resp.num_appointments_current;
+      this.num_appointments_before = 0; //resp.num_appointments_before;
       this.porcentaje_d = resp.porcentaje_d;
 
-      this.num_appointments_attention_current =
-        resp.num_appointments_attention_current;
-      this.num_appointments_attention_before =
-        resp.num_appointments_attention_before;
+      this.num_appointments_attention_current = 0;
+      //      resp.num_appointments_attention_current;
+      this.num_appointments_attention_before = 0; // resp.num_appointments_attention_before;
       this.porcentaje_da = resp.porcentaje_da;
 
-      this.num_appointments_total_pay_current =
-        resp.num_appointments_total_pay_current;
-      this.num_appointments_total_pay_before =
-        resp.num_appointments_total_pay_before;
-      this.porcentaje_dtp = resp.porcentaje_dtp;
+      this.num_appointments_total_pay_current = 0; //resp.num_appointments_total_pay_current;
+      this.num_appointments_total_pay_before = 0; //resp.num_appointments_total_pay_before;
+      this.porcentaje_dtp = 0; // resp.porcentaje_dtp;
 
-      this.num_appointments_total_pending_current =
-        resp.num_appointments_total_pending_current;
-      this.num_appointments_total_pending_before =
-        resp.num_appointments_total_pending_before;
-      this.porcentaje_dtpn = resp.porcentaje_dtpn;
+      this.num_appointments_total_pending_current = 0; //resp.num_appointments_total_pending_current;
+      this.num_appointments_total_pending_before = 0; //resp.num_appointments_total_pending_before;
+      this.porcentaje_dtpn = 0; // resp.porcentaje_dtpn;
     });
   }
   dashboardDoctorYear() {
@@ -424,7 +420,7 @@ export class PatientDashboardComponent implements OnInit {
       // console.log(resp);
 
       //start
-      this.query_income_year = resp.query_income_year;
+      this.query_income_year = []; // resp.query_income_year;
       const data_income = [];
       this.query_income_year.forEach((element) => {
         data_income.push(element.income);
@@ -491,9 +487,8 @@ export class PatientDashboardComponent implements OnInit {
       this.chartOptionsTwo.series = data_by_gender;
       //end
       //start
-      this.query_n_appointment_year = resp.query_n_appointment_year;
-      this.query_n_appointment_year_before =
-        resp.query_n_appointment_year_before;
+      this.query_n_appointment_year = []; //resp.query_n_appointment_year;
+      this.query_n_appointment_year_before = []; //        resp.query_n_appointment_year_before;
 
       const n_appointment_year = [];
       this.query_n_appointment_year.forEach((item: any) => {

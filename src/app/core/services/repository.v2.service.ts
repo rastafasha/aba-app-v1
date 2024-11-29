@@ -1,12 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { catchError, map, Observable, of } from 'rxjs';
 import {
-  ApiResponse,
   ApiV2Response,
   CreateResponse,
   ListParameters,
   ListResponse,
 } from '../models';
-import { catchError, map, Observable, of } from 'rxjs';
 
 export abstract class RepositoryV2Service<T> {
   constructor(protected http: HttpClient, protected endpoint: string) {}
@@ -37,12 +36,29 @@ export abstract class RepositoryV2Service<T> {
 
   create(data) {
     const URL = this.endpoint;
-    return this.http.post<CreateResponse<T>>(URL, data);
+    return this.http
+      .post<CreateResponse<T>>(URL, this.untransform(data))
+      .pipe(
+        map((response) => ({
+          ...response,
+          data: this.transform(response.data),
+        }))
+      );
   }
 
   update(data: T, id: number) {
     const URL = this.endpoint + '/' + id;
-    return this.http.put<ApiResponse<T>>(URL, this.untransform(data)).pipe(
+    return this.http.put<ApiV2Response<T>>(URL, this.untransform(data)).pipe(
+      map((response) => ({
+        ...response,
+        data: this.transform(response.data),
+      }))
+    );
+  }
+
+  updateStatus(data: any, id: number) {
+    const URL = this.endpoint + '/update-status/' + id;
+    return this.http.put<ApiV2Response<T>>(URL, this.untransform(data)).pipe(
       map((response) => ({
         ...response,
         data: this.transform(response.data),

@@ -125,7 +125,7 @@ export class ChartReplacementComponent {
   promedio_porcentual_semanal: any[];
   stoName: any[];
   stoStatus: any;
-  existgrfic: any;
+  existgrfic: any =[];
   loading: boolean;
 
   //datos reales
@@ -158,8 +158,8 @@ export class ChartReplacementComponent {
 
   getProfileBip() {
     this.bipService.showBipProfile(this.patient_id).subscribe((resp) => {
-      // console.log(resp);
-      this.client_selected = resp; // asignamos el objeto a nuestra variable
+      this.client_selected = resp.patient; // asignamos el objeto a nuestra variable
+      // console.log(this.client_selected);
       //traemos la info del usuario
       if (this.client_selected.type !== null) {
         // si hay o no informacion del paciente
@@ -177,7 +177,7 @@ export class ChartReplacementComponent {
 
   getGoalsReductions() {
     this.graphicReductionService
-      .listReductionGraphics(this.goal, this.patient_id)
+      .listReductionGraphics(this.goal, this.client_selected.id)
       .subscribe((resp) => {
         console.log(resp);
         this.existgrfic = resp.replacementsCol;
@@ -210,6 +210,8 @@ export class ChartReplacementComponent {
           );
           return replacementParsed[index];
         }
+
+        
         // fin funcion de pablo alcorta
         // recorremos el resultado del array goalsParsed para extraer los solicitados por el request
         const number_of_correct_response = [];
