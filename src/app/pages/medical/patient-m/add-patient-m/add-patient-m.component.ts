@@ -223,7 +223,7 @@ export class AddPatientMComponent implements OnInit {
 
   checkEmailExistence(): void {
     this.useCases
-      .checkEmailExistense(this.email)
+      .checkEmailExistense(this.form.get('email').value)
       .subscribe((result) => (this.emailExists = result));
   }
 
