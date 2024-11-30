@@ -31,9 +31,9 @@
                     >
                     <input
                       class="form-control"
-                      name="patient_id"
+                      name="patient_identifier"
                       disabled
-                      [(ngModel)]="patient_id"
+                      [(ngModel)]="patient_identifier"
                       type="text"
                     />
                   </div>
@@ -86,7 +86,7 @@
                       >Provider Name <span class="login-danger">*</span></label
                     >
                     <mat-select
-                      [(ngModel)]="selectedValueProviderName"
+                      [(ngModel)]="selectedValueProviderRBT_id"
                       name="provider_name_g"
                       [ngModelOptions]="{ standalone: true }"
                       class="form-control select"
@@ -126,15 +126,6 @@
                       [(ngModel)]="pos"
                       type="text"
                     />
-                    <!-- <select
-                                        class="form-control form-select-solid fw-bolder"
-                                        name="pos" [(ngModel)]="pos" disabled>
-                                        <option>-- Select --</option>
-                                        <option value="03">03 School</option>
-                                        <option value="12">12 Home</option>
-                                        <option value="02">02 Telehealth</option>
-                                        <option value="99">99 Other</option>
-                                          </select> -->
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
@@ -166,7 +157,7 @@
                         *ngFor="let service of paServices"
                         [value]="service"
                       >
-                        {{ service.pa_services }} ({{ service.cpt }})
+                        {{ service.pa_service }} ({{ service.cpt }})
                       </mat-option>
                     </mat-select>
                   </div>
@@ -237,7 +228,6 @@
                             [(ngModel)]="selectedValueTimeIn"
                             name="time_in"
                           />
-                          <!-- <ngx-material-timepicker-toggle matSuffix [for]="toggleTimepicker"></ngx-material-timepicker-toggle> -->
                           <ngx-material-timepicker
                             (timeChanged)="hourTimeInSelected($event)"
                             #toggleTimepicker
@@ -259,7 +249,6 @@
                             class="form-control"
                             name="time_out"
                           />
-                          <!-- <ngx-material-timepicker-toggle [for]="toggleTimepicker2"></ngx-material-timepicker-toggle> -->
                           <ngx-material-timepicker
                             (timeChanged)="hourTimeOutSelected($event)"
                             #toggleTimepicker2
@@ -626,7 +615,7 @@
                 <span class="login-danger">*</span></label
               >
               <mat-select
-                [(ngModel)]="selectedValueRBT"
+                [(ngModel)]="selectedValueProviderRBT_id"
                 name="rbt"
                 [ngModelOptions]="{ standalone: true }"
                 class="form-control select"
@@ -669,17 +658,17 @@
             </div>
             <!-- previsualizacion de la foto -->
           </div>
-          <div class="col-12 col-md-4 col-xl-4">
+          <!-- <div class="col-12 col-md-4 col-xl-4">
             <div class="form-group local-top-form">
               <label class="local-top"
                 >Created At
                 <span class="login-danger">*</span></label
               >
               <p style="padding: 10px">
-                {{ note_selected.session_date | date }}
+                {{ note_selected.session_date | date: 'shortDate' }}
               </p>
             </div>
-          </div>
+          </div> -->
 
           <div class="col-12 col-md-4 col-xl-6">
             <div class="form-group local-forms">
@@ -689,7 +678,7 @@
                   <span class="login-danger">*</span></label
                 >
                 <mat-select
-                  [(ngModel)]="selectedValueBCBA"
+                  [(ngModel)]="selectedValueBcba_id"
                   name="bcba"
                   [ngModelOptions]="{ standalone: true }"
                   class="form-control select"
@@ -735,17 +724,17 @@
             </div>
             <!-- previsualizacion de la foto -->
           </div>
-          <div class="col-12 col-md-4 col-xl-4">
+          <!-- <div class="col-12 col-md-4 col-xl-4">
             <div class="form-group local-top-form">
               <label class="local-top"
                 >Created At
                 <span class="login-danger">*</span></label
               >
               <p style="padding: 10px">
-                {{ note_selected.session_date | date }}
+                {{ note_selected.session_date | date: 'shortDate'  }}
               </p>
             </div>
-          </div>
+          </div> -->
         </div>
         <!-- paciente -->
 

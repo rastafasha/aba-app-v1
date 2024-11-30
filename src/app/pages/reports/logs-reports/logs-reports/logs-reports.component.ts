@@ -37,24 +37,27 @@ type Note = NoteRbtV2 | NoteBcbaV2;
 })
 export class LogsReportsComponent implements OnInit {
   headers: KeyValue<keyof Note, string>[] = [
-    { key: 'type', value: 'Type of Note' },
-    { key: 'session_date', value: 'Date of Note' },
-    { key: 'status', value: 'Status' },
+    // { key: 'type', value: 'Type of Note' },
     { key: 'provider_id', value: 'Provider' },
     { key: 'patient_id', value: 'Client Name' },
-    { key: 'insurance_id', value: 'Insurance' },
-    { key: 'pos', value: 'POS' },
+    { key: 'patient_id', value: 'Patient Id' },
+    { key: 'session_date', value: 'Date of Note' },
     { key: 'time_in', value: 'Time in (M)' },
     { key: 'time_out', value: 'Time Out (M)' },
     { key: 'time_in2', value: 'Time in (A)' },
     { key: 'time_out2', value: 'Time Out (A)' },
     { key: 'total_hours', value: 'Total Hours' },
+    { key: 'pos', value: 'POS' },
     { key: 'cpt_code', value: 'CPT' },
-    { key: 'md', value: 'Modifier 1' },
-    { key: 'md2', value: 'Modifier 2' },
     { key: 'total_units', value: 'Total Units' },
     { key: 'bip_id', value: 'Units Price' },
     { key: 'total_minutes', value: 'Charges' },
+    { key: 'insurance_id', value: 'Insurance' },
+    { key: 'insurance_id', value: 'Insurance Id' },
+    { key: 'md', value: 'Modifier 1' },
+    { key: 'md2', value: 'Modifier 2' },
+    
+    { key: 'status', value: 'Status' },
     { key: 'billed', value: 'Billed' },
     { key: 'paid', value: 'Paid' },
   ];
@@ -128,7 +131,7 @@ export class LogsReportsComponent implements OnInit {
     this.notesRbt =
       this.notesRbt?.map((item) => {
         const patient = this.patients.find(
-          (patient) => patient.patient_id === item.patient_code
+          (patient) => patient.patient_control === item.patient_code
         );
         item.insurance_id = !isNaN(item.insurance_id)
           ? item.insurance_id
@@ -138,7 +141,7 @@ export class LogsReportsComponent implements OnInit {
     this.notesBcba =
       this.notesBcba?.map((item) => {
         const patient = this.patients.find(
-          (patient) => patient.patient_id === item.patient_code
+          (patient) => patient.patient_control === item.patient_code
         );
         item.insurance_id = patient?.insurer_id;
         return item;
@@ -215,10 +218,18 @@ export class LogsReportsComponent implements OnInit {
   }
 
   onSave(data: NoteRbtV2 | NoteBcbaV2) {
+    const datos = {
+      status: data.status,
+      billed: data.billed,
+      paid: data.paid,
+      md: data.md,
+      md2: data.md2
+
+    }
     const update$: Observable<unknown> = isNoteRbtV2(data)
-      ? this.notesRbtService.update(data, data.id)
+      ? this.notesRbtService.updateStatus(datos , data.id)
       : isNoteBcbaV2(data)
-      ? this.notesBcbaService.update(data, data.id)
+      ? this.notesBcbaService.updateStatus(datos , data.id)
       : of(null);
 
     update$.subscribe({

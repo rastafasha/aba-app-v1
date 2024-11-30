@@ -75,12 +75,13 @@ export class EditPatientMComponent implements OnInit {
   ) {
     this.form = this.fb.group<PatientV2FormControls>({
       id: this.fb.control(0),
+      
+      patient_identifier: this.fb.control(''),
       first_name: this.fb.control(''),
       last_name: this.fb.control(''),
       full_name: this.fb.control(''),
       avatar: this.fb.control(''),
       status: this.fb.control(''),
-      patient_id: this.fb.control(''),
       insurer_id: this.fb.control(0),
       insurer_secondary_id: this.fb.control(0),
       insurance_identifier: this.fb.control(''),
@@ -129,6 +130,7 @@ export class EditPatientMComponent implements OnInit {
       cde: this.fb.control(''),
       submitted: this.fb.control(''),
       interview: this.fb.control(''),
+      // patient_id: this.fb.control(this.id),
       pa_services: this.fb.control<PaServiceV2[]>([]),
       pa_assessments: this.fb.control(''),
       compayment_per_visit: this.fb.control(''),
@@ -148,8 +150,8 @@ export class EditPatientMComponent implements OnInit {
 
     this.paForm = this.fb.group<PaServiceV2FormControls>({
       id: this.fb.control(0),
-      pa_services: this.fb.control(''), //the name of the service
       patient_id: this.fb.control(this.id),
+      pa_service: this.fb.control(''), //the name of the service
       cpt: this.fb.control(null as string),
       n_units: this.fb.control(null as number),
       spent_units: this.fb.control(null as number),
@@ -214,11 +216,14 @@ export class EditPatientMComponent implements OnInit {
       next: (resp) => {
         Swal.fire('Updated', `Saved successfully!`, 'success');
         this.patient = resp.data;
+        this.onRefresh();
       },
       error: () => {
         Swal.fire('Error', `Can't update!`, 'error');
       },
     });
+    
+
   }
   // PA
 
@@ -240,6 +245,8 @@ export class EditPatientMComponent implements OnInit {
     this.form.patchValue({ pa_services: pa_services_removed });
     this.patient.pa_services = pa_services_removed;
   }
+
+  
 
   //FILE:
   // Aclaraciones

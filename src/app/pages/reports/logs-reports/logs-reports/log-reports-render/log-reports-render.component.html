@@ -7,7 +7,7 @@
   />
 </td>
 <!-- Type -->
-<td>
+<!-- <td>
   <span
     class="badge"
     [ngClass]="{
@@ -17,8 +17,31 @@
   >
     {{ note.type | uppercase }}
   </span>
+</td> -->
+
+
+<!-- Provider -->
+<td>
+  <a [routerLink]="[routes.doctors.profile, note.provider_id]">
+    {{ (providers | arrayFind : "id" : note.provider_id)?.full_name }}
+  </a>
 </td>
-<!-- Date -->
+
+<!-- patient_name -->
+<td>
+  <a [routerLink]="[routes.patients.profileByPatientId, note.patient_id]">
+    <span>
+      {{ (patients | arrayFind : "id" : note.client_id)?.full_name }}
+    </span>
+  </a>
+</td>
+<!-- patient_id -->
+<td>
+  <span>
+      {{ (patients | arrayFind : "id" : note.patient_identifier) }}
+    </span>
+</td>
+<!-- session Date -->
 <td>
   <span>
     <a
@@ -41,51 +64,7 @@
     [tooltip]="note.status"
   ></i>
 </td>
-<!-- Status -->
-<td>
-  <select
-    class="form-control form-select-solid form-select-long fw-bolder"
-    name="status"
-    [(ngModel)]="note.status"
-    (ngModelChange)="hasChanges = true"
-    placeholder="status"
-  >
-    <option>-- Select --</option>
-    <option *ngFor="let status of statusOptions" [value]="status">
-      {{ status | titlecase }}
-    </option>
-  </select>
-</td>
-<!-- Provider -->
-<td>
-  <a [routerLink]="[routes.doctors.profile, note.provider_id]">
-    {{ (providers | arrayFind : "id" : note.provider_id)?.full_name }}
-  </a>
-</td>
 
-<!-- patient_name -->
-<td>
-  <a [routerLink]="[routes.patients.profileByPatientId, note.patient_id]">
-    <span>
-      {{ (patients | arrayFind : "id" : note.client_id)?.full_name }}
-    </span>
-  </a>
-</td>
-<!-- Insurer Name -->
-<td>
-  <a
-    *ngIf="note.insurance_id"
-    [routerLink]="[routes.insurance.view, note.insurance_id]"
-  >
-    <span>
-      {{ (insurances | arrayFind : "id" : note.insurance_id)?.name }}
-    </span>
-  </a>
-</td>
-<!-- Pos -->
-<td>
-  {{ note.meet_with_client_at ?? "-" }}
-</td>
 <!-- Time In -->
 <td>
   <span> {{ (note.time_in | transformToDate) ?? "-" }}</span>
@@ -106,12 +85,60 @@
 <td>
   <span>{{ note.session_length_total ?? "-" }}</span>
 </td>
+<!-- Pos -->
+<td>
+  {{ note.meet_with_client_at ?? "-" }}
+</td>
 <!-- Cpt Code -->
 <td>
   <span>
     {{ note.cpt_code }}
   </span>
 </td>
+<!-- session_units_total -->
+<td>
+  {{ note.total_units }}
+</td>
+
+<!-- unitPrize -->
+
+<td>
+  {{
+    note.cpt_code
+      | logReportsUnitPrice : note.insurance_id : insurances
+      | currency
+  }}
+</td>
+<!-- session_units_total Charges -->
+<td>
+  {{
+    note.total_units
+      | logReportsSessionTotal
+        : note.md
+        : note.md2
+        : (note.cpt_code | logReportsUnitPrice : note.insurance_id : insurances)
+        : modifiers
+      | currency
+  }}
+</td>
+<!-- Insurer Name -->
+<td>
+  <a
+    *ngIf="note.insurance_id"
+    [routerLink]="[routes.insurance.view, note.insurance_id]"
+  >
+    <span>
+      {{ (insurances | arrayFind : "id" : note.insurance_id)?.name }}
+    </span>
+  </a>
+</td>
+<!-- Insurance Identifier -->
+<td>
+    <span>
+      {{ (patients | arrayFind : "id" : note.insurance_identifier) }}
+    </span>
+</td>
+
 
 <!-- modificadores  -->
 
@@ -157,32 +184,25 @@
   </select>
 </td>
 
-<!-- session_units_total -->
-<td>
-  {{ note.total_units }}
-</td>
 
-<!-- unitPrize -->
 
-<td>
-  {{
-    note.cpt_code
-      | logReportsUnitPrice : note.insurance_id : insurances
-      | currency
-  }}
-</td>
 
-<!-- session_units_total -->
+
+
+<!-- Status -->
 <td>
-  {{
-    note.total_units
-      | logReportsSessionTotal
-        : note.md
-        : note.md2
-        : (note.cpt_code | logReportsUnitPrice : note.insurance_id : insurances)
-        : modifiers
-      | currency
-  }}
+  <select
+    class="form-control form-select-solid form-select-long fw-bolder"
+    name="status"
+    [(ngModel)]="note.status"
+    (ngModelChange)="hasChanges = true"
+    placeholder="status"
+  >
+    <option>-- Select --</option>
+    <option *ngFor="let status of statusOptions" [value]="status">
+      {{ status | titlecase }}
+    </option>
+  </select>
 </td>
 <!-- Billed -->
 <td>

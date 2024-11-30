@@ -25,7 +25,7 @@ export class BehaviorAssistantComponent {
   user: AppUser;
   doctor_id: any;
   client_selected: any;
-  patient_id: any;
+  patient_identifier: any;
   bip_selected: any;
   bip_selectedId: any;
   bip_selectedIdd: any;
@@ -50,24 +50,24 @@ export class BehaviorAssistantComponent {
     this.doctor_id = this.user.id; //se asigna el doctor logueado a este campo para poderlo enviar en los
   }
 
-  addDocument() {
-    this.behaviors.push({
-      monday: this.monday,
-      tuesday: this.tuesday,
-      wednesday: this.wednesday,
-      thursday: this.thursday,
-      friday: this.friday,
-      saturday: this.saturday,
-    });
-    this.monday = '';
-    this.tuesday = '';
-    this.wednesday = '';
-    this.thursday = '';
-    this.friday = '';
-    this.saturday = '';
-  }
+  // addDocument() {
+  //   this.behaviors.push({
+  //     monday: this.monday,
+  //     tuesday: this.tuesday,
+  //     wednesday: this.wednesday,
+  //     thursday: this.thursday,
+  //     friday: this.friday,
+  //     saturday: this.saturday,
+  //   });
+  //   this.monday = '';
+  //   this.tuesday = '';
+  //   this.wednesday = '';
+  //   this.thursday = '';
+  //   this.friday = '';
+  //   this.saturday = '';
+  // }
 
-  deleteDocument(i: any) {
-    this.behaviors.splice(i, 1);
-  }
+  // deleteDocument(i: any) {
+  //   this.behaviors.splice(i, 1);
+  // }
 }

@@ -18,12 +18,11 @@
       </div>
     </div>
     <!-- /Page Header -->
-    <div class="row">
+    <div class="row" [formGroup]="form">
       <!-- paciente -->
       <div class="col-sm-12">
         <div class="card">
           <div class="card-body">
-            <form autocomplete="off">
               <div class="row">
                 <div class="col-12">
                   <div class="form-heading">
@@ -45,7 +44,7 @@
                       class="form-control"
                       autocomplete="off"
                       name="first_name"
-                      [(ngModel)]="first_name"
+                      formControlName="first_name"
                       type="text"
                     />
                   </div>
@@ -57,7 +56,7 @@
                       class="form-control"
                       autocomplete="off"
                       name="last_name"
-                      [(ngModel)]="last_name"
+                      formControlName="last_name"
                       type="text"
                     />
                   </div>
@@ -69,7 +68,7 @@
                       class="form-control datetimepicker"
                       autocomplete="off"
                       name="birth_date"
-                      [(ngModel)]="birth_date"
+                      formControlName="birth_date"
                       type="text"
                       matInput
                       [matDatepicker]="picker"
@@ -83,43 +82,16 @@
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
-                    <label>Age <span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="age"
-                      [(ngModel)]="age"
-                      type="number"
-                    />
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group select-gender">
-                    <label class="gen-label"
-                      >Gender<span class="login-danger">*</span></label
+                    <label>Gender<span class="login-danger">*</span></label>
+                    <select
+                      class="form-control form-select-solid fw-bolder"
+                      name="Gender"
+                      formControlName="gender"
                     >
-                    <div class="form-check-inline">
-                      <label class="form-check-label">
-                        <input
-                          type="radio"
-                          name="gender"
-                          value="1"
-                          [(ngModel)]="gender"
-                          class="form-check-input"
-                        />Male
-                      </label>
-                    </div>
-                    <div class="form-check-inline">
-                      <label class="form-check-label">
-                        <input
-                          type="radio"
-                          name="gender"
-                          value="2"
-                          [(ngModel)]="gender"
-                          class="form-check-input"
-                        />Female
-                      </label>
-                    </div>
+                      <option disabled [value]="null">-- Select --</option>
+                      <option [value]="1">Male</option>
+                      <option [value]="2">Female</option>
+                    </select>
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
@@ -130,8 +102,8 @@
                     <input
                       class="form-control"
                       autocomplete="off"
-                      name="patient_id"
-                      [(ngModel)]="patient_id"
+                      name="patient_identifier"
+                      formControlName="patient_identifier"
                       type="text"
                     />
                   </div>
@@ -143,7 +115,7 @@
                       class="form-control"
                       autocomplete="off"
                       name="education"
-                      [(ngModel)]="education"
+                      formControlName="education"
                       type="text"
                     />
                   </div>
@@ -157,7 +129,7 @@
                       class="form-control"
                       autocomplete="off"
                       name="profession"
-                      [(ngModel)]="profession"
+                      formControlName="profession"
                       type="text"
                     />
                   </div>
@@ -171,7 +143,7 @@
                       class="form-control"
                       autocomplete="off"
                       name="school_name"
-                      [(ngModel)]="school_name"
+                      formControlName="school_name"
                       type="text"
                     />
                   </div>
@@ -185,7 +157,7 @@
                       class="form-control"
                       autocomplete="off"
                       name="school_number"
-                      [(ngModel)]="school_number"
+                      formControlName="school_number"
                       type="text"
                     />
                   </div>
@@ -201,7 +173,7 @@
                       class="form-control"
                       autocomplete="off"
                       name="parent_guardian_name"
-                      [(ngModel)]="parent_guardian_name"
+                      formControlName="parent_guardian_name"
                       type="text"
                     />
                   </div>
@@ -215,7 +187,7 @@
                       class="form-control"
                       autocomplete="off"
                       name="relationship"
-                      [(ngModel)]="relationship"
+                      formControlName="relationship"
                       type="text"
                     />
                   </div>
@@ -228,7 +200,7 @@
                       class="form-control"
                       autocomplete="off"
                       name="language"
-                      [(ngModel)]="language"
+                      formControlName="language"
                       type="text"
                       placeholder="English, Spanish, Italian..."
                     />
@@ -241,7 +213,7 @@
                       class="form-control"
                       autocomplete="off"
                       name="phone"
-                      [(ngModel)]="phone"
+                      formControlName="phone"
                       type="text"
                     />
                   </div>
@@ -255,7 +227,7 @@
                     <input
                       class="form-control"
                       name="home_phone"
-                      [(ngModel)]="home_phone"
+                      formControlName="home_phone"
                       type="text"
                     />
                   </div>
@@ -268,7 +240,7 @@
                     <input
                       class="form-control"
                       name="work_phone"
-                      [(ngModel)]="work_phone"
+                      formControlName="work_phone"
                       type="text"
                     />
                   </div>
@@ -279,7 +251,7 @@
                     <input
                       class="form-control"
                       name="email"
-                      [(ngModel)]="email"
+                      formControlName="email"
                       type="email"
                     />
                     <div *ngIf="emailExists">
@@ -293,7 +265,7 @@
                     <input
                       class="form-control"
                       name="city"
-                      [(ngModel)]="city"
+                      formControlName="city"
                       type="text"
                     />
                   </div>
@@ -304,7 +276,7 @@
                     <input
                       class="form-control"
                       name="zip"
-                      [(ngModel)]="zip"
+                      formControlName="zip"
                       type="text"
                     />
                   </div>
@@ -315,98 +287,8 @@
                     <input
                       class="form-control"
                       name="state"
-                      [(ngModel)]="state"
+                      formControlName="state"
                       type="text"
-                    />
-                  </div>
-                </div>
-                <div class="col-12 col-md-6">
-                  <div class="form-group local-forms">
-                    <label>Address <span class="login-danger">*</span></label>
-                    <textarea
-                      class="form-control"
-                      name="address"
-                      [(ngModel)]="address"
-                      rows="3"
-                      cols="30"
-                    ></textarea>
-                  </div>
-                </div>
-                <div class="col-12 col-md-6">
-                  <div class="form-group local-forms">
-                    <label
-                      >Special Notes<span class="login-danger">*</span></label
-                    >
-                    <textarea
-                      class="form-control"
-                      name="special_note"
-                      [(ngModel)]="special_note"
-                      rows="3"
-                      cols="30"
-                    ></textarea>
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>Diagnosis <span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      name="diagnosis_code"
-                      [(ngModel)]="diagnosis_code"
-                      type="text"
-                    />
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>Schedule <span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      name="schedule"
-                      [(ngModel)]="schedule"
-                      type="text"
-                    />
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label
-                      >Summer Schedule
-                      <span class="login-danger">*</span></label
-                    >
-                    <input
-                      class="form-control"
-                      name="summer_schedule"
-                      [(ngModel)]="summer_schedule"
-                      type="text"
-                    />
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-xl-6">
-                  <div class="form-group local-top-form">
-                    <label class="local-top"
-                      >Picture (Max Size: 2Mb, jpg,png)<span
-                        class="login-danger"
-                        >*</span
-                      ></label
-                    >
-                    <div class="settings-btn upload-files-avator">
-                      <input
-                        type="file"
-                        accept="image/*"
-                        name="image"
-                        id="file"
-                        (change)="loadFile($event)"
-                        class="hide-input"
-                      />
-                      <label for="file" class="upload">Choose File</label>
-                    </div>
-                  </div>
-                  <div *ngIf="FILE_AVATAR">
-                    <img
-                      [src]="IMAGE_PREVISUALIZA"
-                      style="width: 250px"
-                      alt=""
                     />
                   </div>
                 </div>
@@ -417,11 +299,10 @@
                   <div class="form-group local-forms">
                     <label>Location <span class="login-danger">*</span></label>
                     <mat-select
-                      [(ngModel)]="selectedValueLocation"
-                      name="location"
-                      [ngModelOptions]="{ standalone: true }"
+                      formControlName="location_id"
+                      name="location_id"
                       class="form-control select"
-                      (ngModelChange)="selectCategory($event)"
+                      (ngModelChange)="selectLocation($event)"
                       placeholder="Select Location"
                     >
                       <mat-option
@@ -433,30 +314,92 @@
                     </mat-select>
                   </div>
                 </div>
-                <div
-                  class="col-12 col-md-6 col-xl-4"
-                  *ngIf="user.roles[0] === 'MANAGER'"
-                >
+                  <div
+                    class="col-12 col-md-6 col-xl-4"
+                    *ngIf="user.roles[0] === 'MANAGER'"
+                  >
                   <div class="form-group local-forms">
                     <label>Location </label>
                     <h4 style="padding: 15px">{{ location.title }}</h4>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-12 col-md-6">
+                    <div class="form-group local-forms">
+                      <label>Address <span class="login-danger">*</span></label>
+                      <textarea
+                        class="form-control"
+                        name="address"
+                        formControlName="address"
+                        rows="3"
+                        cols="30"
+                      ></textarea>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6">
+                    <div class="form-group local-forms">
+                      <label
+                        >Special Notes<span class="login-danger">*</span></label
+                      >
+                      <textarea
+                        class="form-control"
+                        name="special_note"
+                        formControlName="special_note"
+                        rows="3"
+                        cols="30"
+                      ></textarea>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6 col-xl-4">
+                    <div class="form-group local-forms">
+                      <label>Diagnosis <span class="login-danger">*</span></label>
+                      <input
+                        class="form-control"
+                        name="diagnosis_code"
+                        formControlName="diagnosis_code"
+                        type="text"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6 col-xl-4">
+                    <div class="form-group local-forms">
+                      <label>Schedule <span class="login-danger">*</span></label>
+                      <input
+                        class="form-control"
+                        name="schedule"
+                        formControlName="schedule"
+                        type="text"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6 col-xl-4">
+                    <div class="form-group local-forms">
+                      <label
+                        >Summer Schedule
+                        <span class="login-danger">*</span></label
+                      >
+                      <input
+                        class="form-control"
+                        name="summer_schedule"
+                        formControlName="summer_schedule"
+                        type="text"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
-            </form>
           </div>
         </div>
       </div>
       <!-- fin paciente -->
       <!-- Specialists -->
-      <div class="col-sm-12">
+      <div class="col-sm-12" [ngClass]="{ 'disabled-div': !location_id }">
         <div class="card">
           <div class="card-body">
-            <form autocomplete="off">
               <div class="row">
                 <div class="col-12">
                   <div class="form-heading">
-                    <h4>Add Specialist</h4>
+                    <h4>Add Specialist <span *ngIf="!location_id"> - Select location to enable - </span> </h4>
                   </div>
                 </div>
 
@@ -464,9 +407,8 @@
                   <div class="form-group local-forms">
                     <label>RBT <span class="login-danger">*</span></label>
                     <mat-select
-                      [(ngModel)]="selectedValue_rbt"
-                      name="rbt"
-                      [ngModelOptions]="{ standalone: true }"
+                      formControlName="rbt_home_id"
+                      name="rbt_home_id"
                       class="form-control select"
                       placeholder="Select Specialist"
                     >
@@ -483,9 +425,8 @@
                   <div class="form-group local-forms">
                     <label>RBT 2 <span class="login-danger">*</span></label>
                     <mat-select
-                      [(ngModel)]="selectedValue_rbt2"
-                      name="rbt2"
-                      [ngModelOptions]="{ standalone: true }"
+                      formControlName="rbt2_school_id"
+                      name="rbt2_school_id"
                       class="form-control select"
                       placeholder="Select Specialist"
                     >
@@ -502,9 +443,8 @@
                   <div class="form-group local-forms">
                     <label>BCBA <span class="login-danger">*</span></label>
                     <mat-select
-                      [(ngModel)]="selectedValue_bcba"
-                      name="bcba"
-                      [ngModelOptions]="{ standalone: true }"
+                      formControlName="bcba_home_id"
+                      name="bcba_home_id"
                       class="form-control select"
                       placeholder="Select Specialist"
                     >
@@ -521,9 +461,8 @@
                   <div class="form-group local-forms">
                     <label>BCBA 2<span class="login-danger">*</span></label>
                     <mat-select
-                      [(ngModel)]="selectedValue_bcba2"
-                      name="bcba2"
-                      [ngModelOptions]="{ standalone: true }"
+                      formControlName="bcba2_school_id"
+                      name="bcba2_school_id"
                       class="form-control select"
                       placeholder="Select Specialist"
                     >
@@ -542,9 +481,8 @@
                       >Local Manager<span class="login-danger">*</span></label
                     >
                     <mat-select
-                      [(ngModel)]="selectedValue_clind"
-                      name="clinical_director"
-                      [ngModelOptions]="{ standalone: true }"
+                      formControlName="clin_director_id"
+                      name="clin_director_id"
                       class="form-control select"
                       placeholder="Select Specialist"
                     >
@@ -558,7 +496,6 @@
                   </div>
                 </div>
               </div>
-            </form>
           </div>
         </div>
       </div>
@@ -567,21 +504,19 @@
       <div class="col-sm-12">
         <div class="card">
           <div class="card-body">
-            <form autocomplete="off">
               <div class="row">
                 <div class="col-12">
                   <div class="form-heading">
                     <h4>Benefits</h4>
                   </div>
                 </div>
-
+                <!-- Insurer -->
                 <div class="col-12 col-sm-4">
                   <div class="form-group local-forms">
                     <label>Insurer <span class="login-danger">*</span></label>
                     <mat-select
-                      [(ngModel)]="selectedValueInsurer"
-                      name="insurer"
-                      [ngModelOptions]="{ standalone: true }"
+                      formControlName="insurer_id"
+                      name="insurer_id"
                       class="form-control select"
                       (selectionChange)="selectInsurance($event)"
                       placeholder="Select Insurer"
@@ -598,17 +533,51 @@
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
-                      >Insurance Id <span class="login-danger">*</span></label
+                      >Insurance ID <span class="login-danger">*</span></label
                     >
                     <input
                       class="form-control"
                       autocomplete="off"
                       name="insurance_identifier"
-                      [(ngModel)]="insurance_identifier"
+                      formControlName="insurance_identifier"
                       type="text"
                     />
                   </div>
                 </div>
+                <div class="col-12 col-sm-4">
+                  <div class="form-group local-forms">
+                    <label>Insurer Secondary <span class="login-danger">*</span></label>
+                    <mat-select
+                      formControlName="insurer_secondary_id"
+                      name="insurer_secondary_id"
+                      class="form-control select"
+                      (selectionChange)="selectInsurance($event)"
+                      placeholder="Select Insurer"
+                    >
+                      <mat-option
+                        *ngFor="let data of insurances"
+                        [value]="data.id"
+                      >
+                        {{ data.name }}
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label
+                      >Insurance  Secondary ID <span class="login-danger">*</span></label
+                    >
+                    <input
+                      class="form-control"
+                      autocomplete="off"
+                      name="insurance_secondary_identifier"
+                      formControlName="insurance_secondary_identifier"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <!-- Insurer -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label>Equhl Id<span class="login-danger">*</span></label>
@@ -616,7 +585,7 @@
                       class="form-control"
                       autocomplete="off"
                       name="eqhlid"
-                      [(ngModel)]="eqhlid"
+                      formControlName="eqhlid"
                       type="text"
                     />
                   </div>
@@ -631,7 +600,7 @@
                     <input
                       class="form-control datetimepicker"
                       name="elegibility_date"
-                      [(ngModel)]="elegibility_date"
+                      formControlName="elegibility_date"
                       type="text"
                       matInput
                       [matDatepicker]="picker2"
@@ -651,14 +620,14 @@
                     >
                     <mat-select
                       multiple="multiple"
-                      [(ngModel)]="selectedValuePosCovered"
-                      [ngModelOptions]="{ standalone: true }"
+                      name="pos_covered"
+                      formControlName="pos_covered"
                       class="form-control select"
                       placeholder="Select"
                     >
                       <mat-option
                         *ngFor="let data of poscoveredList"
-                        [value]="data.name"
+                        [value]="data.code"
                       >
                         {{ data.name }}
                       </mat-option>
@@ -676,7 +645,7 @@
                       class="form-control"
                       autocomplete="off"
                       name="deductible_individual_I_F"
-                      [(ngModel)]="deductible_individual_I_F"
+                      formControlName="deductible_individual_I_F"
                       type="text"
                       placeholder="3000 / 5000"
                     />
@@ -689,7 +658,7 @@
                       class="form-control"
                       autocomplete="off"
                       name="balance"
-                      [(ngModel)]="balance"
+                      formControlName="balance"
                       type="text"
                       placeholder="2500 / 3500"
                     />
@@ -704,7 +673,7 @@
                       class="form-control"
                       autocomplete="off"
                       name="coinsurance"
-                      [(ngModel)]="coinsurance"
+                      formControlName="coinsurance"
                       type="text"
                       placeholder="20% / 20%"
                     />
@@ -717,7 +686,7 @@
                       class="form-control"
                       autocomplete="off"
                       name="copayments"
-                      [(ngModel)]="copayments"
+                      formControlName="copayments"
                       type="text"
                       placeholder="10 / 10"
                     />
@@ -730,7 +699,7 @@
                       class="form-control"
                       autocomplete="off"
                       name="oop"
-                      [(ngModel)]="oop"
+                      formControlName="oop"
                       type="text"
                       placeholder="5000 / 8000"
                     />
@@ -747,13 +716,12 @@
                       class="form-control"
                       autocomplete="off"
                       name="patient_control"
-                      [(ngModel)]="patient_control"
+                      formControlName="patient_control"
                       type="text"
                     />
                   </div>
                 </div>
               </div>
-            </form>
           </div>
         </div>
       </div>
@@ -762,7 +730,6 @@
       <div class="col-sm-12">
         <div class="card">
           <div class="card-body">
-            <form autocomplete="off">
               <div class="row">
                 <div class="col-12">
                   <div class="form-heading">
@@ -775,17 +742,10 @@
                     <select
                       class="form-control form-select-solid fw-bolder"
                       name="welcome"
-                      [(ngModel)]="welcome"
+                      formControlName="welcome"
                     >
-                      <option>-- Select --</option>
-                      <option value="waiting">Waiting</option>
-                      <option value="requested">Requested</option>
-                      <option value="reviewing">Reviewing</option>
-                      <option value="psycho eval">Psycho Eval</option>
-                      <option value="need new">Need New</option>
-                      <option value="2 insurance">2 insurance</option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
+                      <option [disabled]="true">-- Select --</option>
+                      <option *ngFor="let option of intakeOptions" value="{{option.value}}">{{option.label}}</option>
                     </select>
                   </div>
                 </div>
@@ -795,17 +755,10 @@
                     <select
                       class="form-control form-select-solid fw-bolder"
                       name="consent"
-                      [(ngModel)]="consent"
+                      formControlName="consent"
                     >
-                      <option>-- Select --</option>
-                      <option value="waiting">Waiting</option>
-                      <option value="requested">Requested</option>
-                      <option value="reviewing">Reviewing</option>
-                      <option value="psycho eval">Psycho Eval</option>
-                      <option value="need new">Need New</option>
-                      <option value="2 insurance">2 insurance</option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
+                      <option [disabled]="true">-- Select --</option>
+                      <option *ngFor="let option of intakeOptions" value="{{option.value}}">{{option.label}}</option>
                     </select>
                   </div>
                 </div>
@@ -817,17 +770,10 @@
                     <select
                       class="form-control form-select-solid fw-bolder"
                       name="insurance_card"
-                      [(ngModel)]="insurance_card"
+                      formControlName="insurance_card"
                     >
-                      <option>-- Select --</option>
-                      <option value="waiting">Waiting</option>
-                      <option value="requested">Requested</option>
-                      <option value="reviewing">Reviewing</option>
-                      <option value="psycho eval">Psycho Eval</option>
-                      <option value="need new">Need New</option>
-                      <option value="2 insurance">2 insurance</option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
+                      <option [disabled]="true">-- Select --</option>
+                      <option *ngFor="let option of intakeOptions" value="{{option.value}}">{{option.label}}</option>
                     </select>
                   </div>
                 </div>
@@ -839,17 +785,10 @@
                     <select
                       class="form-control form-select-solid fw-bolder"
                       name="eligibility"
-                      [(ngModel)]="eligibility"
+                      formControlName="eligibility"
                     >
-                      <option>-- Select --</option>
-                      <option value="waiting">Waiting</option>
-                      <option value="requested">Requested</option>
-                      <option value="reviewing">Reviewing</option>
-                      <option value="psycho eval">Psycho Eval</option>
-                      <option value="need new">Need New</option>
-                      <option value="2 insurance">2 insurance</option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
+                      <option [disabled]="true">-- Select --</option>
+                      <option *ngFor="let option of intakeOptions" value="{{option.value}}">{{option.label}}</option>
                     </select>
                   </div>
                 </div>
@@ -859,17 +798,10 @@
                     <select
                       class="form-control form-select-solid fw-bolder"
                       name="mnl"
-                      [(ngModel)]="mnl"
+                      formControlName="mnl"
                     >
-                      <option>-- Select --</option>
-                      <option value="waiting">Waiting</option>
-                      <option value="requested">Requested</option>
-                      <option value="reviewing">Reviewing</option>
-                      <option value="psycho eval">Psycho Eval</option>
-                      <option value="need new">Need New</option>
-                      <option value="2 insurance">2 insurance</option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
+                      <option [disabled]="true">-- Select --</option>
+                      <option *ngFor="let option of intakeOptions" value="{{option.value}}">{{option.label}}</option>
                     </select>
                   </div>
                 </div>
@@ -879,17 +811,10 @@
                     <select
                       class="form-control form-select-solid fw-bolder"
                       name="referral"
-                      [(ngModel)]="referral"
+                      formControlName="referral"
                     >
-                      <option>-- Select --</option>
-                      <option value="waiting">Waiting</option>
-                      <option value="requested">Requested</option>
-                      <option value="reviewing">Reviewing</option>
-                      <option value="psycho eval">Psycho Eval</option>
-                      <option value="need new">Need New</option>
-                      <option value="2 insurance">2 insurance</option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
+                      <option [disabled]="true">-- Select --</option>
+                      <option *ngFor="let option of intakeOptions" value="{{option.value}}">{{option.label}}</option>
                     </select>
                   </div>
                 </div>
@@ -899,17 +824,10 @@
                     <select
                       class="form-control form-select-solid fw-bolder"
                       name="ados"
-                      [(ngModel)]="ados"
+                      formControlName="ados"
                     >
-                      <option>-- Select --</option>
-                      <option value="waiting">Waiting</option>
-                      <option value="requested">Requested</option>
-                      <option value="reviewing">Reviewing</option>
-                      <option value="psycho eval">Psycho Eval</option>
-                      <option value="need new">Need New</option>
-                      <option value="2 insurance">2 insurance</option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
+                      <option [disabled]="true">-- Select --</option>
+                      <option *ngFor="let option of intakeOptions" value="{{option.value}}">{{option.label}}</option>
                     </select>
                   </div>
                 </div>
@@ -919,17 +837,10 @@
                     <select
                       class="form-control form-select-solid fw-bolder"
                       name="iep"
-                      [(ngModel)]="iep"
+                      formControlName="iep"
                     >
-                      <option>-- Select --</option>
-                      <option value="waiting">Waiting</option>
-                      <option value="requested">Requested</option>
-                      <option value="reviewing">Reviewing</option>
-                      <option value="psycho eval">Psycho Eval</option>
-                      <option value="need new">Need New</option>
-                      <option value="2 insurance">2 insurance</option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
+                      <option [disabled]="true">-- Select --</option>
+                      <option *ngFor="let option of intakeOptions" value="{{option.value}}">{{option.label}}</option>
                     </select>
                   </div>
                 </div>
@@ -941,17 +852,10 @@
                     <select
                       class="form-control form-select-solid fw-bolder"
                       name="asd_diagnosis"
-                      [(ngModel)]="asd_diagnosis"
+                      formControlName="asd_diagnosis"
                     >
-                      <option>-- Select --</option>
-                      <option value="waiting">Waiting</option>
-                      <option value="requested">Requested</option>
-                      <option value="reviewing">Reviewing</option>
-                      <option value="psycho eval">Psycho Eval</option>
-                      <option value="need new">Need New</option>
-                      <option value="2 insurance">2 insurance</option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
+                      <option [disabled]="true">-- Select --</option>
+                      <option *ngFor="let option of intakeOptions" value="{{option.value}}">{{option.label}}</option>
                     </select>
                   </div>
                 </div>
@@ -961,17 +865,10 @@
                     <select
                       class="form-control form-select-solid fw-bolder"
                       name="cde"
-                      [(ngModel)]="cde"
+                      formControlName="cde"
                     >
-                      <option>-- Select --</option>
-                      <option value="waiting">Waiting</option>
-                      <option value="requested">Requested</option>
-                      <option value="reviewing">Reviewing</option>
-                      <option value="psycho eval">Psycho Eval</option>
-                      <option value="need new">Need New</option>
-                      <option value="2 insurance">2 insurance</option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
+                      <option [disabled]="true">-- Select --</option>
+                      <option *ngFor="let option of intakeOptions" value="{{option.value}}">{{option.label}}</option>
                     </select>
                   </div>
                 </div>
@@ -981,17 +878,10 @@
                     <select
                       class="form-control form-select-solid fw-bolder"
                       name="submitted"
-                      [(ngModel)]="submitted"
+                      formControlName="submitted"
                     >
-                      <option>-- Select --</option>
-                      <option value="waiting">Waiting</option>
-                      <option value="requested">Requested</option>
-                      <option value="reviewing">Reviewing</option>
-                      <option value="psycho eval">Psycho Eval</option>
-                      <option value="need new">Need New</option>
-                      <option value="2 insurance">2 insurance</option>
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
+                      <option [disabled]="true">-- Select --</option>
+                      <option *ngFor="let option of intakeOptions" value="{{option.value}}">{{option.label}}</option>
                     </select>
                   </div>
                 </div>
@@ -1001,7 +891,7 @@
                     <select
                       class="form-control form-select-solid fw-bolder"
                       name="interview"
-                      [(ngModel)]="interview"
+                      formControlName="interview"
                     >
                       <option>-- Select --</option>
                       <option value="pending">Pending</option>
@@ -1012,23 +902,24 @@
                   </div>
                 </div>
               </div>
-            </form>
           </div>
         </div>
       </div>
       <!-- fin Intake -->
 
       <!-- PAs -->
-      <div class="col-sm-12">
+      <div class="col-sm-12" [ngClass]="{'disabled-div': !form.get('insurer_id').value}">
         <div class="card">
           <div class="card-body">
-            <form autocomplete="off">
               <div class="row">
                 <!-- pas -->
                 <div class="col-12">
                   <div class="card-box">
                     <div class="card-block">
-                      <h3 class="card-title">PAs</h3>
+                      <h3 class="card-title">
+                        PAs
+                        <span *ngIf="!form.get('insurer_id').value"> - Select insurer to enable - </span>
+                      </h3>
 
                       <div class="row align-items-center">
                         <div class="col-xs-12">
@@ -1042,8 +933,8 @@
                                 <input
                                   class="form-control"
                                   autocomplete="off"
-                                  name="pa_services"
-                                  [(ngModel)]="pa_services"
+                                  name="pa_service"
+                                  formControlName="pa_service"
                                   type="text"
                                 />
                               </div>
@@ -1059,7 +950,7 @@
                                 <input
                                   class="form-control datetimepicker"
                                   name="pa_services_start_date"
-                                  [(ngModel)]="pa_services_start_date"
+                                  formControlName="pa_services_start_date"
                                   type="text"
                                   matInput
                                   [matDatepicker]="picker5"
@@ -1082,7 +973,7 @@
                                 <input
                                   class="form-control datetimepicker"
                                   name="pa_services_end_date"
-                                  [(ngModel)]="pa_services_end_date"
+                                  formControlName="pa_services_end_date"
                                   type="text"
                                   matInput
                                   [matDatepicker]="picker6"
@@ -1101,12 +992,10 @@
                                   <span class="login-danger">*</span></label
                                 >
                                 <mat-select
-                                  [(ngModel)]="selectedValueCode"
+                                  formControlName="selectedValueCode"
                                   name="code"
-                                  [ngModelOptions]="{ standalone: true }"
                                   class="form-control select"
                                   placeholder="Select Code"
-                                  (change)="selectProviderCpt($event)"
                                 >
                                   <mat-option
                                     *ngFor="let data of services"
@@ -1128,11 +1017,12 @@
                                   class="form-control"
                                   autocomplete="off"
                                   name="n_units"
-                                  [(ngModel)]="n_units"
+                                  formControlName="n_units"
                                   type="number"
                                 />
                               </div>
                             </div>
+                            <!-- [disabled]="!enabledPaButton" -->
                             <div class="col-12 mb-3 doctor-submit text-end">
                               <button
                                 class="btn btn-primary btn-sm"
@@ -1164,13 +1054,13 @@
                                   "
                                 >
                                   <td>
-                                    {{ pa_asses.pa_services }}
+                                    {{ pa_asses.pa_service }}
                                   </td>
                                   <td>
-                                    {{ pa_asses.pa_services_start_date | date }}
+                                    {{ pa_asses.start_date | date }}
                                   </td>
                                   <td>
-                                    {{ pa_asses.pa_services_end_date | date }}
+                                    {{ pa_asses.end_date | date }}
                                   </td>
                                   <td>
                                     {{ pa_asses.cpt }}
@@ -1212,9 +1102,12 @@
                       </div>
                     </div>
                   </div>
+                  <!-- [disabled]="!form.valid" -->
                   <div class="col-12">
                     <div class="doctor-submit text-end">
+                      <input type="hidden" formControlName="id">
                       <button
+                        
                         type="button"
                         class="btn btn-primary submit-form me-2"
                         (click)="save()"
@@ -1226,7 +1119,6 @@
                 </div>
                 <!-- pas -->
               </div>
-            </form>
           </div>
         </div>
       </div>

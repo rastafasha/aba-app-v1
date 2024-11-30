@@ -30,7 +30,7 @@ declare var $: any;
 export class ProfilePatientMComponent implements OnInit {
   routes = AppRoutes;
   @ViewChild('contentToConvert') contentToConvert!: ElementRef;
-  patient_id: number;
+  patient_identifier: string;
   client_id: number;
   patientV2: PatientV2;
 
@@ -89,6 +89,7 @@ export class ProfilePatientMComponent implements OnInit {
   location_id: any;
   insurer_id: number;
   insurer_secondary_id: number;
+  patient_ident: number;
 
   constructor(
     private patientService: PatientMService,
@@ -108,7 +109,7 @@ export class ProfilePatientMComponent implements OnInit {
 
     this.activatedRoute.params.subscribe((resp) => {
       this.client_id = resp['id'];
-      this.patient_id = resp['patient_id'];
+      this.patient_identifier = resp['patient_id'];
       this.getPatient();
     });
     // this.getConfig();
@@ -163,7 +164,8 @@ export class ProfilePatientMComponent implements OnInit {
     consulta$.subscribe((resp) => {
       console.log(resp);
       this.patient_selected = resp.patient;
-      this.patient_id = resp.patient.patient_id;
+      this.patient_identifier = resp.patient.patient_identifier;
+      this.patient_ident = resp.patient.id;
       this.avatar = resp.patient.avatar;
       this.rbt_id = resp.patient.rbt_home_id;
       this.rbt2_id = resp.patient.rbt2_school_id;
@@ -175,7 +177,7 @@ export class ProfilePatientMComponent implements OnInit {
       
       
       this.patientService
-        .getLaboratoryByPatient(this.patient_id)
+        .getLaboratoryByPatient(this.patient_identifier)
         .subscribe((resp) => {
           // console.log(resp);
           this.FilesAdded = resp.patientFiles.data;
@@ -241,7 +243,7 @@ export class ProfilePatientMComponent implements OnInit {
     });
   }
   getPaServices() {
-    this.paSerService.getPatientPaServices(this.patient_id).subscribe((resp) => {
+    this.paSerService.getPatientPaServices(this.patient_ident).subscribe((resp) => {
       this.pa_servicesgroup = resp.pa_services;
       console.log(resp);
     });

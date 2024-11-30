@@ -92,7 +92,8 @@ export class ChartReplacementComponent {
   user: AppUser;
   maladaptiveSelected: any;
   maladaptive: any;
-  patient_id: any;
+  patient_identifier: string;
+  patient_ident: number;
   client_id: any;
   created_at?: Date;
   session_date = [];
@@ -125,7 +126,7 @@ export class ChartReplacementComponent {
   promedio_porcentual_semanal: any[];
   stoName: any[];
   stoStatus: any;
-  existgrfic: any;
+  existgrfic: any =[];
   loading: boolean;
 
   //datos reales
@@ -143,32 +144,43 @@ export class ChartReplacementComponent {
   ngOnInit(): void {
     this.goal;
     this.baseline_d;
+
     this.activatedRoute.params.subscribe((resp) => {
-      this.patient_id = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
+      this.patient_identifier = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
+      
+      
+      this.getProfileBip(); // se pide el perfil del paciente por el bip relacionado
+      this.getBip(); // se pide el perfil del paciente por el bip relacionado
+      // setTimeout(() => {
+      // }, 3000);
+      
     });
-    this.getProfileBip(); // se pide el perfil del paciente por el bip relacionado
-    this.getBip(); // se pide el perfil del paciente por el bip relacionado
+
   }
 
   getBip() {
-    this.bipService.getBipByUser(this.patient_id).subscribe((resp) => {
+    this.bipService.getBipByUser(this.patient_identifier).subscribe((resp) => {
       this.created_at = resp.bip.created_at;
     });
   }
 
   getProfileBip() {
-    this.bipService.showBipProfile(this.patient_id).subscribe((resp) => {
-      // console.log(resp);
+    this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
+      console.log(resp);
       this.client_selected = resp; // asignamos el objeto a nuestra variable
+      this.patient_identifier = resp.patient.patient_identifier;
+      this.patient_ident = resp.patient.id;
       //traemos la info del usuario
       if (this.client_selected.type !== null) {
         // si hay o no informacion del paciente
         if (this.client_selected.eligibility === 'yes') {
           // si el status es positivo para proceder
-          this.patient_id = this.client_selected.patient_id;
+          this.patient_identifier = this.client_selected.patient_identifier;
         }
       }
-      this.getGoalsReductions();
+      setTimeout(() => {
+        this.getGoalsReductions();
+      }, 50);
     });
   }
 
@@ -177,7 +189,7 @@ export class ChartReplacementComponent {
 
   getGoalsReductions() {
     this.graphicReductionService
-      .listReductionGraphics(this.goal, this.patient_id)
+      .listReductionGraphics(this.goal, this.patient_identifier)
       .subscribe((resp) => {
         console.log(resp);
         this.existgrfic = resp.replacementsCol;
@@ -210,6 +222,8 @@ export class ChartReplacementComponent {
           );
           return replacementParsed[index];
         }
+
+        
         // fin funcion de pablo alcorta
         // recorremos el resultado del array goalsParsed para extraer los solicitados por el request
         const number_of_correct_response = [];

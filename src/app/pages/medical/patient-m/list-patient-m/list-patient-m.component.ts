@@ -50,6 +50,7 @@ export class ListPatientMComponent implements OnInit {
 
   patient_generals: PatientV2[] = [];
   patient_id: number;
+  patient_identifier: string;
   patient_selected: PatientV2;
   text_validation: string;
   user: AppUser;
@@ -394,28 +395,28 @@ export class ListPatientMComponent implements OnInit {
         icon: 'fa fa-address-book',
         buttonClass: 'btn-outline-success',
         onClick: () =>
-          this.router.navigate([AppRoutes.bip.attention, patient.patient_id]),
+          this.router.navigate([AppRoutes.bip.attention, patient.patient_identifier]),
       },
       {
         title: 'BIP View',
         icon: 'fa fa-eye',
         buttonClass: 'btn-outline-dark',
         onClick: () =>
-          this.router.navigate([AppRoutes.bip.profile, patient.patient_id]),
+          this.router.navigate([AppRoutes.bip.profile, patient.patient_identifier]),
       },
       {
         title: 'Create RBT Note',
         icon: 'fa fa-id-card',
         buttonClass: 'btn-outline-success',
         onClick: () =>
-          this.router.navigate([AppRoutes.noteRbt.noteRbt, patient.patient_id]),
+          this.router.navigate([AppRoutes.noteRbt.noteRbt, patient.patient_identifier]),
       },
       {
         title: 'RBT Note list',
         icon: 'fa fa-bars',
         buttonClass: 'btn-outline-primary',
         onClick: () =>
-          this.router.navigate([AppRoutes.noteRbt.list, patient.patient_id]),
+          this.router.navigate([AppRoutes.noteRbt.list, patient.patient_identifier]),
       },
       {
         title: 'Create BCBA Note',
@@ -424,7 +425,7 @@ export class ListPatientMComponent implements OnInit {
         onClick: () =>
           this.router.navigate([
             AppRoutes.noteBcba.noteBcba,
-            patient.patient_id,
+            patient.patient_identifier,
           ]),
       },
       {
@@ -432,7 +433,7 @@ export class ListPatientMComponent implements OnInit {
         icon: 'fa fa-bars',
         buttonClass: 'btn-outline-primary',
         onClick: () =>
-          this.router.navigate([AppRoutes.noteBcba.list, patient.patient_id]),
+          this.router.navigate([AppRoutes.noteBcba.list, patient.patient_identifier]),
       },
       // {
       //   title: 'Log Report',
@@ -441,7 +442,7 @@ export class ListPatientMComponent implements OnInit {
       //   onClick: () =>
       //     this.router.navigate([
       //       AppRoutes.clientReport.byClient,
-      //       patient.patient_id,
+      //       patient.patient_identifier,
       //     ]),
       // },
     ];

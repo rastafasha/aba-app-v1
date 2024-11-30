@@ -7,7 +7,7 @@ import {
 export class PaServiceV2 {
   id: number;
   patient_id: number;
-  pa_services: string;
+  pa_service: string;
   cpt: string;
   n_units: number;
   spent_units: number;
@@ -22,7 +22,7 @@ export class PaServiceV2 {
       ...data,
       id: NumberOrNullOrUndefined(data.id),
       patient_id: NumberOrNullOrUndefined(data.patient_id),
-      pa_services: StringOrNullOrUndefined(data.pa_services),
+      pa_service: StringOrNullOrUndefined(data.pa_service),
       cpt: StringOrNullOrUndefined(data.cpt),
       n_units: NumberOrNullOrUndefined(data.n_units),
       spent_units: NumberOrNullOrUndefined(data.spent_units),

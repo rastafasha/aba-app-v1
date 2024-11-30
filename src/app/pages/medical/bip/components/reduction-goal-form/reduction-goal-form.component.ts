@@ -23,7 +23,7 @@ export class ReductionGoalFormComponent {
   client_id: any;
   user: AppUser;
   doctor_id: any;
-  patient_id: any;
+  patient_identifier: string;
   client_selected: any;
 
   bip_id: any;
@@ -95,7 +95,7 @@ export class ReductionGoalFormComponent {
   ngOnInit(): void {
     //me subcribo al id recibido por el parametro de la url
     this.ativatedRoute.params.subscribe((resp) => {
-      this.patient_id = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
+      this.patient_identifier = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
       this.getProfileBip(); // se solicita la info del perfil del usuario
       // console.log(this.patient_id);
     });
@@ -107,21 +107,21 @@ export class ReductionGoalFormComponent {
 
   //obtenemos el perfil  del paciente por el id de la ruta
   getProfileBip() {
-    this.bipService.showBipProfile(this.patient_id).subscribe((resp) => {
+    this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
       // console.log('profilebip', resp);
       this.client_selected = resp; //convertimos la respuesta en un variable
 
       this.client_id = this.client_selected.patient.id;
-      if (this.patient_id !== null) {
-        this.getPatientGoals(this.patient_id);
+      if (this.patient_identifier !== null) {
+        this.getPatientGoals(this.patient_identifier);
       }
     });
   }
 
   //obtenemos el bip por el id
   getBip() {
-    if (this.patient_id !== null && this.patient_id !== undefined) {
-      this.bipService.getBipByUser(this.patient_id).subscribe((resp) => {
+    if (this.patient_identifier !== null && this.patient_identifier !== undefined) {
+      this.bipService.getBipByUser(this.patient_identifier).subscribe((resp) => {
         // console.log('bip',resp);
 
         this.bip_selected = resp; //convertimos la respuesta en un variable
@@ -132,10 +132,10 @@ export class ReductionGoalFormComponent {
     }
   }
 
-  //obtenemos los tipo goals: reductions del paciente por el patient_id si existe,
+  //obtenemos los tipo goals: reductions del paciente por el patient_identifier si existe,
   //si existe enviamos el client_id_goal para actualizar el goal del paciente
-  getPatientGoals(patient_id) {
-    this.goalService.getGoalbyPatientId(patient_id).subscribe((resp) => {
+  getPatientGoals(patient_identifier) {
+    this.goalService.getGoalbyPatientId(patient_identifier).subscribe((resp) => {
       console.log('goals by patientid', resp);
       this.goalReductions =
         resp.goalReductionPatientIds.data[0] === ''
@@ -193,7 +193,7 @@ export class ReductionGoalFormComponent {
     this.goalService
       .listMaladaptivesGoals(
         this.maladaptiveSelectedSon.maladaptive_behavior,
-        this.patient_id
+        this.patient_identifier
       )
       .subscribe((resp) => {
         // console.log( resp);

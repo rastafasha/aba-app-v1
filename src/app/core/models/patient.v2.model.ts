@@ -13,7 +13,8 @@ export class PatientV2 {
   first_name: string;
   last_name: string;
   full_name: string;
-  patient_id: string; //is a code
+  // patient_id: number; 
+  patient_identifier: string; 
   avatar: string;
   status: string;
 
@@ -104,7 +105,8 @@ export class PatientV2 {
       status: StringOrNullOrUndefined(data.status),
 
       birth_date: DateOrNullOrUndefined(data.birth_date),
-      patient_id: StringOrNullOrUndefined(data.patient_id),
+      // patient_id: NumberOrNullOrUndefined(data.patient_id),
+      patient_identifier: StringOrNullOrUndefined(data.patient_identifier),
       insurer_id: NumberOrNullOrUndefined(data.insurer_id),
       insurer_secondary_id: NumberOrNullOrUndefined(data.insurer_secondary_id),
       insurance_identifier: StringOrNullOrUndefined(data.insurance_identifier),

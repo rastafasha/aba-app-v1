@@ -9,7 +9,7 @@ import { AppUser } from 'src/app/core/models/users.model';
 
 interface Patient {
   id: number;
-  patient_id: string;
+  patient_identifier: string;
   location_id: number;
   first_name: string;
   last_name: string;
@@ -62,7 +62,7 @@ export class BipAttentionComponent implements OnInit {
   birth_date = '';
 
   client_id: any;
-  patient_id: any;
+  patient_identifier: string;
   doctor_id: any;
   user: AppUser;
 
@@ -106,9 +106,9 @@ export class BipAttentionComponent implements OnInit {
 
   ngOnInit(): void {
     this.ativatedRoute.params.subscribe((resp) => {
-      this.patient_id = resp['patient_id'];
+      this.patient_identifier = resp['patient_id'];
       // this.patient_id= resp.id
-      console.log(this.patient_id);
+      console.log(this.patient_identifier);
     });
     this.getProfileBip();
 
@@ -130,13 +130,13 @@ export class BipAttentionComponent implements OnInit {
   }
 
   getProfileBip() {
-    this.bipService.showBipProfile(this.patient_id).subscribe((resp:Patient) => {
+    this.bipService.showBipProfile(this.patient_identifier).subscribe((resp:Patient) => {
       // console.log(resp);
       this.client_selected = resp;
 
       this.first_name = this.client_selected.patient.first_name;
       this.last_name = this.client_selected.patient.last_name;
-      this.patient_id = this.client_selected.patient.patient_id;
+      this.patient_identifier = this.client_selected.patient.patient_identifier;
       this.phone = this.client_selected.patient.phone;
       this.parent_guardian_name =
         this.client_selected.patient.parent_guardian_name;
