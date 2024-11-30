@@ -75,8 +75,7 @@ export class EditPatientMComponent implements OnInit {
   ) {
     this.form = this.fb.group<PatientV2FormControls>({
       id: this.fb.control(0),
-      patient_id: this.fb.control(0),
-      member_code: this.fb.control(''),
+      patient_id: this.fb.control(''),
       first_name: this.fb.control(''),
       last_name: this.fb.control(''),
       full_name: this.fb.control(''),
