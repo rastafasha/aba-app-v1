@@ -1,7 +1,6 @@
 export class PaService {
   id?: number;
-  // patient_id?: number;
-  id_patient?: number;
+  patient_id?: number;
   pa_service: string;
   cpt: string;
   n_units: number;

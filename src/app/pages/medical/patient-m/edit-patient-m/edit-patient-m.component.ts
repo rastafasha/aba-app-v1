@@ -75,15 +75,14 @@ export class EditPatientMComponent implements OnInit {
   ) {
     this.form = this.fb.group<PatientV2FormControls>({
       id: this.fb.control(0),
-      
+      patient_id: this.fb.control(0),
+      member_code: this.fb.control(''),
       first_name: this.fb.control(''),
       last_name: this.fb.control(''),
       full_name: this.fb.control(''),
       avatar: this.fb.control(''),
       status: this.fb.control(''),
-      patient_id: this.fb.control(''),
       insurer_id: this.fb.control(0),
-      id_patient: this.fb.control(this.id),
       insurer_secondary_id: this.fb.control(0),
       insurance_identifier: this.fb.control(''),
       insurance_secondary_identifier: this.fb.control(''),
@@ -151,7 +150,7 @@ export class EditPatientMComponent implements OnInit {
     this.paForm = this.fb.group<PaServiceV2FormControls>({
       id: this.fb.control(0),
       pa_service: this.fb.control(''), //the name of the service
-      id_patient: this.fb.control(this.id),
+      patient_id: this.fb.control(this.id),
       cpt: this.fb.control(null as string),
       n_units: this.fb.control(null as number),
       spent_units: this.fb.control(null as number),
@@ -230,7 +229,7 @@ export class EditPatientMComponent implements OnInit {
   onAddPaService() {
     const pa_services = this.patient.pa_services ?? [];
     //podria requerir crear o borrar antes de actualizar
-    this.paForm.patchValue({ id_patient: this.id, id: -pa_services.length });
+    this.paForm.patchValue({ patient_id: this.id, id: -pa_services.length });
     pa_services.push(this.paForm.getRawValue());
     this.form.patchValue({ pa_services });
     this.paForm.reset();

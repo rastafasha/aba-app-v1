@@ -50,7 +50,7 @@ export interface Service {
 })
 export class AddPatientMComponent implements OnInit {
   routes = AppRoutes;
-  patient_id: any;
+  patient_id: number;
   selectedValueLocation!: number;
   selectedValueCode!: string;
   selectedValueUnitPrize!: string;
@@ -90,7 +90,7 @@ export class AddPatientMComponent implements OnInit {
 
 
   insurance_id: any;
-  id: any;
+  id: number;
 
   FILE_AVATAR: any;
   IMAGE_PREVISUALIZA = 'assets/img/user-06.jpg';
@@ -155,9 +155,8 @@ export class AddPatientMComponent implements OnInit {
 
   private setForm(): void {
     this.form = this.fb.group({
-      id_patient: [0],
       id: [0],
-      patient_id: ['', Validators.required],
+      patient_id: [this.id,],
       insurer_id: ['', Validators.required],
       insurer_secondary_id: [''],
       insurance_identifier: ['', Validators.required],
@@ -168,7 +167,6 @@ export class AddPatientMComponent implements OnInit {
       bcba_home_id: ['', Validators.required],
       bcba2_school_id: ['', Validators.required],
       clin_director_id: ['', Validators.required],
-      
       first_name: ['',Validators.required],
       last_name: ['',Validators.required],
       parent_guardian_name: ['',Validators.required],
@@ -288,12 +286,14 @@ export class AddPatientMComponent implements OnInit {
     this.insuranceData2(this.form.value.insurer_secondary_id);
   }
 
-  addPAAssestment() {
+  // eslint-disable-next-line no-debugger
+  addPAAssestment() {debugger
     // if(!this.enabledPaButton) {
     //   this.text_validation = 'Invalid data for PA';
     //   return ;
     // }
     this.pa_assessments.push({
+      patient_id: this.id,
       pa_service: this.form.value.pa_service,
       start_date: this.form.value.pa_services_start_date.toISOString().split('T')[0],
       end_date: this.form.value.pa_services_end_date.toISOString().split('T')[0],
