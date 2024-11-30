@@ -154,6 +154,7 @@ export class BipFormComponent implements OnInit {
   client_id: number;
   id: number;
   patient_id: number;
+  patient_identifier: string;
   doctor_id: number;
   user: AppUser;
 
@@ -282,7 +283,7 @@ export class BipFormComponent implements OnInit {
     // //inicia la vista siempre desde arriba
     //me subcribo al id recibido por el parametro de la url
     this.ativatedRoute.params.subscribe((resp) => {
-      this.patient_id = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
+      this.patient_identifier = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
     });
     this.getProfileBip(); // se pide el perfil del paciente por el bip relacionado
 
@@ -295,7 +296,7 @@ export class BipFormComponent implements OnInit {
 
   //se obtiene el perfil del usuario, por el cliente_id  que seria igual al id de la url
   getProfileBip() {
-    this.bipService.showBipProfile(this.patient_id).subscribe((resp) => {
+    this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
       // console.log(resp);
       this.client_selected = resp; // asignamos el objeto a nuestra variable
 
@@ -306,7 +307,7 @@ export class BipFormComponent implements OnInit {
           // si el status es positivo para proceder
           this.first_name = this.client_selected.patient.first_name;
           this.last_name = this.client_selected.patient.last_name;
-          this.patient_id = this.client_selected.patient.patient_id;
+          this.patient_identifier = this.client_selected.patient.patient_identifier;
           this.phone = this.client_selected.patient.phone;
           this.parent_guardian_name =
             this.client_selected.patient.parent_guardian_name;
@@ -320,8 +321,8 @@ export class BipFormComponent implements OnInit {
   }
   //obtenemos el bip por el id..
   getBip() {
-    if (this.patient_id !== null && this.patient_id !== undefined) {
-      this.bipService.getBipByUser(this.patient_id).subscribe((resp) => {
+    if (this.patient_identifier !== null && this.patient_identifier !== undefined) {
+      this.bipService.getBipByUser(this.patient_identifier).subscribe((resp) => {
         console.log(resp);
 
         this.bip_selected = resp; //asigamos una variable a la respuesta
@@ -953,7 +954,7 @@ export class BipFormComponent implements OnInit {
     const data = {
       id: this.bip_selectedid,
       client_id: this.client_selected.patient.id,
-      patient_id: this.patient_id,
+      patient_identifier: this.patient_identifier,
       doctor_id: this.doctor_id,
 
       type_of_assessment: this.type_of_assessment,

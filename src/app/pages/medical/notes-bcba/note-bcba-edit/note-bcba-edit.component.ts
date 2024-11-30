@@ -53,7 +53,8 @@ export class NoteBcbaEditComponent implements OnInit {
 
   client_id: number;
   doctor_id: number;
-  patient_id: string;
+  patient_identifier: string;
+  patient_id: number;
   patientid: number;
   patientLocation_id: number;
   client_selected: any;
@@ -222,7 +223,7 @@ export class NoteBcbaEditComponent implements OnInit {
       console.log('respuesta de getNote', resp);
       this.note_selected = resp.noteBcba;
       this.note_selectedId = resp.noteBcba.id;
-      this.patient_id = this.note_selected.patient_identifier;
+      this.patient_identifier = this.note_selected.patient_identifier;
       this.bip_id = this.note_selected.bip_id;
       this.location = this.note_selected.location;
       
@@ -302,7 +303,7 @@ export class NoteBcbaEditComponent implements OnInit {
 
   getProfileBip() {
     this.bipService
-      .getBipProfilePatient_id(this.patient_id)
+      .getBipProfilePatient_id(this.patient_identifier)
       .subscribe((resp) => {
         console.log(resp);
         this.client_selected = resp.patient;
@@ -328,7 +329,7 @@ export class NoteBcbaEditComponent implements OnInit {
 
   getReplacementsByPatientId() {
     this.noteBcbaService
-      .showReplacementbyPatient(this.patient_id)
+      .showReplacementbyPatient(this.patient_identifier)
       .subscribe((resp) => {
         console.log(resp);
         this.familiEnvolments = resp.familiEnvolments;
@@ -519,6 +520,7 @@ export class NoteBcbaEditComponent implements OnInit {
     formData.append('location', this.location);
     formData.append('birth_date', this.birth_date);
     formData.append('session_date', this.session_date);
+    formData.append('patient_identifier', this.patient_identifier);
     formData.append('location_id', this.patientLocation_id + '');
 
     
@@ -623,7 +625,7 @@ export class NoteBcbaEditComponent implements OnInit {
           // this.text_success = 'Employer created';
           // this.ngOnInit();
           Swal.fire('Updated', ` Note Rbt Updated`, 'success');
-          this.router.navigate([AppRoutes.noteBcba.list, this.patient_id]);
+          this.router.navigate([AppRoutes.noteBcba.list, this.patient_identifier]);
         }
       });
   }

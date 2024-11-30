@@ -50,7 +50,7 @@ export class NoteRbtComponent implements OnInit {
   selectedValueBcba_id!: number;
 
   client_id: number;
-  patient_id: string;
+  patient_identifier: string;
   patientId: number;
   doctor_id: number;
   insurer_id: number;
@@ -192,7 +192,7 @@ export class NoteRbtComponent implements OnInit {
     this.getDoctor();
 
     this.ativatedRoute.params.subscribe((resp) => {
-      this.patient_id = resp['patient_id'];
+      this.patient_identifier = resp['patient_id'];
     });
     this.getConfig();
     this.getProfileBip();
@@ -238,16 +238,16 @@ export class NoteRbtComponent implements OnInit {
   }
 
   getProfileBip() {
-    this.bipService.showBipProfile(this.patient_id).subscribe((resp) => {
+    this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
       this.client_selected = resp;
 
       this.first_name = this.client_selected.patient.first_name;
       this.last_name = this.client_selected.patient.last_name;
-      this.patient_id = resp.patient.patient_id;
+      this.patient_identifier = resp.patient.patient_identifier;
       this.patientId = resp.patient.id;
-      this.insurer_id = resp.patient.insurer_id;
+      this.insurer_id = resp.patient.insurer_identifier;
       this.insurance_identifier = resp.patient.insurance_identifier;
-      console.log(this.insurance_identifier);
+      // console.log(this.insurance_identifier);
       this.patientLocation_id = resp.patient.location_id;
       this.selectedValueProviderRBT_id = resp.patient.rbt_id;
       this.selectedValueRBT = resp.patient.rbt_id;
@@ -276,7 +276,7 @@ export class NoteRbtComponent implements OnInit {
 
   getMaladaptivesBipByPatientId() {
     this.bipService
-      .getBipProfilePatient_id(this.patient_id)
+      .getBipProfilePatient_id(this.patient_identifier)
       .subscribe((resp) => {
         this.maladaptives = resp.maladaptives;
         this.bip_id = resp.id;
@@ -284,7 +284,7 @@ export class NoteRbtComponent implements OnInit {
   }
   getReplacementsByPatientId() {
     this.noteRbtService
-      .showReplacementbyPatient(this.patient_id)
+      .showReplacementbyPatient(this.patient_identifier)
       .subscribe((resp) => {
         this.replacementGoals = [];
         resp['replacementGoals'].forEach((element) => {
@@ -587,6 +587,7 @@ export class NoteRbtComponent implements OnInit {
     }
 
     const formData = new FormData();
+    formData.append('patient_identifier', this.patient_identifier);
     formData.append('patient_id', this.patientId+'');
     formData.append('doctor_id', this.doctor_id+'');
     formData.append('bip_id', this.bip_id);
@@ -595,7 +596,7 @@ export class NoteRbtComponent implements OnInit {
     formData.append('diagnosis_code', this.diagnosis_code);
     formData.append('provider_credential', this.provider_credential);
     formData.append('location_id', this.patientLocation_id);
-    formData.append('insurance_id', this.insurer_id+''); // id del seguro preferiblemente que solo agarre la data al crear
+    // formData.append('insurance_id', this.insurer_id+''); // id del seguro preferiblemente que solo agarre la data al crear
     formData.append('insurance_identifier', this.insurance_identifier); // id del seguro preferiblemente que solo agarre la data al crear
 
     formData.append('session_date', this.session_date);
@@ -686,7 +687,7 @@ export class NoteRbtComponent implements OnInit {
         } else {
           this.text_success = 'Note created';
           Swal.fire('Created', 'Note RBT Created', 'success');
-          this.router.navigate([AppRoutes.noteRbt.list, this.patient_id]);
+          this.router.navigate([AppRoutes.noteRbt.list, this.patient_identifier]);
         }
       },
       (error) => {

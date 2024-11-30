@@ -20,7 +20,7 @@ export class BipProfileComponent implements OnInit {
   @ViewChild('contentToConvert') contentToConvert!: ElementRef;
   patientProfile: any[];
   option_selected = 1;
-  patient_id: any;
+  patient_identifier: string;
 
   num_appointment = 0;
   money_of_appointments = 0;
@@ -141,8 +141,8 @@ export class BipProfileComponent implements OnInit {
     this.pageService.onInitPage();
     // this.doctorService.getUserRoles();
     this.activatedRoute.params.subscribe((resp) => {
-      this.patient_id = resp['patient_id'];
-      console.log(this.patient_id);
+      this.patient_identifier = resp['patient_id'];
+      console.log(this.patient_identifier);
       this.getPatient();
     });
     this.user = this.authService.user as AppUser;
@@ -168,11 +168,11 @@ export class BipProfileComponent implements OnInit {
 
   getPatient() {
     this.bipService
-      .getBipProfilePatientPdf_id(this.patient_id)
+      .getBipProfilePatientPdf_id(this.patient_identifier)
       .subscribe((resp) => {
         console.log(resp);
         this.patient_selected = resp.patient ? resp.patient : null;
-        this.patientId = this.patient_selected.patient_id;
+        this.patientId = this.patient_selected.patient_identifier;
 
         // ------Bip
 
@@ -388,7 +388,7 @@ export class BipProfileComponent implements OnInit {
       }
 
       // Save the PDF
-      const filename = `bip_${this.patient_selected.patient_id}.pdf`;
+      const filename = `bip_${this.patient_selected.patient_identifier}.pdf`;
       pdf.save(filename);
     });
   }

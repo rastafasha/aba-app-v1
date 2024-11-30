@@ -20,7 +20,7 @@ export class ConsentTreatmentFormComponent {
   user: AppUser;
   doctor_id: any;
   client_selected: any;
-  patient_id: any;
+  patient_identifier: string;
   bip_selected: any;
   bip_selectedId: any;
   bip_selectedIdd: any;
@@ -52,7 +52,7 @@ export class ConsentTreatmentFormComponent {
 
     //me subcribo al id recibido por el parametro de la url
     this.ativatedRoute.params.subscribe((resp) => {
-      this.patient_id = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
+      this.patient_identifier = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
       this.getProfileBip(); // se solicita la info del perfil del usuario
       // this.getGoalbyPatient(); // se solicita la info del perfil del usuario
     });
@@ -67,21 +67,21 @@ export class ConsentTreatmentFormComponent {
 
   //obtenemos el perfil  del paciente por el id de la ruta
   getProfileBip() {
-    this.bipService.showBipProfile(this.patient_id).subscribe((resp) => {
+    this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
       // console.log('profilebip', resp);
       this.client_selected = resp; //convertimos la respuesta en un variable
 
       this.client_id = this.client_selected.patient.id;
-      if (this.patient_id !== null) {
-        this.getPatientConsentToTreatment(this.patient_id);
+      if (this.patient_identifier !== null) {
+        this.getPatientConsentToTreatment(this.patient_identifier);
       }
     });
   }
 
   //obtenemos el bip por el id
   getBip() {
-    if (this.patient_id !== null && this.patient_id !== undefined) {
-      this.bipService.getBipByUser(this.patient_id).subscribe((resp) => {
+    if (this.patient_identifier !== null && this.patient_identifier !== undefined) {
+      this.bipService.getBipByUser(this.patient_identifier).subscribe((resp) => {
         // console.log('bip',resp);
 
         this.bip_selected = resp; //convertimos la respuesta en un variable
@@ -92,11 +92,11 @@ export class ConsentTreatmentFormComponent {
     }
   }
 
-  //obtenemos los tipo goals: sustituions del paciente por el patient_id si existe,
+  //obtenemos los tipo goals: sustituions del paciente por el patient_identifier si existe,
   //si existe enviamos el client_id_goal para actualizar el goal del paciente
-  getPatientConsentToTreatment(patient_id) {
+  getPatientConsentToTreatment(patient_identifier) {
     this.consentToTreatmentService
-      .getConsentToTreatmentbyPatientId(patient_id)
+      .getConsentToTreatmentbyPatientId(patient_identifier)
       .subscribe((resp) => {
         // console.log('goals sustition by patientid',resp);
         this.consentToTreatments = resp.consentToTreatmentPatientIds.data[0];
@@ -156,7 +156,7 @@ export class ConsentTreatmentFormComponent {
 
   save() {
     this.text_validation = '';
-    // if(!this.first_name ||!this.last_name || !this.patient_id ){
+    // if(!this.first_name ||!this.last_name || !this.patient_identifier ){
     //   this.text_validation = 'Los campos con * son obligatorios';
     //   return;
     // }
@@ -168,7 +168,7 @@ export class ConsentTreatmentFormComponent {
       this.parent_guardian_signature_date
     );
     formData.append('analyst_signature_date', this.analyst_signature_date);
-    formData.append('patient_id', this.patient_id);
+    formData.append('patient_identifier', this.patient_identifier);
     formData.append('client_id', this.client_id);
 
     if (this.bip_selectedIdd) {

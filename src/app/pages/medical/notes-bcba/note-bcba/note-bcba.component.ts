@@ -41,7 +41,8 @@ export class NoteBcbaComponent implements OnInit {
   option_selected = 0;
 
   client_id: string | number;
-  patient_id: string | number;
+  patient_id: number;
+  patient_identifier: string ;
   doctor_id: string | number;
   patient_selected: any;
   client_selected: any;
@@ -146,7 +147,7 @@ export class NoteBcbaComponent implements OnInit {
   doctor: any;
   full_name: any;
   patientLocation_id: number;
-  insuranceId: string;
+  insurance_identifier: string;
 
   pa_services: PaService[] = [];
   selectedPaService: PaService | null = null;
@@ -165,7 +166,7 @@ export class NoteBcbaComponent implements OnInit {
   ngOnInit(): void {
     //
     this.ativatedRoute.params.subscribe((resp) => {
-      this.patient_id = resp['patient_id'];
+      this.patient_identifier = resp['patient_id'];
     });
     this.getConfig();
     this.getProfileBip();
@@ -205,14 +206,14 @@ export class NoteBcbaComponent implements OnInit {
   }
 
   getProfileBip() {
-    this.bipService.showBipProfile(this.patient_id).subscribe((resp) => {
+    this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
       this.client_selected = resp.patient;
 
       this.first_name = this.client_selected.first_name;
       this.last_name = this.client_selected.last_name;
-      this.patient_id = this.client_selected.patient_id;
+      this.patient_identifier = this.client_selected.patient_identifier;
       this.client_id = this.client_selected.id;
-      this.insuranceId = this.client_selected.insurer_id;
+      this.insurance_identifier = this.client_selected.insurance_identifier;
       this.patientLocation_id = this.client_selected.location_id;
       this.pos = this.client_selected.pos_covered;
       // this.pos = JSON.parse(resp.patient.pos_covered) ;
@@ -252,7 +253,7 @@ export class NoteBcbaComponent implements OnInit {
 
   getReplacementsByPatientId() {
     this.noteBcbaService
-      .showReplacementbyPatient(this.patient_id)
+      .showReplacementbyPatient(this.patient_identifier)
       .subscribe((resp) => {
         console.log(resp);
         this.familiEnvolments = resp.familiEnvolments;
@@ -305,7 +306,7 @@ export class NoteBcbaComponent implements OnInit {
 
   getMaladaptivesBipByPatientId() {
     this.bipService
-      .getBipProfilePatient_id(this.patient_id)
+      .getBipProfilePatient_id(this.patient_identifier)
       .subscribe((resp) => {
         console.log(resp);
         // this.maladaptives = resp.bip.maladaptives;
@@ -441,6 +442,7 @@ export class NoteBcbaComponent implements OnInit {
     formData.append('summary_note', this.summary_note);
 
     formData.append('patient_id', this.client_id + '');
+    formData.append('patient_identifier', this.patient_identifier);
     formData.append('doctor_id', this.doctor_id + '');
     formData.append('bip_id', this.bip_id + '');
 
@@ -459,7 +461,7 @@ export class NoteBcbaComponent implements OnInit {
     formData.append('provider_name', this.doctor_id + '');
     formData.append('supervisor_name', this.selectedValueBCBA);
     // formData.append('note_description', this.note_description);
-    formData.append('insurance_id', this.insuranceId); // id del seguro preferiblemente que solo agarre la data al crear
+    formData.append('insurance_identifier', this.insurance_identifier); // id del seguro preferiblemente que solo agarre la data al crear
 
     formData.append(
       'rbt_training_goals',
@@ -531,7 +533,7 @@ export class NoteBcbaComponent implements OnInit {
         this.text_success = 'Note BCBA created';
         // this.ngOnInit();
         Swal.fire('Created', ` Note BCBA Created`, 'success');
-        this.router.navigate([AppRoutes.noteBcba.list, this.patient_id]);
+        this.router.navigate([AppRoutes.noteBcba.list, this.patient_identifier]);
       }
     });
   }

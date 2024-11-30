@@ -50,7 +50,7 @@ export interface Service {
 })
 export class AddPatientMComponent implements OnInit {
   routes = AppRoutes;
-  patient_id: number;
+  patient_identifier: string;
   selectedValueLocation!: number;
   selectedValueCode!: string;
   selectedValueUnitPrize!: string;
@@ -156,7 +156,8 @@ export class AddPatientMComponent implements OnInit {
   private setForm(): void {
     this.form = this.fb.group({
       id: [0],
-      patient_id: [this.id,],
+      patient_id: [0],
+      patient_identifier: ['0'],
       insurer_id: ['', Validators.required],
       insurer_secondary_id: [''],
       insurance_identifier: ['', Validators.required],

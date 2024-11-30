@@ -95,7 +95,7 @@ export class ChartReductionComponent {
   user: AppUser;
   maladaptiveSelected: any;
   maladaptive: any;
-  patient_id: any;
+  patient_identifier: string;
   client_id: any;
   created_at: any;
   session_date = [];
@@ -148,7 +148,7 @@ export class ChartReductionComponent {
     this.baseline_level;
 
     this.activatedRoute.params.subscribe((resp) => {
-      this.patient_id = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
+      this.patient_identifier = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
       // console.log(this.patient_id);
       this.getBip(); // se pide el perfil del paciente por el bip relacionado
       this.getProfileBip(); // se pide el perfil del paciente por el bip relacionado
@@ -158,7 +158,7 @@ export class ChartReductionComponent {
 
   // traemos la fecha inicial que viene de la creacion del bip
   getBip() {
-    this.bipService.getBipByUser(this.patient_id).subscribe((resp) => {
+    this.bipService.getBipByUser(this.patient_identifier).subscribe((resp) => {
       // console.log(resp);
       this.created_at = resp.bip.created_at;
       // console.log('creacion bip',this.created_at);
@@ -167,10 +167,10 @@ export class ChartReductionComponent {
 
   //traemos la info del paciente o cliente
   getProfileBip() {
-    this.bipService.showBipProfile(this.patient_id).subscribe((resp) => {
+    this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
       console.log(resp);
       this.client_selected = resp; // asignamos el objeto a nuestra variable
-      this.patient_id = resp.patient.patient_id;
+      this.patient_identifier = resp.patient.patient_identifier;
       this.patient_ident = resp.patient.id;
       // console.log(this.patient_id);
 
@@ -179,7 +179,7 @@ export class ChartReductionComponent {
         // si hay o no informacion del paciente
         if (this.client_selected.eligibility === 'yes') {
           // si el status es positivo para proceder
-          this.patient_id = this.client_selected.patient_id;
+          this.patient_identifier = this.client_selected.patient_identifier;
         }
       }
       setTimeout(() => {
