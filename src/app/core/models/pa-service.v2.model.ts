@@ -6,7 +6,7 @@ import {
 
 export class PaServiceV2 {
   id: number;
-  id_patient: number;
+  patient_id: number;
   pa_service: string;
   cpt: string;
   n_units: number;
@@ -21,7 +21,7 @@ export class PaServiceV2 {
     const result: PaServiceV2 = {
       ...data,
       id: NumberOrNullOrUndefined(data.id),
-      id_patient: NumberOrNullOrUndefined(data.id_patient),
+      patient_id: NumberOrNullOrUndefined(data.patient_id),
       pa_service: StringOrNullOrUndefined(data.pa_service),
       cpt: StringOrNullOrUndefined(data.cpt),
       n_units: NumberOrNullOrUndefined(data.n_units),

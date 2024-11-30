@@ -43,7 +43,7 @@ export class PaServicesV2Service extends RepositoryV2Service<PaServiceV2> {
   override create(
     data: Partial<PaServiceV2>
   ): Observable<CreateResponse<PaServiceV2>> {
-    this.changeEndpoint(data?.id_patient);
+    this.changeEndpoint(data?.patient_id);
     return super.create(data).pipe(this.restoreEndpoint());
   }
 
@@ -51,18 +51,18 @@ export class PaServicesV2Service extends RepositoryV2Service<PaServiceV2> {
   override get(id: number): Observable<ApiV2Response<PaServiceV2>>;
   override get(
     id: number,
-    id_patient = 0
+    patient_id = 0
   ): Observable<ApiV2Response<PaServiceV2>> {
-    this.changeEndpoint(id_patient);
+    this.changeEndpoint(patient_id);
     return super.get(id).pipe(this.restoreEndpoint());
   }
 
   override list(options: ListParameters): Observable<ListResponse<PaServiceV2>>;
   override list(
     options: ListParameters,
-    id_patient = 0
+    patient_id = 0
   ): Observable<ListResponse<PaServiceV2>> {
-    this.changeEndpoint(id_patient);
+    this.changeEndpoint(patient_id);
     return super.list(options).pipe(this.restoreEndpoint());
   }
 
@@ -70,13 +70,13 @@ export class PaServicesV2Service extends RepositoryV2Service<PaServiceV2> {
     data: PaServiceV2,
     id: number
   ): Observable<ApiV2Response<PaServiceV2>> {
-    this.changeEndpoint(data?.id_patient);
+    this.changeEndpoint(data?.patient_id);
     return super.update(data, id).pipe(this.restoreEndpoint());
   }
 
   override delete(id: number): Observable<void>;
-  override delete(id: number, id_patient = 0): Observable<void> {
-    this.changeEndpoint(id_patient);
+  override delete(id: number, patient_id = 0): Observable<void> {
+    this.changeEndpoint(patient_id);
     return super.delete(id).pipe(this.restoreEndpoint());
   }
   ////////////////////
