@@ -75,7 +75,8 @@ export class EditPatientMComponent implements OnInit {
   ) {
     this.form = this.fb.group<PatientV2FormControls>({
       id: this.fb.control(0),
-      patient_id: this.fb.control(''),
+      
+      patient_identifier: this.fb.control(''),
       first_name: this.fb.control(''),
       last_name: this.fb.control(''),
       full_name: this.fb.control(''),
@@ -129,6 +130,7 @@ export class EditPatientMComponent implements OnInit {
       cde: this.fb.control(''),
       submitted: this.fb.control(''),
       interview: this.fb.control(''),
+      // patient_id: this.fb.control(this.id),
       pa_services: this.fb.control<PaServiceV2[]>([]),
       pa_assessments: this.fb.control(''),
       compayment_per_visit: this.fb.control(''),
@@ -148,8 +150,8 @@ export class EditPatientMComponent implements OnInit {
 
     this.paForm = this.fb.group<PaServiceV2FormControls>({
       id: this.fb.control(0),
-      pa_service: this.fb.control(''), //the name of the service
       patient_id: this.fb.control(this.id),
+      pa_service: this.fb.control(''), //the name of the service
       cpt: this.fb.control(null as string),
       n_units: this.fb.control(null as number),
       spent_units: this.fb.control(null as number),

@@ -17,8 +17,8 @@ declare var $: any;
 })
 export class NotesByClientComponent implements OnInit {
   routes = AppRoutes;
+  patient_identifier: any;
   patient_id: any;
-  patientId: any;
   doctor_id: any;
   patient_selected: any;
   client_selected: any;
@@ -107,8 +107,9 @@ export class NotesByClientComponent implements OnInit {
       .subscribe((resp) => {
         this.totalDataNotepatient = resp.total;
         this.notespatient_generals = resp.data;
-        this.patientId = resp.data[0].patient_id;
-        console.log(this.patientId);
+        this.patient_id = resp.data[0].patient_id;
+        this.patient_identifier = resp.data[0].patient_identifier;
+        console.log(this.patient_identifier);
         this.getTableDataGeneral();
       });
   }

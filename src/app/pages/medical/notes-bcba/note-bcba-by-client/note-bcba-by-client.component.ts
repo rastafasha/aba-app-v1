@@ -16,6 +16,7 @@ declare var $: any;
 export class NoteBcbaByClientComponent implements OnInit {
   routes = AppRoutes;
   patient_id: any;
+  patient_identifier: string;
   patientId: any;
   doctor_id: any;
   patient_selected: any;
@@ -55,7 +56,7 @@ export class NoteBcbaByClientComponent implements OnInit {
   ngOnInit(): void {
     //
     this.ativatedRoute.params.subscribe((resp) => {
-      this.patient_id = resp['id'];
+      this.patient_identifier = resp['id'];
 
       // this.patient_id= resp.patient_id;
       // console.log(this.patient_id);
@@ -90,7 +91,7 @@ export class NoteBcbaByClientComponent implements OnInit {
     this.notesBcbaV2Service
       .list({
         per_page: 15,
-        patient_identifier: this.patient_id,
+        patient_identifier: this.patient_identifier,
       })
       .subscribe((resp) => {
         console.log(resp);
@@ -98,6 +99,7 @@ export class NoteBcbaByClientComponent implements OnInit {
         this.totalDataNotepatient = resp.total;
         this.notespatient_generals = resp.data;
         this.patientId = resp.data[0].patient_id;
+        this.patient_identifier = resp.data[0].patient_identifier;
         this.getTableDataGeneral();
       });
   }

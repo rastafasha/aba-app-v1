@@ -23,7 +23,7 @@ export class ReductionGoalEditComponent {
   client_id: any;
   user: AppUser;
   doctor_id: any;
-  patient_id: any;
+  patient_identifier: string;
   client_selected: any;
 
   bip_id: any;
@@ -95,7 +95,7 @@ export class ReductionGoalEditComponent {
   ngOnInit(): void {
     //me subcribo al id recibido por el parametro de la url
     this.ativatedRoute.params.subscribe((resp) => {
-      this.patient_id = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
+      this.patient_identifier = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
       // this.getProfileBip(); // se solicita la info del perfil del usuario
       // console.log(this.patient_id);
     });
@@ -108,8 +108,8 @@ export class ReductionGoalEditComponent {
 
   //obtenemos el bip por el id
   getBip() {
-    if (this.patient_id !== null && this.patient_id !== undefined) {
-      this.bipService.getBipByUser(this.patient_id).subscribe((resp) => {
+    if (this.patient_identifier !== null && this.patient_identifier !== undefined) {
+      this.bipService.getBipByUser(this.patient_identifier).subscribe((resp) => {
         // console.log('bip',resp);
         this.bip_selectedIdd = resp.bip.id; //convertimos la respuesta en un variable
       });
@@ -122,7 +122,7 @@ export class ReductionGoalEditComponent {
     this.goalService
       .listMaladaptivesGoals(
         this.maladap?.maladaptive_behavior,
-        this.patient_id
+        this.patient_identifier
       )
       .subscribe((resp) => {
         console.log(resp);
@@ -372,13 +372,13 @@ export class ReductionGoalEditComponent {
       id: this.goalmaladaptiveid,
       bip_id: this.bip_selectedIdd,
       maladaptive: this.maladap?.maladaptive_behavior,
-      patient_id: this.patient_id,
+      patient_identifier: this.patient_identifier,
       current_status: this.current_status,
       goalstos: this.golsto,
       goalltos: this.gollto,
     };
 
-    if (this.patient_id && this.goalmaladaptiveid) {
+    if (this.patient_identifier && this.goalmaladaptiveid) {
       this.goalService
         .editGoal(data, this.goalmaladaptiveid)
         .subscribe((resp) => {

@@ -31,9 +31,9 @@
                     >
                     <input
                       class="form-control"
-                      name="patient_id"
+                      name="patient_identifier"
                       disabled
-                      [(ngModel)]="patient_id"
+                      [(ngModel)]="patient_identifier"
                       type="text"
                     />
                   </div>
@@ -658,17 +658,17 @@
             </div>
             <!-- previsualizacion de la foto -->
           </div>
-          <div class="col-12 col-md-4 col-xl-4">
+          <!-- <div class="col-12 col-md-4 col-xl-4">
             <div class="form-group local-top-form">
               <label class="local-top"
                 >Created At
                 <span class="login-danger">*</span></label
               >
               <p style="padding: 10px">
-                {{ note_selected.session_date | date }}
+                {{ note_selected.session_date | date: 'shortDate' }}
               </p>
             </div>
-          </div>
+          </div> -->
 
           <div class="col-12 col-md-4 col-xl-6">
             <div class="form-group local-forms">
@@ -724,17 +724,17 @@
             </div>
             <!-- previsualizacion de la foto -->
           </div>
-          <div class="col-12 col-md-4 col-xl-4">
+          <!-- <div class="col-12 col-md-4 col-xl-4">
             <div class="form-group local-top-form">
               <label class="local-top"
                 >Created At
                 <span class="login-danger">*</span></label
               >
               <p style="padding: 10px">
-                {{ note_selected.session_date | date }}
+                {{ note_selected.session_date | date: 'shortDate'  }}
               </p>
             </div>
-          </div>
+          </div> -->
         </div>
         <!-- paciente -->
 

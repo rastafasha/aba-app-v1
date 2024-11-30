@@ -131,7 +131,7 @@ export class LogsReportsComponent implements OnInit {
     this.notesRbt =
       this.notesRbt?.map((item) => {
         const patient = this.patients.find(
-          (patient) => patient.patient_id === item.patient_code
+          (patient) => patient.patient_control === item.patient_code
         );
         item.insurance_id = !isNaN(item.insurance_id)
           ? item.insurance_id
@@ -141,7 +141,7 @@ export class LogsReportsComponent implements OnInit {
     this.notesBcba =
       this.notesBcba?.map((item) => {
         const patient = this.patients.find(
-          (patient) => patient.patient_id === item.patient_code
+          (patient) => patient.patient_control === item.patient_code
         );
         item.insurance_id = patient?.insurer_id;
         return item;
