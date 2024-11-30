@@ -341,13 +341,13 @@
                           <p>{{ malad.baseline_date | date }}</p>
                         </div>
                       </div>
-                      <h2 class="text-center">Grafico</h2>
-                      <!-- <app-chart-reduction
+                      <!-- <h2 class="text-center">Grafico</h2> -->
+                      <app-chart-reduction
                         [maladaptive_behavior]="malad.maladaptive_behavior"
                         [baseline_date]="malad.baseline_date"
                         [baseline_level]="malad.baseline_level"
                         [initial_interesting]="malad.initial_interesting"
-                      ></app-chart-reduction> -->
+                      ></app-chart-reduction>
                     </ng-container>
                   </div>
                 </div>
@@ -812,8 +812,8 @@
                           </div>
                         </div>
                       </ng-container>
-                      <h2 class="text-center">Grafico</h2>
-                      <!-- <app-chart-reduction [maladaptive_behavior]="item.maladaptive"  [baseline_date]="item.baseline_date" [baseline_level]="item.baseline_level" [initial_interesting]="item.initial_interesting"></app-chart-reduction> -->
+                      <!-- <h2 class="text-center">Grafico</h2> -->
+                      <app-chart-reduction [maladaptive_behavior]="item.maladaptive"  [baseline_date]="item.baseline_date" [baseline_level]="item.baseline_level" [initial_interesting]="item.initial_interesting"></app-chart-reduction>
                     </ng-container>
                   </div>
                 </div>
@@ -939,10 +939,10 @@
                         <hr />
                       </ng-container>
                       <!-- <h2 class="text-center">Grafico</h2> -->
-                      <!-- <app-chart-replacement
-                        [goal]="itemglt.goal"
-                        [baseline_d]="itemglt.created_at"
-                      ></app-chart-replacement> -->
+                      <app-chart-replacement
+                        [goal]="itemsg.goal"
+                        [baseline_d]="itemsg.created_at"
+                      ></app-chart-replacement>
                     </ng-container>
                   </div>
                 </div>
