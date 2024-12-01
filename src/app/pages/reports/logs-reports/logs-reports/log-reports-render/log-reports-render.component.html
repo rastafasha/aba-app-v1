@@ -29,7 +29,7 @@
 
 <!-- patient_name -->
 <td>
-  <a [routerLink]="[routes.patients.profileByPatientId, note.patient_id]">
+  <a [routerLink]="[routes.patients.profile, note.patient_id]">
     <span>
       {{ (patients | arrayFind : "id" : note.client_id)?.full_name }}
     </span>
@@ -38,7 +38,7 @@
 <!-- patient_id -->
 <td>
   <span>
-      {{ (patients | arrayFind : "id" : note.patient_identifier) }}
+      {{ (patients | arrayFind : "id" : note.client_id )?.patient_identifier }}
     </span>
 </td>
 <!-- session Date -->
@@ -135,7 +135,7 @@
 <!-- Insurance Identifier -->
 <td>
     <span>
-      {{ (patients | arrayFind : "id" : note.insurance_identifier) }}
+      {{ (patients | arrayFind : "id" : note.insurance_id)?.insurance_identifier }}
     </span>
 </td>
 
