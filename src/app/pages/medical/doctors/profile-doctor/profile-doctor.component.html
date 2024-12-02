@@ -161,7 +161,7 @@
                       <tbody>
                         <tr *ngFor="let data of patients">
                           <td>{{ data.first_name }} {{ data.last_name }}</td>
-                          <td>{{ data.patient_id }}</td>
+                          <td>{{ data.patient_identifier }}</td>
                           <td>
                             <button
                               [ngClass]="{
@@ -191,7 +191,7 @@
                                   class="dropdown-item"
                                   [routerLink]="[
                                     routes.clientReport.employeeByClient,
-                                    data.patient_id
+                                    data.patient_identifier
                                   ]"
                                   ><i
                                     class="fa-solid fa-pen-to-square m-r-5"
@@ -205,7 +205,7 @@
                                   "
                                   [routerLink]="[
                                     routes.bip.attention,
-                                    data.patient_id
+                                    data.patient_identifier
                                   ]"
                                   ><i
                                     class="fa-solid fa-pen-to-square m-r-5"
@@ -217,7 +217,7 @@
                                   *ngIf="isPermission('view_bip')"
                                   [routerLink]="[
                                     routes.bip.profile,
-                                    data.patient_id
+                                    data.patient_identifier
                                   ]"
                                   ><i
                                     class="fa-solid fa-pen-to-square m-r-5"
@@ -231,7 +231,7 @@
                                   "
                                   [routerLink]="[
                                     routes.noteRbt.noteRbt,
-                                    data.patient_id
+                                    data.patient_identifier
                                   ]"
                                   ><i
                                     class="fa-solid fa-pen-to-square m-r-5"
@@ -245,7 +245,7 @@
                                   "
                                   [routerLink]="[
                                     routes.noteRbt.list,
-                                    data.patient_id
+                                    data.patient_identifier
                                   ]"
                                   ><i
                                     class="fa-solid fa-pen-to-square m-r-5"
@@ -259,7 +259,7 @@
                                   "
                                   [routerLink]="[
                                     routes.noteBcba.noteBcba,
-                                    data.patient_id
+                                    data.patient_identifier
                                   ]"
                                   ><i
                                     class="fa-solid fa-pen-to-square m-r-5"
@@ -273,7 +273,7 @@
                                   "
                                   [routerLink]="[
                                     routes.noteBcba.list,
-                                    data.patient_id
+                                    data.patient_identifier
                                   ]"
                                   ><i
                                     class="fa-solid fa-pen-to-square m-r-5"
@@ -307,8 +307,8 @@
                           >About me</a
                         >
                       </li>
-
-                      <li
+                      
+                      <!-- <li
                         *ngIf="
                           role === 'SUPERADMIN' ||
                           role === 'LM' ||
@@ -345,7 +345,7 @@
                               alt="" /></span
                           >BCBA Notes
                         </a>
-                      </li>
+                      </li> -->
                       <!-- <li>
                                                 <a href="#" onclick="return false;" [ngClass]="{'active': option_selected === 4}" (click)="optionSelected(4)"><span class="set-about-icon me-2"><img src="assets/img/icons/menu-icon-16.svg" alt=""></span>Settings</a>
                                             </li> -->
