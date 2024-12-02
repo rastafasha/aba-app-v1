@@ -38,8 +38,7 @@ export class EmployeeReportComponent implements OnInit {
   date_start: any;
   date_end: any;
 
-  patient_id: string;
-  patientID: string;
+  patient_identifier: string;
   billing_selected: any =[];
   sponsor_id: number;
   noterbt_id: number;
@@ -73,7 +72,8 @@ export class EmployeeReportComponent implements OnInit {
   n_units: number;
   pa_number: number;
   insurances: LocationInsurance[] = [];
-  insurance_id: number;
+  insurer_id: number;
+  insurer_identifier: number;
   insuranceiddd: string;
   insurer_name: string;
   modifiers = [];
@@ -167,8 +167,7 @@ export class EmployeeReportComponent implements OnInit {
   ngOnInit(): void {
     //
     this.ativatedRoute.params.subscribe((resp) => {
-      this.patient_id = resp['patient_id'];
-      this.patientID = resp['patient_id'];
+      this.patient_identifier = resp['patient_id'];
     });
 
     // this.getConfig();
@@ -212,7 +211,7 @@ export class EmployeeReportComponent implements OnInit {
     this.clientReportService
       .getAllClientReportEmployeeByPatient(
         this.user.id.toString(),
-        this.patientID,
+        this.patient_identifier,
         page,
         this.date_start,
         this.date_end,
@@ -246,8 +245,9 @@ export class EmployeeReportComponent implements OnInit {
         }
         // traemos la info necesaria del paciente
         this.patientName = resp.patient.full_name;
-        this.patientID = resp.patient.patient_id;
-        this.insurance_id = resp.patient.insurer_id;
+        this.patient_identifier = resp.patient.patient_identifier;
+        this.insurer_identifier = resp.patient.insurer_identifier;
+        this.insurer_id = resp.patient.insurer_id;
         this.billed = resp.noteRbts;
         this.pay = resp.noteRbts;
         this.billedbcba = resp.noteBcbas;
@@ -301,7 +301,6 @@ export class EmployeeReportComponent implements OnInit {
         this.totalDataClientReport = resp.noteRbts.length;
         this.clientReport_generals = resp.noteRbts;
 
-        this.patient_id = resp.patient_id;
 
         for (let i = 0; i < this.pa_services.length; i++) {
           if (
@@ -327,12 +326,12 @@ export class EmployeeReportComponent implements OnInit {
 
   getInsurer() {
     //sacamos los detalles insurance seleccionado
-    this.insuranceService.get(this.insurance_id).subscribe(
+    this.insuranceService.get(this.insurer_id).subscribe(
       (resp: any) => {
         console.log('insurer', resp);
-        this.insuranceiddd = resp.id;
+        this.insuranceiddd = resp.insurance.id;
 
-        this.insurer_name = resp.insurer_name;
+        this.insurer_name = resp.insurance.name;
         this.modifiers = resp.notes;
         this.services = resp.services;
 

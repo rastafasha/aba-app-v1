@@ -46,15 +46,15 @@
                     >
                     <input
                       class="form-control"
-                      name="patientID"
+                      name="patient_identifier"
                       disabled
-                      [(ngModel)]="patientID"
+                      [(ngModel)]="patient_identifier"
                       type="text"
                     />
                   </div>
                 </div>
 
-                <div class="col-12 col-md-6 col-xl-4">
+                <!-- <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label>Insurer <span class="login-danger">*</span></label>
                     <input
@@ -65,9 +65,9 @@
                       type="text"
                     />
                   </div>
-                </div>
+                </div> -->
 
-                <div class="col-12 col-md-6 col-xl-4">
+                <!-- <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
                       >Insurer rate <span class="login-danger">*</span></label
@@ -80,8 +80,8 @@
                       type="text"
                     />
                   </div>
-                </div>
-                <div class="col-12 col-md-6 col-xl-4">
+                </div> -->
+                <!-- <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label>CPT <span class="login-danger">*</span></label>
                     <input
@@ -92,7 +92,7 @@
                       type="text"
                     />
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
             <!-- paciente -->
@@ -143,7 +143,7 @@
                       <button
                         type="button"
                         class="btn btn-primary submit-list-form me-2"
-                        (click)="searchData(patientID)"
+                        (click)="searchData(patient_identifier)"
                       >
                         Search
                       </button>
