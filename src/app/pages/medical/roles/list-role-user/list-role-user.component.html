@@ -101,14 +101,16 @@
                         *ngIf="!data.permision_pluck.length"
                         class="persmisoslista"
                       >
-                        <li>TODOS LOS PERMISOS</li>
+                        <li>No Permissions</li>
                       </ul>
                       <ul
                         *ngIf="data.permision_pluck.length"
                         class="persmisoslista"
                       >
-                        <li *ngFor="let permiso of data.permision_pluck">
-                          {{ permiso }}
+                        <!-- <li *ngFor="let permiso of data.permision_pluck"> -->
+                        <li >
+                          <!-- {{ permiso }} -->
+                          Have Permission
                         </li>
                       </ul>
                     </td>

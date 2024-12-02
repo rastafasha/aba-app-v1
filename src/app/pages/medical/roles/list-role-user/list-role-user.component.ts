@@ -58,7 +58,7 @@ export class ListRoleUserComponent implements OnInit {
     this.serialNumberArray = [];
 
     this.rolesService.listRoles().subscribe((resp) => {
-      // console.log(resp);
+      console.log(resp);
 
       this.totalData = resp.roles.length;
       this.role_generals = resp.roles;

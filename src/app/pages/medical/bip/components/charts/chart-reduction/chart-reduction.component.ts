@@ -193,7 +193,7 @@ export class ChartReductionComponent {
 
   getGraphicMaladaptive() {
     this.graphicReductionService
-      .listMaladaptivesGraphics(this.maladaptive_behavior, this.patient_ident)
+      .listMaladaptivesGraphics(this.maladaptive_behavior, this.patient_identifier)
       .subscribe((resp) => {
         // console.log(resp);
 
