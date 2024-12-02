@@ -64,7 +64,9 @@ export class EditRoleUserComponent implements OnInit {
 
   save() {
     this.valid_form = false;
-    if (!this.name || this.permissions.length === 0) {
+    // || this.permissions.length === 0
+    if (!this.name ) {
+
       this.valid_form = true;
       return;
     }
