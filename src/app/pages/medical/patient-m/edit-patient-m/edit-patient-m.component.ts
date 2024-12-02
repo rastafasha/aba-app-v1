@@ -238,12 +238,27 @@ export class EditPatientMComponent implements OnInit {
   }
 
   onDeletePaService(event) {
-    const pa_services = this.patient.pa_services ?? [];
-    const pa_services_removed = pa_services.filter(
-      (item) => item.id !== event.id
-    );
-    this.form.patchValue({ pa_services: pa_services_removed });
-    this.patient.pa_services = pa_services_removed;
+    // Add confirmation dialog
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const pa_services = this.patient.pa_services ?? [];
+        const pa_services_removed = pa_services.filter(
+          (item) => item.id !== event.id
+        );
+        this.form.patchValue({ pa_services: pa_services_removed });
+        this.patient.pa_services = pa_services_removed;
+        this.onSave();
+        Swal.fire('Deleted!', 'Your PA service has been deleted.', 'success');
+      }
+    });
   }
 
   

@@ -14,9 +14,10 @@ import { PipesModule } from './shared/pipes/pipes.module';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { AuthInterceptor } from './core/auth/auth.interceptor';
 import { MockInterceptor } from './mocks/mock.interceptor';
+import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, BreadcrumbsComponent],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
