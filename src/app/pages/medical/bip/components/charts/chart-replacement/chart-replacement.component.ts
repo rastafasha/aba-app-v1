@@ -199,11 +199,14 @@ export class ChartReplacementComponent {
         const data = resp;
         const replacementsParsed = [];
         data?.replacementsCol.forEach((goal) => {
-          const replacementParsed = parsearGoalsCol(goal, this.goal);
+          const replacementParsed = parsearGoalsCol(
+            goal, 
+            this.goal
+          );
           replacementsParsed.push(replacementParsed);
         });
 
-        // console.log(maladaptivesParsed);
+        console.log(replacementsParsed);
         data.replacementsCol = replacementsParsed;
         // console.log(data)
 
@@ -217,7 +220,7 @@ export class ChartReplacementComponent {
             replacementWithoutSlash.slice(1, -1)
           );
           // return JSON.parse(goalParsed);
-          const index = replacementParsed.findIndex(
+          const index = replacementParsed.find(
             (item) => item.goal === goalSelected
           );
           return replacementParsed[index];
