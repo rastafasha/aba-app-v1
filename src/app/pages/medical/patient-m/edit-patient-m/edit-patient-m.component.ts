@@ -250,13 +250,14 @@ export class EditPatientMComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         const pa_services = this.patient.pa_services ?? [];
-        const pa_services_removed = pa_services.filter(
-          (item) => item.id !== event.id
-        );
-        this.form.patchValue({ pa_services: pa_services_removed });
-        this.patient.pa_services = pa_services_removed;
+        const pa_service_to_delete = pa_services.find(item => item.id === event.id);
+        if (pa_service_to_delete) {
+          pa_service_to_delete.deleted = true; // Mark as deleted
+        }
+        this.form.patchValue({ pa_services });
+        this.patient.pa_services = pa_services;
         this.onSave();
-        Swal.fire('Deleted!', 'Your PA service has been deleted.', 'success');
+        Swal.fire('Deleted!', 'Your PA service has been marked for deletion.', 'success');
       }
     });
   }

@@ -74,7 +74,7 @@ export class PaServicesV2Service extends RepositoryV2Service<PaServiceV2> {
     return super.update(data, id).pipe(this.restoreEndpoint());
   }
 
-  override delete(id: number): Observable<void>;
+  // override delete(id: number): Observable<void>;
   override delete(id: number, patient_id = 0): Observable<void> {
     this.changeEndpoint(patient_id);
     return super.delete(id).pipe(this.restoreEndpoint());
