@@ -12,6 +12,7 @@ import { SecureResourceUrlPipe } from './secure-resource-url.pipe';
 import { TransformToDatePipe } from './transform-to-date.pipe';
 import { ArrayFindPipe } from './array-find.pipe';
 import { RemoveStringPipe } from './remove-string.pipe';
+import { RbtFilterPipe } from './rbt-filter.pipe';
 
 const components = [
   ArrayFilterPipe,
@@ -26,9 +27,10 @@ const components = [
   CeilPipe,
   FloorPipe,
   RemoveStringPipe,
+  RbtFilterPipe
 ];
 @NgModule({
-  declarations: [...components, RemoveStringPipe],
+  declarations: [...components, RemoveStringPipe, RbtFilterPipe],
   exports: [...components],
   imports: [CommonModule],
 })
