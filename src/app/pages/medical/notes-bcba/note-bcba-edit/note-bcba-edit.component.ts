@@ -45,6 +45,7 @@ export class NoteBcbaEditComponent implements OnInit {
   
   selectedValueBCBA!: string;
   selectedValueAbaSupervisor!: string;
+  selectedValueAbaSupervisor_id: number;
   selectedValueBcba_id!: number;
 
   selectedValueMaladaptive!: string;
@@ -478,8 +479,8 @@ export class NoteBcbaEditComponent implements OnInit {
     });
   }
   selectFirmaSpecialistRbt(event) {
-    event = this.selectedValueRBT;
-    this.speciaFirmaDataRbt(this.selectedValueRBT);
+    event = this.selectedValueProviderRBT_id;
+    this.speciaFirmaDataRbt(this.selectedValueProviderRBT_id);
     // console.log(this.selectedValueRBT);
   }
 
@@ -497,8 +498,8 @@ export class NoteBcbaEditComponent implements OnInit {
   }
 
   selectFirmaSpecialistBcba(event) {
-    event = this.selectedValueBCBA;
-    this.speciaFirmaDataBcba(this.selectedValueBCBA);
+    event = this.selectedValueBcba_id;
+    this.speciaFirmaDataBcba(this.selectedValueBcba_id);
     // console.log(this.selectedValueBCBA);
   }
 
