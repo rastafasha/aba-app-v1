@@ -40,6 +40,9 @@ export class NoteBcbaComponent implements OnInit {
   selectedValueCode!: string;
   option_selected = 0;
 
+  selectedValueProviderRBT_id:number
+  selectedValueBcba_id:number
+
   client_id: string | number;
   patient_id: number;
   patient_identifier: string ;
@@ -334,10 +337,11 @@ export class NoteBcbaComponent implements OnInit {
       // this.services = resp.services;
     });
   }
+  
   selectFirmaSpecialistRbt(event) {
-    event = this.selectedValueRBT;
-    this.speciaFirmaData(this.selectedValueRBT);
-    console.log(this.selectedValueRBT);
+    event = this.selectedValueProviderRBT_id;
+    this.speciaFirmaData(this.selectedValueProviderRBT_id);
+    console.log(this.selectedValueProviderRBT_id);
   }
 
   speciaFirmaDataBcba(selectedValueBCBA) {
@@ -355,8 +359,8 @@ export class NoteBcbaComponent implements OnInit {
 
   selectFirmaSpecialistBcba(event) {
     // event = this.selectedValueBCBA;
-    this.speciaFirmaDataBcba(this.selectedValueBCBA);
-    console.log('selectFirmaSpecialistBcba', this.selectedValueBCBA, event);
+    this.speciaFirmaDataBcba(this.selectedValueBcba_id);
+    console.log('selectFirmaSpecialistBcba', this.selectedValueBcba_id, event);
   }
 
   hourTimeInSelected(value: string) {

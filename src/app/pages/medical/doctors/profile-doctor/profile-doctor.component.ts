@@ -160,6 +160,10 @@ export class ProfileDoctorComponent {
       });
   }
 
+  print() {
+    window.print();
+    }
+
   convertToPdf(): void {
     const data = this.contentToConvert.nativeElement;
 
