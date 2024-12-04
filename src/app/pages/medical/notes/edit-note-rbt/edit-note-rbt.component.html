@@ -154,7 +154,7 @@
                       placeholder="Select Service"
                     >
                       <mat-option
-                        *ngFor="let service of paServices"
+                        *ngFor="let service of paServices | rbtFilter"
                         [value]="service"
                       >
                         {{ service.pa_service }} ({{ service.cpt }})
