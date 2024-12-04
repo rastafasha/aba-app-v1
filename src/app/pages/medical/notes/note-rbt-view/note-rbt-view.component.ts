@@ -308,7 +308,9 @@ export class NoteRbtViewComponent implements OnInit {
 
         this.first_name = this.patient_selected.first_name;
         this.last_name = this.patient_selected.last_name;
-        this.patient_identifier = resp.patient.patient_identifier;
+        this.patient_identifier = this.patient_selected.patient_identifier;
+        this.patient_id = this.patient_selected.id;
+        this.pos = this.patient_selected.pos_covered;
         // console.log(this.patient_id);
         this.diagnosis_code = this.patient_selected.diagnosis_code;
       });

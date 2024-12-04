@@ -54,14 +54,15 @@ export class EditNoteRbtComponent implements OnInit {
 
   client_id: any;
   patient_identifier: string;
-  patientId: any;
+  patient_id: number;
   doctor_id: any;
   patient_selected: any;
   client_selected: any;
   note_selected: any;
   user: AppUser;
   bip_id: any;
-  insurance_identifier: any;
+  insurance_identifier: string;
+  insurance_id: number;
 
   first_name = '';
   last_name = '';
@@ -258,9 +259,9 @@ export class EditNoteRbtComponent implements OnInit {
       this.target = resp.target;
       this.note_selected = resp.noteRbt;
       this.note_selectedId = resp.noteRbt.id;
-      this.patient_identifier = this.note_selected.patient_identifier;
       this.bip_id = this.note_selected.bip_id;
       this.insurance_identifier = this.note_selected.insurance_identifier;
+      this.patient_identifier = this.note_selected.patient_identifier;
 
       this.provider_credential = this.note_selected.provider_credential;
       this.as_evidenced_by = this.note_selected.as_evidenced_by;
@@ -368,15 +369,15 @@ export class EditNoteRbtComponent implements OnInit {
     this.bipService
       .getBipProfilePatient_id(this.patient_identifier)
       .subscribe((resp) => {
-        console.log(resp);
+        console.log('client',resp);
         this.client_selected = resp.patient;
 
         this.first_name = this.client_selected.first_name;
         this.last_name = this.client_selected.last_name;
         this.patient_identifier = this.client_selected.patient_identifier;
-        this.patientId = this.client_selected.id;
-        this.insurer_id = this.client_selected.insurer_id;
-        this.insurance_identifier = this.client_selected.insurance_identifier;
+      this.patient_id = this.client_selected.id;
+      this.insurance_id = this.client_selected.insurer_id;
+      this.insurance_identifier = this.client_selected.insurance_identifier;
         this.patientLocation_id = this.client_selected.location_id;
 
         
@@ -724,7 +725,7 @@ export class EditNoteRbtComponent implements OnInit {
     }
 
     const formData = new FormData();
-    formData.append('patient_id', this.patientId);
+    formData.append('patient_id', this.patient_id+'');
     formData.append('doctor_id', this.selectedValueProviderRBT_id+'');
     formData.append('bip_id', this.bip_id);
     formData.append('first_name', this.first_name);
@@ -740,8 +741,11 @@ export class EditNoteRbtComponent implements OnInit {
 
     formData.append('location_id', this.patientLocation_id);
 
-    formData.append('insurance_id', this.insurer_id+'');
 
+    formData.append('insurance_id', this.insurance_id+''); // id del seguro preferiblemente que solo agarre la data al crear
+    formData.append('insurance_identifier', this.insurance_identifier); // id del seguro preferiblemente que solo agarre la data al crear
+
+    
     if (this.meet_with_client_at) {
       formData.append('meet_with_client_at', this.meet_with_client_at);
     }

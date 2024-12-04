@@ -147,6 +147,7 @@ export class NoteBcbaComponent implements OnInit {
   doctor: any;
   full_name: any;
   patientLocation_id: number;
+  insurance_id: number;
   insurance_identifier: string;
 
   pa_services: PaService[] = [];
@@ -208,14 +209,19 @@ export class NoteBcbaComponent implements OnInit {
   getProfileBip() {
     this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
       this.client_selected = resp.patient;
+      console.log('cliente',resp);
 
       this.first_name = this.client_selected.first_name;
       this.last_name = this.client_selected.last_name;
-      this.patient_identifier = this.client_selected.patient_identifier;
-      this.client_id = this.client_selected.id;
-      this.insurance_identifier = this.client_selected.insurance_identifier;
       this.patientLocation_id = this.client_selected.location_id;
       this.pos = this.client_selected.pos_covered;
+
+      this.patient_id = this.client_selected.id;
+      this.patient_identifier = this.client_selected.patient_identifier;
+      this.patientLocation_id = this.client_selected.location_id;
+      this.insurance_id = resp.patient.insurer_id;
+      this.insurance_identifier = resp.patient.insurance_identifier;
+      
       // this.pos = JSON.parse(resp.patient.pos_covered) ;
 
       // let jsonObjPOS = JSON.parse(this.pos) || '';
@@ -265,16 +271,7 @@ export class NoteBcbaComponent implements OnInit {
           resp.monitoringEvaluatingPatientIds.data?.[0]?.rbt_training_goals ??
           [];
 
-        this.pa_assessments = resp.pa_assessments;
-        /*
-        const jsonObj = JSON.parse(this.pa_assessments) || '';
-        this.pa_assessmentsgroup = jsonObj;
-        this.n_un = this.pa_assessmentsgroup?.[0]?.n_units;
-        */
-        // this.unitsAsignated = this.pa_assessmentsgroup.n_units;
-        console.log(this.pa_assessmentsgroup);
-        // this.cpt = this.pa_assessmentsgroup[0].cpt;
-        console.log(this.cpt);
+        
       });
   }
 
@@ -417,7 +414,8 @@ export class NoteBcbaComponent implements OnInit {
       (this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED = reader2.result);
   }
 
-  save() {
+  // eslint-disable-next-line no-debugger
+  save() {debugger
     this.text_validation = '';
     if (
       !this.rbt_training_goals ||
@@ -441,7 +439,7 @@ export class NoteBcbaComponent implements OnInit {
     const formData = new FormData();
     formData.append('summary_note', this.summary_note);
 
-    formData.append('patient_id', this.client_id + '');
+    formData.append('patient_id', this.patient_id + '');
     formData.append('patient_identifier', this.patient_identifier);
     formData.append('doctor_id', this.doctor_id + '');
     formData.append('bip_id', this.bip_id + '');
@@ -460,7 +458,8 @@ export class NoteBcbaComponent implements OnInit {
 
     formData.append('provider_name', this.doctor_id + '');
     formData.append('supervisor_name', this.selectedValueBCBA);
-    // formData.append('note_description', this.note_description);
+    
+    formData.append('insurance_id', this.insurance_id+''); // id del seguro preferiblemente que solo agarre la data al crear
     formData.append('insurance_identifier', this.insurance_identifier); // id del seguro preferiblemente que solo agarre la data al crear
 
     formData.append(
