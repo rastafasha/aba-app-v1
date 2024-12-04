@@ -549,8 +549,9 @@ export class EditNoteRbtComponent implements OnInit {
     });
   }
   selectFirmaSpecialistRbt(event) {
-    event = this.selectedValueRBT;
-    this.speciaFirmaDataRbt(this.selectedValueRBT);
+    event = this.selectedValueProviderRBT_id;
+    this.speciaFirmaDataRbt(this.selectedValueProviderRBT_id);
+    console.log(this.selectedValueProviderRBT_id);
   }
 
   speciaFirmaDataBcba(selectedValueBCBA) {
@@ -565,8 +566,9 @@ export class EditNoteRbtComponent implements OnInit {
   }
 
   selectFirmaSpecialistBcba(event) {
-    event = this.selectedValueBCBA;
-    this.speciaFirmaDataBcba(this.selectedValueBCBA);
+    event = this.selectedValueBcba_id;
+    this.speciaFirmaDataBcba(this.selectedValueBcba_id);
+    console.log(this.selectedValueBcba_id);
   }
 
   addMaladaptive(behavior: any, i) {
