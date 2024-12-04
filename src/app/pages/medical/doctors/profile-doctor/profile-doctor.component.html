@@ -23,9 +23,7 @@
                   <h4>Employeer Profile</h4>
                 </div>
                 <div class="doctor-profile-head">
-                  <!-- <div class="profile-bg-img">
-                                        <img  src="assets/img/profile-bg.jpg"  alt="Profile">
-                                    </div> -->
+                 
                   <div class="row">
                     <div class="col-lg-4 col-md-4">
                       <div class="profile-user-box">
@@ -120,7 +118,7 @@
                         >
                         <button
                           class="btn btn-info follow-btns"
-                          (click)="convertToPdf()"
+                          (click)="print()"
                         >
                           Save PDF
                         </button>
@@ -151,9 +149,7 @@
                           <th mat-sort-header="doctor">Patient Id</th>
                           <th mat-sort-header="status">Status</th>
                           <th mat-sort-header="viewall">
-                            <a [routerLink]="[routes.patients.list]"
-                              >View All</a
-                            >
+                            Options
                           </th>
                           <th></th>
                         </tr>

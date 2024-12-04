@@ -45,9 +45,9 @@ export class NoteRbtComponent implements OnInit {
   selectedValueRenderingProvider!: string;
   selectedValueProviderRBT_id!: number;
 
-  selectedValueBCBA!: string;
+  selectedValueBcba_id!: string;
   selectedValueAbaSupervisor!: string;
-  selectedValueBcba_id!: number;
+  selectedValueBcba_id_id!: number;
 
   client_id: number;
   patient_identifier: string;
@@ -251,8 +251,7 @@ export class NoteRbtComponent implements OnInit {
       // console.log(this.insurance_identifier);
       this.patientLocation_id = this.client_selected.location_id;
       this.selectedValueProviderRBT_id = this.client_selected.rbt_id;
-      this.selectedValueRBT = this.client_selected.rbt_id;
-      this.selectedValueBCBA = this.client_selected.bcba_id;
+      this.selectedValueBcba_id = this.client_selected.bcba_id;
       this.pos = this.client_selected.pos_covered;
       this.diagnosis_code = this.client_selected.diagnosis_code;
 
@@ -312,7 +311,7 @@ export class NoteRbtComponent implements OnInit {
     });
   }
   selectFirmaSpecialistRbt() {
-    this.speciaFirmaDataRbt(this.selectedValueRBT);
+    this.speciaFirmaDataRbt(this.selectedValueProviderRBT_id);
   }
 
   speciaFirmaDataBcba(selectedValueBCBA: string) {
@@ -325,7 +324,8 @@ export class NoteRbtComponent implements OnInit {
   }
 
   selectFirmaSpecialistBcba(event) {
-    this.speciaFirmaDataBcba(this.selectedValueBCBA);
+    this.speciaFirmaDataBcba(this.selectedValueBcba_id);
+    console.log(this.selectedValueBcba_id);
   }
 
   calculateUnitsFromTime(startTime: string, endTime: string): number {
@@ -601,16 +601,16 @@ export class NoteRbtComponent implements OnInit {
 
     formData.append('session_date', this.session_date);
 
-    formData.append('provider_name_g', this.doctor_id+'');
-    formData.append('provider_name', this.doctor_id+'');
-    formData.append('supervisor_name', this.selectedValueBCBA);
+    formData.append('provider_name_g',this.selectedValueProviderRBT_id+'');
+    formData.append('provider_name',this.selectedValueProviderRBT_id+'');
+    formData.append('supervisor_name', this.selectedValueBcba_id+'');
     formData.append('cpt_code', this.selectedValueCode);
 
     formData.append('pa_service_id', this.selectedPaService.id.toString());
     formData.append('cpt_code', this.selectedPaService.cpt);
 
-    formData.append('provider_id', this.doctor_id+'');
-    formData.append('supervisor_id', this.selectedValueBCBA);
+    formData.append('provider_id', this.selectedValueProviderRBT_id+'');
+    formData.append('supervisor_id', this.selectedValueBcba_id+'');
     
 
     if (this.selectedValueTimeIn) {
