@@ -37,11 +37,6 @@
                       type="text"
                     />
 
-                    <!-- <mat-select [(ngModel)]="pos" name="pos" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select POS Asigned">
-                                                <mat-option *ngFor="let data of pos, let i=index"  [value]="data.name">
-                                                {{data.name}}
-                                                </mat-option>
-                                            </mat-select> -->
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
@@ -136,7 +131,7 @@
                       placeholder="Select Service"
                     >
                       <mat-option
-                        *ngFor="let service of pa_services"
+                        *ngFor="let service of pa_services "
                         [value]="service"
                       >
                         ({{ service.cpt }})
@@ -294,8 +289,9 @@
       </div>
       <!-- fin paciente -->
 
-      <!-- Maladaptives -->
-      <div class="col-xs-12 col-sm-6">
+      <!-- Family -->
+      <!-- *ngIf="pa_services.cpt === '91756'  -->
+      <div class="col-xs-12 col-sm-6" >
         <div class="card">
           <div class="card-body">
             <div class="col-12">
@@ -336,9 +332,10 @@
           </div>
         </div>
       </div>
-      <!-- fin Maladaptives -->
+      <!-- fin Family -->
       <!-- replacements -->
-      <div class="col-xs-12 col-sm-6">
+      <!-- *ngIf="pa_services.cpt === '91755'" -->
+      <div class="col-xs-12 col-sm-6" >
         <div class="card">
           <div class="card-body">
             <div class="col-12">
