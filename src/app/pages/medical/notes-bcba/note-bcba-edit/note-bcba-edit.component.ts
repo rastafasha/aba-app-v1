@@ -55,7 +55,6 @@ export class NoteBcbaEditComponent implements OnInit {
   doctor_id: number;
   patient_identifier: string;
   patient_id: number;
-  patientid: number;
   patientLocation_id: number;
   client_selected: any;
   note_selected: any = [];
@@ -176,6 +175,8 @@ export class NoteBcbaEditComponent implements OnInit {
   
   provider: any = [];
   
+  insurance_identifier: string;
+  insurance_id: number;
   
   
   constructor(
@@ -310,10 +311,11 @@ export class NoteBcbaEditComponent implements OnInit {
 
         this.first_name = this.client_selected.first_name;
         this.last_name = this.client_selected.last_name;
-        this.patient_id = this.client_selected.patient_id;
-        this.patientid = this.client_selected.id;
+        this.patient_id = this.client_selected.id;
+        this.patient_identifier = this.client_selected.patient_identifier;
         this.patientLocation_id = this.client_selected.location_id;
-        this.insurer_id = this.client_selected.insurer_id;
+        this.insurance_id = resp.patient.insurer_id;
+        this.insurance_identifier = resp.patient.insurance_identifier;
         // this.pos = JSON.parse(this.client_selected.pos_covered) ;
         this.pos = this.client_selected.pos_covered;
         this.insuranceData();
@@ -513,7 +515,7 @@ export class NoteBcbaEditComponent implements OnInit {
     // }
 
     const formData = new FormData();
-    formData.append('patient_id', this.patientid+'');
+    formData.append('patient_id', this.patient_id+'');
     formData.append('doctor_id', this.selectedValueProviderRBT_id+'');
     formData.append('bip_id', this.bip_id+'');
     formData.append('diagnosis_code', this.diagnosis_code);
@@ -522,6 +524,8 @@ export class NoteBcbaEditComponent implements OnInit {
     formData.append('session_date', this.session_date);
     formData.append('patient_identifier', this.patient_identifier);
     formData.append('location_id', this.patientLocation_id + '');
+    formData.append('insurance_id', this.insurance_id+''); // id del seguro preferiblemente que solo agarre la data al crear
+    formData.append('insurance_identifier', this.insurance_identifier); // id del seguro preferiblemente que solo agarre la data al crear
 
     
     if (this.summary_note) {

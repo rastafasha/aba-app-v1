@@ -51,7 +51,7 @@ export class NoteRbtComponent implements OnInit {
 
   client_id: number;
   patient_identifier: string;
-  patientId: number;
+  patient_id: number;
   doctor_id: number;
   insurer_id: number;
   patient_selected: any;
@@ -150,6 +150,7 @@ export class NoteRbtComponent implements OnInit {
   location_id: number;
   patientLocation_id: any;
   insuranceId: string;
+  insurance_id: number;
   insurance_identifier: string;
 
   intervention_added = [];
@@ -239,21 +240,21 @@ export class NoteRbtComponent implements OnInit {
 
   getProfileBip() {
     this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
-      this.client_selected = resp;
-
-      this.first_name = this.client_selected.patient.first_name;
-      this.last_name = this.client_selected.patient.last_name;
-      this.patient_identifier = resp.patient.patient_identifier;
-      this.patientId = resp.patient.id;
-      this.insurer_id = resp.patient.insurer_identifier;
-      this.insurance_identifier = resp.patient.insurance_identifier;
+      this.client_selected = resp.patient;
+      console.log(resp);
+      this.first_name = this.client_selected.first_name;
+      this.last_name = this.client_selected.last_name;
+      this.patient_identifier = this.client_selected.patient_identifier;
+      this.patient_id = this.client_selected.id;
+      this.insurance_id = this.client_selected.insurer_id;
+      this.insurance_identifier = this.client_selected.insurance_identifier;
       // console.log(this.insurance_identifier);
-      this.patientLocation_id = resp.patient.location_id;
-      this.selectedValueProviderRBT_id = resp.patient.rbt_id;
-      this.selectedValueRBT = resp.patient.rbt_id;
-      this.selectedValueBCBA = resp.patient.bcba_id;
-      this.pos = resp.patient.pos_covered;
-      this.diagnosis_code = this.client_selected.patient.diagnosis_code;
+      this.patientLocation_id = this.client_selected.location_id;
+      this.selectedValueProviderRBT_id = this.client_selected.rbt_id;
+      this.selectedValueRBT = this.client_selected.rbt_id;
+      this.selectedValueBCBA = this.client_selected.bcba_id;
+      this.pos = this.client_selected.pos_covered;
+      this.diagnosis_code = this.client_selected.diagnosis_code;
 
       console.log(resp.patient.pa_services);
       this.pa_services = resp.patient.pa_services;
@@ -543,8 +544,7 @@ export class NoteRbtComponent implements OnInit {
     );
   }
 
-  // eslint-disable-next-line no-debugger
-  save() {debugger
+  save() {
     this.text_validation = '';
     if (!this.selectedPaService) {
       this.text_validation = 'Please select a service';
@@ -588,7 +588,7 @@ export class NoteRbtComponent implements OnInit {
 
     const formData = new FormData();
     formData.append('patient_identifier', this.patient_identifier);
-    formData.append('patient_id', this.patientId+'');
+    formData.append('patient_id', this.patient_id+'');
     formData.append('doctor_id', this.doctor_id+'');
     formData.append('bip_id', this.bip_id);
     formData.append('first_name', this.first_name);
@@ -596,7 +596,7 @@ export class NoteRbtComponent implements OnInit {
     formData.append('diagnosis_code', this.diagnosis_code);
     formData.append('provider_credential', this.provider_credential);
     formData.append('location_id', this.patientLocation_id);
-    // formData.append('insurance_id', this.insurer_id+''); // id del seguro preferiblemente que solo agarre la data al crear
+    formData.append('insurance_id', this.insurance_id+''); // id del seguro preferiblemente que solo agarre la data al crear
     formData.append('insurance_identifier', this.insurance_identifier); // id del seguro preferiblemente que solo agarre la data al crear
 
     formData.append('session_date', this.session_date);
