@@ -62,6 +62,11 @@ export class ClaimsService {
       url_servicios + '/v2/claims/' + id.toString() + '/send-to-claim-md';
     return this.http.post<ClaimMDResponse>(URL, {}, options);
   }
+  delete(id: number) {
+    const URL =
+      url_servicios + '/v2/claims/' + id.toString();
+    return this.http.delete<ClaimMDResponse>(URL, {});
+  }
 
   create(data: Partial<Claim>) {
     const URL = url_servicios + '/v2/claims';
