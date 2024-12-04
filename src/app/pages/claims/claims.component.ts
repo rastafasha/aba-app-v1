@@ -68,6 +68,23 @@ export class ClaimsComponent implements OnInit {
     });
   }
 
+  deleteClaim(claim: Claim) {
+    this.claimsService.delete(claim.id).subscribe({
+      next: (response) => {
+        Swal.fire('Success', `Claim deleted successfully!`, 'success');
+        console.log('Claim deleted:', response);
+        this.loadClaims();
+      },
+      error: (error) => {
+        Swal.fire('Error', `Failed to deleted claim: ${error.message}`, 'error');
+        console.error('Error deleting claim:', error);
+        this.loadClaims();
+      }
+    });
+    
+  }
+
+
   goBack() {
     this.location.back();
   }

@@ -15,7 +15,7 @@ declare var $: any;
 })
 export class NoteBcbaByClientComponent implements OnInit {
   routes = AppRoutes;
-  patient_id: any;
+  patient_id: number;
   patient_identifier: string;
   patientId: any;
   doctor_id: any;

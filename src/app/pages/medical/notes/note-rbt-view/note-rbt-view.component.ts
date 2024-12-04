@@ -35,7 +35,8 @@ export class NoteRbtViewComponent implements OnInit {
   @ViewChild('contentToConvert') contentToConvert!: ElementRef;
   patientProfile: any[];
   option_selected = 1;
-  patient_id: any;
+  patient_identifier: string;
+  patient_id: number;
   // option_selected:number = 0;
 
   selectedValueProvider;
@@ -185,7 +186,7 @@ export class NoteRbtViewComponent implements OnInit {
       this.note_selected = resp.noteRbt as unknown as NoteRbtV2;
       console.log('noteRbt', this.note_selected);
       this.note_selectedId = resp.noteRbt.id;
-      this.patient_id = this.note_selected.patient_identifier;
+      this.patient_identifier = this.note_selected.patient_identifier;
       this.bip_id = this.note_selected.bip_id;
       this.statusNote = this.note_selected.status;
 
@@ -300,14 +301,14 @@ export class NoteRbtViewComponent implements OnInit {
 
   getProfileBip() {
     this.bipService
-      .getBipProfilePatient_id(this.patient_id)
+      .getBipProfilePatient_id(this.patient_identifier)
       .subscribe((resp) => {
         console.log(resp);
         this.patient_selected = resp.patient;
 
         this.first_name = this.patient_selected.first_name;
         this.last_name = this.patient_selected.last_name;
-        this.patient_id = resp.patient.patient_id;
+        this.patient_identifier = resp.patient.patient_identifier;
         // console.log(this.patient_id);
         this.diagnosis_code = this.patient_selected.diagnosis_code;
       });

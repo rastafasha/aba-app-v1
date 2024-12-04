@@ -46,7 +46,7 @@ export class LogsReportsComponent implements OnInit {
     { key: 'time_out', value: 'Time Out (M)' },
     { key: 'time_in2', value: 'Time in (A)' },
     { key: 'time_out2', value: 'Time Out (A)' },
-    { key: 'total_hours', value: 'Total Hours' },
+    { key: 'total_hours', value: 'Total Minutes' },
     { key: 'pos', value: 'POS' },
     { key: 'cpt_code', value: 'CPT' },
     { key: 'total_units', value: 'Total Units' },
@@ -235,11 +235,11 @@ export class LogsReportsComponent implements OnInit {
     update$.subscribe({
       next: () => {
         Swal.fire('Updated', `Saved successfully!`, 'success');
-        this.loadData();
+        this.ngOnInit();
       },
       error: () => {
         Swal.fire('Error', `Can't update!`, 'error');
-        this.loadData();
+        this.ngOnInit();
       },
     });
   }
