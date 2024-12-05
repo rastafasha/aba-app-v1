@@ -99,7 +99,7 @@
               ></i>
             </td>
             <td>{{ data.next_session_is_scheduled_for | date : "shortDate" }}</td>
-            <td>{{ data.total_minutes }}</td>
+            <td>{{ (data.total_minutes)/60 }}</td>
             <td>{{ data.total_units }}</td>
 
             <td>{{ data.created_at | date : "shortDate" }}</td>

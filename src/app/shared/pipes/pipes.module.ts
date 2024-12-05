@@ -13,6 +13,7 @@ import { TransformToDatePipe } from './transform-to-date.pipe';
 import { ArrayFindPipe } from './array-find.pipe';
 import { RemoveStringPipe } from './remove-string.pipe';
 import { RbtFilterPipe } from './rbt-filter.pipe';
+import { TransformToHourPipe } from './transform-to-hours.pipe';
 
 const components = [
   ArrayFilterPipe,
@@ -27,7 +28,8 @@ const components = [
   CeilPipe,
   FloorPipe,
   RemoveStringPipe,
-  RbtFilterPipe
+  RbtFilterPipe,
+  TransformToHourPipe
 ];
 @NgModule({
   declarations: [...components, RemoveStringPipe, RbtFilterPipe],
