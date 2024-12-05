@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
@@ -14,7 +14,7 @@ export class CrisisPlanComponent {
   valid_form_success = false;
   text_validation = '';
   text_success = '';
-
+  @Input() clientSelected: any;
   client_id: number;
   user: AppUser;
   doctor_id: number;
@@ -127,8 +127,8 @@ export class CrisisPlanComponent {
         this.crisisPlans = resp.crisiPlanPatientIds.data;
         this.crisisplanId = resp.crisiPlanPatientIds.data[0]?.id;
         //risk list
-        this.risk_factors = resp.crisiPlanPatientIds.data[0].risk_factors;
-        this.other = resp.crisiPlanPatientIds.data[0].risk_factors[0].other;
+        this.risk_factors = resp.crisiPlanPatientIds.data[0]?.risk_factors;
+        this.other = resp.crisiPlanPatientIds.data[0].risk_factors[0]?.other;
         this.do_not_apply =
           resp.crisiPlanPatientIds.data[0].risk_factors[0].do_not_apply;
         this.elopement =

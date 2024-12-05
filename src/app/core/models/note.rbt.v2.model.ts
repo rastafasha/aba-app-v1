@@ -57,6 +57,7 @@ export class NoteRbtV2 {
   location_id: number;
   md: string;
   md2: string;
+  md3: string;
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;
@@ -138,6 +139,7 @@ export class NoteRbtV2 {
       location_id: NumberOrNullOrUndefined(data.location_id),
       md: StringOrNullOrUndefined(data.md),
       md2: StringOrNullOrUndefined(data.md2),
+      md3: StringOrNullOrUndefined(data.md3),
 
       created_at: DateOrNullOrUndefined(data.created_at),
       updated_at: DateOrNullOrUndefined(data.updated_at),

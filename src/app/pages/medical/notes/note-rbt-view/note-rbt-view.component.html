@@ -4,6 +4,11 @@
     <div class="page-header d-print-none">
       <div class="row">
         <div class="col-sm-12">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a [routerLink]="routes.noteRbt.list">RBT Notes </a></li>
+            <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+            <li class="breadcrumb-item active">View Note </li>
+        </ul>
           <div class="doctor-submit text-start">
             <button class="btn btn-primary btn-sm" (click)="goBack()">
               Back
@@ -147,6 +152,12 @@
                           <div class="detail-personal">
                             <h2>Modifier 2 (optional)</h2>
                             <p>{{ note_selected.md2 ?? "&nbsp;" }}</p>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 col-lg-3">
+                          <div class="detail-personal">
+                            <h2>Modifier 3 (optional)</h2>
+                            <p>{{ note_selected.md3 ?? "&nbsp;" }}</p>
                           </div>
                         </div>
                         <div class="col-xl-3 col-sm-6 col-lg-3">

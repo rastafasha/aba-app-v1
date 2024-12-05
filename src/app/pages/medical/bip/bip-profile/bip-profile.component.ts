@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import html2canvas from 'html2canvas';
 import * as jspdf from 'jspdf';
@@ -146,6 +146,7 @@ export class BipProfileComponent implements OnInit {
       this.getPatient();
     });
     this.user = this.authService.user as AppUser;
+  //  console.log( this.clientSelected );
   }
 
   goBack() {

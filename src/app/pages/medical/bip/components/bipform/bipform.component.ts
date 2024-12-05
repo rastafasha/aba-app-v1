@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AppUser } from 'src/app/core/models/users.model';
 import { AppRoutes } from 'src/app/shared/routes/routes';
@@ -129,8 +129,10 @@ interface PatientBIP {
   templateUrl: './bipform.component.html',
   styleUrls: ['./bipform.component.scss'],
 })
-export class BipFormComponent implements OnInit {
+export class BipFormComponent implements OnInit, OnChanges {
   routes = AppRoutes;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Input() clientSelected: any;
 
   valid_form_success = false;
   text_validation = '';
@@ -160,7 +162,7 @@ export class BipFormComponent implements OnInit {
 
   type_of_assessment: any;
   background_information: any;
-  client_selected: any;
+  // client_selected: any;
   bip_selected: any;
   previus_treatment_and_result: any;
   current_treatment_and_progress: any;
@@ -285,7 +287,7 @@ export class BipFormComponent implements OnInit {
     this.ativatedRoute.params.subscribe((resp) => {
       this.patient_identifier = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
     });
-    this.getProfileBip(); // se pide el perfil del paciente por el bip relacionado
+    // this.getProfileBip(); // se pide el perfil del paciente por el bip relacionado
 
     this.ativatedRoute.params.subscribe(({ id }) => this.getBip()); //se pide el id del bip creado para traer la info necesaria
     this.user = this.authService.user as AppUser;
@@ -294,31 +296,52 @@ export class BipFormComponent implements OnInit {
     this.accesstoSensories = [];
   }
 
-  //se obtiene el perfil del usuario, por el cliente_id  que seria igual al id de la url
-  getProfileBip() {
-    this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
-      // console.log(resp);
-      this.client_selected = resp; // asignamos el objeto a nuestra variable
-
-      //traemos la info del usuario
-      if (this.client_selected.type !== null) {
-        // si hay o no informacion del paciente
-        if (this.client_selected.eligibility === 'yes') {
-          // si el status es positivo para proceder
-          this.first_name = this.client_selected.patient.first_name;
-          this.last_name = this.client_selected.patient.last_name;
-          this.patient_identifier = this.client_selected.patient.patient_identifier;
-          this.phone = this.client_selected.patient.phone;
-          this.parent_guardian_name =
-            this.client_selected.patient.parent_guardian_name;
-          this.relationship = this.client_selected.patient.relationship;
-          this.address = this.client_selected.patient.address;
-          this.age = this.client_selected.patient.age;
-          this.dob = this.client_selected.patient.dob;
-        }
-      }
-    });
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['clientSelected']) {
+      this.handleClientSelectedChange();
+      console.log('clientSelected changed:', this.clientSelected);
+    }
   }
+
+  private handleClientSelectedChange() {
+    if (this.clientSelected) {
+      this.first_name = this.clientSelected.first_name;
+      this.last_name = this.clientSelected.last_name;
+      this.patient_identifier = this.clientSelected.patient_identifier;
+      this.phone = this.clientSelected.phone;
+      this.parent_guardian_name = this.clientSelected.parent_guardian_name;
+      this.relationship = this.clientSelected.relationship;
+      this.address = this.clientSelected.address;
+      this.age = this.clientSelected.age;
+      this.dob = this.clientSelected.dob;
+    }
+  }
+
+  //se obtiene el perfil del usuario, por el cliente_id  que seria igual al id de la url
+  // getProfileBip() {
+  //   this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
+  //     // console.log(resp);
+  //     this.client_selected = resp.patient; // asignamos el objeto a nuestra variable
+
+  //     //traemos la info del usuario
+  //     if (this.client_selected.type !== null) {
+  //       // si hay o no informacion del paciente
+  //       if (this.client_selected.eligibility === 'yes') {
+  //         // si el status es positivo para proceder
+  //         this.first_name = this.client_selected.first_name;
+  //         this.last_name = this.client_selected.last_name;
+  //         this.patient_identifier = this.client_selected.patient_identifier;
+  //         this.phone = this.client_selected.phone;
+  //         this.parent_guardian_name =
+  //           this.client_selected.parent_guardian_name;
+  //         this.relationship = this.client_selected.relationship;
+  //         this.address = this.client_selected.address;
+  //         this.age = this.client_selected.age;
+  //         this.dob = this.client_selected.dob;
+  //       }
+  //     }
+  //   });
+  // }
   //obtenemos el bip por el id..
   getBip() {
     if (this.patient_identifier !== null && this.patient_identifier !== undefined) {
@@ -953,7 +976,7 @@ export class BipFormComponent implements OnInit {
 
     const data = {
       id: this.bip_selectedid,
-      client_id: this.client_selected.patient.id,
+      client_id: this.clientSelected.patient.id,
       patient_identifier: this.patient_identifier,
       doctor_id: this.doctor_id,
 

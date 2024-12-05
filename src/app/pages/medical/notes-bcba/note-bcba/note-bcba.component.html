@@ -4,6 +4,11 @@
     <div class="page-header">
       <div class="row">
         <div class="col-sm-12">
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a [routerLink]="routes.noteBcba.list">BCBA Notes </a></li>
+            <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+            <li class="breadcrumb-item active">Add Note </li>
+        </ul>
           <div class="doctor-submit text-start">
             <button class="btn btn-primary btn-sm" (click)="goBack()">
               Back
@@ -289,9 +294,8 @@
       </div>
       <!-- fin paciente -->
 
-      <!-- Family -->
-      <!-- *ngIf="pa_services.cpt === '91756'  -->
-      <div class="col-xs-12 col-sm-6" >
+      <!-- Family only full -->
+      <div class="col-xs-12 col-sm-6" *ngIf="selectedValueCode !== '91756'&& selectedValueCode !== '91755'">
         <div class="card">
           <div class="card-body">
             <div class="col-12">
@@ -333,9 +337,8 @@
         </div>
       </div>
       <!-- fin Family -->
-      <!-- replacements -->
-      <!-- *ngIf="pa_services.cpt === '91755'" -->
-      <div class="col-xs-12 col-sm-6" >
+      <!-- Monitoring  full-->
+      <div class="col-xs-12 col-sm-6" *ngIf="selectedValueCode !== '91756'&& selectedValueCode !== '91755'" >
         <div class="card">
           <div class="card-body">
             <div class="col-12">
@@ -371,9 +374,92 @@
           </div>
         </div>
       </div>
-      <!-- fin replacements -->
+      <!-- fin Monitoring -->
 
-      <!-- paciente -->
+      <!-- Family only 56 -->
+      <div class="col-xs-12 col-sm-6" *ngIf="selectedValueCode === '91756'">
+        <div class="card">
+          <div class="card-body">
+            <div class="col-12">
+              <h4>Caregiver Goal</h4>
+              <p class="text-danger">
+                Note: Please fill out all fields. If you didn't have any
+                reaction, enter "0"
+              </p>
+            </div>
+            <div class="table-responsive">
+              <table class="table mb-0">
+                <thead>
+                  <tr>
+                    <th>Caregiver Goal</th>
+                    <th>% of Occurrences</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let goal of caregivers_training_goals;
+                      let i = index
+                    "
+                  >
+                    <td>{{ goal.caregiver_goal }}</td>
+                    <td>
+                      <input
+                        class="form-control"
+                        type="number"
+                        [(ngModel)]="goal.porcent_of_correct_response"
+                        (ngModelChange)="updateCaregiverGoal(i)"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- fin Family -->
+      <!-- Monitoring  only 55-->
+      <div class="col-xs-12 col-sm-6" *ngIf="selectedValueCode === '91755'" >
+        <div class="card">
+          <div class="card-body">
+            <div class="col-12">
+              <h4>RBT Training goals</h4>
+              <p class="text-danger">
+                Note: Please fill out all fields. If you didn't have any
+                reaction, enter "0"
+              </p>
+            </div>
+            <div class="table-responsive">
+              <table class="table mb-0">
+                <thead>
+                  <tr>
+                    <th>RBT Training Goal</th>
+                    <th>% of correct responses</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let goal of rbt_training_goals; let i = index">
+                    <td>{{ goal.lto }}</td>
+                    <td>
+                      <input
+                        class="form-control"
+                        type="number"
+                        [(ngModel)]="goal.porcent_of_correct_response"
+                        (ngModelChange)="updateRbtGoal(i)"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- fin Monitoring -->
+       
+
+      <!-- Summary Note -->
       <div class="col-sm-12">
         <div class="card">
           <div class="card-body">
@@ -528,7 +614,7 @@
           </div>
         </div>
       </div>
-      <!-- fin paciente -->
+      <!-- fin Summary Note -->
     </div>
   </div>
 </div>

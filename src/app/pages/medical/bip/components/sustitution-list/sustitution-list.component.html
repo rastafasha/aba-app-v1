@@ -864,11 +864,11 @@
                                     </td>
 
                                     <td>
-                                      {{ goall.sustitution_date_lto | date }}
+                                      {{ goall.sustitution_date_lto | date : "shortDate" }}
                                     </td>
                                     <td>
                                       {{
-                                        goall.end_sustitution_date_lto | date
+                                        goall.end_sustitution_date_lto | date : "shortDate"
                                       }}
                                     </td>
                                     <td>

@@ -52,6 +52,7 @@ export class NoteBcbaV2 {
   bcba: string;
   md: string;
   md2: string;
+  md3: string;
   meet_with_client_at: string;
   status: NoteStatus;
 
@@ -98,6 +99,7 @@ export class NoteBcbaV2 {
       bcba: StringOrNullOrUndefined(data.bcba),
       md: StringOrNullOrUndefined(data.md),
       md2: StringOrNullOrUndefined(data.md2),
+      md3: StringOrNullOrUndefined(data.md3),
       meet_with_client_at: data.meet_with_client_at as string,
       status: (StringOrNullOrUndefined(data.status) as NoteStatus) ?? 'pending',
       location_id: NumberOrNullOrUndefined(data.location_id),

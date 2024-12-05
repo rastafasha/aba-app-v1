@@ -41,7 +41,7 @@ export class LogsReportsComponent implements OnInit {
     { key: 'provider_id', value: 'Provider' },
     { key: 'patient_id', value: 'Client Name' },
     { key: 'patient_id', value: 'Patient Id' },
-    { key: 'session_date', value: 'Date of Note' },
+    { key: 'session_date', value: 'DOS' },
     { key: 'time_in', value: 'Time in (M)' },
     { key: 'time_out', value: 'Time Out (M)' },
     { key: 'time_in2', value: 'Time in (A)' },
@@ -56,6 +56,7 @@ export class LogsReportsComponent implements OnInit {
     { key: 'insurance_id', value: 'Insurance Id' },
     { key: 'md', value: 'Modifier 1' },
     { key: 'md2', value: 'Modifier 2' },
+    { key: 'md3', value: 'Modifier 3' },
     
     { key: 'status', value: 'Status' },
     { key: 'billed', value: 'Billed' },
