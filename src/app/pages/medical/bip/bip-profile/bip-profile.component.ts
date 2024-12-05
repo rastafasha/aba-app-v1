@@ -17,7 +17,6 @@ import { BipService } from '../service/bip.service';
 })
 export class BipProfileComponent implements OnInit {
   routes = AppRoutes;
-  @Input() clientSelected: any;
   @ViewChild('contentToConvert') contentToConvert!: ElementRef;
   patientProfile: any[];
   option_selected = 1;
@@ -147,7 +146,7 @@ export class BipProfileComponent implements OnInit {
       // this.getPatient();
     });
     this.user = this.authService.user as AppUser;
-   console.log( this.clientSelected );
+  //  console.log( this.clientSelected );
   }
 
   goBack() {

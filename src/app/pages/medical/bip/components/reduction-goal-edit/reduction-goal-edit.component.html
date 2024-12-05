@@ -192,10 +192,10 @@
                     >
                   </td>
                   <td>
-                    {{ goalst.initial_date_sto | date }}
+                    {{ goalst.initial_date_sto | date : "shortDate"}}
                   </td>
                   <td>
-                    {{ goalst.end_date_sto | date }}
+                    {{ goalst.end_date_sto | date : "shortDate"}}
                   </td>
                   <td>
                     <!-- <button class="btn btn-outline-success btn-sm" (click)="selectedMaladaptiveSon(goalsto)"><i class="fa fa-bar-chart"></i></button> -->
@@ -551,10 +551,10 @@
                   </td>
 
                   <td>
-                    {{ goall.initial_date_lto | date }}
+                    {{ goall.initial_date_lto | date : "shortDate"}}
                   </td>
                   <td>
-                    {{ goall.end_date_lto | date }}
+                    {{ goall.end_date_lto | date : "shortDate"}}
                   </td>
                   <td>
                     <button

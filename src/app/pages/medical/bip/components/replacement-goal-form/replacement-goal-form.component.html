@@ -147,10 +147,10 @@
                                                         <span class="badge bg-warning" *ngIf="goalst.sustitution_status_sto === 'maintenance'">Maintenance</span>
                                                     </td>
                                                     <td>
-                                                        {{goalst.sustitution_date_sto | date}}
+                                                        {{goalst.sustitution_date_sto | date : "shortDate"}}
                                                     </td>
                                                     <td>
-                                                        {{goalst.end_sustitution_date_sto | date}}
+                                                        {{goalst.end_sustitution_date_sto | date : "shortDate"}}
                                                     </td>
                                                     <td>
                                                         <button class="btn btn-outline-success btn-sm" (click)="seleccionarParaEdit(goalst)" 
@@ -348,10 +348,10 @@
                                                         <span class="badge bg-warning" *ngIf="goall.sustitution_status_lto === 'maintenance'">Maintenance</span>
                                                     </td>
                                                     <td>
-                                                        {{goall.sustitution_date_lto | date}}
+                                                        {{goall.sustitution_date_lto | date : "shortDate"}}
                                                     </td>
                                                     <td>
-                                                        {{goall.end_sustitution_date_lto | date}}
+                                                        {{goall.end_sustitution_date_lto | date : "shortDate"}}
                                                     </td>
                                                     <td>
                                                         <button class="btn btn-outline-success btn-sm" (click)="seleccionarParaEditLto(goall)" 

@@ -338,7 +338,7 @@
                       <div class="col-xs-12 col-sm-4">
                         <div class="detail-personal">
                           <h2>Baseline Date</h2>
-                          <p>{{ malad.baseline_date | date }}</p>
+                          <p>{{ malad.baseline_date | date : "shortDate" }}</p>
                         </div>
                       </div>
                       <!-- <h2 class="text-center">Grafico</h2> -->
@@ -770,7 +770,7 @@
                       <div class="col-xs-12 col-sm-4">
                         <div class="detail-personal">
                           <h2>Created at</h2>
-                          <p>{{ item.created_at | date }}</p>
+                          <p>{{ item.created_at | date : "shortDate" }}</p>
                         </div>
                       </div>
                       <div
@@ -807,7 +807,7 @@
                           <div class="col-xs-12 col-sm-3">
                             <div class="detail-personal">
                               <h2>date</h2>
-                              <p>{{ item.date_sto | date }}</p>
+                              <p>{{ item.date_sto | date : "shortDate" }}</p>
                             </div>
                           </div>
                         </div>
@@ -853,7 +853,7 @@
                           <div class="col-xs-12 col-sm-4">
                             <div class="detail-personal">
                               <h2>Created at</h2>
-                              <p>{{ itemsg.created_at | date }}</p>
+                              <p>{{ itemsg.created_at | date : "shortDate" }}</p>
                             </div>
                           </div>
                           <div class="col-xs-12">
@@ -893,7 +893,7 @@
                           <div class="col-xs-12 col-sm-3">
                             <div class="detail-personal">
                               <h2>Date</h2>
-                              <p>{{ itemsgst.sustitution_date_sto | date }}</p>
+                              <p>{{ itemsgst.sustitution_date_sto | date : "shortDate" }}</p>
                             </div>
                           </div>
                           <div class="col-xs-12">
@@ -932,7 +932,7 @@
                           <div class="col-xs-12 col-sm-3">
                             <div class="detail-personal">
                               <h2>date</h2>
-                              <p>{{ itemglt.sustitution_date_lto | date }}</p>
+                              <p>{{ itemglt.sustitution_date_lto | date : "shortDate" }}</p>
                             </div>
                           </div>
                         </div>
@@ -1044,13 +1044,13 @@
                       <div class="col-xs-12 col-sm-4">
                         <div class="detail-personal">
                           <h2>initiation</h2>
-                          <p>{{ item.initiation | date }}</p>
+                          <p>{{ item.initiation | date : "shortDate" }}</p>
                         </div>
                       </div>
                       <div class="col-xs-12 col-sm-4">
                         <div class="detail-personal">
                           <h2>End Date</h2>
-                          <p>{{ item.end_date | date }}</p>
+                          <p>{{ item.end_date | date : "shortDate" }}</p>
                         </div>
                       </div>
                     </div>
@@ -1120,7 +1120,7 @@
                       <div class="col-xs-12 col-sm-6">
                         <div class="detail-personal">
                           <h2>date</h2>
-                          <p>{{ itemrtg.date | date }}</p>
+                          <p>{{ itemrtg.date | date : "shortDate" }}</p>
                         </div>
                       </div>
                     </div>
@@ -2604,7 +2604,7 @@
                     <div class="col-xs-12 col-sm-3">
                       <div class="detail-personal">
                         <h2>Analyst Signature date</h2>
-                        <p>{{ consent_to_treatment.analyst_signature_date | date }}</p>
+                        <p>{{ consent_to_treatment.analyst_signature_date | date : "shortDate" : "shortDate" }}</p>
                       </div>
                     </div>
                     <div class="col-xs-12 col-sm-3">
@@ -2625,7 +2625,7 @@
                     <div class="col-xs-12 col-sm-3">
                       <div class="detail-personal">
                         <h2>Guardian Signature day</h2>
-                        <p>{{ consent_to_treatment.parent_guardian_signature_date | date }}</p>
+                        <p>{{ consent_to_treatment.parent_guardian_signature_date | date : "shortDate" }}</p>
                       </div>
                     </div>
                   </div>
