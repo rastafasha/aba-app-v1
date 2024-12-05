@@ -324,7 +324,6 @@ export class NoteBcbaComponent implements OnInit {
     this.selectedValueAba = event.value;
     // event = this.selectedValueAba;
     this.specialistDataSupervisor(this.selectedValueAba);
-    console.log('selectedValueAba', this.selectedValueAba);
   }
 
 

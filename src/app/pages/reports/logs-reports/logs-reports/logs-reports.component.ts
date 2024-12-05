@@ -224,7 +224,8 @@ export class LogsReportsComponent implements OnInit {
       billed: data.billed,
       paid: data.paid,
       md: data.md,
-      md2: data.md2
+      md2: data.md2,
+      md3: data.md3
 
     }
     const update$: Observable<unknown> = isNoteRbtV2(data)
