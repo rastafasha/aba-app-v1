@@ -46,7 +46,7 @@ export class LogsReportsComponent implements OnInit {
     { key: 'time_out', value: 'Time Out (M)' },
     { key: 'time_in2', value: 'Time in (A)' },
     { key: 'time_out2', value: 'Time Out (A)' },
-    { key: 'total_hours', value: 'Total Minutes' },
+    { key: 'total_hours', value: 'Total Hours' },
     { key: 'pos', value: 'POS' },
     { key: 'cpt_code', value: 'CPT' },
     { key: 'total_units', value: 'Total Units' },
