@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
@@ -14,7 +14,7 @@ export class MonitoringEvaluatingComponent {
   valid_form_success = false;
   text_validation = '';
   text_success = '';
-
+  @Input() clientSelected: any;
   goal: any;
   lto: any;
   date: Date;

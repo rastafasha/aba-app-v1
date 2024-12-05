@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AppUser } from 'src/app/core/models/users.model';
 import { AppRoutes } from 'src/app/shared/routes/routes';
@@ -131,6 +131,8 @@ interface PatientBIP {
 })
 export class BipFormComponent implements OnInit {
   routes = AppRoutes;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @Input() clientSelected: any;
 
   valid_form_success = false;
   text_validation = '';
@@ -292,29 +294,31 @@ export class BipFormComponent implements OnInit {
     this.doctor_id = this.user?.id; //se asigna el doctor logueado a este campo para poderlo enviar en los
 
     this.accesstoSensories = [];
+
+    console.log(this.clientSelected);
   }
 
   //se obtiene el perfil del usuario, por el cliente_id  que seria igual al id de la url
   getProfileBip() {
     this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
       // console.log(resp);
-      this.client_selected = resp; // asignamos el objeto a nuestra variable
+      this.client_selected = resp.patient; // asignamos el objeto a nuestra variable
 
       //traemos la info del usuario
       if (this.client_selected.type !== null) {
         // si hay o no informacion del paciente
         if (this.client_selected.eligibility === 'yes') {
           // si el status es positivo para proceder
-          this.first_name = this.client_selected.patient.first_name;
-          this.last_name = this.client_selected.patient.last_name;
-          this.patient_identifier = this.client_selected.patient.patient_identifier;
-          this.phone = this.client_selected.patient.phone;
+          this.first_name = this.client_selected.first_name;
+          this.last_name = this.client_selected.last_name;
+          this.patient_identifier = this.client_selected.patient_identifier;
+          this.phone = this.client_selected.phone;
           this.parent_guardian_name =
-            this.client_selected.patient.parent_guardian_name;
-          this.relationship = this.client_selected.patient.relationship;
-          this.address = this.client_selected.patient.address;
-          this.age = this.client_selected.patient.age;
-          this.dob = this.client_selected.patient.dob;
+            this.client_selected.parent_guardian_name;
+          this.relationship = this.client_selected.relationship;
+          this.address = this.client_selected.address;
+          this.age = this.client_selected.age;
+          this.dob = this.client_selected.dob;
         }
       }
     });
