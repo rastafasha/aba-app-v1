@@ -601,15 +601,15 @@ export class NoteRbtComponent implements OnInit {
 
     formData.append('session_date', this.session_date);
 
-    formData.append('provider_name_g',this.selectedValueProviderRBT_id+'');
-    formData.append('provider_name',this.selectedValueProviderRBT_id+'');
+    formData.append('provider_name_g',this.doctor_id+'');
+    formData.append('provider_name',this.doctor_id+'');
     formData.append('supervisor_name', this.selectedValueBcba_id+'');
     formData.append('cpt_code', this.selectedValueCode);
 
     formData.append('pa_service_id', this.selectedPaService.id.toString());
     formData.append('cpt_code', this.selectedPaService.cpt);
 
-    formData.append('provider_id', this.selectedValueProviderRBT_id+'');
+    formData.append('provider_id', this.doctor_id+'');
     formData.append('supervisor_id', this.selectedValueBcba_id+'');
     
 
