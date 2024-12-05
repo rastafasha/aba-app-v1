@@ -22,7 +22,8 @@ throw new Error('Method not implemented.');
   routes = AppRoutes;
   summary_note = '';
   isGeneratingSummary = false;
-
+  showFamily = false;
+  showMonitoring = false;
   valid_form = false;
   valid_form_success = false;
 
@@ -660,6 +661,15 @@ throw new Error('Method not implemented.');
     if (service) {
       this.selectedValueCode = service.cpt;
       console.log(this.selectedValueCode);
+      this.showFamily = false;
+      this.showMonitoring = false;
+      
+      if(service.cpt === '97155' ){
+        this.showFamily = true;
+      }
+      if(service.cpt === '97156' ){
+        this.showMonitoring = true;
+      }
     }
   }
 

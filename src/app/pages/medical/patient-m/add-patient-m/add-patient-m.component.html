@@ -294,7 +294,7 @@
                 </div>
                 <div
                   class="col-12 col-md-6 col-xl-4"
-                  *ngIf="user.roles[0] === 'SUPERADMIN'"
+                  *ngIf="showLocationSelected"
                 >
                   <div class="form-group local-forms">
                     <label>Location <span class="login-danger">*</span></label>
@@ -316,7 +316,7 @@
                 </div>
                   <div
                     class="col-12 col-md-6 col-xl-4"
-                    *ngIf="user.roles[0] === 'MANAGER'"
+                    *ngIf="!showLocationSelected"
                   >
                   <div class="form-group local-forms">
                     <label>Location </label>

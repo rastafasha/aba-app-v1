@@ -295,7 +295,7 @@
       <!-- fin paciente -->
 
       <!-- Family only full -->
-      <ng-container  *ngIf="selectedValueCode !== '91756' && selectedValueCode !==  '91755' ">
+      <ng-container  *ngIf="!showFamily && !showMonitoring">
         <div class="col-xs-12 col-sm-6" >
           <div class="card">
             <div class="card-body">
@@ -380,7 +380,7 @@
       
 
       <!-- Family only 56 -->
-       <ng-container  *ngIf="selectedValueCode === '91756'">
+       <ng-container  *ngIf="showFamily">
         <div class="col-xs-12 col-sm-6" >
           <div class="card">
             <div class="card-body">
@@ -424,7 +424,7 @@
         </div>
        </ng-container>
        <!-- Monitoring  only 55-->
-       <ng-container  *ngIf="selectedValueCode === '91755'" >
+       <ng-container  *ngIf="showMonitoring" >
       <div class="col-xs-12 col-sm-6" >
         <div class="card">
           <div class="card-body">
