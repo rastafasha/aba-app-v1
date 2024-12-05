@@ -361,8 +361,8 @@
       </div>
       <!-- fin paciente -->
 
-      <!-- Maladaptives -->
-      <div class="col-xs-12 col-sm-6">
+      <!-- Family full-->
+      <div class="col-xs-12 col-sm-6" *ngIf="selectedValueCode !== '91756'&& selectedValueCode !== '91755'">
         <div class="card">
           <div class="card-body">
             <div class="col-12">
@@ -403,9 +403,9 @@
           </div>
         </div>
       </div>
-      <!-- fin Maladaptives -->
-      <!-- replacements -->
-      <div class="col-xs-12 col-sm-6">
+      <!-- fin Family full-->
+      <!-- Monitoring  full -->
+      <div class="col-xs-12 col-sm-6" *ngIf="selectedValueCode !== '91756'&& selectedValueCode !== '91755'">
         <div class="card">
           <div class="card-body">
             <div class="col-12">
@@ -441,7 +441,89 @@
           </div>
         </div>
       </div>
-      <!-- fin replacements -->
+      <!-- fin Monitoring  full -->
+
+      <!-- Family only 56 -->
+      <div class="col-xs-12 col-sm-6" *ngIf="selectedValueCode === '91755'">
+        <div class="card">
+          <div class="card-body">
+            <div class="col-12">
+              <h4>Caregiver Goal</h4>
+              <p class="text-danger">
+                Note: Please fill out all fields. If you didn't have any
+                reaction, enter "0"
+              </p>
+            </div>
+            <div class="table-responsive">
+              <table class="table mb-0">
+                <thead>
+                  <tr>
+                    <th>Caregiver Goal</th>
+                    <th>% of Occurrences</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="
+                      let goal of caregivers_training_goals;
+                      let i = index
+                    "
+                  >
+                    <td>{{ goal.caregiver_goal }}</td>
+                    <td>
+                      <input
+                        class="form-control"
+                        type="number"
+                        [(ngModel)]="goal.porcent_of_correct_response"
+                        (ngModelChange)="updateCaregiverGoal(i)"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- fin Family only 56 -->
+      <!-- Monitoring  only 55 -->
+      <div class="col-xs-12 col-sm-6" *ngIf="selectedValueCode === '91756'">
+        <div class="card">
+          <div class="card-body">
+            <div class="col-12">
+              <h4>RBT Training goals</h4>
+              <p class="text-danger">
+                Note: Please fill out all fields. If you didn't have any
+                reaction, enter "0"
+              </p>
+            </div>
+            <div class="table-responsive">
+              <table class="table mb-0">
+                <thead>
+                  <tr>
+                    <th>RBT Training Goal</th>
+                    <th>% of correct responses</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let goalr of rbt_training_goals; let i = index">
+                    <td>{{ goalr.lto }}</td>
+                    <td>
+                      <input
+                        class="form-control"
+                        type="number"
+                        [(ngModel)]="goalr.porcent_of_correct_response"
+                        (ngModelChange)="updateRbtGoal(i)"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- fin Monitoring  only 55 -->
 
       <!-- Sumary note -->
       <div class="col-sm-12">
@@ -504,10 +586,6 @@
                       >Provider Signature
                       <span class="login-danger">*</span></label
                     >
-                    <!-- <div class="settings-btn upload-files-avator">
-                                            <input type="file" accept="image/*" name="provider_signature" id="file" (change)="loadFile($event)" class="hide-input">
-                                            <label for="file" class="upload">Choose File</label>
-                                        </div> -->
                   </div>
 
                   <!-- previsualizacion de la foto -->

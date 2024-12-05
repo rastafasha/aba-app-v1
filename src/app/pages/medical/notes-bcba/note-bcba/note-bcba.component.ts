@@ -657,6 +657,7 @@ export class NoteBcbaComponent implements OnInit {
     const service = event.value;
     if (service) {
       this.selectedValueCode = service.cpt;
+      console.log(this.selectedValueCode);
     }
   }
 
