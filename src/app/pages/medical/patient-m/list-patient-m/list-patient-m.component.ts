@@ -58,6 +58,7 @@ export class ListPatientMComponent implements OnInit {
   permissions = [];
   maladaptives = [];
   locationPatientList = [];
+  doctorPatientList = [];
   search: string;
   status: string;
   location_id: number;
@@ -65,7 +66,8 @@ export class ListPatientMComponent implements OnInit {
   constructor(
     private pageService: PageService,
     // private patientService: PatientMService,
-    private patientService: PatientsV2Service,
+    private patientV2Service: PatientsV2Service,
+    private patientService: PatientMService,
     private locationsService: LocationsV2Service,
     private location: Location,
     private fileSaver: FileSaverService,
@@ -97,6 +99,21 @@ export class ListPatientMComponent implements OnInit {
     });
   }
 
+  getPatiensByDoctor(){
+    this.patientService.getPatientsByDoctor(this.user.id).subscribe((resp:any)=>{
+      // console.log(resp);
+      this.doctorPatientList = resp.patients.data;
+    })
+    this.getPatiensByLocation();
+  }
+  getPatiensByLocation(){
+    this.patientService.getPatientByLocations(this.location_id).subscribe((resp:any)=>{
+      // console.log(resp);
+      this.locationPatientList = resp.patients.data;
+    })
+  }
+
+
   isPermission(permission: string) {
     if (this.user.roles.includes('SUPERADMIN')) {
       return true;
@@ -112,7 +129,7 @@ export class ListPatientMComponent implements OnInit {
     this.patientList = [];
     this.serialNumberArray = [];
 
-    this.patientService
+    this.patientV2Service
       .list({
         per_page: 15,
         // search: this.search,
@@ -152,7 +169,7 @@ export class ListPatientMComponent implements OnInit {
     this.patient_selected = patient;
   }
   deleteRol() {
-    this.patientService.delete(this.patient_selected.id).subscribe({
+    this.patientV2Service.delete(this.patient_selected.id).subscribe({
       next: (resp) => {
         const INDEX = this.patientList.findIndex(
           (item) => item.id === this.patient_selected.id
@@ -373,7 +390,7 @@ export class ListPatientMComponent implements OnInit {
     const VALUE = data.status;
     // console.log(VALUE);
 
-    this.patientService.update(data, data.id).subscribe((resp) => {
+    this.patientV2Service.update(data, data.id).subscribe((resp) => {
       Swal.fire('Updated', `Client Status Updated successfully!`, 'success');
       this.getTableData();
     });

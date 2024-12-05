@@ -162,7 +162,7 @@ export class AddPatientMComponent implements OnInit {
       insurer_secondary_id: [''],
       insurance_identifier: ['', Validators.required],
       insurance_secondary_identifier: [''],
-      location_id: ['', Validators.required],
+      location_id: [''],
       rbt_home_id: ['', Validators.required],
       rbt2_school_id: ['', Validators.required],
       bcba_home_id: ['', Validators.required],
@@ -287,8 +287,7 @@ export class AddPatientMComponent implements OnInit {
     this.insuranceData2(this.form.value.insurer_secondary_id);
   }
 
-  // eslint-disable-next-line no-debugger
-  addPAAssestment() {debugger
+  addPAAssestment() {
     // if(!this.enabledPaButton) {
     //   this.text_validation = 'Invalid data for PA';
     //   return ;
@@ -349,6 +348,7 @@ export class AddPatientMComponent implements OnInit {
       (this.IMAGE_PREVISUALIZA = reader.result as string);
   }
 
+  // eslint-disable-next-line no-debugger
   public save(): void {
     if(!this.form.valid) {
       this.text_validation = 'All the fields are required';
