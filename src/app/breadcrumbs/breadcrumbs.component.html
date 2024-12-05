@@ -1,0 +1,21 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <ng-container *ngFor="let crumb of displayBreadcrumbs; let last = last">
+            <li class="breadcrumb-item" [ngClass]="{ active: last }">
+                <ng-container *ngIf="!last; else lastCrumb">
+                    <ng-container *ngIf="getHref(crumb); else textCrumb">
+                        <a [routerLink]="getHref(crumb)">
+                            {{ getLabel(crumb) }}
+                        </a>
+                    </ng-container>
+                    <ng-template #textCrumb>
+                        {{ getLabel(crumb) }}
+                    </ng-template>
+                </ng-container>
+                <ng-template #lastCrumb>
+                    {{ getLabel(crumb) }}
+                </ng-template>
+            </li>
+        </ng-container>
+    </ol>
+</nav>

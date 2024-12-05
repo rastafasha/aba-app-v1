@@ -25,12 +25,23 @@ export class PatientsUseCasesService {
       //crear nuevos pa_services y devolver el patient actualizado
       switchMap((resp) => {
         const pa_services = value.pa_services.filter((item) => item.id < 0);
-        if (pa_services.length === 0) {
+        const pa_servicesToDelete = value.pa_services.filter((item) => item.id > 0 && item.deleted);
+        if (pa_services.length === 0 && pa_servicesToDelete.length === 0) {
           return of(resp);
         }
-        return combineLatest(
-          pa_services.map((item) => this.paServicesV2Service.create(item))
-        ).pipe(map(() => resp));
+        // Handle creation of new pa_services
+        const createServices$ = pa_services.length > 0 
+          ? combineLatest(
+              pa_services.map((item) => this.paServicesV2Service.create(item))
+            )
+          : of(null);
+        // Handle deletion of existing pa_services
+        const deleteServices$ = pa_servicesToDelete.length > 0 
+          ? combineLatest(
+              pa_servicesToDelete.map((item) => this.paServicesV2Service.delete(item.id, resp.data.id)) // Assuming a delete method exists
+            )
+          : of(null);
+        return combineLatest([createServices$, deleteServices$]).pipe(map(() => resp));
       })
       // actualizamos la lista de pa_services
       // switchMap((resp) => {

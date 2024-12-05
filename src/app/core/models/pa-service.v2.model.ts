@@ -16,6 +16,7 @@ export class PaServiceV2 {
   created_at?: Date;
   updated_at?: Date;
   deleted_at?: Date;
+  deleted?: boolean;
   constructor(data: Partial<PaServiceV2>) {
     if (!data) return null;
     const result: PaServiceV2 = {
