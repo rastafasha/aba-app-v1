@@ -106,6 +106,8 @@ export class ReductionGoalEditComponent {
     this.getGoalsMaladaptives();
   }
 
+  
+
   //obtenemos el bip por el id
   getBip() {
     if (this.patient_identifier !== null && this.patient_identifier !== undefined) {
