@@ -728,7 +728,7 @@ export class EditNoteRbtComponent implements OnInit {
 
     const formData = new FormData();
     formData.append('patient_id', this.patient_id+'');
-    formData.append('doctor_id', this.selectedValueProviderRBT_id+'');
+    formData.append('doctor_id', this.doctor_id+'');
     formData.append('bip_id', this.bip_id);
     formData.append('first_name', this.first_name);
     formData.append('last_name', this.last_name);
