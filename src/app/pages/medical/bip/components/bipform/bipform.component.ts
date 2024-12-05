@@ -162,7 +162,7 @@ export class BipFormComponent implements OnInit, OnChanges {
 
   type_of_assessment: any;
   background_information: any;
-  client_selected: any;
+  // client_selected: any;
   bip_selected: any;
   previus_treatment_and_result: any;
   current_treatment_and_progress: any;
@@ -976,7 +976,7 @@ export class BipFormComponent implements OnInit, OnChanges {
 
     const data = {
       id: this.bip_selectedid,
-      client_id: this.client_selected.patient.id,
+      client_id: this.clientSelected.patient.id,
       patient_identifier: this.patient_identifier,
       doctor_id: this.doctor_id,
 
