@@ -142,7 +142,7 @@
 
 <!-- modificadores  -->
 
-<!-- modificadores Medicaid 1 -->
+<!-- modificadores  1 -->
 <td>
   <select
     class="form-control form-select-solid fw-bolder"
@@ -163,13 +163,34 @@
   </select>
 </td>
 
-<!-- modificadores Medicaid 2 -->
+<!-- modificadores 2 -->
 <td>
   <select
     class="form-control form-select-solid fw-bolder"
     style="width: 9ch; text-overflow: ellipsis"
     name="md2"
     [(ngModel)]="note.md2"
+    (ngModelChange)="hasChanges = true"
+  >
+    <option [value]="null">-- Select --</option>
+    <ng-container *ngFor="let item of modifiers">
+      <option
+        *ngIf="item.type === 'all' || item.type === note.type"
+        [value]="item.value"
+      >
+        {{ item.value | uppercase }} : {{ item.description }}
+      </option>
+    </ng-container>
+  </select>
+</td>
+
+<!-- modificadores 3 -->
+<td>
+  <select
+    class="form-control form-select-solid fw-bolder"
+    style="width: 9ch; text-overflow: ellipsis"
+    name="md3"
+    [(ngModel)]="note.md3"
     (ngModelChange)="hasChanges = true"
   >
     <option [value]="null">-- Select --</option>
