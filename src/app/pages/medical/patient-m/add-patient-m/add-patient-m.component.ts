@@ -120,7 +120,7 @@ export class AddPatientMComponent implements OnInit {
 
   user: AppUser;
   roles = [];
-  doctor_id: any;
+  doctor_id: number;
   location: any=[];
   location_id: number;
   emailExists: boolean;

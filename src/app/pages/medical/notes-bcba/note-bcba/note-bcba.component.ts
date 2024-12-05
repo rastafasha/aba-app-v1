@@ -660,7 +660,7 @@ throw new Error('Method not implemented.');
     const service = event.value;
     if (service) {
       this.selectedValueCode = service.cpt;
-      console.log(this.selectedValueCode);
+      // console.log(this.selectedValueCode);
       this.showFamily = false;
       this.showMonitoring = false;
       

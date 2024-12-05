@@ -26,7 +26,8 @@ export class NoteBcbaEditComponent implements OnInit {
 
   valid_form = false;
   valid_form_success = false;
-
+  showFamily = false;
+  showMonitoring = false;
   text_success = '';
   text_validation = '';
 
@@ -752,6 +753,15 @@ export class NoteBcbaEditComponent implements OnInit {
     const service = event.value;
     if (service) {
       this.selectedValueCode = service.cpt;
+      this.showFamily = false;
+      this.showMonitoring = false;
+      
+      if(service.cpt === '97155' ){
+        this.showFamily = true;
+      }
+      if(service.cpt === '97156' ){
+        this.showMonitoring = true;
+      }
     }
   }
 
