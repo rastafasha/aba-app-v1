@@ -5,10 +5,11 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, of, tap } from 'rxjs';
 import {
   ApiV2Response,
+  AppUser,
   DoctorV2,
   InsuranceV2,
   LocationV2,
@@ -30,6 +31,7 @@ import {
   DEFAULT_AVATAR,
   INTAKEN_OPTIONS,
 } from './edit-patient-m.component.const';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
 type PatientV2FormControls = {
   [T in keyof PatientV2]: AbstractControl<PatientV2[T]>;
@@ -53,10 +55,16 @@ export class EditPatientMComponent implements OnInit {
   bcbas: DoctorV2[] = [];
   insurances: InsuranceV2[] = [];
   insurerSelected: InsuranceV2;
-
+  showLocationSelected = false;
   defaultAvatar = DEFAULT_AVATAR;
   posCoveredOptions: PosCoveredV2[] = [];
 
+  user: AppUser;
+  roles = [];
+  doctor_id: number;
+  location: any=[];
+  location_id: number;
+  
   intakenOptions = INTAKEN_OPTIONS;
   services = [];
   files: File[] = [];
@@ -71,7 +79,9 @@ export class EditPatientMComponent implements OnInit {
     private providersService: DoctorService,
     private insurancesService: InsurancesV2Service,
     private route: ActivatedRoute,
-    private fb: FormBuilder
+    private authService: AuthService,
+    private fb: FormBuilder,
+    private router: Router,
   ) {
     this.form = this.fb.group<PatientV2FormControls>({
       id: this.fb.control(0),
@@ -165,6 +175,16 @@ export class EditPatientMComponent implements OnInit {
 
   ngOnInit(): void {
     this.useCases.init();
+    this.user = this.authService.user as AppUser;
+    
+    this.doctor_id = this.user.id;
+    this.location_id = this.user.location_id;
+    this.roles = this.user.roles;
+
+
+    if (this.user.roles[0] === 'SUPERADMIN') {
+      this.showLocationSelected = true;
+    }
     //
     this.route.params.subscribe((params) => {
       this.id = params['id'];
@@ -217,6 +237,15 @@ export class EditPatientMComponent implements OnInit {
         Swal.fire('Updated', `Saved successfully!`, 'success');
         this.patient = resp.data;
         this.onRefresh();
+        if(this.user.roles[0] === 'MANAGER') {
+          this.router.navigate([
+            AppRoutes.location.view,
+            this.user.location_id,
+          ]);
+        }
+        if (this.user.roles[0] === 'SUPERADMIN') {
+          this.router.navigate([AppRoutes.patients.list]);
+        }
       },
       error: () => {
         Swal.fire('Error', `Can't update!`, 'error');

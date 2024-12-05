@@ -16,10 +16,14 @@ import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
   styleUrls: ['./note-bcba.component.scss'],
 })
 export class NoteBcbaComponent implements OnInit {
+Number(arg0: string) {
+throw new Error('Method not implemented.');
+}
   routes = AppRoutes;
   summary_note = '';
   isGeneratingSummary = false;
-
+  showFamily = false;
+  showMonitoring = false;
   valid_form = false;
   valid_form_success = false;
 
@@ -144,7 +148,7 @@ export class NoteBcbaComponent implements OnInit {
   insurer_name: any;
   services: any;
   insurer_id: any;
-  cpt: any;
+  cpt: number;
   roles: string[];
   electronic_signature: any;
   doctor: any;
@@ -656,7 +660,16 @@ export class NoteBcbaComponent implements OnInit {
     const service = event.value;
     if (service) {
       this.selectedValueCode = service.cpt;
-      console.log(this.selectedValueCode);
+      // console.log(this.selectedValueCode);
+      this.showFamily = false;
+      this.showMonitoring = false;
+      
+      if(service.cpt === '97155' ){
+        this.showFamily = true;
+      }
+      if(service.cpt === '97156' ){
+        this.showMonitoring = true;
+      }
     }
   }
 

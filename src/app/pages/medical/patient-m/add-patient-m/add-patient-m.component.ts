@@ -12,6 +12,7 @@ import { AppUser } from 'src/app/core/models/users.model';
 import { PatientsUseCasesService } from '../service/patients-use-cases.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Validators } from 'ngx-editor';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
 /** Principios SOLID
  * Single reposonsablity: que la cosa, haga una sola cosa y bien
@@ -69,6 +70,7 @@ export class AddPatientMComponent implements OnInit {
   roles_doctor: any;
 
   pa_assessments = [];
+  showLocationSelected = false;
   
 
   intakeOptions = [
@@ -118,7 +120,7 @@ export class AddPatientMComponent implements OnInit {
 
   user: AppUser;
   roles = [];
-  doctor_id: any;
+  doctor_id: number;
   location: any=[];
   location_id: number;
   emailExists: boolean;
@@ -134,24 +136,29 @@ export class AddPatientMComponent implements OnInit {
     private locationBack: Location,
     private http: HttpClient,
     private fb: FormBuilder,
-    private useCases: PatientsUseCasesService
+    private useCases: PatientsUseCasesService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.pageService.onInitPage();
     this.setForm();
     this.getPoscoveredList();
-    const USER = localStorage.getItem('user');
-    this.user = JSON.parse(USER ? USER : '');
+    this.user = this.authService.user as AppUser;
+    
     this.doctor_id = this.user.id;
     this.location_id = this.user.location_id;
     this.roles = this.user.roles;
 
-    if (this.user.roles[0] === 'MANAGER') {
-      this.selectedValueLocation = this.user.location_id;
+    console.log(this.user);
+
+    if (this.user.roles[0] === 'SUPERADMIN') {
+      this.showLocationSelected = true;
     }
     this.getConfig();
   }
+
+
 
   private setForm(): void {
     this.form = this.fb.group({
@@ -162,7 +169,7 @@ export class AddPatientMComponent implements OnInit {
       insurer_secondary_id: [''],
       insurance_identifier: ['', Validators.required],
       insurance_secondary_identifier: [''],
-      location_id: ['', Validators.required],
+      location_id: [''],
       rbt_home_id: ['', Validators.required],
       rbt2_school_id: ['', Validators.required],
       bcba_home_id: ['', Validators.required],
@@ -287,8 +294,7 @@ export class AddPatientMComponent implements OnInit {
     this.insuranceData2(this.form.value.insurer_secondary_id);
   }
 
-  // eslint-disable-next-line no-debugger
-  addPAAssestment() {debugger
+  addPAAssestment() {
     // if(!this.enabledPaButton) {
     //   this.text_validation = 'Invalid data for PA';
     //   return ;
@@ -356,6 +362,7 @@ export class AddPatientMComponent implements OnInit {
     }
 
     const data = this.mapData();
+    if(!data) return;
     this.patientService.createPatient({...data, pa_services: this.pa_assessments}).subscribe((resp) => {
       if (resp.message === 403) {
         this.text_validation = resp.message_text;
@@ -394,6 +401,7 @@ export class AddPatientMComponent implements OnInit {
     }
     else {
       this.text_validation = 'Add birth date';
+      return null;
     }
     if (data.elegibility_date?.getFullYear()) {
       year = data.elegibility_date.getFullYear();
@@ -403,10 +411,12 @@ export class AddPatientMComponent implements OnInit {
     }
     else {
       this.text_validation = 'Add elegibility date';
+      return null;
     }
-    // eslint-disable-next-line prefer-const
-    // let pos_covered = JSON.stringify(data?.selectedValuePosCovered);
-    // data.pos_covered = pos_covered;
+    if(!this.showLocationSelected){
+      data.location_id = this.location_id;
+    }
+    
     return data;
   }
 }
