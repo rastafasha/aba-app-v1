@@ -143,7 +143,7 @@ export class BipProfileComponent implements OnInit {
     this.activatedRoute.params.subscribe((resp) => {
       this.patient_identifier = resp['patient_id'];
       console.log(this.patient_identifier);
-      // this.getPatient();
+      this.getPatient();
     });
     this.user = this.authService.user as AppUser;
   //  console.log( this.clientSelected );
