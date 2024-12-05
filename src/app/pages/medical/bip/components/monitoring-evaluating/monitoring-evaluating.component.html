@@ -160,10 +160,10 @@
                                                             *ngIf="monito?.status === 'maintenance'">Maintenance</span>
                                                     </td>
                                                     <td>
-                                                        {{monito?.date | date}}
+                                                        {{monito?.date | date : "shortDate"}}
                                                     </td>
                                                     <td>
-                                                        {{monito?.end_date | date}}
+                                                        {{monito?.end_date | date : "shortDate"}}
                                                     </td>
                                                     <td>
                                                         <button class="btn btn-outline-success btn-sm" (click)="seleccionarParaEdit(monito)" 

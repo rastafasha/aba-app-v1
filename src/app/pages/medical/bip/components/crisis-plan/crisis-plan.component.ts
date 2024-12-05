@@ -127,8 +127,8 @@ export class CrisisPlanComponent {
         this.crisisPlans = resp.crisiPlanPatientIds.data;
         this.crisisplanId = resp.crisiPlanPatientIds.data[0]?.id;
         //risk list
-        this.risk_factors = resp.crisiPlanPatientIds.data[0].risk_factors;
-        this.other = resp.crisiPlanPatientIds.data[0].risk_factors[0].other;
+        this.risk_factors = resp.crisiPlanPatientIds.data[0]?.risk_factors;
+        this.other = resp.crisiPlanPatientIds.data[0].risk_factors[0]?.other;
         this.do_not_apply =
           resp.crisiPlanPatientIds.data[0].risk_factors[0].do_not_apply;
         this.elopement =
