@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AppUser } from 'src/app/core/models/users.model';
 import { AppRoutes } from 'src/app/shared/routes/routes';
@@ -121,13 +121,29 @@ export class SustitutionListComponent implements OnInit {
     //me subcribo al id recibido por el parametro de la url
     this.ativatedRoute.params.subscribe((resp) => {
       this.patient_identifier = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
-      this.getProfileBip(); // se solicita la info del perfil del usuario
+      // this.getProfileBip(); // se solicita la info del perfil del usuario
     });
 
     this.ativatedRoute.params.subscribe(({ id }) => this.getBip()); // se solicita la info del perfil del bip
     const USER = localStorage.getItem('user'); // se solicita el usuario logueado
     this.user = JSON.parse(USER ? USER : ''); //  si no hay un usuario en el localstorage retorna un objeto vacio
     this.doctor_id = this.user.id; //se asigna el doctor logueado a este campo para poderlo enviar en los
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['clientSelected']) {
+      this.handleClientSelectedChange();
+      console.log('clientSelected changed:', this.clientSelected);
+    }
+  }
+
+  private handleClientSelectedChange() {
+    if (this.clientSelected) {
+      this.patient_identifier = this.clientSelected.patient.patient_identifier;
+      if (this.patient_identifier !== null) {
+        this.getPatientGoalSustitutions(this.patient_identifier);
+      }
+    }
   }
 
   //obtenemos el perfil  del paciente por el id de la ruta

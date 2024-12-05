@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AppUser } from 'src/app/core/models/users.model';
 import Swal from 'sweetalert2';
@@ -55,7 +55,7 @@ export class FamilyInvolvementGoalFormComponent implements OnInit {
     //me subcribo al id recibido por el parametro de la url
     this.ativatedRoute.params.subscribe((resp) => {
       this.patient_identifier = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
-      this.getProfileBip(); // se solicita la info del perfil del usuario
+      // this.getProfileBip(); // se solicita la info del perfil del usuario
     });
 
     this.getBip(); // se solicita la info del perfil del bip
@@ -64,18 +64,34 @@ export class FamilyInvolvementGoalFormComponent implements OnInit {
     this.doctor_id = this.user.id; //se asigna el doctor logueado a este campo para poderlo enviar en los
   }
 
-  //obtenemos el perfil  del paciente por el id de la ruta
-  getProfileBip() {
-    this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
-      // console.log('profilebip', resp);
-      this.client_selected = resp; //convertimos la respuesta en un variable
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['clientSelected']) {
+      this.handleClientSelectedChange();
+      console.log('clientSelected changed:', this.clientSelected);
+    }
+  }
 
-      this.client_id = this.client_selected.patient.id;
+  private handleClientSelectedChange() {
+    if (this.clientSelected) {
+      this.client_id = this.clientSelected.patient.id;
       if (this.patient_identifier !== null) {
         this.getPatientGoalFamilyEnvolments(this.patient_identifier);
       }
-    });
+    }
   }
+
+  //obtenemos el perfil  del paciente por el id de la ruta
+  // getProfileBip() {
+  //   this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
+  //     // console.log('profilebip', resp);
+  //     this.client_selected = resp; //convertimos la respuesta en un variable
+
+  //     this.client_id = this.client_selected.patient.id;
+  //     if (this.patient_identifier !== null) {
+  //       this.getPatientGoalFamilyEnvolments(this.patient_identifier);
+  //     }
+  //   });
+  // }
 
   //obtenemos el bip por el id
   getBip() {

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
@@ -12,7 +12,7 @@ import { AppUser } from 'src/app/core/models/users.model';
 })
 export class ReplacementGoalFormComponent {
   @Input() goal: any;
-
+  @Input() clientSelected: any;
   routes = AppRoutes;
   valid_form_success = false;
   text_validation = '';
@@ -121,7 +121,7 @@ export class ReplacementGoalFormComponent {
     //me subcribo al id recibido por el parametro de la url
     this.ativatedRoute.params.subscribe((resp) => {
       this.patient_identifier = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
-      this.getProfileBip(); // se solicita la info del perfil del usuario
+      // this.getProfileBip(); // se solicita la info del perfil del usuario
     });
 
     this.ativatedRoute.params.subscribe(({ id }) => this.getBip()); // se solicita la info del perfil del bip
@@ -130,18 +130,34 @@ export class ReplacementGoalFormComponent {
     this.doctor_id = this.user.id; //se asigna el doctor logueado a este campo para poderlo enviar en los
   }
 
-  //obtenemos el perfil  del paciente por el id de la ruta
-  getProfileBip() {
-    this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
-      // console.log('profilebip', resp);
-      this.client_selected = resp; //convertimos la respuesta en un variable
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['clientSelected']) {
+      this.handleClientSelectedChange();
+      console.log('clientSelected changed:', this.clientSelected);
+    }
+  }
 
-      this.patient_identifier = this.client_selected.patient.patient_identifier;
+  private handleClientSelectedChange() {
+    if (this.clientSelected) {
+      this.patient_identifier = this.clientSelected.patient.patient_identifier;
       if (this.patient_identifier !== null) {
         this.getPatientGoalSustitutions(this.patient_identifier);
       }
-    });
+    }
   }
+
+  //obtenemos el perfil  del paciente por el id de la ruta
+  // getProfileBip() {
+  //   this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
+  //     // console.log('profilebip', resp);
+  //     this.client_selected = resp; //convertimos la respuesta en un variable
+
+  //     this.patient_identifier = this.client_selected.patient.patient_identifier;
+  //     if (this.patient_identifier !== null) {
+  //       this.getPatientGoalSustitutions(this.patient_identifier);
+  //     }
+  //   });
+  // }
 
   //obtenemos el bip por el id
   getBip() {
