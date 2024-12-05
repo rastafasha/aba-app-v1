@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
@@ -12,7 +12,7 @@ import { AppUser } from 'src/app/core/models/users.model';
 export class ConsentTreatmentFormComponent {
   valid_form = false;
   valid_form_success = false;
-
+  @Input() clientSelected: any;
   text_success = '';
   text_validation = '';
 

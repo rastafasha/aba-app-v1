@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import html2canvas from 'html2canvas';
 import * as jspdf from 'jspdf';
@@ -17,6 +17,7 @@ import { BipService } from '../service/bip.service';
 })
 export class BipProfileComponent implements OnInit {
   routes = AppRoutes;
+  @Input() clientSelected: any;
   @ViewChild('contentToConvert') contentToConvert!: ElementRef;
   patientProfile: any[];
   option_selected = 1;
@@ -143,9 +144,10 @@ export class BipProfileComponent implements OnInit {
     this.activatedRoute.params.subscribe((resp) => {
       this.patient_identifier = resp['patient_id'];
       console.log(this.patient_identifier);
-      this.getPatient();
+      // this.getPatient();
     });
     this.user = this.authService.user as AppUser;
+   console.log( this.clientSelected );
   }
 
   goBack() {

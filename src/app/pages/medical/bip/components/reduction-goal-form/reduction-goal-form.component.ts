@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { BipService } from '../../service/bip.service';
@@ -14,7 +14,7 @@ export class ReductionGoalFormComponent {
   // created comments by Malcolm Cordova at 10 feb 2004
   // mercadocreativo@gmail.com
   // @malcolmcordova
-
+  @Input() clientSelected: any;
   routes = AppRoutes;
   valid_form_success = false;
   text_validation = '';

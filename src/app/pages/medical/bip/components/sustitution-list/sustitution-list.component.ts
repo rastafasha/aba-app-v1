@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AppUser } from 'src/app/core/models/users.model';
 import { AppRoutes } from 'src/app/shared/routes/routes';
@@ -16,7 +16,7 @@ export class SustitutionListComponent implements OnInit {
   valid_form_success = false;
   text_validation = '';
   text_success = '';
-
+  @Input() clientSelected: any;
   client_id: any;
   user: AppUser;
   doctor_id: any;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { BipService } from '../service/bip.service';
@@ -46,7 +46,6 @@ interface PaService {
 })
 export class BipAttentionComponent implements OnInit {
   routes = AppRoutes;
-
   valid_form_success = false;
   text_validation = '';
   text_success = '';
@@ -71,7 +70,7 @@ export class BipAttentionComponent implements OnInit {
   client_selected: any;
 
   patient_selected: any;
-  bip_id: any;
+  bip_id: number;
 
   current_status: any;
   status: any;
@@ -115,6 +114,7 @@ export class BipAttentionComponent implements OnInit {
     const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
     this.doctor_id = this.user.id;
+
   }
 
   goBack() {
@@ -131,8 +131,8 @@ export class BipAttentionComponent implements OnInit {
 
   getProfileBip() {
     this.bipService.showBipProfile(this.patient_identifier).subscribe((resp:Patient) => {
-      // console.log(resp);
       this.client_selected = resp;
+      console.log(this.client_selected);
 
       this.first_name = this.client_selected.patient.first_name;
       this.last_name = this.client_selected.patient.last_name;

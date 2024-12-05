@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AppUser } from 'src/app/core/models/users.model';
 
@@ -11,7 +11,7 @@ export class BehaviorAssistantComponent {
   valid_form_success = false;
   text_validation = '';
   text_success = '';
-
+  @Input() clientSelected: any;
   monday: any;
   tuesday: any;
   wednesday: any;

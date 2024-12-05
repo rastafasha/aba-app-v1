@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AppUser } from 'src/app/core/models/users.model';
 import Swal from 'sweetalert2';
@@ -14,7 +14,7 @@ export class FamilyInvolvementGoalFormComponent implements OnInit {
   valid_form_success = false;
   text_validation = '';
   text_success = '';
-
+  @Input() clientSelected: any;
   caregiver_goal: any;
   outcome_measure: any;
   criteria: any;
