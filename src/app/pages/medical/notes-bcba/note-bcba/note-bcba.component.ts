@@ -16,6 +16,9 @@ import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
   styleUrls: ['./note-bcba.component.scss'],
 })
 export class NoteBcbaComponent implements OnInit {
+Number(arg0: string) {
+throw new Error('Method not implemented.');
+}
   routes = AppRoutes;
   summary_note = '';
   isGeneratingSummary = false;
@@ -144,7 +147,7 @@ export class NoteBcbaComponent implements OnInit {
   insurer_name: any;
   services: any;
   insurer_id: any;
-  cpt: any;
+  cpt: number;
   roles: string[];
   electronic_signature: any;
   doctor: any;

@@ -18,9 +18,11 @@
       </div>
     </div>
     <!-- /Page Header -->
-
+    <div class="row" *ngIf="roles !== 'SUPERADMIN' ">
+      <h3 class="text-center">Don't have Permissions</h3>
+    </div>
     <!-- table patients all -->
-    <div class="row">
+    <div class="row" *ngIf="roles === 'SUPERADMIN' ">
       <div class="col-sm-12">
         <div class="card card-table show-entire">
           <div class="card-body">
@@ -486,5 +488,7 @@
       </div>
     </div>
     <!--  end table patients all -->
+
+
   </div>
 </div>
