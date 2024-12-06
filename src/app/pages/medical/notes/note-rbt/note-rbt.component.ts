@@ -39,6 +39,8 @@ export class NoteRbtComponent implements OnInit {
   selectedValueProviderCredential!: string;
   option_selected = 0;
   isGeneratingSummary = false;
+  totalMinutos = 0;
+  total_hour_session = '';
 
 
   selectedValueRBT!: string;
@@ -74,6 +76,7 @@ export class NoteRbtComponent implements OnInit {
   session_length_total = '';
   session_length_total2 = '';
   environmental_changes = '';
+  
 
   sumary_note = '';
   meet_with_client_at = '';
@@ -195,6 +198,7 @@ export class NoteRbtComponent implements OnInit {
     this.ativatedRoute.params.subscribe((resp) => {
       this.patient_identifier = resp['patient_id'];
     });
+    
     this.getConfig();
     this.getProfileBip();
 
@@ -389,19 +393,70 @@ export class NoteRbtComponent implements OnInit {
   hourTimeInSelected(value: string) {
     this.selectedValueTimeIn = value;
     this.calculateProjectedUnits();
+    console.log(this.selectedValueTimeIn);
+    // this.sumarHoras(this.selectedValueTimeIn);
+    this.calculateTotalHours();
+
   }
   hourTimeOutSelected(value: string) {
     this.selectedValueTimeOut = value;
     this.calculateProjectedUnits();
+    console.log(this.selectedValueTimeOut);
+    // this.sumarHoras(this.selectedValueTimeOut);
+    this.calculateTotalHours();
   }
   hourTimeIn2Selected(value: string) {
     this.selectedValueTimeIn2 = value;
     this.calculateProjectedUnits();
+    console.log(this.selectedValueTimeIn2);
+    // this.sumarHoras(this.selectedValueTimeIn2);
+    this.calculateTotalHours();
   }
   hourTimeOut2Selected(value: string) {
     this.selectedValueTimeOut2 = value;
     this.calculateProjectedUnits();
+    console.log(this.selectedValueTimeOut2);
+    // this.sumarHoras(this.selectedValueTimeOut2);
+    this.calculateTotalHours();
   }
+
+  calculateTotalHours() {
+    const timeIn1 = this.convertToMinutes(this.selectedValueTimeIn);
+    const timeOut1 = this.convertToMinutes(this.selectedValueTimeOut);
+    const timeIn2 = this.convertToMinutes(this.selectedValueTimeIn2);
+    const timeOut2 = this.convertToMinutes(this.selectedValueTimeOut2);
+
+    const totalMinutes = (timeOut1 - timeIn1) + (timeOut2 - timeIn2);
+    const totalHours = this.convertToHours(totalMinutes);
+    this.total_hour_session = totalHours;
+    console.log(`Total hours: ${totalHours}`);
+    console.log('para el html', this.total_hour_session);
+}
+
+convertToMinutes(time: string): number {
+  if (!time || !time.includes(':')) {
+    console.error(`Invalid time format: ${time}`);
+        return 0; // O manejar el error de otra manera
+    }
+
+    const [hours, minutes] = time.split(':').map(Number);
+
+    // Validar que hours y minutes sean números válidos
+    if (isNaN(hours) || isNaN(minutes) || hours < 0 || minutes < 0 || minutes >= 60) {
+        console.error(`Invalid time values: hours=${hours}, minutes=${minutes}`);
+        return 0; // O manejar el error de otra manera
+    }
+
+    return hours * 60 + minutes;
+}
+
+convertToHours(totalMinutes: number): string {
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return `${hours}h ${minutes}m`;
+}
+
+
 
   selectMaladaptive(behavior: any) {
     this.maladaptiveSelected = behavior;
