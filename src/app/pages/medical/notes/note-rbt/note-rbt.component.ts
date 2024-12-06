@@ -790,7 +790,7 @@ convertToHours(totalMinutes: number): string {
     this.isGeneratingSummary = true;
     const data = {
       diagnosis: this.diagnosis_code,
-      birthDate: this.client_selected.patient?.birth_date
+      birthDate: this.client_selected?.patient?.birth_date
         ? this.client_selected.patient.birth_date
         : null,
       startTime: this.selectedValueTimeIn ? this.selectedValueTimeIn : null,
