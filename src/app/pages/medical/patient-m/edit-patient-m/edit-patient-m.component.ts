@@ -237,15 +237,15 @@ export class EditPatientMComponent implements OnInit {
         Swal.fire('Updated', `Saved successfully!`, 'success');
         this.patient = resp.data;
         this.onRefresh();
-        if(this.user.roles[0] === 'MANAGER') {
-          this.router.navigate([
-            AppRoutes.location.view,
-            this.user.location_id,
-          ]);
-        }
-        if (this.user.roles[0] === 'SUPERADMIN') {
-          this.router.navigate([AppRoutes.patients.list]);
-        }
+        // if(this.user.roles[0] === 'MANAGER') {
+        //   this.router.navigate([
+        //     AppRoutes.location.view,
+        //     this.user.location_id,
+        //   ]);
+        // }
+        // if (this.user.roles[0] === 'SUPERADMIN') {
+        //   this.router.navigate([AppRoutes.patients.list]);
+        // }
       },
       error: () => {
         Swal.fire('Error', `Can't update!`, 'error');

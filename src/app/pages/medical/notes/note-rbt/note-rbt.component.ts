@@ -156,6 +156,8 @@ export class NoteRbtComponent implements OnInit {
   insurance_id: number;
   insurance_identifier: string;
 
+  
+
   intervention_added = [];
   interventionsSelected = {};
   interventionsList = [
@@ -175,9 +177,11 @@ export class NoteRbtComponent implements OnInit {
 
   pa_services: PaService[] = [];
   selectedPaService: PaService | null = null;
+  
   selectedValueCode = '';
 
   projectedUnits = 0;
+
 
   constructor(
     private bipService: BipService,
@@ -205,6 +209,7 @@ export class NoteRbtComponent implements OnInit {
     this.specialistData();
 
     this.updateInterventions();
+    
   }
 
   updateInterventions() {
@@ -220,6 +225,8 @@ export class NoteRbtComponent implements OnInit {
   onInterventionsChange(updatedInterventions: any[]) {
     this.intervention_added = updatedInterventions;
   }
+
+ 
 
   goBack() {
     this.location.back();
@@ -262,16 +269,22 @@ export class NoteRbtComponent implements OnInit {
       console.log(resp.patient.pa_services);
       this.pa_services = resp.patient.pa_services;
 
+      this.selectedPaService = resp.patient.pa_services.find(service => service.cpt === '97153') || null;
+      // console.log('Selected Service:', this.selectedPaService);
+
       this.getMaladaptivesBipByPatientId();
       this.getReplacementsByPatientId();
     });
   }
+
+  
 
   onPaServiceSelect(event: any) {
     const service = event.value;
     if (service) {
       this.selectedValueCode = service.cpt;
     }
+    console.log('Servicio seleccionado:', event.value);
   }
 
   selectCpt(event: { value: string }) {
