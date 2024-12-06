@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-sm-12">
           <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a [routerLink]="routes.noteRbt.list">RBT Notes </a></li>
+            <li class="breadcrumb-item"><a [routerLink]="[routes.noteRbt.list, patient_identifier]">RBT Notes </a></li>
             <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
             <li class="breadcrumb-item active">View Note </li>
         </ul>
@@ -118,6 +118,12 @@
                             <p>{{ patient_selected.insurance_identifier }}</p>
                           </div>
                         </div>
+                        <div class="col-xl-3 col-md-6 col-lg-3">
+                          <div class="detail-personal">
+                            <h2>POS</h2>
+                            <p>{{ note_selected.meet_with_client_at }}</p>
+                          </div>
+                        </div>
                         <div class="col-xl-3 col-sm-6 col-lg-3">
                           <div class="detail-personal">
                             <h2>Provider Name</h2>
@@ -161,16 +167,7 @@
                             <p>{{ note_selected.session_date | date }}</p>
                           </div>
                         </div>
-                        <div class="col-xl-3 col-sm-6 col-lg-3">
-                          <div class="detail-personal">
-                            <h2>Session Length Total</h2>
-                            <p>
-                              {{
-                                note_selected.session_length_total || "&nbsp;"
-                              }}
-                            </p>
-                          </div>
-                        </div>
+                        
 
                         <div class="clear"></div>
 
@@ -225,6 +222,16 @@
                               {{
                                 note_selected.session_length_afternon_total ||
                                   "&nbsp;"
+                              }}
+                            </p>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 col-lg-3">
+                          <div class="detail-personal">
+                            <h2>Session Length Total</h2>
+                            <p>
+                              {{
+                                note_selected.session_length_total || "&nbsp;"
                               }}
                             </p>
                           </div>
@@ -610,12 +617,7 @@
                   <div class="personal-list-out">
                     <div class="container">
                       <div class="row">
-                        <div class="col-xl-3 col-md-6">
-                          <div class="detail-personal">
-                            <h2>Meet with client at</h2>
-                            <p>{{ note_selected.meet_with_client_at }}</p>
-                          </div>
-                        </div>
+                        
                         <div class="col-xl-3 col-md-6">
                           <div class="detail-personal">
                             <h2>Client appeared</h2>

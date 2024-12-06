@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-sm-12">
           <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a [routerLink]="routes.noteBcba.list">BCBA Notes </a></li>
+            <li class="breadcrumb-item"><a [routerLink]="[routes.noteBcba.list, patient_identifier]">BCBA Notes </a></li>
             <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
             <li class="breadcrumb-item active">Add Note </li>
         </ul>
@@ -44,6 +44,25 @@
 
                   </div>
                 </div> -->
+                <div class="col-12 col-md-3">
+                  <div class="form-group local-forms">
+                    <label
+                      >POS
+                      <span class="login-danger">*</span></label
+                    >
+                    <select
+                      class="form-control form-select-solid fw-bolder"
+                      name="meet_with_client_at"
+                      [(ngModel)]="meet_with_client_at"
+                    >
+                      <option>-- Select --</option>
+                      <option value="03">03 School</option>
+                      <option value="12">12 Home</option>
+                      <option value="02">02 Telehealth</option>
+                      <option value="99">99 Other</option>
+                    </select>
+                  </div>
+                </div>
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
@@ -153,7 +172,7 @@
                 <div class="col-12 col-md-3">
                   <div class="form-group local-forms">
                     <label
-                      >Met with client at
+                      >POS
                       <span class="login-danger">*</span></label
                     >
                     <select
