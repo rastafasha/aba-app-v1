@@ -29,7 +29,7 @@
                 <div class="col-12 py-4">
                   <h4>Create Note Bcba</h4>
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
+                <!-- <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
                       >POS Avaiable<span class="login-danger">*</span></label
@@ -43,7 +43,7 @@
                     />
 
                   </div>
-                </div>
+                </div> -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
@@ -380,7 +380,7 @@
       
 
       <!-- Family only 56 -->
-       <ng-container  *ngIf="showFamily">
+       <ng-container  *ngIf="showMonitoring">
         <div class="col-xs-12 col-sm-6" >
           <div class="card">
             <div class="card-body">
@@ -424,7 +424,7 @@
         </div>
        </ng-container>
        <!-- Monitoring  only 55-->
-       <ng-container  *ngIf="showMonitoring" >
+       <ng-container  *ngIf=" showFamily" >
       <div class="col-xs-12 col-sm-6" >
         <div class="card">
           <div class="card-body">
