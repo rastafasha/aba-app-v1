@@ -200,7 +200,8 @@ export class EmployeeReportComponent implements OnInit {
   //   });
   // }
 
-  getTableData(page = 1): void {
+  // eslint-disable-next-line no-debugger
+  getTableData(page = 1): void {debugger
     this.clientReportList = [];
     this.serialNumberArray = [];
     this.currentPage = page;
