@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AppUser } from 'src/app/core/models/users.model';
 import { AppRoutes } from 'src/app/shared/routes/routes';
@@ -11,12 +11,14 @@ import { GoalSustitutionService } from '../../service/goal-sustitution.service';
   templateUrl: './sustitution-list.component.html',
   styleUrls: ['./sustitution-list.component.scss'],
 })
-export class SustitutionListComponent implements OnInit {
+export class SustitutionListComponent implements OnInit, OnChanges {
+  @Input() clientSelected: any;
+  @Input() bipSelected: any;
+
   routes = AppRoutes;
   valid_form_success = false;
   text_validation = '';
   text_success = '';
-  @Input() clientSelected: any;
   client_id: any;
   user: AppUser;
   doctor_id: any;
@@ -24,7 +26,7 @@ export class SustitutionListComponent implements OnInit {
   client_selected: any;
 
   bip_id: any;
-  bip_selected: any;
+  // bip_selected: any;
   bip_selectedId: any;
   bip_selectedIdd: any;
   maladaptives = [];
@@ -124,7 +126,7 @@ export class SustitutionListComponent implements OnInit {
       // this.getProfileBip(); // se solicita la info del perfil del usuario
     });
 
-    this.ativatedRoute.params.subscribe(({ id }) => this.getBip()); // se solicita la info del perfil del bip
+    // this.ativatedRoute.params.subscribe(({ id }) => this.getBip()); // se solicita la info del perfil del bip
     const USER = localStorage.getItem('user'); // se solicita el usuario logueado
     this.user = JSON.parse(USER ? USER : ''); //  si no hay un usuario en el localstorage retorna un objeto vacio
     this.doctor_id = this.user.id; //se asigna el doctor logueado a este campo para poderlo enviar en los
@@ -134,6 +136,18 @@ export class SustitutionListComponent implements OnInit {
     if (changes['clientSelected']) {
       this.handleClientSelectedChange();
       console.log('clientSelected changed:', this.clientSelected);
+    }
+    if (changes['bipSelected']) {
+      this.handleBipSelectedChange();
+      console.log('bipSelected changed:', this.bipSelected);
+    }
+  }
+
+  private handleBipSelectedChange() {
+    if (this.bipSelected) {
+      this.bip_selectedId = this.bipSelected.bip.id;
+      this.bip_selectedIdd = this.bipSelected.bip.id;
+      this.maladaptives = this.bipSelected.maladaptives;
     }
   }
 
@@ -160,18 +174,18 @@ export class SustitutionListComponent implements OnInit {
   }
 
   //obtenemos el bip por el id
-  getBip() {
-    if (this.patient_identifier !== null && this.patient_identifier !== undefined) {
-      this.bipService.getBipByUser(this.patient_identifier).subscribe((resp) => {
-        // console.log('bip',resp);
+  // getBip() {
+  //   if (this.patient_identifier !== null && this.patient_identifier !== undefined) {
+  //     this.bipService.getBipByUser(this.patient_identifier).subscribe((resp) => {
+  //       // console.log('bip',resp);
 
-        this.bip_selected = resp; //convertimos la respuesta en un variable
-        this.bip_selectedId = resp.id; //convertimos la respuesta en un variable
-        this.bip_selectedIdd = this.bip_selected.bip.id; //convertimos la respuesta en un variable
-        this.maladaptives = this.bip_selected.maladaptives; //convertimos la respuesta en un variable
-      });
-    }
-  }
+  //       this.bip_selected = resp; //convertimos la respuesta en un variable
+  //       this.bip_selectedId = resp.id; //convertimos la respuesta en un variable
+  //       this.bip_selectedIdd = this.bip_selected.bip.id; //convertimos la respuesta en un variable
+  //       this.maladaptives = this.bip_selected.maladaptives; //convertimos la respuesta en un variable
+  //     });
+  //   }
+  // }
 
   //obtenemos los tipo goals: sustituions del paciente por el patient_identifier si existe,
   //si existe enviamos el client_id_goal para actualizar el goal del paciente

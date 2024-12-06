@@ -184,8 +184,7 @@
                     <th mat-sort-header="units">Units Price</th>
                     <th mat-sort-header="charges">Charges</th>
                     <!-- <th mat-sort-header="total">Total</th> -->
-                    <th mat-sort-header="sponsor_id">Provider</th>
-                    <th mat-sort-header="pa_number">PA Number</th>
+                    <!-- <th mat-sort-header="pa_number">PA Number</th> -->
                     <th mat-sort-header="npi">Npi</th>
                     <th mat-sort-header="billed">Billed</th>
                     <th mat-sort-header="pay">Pay</th>
@@ -202,7 +201,7 @@
                       <td>
                         <span *ngIf="data?.rbt">
                           <a [routerLink]="[routes.noteRbt.view, data.rbt.id]">
-                            {{ data.rbt?.session_date | date }}
+                            {{ data.rbt?.session_date | date: 'shortDate' }}
                           </a>
                         </span>
                       </td>
@@ -261,16 +260,8 @@
                           }}
                         </span>
                       </td>
-                      <td>
-                        <!-- {{data.tecnicoRbt?.name}}
-                                            {{data.tecnicoRbt?.surname}} -->
-                        <span *ngIf="data.rbt">
-                          {{ data.rbt?.tecnicoRbt.name }}
-                          {{ data.rbt?.tecnicoRbt.surname }}
-                        </span>
-                      </td>
-
-                      <td>{{ pa_number }}</td>
+                      
+                      <!-- <td>{{ pa_number }}</td> -->
                       <td>
                         <!-- {{data.supervisor?.npi}}  -->
                         <span *ngIf="data?.rbt">
@@ -301,7 +292,7 @@
                         ></span>
                       </td>
 
-                      <td>{{ data.rbt?.created_at | date }}</td>
+                      <td>{{ data.rbt?.created_at | date: 'shortDate' }}</td>
                     </tr>
 
                     <!-- Notas BCBA -->
@@ -313,7 +304,7 @@
                           <a
                             [routerLink]="[routes.noteBcba.view, data.bcba?.id]"
                           >
-                            {{ data.bcba?.session_date | date }}
+                            {{ data.bcba?.session_date | date: 'shortDate' }}
                           </a>
                         </span>
                       </td>
@@ -368,16 +359,8 @@
                         </span>
                       </td>
 
-                      <td>
-                        <!-- {{data.tecnicoRbt?.name}}
-                                            {{data.tecnicoRbt?.surname}} -->
-                        <span *ngIf="data?.bcba">
-                          {{ data.rbt?.tecnicoRbt.name }}
-                          {{ data.rbt?.tecnicoRbt.surname }}
-                        </span>
-                      </td>
 
-                      <td>{{ pa_number }}</td>
+                      <!-- <td>{{ pa_number }}</td> -->
 
                       <td>
                         <!-- {{data.supervisor?.npi}}  -->
@@ -411,7 +394,7 @@
                         ></span>
                       </td>
 
-                      <td>{{ data.bcba?.created_at | date }}</td>
+                      <td>{{ data.bcba?.created_at | date: 'shortDate' }}</td>
                     </tr>
                   </ng-container>
                 </tbody>

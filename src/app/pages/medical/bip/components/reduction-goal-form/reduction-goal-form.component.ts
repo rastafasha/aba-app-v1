@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, SimpleChanges, OnChanges, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { BipService } from '../../service/bip.service';
@@ -10,11 +10,13 @@ import { AuthService } from 'src/app/core/auth/auth.service';
   templateUrl: './reduction-goal-form.component.html',
   styleUrls: ['./reduction-goal-form.component.scss'],
 })
-export class ReductionGoalFormComponent {
+export class ReductionGoalFormComponent implements OnChanges, OnInit {
   // created comments by Malcolm Cordova at 10 feb 2004
   // mercadocreativo@gmail.com
   // @malcolmcordova
   @Input() clientSelected: any;
+  @Input() bipSelected: any;
+
   routes = AppRoutes;
   valid_form_success = false;
   text_validation = '';
@@ -27,7 +29,6 @@ export class ReductionGoalFormComponent {
   client_selected: any;
 
   bip_id: any;
-  bip_selected: any;
   bip_selectedId: any;
   bip_selectedIdd: any;
   maladaptives = [];
@@ -100,7 +101,7 @@ export class ReductionGoalFormComponent {
       // console.log(this.patient_id);
     });
 
-    this.ativatedRoute.params.subscribe(({ id }) => this.getBip()); // se solicita la info del perfil del bip
+    // this.ativatedRoute.params.subscribe(({ id }) => this.getBip()); // se solicita la info del perfil del bip
     this.user = this.authService.user as AppUser; //
     this.doctor_id = this.user?.id; //se asigna el doctor logueado a este campo para poderlo enviar en los
   }
@@ -110,13 +111,24 @@ export class ReductionGoalFormComponent {
       this.handleClientSelectedChange();
       console.log('clientSelected changed:', this.clientSelected);
     }
+    if (changes['bipSelected']) {
+      this.handleBipSelectedChange();
+      console.log('bipSelected changed:', this.bipSelected);
+    }
+  }
+
+  private handleBipSelectedChange() {
+    if (this.bipSelected) {
+      this.bip_selectedId = this.bipSelected.bip.id;
+      this.bip_selectedIdd = this.bipSelected.bip.id;
+      this.maladaptives = this.bipSelected.maladaptives;
+    }
   }
 
   private handleClientSelectedChange() {
     if (this.clientSelected) {
-      
-
       this.client_id = this.clientSelected.patient.id;
+      this.patient_identifier = this.clientSelected.patient.patient_identifier;
       if (this.patient_identifier !== null) {
         this.getPatientGoals(this.patient_identifier);
       }
@@ -137,18 +149,17 @@ export class ReductionGoalFormComponent {
   // }
 
   //obtenemos el bip por el id
-  getBip() {
-    if (this.patient_identifier !== null && this.patient_identifier !== undefined) {
-      this.bipService.getBipByUser(this.patient_identifier).subscribe((resp) => {
-        // console.log('bip',resp);
+  // getBip() {
+  //   if (this.patient_identifier !== null && this.patient_identifier !== undefined) {
+  //     this.bipService.getBipByUser(this.patient_identifier).subscribe((resp) => {
+  //       // console.log('bip',resp);
 
-        this.bip_selected = resp; //convertimos la respuesta en un variable
-        this.bip_selectedId = resp['id']; //convertimos la respuesta en un variable
-        this.bip_selectedIdd = this.bip_selected.bip.id; //convertimos la respuesta en un variable
-        this.maladaptives = this.bip_selected.maladaptives; //convertimos la respuesta en un variable
-      });
-    }
-  }
+  //       this.bip_selectedId = resp['id']; //convertimos la respuesta en un variable
+  //       this.bip_selectedIdd = this.bipSelected.bip.id; //convertimos la respuesta en un variable
+  //       this.maladaptives = this.bipSelected.maladaptives; //convertimos la respuesta en un variable
+  //     });
+  //   }
+  // }
 
   //obtenemos los tipo goals: reductions del paciente por el patient_identifier si existe,
   //si existe enviamos el client_id_goal para actualizar el goal del paciente

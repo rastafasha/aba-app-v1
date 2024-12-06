@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AppUser } from 'src/app/core/models/users.model';
 
@@ -7,11 +7,13 @@ import { AppUser } from 'src/app/core/models/users.model';
   templateUrl: './behavior-assistant.component.html',
   styleUrls: ['./behavior-assistant.component.scss'],
 })
-export class BehaviorAssistantComponent {
+export class BehaviorAssistantComponent implements OnInit {
+  // @Input() clientSelected: any;
+  // @Input() bipSelected: any;
+
   valid_form_success = false;
   text_validation = '';
   text_success = '';
-  @Input() clientSelected: any;
   monday: any;
   tuesday: any;
   wednesday: any;

@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
@@ -9,10 +9,12 @@ import { AppUser } from 'src/app/core/models/users.model';
   templateUrl: './consent-treatment-form.component.html',
   styleUrls: ['./consent-treatment-form.component.scss'],
 })
-export class ConsentTreatmentFormComponent {
+export class ConsentTreatmentFormComponent implements OnInit, OnChanges {
+  @Input() clientSelected: any;
+  @Input() bipSelected: any;
+
   valid_form = false;
   valid_form_success = false;
-  @Input() clientSelected: any;
   text_success = '';
   text_validation = '';
 
@@ -57,7 +59,7 @@ export class ConsentTreatmentFormComponent {
       // this.getGoalbyPatient(); // se solicita la info del perfil del usuario
     });
 
-    this.ativatedRoute.params.subscribe(({ id }) => this.getBip()); // se solicita la info del perfil del bip
+    // this.ativatedRoute.params.subscribe(({ id }) => this.getBip()); // se solicita la info del perfil del bip
     // this.ativatedRoute.params.subscribe( ({id}) => this.getGoal(id)); // se solicita la info del perfil del bip
     // this.ativatedRoute.params.subscribe( ({id}) => this.getGoal(id)); // se solicita la info del perfil del goal
     const USER = localStorage.getItem('user'); // se solicita el usuario logueado
@@ -70,10 +72,23 @@ export class ConsentTreatmentFormComponent {
       this.handleClientSelectedChange();
       console.log('clientSelected changed:', this.clientSelected);
     }
+    if (changes['bipSelected']) {
+      this.handleBipSelectedChange();
+      console.log('bipSelected changed:', this.bipSelected);
+    }
+  }
+
+  private handleBipSelectedChange() {
+    if (this.bipSelected) {
+      this.bip_selected = this.bipSelected;
+      this.bip_selectedId = this.bipSelected.id;
+      this.bip_selectedIdd = this.bipSelected.bip.id;
+    }
   }
 
   private handleClientSelectedChange() {
     if (this.clientSelected) {
+      this.client_selected = this.clientSelected;
       this.client_id = this.clientSelected.patient.id;
       if (this.patient_identifier !== null) {
         this.getPatientConsentToTreatment(this.patient_identifier);
@@ -95,18 +110,18 @@ export class ConsentTreatmentFormComponent {
   // }
 
   //obtenemos el bip por el id
-  getBip() {
-    if (this.patient_identifier !== null && this.patient_identifier !== undefined) {
-      this.bipService.getBipByUser(this.patient_identifier).subscribe((resp) => {
-        // console.log('bip',resp);
+  // getBip() {
+  //   if (this.patient_identifier !== null && this.patient_identifier !== undefined) {
+  //     this.bipService.getBipByUser(this.patient_identifier).subscribe((resp) => {
+  //       // console.log('bip',resp);
 
-        this.bip_selected = resp; //convertimos la respuesta en un variable
-        this.bip_selected = resp; //convertimos la respuesta en un variable
-        this.bip_selectedId = resp.id; //convertimos la respuesta en un variable
-        this.bip_selectedIdd = this.bip_selected.bip.id; //convertimos la respuesta en un variable
-      });
-    }
-  }
+  //       this.bip_selected = resp; //convertimos la respuesta en un variable
+  //       this.bip_selected = resp; //convertimos la respuesta en un variable
+  //       this.bip_selectedId = resp.id; //convertimos la respuesta en un variable
+  //       this.bip_selectedIdd = this.bip_selected.bip.id; //convertimos la respuesta en un variable
+  //     });
+  //   }
+  // }
 
   //obtenemos los tipo goals: sustituions del paciente por el patient_identifier si existe,
   //si existe enviamos el client_id_goal para actualizar el goal del paciente
