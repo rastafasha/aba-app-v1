@@ -170,7 +170,7 @@ export class ChartReplacementComponent implements OnInit, OnChanges {
     // Add check for goal changes
     if (changes['goal']?.currentValue) {
       if (this.patient_identifier) {
-        this.getGoalsReductions();
+        // this.getGoalsReductions();
       }
     }
   }
@@ -179,13 +179,14 @@ export class ChartReplacementComponent implements OnInit, OnChanges {
     if (!this.loaded_bip) return;
 
     this.client_selected = this.loaded_bip;
-    this.patient_identifier = this.loaded_bip.patient?.patient_identifier;
-    this.patient_ident = this.loaded_bip.patient?.id;
+    this.patient_identifier = this.client_selected.patient_identifier;
+    this.patient_ident = this.client_selected.id;
 
     if (this.client_selected?.type !== null && this.client_selected?.eligibility === 'yes') {
       this.patient_identifier = this.client_selected.patient_identifier;
     }
 
+    console.log(this.goal, this.patient_identifier, this.patient_ident, 'this.goal from handleBipLoaded');
     if (this.goal) {
       this.getGoalsReductions();
     }
@@ -220,44 +221,47 @@ export class ChartReplacementComponent implements OnInit, OnChanges {
   // obtenemos todos las notas filtrandose con el nombre seleccionado traido como input.. this.goal
   // junto con el patient_id por si existe otro paciente con el mismo maladaptive
 
+  private parsearGoalsCol(goal, goalSelected) {
+    console.log(goalSelected, 'goal and goalSelected');
+    const replacementWithoutSlash = goalSelected.replace(/\\"/g, '"');
+    const replacementParsed = JSON.parse(
+      replacementWithoutSlash.slice(1, -1)
+    );
+    // return JSON.parse(goalParsed);
+    const index = replacementParsed.find(
+      (item) => item.goal === goal
+    );
+    return replacementParsed[index];
+  }
+
   getGoalsReductions() {
     this.graphicReductionService
       .listReductionGraphics(this.goal, this.patient_identifier)
       .subscribe((resp) => {
-        console.log(resp);
+        console.log(resp, 'resp from getGoalsReductions');
         this.existgrfic = resp.replacementsCol;
 
         //funcion de pablo alcorta
         //se limpia y se extrae los datos de la coleccion json
         const data = resp;
+        console.log(data, 'data');
         const replacementsParsed = [];
-        data?.replacementsCol.forEach((goal) => {
-          const replacementParsed = parsearGoalsCol(
+        resp?.replacementsCol.forEach((goal) => {
+          const replacementParsed = this.parsearGoalsCol(
             goal, 
             this.goal
           );
+          console.log(replacementParsed, 'replacementParsed');
           replacementsParsed.push(replacementParsed);
         });
 
-        console.log(replacementsParsed);
+        console.log(replacementsParsed, 'replacementsParsed');
         data.replacementsCol = replacementsParsed;
         // console.log(data)
 
         //lo convierto a variable
         this.graphData = replacementsParsed;
-        // console.log(this.graphData);
-
-        function parsearGoalsCol(goal, goalSelected) {
-          const replacementWithoutSlash = goal.replace(/\\"/g, '"');
-          const replacementParsed = JSON.parse(
-            replacementWithoutSlash.slice(1, -1)
-          );
-          // return JSON.parse(goalParsed);
-          const index = replacementParsed.find(
-            (item) => item.goal === goalSelected
-          );
-          return replacementParsed[index];
-        }
+        console.log(this.graphData, 'this.graphData replacements');
 
         
         // fin funcion de pablo alcorta

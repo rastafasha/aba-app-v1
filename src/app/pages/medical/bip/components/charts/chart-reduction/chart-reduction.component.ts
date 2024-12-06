@@ -250,7 +250,7 @@ export class ChartReductionComponent implements OnInit, OnChanges {
 
         //lo convierto a variable
         this.graphData = maladaptivesParsed;
-        // console.log(this.graphData);
+        console.log(this.graphData, 'this.graphData');
 
         function parsearMaladaptivesCol(maladaptive, maladaptiveSelected) {
           const maladaptiveWithoutSlash = maladaptive.replace(/\\"/g, '"');
