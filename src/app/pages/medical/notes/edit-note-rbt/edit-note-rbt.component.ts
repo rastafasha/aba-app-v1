@@ -79,6 +79,8 @@ export class EditNoteRbtComponent implements OnInit {
   session_length_morning_total = '';
   session_length_afternon_total = '';
   environmental_changes = '';
+  totalMinutos = 0;
+  total_hour_session = '';
 
   sumary_note = '';
   meet_with_client_at = '';
@@ -468,20 +470,62 @@ export class EditNoteRbtComponent implements OnInit {
   hourTimeInSelected(value: string) {
     this.selectedValueTimeIn = value;
     this.recalculateSessionLength();
+    this.calculateTotalHours();
   }
   hourTimeOutSelected(value: string) {
     this.selectedValueTimeOut = value;
     this.recalculateSessionLength();
+    this.calculateTotalHours();
   }
 
   hourTimeIn2Selected(value: string) {
     this.selectedValueTimeIn2 = value;
     this.recalculateSessionLength();
+    this.calculateTotalHours();
   }
   hourTimeOut2Selected(value: string) {
     this.selectedValueTimeOut2 = value;
     this.recalculateSessionLength();
+    this.calculateTotalHours();
   }
+
+
+  calculateTotalHours() {
+    const timeIn1 = this.convertToMinutes(this.selectedValueTimeIn);
+    const timeOut1 = this.convertToMinutes(this.selectedValueTimeOut);
+    const timeIn2 = this.convertToMinutes(this.selectedValueTimeIn2);
+    const timeOut2 = this.convertToMinutes(this.selectedValueTimeOut2);
+
+    const totalMinutes = (timeOut1 - timeIn1) + (timeOut2 - timeIn2);
+    const totalHours = this.convertToHours(totalMinutes);
+    this.total_hour_session = totalHours;
+    console.log(`Total hours: ${totalHours}`);
+    console.log('para el html', this.total_hour_session);
+}
+
+convertToMinutes(time: string): number {
+  if (!time || !time.includes(':')) {
+    console.error(`Invalid time format: ${time}`);
+        return 0; // O manejar el error de otra manera
+    }
+
+    const [hours, minutes] = time.split(':').map(Number);
+
+    // Validar que hours y minutes sean números válidos
+    if (isNaN(hours) || isNaN(minutes) || hours < 0 || minutes < 0 || minutes >= 60) {
+        console.error(`Invalid time values: hours=${hours}, minutes=${minutes}`);
+        return 0; // O manejar el error de otra manera
+    }
+
+    return hours * 60 + minutes;
+}
+
+convertToHours(totalMinutes: number): string {
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return `${hours}h ${minutes}m`;
+}
+
 
   private recalculateSessionLength() {
     this.session_length_morning_total =
