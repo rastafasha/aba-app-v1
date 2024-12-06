@@ -250,7 +250,6 @@ export class NoteRbtComponent implements OnInit {
   getProfileBip() {
     this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
       this.client_selected = resp.patient;
-      console.log(resp);
       this.first_name = this.client_selected.first_name;
       this.last_name = this.client_selected.last_name;
       this.patient_identifier = this.client_selected.patient_identifier;
@@ -790,7 +789,7 @@ convertToHours(totalMinutes: number): string {
     this.isGeneratingSummary = true;
     const data = {
       diagnosis: this.diagnosis_code,
-      birthDate: this.client_selected?.patient?.birth_date
+      birthDate: this.client_selected?.birth_date
         ? this.client_selected.patient.birth_date
         : null,
       startTime: this.selectedValueTimeIn ? this.selectedValueTimeIn : null,
