@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-sm-12">
           <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a [routerLink]="routes.noteBcba.list">BCBA Notes </a></li>
+            <li class="breadcrumb-item"><a [routerLink]="[routes.noteBcba.list, patient_identifier]">BCBA Notes </a></li>
             <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
             <li class="breadcrumb-item active">Add Note </li>
         </ul>
@@ -29,7 +29,7 @@
                 <div class="col-12 py-4">
                   <h4>Create Note Bcba</h4>
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
+                <!-- <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
                       >POS Avaiable<span class="login-danger">*</span></label
@@ -42,6 +42,25 @@
                       type="text"
                     />
 
+                  </div>
+                </div> -->
+                <div class="col-12 col-md-3">
+                  <div class="form-group local-forms">
+                    <label
+                      >POS
+                      <span class="login-danger">*</span></label
+                    >
+                    <select
+                      class="form-control form-select-solid fw-bolder"
+                      name="meet_with_client_at"
+                      [(ngModel)]="meet_with_client_at"
+                    >
+                      <option>-- Select --</option>
+                      <option value="03">03 School</option>
+                      <option value="12">12 Home</option>
+                      <option value="02">02 Telehealth</option>
+                      <option value="99">99 Other</option>
+                    </select>
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
@@ -153,7 +172,7 @@
                 <div class="col-12 col-md-3">
                   <div class="form-group local-forms">
                     <label
-                      >Met with client at
+                      >POS
                       <span class="login-danger">*</span></label
                     >
                     <select
@@ -380,7 +399,7 @@
       
 
       <!-- Family only 56 -->
-       <ng-container  *ngIf="showFamily">
+       <ng-container  *ngIf="showMonitoring">
         <div class="col-xs-12 col-sm-6" >
           <div class="card">
             <div class="card-body">
@@ -424,7 +443,7 @@
         </div>
        </ng-container>
        <!-- Monitoring  only 55-->
-       <ng-container  *ngIf="showMonitoring" >
+       <ng-container  *ngIf=" showFamily" >
       <div class="col-xs-12 col-sm-6" >
         <div class="card">
           <div class="card-body">

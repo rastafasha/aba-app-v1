@@ -21,7 +21,8 @@ export class NoteBcbaViewComponent implements OnInit {
   @ViewChild('contentToConvert') contentToConvert!: ElementRef;
   patientProfile: any[];
   option_selected = 1;
-  patient_id: any;
+  patient_id: number;
+  patient_identifier: string;
   // option_selected:number = 0;
 
   selectedValueProvider!: string;
@@ -187,7 +188,7 @@ export class NoteBcbaViewComponent implements OnInit {
       console.log(resp, 'resp');
       this.note_selected = resp.noteBcba;
       this.note_selectedId = resp.noteBcba.id;
-      this.patient_id = this.note_selected.patient_identifier;
+      this.patient_identifier = this.note_selected.patient_identifier;
       this.bip_id = this.note_selected.bip_id;
       this.location = this.note_selected.location;
       // this.birth_date = this.note_selected.birth_date;
@@ -269,14 +270,14 @@ export class NoteBcbaViewComponent implements OnInit {
 
   getProfileBip() {
     this.bipService
-      .getBipProfilePatient_id(this.patient_id)
+      .getBipProfilePatient_id(this.patient_identifier)
       .subscribe((resp) => {
         console.log(resp);
         this.patient_selected = resp.patient;
 
         this.first_name = this.patient_selected.first_name;
         this.last_name = this.patient_selected.last_name;
-        this.patient_id = resp.patient.patient_id;
+        this.patient_identifier = resp.patient.patient_identifier;
         // console.log(this.patient_id);
         this.diagnosis_code = this.patient_selected.diagnosis_code;
 
