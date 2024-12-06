@@ -110,11 +110,11 @@ export class BipAttentionComponent implements OnInit {
       console.log(this.patient_identifier);
     });
     this.getProfileBip();
+    this.getBip();
 
     const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
     this.doctor_id = this.user.id;
-
   }
 
   goBack() {
@@ -127,6 +127,12 @@ export class BipAttentionComponent implements OnInit {
     }
     this.option_selected = value;
 
+  }
+
+  getBip() {
+    this.bipService.getBipByUser(this.patient_identifier).subscribe((resp) => {
+      this.bip_selected = resp;
+    });
   }
 
   getProfileBip() {
