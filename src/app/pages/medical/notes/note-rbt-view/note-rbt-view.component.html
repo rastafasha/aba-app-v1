@@ -167,7 +167,16 @@
                             <p>{{ note_selected.session_date | date }}</p>
                           </div>
                         </div>
-                        
+                        <div class="col-xl-3 col-sm-6 col-lg-3">
+                          <div class="detail-personal">
+                            <h2>Session Length Total</h2>
+                            <p>
+                              {{
+                                note_selected.session_length_total || "&nbsp;"
+                              }}
+                            </p>
+                          </div>
+                        </div>
 
                         <div class="clear"></div>
 
@@ -188,7 +197,7 @@
                         </div>
                         <div class="col-xl-3 col-sm-6 col-lg-3">
                           <div class="detail-personal">
-                            <h2>Total Morning Session</h2>
+                            <h2>Total First Session</h2>
                             <p>
                               {{
                                 note_selected.session_length_morning_total ||
@@ -217,21 +226,11 @@
                         </div>
                         <div class="col-xl-3 col-sm-6 col-lg-3">
                           <div class="detail-personal">
-                            <h2>Total Afternoon Session</h2>
+                            <h2>Total Second Session</h2>
                             <p>
                               {{
                                 note_selected.session_length_afternon_total ||
                                   "&nbsp;"
-                              }}
-                            </p>
-                          </div>
-                        </div>
-                        <div class="col-xl-3 col-sm-6 col-lg-3">
-                          <div class="detail-personal">
-                            <h2>Session Length Total</h2>
-                            <p>
-                              {{
-                                note_selected.session_length_total || "&nbsp;"
                               }}
                             </p>
                           </div>
