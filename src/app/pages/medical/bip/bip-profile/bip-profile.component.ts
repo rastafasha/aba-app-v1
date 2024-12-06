@@ -16,6 +16,7 @@ import { BipService } from '../service/bip.service';
   styleUrls: ['./bip-profile.component.scss'],
 })
 export class BipProfileComponent implements OnInit {
+  loaded_bip: any;
   routes = AppRoutes;
   @ViewChild('contentToConvert') contentToConvert!: ElementRef;
   patientProfile: any[];
@@ -52,6 +53,7 @@ export class BipProfileComponent implements OnInit {
 
 
   bip_selected: any = {};
+  bip_created_at: any;
   patient_selected: any = {};
   reduction_goal :any = [];
   reduction_goals_goalltos = [];
@@ -139,6 +141,7 @@ export class BipProfileComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.pageService.onInitPage();
+    console.log('init bip profile');
     // this.doctorService.getUserRoles();
     this.activatedRoute.params.subscribe((resp) => {
       this.patient_identifier = resp['patient_id'];
@@ -146,6 +149,7 @@ export class BipProfileComponent implements OnInit {
       this.getPatient();
     });
     this.user = this.authService.user as AppUser;
+    this.getProfileBip();
   //  console.log( this.clientSelected );
   }
 
@@ -167,17 +171,26 @@ export class BipProfileComponent implements OnInit {
     return false;
   }
 
+  getProfileBip() {
+    this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
+      this.loaded_bip = resp;
+    });
+  }
+
   getPatient() {
     this.bipService
       .getBipProfilePatientPdf_id(this.patient_identifier)
       .subscribe((resp) => {
-        console.log(resp);
+        console.log(resp, 'resp from bip profile getPatient');
         this.patient_selected = resp.patient ? resp.patient : null;
         this.patientId = this.patient_selected.patient_identifier;
 
         // ------Bip
 
         this.bip_selected = resp.bip;
+        this.bip_created_at = resp.bip.created_at;
+        console.log('created_at',this.bip_created_at);
+        console.log('bip_selected',this.bip_selected);
         
         this.maladaptives = resp.maladaptives;
         

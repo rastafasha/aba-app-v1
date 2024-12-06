@@ -343,6 +343,8 @@
                       </div>
                       <!-- <h2 class="text-center">Grafico</h2> -->
                       <app-chart-reduction
+                        [bip_created_at]="bip_selected.created_at"
+                        [loaded_bip]="bip_selected"
                         [maladaptive_behavior]="malad.maladaptive_behavior"
                         [baseline_date]="malad.baseline_date"
                         [baseline_level]="malad.baseline_level"
@@ -813,7 +815,14 @@
                         </div>
                       </ng-container>
                       <!-- <h2 class="text-center">Grafico</h2> -->
-                      <app-chart-reduction [maladaptive_behavior]="item.maladaptive"  [baseline_date]="item.baseline_date" [baseline_level]="item.baseline_level" [initial_interesting]="item.initial_interesting"></app-chart-reduction>
+                      <app-chart-reduction
+                        [maladaptive_behavior]="item.maladaptive"
+                        [baseline_date]="item.baseline_date"
+                        [baseline_level]="item.baseline_level"
+                        [initial_interesting]="item.initial_interesting"
+                        [bip_created_at]="bip_created_at"
+                        [loaded_bip]="bip_selected"
+                      ></app-chart-reduction>
                     </ng-container>
                   </div>
                 </div>
@@ -942,6 +951,8 @@
                       <app-chart-replacement
                         [goal]="itemsg.goal"
                         [baseline_d]="itemsg.created_at"
+                        [bip_created_at]="bip_created_at"
+                        [loaded_bip]="bip_selected"
                       ></app-chart-replacement>
                     </ng-container>
                   </div>

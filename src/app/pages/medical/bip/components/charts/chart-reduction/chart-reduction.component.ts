@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import {
   ApexAxisChartSeries,
@@ -66,7 +66,7 @@ export type ChartOptions = {
   templateUrl: './chart-reduction.component.html',
   styleUrls: ['./chart-reduction.component.scss'],
 })
-export class ChartReductionComponent {
+export class ChartReductionComponent implements OnInit, OnChanges {
   selectedValue = '03';
   @ViewChild('chart') chart!: ChartComponent;
 
@@ -75,6 +75,8 @@ export class ChartReductionComponent {
   @Input() initial_interesting: any;
   @Input() baseline_level: any;
   @Input() baseline_date: Date | 'shortTime';
+  @Input() bip_created_at: any;
+  @Input() loaded_bip: any;
   // @Output() cursoD: EventEmitter<any>  = new EventEmitter();// envia la data
 
   chartOptionsOne: Partial<ChartOptions>;
@@ -150,43 +152,74 @@ export class ChartReductionComponent {
     this.activatedRoute.params.subscribe((resp) => {
       this.patient_identifier = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
       // console.log(this.patient_id);
-      this.getBip(); // se pide el perfil del paciente por el bip relacionado
-      this.getProfileBip(); // se pide el perfil del paciente por el bip relacionado
+      // this.getBip(); // se pide el perfil del paciente por el bip relacionado
+      // this.getProfileBip(); // se pide el perfil del paciente por el bip relacionado
     });
     //  this.getGraphicPatientMonth();
   }
 
-  // traemos la fecha inicial que viene de la creacion del bip
-  getBip() {
-    this.bipService.getBipByUser(this.patient_identifier).subscribe((resp) => {
-      // console.log(resp);
-      this.created_at = resp.bip.created_at;
-      // console.log('creacion bip',this.created_at);
-    });
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['bip_created_at']?.currentValue) {
+      this.created_at = changes['bip_created_at'].currentValue;
+    }
+    if (changes['loaded_bip']?.currentValue) {
+      this.handleBipLoaded();
+    }
+    // Add check for maladaptive_behavior changes
+    if (changes['maladaptive_behavior']?.currentValue) {
+      if (this.patient_identifier) {
+        this.getGraphicMaladaptive();
+      }
+    }
   }
+
+  handleBipLoaded() {
+    if (!this.loaded_bip) return;
+    
+    this.client_selected = this.loaded_bip;
+    this.patient_identifier = this.loaded_bip.patient?.patient_identifier;
+    this.patient_ident = this.loaded_bip.patient?.id;
+
+    if (this.client_selected?.type !== null && this.client_selected?.eligibility === 'yes') {
+      this.patient_identifier = this.client_selected.patient_identifier;
+    }
+
+    if (this.maladaptive_behavior) {
+      this.getGraphicMaladaptive();
+    }
+  }
+
+  // traemos la fecha inicial que viene de la creacion del bip
+  // getBip() {
+  //   this.bipService.getBipByUser(this.patient_identifier).subscribe((resp) => {
+  //     // console.log(resp);
+  //     this.created_at = resp.bip.created_at;
+  //     // console.log('creacion bip',this.created_at);
+  //   });
+  // }
 
   //traemos la info del paciente o cliente
-  getProfileBip() {
-    this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
-      console.log(resp);
-      this.client_selected = resp; // asignamos el objeto a nuestra variable
-      this.patient_identifier = resp.patient.patient_identifier;
-      this.patient_ident = resp.patient.id;
-      // console.log(this.patient_id);
+  // getProfileBip() {
+  //   this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
+  //     console.log(resp);
+  //     this.client_selected = resp; // asignamos el objeto a nuestra variable
+  //     this.patient_identifier = resp.patient.patient_identifier;
+  //     this.patient_ident = resp.patient.id;
+  //     // console.log(this.patient_id);
 
-      //traemos la info del usuario
-      if (this.client_selected.type !== null) {
-        // si hay o no informacion del paciente
-        if (this.client_selected.eligibility === 'yes') {
-          // si el status es positivo para proceder
-          this.patient_identifier = this.client_selected.patient_identifier;
-        }
-      }
-      setTimeout(() => {
-        this.getGraphicMaladaptive();
-      }, 50);
-    });
-  }
+  //     //traemos la info del usuario
+  //     if (this.client_selected.type !== null) {
+  //       // si hay o no informacion del paciente
+  //       if (this.client_selected.eligibility === 'yes') {
+  //         // si el status es positivo para proceder
+  //         this.patient_identifier = this.client_selected.patient_identifier;
+  //       }
+  //     }
+  //     setTimeout(() => {
+  //       this.getGraphicMaladaptive();
+  //     }, 50);
+  //   });
+  // }
 
   // obtenemos todos las notas filtrandose con el nombre seleccionado traido como input.. this.maladaptive_behavior
   // junto con el patient_id por si existe otro paciente con el mismo maladaptive
