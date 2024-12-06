@@ -11,6 +11,11 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { AppUser } from 'src/app/core/models/users.model';
 import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 
+
+interface ValidationResult {
+  isValid: boolean;
+  missingFields: string[];
+}
 export interface POSModel {
   id: number;
   name: string;
@@ -774,14 +779,18 @@ convertToHours(totalMinutes: number): string {
   }
 
   generateAISummary() {
-    if (!this.checkDataSufficient()) {
-      Swal.fire('Warning', 'Please fill all the required fields', 'warning');
+    const validationResult = this.checkDataSufficient();
+    
+    if (!validationResult.isValid) {
+      const missingFieldsList = validationResult.missingFields.join('\n• ');
+      Swal.fire('Warning', `Please fill all the required fields:\n\n• ${missingFieldsList}`, 'warning');
       return;
     }
+
     this.isGeneratingSummary = true;
     const data = {
       diagnosis: this.diagnosis_code,
-      birthDate: this.client_selected.patient.birth_date
+      birthDate: this.client_selected.patient?.birth_date
         ? this.client_selected.patient.birth_date
         : null,
       startTime: this.selectedValueTimeIn ? this.selectedValueTimeIn : null,
@@ -815,7 +824,7 @@ convertToHours(totalMinutes: number): string {
       (error) => {
         Swal.fire(
           'Error',
-          'Error generating AI summary. Please ensure you have filled all the required fields.',
+          'Error generating AI summary. Please try again.',
           'error'
         );
         this.isGeneratingSummary = false;
@@ -823,39 +832,60 @@ convertToHours(totalMinutes: number): string {
     );
   }
 
-  checkDataSufficient(): boolean {
-    if (!this.client_selected) return false;
+  checkDataSufficient(): ValidationResult {
+    const missingFields: string[] = [];
+
+    if (!this.client_selected) {
+      missingFields.push('Client information');
+    }
 
     const hasTime1 = this.selectedValueTimeIn && this.selectedValueTimeOut;
     const hasTime2 = this.selectedValueTimeIn2 && this.selectedValueTimeOut2;
-    if (!hasTime1 && !hasTime2) return false;
+    if (!hasTime1 && !hasTime2) {
+      missingFields.push('At least one session time period (Time In/Out)');
+    }
 
-    if (!this.meet_with_client_at) return false;
+    if (!this.meet_with_client_at) {
+      missingFields.push('Meeting location');
+    }
 
-    if (!this.maladaptives || this.maladaptives.length === 0) return false;
-    const allMaladaptivesValid = this.maladaptives.every(
-      (m) =>
-        m.maladaptive_behavior &&
-        m.number_of_occurrences !== undefined &&
-        m.number_of_occurrences !== null
-    );
-    if (!allMaladaptivesValid) return false;
+    if (!this.maladaptives || this.maladaptives.length === 0) {
+      missingFields.push('Maladaptive behaviors');
+    } else {
+      const allMaladaptivesValid = this.maladaptives.every(
+        (m) =>
+          m.maladaptive_behavior &&
+          m.number_of_occurrences !== undefined &&
+          m.number_of_occurrences !== null
+      );
+      if (!allMaladaptivesValid) {
+        missingFields.push('Complete maladaptive behavior information (behavior name and occurrences)');
+      }
+    }
 
-    if (!this.replacementGoals || this.replacementGoals.length === 0)
-      return false;
-    const allReplacementsValid = this.replacementGoals.every(
-      (r) =>
-        r.total_trials !== undefined &&
-        r.total_trials !== null &&
-        r.number_of_correct_response !== undefined &&
-        r.number_of_correct_response !== null
-    );
-    if (!allReplacementsValid) return false;
+    if (!this.replacementGoals || this.replacementGoals.length === 0) {
+      missingFields.push('Replacement goals');
+    } else {
+      const allReplacementsValid = this.replacementGoals.every(
+        (r) =>
+          r.total_trials !== undefined &&
+          r.total_trials !== null &&
+          r.number_of_correct_response !== undefined &&
+          r.number_of_correct_response !== null
+      );
+      if (!allReplacementsValid) {
+        missingFields.push('Complete replacement goal information (trials and correct responses)');
+      }
+    }
 
-    if (!this.intervention_added || this.intervention_added.length === 0)
-      return false;
+    if (!this.intervention_added || this.intervention_added.length === 0) {
+      missingFields.push('Interventions');
+    }
 
-    return true;
+    return {
+      isValid: missingFields.length === 0,
+      missingFields
+    };
   }
 
   getPos(posCode: string) {
