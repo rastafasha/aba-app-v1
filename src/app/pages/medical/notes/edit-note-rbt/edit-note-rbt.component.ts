@@ -781,7 +781,7 @@ convertToHours(totalMinutes: number): string {
     formData.append('provider_credential', this.provider_credential);
     formData.append('pos', this.pos);
 
-    formData.append('cpt_code', this.selectedValueCode);
+    
     // formData.append('provider', this.provider); // para el calculo de las unidades
 
     formData.append('session_date', this.session_date);
