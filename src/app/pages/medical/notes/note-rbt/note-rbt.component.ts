@@ -274,7 +274,7 @@ export class NoteRbtComponent implements OnInit {
       this.pa_services = resp.patient.pa_services;
 
       this.selectedPaService = resp.patient.pa_services.find(service => service.cpt === '97153') || null;
-      // console.log('Selected Service:', this.selectedPaService);
+      console.log('Selected Service:', this.selectedPaService);
 
       this.getMaladaptivesBipByPatientId();
       this.getReplacementsByPatientId();
@@ -618,10 +618,10 @@ convertToHours(totalMinutes: number): string {
 
   save() {
     this.text_validation = '';
-    if (!this.selectedPaService) {
-      this.text_validation = 'Please select a service';
-      return;
-    }
+    // if (!this.selectedPaService) {
+    //   this.text_validation = 'Please select a service';
+    //   return;
+    // }
     if (
       this.maladaptives[0].number_of_occurrences === undefined ||
       this.replacementGoals[0].number_of_correct_response === undefined ||
@@ -632,11 +632,11 @@ convertToHours(totalMinutes: number): string {
       !this.as_evidenced_by ||
       !this.rbt_modeled_and_demonstrated_to_caregiver ||
       !this.client_response_to_treatment_this_session ||
-      !this.progress_noted_this_session_compared_to_previous_session ||
-      !this.selectedValueCode
+      !this.progress_noted_this_session_compared_to_previous_session 
+      // !this.selectedValueCode
     ) {
       this.text_validation = 'All Fields (*) are required';
-      Swal.fire('Warning', `Must add less one`, 'warning');
+      Swal.fire('Warning', `All Fields (*) are required`, 'warning');
       return;
     }
 
@@ -676,7 +676,6 @@ convertToHours(totalMinutes: number): string {
     formData.append('provider_name_g',this.doctor_id+'');
     formData.append('provider_name',this.doctor_id+'');
     formData.append('supervisor_name', this.selectedValueBcba_id+'');
-    formData.append('cpt_code', this.selectedValueCode);
 
     formData.append('pa_service_id', this.selectedPaService.id.toString());
     formData.append('cpt_code', this.selectedPaService.cpt);
