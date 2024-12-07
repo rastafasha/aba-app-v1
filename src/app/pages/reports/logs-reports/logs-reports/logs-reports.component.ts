@@ -226,22 +226,24 @@ export class LogsReportsComponent implements OnInit {
       md: data.md,
       md2: data.md2,
       md3: data.md3
-
     }
+    
     const update$: Observable<unknown> = isNoteRbtV2(data)
-      ? this.notesRbtService.updateStatus(datos , data.id)
+      ? this.notesRbtService.updateStatus(datos, data.id)
       : isNoteBcbaV2(data)
-      ? this.notesBcbaService.updateStatus(datos , data.id)
+      ? this.notesBcbaService.updateStatus(datos, data.id)
       : of(null);
 
     update$.subscribe({
       next: () => {
+        const index = this.notes.findIndex(note => note.id === data.id);
+        if (index !== -1) {
+          this.notes[index] = {...this.notes[index], ...datos};
+        }
         Swal.fire('Updated', `Saved successfully!`, 'success');
-        this.ngOnInit();
       },
       error: () => {
         Swal.fire('Error', `Can't update!`, 'error');
-        this.ngOnInit();
       },
     });
   }
