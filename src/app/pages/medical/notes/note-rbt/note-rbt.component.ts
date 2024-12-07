@@ -803,7 +803,7 @@ convertToHours(totalMinutes: number): string {
     const data = {
       diagnosis: this.diagnosis_code,
       birthDate: this.client_selected?.birth_date
-        ? this.client_selected?.birth_date
+        ? this.client_selected.birth_date
         : null,
       startTime: this.selectedValueTimeIn ? this.selectedValueTimeIn : null,
       endTime: this.selectedValueTimeOut ? this.selectedValueTimeOut : null,
