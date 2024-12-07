@@ -469,8 +469,8 @@ convertToHours(totalMinutes: number): string {
   save() {debugger
     this.text_validation = '';
     if (
-      !this.rbt_training_goals ||
-      !this.caregivers_training_goals ||
+      // !this.rbt_training_goals ||
+      // !this.caregivers_training_goals ||
       !this.meet_with_client_at ||
       !this.session_date
     ) {
