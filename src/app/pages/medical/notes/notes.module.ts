@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { LayoutModule } from 'src/app/layout/layout.module';
 import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ComponentsModule } from '../bip/components/components.module';
@@ -16,7 +17,7 @@ import { NoteRbtComponent } from './note-rbt/note-rbt.component';
 import { NotesByClientComponent } from './notes-by-client/notes-by-client.component';
 import { NotesComponent } from './notes.component';
 import { NotesRoutingModule } from './notes.routing';
-import { LayoutModule } from '../../../layout/layout.module';
+
 
 @NgModule({
   declarations: [

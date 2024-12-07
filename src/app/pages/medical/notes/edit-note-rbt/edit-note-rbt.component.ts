@@ -8,11 +8,12 @@ import Swal from 'sweetalert2';
 import { NoteRbtService } from '../../../../core/services/notes-rbt.service';
 import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
+import { MaladaptivesComponent } from "../components/maladaptives/maladaptives.component";
 
 @Component({
   selector: 'app-edit-note-rbt',
   templateUrl: './edit-note-rbt.component.html',
-  styleUrls: ['./edit-note-rbt.component.scss'],
+  styleUrls: ['./edit-note-rbt.component.scss']
 })
 export class EditNoteRbtComponent implements OnInit {
   routes = AppRoutes;
@@ -78,6 +79,7 @@ export class EditNoteRbtComponent implements OnInit {
   time_out2 = '';
   session_length_morning_total = '';
   session_length_afternon_total = '';
+  session_length_total = '';
   environmental_changes = '';
   totalMinutos = 0;
   total_hour_session = '';
@@ -323,6 +325,8 @@ export class EditNoteRbtComponent implements OnInit {
         this.note_selected.session_length_morning_total;
       this.session_length_afternon_total =
         this.note_selected.session_length_afternon_total;
+
+        this.session_length_total = this.note_selected.session_length_total;
 
       console.log('Setting:', this.formatTime(this.note_selected.time_in));
       this.selectedValueTimeIn = this.formatTime(this.note_selected.time_in);
