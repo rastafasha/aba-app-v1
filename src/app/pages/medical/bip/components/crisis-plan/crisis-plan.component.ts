@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
@@ -10,11 +10,12 @@ import { AppUser } from 'src/app/core/models/users.model';
   templateUrl: './crisis-plan.component.html',
   styleUrls: ['./crisis-plan.component.scss'],
 })
-export class CrisisPlanComponent {
+export class CrisisPlanComponent implements OnInit, OnChanges {
+  @Input() clientSelected: any;
+  @Input() bipSelected: any;
   valid_form_success = false;
   text_validation = '';
   text_success = '';
-  @Input() clientSelected: any;
   client_id: number;
   user: AppUser;
   doctor_id: number;
@@ -81,7 +82,7 @@ export class CrisisPlanComponent {
       // this.getGoalbyPatient(); // se solicita la info del perfil del usuario
     });
 
-    this.ativatedRoute.params.subscribe(({ id }) => this.getBip()); // se solicita la info del perfil del bip
+    // this.ativatedRoute.params.subscribe(({ id }) => this.getBip()); // se solicita la info del perfil del bip
     // this.ativatedRoute.params.subscribe( ({id}) => this.getGoal(id)); // se solicita la info del perfil del bip
     // this.ativatedRoute.params.subscribe( ({id}) => this.getGoal(id)); // se solicita la info del perfil del goal
     const USER = localStorage.getItem('user'); // se solicita el usuario logueado
@@ -94,11 +95,24 @@ export class CrisisPlanComponent {
       this.handleClientSelectedChange();
       console.log('clientSelected changed:', this.clientSelected);
     }
+    if (changes['bipSelected']) {
+      this.handleBipSelectedChange();
+      console.log('bipSelected changed:', this.bipSelected);
+    }
+  }
+
+  private handleBipSelectedChange() {
+    if (this.bipSelected) {
+      this.bip_selected = this.bipSelected;
+      this.bip_selectedId = this.bipSelected.id;
+      this.bip_selectedIdd = this.bipSelected.bip.id;
+      this.maladaptives = this.bipSelected.maladaptives;
+    }
   }
 
   private handleClientSelectedChange() {
     if (this.clientSelected) {
-      
+      this.client_selected = this.clientSelected;
       this.client_id = this.clientSelected.patient.id;
       if (this.patient_identifier !== null) {
         this.getPatientGoalFamilyEnvolments(this.patient_identifier);
@@ -120,19 +134,19 @@ export class CrisisPlanComponent {
   // }
 
   //obtenemos el bip por el id
-  getBip() {
-    if (this.patient_identifier !== null && this.patient_identifier !== undefined) {
-      this.bipService.getBipByUser(this.patient_identifier).subscribe((resp) => {
-        // console.log('bip',resp);
+  // getBip() {
+  //   if (this.patient_identifier !== null && this.patient_identifier !== undefined) {
+  //     this.bipService.getBipByUser(this.patient_identifier).subscribe((resp) => {
+  //       // console.log('bip',resp);
 
-        this.bip_selected = resp; //convertimos la respuesta en un variable
-        this.bip_selected = resp; //convertimos la respuesta en un variable
-        this.bip_selectedId = resp.id; //convertimos la respuesta en un variable
-        this.bip_selectedIdd = this.bip_selected.bip.id; //convertimos la respuesta en un variable
-        this.maladaptives = this.bip_selected.maladaptives; //convertimos la respuesta en un variable
-      });
-    }
-  }
+  //       this.bip_selected = resp; //convertimos la respuesta en un variable
+  //       this.bip_selected = resp; //convertimos la respuesta en un variable
+  //       this.bip_selectedId = resp.id; //convertimos la respuesta en un variable
+  //       this.bip_selectedIdd = this.bip_selected.bip.id; //convertimos la respuesta en un variable
+  //       this.maladaptives = this.bip_selected.maladaptives; //convertimos la respuesta en un variable
+  //     });
+  //   }
+  // }
 
   //obtenemos los tipo goals: sustituions del paciente por el patient_identifier si existe,
   //si existe enviamos el client_id_goal para actualizar el goal del paciente

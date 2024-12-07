@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AppUser } from 'src/app/core/models/users.model';
 import Swal from 'sweetalert2';
@@ -10,11 +10,12 @@ import { GoalFamilyEnvolmentService } from '../../service/goal-family-envolment.
   templateUrl: './family-involvement-goal-form.component.html',
   styleUrls: ['./family-involvement-goal-form.component.scss'],
 })
-export class FamilyInvolvementGoalFormComponent implements OnInit {
+export class FamilyInvolvementGoalFormComponent implements OnInit, OnChanges {
+  @Input() clientSelected: any;
+  @Input() bipSelected: any;
   valid_form_success = false;
   text_validation = '';
   text_success = '';
-  @Input() clientSelected: any;
   caregiver_goal: any;
   outcome_measure: any;
   criteria: any;
@@ -28,9 +29,9 @@ export class FamilyInvolvementGoalFormComponent implements OnInit {
   client_id: any;
   user: AppUser;
   doctor_id: any;
-  client_selected: any;
+  // client_selected: any;
   patient_identifier: string;
-  bip_selected: any;
+  // bip_selected: any;
   bip_selectedId: any;
   bip_selectedIdd: any;
   maladaptives: any;
@@ -58,7 +59,7 @@ export class FamilyInvolvementGoalFormComponent implements OnInit {
       // this.getProfileBip(); // se solicita la info del perfil del usuario
     });
 
-    this.getBip(); // se solicita la info del perfil del bip
+    // this.getBip(); // se solicita la info del perfil del bip
     const USER = localStorage.getItem('user'); // se solicita el usuario logueado
     this.user = JSON.parse(USER ? USER : ''); //  si no hay un usuario en el localstorage retorna un objeto vacio
     this.doctor_id = this.user.id; //se asigna el doctor logueado a este campo para poderlo enviar en los
@@ -69,14 +70,26 @@ export class FamilyInvolvementGoalFormComponent implements OnInit {
       this.handleClientSelectedChange();
       console.log('clientSelected changed:', this.clientSelected);
     }
+    if (changes['bipSelected']) {
+      this.handleBipSelectedChange();
+      console.log('bipSelected changed:', this.bipSelected);
+    }
   }
 
   private handleClientSelectedChange() {
     if (this.clientSelected) {
       this.client_id = this.clientSelected.patient.id;
+      this.patient_identifier = this.clientSelected.patient.patient_identifier;
       if (this.patient_identifier !== null) {
         this.getPatientGoalFamilyEnvolments(this.patient_identifier);
       }
+    }
+  }
+
+  private handleBipSelectedChange() {
+    if (this.bipSelected) {
+      this.bip_selectedId = this.bipSelected.bip.id;
+      this.bip_selectedIdd = this.bipSelected.bip.id;
     }
   }
 
@@ -93,20 +106,20 @@ export class FamilyInvolvementGoalFormComponent implements OnInit {
   //   });
   // }
 
-  //obtenemos el bip por el id
-  getBip() {
-    if (this.patient_identifier !== null && this.patient_identifier !== undefined) {
-      this.bipService.getBipByUser(this.patient_identifier).subscribe((resp) => {
-        // console.log('bip',resp);
+  // //obtenemos el bip por el id
+  // getBip() {
+  //   if (this.patient_identifier !== null && this.patient_identifier !== undefined) {
+  //     this.bipService.getBipByUser(this.patient_identifier).subscribe((resp) => {
+  //       // console.log('bip',resp);
 
-        this.bip_selected = resp; //convertimos la respuesta en un variable
-        this.bip_selected = resp; //convertimos la respuesta en un variable
-        this.bip_selectedId = resp.id; //convertimos la respuesta en un variable
-        this.bip_selectedIdd = this.bip_selected.bip.id; //convertimos la respuesta en un variable
-        this.maladaptives = this.bip_selected.maladaptives; //convertimos la respuesta en un variable
-      });
-    }
-  }
+  //       this.bip_selected = resp; //convertimos la respuesta en un variable
+  //       this.bip_selected = resp; //convertimos la respuesta en un variable
+  //       this.bip_selectedId = resp.id; //convertimos la respuesta en un variable
+  //       this.bip_selectedIdd = this.bip_selected.bip.id; //convertimos la respuesta en un variable
+  //       this.maladaptives = this.bip_selected.maladaptives; //convertimos la respuesta en un variable
+  //     });
+  //   }
+  // }
 
   //obtenemos los tipo goals: sustituions del paciente por el patient_identifier si existe,
   //si existe enviamos el client_id_goal para actualizar el goal del paciente

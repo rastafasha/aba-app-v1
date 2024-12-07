@@ -10,6 +10,12 @@ import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 
+interface ValidationResult {
+  isValid: boolean;
+  missingFields: string[];
+}
+
+
 @Component({
   selector: 'app-note-bcba',
   templateUrl: './note-bcba.component.html',
@@ -607,82 +613,102 @@ convertToHours(totalMinutes: number): string {
   // }
   //
 
+  
   generateAISummary() {
-    if (!this.checkDataSufficient()) {
-      Swal.fire('Warning', 'Please fill all the required fields', 'warning');
-      return;
+    const validationResult = this.checkDataSufficient();
+    
+    if (!validationResult.isValid) {
+        const missingFieldsList = validationResult.missingFields.join('\n• ');
+        Swal.fire('Warning', `Please fill all the required fields:\n\n• ${missingFieldsList}`, 'warning');
+        return;
     }
+
     this.isGeneratingSummary = true;
     const data = {
-      diagnosis: this.diagnosis_code,
-      birthDate: this.birth_date,
-      startTime: this.selectedValueTimeIn ? this.selectedValueTimeIn : null,
-      endTime: this.selectedValueTimeOut ? this.selectedValueTimeOut : null,
-      startTime2: this.selectedValueTimeIn2 ? this.selectedValueTimeIn2 : null,
-      endTime2: this.selectedValueTimeOut2 ? this.selectedValueTimeOut2 : null,
-      pos: this.getPos(this.meet_with_client_at),
-      caregiverGoals: this.caregivers_training_goals.map((g) => ({
-        goal: g.caregiver_goal,
-        percentCorrect: g.porcent_of_correct_response,
-      })),
-      rbtTrainingGoals: this.rbt_training_goals.map((g) => ({
-        goal: g.lto,
-        percentCorrect: g.porcent_of_correct_response,
-      })),
-      noteDescription: this.note_description,
+        diagnosis: this.diagnosis_code,
+        birthDate: this.birth_date || null,
+        startTime: this.selectedValueTimeIn ? this.selectedValueTimeIn : null,
+        endTime: this.selectedValueTimeOut ? this.selectedValueTimeOut : null,
+        startTime2: this.selectedValueTimeIn2 ? this.selectedValueTimeIn2 : null,
+        endTime2: this.selectedValueTimeOut2 ? this.selectedValueTimeOut2 : null,
+        pos: this.getPos(this.meet_with_client_at),
+        caregiverGoals: this.showMonitoring ? this.caregivers_training_goals.map((g) => ({
+            goal: g.caregiver_goal,
+            percentCorrect: g.porcent_of_correct_response,
+        })) : [],
+        rbtTrainingGoals: this.showFamily ? this.rbt_training_goals.map((g) => ({
+            goal: g.lto,
+            percentCorrect: g.porcent_of_correct_response,
+        })) : [],
+        noteDescription: this.note_description,
     };
 
     this.noteBcbaService.generateAISummary(data).subscribe(
-      (response: any) => {
-        this.summary_note = response.summary;
-        this.isGeneratingSummary = false;
-      },
-      (error) => {
-        console.error('Error generating AI summary:', error);
-        Swal.fire(
-          'Error',
-          'Error generating AI summary. Please try again.',
-          'error'
-        );
-        this.isGeneratingSummary = false;
-      }
+        (response: any) => {
+            this.summary_note = response.summary;
+            this.isGeneratingSummary = false;
+        },
+        (error) => {
+            console.error('Error generating AI summary:', error);
+            Swal.fire('Error', 'Error generating AI summary. Please try again.', 'error');
+            this.isGeneratingSummary = false;
+        }
     );
   }
 
-  checkDataSufficient(): boolean {
-    if (!this.client_selected) return false;
+  checkDataSufficient(): ValidationResult {
+    const missingFields: string[] = [];
 
-    const hasTime = this.selectedValueTimeIn && this.selectedValueTimeOut;
-    if (!hasTime) return false;
+    if (!this.client_selected) {
+        missingFields.push('Client information');
+    }
 
-    if (!this.meet_with_client_at) return false;
+    const hasTime1 = this.selectedValueTimeIn && this.selectedValueTimeOut;
+    const hasTime2 = this.selectedValueTimeIn2 && this.selectedValueTimeOut2;
+    if (!hasTime1 && !hasTime2) {
+        missingFields.push('At least one session time period (Time In/Out)');
+    }
 
-    if (
-      !this.caregivers_training_goals ||
-      this.caregivers_training_goals.length === 0
-    )
-      return false;
-    const allCaregiverGoalsValid = this.caregivers_training_goals.every(
-      (g) =>
-        g.caregiver_goal &&
-        g.porcent_of_correct_response !== undefined &&
-        g.porcent_of_correct_response !== null
-    );
-    if (!allCaregiverGoalsValid) return false;
+    if (!this.meet_with_client_at) {
+        missingFields.push('Meeting location');
+    }
 
-    if (!this.rbt_training_goals || this.rbt_training_goals.length === 0)
-      return false;
-    const allRbtGoalsValid = this.rbt_training_goals.every(
-      (g) =>
-        g.lto &&
-        g.porcent_of_correct_response !== undefined &&
-        g.porcent_of_correct_response !== null
-    );
-    if (!allRbtGoalsValid) return false;
+    // Only validate caregiver goals if CPT code is 97156
+    if (this.showMonitoring) {
+        if (!this.caregivers_training_goals || this.caregivers_training_goals.length === 0) {
+            missingFields.push('Caregiver training goals');
+        } else {
+            const allCaregiverGoalsValid = this.caregivers_training_goals.every(
+                (g) => g.caregiver_goal && 
+                g.porcent_of_correct_response !== undefined && 
+                g.porcent_of_correct_response !== null
+            );
+            if (!allCaregiverGoalsValid) {
+                missingFields.push('Complete caregiver goal information (goals and percentages)');
+            }
+        }
+    }
 
-    // if (!this.note_description) return false;
+    // Only validate RBT goals if CPT code is 97155
+    if (this.showFamily) {
+        if (!this.rbt_training_goals || this.rbt_training_goals.length === 0) {
+            missingFields.push('RBT training goals');
+        } else {
+            const allRbtGoalsValid = this.rbt_training_goals.every(
+                (g) => g.lto && 
+                g.porcent_of_correct_response !== undefined && 
+                g.porcent_of_correct_response !== null
+            );
+            if (!allRbtGoalsValid) {
+                missingFields.push('Complete RBT goal information (goals and percentages)');
+            }
+        }
+    }
 
-    return true;
+    return {
+        isValid: missingFields.length === 0,
+        missingFields
+    };
   }
 
   getPos(posCode: string) {
