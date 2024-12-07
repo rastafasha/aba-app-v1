@@ -392,6 +392,7 @@ export class EditNoteRbtComponent implements OnInit {
         if (noteServiceId) {
           this.setPaService(noteServiceId);
         }
+        this.selectedPaService = resp.patient.pa_services.find(service => service.cpt === '97153') || null;
       });
 
     this.getReplacementsByPatientId();
