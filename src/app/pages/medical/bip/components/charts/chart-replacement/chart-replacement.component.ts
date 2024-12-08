@@ -166,7 +166,6 @@ export class ChartReplacementComponent {
 
   getProfileBip() {
     this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
-      console.log(resp);
       this.client_selected = resp; // asignamos el objeto a nuestra variable
       this.patient_identifier = resp.patient.patient_identifier;
       this.patient_ident = resp.patient.id;
@@ -191,189 +190,98 @@ export class ChartReplacementComponent {
     this.graphicReductionService
       .listReductionGraphics(this.goal, this.patient_identifier)
       .subscribe((resp) => {
-        console.log(resp);
-        this.existgrfic = resp.replacementsCol;
+        this.existgrfic = resp.replacementsCol; //Corroborar si existe grafico
 
-        //funcion de pablo alcorta
-        //se limpia y se extrae los datos de la coleccion json
         const data = resp;
         const replacementsParsed = [];
         data?.replacementsCol.forEach((goal) => {
-          const replacementParsed = parsearGoalsCol(
-            goal, 
-            this.goal
-          );
-          replacementsParsed.push(replacementParsed);
+          replacementsParsed.push(JSON.parse(JSON.parse(goal))[0]);
         });
 
-        console.log(replacementsParsed);
         data.replacementsCol = replacementsParsed;
-        // console.log(data)
-
-        //lo convierto a variable
         this.graphData = replacementsParsed;
-        // console.log(this.graphData);
-
-        function parsearGoalsCol(goal, goalSelected) {
-          const replacementWithoutSlash = goal.replace(/\\"/g, '"');
-          const replacementParsed = JSON.parse(
-            replacementWithoutSlash.slice(1, -1)
-          );
-          // return JSON.parse(goalParsed);
-          const index = replacementParsed.find(
-            (item) => item.goal === goalSelected
-          );
-          return replacementParsed[index];
-        }
-
-        
-        // fin funcion de pablo alcorta
-        // recorremos el resultado del array goalsParsed para extraer los solicitados por el request
         const number_of_correct_response = [];
-        const goal: string[] = [];
         const array = this.graphData;
-        for (this.goals of array) {
-          number_of_correct_response.push(
-            Number(this.goals.number_of_correct_response)
-          );
-          goal.push(String(this.goals.goal));
-        }
+        replacementsParsed.forEach(item => {
+          number_of_correct_response.push(item.number_of_correct_response);
+        })
+
         const number_of_trials: number[] = [];
         array.forEach((element) => {
           number_of_trials.push(element.total_trials);
         });
 
-        // this.stoName = resp.nameSto;
-        // this.stoName = resp.sustitutionStatusStoValues[0];
         this.stoStatus = resp.datosFiltrados[0];
         this.stoName = resp.nameSto;
-
-        // if(resp.filtered_goals !== null){
-        //   console.log(this.stoStatus);
-
-        // }else{
-        //   this.stoStatus = resp.sustitutionStatusStoValues[0];
-        //   console.log(this.stoStatus);
-
-        // }
-
-        console.log(this.stoName);
 
         this.replacementsExtractedGoal = this.replacements;
 
         // traemos todas las fechas
         this.sessions_dates = resp.sessions_dates.session_date;
         this.number_of_correct_response = number_of_correct_response;
-        this.notesRbts = resp.noteRbt;
 
         //fecha inicial cuando se hizo el bip
         this.sessions_dates = resp.sessions_dates.map(
           (item) => item.session_date
         );
-        this.sessions_dates.unshift(this.created_at); // con unshift lo unimos y colocamos de primero
-
-        this.number_of_correct_response.unshift(0);
-        number_of_trials.unshift(0);
-        //end
-
-        if (
-          this.sessions_dates?.length > 1 &&
-          this.sessions_dates?.length ===
-            this.number_of_correct_response?.length
-        ) {
-          let acumulador = 0;
-          let sumadorDeTrials = 0;
-          const acumuladorDeSemanas = [];
-          const acumuladorDeTrials = [];
-          let cantidadDeDias = 0;
-          let labelSemanal = '';
-          const arrayLabelSemanal = [];
-          this.sessions_dates.forEach((date, index) => {
-            if (index > 0) {
-              if (cantidadDeDias === 0) {
-                labelSemanal = date.substr(0, 10);
-              }
-              acumulador = acumulador + +this.number_of_correct_response[index];
-              cantidadDeDias += 1;
-              sumadorDeTrials += +number_of_trials[index];
-              // console.log(sumadorDeTrials, index)
-
-              if (
-                cantidadDeDias === 7 ||
-                index + 1 === this.sessions_dates.length
-              ) {
-                labelSemanal += ' - ' + date.substr(0, 10);
-                acumuladorDeSemanas.push(acumulador);
-                arrayLabelSemanal.push(labelSemanal);
-                cantidadDeDias = 0;
-                acumulador = 0;
-                labelSemanal = '';
-                acumuladorDeTrials.push(sumadorDeTrials);
-                sumadorDeTrials = 0;
-              }
-            }
-          });
-          const porcentajes: number[] = [];
-          if (acumuladorDeSemanas.length === acumuladorDeTrials.length) {
-            acumuladorDeSemanas.forEach((ac, index) => {
-              porcentajes.push(
-                +(ac / acumuladorDeTrials[index]).toFixed(2) * 100
-              );
-            });
-          }
-
-          this.sessions_dates = [this.sessions_dates[0].substr(0, 10)].concat(
-            arrayLabelSemanal
-          );
-          this.number_of_correct_response = [
-            this.number_of_correct_response[0],
-          ].concat(porcentajes);
-        }
-
-        //Chart
-        this.chartOptionsOne = {
-          chart: {
-            height: 370,
-            type: 'line',
-            toolbar: {
-              show: false,
-            },
-          },
-          grid: {
-            show: true,
-            xaxis: {
-              lines: {
-                show: true,
-              },
-            },
-            yaxis: {
-              lines: {
-                show: true,
-              },
-            },
-          },
-          dataLabels: {
-            enabled: true,
-          },
-          stroke: {
-            // curve: 'smooth',
-          },
-          series: [
-            {
-              name: '% Week',
-              color: '#00D3C7',
-              data: this.number_of_correct_response,
-            },
-          ],
-          xaxis: {
-            //
-            categories: this.sessions_dates,
-            // categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-          },
-        };
+        this.sessions_dates.unshift(this.created_at);
+        this.sessions_dates = this.sessions_dates.map(date => {
+          const dateAux = new Date(date);
+          const mes = String(dateAux.getUTCMonth() + 1).padStart(2, "0");
+          const dia = String(dateAux.getUTCDate()).padStart(2, "0");
+          const anio = dateAux.getUTCFullYear();
+          return `${mes}-${dia}-${anio}`;
+        });
+        this.setChart();
       });
   }
 
+
+  public setChart(): void {
+    this.chartOptionsOne = {
+      chart: {
+        height: 370,
+        type: 'line',
+            toolbar: {
+              show: false,
+            },
+      },
+      grid: {
+        show: true,
+        xaxis: {
+          lines: {
+            show: true,
+          },
+        },
+        yaxis: {
+          lines: {
+            show: true,
+          },
+        },
+      },
+      dataLabels: {
+        enabled: true,
+      },
+      stroke: {
+        // curve: 'smooth',
+      },
+      series: [
+        {
+          type: "scatter",
+          data: [0],
+        },
+        {
+          name: '% Week',
+          color: '#00D3C7',
+          data: [null, ...this.number_of_correct_response],
+        },
+      ],
+      xaxis: {
+        categories: this.sessions_dates,
+      },
+    };
+    
+  }
   selecedList: data[] = [
     { value: '01' },
     { value: '02' },
