@@ -29,28 +29,18 @@
                 </div>
                 <div class="doctor-profile-head">
                   <div class="row">
-                    <div class="col-lg-4 col-md-4">
-                      <div class="profile-user-box" style="padding-top: 10px">
+                    <div class="col-lg-8">
+                      <div class="profile-user-box align-items-left "style="padding-top: 10px">
                         <div class="names-profiles">
-                          <h5>Client</h5>
-                          <p>{{ patient_selected.first_name }}</p>
+                          <!-- <h5>Client</h5>
+                          <p>{{ patient_selected.first_name }} ({{ note_selected.patient_identifier }})</p>
+                          
                           <h5>Provider Name</h5>
-                          <p>{{ doctor_selected_full_name }}</p>
+                          <p>{{ doctor_selected_full_name }}</p> -->
                         </div>
                       </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 d-flex align-items-center">
-                      <div class="follow-group">
-                        <div class="doctor-follows">
-                          <h5>Patient ID</h5>
-                          <p>{{ note_selected.patient_identifier }}</p>
-                        </div>
-                        <div class="doctor-follows">
-                          <h5>diagnosis_code</h5>
-                          <p>{{ patient_selected.diagnosis_code }}</p>
-                        </div>
-                      </div>
-                    </div>
+                    
                     <div class="col-lg-4 col-md-4 d-flex align-items-center">
                       <div class="follow-btn-group">
                         <a
@@ -149,8 +139,8 @@
                         </div>
                         <div class="col-xl-3 col-xs-6">
                           <div class="detail-personal">
-                            <h2>Date Session</h2>
-                            <p>{{ note_selected.session_date | date }}</p>
+                            <h2>DOS</h2>
+                            <p>{{ note_selected.session_date |  date : "shortDate" }}</p>
                           </div>
                         </div>
                         <div class="col-xl-3 col-xs-6 ">
@@ -210,7 +200,8 @@
                   </ng-container>
                 </div>
               </div>
-              <div class="row">
+              <!-- all -->
+              <div class="row" *ngIf="!showFamily && !showMonitoring">
                 <div class="col-xs-12 col-sm-6">
                   <div class="card">
                     <div class="card-header">
@@ -318,6 +309,121 @@
                   </div>
                 </div>
               </div>
+              <!-- all -->
+
+              <!-- all -->
+              <div class="row">
+                <div class="col-xs-12 col-sm-6" *ngIf="showMonitoring">
+                  <div class="card">
+                    <div class="card-header">
+                      <h4 class="card-title">Caregiver Goal</h4>
+                    </div>
+                    <div class="card-body p-0">
+                      <div class="personal-list-out">
+                        <div class="container">
+                          <div class="row">
+                            <table class="table mb-0">
+                              <thead>
+                                <tr>
+                                  <th>
+                                    <h2
+                                      style="font-size: 12px; font-weight: 500"
+                                    >
+                                      Caregiver Goal
+                                    </h2>
+                                  </th>
+                                  <th>
+                                    <h2
+                                      style="font-size: 12px; font-weight: 500"
+                                    >
+                                      % of Occurrences
+                                    </h2>
+                                  </th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr
+                                  *ngFor="
+                                    let behavior of caregivers_training_goals;
+                                    let i = index
+                                  "
+                                >
+                                  <td>
+                                    <p>{{ behavior.caregiver_goal }}</p>
+                                  </td>
+                                  <td>
+                                    <p>
+                                      {{ behavior.porcent_of_correct_response }}
+                                    </p>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-6" *ngIf="showFamily">
+                  <div class="card">
+                    <div class="card-header">
+                      <h4 class="card-title">RBT Training goals</h4>
+                    </div>
+                    <div class="card-body p-0">
+                      <div class="personal-list-out">
+                        <div class="container">
+                          <div class="row">
+                            <table class="table mb-0">
+                              <thead>
+                                <tr>
+                                  <th>
+                                    <h2
+                                      style="font-size: 12px; font-weight: 500"
+                                    >
+                                      Caregiver Goal
+                                    </h2>
+                                  </th>
+                                  <th>
+                                    <h2
+                                      style="font-size: 12px; font-weight: 500"
+                                    >
+                                      % of correct responses
+                                    </h2>
+                                  </th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr
+                                  *ngFor="
+                                    let replacemen of rbt_training_goals;
+                                    let i = index
+                                  "
+                                >
+                                  <td>
+                                    <p>{{ replacemen.lto }}</p>
+                                  </td>
+                                  <td>
+                                    <p>
+                                      {{
+                                        replacemen.porcent_of_correct_response
+                                      }}
+                                    </p>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- all -->
+
+              
+
               <div class="card">
                 <div class="card-header">
                   <h4 class="card-title">Summary Note</h4>
@@ -355,7 +461,7 @@
                                 {{ doctor_selected_full_name }}
                               </p>
                               <h2 style="margin: 0">Signature Date</h2>
-                              <p>{{ note_selected.session_date | date }}</p>
+                              <p>{{ note_selected.session_date |  date : "shortDate" }}</p>
                             </div>
                           </div>
                           <div class="col-xl-4 col-md-6">
@@ -378,7 +484,7 @@
                                 {{ doctor_selected_full_name_supervisor }}
                               </p>
                               <h2 style="margin: 0">Signature Date</h2>
-                              <p>{{ note_selected.session_date | date }}</p>
+                              <p>{{ note_selected.session_date |  date : "shortDate" }}</p>
                             </div>
                           </div>
                         </div>

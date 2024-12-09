@@ -19,7 +19,7 @@ export class AddDoctorComponent implements OnInit {
   routes = AppRoutes;
   selectedValue!: string;
   selectedValueLocation!: number;
-
+  isManager = false;
   name = '';
   surname = '';
   phone = '';
@@ -130,6 +130,19 @@ export class AddDoctorComponent implements OnInit {
 
   goBack() {
     this.locationBack.back(); // <-- go back to previous location on cancel
+  }
+
+  selectRol(event: any) {
+    const role = event.value;
+    if (role) {
+      this.selectedValue = role;
+      console.log(this.selectedValue);
+      this.isManager = false;
+      
+      if(role === 2 ){
+        this.isManager = true;
+      }
+    }
   }
 
   getConfig() {
@@ -322,6 +335,7 @@ export class AddDoctorComponent implements OnInit {
     formData.append('contract_type', this.contract_type);
     formData.append('salary', this.salary + '');
     let locations = '';
+    
     this.locations_selected.forEach((location, index) => {
       if (index !== 0) {
         locations += `,${location.toString()}`;

@@ -634,12 +634,53 @@ convertToHours(totalMinutes: number): string {
       !this.client_response_to_treatment_this_session ||
       !this.progress_noted_this_session_compared_to_previous_session 
       // !this.selectedValueCode
-    ) {
-      this.text_validation = 'All Fields (*) are required';
-      Swal.fire('Warning', `All Fields (*) are required`, 'warning');
+    ) 
+    // {
+    //   this.text_validation = 'All Fields (*) are required';
+    //   Swal.fire('Warning', `All Fields (*) are required`, 'warning');
+    //   return;
+    // }
+
+    if (!this.progress_noted_this_session_compared_to_previous_session) {
+      Swal.fire(
+        'Warning',
+        'Please select a progress noted_this session compared to previous session ',
+        'warning'
+      );
       return;
     }
-
+    if (!this.environmental_changes) {
+      Swal.fire(
+        'Warning',
+        'Please select a environmental ',
+        'warning'
+      );
+      return;
+    }
+    if (!this.as_evidenced_by) {
+      Swal.fire(
+        'Warning',
+        'Please select a as evidenced by',
+        'warning'
+      );
+      return;
+    }
+    if (!this.client_appeared) {
+      Swal.fire(
+        'Warning',
+        'Please select a client appeared',
+        'warning'
+      );
+      return;
+    }
+    if (!this.meet_with_client_at) {
+      Swal.fire(
+        'Warning',
+        'Please select a POS',
+        'warning'
+      );
+      return;
+    }
     if (!this.validateMaladaptives()) {
       Swal.fire(
         'Warning',
@@ -777,7 +818,7 @@ convertToHours(totalMinutes: number): string {
   onDateChange(event: MatDatepickerInputEvent<Date>) {
     const date = event.value;
     const nextDate = new Date(date);
-    nextDate.setDate(nextDate.getDate() + 2);
+    nextDate.setDate(nextDate.getDate() + 1);
     this.next_session_is_scheduled_for = nextDate.toISOString().split('T')[0];
   }
 
