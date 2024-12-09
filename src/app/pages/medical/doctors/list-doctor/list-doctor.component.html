@@ -128,6 +128,12 @@
                     <td>{{ data.email }}</td>
                     <td>{{ data.phone }}</td>
                     <td>{{ data.city }}</td>
+                    <!-- <td>
+                      {{
+                        (locations | arrayFind : "id" : data.location_id)?.title
+                      }}
+                    </td> -->
+                   
                     <td>{{ data.roles.name }}</td>
                     <td>
                       <span

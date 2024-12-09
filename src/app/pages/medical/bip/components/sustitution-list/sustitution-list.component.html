@@ -29,7 +29,7 @@
                   {{ goal.current_status }}
                 </td>
                 <td>
-                  {{ goal.created_at | date }}
+                  {{ goal.created_at |  date : "shortDate" }}
                 </td>
                 <td>
                   <button
@@ -362,11 +362,11 @@
                                       >
                                     </td>
                                     <td>
-                                      {{ goalst.sustitution_date_sto | date }}
+                                      {{ goalst.sustitution_date_sto |  date : "shortDate" }}
                                     </td>
                                     <td>
                                       {{
-                                        goalst.end_sustitution_date_sto | date
+                                        goalst.end_sustitution_date_sto |  date : "shortDate"
                                       }}
                                     </td>
                                     <td>

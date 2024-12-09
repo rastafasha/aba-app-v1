@@ -10,6 +10,8 @@ import * as XLSX from 'xlsx';
 import { DoctorService } from '../service/doctor.service';
 import { AppUser } from 'src/app/core/models/users.model';
 import { PageService } from 'src/app/shared/services/pages.service';
+import { LocationsV2Service } from 'src/app/core/services/locations.v2.service';
+import { LocationV2 } from 'src/app/core/models/location.v2.model';
 declare var $: any;
 @Component({
   selector: 'app-list-doctor',
@@ -43,29 +45,31 @@ export class ListDoctorComponent implements OnInit {
   doctor_selected: any;
   text_validation: any;
   user: AppUser;
-  locationId: any;
+  locations: LocationV2[] = [];
+  location_id: number;
 
   constructor(
     private doctorService: DoctorService,
     private fileSaver: FileSaverService,
     private authService: AuthService,
     private pageService: PageService,
-    private location: Location
+    private locationsService: LocationsV2Service,
+    private location_back: Location
   ) {}
   ngOnInit() {
     this.pageService.onInitPage();
     this.getTableData();
+    this.getLocations();
 
-    const USER = localStorage.getItem('user');
-    this.user = JSON.parse(USER ? USER : '');
-    this.role = this.user.roles[0];
-    this.locationId = this.user.location_id;
-
+   
     this.user = this.authService.user as AppUser;
+    this.role = this.user.roles[0];
+    this.location_id = this.user.location_id;
+
   }
 
   goBack() {
-    this.location.back(); // <-- go back to previous location on cancel
+    this.location_back.back(); // <-- go back to previous location on cancel
   }
   isPermission(permission: string) {
     if (this.user.roles.includes('SUPERADMIN')) {
@@ -76,15 +80,14 @@ export class ListDoctorComponent implements OnInit {
     }
     return false;
   }
-
-  getPatiensByLocation() {
-    this.doctorService
-      .getEmployeesByLocation(this.locationId)
-      .subscribe((resp) => {
-        // console.log(resp);
-        this.doctorEmployeesList = resp.patients.data;
-      });
+  getLocations() {
+    this.locationsService.list().subscribe((resp) => {
+      this.locations = resp.data;
+      console.log(this.locations);
+    });
   }
+
+  
 
   private getTableData(): void {
     this.doctorList = [];
