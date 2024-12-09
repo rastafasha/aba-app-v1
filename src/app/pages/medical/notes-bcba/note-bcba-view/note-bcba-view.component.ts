@@ -25,6 +25,9 @@ export class NoteBcbaViewComponent implements OnInit {
   patient_identifier: string;
   // option_selected:number = 0;
 
+  showFamily = false;
+  showMonitoring = false;
+
   selectedValueProvider!: string;
   selectedValueRBT!: string;
   selectedValueBCBA!: string;
@@ -167,6 +170,7 @@ export class NoteBcbaViewComponent implements OnInit {
     });
     this.getConfig();
     this.getNote();
+    
   }
 
   goBack() {
@@ -240,6 +244,13 @@ export class NoteBcbaViewComponent implements OnInit {
       this.getDoctor();
       this.getDoctorRbt();
       this.getDoctorBcba();
+
+      if(this.cpt_code === '97155' ){
+        this.showFamily = true;
+      }
+      if(this.cpt_code === '97156' ){
+        this.showMonitoring = true;
+      }
     });
   }
 

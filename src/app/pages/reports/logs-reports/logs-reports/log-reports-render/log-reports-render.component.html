@@ -83,7 +83,8 @@
 </td>
 <!-- Total Hours -->
 <td>
-  <span>{{ (note.total_minutes | transformToHour) ?? "-" }}</span>
+  <!-- <span>{{ (note.total_minutes | transformToHour) ?? "-" }}</span> -->
+  <span>{{ (note.total_minutes)/60  }}</span>
 </td>
 <!-- Pos -->
 <td>

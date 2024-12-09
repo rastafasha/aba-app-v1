@@ -69,7 +69,7 @@ export class ListPatientMComponent implements OnInit {
     private patientV2Service: PatientsV2Service,
     private patientService: PatientMService,
     private locationsService: LocationsV2Service,
-    private location: Location,
+    private location_back: Location,
     private fileSaver: FileSaverService,
     private authService: AuthService,
     private bipService: BipService,
@@ -84,35 +84,11 @@ export class ListPatientMComponent implements OnInit {
     this.user = this.authService.user as AppUser;
     this.roles = this.user.roles[0];
     this.location_id = this.user.location_id;
-
-    this.user = this.authService.user as AppUser;
   }
 
   goBack() {
-    this.location.back(); // <-- go back to previous location on cancel
+    this.location_back.back(); // <-- go back to previous location on cancel
   }
-
-  isMaladaptiveBip() {
-    this.bipService.getBipByPatient_id(this.patient_id).subscribe((resp) => {
-      console.log(resp);
-      this.maladaptives = resp.maladaptives;
-    });
-  }
-
-  getPatiensByDoctor(){
-    this.patientService.getPatientsByDoctor(this.user.id).subscribe((resp:any)=>{
-      // console.log(resp);
-      this.doctorPatientList = resp.patients.data;
-    })
-    this.getPatiensByLocation();
-  }
-  getPatiensByLocation(){
-    this.patientService.getPatientByLocations(this.location_id).subscribe((resp:any)=>{
-      // console.log(resp);
-      this.locationPatientList = resp.patients.data;
-    })
-  }
-
 
   isPermission(permission: string) {
     if (this.user.roles.includes('SUPERADMIN')) {
@@ -122,6 +98,19 @@ export class ListPatientMComponent implements OnInit {
       return true;
     }
     return false;
+  }
+  getLocations() {
+    this.locationsService.list().subscribe((resp) => {
+      this.locations = resp.data;
+      console.log(this.locations);
+    });
+  }
+
+  isMaladaptiveBip() {
+    this.bipService.getBipByPatient_id(this.patient_id).subscribe((resp) => {
+      console.log(resp);
+      this.maladaptives = resp.maladaptives;
+    });
   }
 
   private getTableData(): void {
@@ -492,9 +481,5 @@ export class ListPatientMComponent implements OnInit {
     }
   }
 
-  getLocations() {
-    this.locationsService.list().subscribe((resp) => {
-      this.locations = resp.data;
-    });
-  }
+  
 }

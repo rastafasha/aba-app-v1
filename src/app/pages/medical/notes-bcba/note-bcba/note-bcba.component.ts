@@ -479,17 +479,50 @@ convertToHours(totalMinutes: number): string {
       // !this.caregivers_training_goals ||
       !this.meet_with_client_at ||
       !this.session_date
-    ) {
-      this.text_validation = 'All Fields (*) are required';
-      return;
-    }
+    ) 
+    // {
+    //   this.text_validation = 'All Fields (*) are required';
+    //   return;
+    // }
     if (!this.selectedValueAba) {
-      this.text_validation = 'ABA Supervisor must be selected';
+      // this.text_validation = 'ABA Supervisor must be selected';
+      // return;
+      Swal.fire(
+        'Warning',
+        'ABA Supervisor must be selected ',
+        'warning'
+      );
       return;
     }
 
     if (!this.selectedPaService) {
-      this.text_validation = 'Please select a service';
+      // this.text_validation = 'Please select a service';
+      // return;
+      Swal.fire(
+        'Warning',
+        'Please select a service ',
+        'warning'
+      );
+      return;
+    }
+    if (!this.meet_with_client_at) {
+      // this.text_validation = 'Please select a POS';
+      // return;
+      Swal.fire(
+        'Warning',
+        'Please select a POS ',
+        'warning'
+      );
+      return;
+    }
+    if (!this.session_date) {
+      // this.text_validation = 'Please select a session date';
+      // return;
+      Swal.fire(
+        'Warning',
+        'Please select a session date ',
+        'warning'
+      );
       return;
     }
 

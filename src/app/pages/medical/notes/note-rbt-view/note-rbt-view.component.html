@@ -33,28 +33,18 @@
                   style="background-color: white"
                 >
                   <div class="row">
-                    <div class="col-sm-4">
-                      <div class="profile-user-box" style="padding-top: 10px">
+                    <div class="col-sm-8">
+                      <div class="profile-user-box align-items-left" style="padding-top: 10px">
                         <div class="names-profiles">
-                          <h5>Client</h5>
-                          <p>{{ patient_selected.first_name }}</p>
+                          <!-- <h5>Client</h5>
+                          <p>{{ patient_selected.first_name }} ({{ note_selected.patient_identifier }})</p>
+                          
                           <h5>Provider Name</h5>
-                          <p>{{ doctor_selected_full_name }}</p>
+                          <p>{{ doctor_selected_full_name }}</p> -->
                         </div>
                       </div>
                     </div>
-                    <div class="col-sm-6 col-md-4 d-flex align-items-center">
-                      <div class="follow-group">
-                        <div class="doctor-follows">
-                          <h5>Patient ID</h5>
-                          <p>{{ patient_selected.patient_identifier }}</p>
-                        </div>
-                        <div class="doctor-follows">
-                          <h5>Diagnosis Code</h5>
-                          <p>{{ patient_selected.diagnosis_code }}</p>
-                        </div>
-                      </div>
-                    </div>
+                    
                     <div
                       class="col-sm-4 d-flex align-items-center d-print-none"
                     >
@@ -163,8 +153,8 @@
                         </div>
                         <div class="col-xl-3 col-sm-6 col-lg-3">
                           <div class="detail-personal">
-                            <h2>Date Session</h2>
-                            <p>{{ note_selected.session_date | date }}</p>
+                            <h2>DOS</h2>
+                            <p>{{ note_selected.session_date |  date : "shortDate" }}</p>
                           </div>
                         </div>
                         <div class="col-xl-3 col-sm-6 col-lg-3">
@@ -697,7 +687,7 @@
                                   {{ doctor_selected_full_name }}
                                 </p>
                                 <h2 style="margin: 0">Signature date</h2>
-                                <p>{{ note_selected.session_date | date }}</p>
+                                <p>{{ note_selected.session_date |  date : "shortDate" }}</p>
                               </div>
                             </div>
                             <div class="col-xl-4 col-md-6">
@@ -720,7 +710,7 @@
                                   {{ doctor_selected_full_name_bcba }}
                                 </p>
                                 <h2 style="margin: 0">Signature date</h2>
-                                <p>{{ note_selected.session_date | date }}</p>
+                                <p>{{ note_selected.session_date |  date : "shortDate" }}</p>
                               </div>
                             </div>
                           </div>
