@@ -81,7 +81,7 @@ export class NoteRbtComponent implements OnInit {
   session_length_total = '';
   session_length_total2 = '';
   environmental_changes = '';
-  
+
 
   sumary_note = '';
   meet_with_client_at = '';
@@ -161,7 +161,7 @@ export class NoteRbtComponent implements OnInit {
   insurance_id: number;
   insurance_identifier: string;
 
-  
+
 
   intervention_added = [];
   interventionsSelected = {};
@@ -182,7 +182,7 @@ export class NoteRbtComponent implements OnInit {
 
   pa_services: PaService[] = [];
   selectedPaService: PaService | null = null;
-  
+
   selectedValueCode = '';
 
   projectedUnits = 0;
@@ -207,14 +207,14 @@ export class NoteRbtComponent implements OnInit {
     this.ativatedRoute.params.subscribe((resp) => {
       this.patient_identifier = resp['patient_id'];
     });
-    
+
     this.getConfig();
     this.getProfileBip();
 
     this.specialistData();
 
     this.updateInterventions();
-    
+
   }
 
   updateInterventions() {
@@ -231,7 +231,7 @@ export class NoteRbtComponent implements OnInit {
     this.intervention_added = updatedInterventions;
   }
 
- 
+
 
   goBack() {
     this.location.back();
@@ -281,7 +281,7 @@ export class NoteRbtComponent implements OnInit {
     });
   }
 
-  
+
 
   onPaServiceSelect(event: any) {
     const service = event.value;
@@ -632,9 +632,9 @@ convertToHours(totalMinutes: number): string {
       !this.as_evidenced_by ||
       !this.rbt_modeled_and_demonstrated_to_caregiver ||
       !this.client_response_to_treatment_this_session ||
-      !this.progress_noted_this_session_compared_to_previous_session 
+      !this.progress_noted_this_session_compared_to_previous_session
       // !this.selectedValueCode
-    ) 
+    )
     // {
     //   this.text_validation = 'All Fields (*) are required';
     //   Swal.fire('Warning', `All Fields (*) are required`, 'warning');
@@ -723,7 +723,7 @@ convertToHours(totalMinutes: number): string {
 
     formData.append('provider_id', this.doctor_id+'');
     formData.append('supervisor_id', this.selectedValueBcba_id+'');
-    
+
 
     if (this.selectedValueTimeIn) {
       formData.append(
@@ -832,7 +832,7 @@ convertToHours(totalMinutes: number): string {
 
   generateAISummary() {
     const validationResult = this.checkDataSufficient();
-    
+
     if (!validationResult.isValid) {
       const missingFieldsList = validationResult.missingFields.join('\n• ');
       Swal.fire('Warning', `Please fill all the required fields:\n\n• ${missingFieldsList}`, 'warning');
@@ -849,6 +849,7 @@ convertToHours(totalMinutes: number): string {
       endTime: this.selectedValueTimeOut ? this.selectedValueTimeOut : null,
       startTime2: this.selectedValueTimeIn2 ? this.selectedValueTimeIn2 : null,
       endTime2: this.selectedValueTimeOut2 ? this.selectedValueTimeOut2 : null,
+      progressNotedThisSessionComparedToPreviousSession: this.progress_noted_this_session_compared_to_previous_session,
       mood: this.client_appeared,
       pos: this.getPos(this.meet_with_client_at),
       maladaptives: this.maladaptives.map((m) => ({
