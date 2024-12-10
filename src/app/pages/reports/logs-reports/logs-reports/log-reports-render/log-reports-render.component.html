@@ -197,7 +197,18 @@
 
 
 
-
+<!-- session_units_total Charges -->
+<td>
+  {{
+    note.total_units
+      | logReportsSessionTotal
+        : note.md
+        : note.md2
+        : (note.cpt_code | logReportsUnitPrice : note.insurance_id : insurances)
+        : modifiers
+      | currency
+  }}
+</td>
 
 
 <!-- Status -->
@@ -215,18 +226,7 @@
     </option>
   </select>
 </td>
-<!-- session_units_total Charges -->
-<td>
-  {{
-    note.total_units
-      | logReportsSessionTotal
-        : note.md
-        : note.md2
-        : (note.cpt_code | logReportsUnitPrice : note.insurance_id : insurances)
-        : modifiers
-      | currency
-  }}
-</td>
+
 <!-- Billed -->
 <td>
   <div class="note-checkit">
