@@ -110,18 +110,7 @@
       | currency
   }}
 </td>
-<!-- session_units_total Charges -->
-<td>
-  {{
-    note.total_units
-      | logReportsSessionTotal
-        : note.md
-        : note.md2
-        : (note.cpt_code | logReportsUnitPrice : note.insurance_id : insurances)
-        : modifiers
-      | currency
-  }}
-</td>
+
 <!-- Insurer Name -->
 <td>
   <a
@@ -208,7 +197,18 @@
 
 
 
-
+<!-- session_units_total Charges -->
+<td>
+  {{
+    note.total_units
+      | logReportsSessionTotal
+        : note.md
+        : note.md2
+        : (note.cpt_code | logReportsUnitPrice : note.insurance_id : insurances)
+        : modifiers
+      | currency
+  }}
+</td>
 
 
 <!-- Status -->
@@ -226,6 +226,7 @@
     </option>
   </select>
 </td>
+
 <!-- Billed -->
 <td>
   <div class="note-checkit">

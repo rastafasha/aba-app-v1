@@ -658,7 +658,7 @@
                             <p>
                               {{
                                 note_selected.next_session_is_scheduled_for
-                                  | date
+                                | date : "shortDate" 
                               }}
                             </p>
                           </div>
@@ -687,7 +687,7 @@
                                   {{ doctor_selected_full_name }}
                                 </p>
                                 <h2 style="margin: 0">Signature date</h2>
-                                <p>{{ note_selected.session_date |  date : "shortDate" }}</p>
+                                <p>{{ note_selected.session_date | date : "shortDate"  }}</p>
                               </div>
                             </div>
                             <div class="col-xl-4 col-md-6">
@@ -710,7 +710,7 @@
                                   {{ doctor_selected_full_name_bcba }}
                                 </p>
                                 <h2 style="margin: 0">Signature date</h2>
-                                <p>{{ note_selected.session_date |  date : "shortDate" }}</p>
+                                <p>{{ note_selected.session_date  | date : "shortDate" }}</p>
                               </div>
                             </div>
                           </div>
