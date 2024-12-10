@@ -51,13 +51,13 @@ export class LogsReportsComponent implements OnInit {
     { key: 'cpt_code', value: 'CPT' },
     { key: 'total_units', value: 'Total Units' },
     { key: 'bip_id', value: 'Units Price' },
-    { key: 'total_minutes', value: 'Charges' },
+    
     { key: 'insurance_id', value: 'Insurance' },
     { key: 'insurance_id', value: 'Insurance Id' },
     { key: 'md', value: 'Modifier 1' },
     { key: 'md2', value: 'Modifier 2' },
     { key: 'md3', value: 'Modifier 3' },
-    
+    { key: 'total_minutes', value: 'Charges' },
     { key: 'status', value: 'Status' },
     { key: 'billed', value: 'Billed' },
     { key: 'paid', value: 'Paid' },
