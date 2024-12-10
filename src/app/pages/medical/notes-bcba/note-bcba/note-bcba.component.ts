@@ -236,7 +236,7 @@ throw new Error('Method not implemented.');
       this.patientLocation_id = this.client_selected.location_id;
       this.insurance_id = resp.patient.insurer_id;
       this.insurance_identifier = resp.patient.insurance_identifier;
-      
+
       // this.pos = JSON.parse(resp.patient.pos_covered) ;
 
       // let jsonObjPOS = JSON.parse(this.pos) || '';
@@ -276,7 +276,7 @@ throw new Error('Method not implemented.');
     this.noteBcbaService
       .showReplacementbyPatient(this.patient_identifier)
       .subscribe((resp) => {
-        console.log(resp);
+        console.log(resp, 'resp in getReplacementsByPatientId');
         this.familiEnvolments = resp.familiEnvolments;
         this.caregivers_training_goals =
           resp.familiEnvolments.data?.[0]?.caregivers_training_goals ?? [];
@@ -286,7 +286,7 @@ throw new Error('Method not implemented.');
           resp.monitoringEvaluatingPatientIds.data?.[0]?.rbt_training_goals ??
           [];
 
-        
+
       });
   }
 
@@ -348,7 +348,7 @@ throw new Error('Method not implemented.');
       // this.services = resp.services;
     });
   }
-  
+
   selectFirmaSpecialistRbt(event) {
     event = this.selectedValueProviderRBT_id;
     this.speciaFirmaData(this.selectedValueProviderRBT_id);
@@ -479,7 +479,7 @@ convertToHours(totalMinutes: number): string {
       // !this.caregivers_training_goals ||
       !this.meet_with_client_at ||
       !this.session_date
-    ) 
+    )
     // {
     //   this.text_validation = 'All Fields (*) are required';
     //   return;
@@ -548,7 +548,7 @@ convertToHours(totalMinutes: number): string {
 
     formData.append('provider_name', this.doctor_id + '');
     formData.append('supervisor_name', this.selectedValueBCBA);
-    
+
     formData.append('insurance_id', this.insurance_id+''); // id del seguro preferiblemente que solo agarre la data al crear
     formData.append('insurance_identifier', this.insurance_identifier); // id del seguro preferiblemente que solo agarre la data al crear
 
@@ -646,10 +646,10 @@ convertToHours(totalMinutes: number): string {
   // }
   //
 
-  
+
   generateAISummary() {
     const validationResult = this.checkDataSufficient();
-    
+
     if (!validationResult.isValid) {
         const missingFieldsList = validationResult.missingFields.join('\n• ');
         Swal.fire('Warning', `Please fill all the required fields:\n\n• ${missingFieldsList}`, 'warning');
@@ -703,7 +703,7 @@ convertToHours(totalMinutes: number): string {
     }
 
     if (!this.meet_with_client_at) {
-        missingFields.push('Meeting location');
+        missingFields.push('POS');
     }
 
     // Only validate caregiver goals if CPT code is 97156
@@ -712,8 +712,8 @@ convertToHours(totalMinutes: number): string {
             missingFields.push('Caregiver training goals');
         } else {
             const allCaregiverGoalsValid = this.caregivers_training_goals.every(
-                (g) => g.caregiver_goal && 
-                g.porcent_of_correct_response !== undefined && 
+                (g) => g.caregiver_goal &&
+                g.porcent_of_correct_response !== undefined &&
                 g.porcent_of_correct_response !== null
             );
             if (!allCaregiverGoalsValid) {
@@ -728,8 +728,8 @@ convertToHours(totalMinutes: number): string {
             missingFields.push('RBT training goals');
         } else {
             const allRbtGoalsValid = this.rbt_training_goals.every(
-                (g) => g.lto && 
-                g.porcent_of_correct_response !== undefined && 
+                (g) => g.lto &&
+                g.porcent_of_correct_response !== undefined &&
                 g.porcent_of_correct_response !== null
             );
             if (!allRbtGoalsValid) {
@@ -766,7 +766,7 @@ convertToHours(totalMinutes: number): string {
       // console.log(this.selectedValueCode);
       this.showFamily = false;
       this.showMonitoring = false;
-      
+
       if(service.cpt === '97155' ){
         this.showFamily = true;
       }
