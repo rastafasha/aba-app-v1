@@ -899,7 +899,11 @@ convertToHours(totalMinutes: number): string {
     }
 
     if (!this.meet_with_client_at) {
-      missingFields.push('Meeting location');
+      missingFields.push('POS');
+    }
+
+    if (!this.progress_noted_this_session_compared_to_previous_session || this.progress_noted_this_session_compared_to_previous_session === '') {
+      missingFields.push('Progress noted this session compared to previous session');
     }
 
     if (!this.maladaptives || this.maladaptives.length === 0) {
@@ -912,7 +916,7 @@ convertToHours(totalMinutes: number): string {
           m.number_of_occurrences !== null
       );
       if (!allMaladaptivesValid) {
-        missingFields.push('Complete maladaptive behavior information (behavior name and occurrences)');
+        missingFields.push('Complete maladaptive behavior information (occurrences)');
       }
     }
 
