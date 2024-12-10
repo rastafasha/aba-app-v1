@@ -703,7 +703,7 @@ convertToHours(totalMinutes: number): string {
     }
 
     if (!this.meet_with_client_at) {
-        missingFields.push('Meeting location');
+        missingFields.push('POS');
     }
 
     // Only validate caregiver goals if CPT code is 97156
