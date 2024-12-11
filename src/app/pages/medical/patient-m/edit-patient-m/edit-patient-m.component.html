@@ -217,6 +217,55 @@
                     />
                   </div>
                 </div>
+                <!-- Gender -->
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group select-gender">
+                    <label class="gen-label">
+                      Parent's Sex<span class="login-danger">*</span>
+                    </label>
+                    <div class="form-check-inline" [formGroup]="form">
+                      <label class="form-check-label">
+                        <input
+                          type="radio"
+                          name="parent_gender"
+                          [value]="1"
+                          formControlName="parent_gender"
+                          class="form-check-input"
+                        />Male
+                      </label>
+                    </div>
+                    <div class="form-check-inline" [formGroup]="form">
+                      <label class="form-check-label">
+                        <input
+                          type="radio"
+                          name="parent_gender"
+                          [value]="2"
+                          formControlName="parent_gender"
+                          class="form-check-input"
+                        />Female
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label>Parent/Guardian's Birth day <span class="login-danger">*</span></label>
+                    <input
+                      class="form-control datetimepicker"
+                      autocomplete="off"
+                      name="parent_birth_date"
+                      formControlName="parent_birth_date"
+                      type="text"
+                      matInput
+                      [matDatepicker]="picker3"
+                    />
+                    <mat-datepicker #picker3></mat-datepicker>
+                    <mat-datepicker-toggle
+                      matIconSuffix
+                      [for]="picker3"
+                    ></mat-datepicker-toggle>
+                  </div>
+                </div>
                 <!-- Relationship -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms" [formGroup]="form">
@@ -230,6 +279,81 @@
                       formControlName="relationship"
                       type="text"
                     />
+                  </div>
+                </div>
+                <div class="row">
+                  <label>Is Patient's Condition Related to: <span class="login-danger">*</span></label>
+                  <div class="col-12 col-md-4">
+                    <div class="form-group">
+                      <div
+                        class="card-header d-flex justify-content-between align-items-center"
+                      >
+                        <p >Employment? (current or previews)</p>
+                        <div
+                          [formGroup]="form"
+                          class="status-toggle d-flex justify-content-between align-items-center"
+                        >
+                          <input
+                            type="checkbox"
+                            id="emmployment"
+                            class="check"
+                            name="emmployment"
+                            formControlName="emmployment"
+                          />
+                          <label for="emmployment" class="checktoggle" value="true">
+                            checkbox
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-4">
+                    <div class="form-group">
+                      <div
+                        class="card-header d-flex justify-content-between align-items-center"
+                      >
+                        <p class="card-title">Auto Accident?</p>
+                        <div
+                          [formGroup]="form"
+                          class="status-toggle d-flex justify-content-between align-items-center"
+                        >
+                          <input
+                            type="checkbox"
+                            id="auto_accident"
+                            class="check"
+                            name="auto_accident"
+                            formControlName="auto_accident"
+                          />
+                          <label for="auto_accident" class="checktoggle" value="true">
+                            checkbox
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-4">
+                    <div class="form-group">
+                      <div
+                        class="card-header d-flex justify-content-between align-items-center"
+                      >
+                        <p class="card-title">Other Accident?</p>
+                        <div
+                          [formGroup]="form"
+                          class="status-toggle d-flex justify-content-between align-items-center"
+                        >
+                          <input
+                            type="checkbox"
+                            id="other_accident"
+                            class="check"
+                            name="other_accident"
+                            formControlName="other_accident"
+                          />
+                          <label for="other_accident" class="checktoggle" value="true">
+                            checkbox
+                          </label>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <!-- Language -->
@@ -790,7 +914,7 @@
                   <div
                     class="card-header d-flex justify-content-between align-items-center"
                   >
-                    <h5 class="card-title">Telehealth</h5>
+                    <p class="card-title">Telehealth</p>
                     <div
                       [formGroup]="form"
                       class="status-toggle d-flex justify-content-between align-items-center"
@@ -815,7 +939,7 @@
                   <div
                     class="card-header d-flex justify-content-between align-items-center"
                   >
-                    <h5 class="card-title">Pay</h5>
+                    <p class="card-title">Pay</p>
                     <div
                       [formGroup]="form"
                       class="status-toggle d-flex justify-content-between align-items-center"
@@ -828,6 +952,30 @@
                         formControlName="pay"
                       />
                       <label for="pay" class="checktoggle" value="true">
+                        checkbox
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-2">
+                <div class="form-group">
+                  <div
+                    class="card-header d-flex justify-content-between align-items-center"
+                  >
+                    <p class="card-title">Is Self Subcriber?</p>
+                    <div
+                      [formGroup]="form"
+                      class="status-toggle d-flex justify-content-between align-items-center"
+                    >
+                      <input
+                        type="checkbox"
+                        id="is_self_subscriber"
+                        class="check"
+                        name="is_self_subscriber"
+                        formControlName="is_self_subscriber"
+                      />
+                      <label for="is_self_subscriber" class="checktoggle" value="true">
                         checkbox
                       </label>
                     </div>
@@ -1267,8 +1415,8 @@
                             <td>{{ paService.end_date |  date : "shortDate" }}</td>
                             <td>
                               <input type="hidden" formControlName="id">
-                              <button class="btn btn-outline-success btn-sm" (click)="seleccionarParaEdit(paService)"
-                              data-bs-toggle="modal" [attr.data-bs-target]="'#edit-paService-'+paService.id" ><i class="fa fa-pencil"></i> </button>
+                              <!-- <button class="btn btn-outline-success btn-sm" (click)="seleccionarParaEdit(paService)"
+                              data-bs-toggle="modal" [attr.data-bs-target]="'#edit-paService-'+paService.id" ><i class="fa fa-pencil"></i> </button> -->
                               <button
                                 type="button"
                                 class="btn btn-sm btn-danger"
@@ -1297,7 +1445,7 @@
                                               <!-- PA Service Name -->
                                               <div
                                                 class="form-group local-forms"
-                                                [formGroup]="paFormEdit"
+                                                [formGroup]="paForm"
                                               >
                                                 <label>
                                                   PA Service Name

@@ -211,70 +211,8 @@
               </div>
             </div>
             
-            <div
-              class="doctor-personals-grp"
-              *ngIf="
-                patient_selected.person &&
-                patient_selected.person.name_companion
-              "
-            >
-              <div class="card">
-                <div class="card-body">
-                  <div class="about-me-list">
-                    <ul class="list-space">
-                      <li>
-                        <h4>Parent/Guardian Name</h4>
-                        <span>{{
-                          patient_selected.person.parent_guardian_name +
-                            " " +
-                            patient_selected.person.surname_companion
-                        }}</span>
-                      </li>
-                      <li>
-                        <h4>Relationship</h4>
-                        <span>{{ patient_selected.person.relationship }}</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="doctor-personals-grp"
-              *ngIf="
-                patient_selected.person &&
-                patient_selected.person.name_responsable
-              "
-            >
-              <div class="card">
-                <div class="card-body">
-                  <div class="about-me-list">
-                    <ul class="list-space">
-                      <li>
-                        <h4>Responsable</h4>
-                        <span>{{
-                          patient_selected.person.name_responsable +
-                            " " +
-                            patient_selected.person.surname_responsable
-                        }}</span>
-                      </li>
-                      <li>
-                        <h4>Teléfono Responsable</h4>
-                        <span>{{
-                          patient_selected.person.mobile_responsable
-                        }}</span>
-                      </li>
-                      <li>
-                        <h4>Relación Responsable</h4>
-                        <span>{{
-                          patient_selected.person.relationship_responsable
-                        }}</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
+            
+            
           </div>
           <div class="col-lg-8">
             <div class="doctor-personals-grp">
@@ -391,6 +329,83 @@
                             <h3>{{ patient_selected.school_number }}</h3>
                           </div>
                         </div>
+                        <div class="row">
+                          <div class="col-xl-3 col-md-6">
+                            <div class="detail-personal">
+                              <h2>Parent/Guardian Name</h2>
+                              <h3>{{ patient_selected.parent_guardian_name }}</h3>
+                            </div>
+                          </div>
+                          <div class="col-xl-3 col-md-6">
+                            <div class="detail-personal">
+                              <h2>Parent's Sex</h2>
+                              <span *ngIf="patient_selected.parent_gender === 2"
+                          >Female</span
+                        >
+                        <span *ngIf="patient_selected.parent_gender === 1">Male</span>
+                            </div>
+                          </div>
+                          <div class="col-xl-3 col-md-6">
+                            <div class="detail-personal">
+                              <h2>Parent/Guardian's Birth day</h2>
+                              <h3>{{ patient_selected.parent_birth_date | date : "shortDate" }}</h3>
+                            </div>
+                          </div>
+                          <div class="col-xl-3 col-md-6">
+                            <div class="detail-personal">
+                              <h2>Relationship</h2>
+                              <h3>{{ patient_selected.relationship }}</h3>
+                            </div>
+                          </div>
+                          
+                          <h5>Is Patient's Condition Related to:</h5>
+                          <div class="col-xl-3 col-md-6">
+                            <div class="detail-personal">
+                              <h2>Employment? (current or previews)</h2>
+                              <span
+                                class="badge bg-success"
+                                *ngIf="patient_selected.emmployment === true"
+                                >true</span
+                              >
+                              <span
+                                class="badge bg-danger"
+                                *ngIf="patient_selected.emmployment === false"
+                                >false</span
+                              >
+                            </div>
+                          </div>
+                          <div class="col-xl-3 col-md-6">
+                            <div class="detail-personal">
+                              <h2>Auto Accident?</h2>
+                              <span
+                                class="badge bg-success"
+                                *ngIf="patient_selected.auto_accident === true"
+                                >true</span
+                              >
+                              <span
+                                class="badge bg-danger"
+                                *ngIf="patient_selected.auto_accident === false"
+                                >false</span
+                              >
+                            </div>
+                          </div>
+                          <div class="col-xl-3 col-md-6">
+                            <div class="detail-personal">
+                              <h2>Other Accident?</h2>
+                              <span
+                                class="badge bg-success"
+                                *ngIf="patient_selected.other_accident === true"
+                                >true</span
+                              >
+                              <span
+                                class="badge bg-danger"
+                                *ngIf="patient_selected.other_accident === false"
+                                >false</span
+                              >
+                            </div>
+                          </div>
+                        </div>
+                        
                         <div class="col-xl-3 col-md-6">
                           <div class="detail-personal">
                             <h2>Diagnosis Code</h2>
@@ -737,7 +752,6 @@
                               *ngIf="patient_selected.telehealth === false"
                               >false</span
                             >
-                            <!-- <h3>{{patient_selected.telehealth}}</h3> -->
                           </div>
                         </div>
                         <div class="col-xl-3 col-md-6">

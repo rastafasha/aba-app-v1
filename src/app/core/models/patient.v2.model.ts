@@ -23,14 +23,22 @@ export class PatientV2 {
   insurance_identifier: string;
   insurance_secondary_identifier: string;
   birth_date: Date;
+  
   age: number;
   gender: number;
+  parent_gender: number;
   education: string;
   profession: string;
   school_name: string;
   school_number: string;
+
   parent_guardian_name: string;
   relationship: string;
+  parent_birth_date: Date;
+  emmployment: boolean;
+  auto_accident: boolean;
+  other_accident: boolean;
+  is_self_subscriber: boolean;
 
   language: string;
   phone: string;
@@ -80,6 +88,7 @@ export class PatientV2 {
   telehealth: boolean;
   pay: boolean;
 
+  
   //
   pa_services: PaServiceV2[];
   pa_assessments: string;
@@ -105,6 +114,7 @@ export class PatientV2 {
       status: StringOrNullOrUndefined(data.status),
 
       birth_date: DateOrNullOrUndefined(data.birth_date),
+     
       // patient_id: NumberOrNullOrUndefined(data.patient_id),
       patient_identifier: StringOrNullOrUndefined(data.patient_identifier),
       insurer_id: NumberOrNullOrUndefined(data.insurer_id),
@@ -121,6 +131,7 @@ export class PatientV2 {
       work_phone: StringOrNullOrUndefined(data.work_phone),
       age: NumberOrNullOrUndefined(data.age),
       gender: NumberOrNullOrUndefined(data.gender),
+      parent_gender: NumberOrNullOrUndefined(data.parent_gender),
       education: StringOrNullOrUndefined(data.education),
 
       profession: StringOrNullOrUndefined(data.profession),
@@ -128,6 +139,11 @@ export class PatientV2 {
       school_number: StringOrNullOrUndefined(data.school_number),
       parent_guardian_name: StringOrNullOrUndefined(data.parent_guardian_name),
       relationship: StringOrNullOrUndefined(data.relationship),
+      parent_birth_date: DateOrNullOrUndefined(data.parent_birth_date),
+      emmployment: BooleanOrNullOrUndefined(data.emmployment),
+      auto_accident: BooleanOrNullOrUndefined(data.auto_accident),
+      other_accident: BooleanOrNullOrUndefined(data.other_accident),
+      is_self_subscriber: BooleanOrNullOrUndefined(data.is_self_subscriber),
 
       zip: StringOrNullOrUndefined(data.zip),
       state: StringOrNullOrUndefined(data.state),
@@ -178,6 +194,7 @@ export class PatientV2 {
       clin_director_id: NumberOrNullOrUndefined(data.clin_director_id),
       telehealth: BooleanOrNullOrUndefined(data.telehealth),
       pay: BooleanOrNullOrUndefined(data.pay),
+     
 
       created_at: DateOrNullOrUndefined(data.created_at),
       updated_at: DateOrNullOrUndefined(data.updated_at),
