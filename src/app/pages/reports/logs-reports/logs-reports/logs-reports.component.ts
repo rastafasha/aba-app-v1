@@ -40,7 +40,6 @@ export class LogsReportsComponent implements OnInit {
     // { key: 'type', value: 'Type of Note' },
     { key: 'provider_id', value: 'Provider' },
     { key: 'patient_id', value: 'Client Name' },
-    { key: 'patient_id', value: 'Patient Id' },
     { key: 'session_date', value: 'DOS' },
     { key: 'time_in', value: 'Time in (M)' },
     { key: 'time_out', value: 'Time Out (M)' },

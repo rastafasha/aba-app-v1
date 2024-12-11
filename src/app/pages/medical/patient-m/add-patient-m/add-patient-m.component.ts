@@ -231,6 +231,8 @@ export class AddPatientMComponent implements OnInit {
     this.form.valueChanges.subscribe(() => {
       this.isValidPa();
     })
+
+    
   }
 
   goBack() {
@@ -418,5 +420,34 @@ export class AddPatientMComponent implements OnInit {
     }
     
     return data;
+  }
+
+  seleccionarParaEdit(paService: any) {
+    const selectedPaservice = this.services.find(
+      (item) => item.index === paService.index
+    );
+    console.log(paService);
+    // if (selectedCaregiver) {
+    //   this.family_edit = selectedCaregiver;
+    //   this.selectedCaregiver = selectedCaregiver;
+    //   // Ahora puedes editar el objeto selectedCaregiver
+    //   selectedCaregiver.nombre = 'Nuevo nombre'; // Por ejemplo
+    //   console.log('Objeto seleccionado:', this.selectedCaregiver);
+    // }
+  }
+
+  updatePaService(paService: any) {
+    const selectedPaservice = this.services.find(
+      (item) => item.index === paService.index
+    );
+    console.log(paService);
+    // if (index !== -1) {
+    //   this.training_goals[index] = monito;
+    //   Swal.fire(
+    //     'Updated',
+    //     `Updated item List successfully, if you finish the list, now press button save!`,
+    //     'success'
+    //   );
+    // }
   }
 }
