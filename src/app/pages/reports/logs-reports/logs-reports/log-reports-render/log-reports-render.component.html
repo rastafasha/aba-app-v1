@@ -44,6 +44,7 @@
         note.type === 'rbt' ? routes.noteRbt.view : routes.noteBcba.view,
         note.id
       ]"
+      [queryParams]="{from: 'log'}"
     >
       {{ note.session_date | date : "shortDate" }}
     </a>

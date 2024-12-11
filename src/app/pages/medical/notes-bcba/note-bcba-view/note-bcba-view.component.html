@@ -5,10 +5,17 @@
       <div class="row">
         <div class="col-sm-12">
           <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a [routerLink]="[routes.noteBcba.list, patient_identifier]">BCBA Notes </a></li>
-            <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
-            <li class="breadcrumb-item active">view Note </li>
-        </ul>
+            <ng-container *ngIf="fromParam?.toLowerCase() === 'log'; else defaultBreadcrumb">
+              <li class="breadcrumb-item"><a [routerLink]="['/reports/logs']">Log Report</a></li>
+              <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+              <li class="breadcrumb-item active">View Note</li>
+            </ng-container>
+            <ng-template #defaultBreadcrumb>
+              <li class="breadcrumb-item"><a [routerLink]="[routes.noteBcba.list, patient_identifier]">BCBA Notes</a></li>
+              <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+              <li class="breadcrumb-item active">View Note</li>
+            </ng-template>
+          </ul>
           <div class="doctor-submit text-start">
             <button class="btn btn-primary btn-sm" (click)="goBack()">
               Back
@@ -34,17 +41,18 @@
                         <div class="names-profiles">
                           <!-- <h5>Client</h5>
                           <p>{{ patient_selected.first_name }} ({{ note_selected.patient_identifier }})</p>
-                          
+
                           <h5>Provider Name</h5>
                           <p>{{ doctor_selected_full_name }}</p> -->
                         </div>
                       </div>
                     </div>
-                    
+
                     <div class="col-lg-4 col-md-4 d-flex align-items-center">
                       <div class="follow-btn-group">
                         <a
                           [routerLink]="[routes.noteBcba.edit, note_id]"
+                          [queryParams]="{ from: fromParam }"
                           *ngIf="
                             note_selected.status === 'pending' ||
                             note_selected.status === 'no'
@@ -194,7 +202,7 @@
                             <p>{{ note_selected.session_length_afternon_total }}</p>
                           </div>
                         </div>
-                       
+
                       </div>
                     </div>
                   </ng-container>
@@ -422,7 +430,7 @@
               </div>
               <!-- all -->
 
-              
+
 
               <div class="card">
                 <div class="card-header">
