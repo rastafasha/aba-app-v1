@@ -72,7 +72,6 @@ export class EditPatientMComponent implements OnInit {
   documentSelected;
   form: FormGroup<PatientV2FormControls>;
   paForm: FormGroup<PaServiceV2FormControls>;
-  paFormEdit: FormGroup<PaServiceV2FormControls>;
   constructor(
     private useCases: PatientsUseCasesService,
     private patientsService: PatientsV2Service,
@@ -100,12 +99,19 @@ export class EditPatientMComponent implements OnInit {
       birth_date: this.fb.control(null as Date),
       age: this.fb.control(0),
       gender: this.fb.control(0),
+      parent_gender: this.fb.control(0),
       education: this.fb.control(''),
       profession: this.fb.control(''),
       school_name: this.fb.control(''),
       school_number: this.fb.control(''),
       parent_guardian_name: this.fb.control(''),
+      parent_birth_date: this.fb.control(null as Date),
       relationship: this.fb.control(''),
+      emmployment: this.fb.control(false),
+      auto_accident: this.fb.control(false),
+      other_accident: this.fb.control(false),
+      is_self_subscriber: this.fb.control(false),
+
       language: this.fb.control(''),
       phone: this.fb.control(''),
       home_phone: this.fb.control(''),
@@ -154,6 +160,8 @@ export class EditPatientMComponent implements OnInit {
       clin_director_id: this.fb.control(null as number),
       telehealth: this.fb.control(false),
       pay: this.fb.control(false),
+      
+
       created_at: this.fb.control(null as Date),
       updated_at: this.fb.control(null as Date),
       deleted_at: this.fb.control(null as Date),
@@ -172,19 +180,7 @@ export class EditPatientMComponent implements OnInit {
       updated_at: this.fb.control(null as Date),
       deleted_at: this.fb.control(null as Date),
     });
-    this.paFormEdit = this.fb.group<PaServiceV2FormControls>({
-      id: this.fb.control(0),
-      patient_id: this.fb.control(this.id),
-      pa_service: this.fb.control(''), //the name of the service
-      cpt: this.fb.control(null as string),
-      n_units: this.fb.control(null as number),
-      spent_units: this.fb.control(null as number),
-      start_date: this.fb.control(new Date()),
-      end_date: this.fb.control(null as Date),
-      created_at: this.fb.control(null as Date),
-      updated_at: this.fb.control(null as Date),
-      deleted_at: this.fb.control(null as Date),
-    });
+    
   }
 
   ngOnInit(): void {
