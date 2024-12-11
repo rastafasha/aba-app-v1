@@ -72,6 +72,7 @@ export class EditPatientMComponent implements OnInit {
   documentSelected;
   form: FormGroup<PatientV2FormControls>;
   paForm: FormGroup<PaServiceV2FormControls>;
+  paFormEdit: FormGroup<PaServiceV2FormControls>;
   constructor(
     private useCases: PatientsUseCasesService,
     private patientsService: PatientsV2Service,
@@ -159,6 +160,19 @@ export class EditPatientMComponent implements OnInit {
     });
 
     this.paForm = this.fb.group<PaServiceV2FormControls>({
+      id: this.fb.control(0),
+      patient_id: this.fb.control(this.id),
+      pa_service: this.fb.control(''), //the name of the service
+      cpt: this.fb.control(null as string),
+      n_units: this.fb.control(null as number),
+      spent_units: this.fb.control(null as number),
+      start_date: this.fb.control(new Date()),
+      end_date: this.fb.control(null as Date),
+      created_at: this.fb.control(null as Date),
+      updated_at: this.fb.control(null as Date),
+      deleted_at: this.fb.control(null as Date),
+    });
+    this.paFormEdit = this.fb.group<PaServiceV2FormControls>({
       id: this.fb.control(0),
       patient_id: this.fb.control(this.id),
       pa_service: this.fb.control(''), //the name of the service
@@ -373,5 +387,34 @@ export class EditPatientMComponent implements OnInit {
   ////////////////////////////////////////////////////////////////
   goBack() {
     this.useCases.goBack();
+  }
+
+  seleccionarParaEdit(paService: any) {
+    const selectedPaservice = this.services.find(
+      (item) => item.index === paService.index
+    );
+    console.log(paService);
+    // if (selectedCaregiver) {
+    //   this.family_edit = selectedCaregiver;
+    //   this.selectedCaregiver = selectedCaregiver;
+    //   // Ahora puedes editar el objeto selectedCaregiver
+    //   selectedCaregiver.nombre = 'Nuevo nombre'; // Por ejemplo
+    //   console.log('Objeto seleccionado:', this.selectedCaregiver);
+    // }
+  }
+
+  updatePaService(paService: any) {
+    const selectedPaservice = this.services.find(
+      (item) => item.index === paService.index
+    );
+    console.log(paService);
+    // if (index !== -1) {
+    //   this.training_goals[index] = monito;
+    //   Swal.fire(
+    //     'Updated',
+    //     `Updated item List successfully, if you finish the list, now press button save!`,
+    //     'success'
+    //   );
+    // }
   }
 }
