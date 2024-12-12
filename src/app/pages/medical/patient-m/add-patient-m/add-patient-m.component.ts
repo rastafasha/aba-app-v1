@@ -191,7 +191,9 @@ export class AddPatientMComponent implements OnInit {
       school_name: ['',Validators.required],
       school_number: ['',Validators.required],
       birth_date: [null,Validators.required],
+      parent_birth_date: [null,Validators.required],
       gender: [null, Validators.required],
+      parent_gender: [null, Validators.required],
       address: ['',Validators.required],
       special_note: ['',Validators.required],
       city: ['',Validators.required],
@@ -219,6 +221,12 @@ export class AddPatientMComponent implements OnInit {
       cde: ['', Validators.required],
       submitted: ['', Validators.required],
       interview: ['', Validators.required],
+      telehealth: this.fb.control(false),
+      pay: this.fb.control(false),
+      emmployment: this.fb.control(false),
+      auto_accident: this.fb.control(false),
+      other_accident: this.fb.control(false),
+      is_self_subscriber: this.fb.control(false),
       
       pa_services: ['', this.fb.control<string[]>([]),],
       pa_service: ['', this.fb.control<string[]>([]),],
@@ -231,6 +239,8 @@ export class AddPatientMComponent implements OnInit {
     this.form.valueChanges.subscribe(() => {
       this.isValidPa();
     })
+
+    
   }
 
   goBack() {
@@ -355,7 +365,8 @@ export class AddPatientMComponent implements OnInit {
       (this.IMAGE_PREVISUALIZA = reader.result as string);
   }
 
-  public save(): void {
+  // eslint-disable-next-line no-debugger
+  public save(): void {debugger
     if(!this.form.valid) {
       this.text_validation = 'All the fields are required';
       return;
@@ -399,6 +410,12 @@ export class AddPatientMComponent implements OnInit {
       day = data.birth_date.getDate().toString().padStart(2, '0'); 
       data.birth_date = `${year}-${month}-${day}`;
     }
+    if (data.parent_birth_date?.getFullYear()) {
+      year = data.parent_birth_date.getFullYear();
+      month = (data.parent_birth_date.getMonth() + 1).toString().padStart(2, '0');
+      day = data.parent_birth_date.getDate().toString().padStart(2, '0'); 
+      data.parent_birth_date = `${year}-${month}-${day}`;
+    }
     else {
       this.text_validation = 'Add birth date';
       return null;
@@ -418,5 +435,34 @@ export class AddPatientMComponent implements OnInit {
     }
     
     return data;
+  }
+
+  seleccionarParaEdit(paService: any) {
+    const selectedPaservice = this.services.find(
+      (item) => item.index === paService.index
+    );
+    console.log(paService);
+    // if (selectedCaregiver) {
+    //   this.family_edit = selectedCaregiver;
+    //   this.selectedCaregiver = selectedCaregiver;
+    //   // Ahora puedes editar el objeto selectedCaregiver
+    //   selectedCaregiver.nombre = 'Nuevo nombre'; // Por ejemplo
+    //   console.log('Objeto seleccionado:', this.selectedCaregiver);
+    // }
+  }
+
+  updatePaService(paService: any) {
+    const selectedPaservice = this.services.find(
+      (item) => item.index === paService.index
+    );
+    console.log(paService);
+    // if (index !== -1) {
+    //   this.training_goals[index] = monito;
+    //   Swal.fire(
+    //     'Updated',
+    //     `Updated item List successfully, if you finish the list, now press button save!`,
+    //     'success'
+    //   );
+    // }
   }
 }

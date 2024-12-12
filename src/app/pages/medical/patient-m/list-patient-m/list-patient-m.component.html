@@ -110,7 +110,7 @@
                     <th mat-sort-header="city">city</th>
                     <th mat-sort-header="location">location</th>
                     <th mat-sort-header="patient_id">Patient Id</th>
-                    <th mat-sort-header="elegible">Status</th>
+                    <!-- <th mat-sort-header="elegible">Status</th> -->
                     <th mat-sort-header="ops" *ngIf="roles === 'SUPERADMIN'">
                       Options
                     </th>
@@ -174,7 +174,7 @@
                     </td>
                     <td>{{ data.patient_identifier }}</td>
 
-                    <td>
+                    <!-- <td>
                       <span
                         class="badge bg-primary"
                         *ngIf="data.status === 'incoming'"
@@ -230,7 +230,7 @@
                         *ngIf="data.status === 'waitintOnSchool'"
                         >Waiting on School</span
                       >
-                    </td>
+                    </td> -->
                     <td *ngIf="roles === 'SUPERADMIN'">
                       <select
                         class="form-control form-select-solid fw-bolder"
@@ -241,7 +241,7 @@
                       >
                         <option>-- Select --</option>
                         <option value="incoming">Incoming</option>
-                        <option value="active">Active</option>
+                        <option class="badge bg-success"  value="active">Active</option>
                         <option value="inactive">Inactive</option>
                         <option value="onHold">On Hold</option>
                         <option value="onDischarge">On Discharge</option>

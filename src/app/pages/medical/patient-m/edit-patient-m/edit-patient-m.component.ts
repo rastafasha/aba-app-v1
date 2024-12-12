@@ -99,12 +99,19 @@ export class EditPatientMComponent implements OnInit {
       birth_date: this.fb.control(null as Date),
       age: this.fb.control(0),
       gender: this.fb.control(0),
+      parent_gender: this.fb.control(0),
       education: this.fb.control(''),
       profession: this.fb.control(''),
       school_name: this.fb.control(''),
       school_number: this.fb.control(''),
       parent_guardian_name: this.fb.control(''),
+      parent_birth_date: this.fb.control(null as Date),
       relationship: this.fb.control(''),
+      emmployment: this.fb.control(false),
+      auto_accident: this.fb.control(false),
+      other_accident: this.fb.control(false),
+      is_self_subscriber: this.fb.control(false),
+
       language: this.fb.control(''),
       phone: this.fb.control(''),
       home_phone: this.fb.control(''),
@@ -153,6 +160,8 @@ export class EditPatientMComponent implements OnInit {
       clin_director_id: this.fb.control(null as number),
       telehealth: this.fb.control(false),
       pay: this.fb.control(false),
+      
+
       created_at: this.fb.control(null as Date),
       updated_at: this.fb.control(null as Date),
       deleted_at: this.fb.control(null as Date),
@@ -171,6 +180,7 @@ export class EditPatientMComponent implements OnInit {
       updated_at: this.fb.control(null as Date),
       deleted_at: this.fb.control(null as Date),
     });
+    
   }
 
   ngOnInit(): void {
@@ -226,6 +236,7 @@ export class EditPatientMComponent implements OnInit {
         }) as Observable<ApiV2Response<PatientV2>>);
     get$.subscribe((resp) => {
       this.updateData(resp.data);
+      console.log(resp);
     });
   }
 
@@ -373,5 +384,34 @@ export class EditPatientMComponent implements OnInit {
   ////////////////////////////////////////////////////////////////
   goBack() {
     this.useCases.goBack();
+  }
+
+  seleccionarParaEdit(paService: any) {
+    const selectedPaservice = this.services.find(
+      (item) => item.index === paService.index
+    );
+    console.log(paService);
+    // if (selectedCaregiver) {
+    //   this.family_edit = selectedCaregiver;
+    //   this.selectedCaregiver = selectedCaregiver;
+    //   // Ahora puedes editar el objeto selectedCaregiver
+    //   selectedCaregiver.nombre = 'Nuevo nombre'; // Por ejemplo
+    //   console.log('Objeto seleccionado:', this.selectedCaregiver);
+    // }
+  }
+
+  updatePaService(paService: any) {
+    const selectedPaservice = this.services.find(
+      (item) => item.index === paService.index
+    );
+    console.log(paService);
+    // if (index !== -1) {
+    //   this.training_goals[index] = monito;
+    //   Swal.fire(
+    //     'Updated',
+    //     `Updated item List successfully, if you finish the list, now press button save!`,
+    //     'success'
+    //   );
+    // }
   }
 }

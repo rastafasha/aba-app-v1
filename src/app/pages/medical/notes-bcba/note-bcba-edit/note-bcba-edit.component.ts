@@ -32,7 +32,7 @@ export class NoteBcbaEditComponent implements OnInit {
   text_validation = '';
 
   selectedValueProvider!: string;
-  
+
   selectedValueTimeIn = '';
   selectedValueTimeOut = '';
   selectedValueTimeIn2 = '';
@@ -45,7 +45,7 @@ export class NoteBcbaEditComponent implements OnInit {
   selectedValueRBT!: string;
   selectedValueRenderingProvider!: string;
   selectedValueProviderRBT_id!: number;
-  
+
   selectedValueBCBA!: string;
   selectedValueAbaSupervisor!: string;
   selectedValueAbaSupervisor_id: number;
@@ -176,13 +176,15 @@ export class NoteBcbaEditComponent implements OnInit {
   pa_services: PaService[] = [];
   selectedPaService: PaService | null = null;
   projectedUnits = 0;
-  
+
   provider: any = [];
-  
+
   insurance_identifier: string;
   insurance_id: number;
-  
-  
+
+  fromParam: string | null = null;
+
+
   constructor(
     private bipService: BipService,
     private router: Router,
@@ -194,10 +196,14 @@ export class NoteBcbaEditComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    //
     this.ativatedRoute.params.subscribe((resp) => {
       this.note_id = resp['id'];
     });
+
+    this.ativatedRoute.queryParams.subscribe(params => {
+      this.fromParam = params['from'];
+    });
+
     this.getConfig();
     this.getNote();
 
@@ -206,7 +212,7 @@ export class NoteBcbaEditComponent implements OnInit {
     this.doctor_id = this.user.id;
   }
 
-  
+
 
   goBack() {
     this.locations.back(); // <-- go back to previous location on cancel
@@ -231,7 +237,7 @@ export class NoteBcbaEditComponent implements OnInit {
       this.patient_identifier = this.note_selected.patient_identifier;
       this.bip_id = this.note_selected.bip_id;
       this.location = this.note_selected.location;
-      
+
       this.summary_note = resp.noteBcba.summary_note || '';
 
       this.provider_credential = this.note_selected.provider_credential;
@@ -257,7 +263,7 @@ export class NoteBcbaEditComponent implements OnInit {
 
       this.selectedValueRBT = resp.noteBcba.provider.name;
       this.selectedValueProviderRBT_id =resp.noteBcba.provider_id;
-      
+
       this.selectedValueBCBA = resp.noteBcba.supervisor.name;
       this.selectedValueBcba_id =resp.noteBcba.supervisor_id;
       // console.log(this.selectedValueRendering );
@@ -384,7 +390,7 @@ export class NoteBcbaEditComponent implements OnInit {
     event = this.selectedValueProviderRBT_id;
     this.specialistData(this.selectedValueProviderRBT_id);
     console.log(this.selectedValueProviderRBT_id);
-    
+
   }
   selectSpecialistBCBA(event) {
     event = this.selectedValueBcba_id;
@@ -573,7 +579,7 @@ convertToHours(totalMinutes: number): string {
     formData.append('insurance_id', this.insurance_id+''); // id del seguro preferiblemente que solo agarre la data al crear
     formData.append('insurance_identifier', this.insurance_identifier); // id del seguro preferiblemente que solo agarre la data al crear
 
-    
+
     if (this.summary_note) {
       formData.append('summary_note', this.summary_note);
     }
@@ -623,12 +629,12 @@ convertToHours(totalMinutes: number): string {
     }
     if (this.selectedPaService) {
       formData.append('pa_service_id', this.selectedPaService.id.toString());
-    
+
     }
     if (this.meet_with_client_at) {
       formData.append('meet_with_client_at', this.meet_with_client_at);
     }
-   
+
     // if (this.note_description) {
     //   formData.append('note_description', this.note_description);
     // }
@@ -799,7 +805,7 @@ convertToHours(totalMinutes: number): string {
       this.selectedValueCode = service.cpt;
       this.showFamily = false;
       this.showMonitoring = false;
-      
+
       if(service.cpt === '97155' ){
         this.showFamily = true;
       }

@@ -30,7 +30,7 @@ export class EditNoteRbtComponent implements OnInit {
   text_success = '';
   text_validation = '';
 
-  
+
 
   selectedValueCode!: string;
   selectedValueTimeIn = '';
@@ -42,7 +42,7 @@ export class EditNoteRbtComponent implements OnInit {
   option_selected = 0;
   isGeneratingSummary = false;
 
-  
+
 
   selectedValueRBT!: string;
   selectedValueRenderingProvider!: string;
@@ -163,6 +163,8 @@ export class EditNoteRbtComponent implements OnInit {
   paServices: PaService[] = [];
   selectedPaService: PaService | null = null;
 
+  fromParam: string | null = null;
+
   constructor(
     private bipService: BipService,
     private router: Router,
@@ -173,12 +175,13 @@ export class EditNoteRbtComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    //
     this.ativatedRoute.params.subscribe((resp) => {
       this.note_id = resp['id'];
     });
 
-    //  this.countValue();
+    this.ativatedRoute.queryParams.subscribe(params => {
+      this.fromParam = params['from'];
+    });
 
     this.total_trials = 0;
     this.number_of_occurrences = 0;
@@ -277,7 +280,7 @@ export class EditNoteRbtComponent implements OnInit {
 
       this.selectedValueRBT = resp.noteRbt.provider.name;
       this.selectedValueProviderRBT_id =resp.noteRbt.provider_id;
-      
+
       this.selectedValueBCBA = resp.noteRbt.supervisor.name;
       this.selectedValueBcba_id =resp.noteRbt.supervisor_id;
       // console.log(this.selectedValueRendering );
@@ -366,7 +369,7 @@ export class EditNoteRbtComponent implements OnInit {
     return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
   }
 
-  
+
   getProfileBip(noteServiceId?: number) {
     console.log('Getting profile BIP:', {
       noteServiceId,
@@ -386,7 +389,7 @@ export class EditNoteRbtComponent implements OnInit {
       this.insurance_identifier = this.client_selected.insurance_identifier;
         this.patientLocation_id = this.client_selected.location_id;
 
-        
+
 
         // this.pos = JSON.parse(resp.patient.pos_covered) ;
         this.pos = this.client_selected.pos_covered;
@@ -632,7 +635,7 @@ convertToHours(totalMinutes: number): string {
     this.number_of_occurrences = null;
   }
 
-  
+
 
   addReplacement(replacemen) {
     this.replacementSelected = replacemen;
@@ -785,7 +788,7 @@ convertToHours(totalMinutes: number): string {
     formData.append('provider_credential', this.provider_credential);
     formData.append('pos', this.pos);
 
-    
+
     // formData.append('provider', this.provider); // para el calculo de las unidades
 
     formData.append('session_date', this.session_date);
@@ -796,11 +799,11 @@ convertToHours(totalMinutes: number): string {
     formData.append('insurance_id', this.insurance_id+''); // id del seguro preferiblemente que solo agarre la data al crear
     formData.append('insurance_identifier', this.insurance_identifier); // id del seguro preferiblemente que solo agarre la data al crear
 
-    
+
     if (this.meet_with_client_at) {
       formData.append('meet_with_client_at', this.meet_with_client_at);
     }
-    
+
 
     if (this.selectedValueTimeIn) {
       formData.append(
@@ -830,11 +833,11 @@ convertToHours(totalMinutes: number): string {
     if (this.environmental_changes) {
       formData.append('environmental_changes', this.environmental_changes);
     }
-    
+
     if (this.selectedValueRenderingProvider) {
       formData.append('provider_id', this.selectedValueRenderingProvider);
     }
-    
+
     if (this.selectedValueProviderRBT_id) {
       formData.append('provider_id', this.selectedValueProviderRBT_id+'');
     }

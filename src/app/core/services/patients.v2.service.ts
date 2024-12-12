@@ -20,6 +20,7 @@ export class PatientsV2Service extends RepositoryV2Service<PatientV2> {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const result: any = { ...data };
     result.birth_date = fromIsoToDate(data?.birth_date);
+    result.parent_birth_date = fromIsoToDate(data?.parent_birth_date);
     result.elegibility_date = fromIsoToDate(data?.elegibility_date);
     delete result.created_at;
     delete result.updated_at;

@@ -39,7 +39,7 @@
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms" [formGroup]="form">
                     <label>
-                      First Name <span class="login-danger">*</span>
+                      Patient's First Name <span class="login-danger">*</span>
                     </label>
                     <input
                       class="form-control"
@@ -53,7 +53,7 @@
                 <!-- Last Name -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms" [formGroup]="form">
-                    <label>Last Name <span class="login-danger">*</span></label>
+                    <label>Patient's Last Name <span class="login-danger">*</span></label>
                     <input
                       class="form-control"
                       autocomplete="off"
@@ -67,7 +67,7 @@
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms" [formGroup]="form">
                     <label>
-                      Birth day <span class="login-danger">*</span>
+                      Patient's Birth day <span class="login-danger">*</span>
                     </label>
                     <input
                       class="form-control datetimepicker"
@@ -101,7 +101,7 @@
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group select-gender">
                     <label class="gen-label">
-                      Gender<span class="login-danger">*</span>
+                      Sex<span class="login-danger">*</span>
                     </label>
                     <div class="form-check-inline" [formGroup]="form">
                       <label class="form-check-label">
@@ -217,6 +217,55 @@
                     />
                   </div>
                 </div>
+                <!-- Gender -->
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group select-gender">
+                    <label class="gen-label">
+                      Parent's Sex<span class="login-danger">*</span>
+                    </label>
+                    <div class="form-check-inline" [formGroup]="form">
+                      <label class="form-check-label">
+                        <input
+                          type="radio"
+                          name="parent_gender"
+                          [value]="1"
+                          formControlName="parent_gender"
+                          class="form-check-input"
+                        />Male
+                      </label>
+                    </div>
+                    <div class="form-check-inline" [formGroup]="form">
+                      <label class="form-check-label">
+                        <input
+                          type="radio"
+                          name="parent_gender"
+                          [value]="2"
+                          formControlName="parent_gender"
+                          class="form-check-input"
+                        />Female
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms" [formGroup]="form">
+                    <label>Parent/Guardian's Birth day <span class="login-danger">*</span></label>
+                    <input
+                      class="form-control datetimepicker"
+                      autocomplete="off"
+                      name="parent_birth_date"
+                      formControlName="parent_birth_date"
+                      type="text"
+                      matInput
+                      [matDatepicker]="picker3"
+                    />
+                    <mat-datepicker #picker3></mat-datepicker>
+                    <mat-datepicker-toggle
+                      matIconSuffix
+                      [for]="picker3"
+                    ></mat-datepicker-toggle>
+                  </div>
+                </div>
                 <!-- Relationship -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms" [formGroup]="form">
@@ -230,6 +279,81 @@
                       formControlName="relationship"
                       type="text"
                     />
+                  </div>
+                </div>
+                <div class="row">
+                  <label>Is Patient's Condition Related to: <span class="login-danger">*</span></label>
+                  <div class="col-12 col-md-4">
+                    <div class="form-group">
+                      <div
+                        class="card-header d-flex justify-content-between align-items-center"
+                      >
+                        <p >Employment? (current or previews)</p>
+                        <div
+                          [formGroup]="form"
+                          class="status-toggle d-flex justify-content-between align-items-center"
+                        >
+                          <input
+                            type="checkbox"
+                            id="emmployment"
+                            class="check"
+                            name="emmployment"
+                            formControlName="emmployment"
+                          />
+                          <label for="emmployment" class="checktoggle" value="true">
+                            checkbox
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-4">
+                    <div class="form-group">
+                      <div
+                        class="card-header d-flex justify-content-between align-items-center"
+                      >
+                        <p class="card-title">Auto Accident?</p>
+                        <div
+                          [formGroup]="form"
+                          class="status-toggle d-flex justify-content-between align-items-center"
+                        >
+                          <input
+                            type="checkbox"
+                            id="auto_accident"
+                            class="check"
+                            name="auto_accident"
+                            formControlName="auto_accident"
+                          />
+                          <label for="auto_accident" class="checktoggle" value="true">
+                            checkbox
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-4">
+                    <div class="form-group">
+                      <div
+                        class="card-header d-flex justify-content-between align-items-center"
+                      >
+                        <p class="card-title">Other Accident?</p>
+                        <div
+                          [formGroup]="form"
+                          class="status-toggle d-flex justify-content-between align-items-center"
+                        >
+                          <input
+                            type="checkbox"
+                            id="other_accident"
+                            class="check"
+                            name="other_accident"
+                            formControlName="other_accident"
+                          />
+                          <label for="other_accident" class="checktoggle" value="true">
+                            checkbox
+                          </label>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <!-- Language -->
@@ -339,7 +463,7 @@
                 </div>
                 <div class="col-12 col-md-6">
                   <div class="form-group local-forms" [formGroup]="form">
-                    <label>Address <span class="login-danger">*</span></label>
+                    <label>Patient's Address <span class="login-danger">*</span></label>
                     <textarea
                       class="form-control"
                       autocomplete="off"
@@ -611,7 +735,7 @@
               
               <div class="col-12 col-md-6 col-xl-4">
                 <div class="form-group local-forms" [formGroup]="form">
-                  <label>Insurance ID<span class="login-danger">*</span></label>
+                  <label>Insurance I.D. Number<span class="login-danger">*</span></label>
                   <input
                     class="form-control"
                     autocomplete="off"
@@ -790,7 +914,7 @@
                   <div
                     class="card-header d-flex justify-content-between align-items-center"
                   >
-                    <h5 class="card-title">Telehealth</h5>
+                    <p class="card-title">Telehealth</p>
                     <div
                       [formGroup]="form"
                       class="status-toggle d-flex justify-content-between align-items-center"
@@ -815,7 +939,7 @@
                   <div
                     class="card-header d-flex justify-content-between align-items-center"
                   >
-                    <h5 class="card-title">Pay</h5>
+                    <p class="card-title">Pay</p>
                     <div
                       [formGroup]="form"
                       class="status-toggle d-flex justify-content-between align-items-center"
@@ -828,6 +952,30 @@
                         formControlName="pay"
                       />
                       <label for="pay" class="checktoggle" value="true">
+                        checkbox
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-2">
+                <div class="form-group">
+                  <div
+                    class="card-header d-flex justify-content-between align-items-center"
+                  >
+                    <p class="card-title">Is Self Subcriber?</p>
+                    <div
+                      [formGroup]="form"
+                      class="status-toggle d-flex justify-content-between align-items-center"
+                    >
+                      <input
+                        type="checkbox"
+                        id="is_self_subscriber"
+                        class="check"
+                        name="is_self_subscriber"
+                        formControlName="is_self_subscriber"
+                      />
+                      <label for="is_self_subscriber" class="checktoggle" value="true">
                         checkbox
                       </label>
                     </div>
@@ -1267,6 +1415,8 @@
                             <td>{{ paService.end_date |  date : "shortDate" }}</td>
                             <td>
                               <input type="hidden" formControlName="id">
+                              <!-- <button class="btn btn-outline-success btn-sm" (click)="seleccionarParaEdit(paService)"
+                              data-bs-toggle="modal" [attr.data-bs-target]="'#edit-paService-'+paService.id" ><i class="fa fa-pencil"></i> </button> -->
                               <button
                                 type="button"
                                 class="btn btn-sm btn-danger"
@@ -1274,7 +1424,124 @@
                               >
                                 <i class="fas fa-trash"></i>
                               </button>
+                              
                             </td>
+
+                            <!-- modal edit paService-->
+           
+                    <div [id]="'edit-paService-'+paService.id" class="modal  fade" role="dialog">
+                      <div class="modal-dialog modal-dialog-centered modal-lg">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <h5 class="modal-title" id="modalEscape">{{paService.pa_service}}</h5>
+                                  <a href="javascript:void(0);"  data-bs-dismiss="modal" aria-label="Close" class="btn btn-white me-1"
+                                      >Close</a>
+                              </div>
+                              <div class="modal-body text-center">
+                                  <div class="col-xs-12 ">
+                                      <form action="">
+                                          <div class="row">
+                                            <div class="col-12 col-md-6 col-xl-4">
+                                              <!-- PA Service Name -->
+                                              <div
+                                                class="form-group local-forms"
+                                                [formGroup]="paForm"
+                                              >
+                                                <label>
+                                                  PA Service Name
+                                                  <span class="login-danger">*</span></label
+                                                >
+                                                <input
+                                                  class="form-control"
+                                                  formControlName="pa_service"
+                                                  name="pa_service"
+                                                  required
+                                                  type="text"
+                                                />
+                                              </div>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-xl-4">
+                                              <div
+                                                class="form-group local-forms"
+                                                [formGroup]="paForm"
+                                              >
+                                                <label>
+                                                  Number of Units
+                                                  <span class="login-danger">*</span></label
+                                                >
+                                                <input
+                                                  class="form-control"
+                                                  formControlName="n_units"
+                                                  name="n_units"
+                                                  required
+                                                  type="number"
+                                                  min="0"
+                                                />
+                                              </div>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-xl-4">
+                                              <div
+                                                class="form-group local-forms"
+                                                [formGroup]="paForm"
+                                              >
+                                                <label>
+                                                  Start Date
+                                                  <span class="login-danger">*</span></label
+                                                >
+                                                <input
+                                                  class="form-control datetimepicker"
+                                                  name="start_date"
+                                                  formControlName="start_date"
+                                                  type="text"
+                                                  matInput
+                                                  [matDatepicker]="start_date_picker"
+                                                />
+                                                <mat-datepicker #start_date_picker></mat-datepicker>
+                                                <mat-datepicker-toggle
+                                                  matIconSuffix
+                                                  [for]="start_date_picker"
+                                                >
+                                                </mat-datepicker-toggle>
+                                              </div>
+                                            </div>
+                                            <div class="col-12 col-md-6 col-xl-4">
+                                              <div
+                                                class="form-group local-forms"
+                                                [formGroup]="paForm"
+                                              >
+                                                <label>
+                                                  End Date
+                                                  <span class="login-danger">*</span></label
+                                                >
+                                                <input
+                                                  class="form-control datetimepicker"
+                                                  name="end_date"
+                                                  formControlName="end_date"
+                                                  type="text"
+                                                  matInput
+                                                  [matDatepicker]="end_date_picker"
+                                                />
+                                                <mat-datepicker #end_date_picker></mat-datepicker>
+                                                <mat-datepicker-toggle
+                                                  matIconSuffix
+                                                  [for]="end_date_picker"
+                                                >
+                                                </mat-datepicker-toggle>
+                                              </div>
+                                            </div>
+                                              <div class="col-12 mb-3 doctor-submit text-end">
+                                                  <button class="btn btn-primary btn-sm" (click)="updatePaService(paService)">Update Item</button>
+                                              </div>
+  
+                                          </div>
+                                      </form>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <!-- modal edit  end-->
                           </tr>
                           <tr *ngIf="patient.pa_services.length === 0">
                             <td colspan="6" class="text-center">
@@ -1284,6 +1551,8 @@
                         </tbody>
                       </table>
                     </div>
+
+                    
                   </div>
                 </div>
               </div>
