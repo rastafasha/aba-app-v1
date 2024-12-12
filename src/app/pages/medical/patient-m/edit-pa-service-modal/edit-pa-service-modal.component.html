@@ -1,0 +1,85 @@
+<!-- modal edit paService-->
+
+<h1 mat-dialog-title>{{ paService.pa_service }}</h1>
+
+<div mat-dialog-content>
+  <div class="pt-2">
+    <div>
+      <div class="form-group local-forms" [formGroup]="paForm">
+        <label>
+          PA Service Name
+          <span class="login-danger">*</span></label
+        >
+        <input
+          class="form-control"
+          formControlName="pa_service"
+          name="pa_service"
+          required
+          type="text"
+        />
+      </div>
+    </div>
+    <div>
+      <div class="form-group local-forms" [formGroup]="paForm">
+        <label>
+          Number of Units
+          <span class="login-danger">*</span></label
+        >
+        <input
+          class="form-control"
+          formControlName="n_units"
+          name="n_units"
+          required
+          type="number"
+          min="0"
+        />
+      </div>
+    </div>
+    <div>
+      <div class="form-group local-forms" [formGroup]="paForm">
+        <label>
+          Start Date
+          <span class="login-danger">*</span></label
+        >
+        <input
+          class="form-control datetimepicker"
+          name="start_date"
+          formControlName="start_date"
+          type="text"
+          matInput
+          [matDatepicker]="start_date_picker"
+        />
+        <mat-datepicker #start_date_picker></mat-datepicker>
+        <mat-datepicker-toggle matIconSuffix [for]="start_date_picker">
+        </mat-datepicker-toggle>
+      </div>
+    </div>
+    <div>
+      <div class="form-group local-forms" [formGroup]="paForm">
+        <label>
+          End Date
+          <span class="login-danger">*</span></label
+        >
+        <input
+          class="form-control datetimepicker"
+          name="end_date"
+          formControlName="end_date"
+          type="text"
+          matInput
+          [matDatepicker]="end_date_picker"
+        />
+        <mat-datepicker #end_date_picker></mat-datepicker>
+        <mat-datepicker-toggle matIconSuffix [for]="end_date_picker">
+        </mat-datepicker-toggle>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <button class="btn btn-primary btn-sm" (click)="onUpdate()" mat-dialog-close>
+    Update Item
+  </button>
+</div>
+
+<!-- modal edit  end-->

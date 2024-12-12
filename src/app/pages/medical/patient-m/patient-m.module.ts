@@ -16,6 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { LayoutModule } from '../../../layout/layout.module';
 import { ClientLogReportComponent } from './client-log-report/client-log-report.component';
+import { EditPaServiceModalComponent } from './edit-pa-service-modal/edit-pa-service-modal.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ClientLogReportComponent } from './client-log-report/client-log-report.
     EditPatientMComponent,
     ProfilePatientMComponent,
     ClientLogReportComponent,
+    EditPaServiceModalComponent,
   ],
   imports: [
     CommonModule,

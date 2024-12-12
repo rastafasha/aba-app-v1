@@ -32,6 +32,8 @@ import {
   INTAKEN_OPTIONS,
 } from './edit-patient-m.component.const';
 import { AuthService } from 'src/app/core/auth/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { EditPaServiceModalComponent } from '../edit-pa-service-modal/edit-pa-service-modal.component';
 
 type PatientV2FormControls = {
   [T in keyof PatientV2]: AbstractControl<PatientV2[T]>;
@@ -81,7 +83,7 @@ export class EditPatientMComponent implements OnInit {
     private route: ActivatedRoute,
     private authService: AuthService,
     private fb: FormBuilder,
-    private router: Router,
+    public dialog: MatDialog
   ) {
     this.form = this.fb.group<PatientV2FormControls>({
       id: this.fb.control(0),
@@ -99,14 +101,15 @@ export class EditPatientMComponent implements OnInit {
       birth_date: this.fb.control(null as Date),
       age: this.fb.control(0),
       gender: this.fb.control(0),
-      parent_gender: this.fb.control(0),
       education: this.fb.control(''),
       profession: this.fb.control(''),
       school_name: this.fb.control(''),
       school_number: this.fb.control(''),
       parent_guardian_name: this.fb.control(''),
-      parent_birth_date: this.fb.control(null as Date),
       relationship: this.fb.control(''),
+      
+      parent_gender: this.fb.control(0),
+      parent_birth_date: this.fb.control(null as Date),
       emmployment: this.fb.control(false),
       auto_accident: this.fb.control(false),
       other_accident: this.fb.control(false),
@@ -386,32 +389,18 @@ export class EditPatientMComponent implements OnInit {
     this.useCases.goBack();
   }
 
-  seleccionarParaEdit(paService: any) {
-    const selectedPaservice = this.services.find(
-      (item) => item.index === paService.index
-    );
+  seleccionarParaEdit(paService: PaServiceV2) {
+    const dialogRef = this.dialog.open(EditPaServiceModalComponent, {
+      data: {paService: paService},
+      width: '300px',
+    });
     console.log(paService);
-    // if (selectedCaregiver) {
-    //   this.family_edit = selectedCaregiver;
-    //   this.selectedCaregiver = selectedCaregiver;
-    //   // Ahora puedes editar el objeto selectedCaregiver
-    //   selectedCaregiver.nombre = 'Nuevo nombre'; // Por ejemplo
-    //   console.log('Objeto seleccionado:', this.selectedCaregiver);
-    // }
+   
   }
 
-  updatePaService(paService: any) {
-    const selectedPaservice = this.services.find(
-      (item) => item.index === paService.index
-    );
+  updatePaService(paService: PaServiceV2) {
+    
     console.log(paService);
-    // if (index !== -1) {
-    //   this.training_goals[index] = monito;
-    //   Swal.fire(
-    //     'Updated',
-    //     `Updated item List successfully, if you finish the list, now press button save!`,
-    //     'success'
-    //   );
-    // }
+    
   }
 }
