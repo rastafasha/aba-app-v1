@@ -106,6 +106,8 @@ export class LogsReportsComponent implements OnInit {
   }
 
   onRefresh() {
+    this.currentFilter = {};
+    this.notes = null;
     forkJoin([
       this.locationsService.list(),
       this.insurancesService.list(),
@@ -169,6 +171,12 @@ export class LogsReportsComponent implements OnInit {
       page: this.currentPage,
       per_page: this.pageSize,
     };
+
+    // resetea la busqueda por location
+    if(filter.location_id === null){
+      delete filter.location_id;
+    }
+   
 
     forkJoin([
       this.notesRbtService.list(filter),
