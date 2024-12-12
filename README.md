@@ -1,4 +1,3 @@
-Hola Soy MARCO FRIZ
 # aba-app-v1
 
 ## Normas de desarrollo
