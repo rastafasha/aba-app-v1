@@ -5,10 +5,21 @@
       <div class="row">
         <div class="col-sm-12">
           <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a [routerLink]="[routes.noteRbt.list, patient_identifier]">RBT Notes </a></li>
-            <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
-            <li class="breadcrumb-item active">Edit Note </li>
-        </ul>
+            <ng-container *ngIf="fromParam?.toLowerCase() === 'log'; else defaultBreadcrumb">
+              <li class="breadcrumb-item"><a [routerLink]="['/reports/logs']">Log Report</a></li>
+              <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+              <li class="breadcrumb-item">
+                <a [routerLink]="[routes.noteRbt.view, note_id]" [queryParams]="{ from: fromParam }">View Note</a>
+              </li>
+              <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+              <li class="breadcrumb-item active">Edit Note</li>
+            </ng-container>
+            <ng-template #defaultBreadcrumb>
+              <li class="breadcrumb-item"><a [routerLink]="[routes.noteRbt.list, patient_identifier]">RBT Notes</a></li>
+              <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+              <li class="breadcrumb-item active">Edit Note</li>
+            </ng-template>
+          </ul>
           <div class="doctor-submit text-start">
             <button class="btn btn-primary btn-sm" (click)="goBack()">
               Back
@@ -90,7 +101,7 @@
                       >POS
                       <span class="login-danger">*</span></label
                     >
-      
+
                     <select
                       class="form-control form-select-solid fw-bolder"
                       name="meet_with_client_at"
@@ -141,8 +152,8 @@
                     />
                   </div>
                 </div>
-                
-                
+
+
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label>Insurance ID <span class="login-danger">*</span></label>
@@ -336,7 +347,7 @@
                     </p>
                   </div>
                 </div>
-                
+
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
@@ -415,10 +426,10 @@
           <div class="col-12">
             <div class="form-group local-forms">
               <h4>Summary Note</h4>
-              
+
             </div>
           </div>
-          
+
           <div class="col-12 col-md-4">
             <div class="form-group local-forms">
               <label
@@ -733,6 +744,6 @@
   </div>
 </div>
 <!-- fin paciente -->
-    
+
   </div>
 </div>

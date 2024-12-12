@@ -149,6 +149,8 @@ export class NoteRbtViewComponent implements OnInit {
   doctor_selected_bcba: any = null;
   doctor_selected_full_name_bcba: any = null;
 
+  fromParam: string | null = null;
+
   constructor(
     private noteRbtService: NoteRbtService,
     private activatedRoute: ActivatedRoute,
@@ -163,6 +165,11 @@ export class NoteRbtViewComponent implements OnInit {
     this.activatedRoute.params.subscribe((resp) => {
       this.note_id = resp['id'];
     });
+
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.fromParam = params['from'];
+    });
+
     this.getConfig();
     this.getNote();
   }

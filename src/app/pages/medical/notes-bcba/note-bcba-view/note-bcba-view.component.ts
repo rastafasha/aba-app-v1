@@ -153,6 +153,8 @@ export class NoteBcbaViewComponent implements OnInit {
   pa_assessments: string;
   pa_assessmentsgroup = [];
 
+  fromParam: string | null = null;
+
   constructor(
     private noteBcbaService: NoteBcbaService,
     private activatedRoute: ActivatedRoute,
@@ -165,12 +167,15 @@ export class NoteBcbaViewComponent implements OnInit {
   ngOnInit(): void {
     this.pageService.onInitPage();
     this.activatedRoute.params.subscribe((resp) => {
-      // console.log(resp);
       this.note_id = resp['id'];
     });
+
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.fromParam = params['from'];
+    });
+
     this.getConfig();
     this.getNote();
-    
   }
 
   goBack() {
