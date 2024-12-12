@@ -365,7 +365,8 @@ export class AddPatientMComponent implements OnInit {
       (this.IMAGE_PREVISUALIZA = reader.result as string);
   }
 
-  public save(): void {
+  // eslint-disable-next-line no-debugger
+  public save(): void {debugger
     if(!this.form.valid) {
       this.text_validation = 'All the fields are required';
       return;
@@ -408,6 +409,12 @@ export class AddPatientMComponent implements OnInit {
       month = (data.birth_date.getMonth() + 1).toString().padStart(2, '0');
       day = data.birth_date.getDate().toString().padStart(2, '0'); 
       data.birth_date = `${year}-${month}-${day}`;
+    }
+    if (data.parent_birth_date?.getFullYear()) {
+      year = data.parent_birth_date.getFullYear();
+      month = (data.parent_birth_date.getMonth() + 1).toString().padStart(2, '0');
+      day = data.parent_birth_date.getDate().toString().padStart(2, '0'); 
+      data.parent_birth_date = `${year}-${month}-${day}`;
     }
     else {
       this.text_validation = 'Add birth date';
