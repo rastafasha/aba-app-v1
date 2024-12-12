@@ -236,6 +236,7 @@ export class EditPatientMComponent implements OnInit {
         }) as Observable<ApiV2Response<PatientV2>>);
     get$.subscribe((resp) => {
       this.updateData(resp.data);
+      console.log(resp);
     });
   }
 
