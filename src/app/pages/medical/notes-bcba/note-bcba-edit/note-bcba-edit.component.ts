@@ -301,7 +301,7 @@ export class NoteBcbaEditComponent implements OnInit {
       this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED =
         this.note_selected.supervisor_signature;
 
-      this.getProfileBip();
+      this.getProfileBip(noteServiceId);
     });
   }
 
@@ -312,7 +312,11 @@ export class NoteBcbaEditComponent implements OnInit {
     return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
   }
 
-  getProfileBip() {
+  getProfileBip(noteServiceId?: number) {
+    console.log('Getting profile BIP:', {
+      noteServiceId,
+      availableServices: this.pa_services,
+    });
     this.bipService
       .getBipProfilePatient_id(this.patient_identifier)
       .subscribe((resp) => {
@@ -326,17 +330,38 @@ export class NoteBcbaEditComponent implements OnInit {
         this.patientLocation_id = this.client_selected.location_id;
         this.insurance_id = resp.patient.insurer_id;
         this.insurance_identifier = resp.patient.insurance_identifier;
-        // this.pos = JSON.parse(this.client_selected.pos_covered) ;
+        
         this.pos = this.client_selected.pos_covered;
         this.insuranceData();
         this.getReplacementsByPatientId();
         this.pa_services = this.client_selected.pa_services;
+        if (noteServiceId) {
+          this.setPaService(noteServiceId);
+        }
 
         this.birth_date = this.client_selected.birth_date
         ? new Date(this.client_selected.birth_date).toISOString()
         : '';
 
       });
+  }
+
+  private setPaService(noteServiceId: number) {
+    console.log('Setting PA Service:', {
+      noteServiceId,
+      availableServices: this.pa_services,
+    });
+
+    if (this.pa_services?.length && noteServiceId) {
+      this.selectedPaService =
+        this.pa_services.find((service) => service.id === noteServiceId) || null;
+
+      console.log('Selected PA Service:', this.selectedPaService);
+
+      if (this.selectedPaService) {
+        this.selectedValueCode = this.selectedPaService.cpt;
+      }
+    }
   }
 
   getReplacementsByPatientId() {
@@ -353,16 +378,6 @@ export class NoteBcbaEditComponent implements OnInit {
           resp.monitoringEvaluatingPatientIds.data?.[0]?.rbt_training_goals ??
           [];
 
-        this.pa_assessments = resp.pa_assessments;
-        /*
-        const jsonObj = JSON.parse(this.pa_assessments) || '';
-        this.pa_assessmentsgroup = jsonObj;
-        this.n_un = this.pa_assessmentsgroup?.[0]?.n_units;
-        */
-        // this.unitsAsignated = this.pa_assessmentsgroup.n_units;
-        console.log(this.pa_assessmentsgroup);
-        // this.cpt = this.pa_assessmentsgroup[0].cpt;
-        console.log(this.cpt);
       });
   }
 
@@ -524,34 +539,28 @@ convertToHours(totalMinutes: number): string {
       console.log(resp);
       this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED =
         resp.doctor.electronic_signature;
-      // console.log(this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED);
-      // this.notes = resp.notes;
-      // this.services = resp.services;
+      
     });
   }
   selectFirmaSpecialistRbt(event) {
     event = this.selectedValueProviderRBT_id;
     this.speciaFirmaDataRbt(this.selectedValueProviderRBT_id);
-    // console.log(this.selectedValueRBT);
+    
   }
 
   speciaFirmaDataBcba(selectedValueBCBA) {
     this.doctorService
       .showDoctorProfile(selectedValueBCBA)
       .subscribe((resp) => {
-        // console.log(resp);
         this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED =
           resp.doctor.electronic_signature;
-        // console.log(this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED);
-        // this.notes = resp.notes;
-        // this.services = resp.services;
+        
       });
   }
 
   selectFirmaSpecialistBcba(event) {
     event = this.selectedValueBcba_id;
     this.speciaFirmaDataBcba(this.selectedValueBcba_id);
-    // console.log(this.selectedValueBCBA);
   }
 
   save() {
@@ -686,24 +695,7 @@ convertToHours(totalMinutes: number): string {
       });
   }
 
-  //   class Calculadora {
-  //     sumar(num1, num2) {
-  //         return num1 + num2;
-  //     }
-
-  //     restar(num1, num2) {
-  //         return num1 - num2;
-  //     }
-
-  //     dividir(num1, num2) {
-  //         return num1 / num2;
-  //     }
-
-  //     multiplicar(num1, num2) {
-  //         return num1 * num2;
-  //     }
-  // }
-  //
+  
   generateAISummary() {
     if (!this.checkDataSufficient()) {
       Swal.fire('Warning', 'Please fill all the required fields', 'warning');
