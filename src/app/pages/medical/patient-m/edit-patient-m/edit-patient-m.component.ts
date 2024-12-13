@@ -5,8 +5,10 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 import { Observable, of, tap } from 'rxjs';
+import { AuthService } from 'src/app/core/auth/auth.service';
 import {
   ApiV2Response,
   AppUser,
@@ -22,16 +24,17 @@ import {
   LocationsV2Service,
   PatientsV2Service,
 } from 'src/app/core/services';
+import { PaServicesV2Service } from 'src/app/core/services/pa-services.v2.service';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { compareObjects } from 'src/app/shared/utils';
 import Swal from 'sweetalert2';
 import { DoctorService } from '../../doctors/service/doctor.service';
+import { EditPaServiceModalComponent } from '../edit-pa-service-modal/edit-pa-service-modal.component';
 import { PatientsUseCasesService } from '../service/patients-use-cases.service';
 import {
   DEFAULT_AVATAR,
   INTAKEN_OPTIONS,
 } from './edit-patient-m.component.const';
-import { AuthService } from 'src/app/core/auth/auth.service';
 
 type PatientV2FormControls = {
   [T in keyof PatientV2]: AbstractControl<PatientV2[T]>;
@@ -44,6 +47,7 @@ type PaServiceV2FormControls = {
   selector: 'app-edit-patient-m',
   templateUrl: './edit-patient-m.component.html',
   styleUrls: ['./edit-patient-m.component.scss'],
+  
 })
 export class EditPatientMComponent implements OnInit {
   routes = AppRoutes;
@@ -62,9 +66,9 @@ export class EditPatientMComponent implements OnInit {
   user: AppUser;
   roles = [];
   doctor_id: number;
-  location: any=[];
+  location: LocationV2[] = [];
   location_id: number;
-  
+
   intakenOptions = INTAKEN_OPTIONS;
   services = [];
   files: File[] = [];
@@ -75,17 +79,18 @@ export class EditPatientMComponent implements OnInit {
   constructor(
     private useCases: PatientsUseCasesService,
     private patientsService: PatientsV2Service,
+    private paServicesService: PaServicesV2Service,
     private locationsService: LocationsV2Service,
     private providersService: DoctorService,
     private insurancesService: InsurancesV2Service,
     private route: ActivatedRoute,
     private authService: AuthService,
     private fb: FormBuilder,
-    private router: Router,
+    public dialog: MatDialog
   ) {
     this.form = this.fb.group<PatientV2FormControls>({
       id: this.fb.control(0),
-      
+
       patient_identifier: this.fb.control(''),
       first_name: this.fb.control(''),
       last_name: this.fb.control(''),
@@ -99,14 +104,15 @@ export class EditPatientMComponent implements OnInit {
       birth_date: this.fb.control(null as Date),
       age: this.fb.control(0),
       gender: this.fb.control(0),
-      parent_gender: this.fb.control(0),
       education: this.fb.control(''),
       profession: this.fb.control(''),
       school_name: this.fb.control(''),
       school_number: this.fb.control(''),
       parent_guardian_name: this.fb.control(''),
-      parent_birth_date: this.fb.control(null as Date),
       relationship: this.fb.control(''),
+
+      parent_gender: this.fb.control(0),
+      parent_birth_date: this.fb.control(null as Date),
       emmployment: this.fb.control(false),
       auto_accident: this.fb.control(false),
       other_accident: this.fb.control(false),
@@ -160,7 +166,6 @@ export class EditPatientMComponent implements OnInit {
       clin_director_id: this.fb.control(null as number),
       telehealth: this.fb.control(false),
       pay: this.fb.control(false),
-      
 
       created_at: this.fb.control(null as Date),
       updated_at: this.fb.control(null as Date),
@@ -180,17 +185,15 @@ export class EditPatientMComponent implements OnInit {
       updated_at: this.fb.control(null as Date),
       deleted_at: this.fb.control(null as Date),
     });
-    
   }
 
   ngOnInit(): void {
     this.useCases.init();
     this.user = this.authService.user as AppUser;
-    
+
     this.doctor_id = this.user.id;
     this.location_id = this.user.location_id;
     this.roles = this.user.roles;
-
 
     if (this.user.roles[0] === 'SUPERADMIN') {
       this.showLocationSelected = true;
@@ -262,8 +265,6 @@ export class EditPatientMComponent implements OnInit {
         Swal.fire('Error', `Can't update!`, 'error');
       },
     });
-    
-
   }
   // PA
 
@@ -286,23 +287,27 @@ export class EditPatientMComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
         const pa_services = this.patient.pa_services ?? [];
-        const pa_service_to_delete = pa_services.find(item => item.id === event.id);
+        const pa_service_to_delete = pa_services.find(
+          (item) => item.id === event.id
+        );
         if (pa_service_to_delete) {
           pa_service_to_delete.deleted = true; // Mark as deleted
         }
         this.form.patchValue({ pa_services });
         this.patient.pa_services = pa_services;
         this.onSave();
-        Swal.fire('Deleted!', 'Your PA service has been marked for deletion.', 'success');
+        Swal.fire(
+          'Deleted!',
+          'Your PA service has been marked for deletion.',
+          'success'
+        );
       }
     });
   }
-
-  
 
   //FILE:
   // Aclaraciones
@@ -386,32 +391,24 @@ export class EditPatientMComponent implements OnInit {
     this.useCases.goBack();
   }
 
-  seleccionarParaEdit(paService: any) {
-    const selectedPaservice = this.services.find(
-      (item) => item.index === paService.index
-    );
-    console.log(paService);
-    // if (selectedCaregiver) {
-    //   this.family_edit = selectedCaregiver;
-    //   this.selectedCaregiver = selectedCaregiver;
-    //   // Ahora puedes editar el objeto selectedCaregiver
-    //   selectedCaregiver.nombre = 'Nuevo nombre'; // Por ejemplo
-    //   console.log('Objeto seleccionado:', this.selectedCaregiver);
-    // }
+  onEditPaService(paService: PaServiceV2) {
+    const ref = this.dialog.open(EditPaServiceModalComponent, {
+      data: { paService: paService },
+      width: '300px',
+    });
+    ref.afterClosed().subscribe((resp) => {
+      //cambiar logica para cuando el paciente se este creando
+      if (resp) {
+        this.paServicesService.create(resp).subscribe(() => {
+          this.onRefresh();
+          });
+        }
+          
+      this.paServicesService
+        .update(resp, resp.id)
+        .subscribe(() => this.onRefresh());
+    });
   }
 
-  updatePaService(paService: any) {
-    const selectedPaservice = this.services.find(
-      (item) => item.index === paService.index
-    );
-    console.log(paService);
-    // if (index !== -1) {
-    //   this.training_goals[index] = monito;
-    //   Swal.fire(
-    //     'Updated',
-    //     `Updated item List successfully, if you finish the list, now press button save!`,
-    //     'success'
-    //   );
-    // }
-  }
+  
 }
