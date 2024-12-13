@@ -5,10 +5,14 @@
       <div class="row">
         <div class="col-sm-12">
           <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a [routerLink]="routes.patients.list">Clients </a></li>
-            <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
-            <li class="breadcrumb-item active">Edit Client </li>
-        </ul>
+            <li class="breadcrumb-item">
+              <a [routerLink]="routes.patients.list">Clients </a>
+            </li>
+            <li class="breadcrumb-item">
+              <i class="feather icon-chevron-right"></i>
+            </li>
+            <li class="breadcrumb-item active">Edit Client</li>
+          </ul>
           <div class="doctor-submit text-start">
             <button class="btn btn-primary btn-sm" (click)="goBack()">
               Back
@@ -53,7 +57,10 @@
                 <!-- Last Name -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms" [formGroup]="form">
-                    <label>Patient's Last Name <span class="login-danger">*</span></label>
+                    <label
+                      >Patient's Last Name
+                      <span class="login-danger">*</span></label
+                    >
                     <input
                       class="form-control"
                       autocomplete="off"
@@ -217,7 +224,7 @@
                     />
                   </div>
                 </div>
-                <!-- Gender -->
+                <!-- Parent Gender -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group select-gender">
                     <label class="gen-label">
@@ -247,9 +254,13 @@
                     </div>
                   </div>
                 </div>
+                <!-- Parent/Guardian's Birth day -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms" [formGroup]="form">
-                    <label>Parent/Guardian's Birth day <span class="login-danger">*</span></label>
+                    <label
+                      >Parent/Guardian's Birth day
+                      <span class="login-danger">*</span></label
+                    >
                     <input
                       class="form-control datetimepicker"
                       autocomplete="off"
@@ -257,12 +268,12 @@
                       formControlName="parent_birth_date"
                       type="text"
                       matInput
-                      [matDatepicker]="picker3"
+                      [matDatepicker]="picker_parent_birth_date"
                     />
-                    <mat-datepicker #picker3></mat-datepicker>
+                    <mat-datepicker #picker_parent_birth_date></mat-datepicker>
                     <mat-datepicker-toggle
                       matIconSuffix
-                      [for]="picker3"
+                      [for]="picker_parent_birth_date"
                     ></mat-datepicker-toggle>
                   </div>
                 </div>
@@ -463,7 +474,10 @@
                 </div>
                 <div class="col-12 col-md-6">
                   <div class="form-group local-forms" [formGroup]="form">
-                    <label>Patient's Address <span class="login-danger">*</span></label>
+                    <label
+                      >Patient's Address
+                      <span class="login-danger">*</span></label
+                    >
                     <textarea
                       class="form-control"
                       autocomplete="off"
@@ -732,10 +746,14 @@
                   </mat-select>
                 </div>
               </div>
-              
+
               <div class="col-12 col-md-6 col-xl-4">
                 <div class="form-group local-forms" [formGroup]="form">
-                  <label>Insurance I.D. Number<span class="login-danger">*</span></label>
+                  <label
+                    >Insurance I.D. Number<span class="login-danger"
+                      >*</span
+                    ></label
+                  >
                   <input
                     class="form-control"
                     autocomplete="off"
@@ -933,7 +951,7 @@
                   </div>
                 </div>
               </div>
-              
+
               <div class="col-12 col-md-2">
                 <div class="form-group">
                   <div
@@ -975,7 +993,11 @@
                         name="is_self_subscriber"
                         formControlName="is_self_subscriber"
                       />
-                      <label for="is_self_subscriber" class="checktoggle" value="true">
+                      <label
+                        for="is_self_subscriber"
+                        class="checktoggle"
+                        value="true"
+                      >
                         checkbox
                       </label>
                     </div>
@@ -1227,11 +1249,8 @@
                 </div>
               </div>
 
-              
-
               <div class="col-12">
                 <div class="doctor-submit text-end">
-                  
                   <button
                     type="button"
                     class="btn btn-primary submit-form me-2"
@@ -1411,12 +1430,20 @@
                             <td>{{ paService.pa_service }}</td>
                             <td>{{ paService.cpt }}</td>
                             <td>{{ paService.n_units }}</td>
-                            <td>{{ paService.start_date |  date : "shortDate" }}</td>
-                            <td>{{ paService.end_date |  date : "shortDate" }}</td>
                             <td>
-                              <input type="hidden" formControlName="id">
-                              <!-- <button class="btn btn-outline-success btn-sm" (click)="seleccionarParaEdit(paService)"
-                              data-bs-toggle="modal" [attr.data-bs-target]="'#edit-paService-'+paService.id" ><i class="fa fa-pencil"></i> </button> -->
+                              {{ paService.start_date | date : "shortDate" }}
+                            </td>
+                            <td>
+                              {{ paService.end_date | date : "shortDate" }}
+                            </td>
+                            <td>
+                              <button
+                                type="button"
+                                class="btn btn-outline-success btn-sm"
+                                (click)="onEditPaService(paService)"
+                              >
+                                <i class="fa fa-pencil"></i>
+                              </button>
                               <button
                                 type="button"
                                 class="btn btn-sm btn-danger"
@@ -1424,124 +1451,7 @@
                               >
                                 <i class="fas fa-trash"></i>
                               </button>
-                              
                             </td>
-
-                            <!-- modal edit paService-->
-           
-                    <div [id]="'edit-paService-'+paService.id" class="modal  fade" role="dialog">
-                      <div class="modal-dialog modal-dialog-centered modal-lg">
-                          <div class="modal-content">
-                              <div class="modal-header">
-                                  <h5 class="modal-title" id="modalEscape">{{paService.pa_service}}</h5>
-                                  <a href="javascript:void(0);"  data-bs-dismiss="modal" aria-label="Close" class="btn btn-white me-1"
-                                      >Close</a>
-                              </div>
-                              <div class="modal-body text-center">
-                                  <div class="col-xs-12 ">
-                                      <form action="">
-                                          <div class="row">
-                                            <div class="col-12 col-md-6 col-xl-4">
-                                              <!-- PA Service Name -->
-                                              <div
-                                                class="form-group local-forms"
-                                                [formGroup]="paForm"
-                                              >
-                                                <label>
-                                                  PA Service Name
-                                                  <span class="login-danger">*</span></label
-                                                >
-                                                <input
-                                                  class="form-control"
-                                                  formControlName="pa_service"
-                                                  name="pa_service"
-                                                  required
-                                                  type="text"
-                                                />
-                                              </div>
-                                            </div>
-                                            <div class="col-12 col-md-6 col-xl-4">
-                                              <div
-                                                class="form-group local-forms"
-                                                [formGroup]="paForm"
-                                              >
-                                                <label>
-                                                  Number of Units
-                                                  <span class="login-danger">*</span></label
-                                                >
-                                                <input
-                                                  class="form-control"
-                                                  formControlName="n_units"
-                                                  name="n_units"
-                                                  required
-                                                  type="number"
-                                                  min="0"
-                                                />
-                                              </div>
-                                            </div>
-                                            <div class="col-12 col-md-6 col-xl-4">
-                                              <div
-                                                class="form-group local-forms"
-                                                [formGroup]="paForm"
-                                              >
-                                                <label>
-                                                  Start Date
-                                                  <span class="login-danger">*</span></label
-                                                >
-                                                <input
-                                                  class="form-control datetimepicker"
-                                                  name="start_date"
-                                                  formControlName="start_date"
-                                                  type="text"
-                                                  matInput
-                                                  [matDatepicker]="start_date_picker"
-                                                />
-                                                <mat-datepicker #start_date_picker></mat-datepicker>
-                                                <mat-datepicker-toggle
-                                                  matIconSuffix
-                                                  [for]="start_date_picker"
-                                                >
-                                                </mat-datepicker-toggle>
-                                              </div>
-                                            </div>
-                                            <div class="col-12 col-md-6 col-xl-4">
-                                              <div
-                                                class="form-group local-forms"
-                                                [formGroup]="paForm"
-                                              >
-                                                <label>
-                                                  End Date
-                                                  <span class="login-danger">*</span></label
-                                                >
-                                                <input
-                                                  class="form-control datetimepicker"
-                                                  name="end_date"
-                                                  formControlName="end_date"
-                                                  type="text"
-                                                  matInput
-                                                  [matDatepicker]="end_date_picker"
-                                                />
-                                                <mat-datepicker #end_date_picker></mat-datepicker>
-                                                <mat-datepicker-toggle
-                                                  matIconSuffix
-                                                  [for]="end_date_picker"
-                                                >
-                                                </mat-datepicker-toggle>
-                                              </div>
-                                            </div>
-                                              <div class="col-12 mb-3 doctor-submit text-end">
-                                                  <button class="btn btn-primary btn-sm" (click)="updatePaService(paService)">Update Item</button>
-                                              </div>
-  
-                                          </div>
-                                      </form>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-
-                  <!-- modal edit  end-->
                           </tr>
                           <tr *ngIf="patient.pa_services.length === 0">
                             <td colspan="6" class="text-center">
@@ -1551,8 +1461,6 @@
                         </tbody>
                       </table>
                     </div>
-
-                    
                   </div>
                 </div>
               </div>
@@ -1750,6 +1658,7 @@
                               <!--end::Wrapper-->
                             </div>
                             <!--end::Info-->
+
                             <!-- modal -->
 
                             <div

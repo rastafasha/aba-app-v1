@@ -13,6 +13,10 @@ import { PatientsUseCasesService } from '../service/patients-use-cases.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Validators } from 'ngx-editor';
 import { AuthService } from 'src/app/core/auth/auth.service';
+import { PaServiceV2 } from 'src/app/core/models/pa-service.v2.model';
+import { EditPaServiceModalComponent } from '../edit-pa-service-modal/edit-pa-service-modal.component';
+import { MatDialog } from '@angular/material/dialog';
+import { PaServicesV2Service } from 'src/app/core/services/pa-services.v2.service';
 
 /** Principios SOLID
  * Single reposonsablity: que la cosa, haga una sola cosa y bien
@@ -131,13 +135,15 @@ export class AddPatientMComponent implements OnInit {
     private patientsUseCasesService: PatientsUseCasesService,
     private patientService: PatientMService,
     private pageService: PageService,
+    private paServicesService: PaServicesV2Service,
     private insuranceService: InsuranceService,
     private router: Router,
     private locationBack: Location,
     private http: HttpClient,
     private fb: FormBuilder,
     private useCases: PatientsUseCasesService,
-    private authService: AuthService
+    private authService: AuthService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -437,32 +443,7 @@ export class AddPatientMComponent implements OnInit {
     return data;
   }
 
-  seleccionarParaEdit(paService: any) {
-    const selectedPaservice = this.services.find(
-      (item) => item.index === paService.index
-    );
-    console.log(paService);
-    // if (selectedCaregiver) {
-    //   this.family_edit = selectedCaregiver;
-    //   this.selectedCaregiver = selectedCaregiver;
-    //   // Ahora puedes editar el objeto selectedCaregiver
-    //   selectedCaregiver.nombre = 'Nuevo nombre'; // Por ejemplo
-    //   console.log('Objeto seleccionado:', this.selectedCaregiver);
-    // }
-  }
+  
 
-  updatePaService(paService: any) {
-    const selectedPaservice = this.services.find(
-      (item) => item.index === paService.index
-    );
-    console.log(paService);
-    // if (index !== -1) {
-    //   this.training_goals[index] = monito;
-    //   Swal.fire(
-    //     'Updated',
-    //     `Updated item List successfully, if you finish the list, now press button save!`,
-    //     'success'
-    //   );
-    // }
-  }
+  
 }
