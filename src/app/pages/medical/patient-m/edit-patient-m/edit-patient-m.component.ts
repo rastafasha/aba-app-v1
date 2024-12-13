@@ -397,6 +397,12 @@ export class EditPatientMComponent implements OnInit {
     });
     ref.afterClosed().subscribe((resp) => {
       //cambiar logica para cuando el paciente se este creando
+      if (resp) {
+        this.paServicesService.create(resp).subscribe(() => {
+          this.onRefresh();
+          });
+        }
+          
       this.paServicesService
         .update(resp, resp.id)
         .subscribe(() => this.onRefresh());
