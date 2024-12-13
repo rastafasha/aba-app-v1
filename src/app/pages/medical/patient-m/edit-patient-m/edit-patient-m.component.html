@@ -5,10 +5,14 @@
       <div class="row">
         <div class="col-sm-12">
           <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a [routerLink]="routes.patients.list">Clients </a></li>
-            <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
-            <li class="breadcrumb-item active">Edit Client </li>
-        </ul>
+            <li class="breadcrumb-item">
+              <a [routerLink]="routes.patients.list">Clients </a>
+            </li>
+            <li class="breadcrumb-item">
+              <i class="feather icon-chevron-right"></i>
+            </li>
+            <li class="breadcrumb-item active">Edit Client</li>
+          </ul>
           <div class="doctor-submit text-start">
             <button class="btn btn-primary btn-sm" (click)="goBack()">
               Back
@@ -53,7 +57,10 @@
                 <!-- Last Name -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms" [formGroup]="form">
-                    <label>Patient's Last Name <span class="login-danger">*</span></label>
+                    <label
+                      >Patient's Last Name
+                      <span class="login-danger">*</span></label
+                    >
                     <input
                       class="form-control"
                       autocomplete="off"
@@ -250,7 +257,10 @@
                 <!-- Parent/Guardian's Birth day -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms" [formGroup]="form">
-                    <label>Parent/Guardian's Birth day <span class="login-danger">*</span></label>
+                    <label
+                      >Parent/Guardian's Birth day
+                      <span class="login-danger">*</span></label
+                    >
                     <input
                       class="form-control datetimepicker"
                       autocomplete="off"
@@ -464,7 +474,10 @@
                 </div>
                 <div class="col-12 col-md-6">
                   <div class="form-group local-forms" [formGroup]="form">
-                    <label>Patient's Address <span class="login-danger">*</span></label>
+                    <label
+                      >Patient's Address
+                      <span class="login-danger">*</span></label
+                    >
                     <textarea
                       class="form-control"
                       autocomplete="off"
@@ -733,10 +746,14 @@
                   </mat-select>
                 </div>
               </div>
-              
+
               <div class="col-12 col-md-6 col-xl-4">
                 <div class="form-group local-forms" [formGroup]="form">
-                  <label>Insurance I.D. Number<span class="login-danger">*</span></label>
+                  <label
+                    >Insurance I.D. Number<span class="login-danger"
+                      >*</span
+                    ></label
+                  >
                   <input
                     class="form-control"
                     autocomplete="off"
@@ -934,7 +951,7 @@
                   </div>
                 </div>
               </div>
-              
+
               <div class="col-12 col-md-2">
                 <div class="form-group">
                   <div
@@ -976,7 +993,11 @@
                         name="is_self_subscriber"
                         formControlName="is_self_subscriber"
                       />
-                      <label for="is_self_subscriber" class="checktoggle" value="true">
+                      <label
+                        for="is_self_subscriber"
+                        class="checktoggle"
+                        value="true"
+                      >
                         checkbox
                       </label>
                     </div>
@@ -1228,11 +1249,8 @@
                 </div>
               </div>
 
-              
-
               <div class="col-12">
                 <div class="doctor-submit text-end">
-                  
                   <button
                     type="button"
                     class="btn btn-primary submit-form me-2"
@@ -1412,12 +1430,20 @@
                             <td>{{ paService.pa_service }}</td>
                             <td>{{ paService.cpt }}</td>
                             <td>{{ paService.n_units }}</td>
-                            <td>{{ paService.start_date |  date : "shortDate" }}</td>
-                            <td>{{ paService.end_date |  date : "shortDate" }}</td>
                             <td>
-                             
-                              <button class="btn btn-outline-success btn-sm" (click)="seleccionarParaEdit(paService)"
-                               ><i class="fa fa-pencil"></i> </button>
+                              {{ paService.start_date | date : "shortDate" }}
+                            </td>
+                            <td>
+                              {{ paService.end_date | date : "shortDate" }}
+                            </td>
+                            <td>
+                              <button
+                                type="button"
+                                class="btn btn-outline-success btn-sm"
+                                (click)="onEditPaService(paService)"
+                              >
+                                <i class="fa fa-pencil"></i>
+                              </button>
                               <button
                                 type="button"
                                 class="btn btn-sm btn-danger"
@@ -1425,10 +1451,7 @@
                               >
                                 <i class="fas fa-trash"></i>
                               </button>
-                              
                             </td>
-
-                            
                           </tr>
                           <tr *ngIf="patient.pa_services.length === 0">
                             <td colspan="6" class="text-center">
@@ -1438,8 +1461,6 @@
                         </tbody>
                       </table>
                     </div>
-
-                    
                   </div>
                 </div>
               </div>
@@ -1637,6 +1658,7 @@
                               <!--end::Wrapper-->
                             </div>
                             <!--end::Info-->
+
                             <!-- modal -->
 
                             <div

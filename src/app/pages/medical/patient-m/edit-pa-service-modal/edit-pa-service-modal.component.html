@@ -77,7 +77,11 @@
 </div>
 
 <div mat-dialog-actions>
-  <button class="btn btn-primary btn-sm" (click)="onUpdate()" mat-dialog-close>
+  <button
+    class="btn btn-primary btn-sm"
+    (click)="onUpdate()"
+    [disabled]="isDisabledUpdate"
+  >
     Update Item
   </button>
 </div>
