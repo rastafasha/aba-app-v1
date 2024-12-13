@@ -1,8 +1,7 @@
 import { Component, Inject } from '@angular/core';
-import { AbstractControl, FormGroup, FormBuilder } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { PaServiceV2 } from 'src/app/core/models';
-import { PaServicesV2Service } from 'src/app/core/services/pa-services.v2.service';
 
 type PaServiceV2FormControls = {
   [T in keyof PaServiceV2]: AbstractControl<PaServiceV2[T]>;
@@ -22,13 +21,12 @@ export class EditPaServiceModalComponent {
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<EditPaServiceModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { paService: PaServiceV2 },
-    private paServicesService: PaServicesV2Service
+    @Inject(MAT_DIALOG_DATA) public data: { paService: PaServiceV2 }
   ) {
     this.paForm = this.fb.group<PaServiceV2FormControls>({
       id: this.fb.control(0),
       patient_id: this.fb.control(this.id),
-      pa_service: this.fb.control(''), //the name of the service
+      pa_service: this.fb.control(''),
       cpt: this.fb.control(null as string),
       n_units: this.fb.control(null as number),
       spent_units: this.fb.control(null as number),
@@ -45,14 +43,6 @@ export class EditPaServiceModalComponent {
   onUpdate() {
     this.isDisabledUpdate = true;
     this.paService = { ...this.paService, ...this.paForm.value };
-    this.paServicesService.update(this.paService, this.paService.id).subscribe(
-      () => {
-        this.isDisabledUpdate = false;
-        this.dialogRef.close();
-      },
-      () => {
-        this.isDisabledUpdate = false;
-      }
-    );
+    this.dialogRef.close(this.paService);
   }
 }

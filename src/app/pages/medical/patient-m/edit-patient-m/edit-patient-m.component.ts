@@ -24,6 +24,7 @@ import {
   LocationsV2Service,
   PatientsV2Service,
 } from 'src/app/core/services';
+import { PaServicesV2Service } from 'src/app/core/services/pa-services.v2.service';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { compareObjects } from 'src/app/shared/utils';
 import Swal from 'sweetalert2';
@@ -64,7 +65,7 @@ export class EditPatientMComponent implements OnInit {
   user: AppUser;
   roles = [];
   doctor_id: number;
-  location: any = [];
+  location: LocationV2[] = [];
   location_id: number;
 
   intakenOptions = INTAKEN_OPTIONS;
@@ -77,6 +78,7 @@ export class EditPatientMComponent implements OnInit {
   constructor(
     private useCases: PatientsUseCasesService,
     private patientsService: PatientsV2Service,
+    private paServicesService: PaServicesV2Service,
     private locationsService: LocationsV2Service,
     private providersService: DoctorService,
     private insurancesService: InsurancesV2Service,
@@ -393,8 +395,11 @@ export class EditPatientMComponent implements OnInit {
       data: { paService: paService },
       width: '300px',
     });
-    ref.afterClosed().subscribe(() => {
-      this.onRefresh();
+    ref.afterClosed().subscribe((resp) => {
+      //cambiar logica para cuando el paciente se este creando
+      this.paServicesService
+        .update(resp, resp.id)
+        .subscribe(() => this.onRefresh());
     });
   }
 
