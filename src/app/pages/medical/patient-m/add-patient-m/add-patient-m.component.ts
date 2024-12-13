@@ -445,24 +445,5 @@ export class AddPatientMComponent implements OnInit {
 
   
 
-  onEditPaService(pa_asses: PaServiceV2) {
-    const ref = this.dialog.open(EditPaServiceModalComponent, {
-      data: { pa_service: pa_asses },
-      width: '300px',
-    });
-    ref.afterClosed().subscribe((resp) => {
-      //cambiar logica para cuando el paciente se este creando
-      if (resp) {
-        this.paServicesService.create(resp).subscribe(() => {
-          // this.onRefresh();
-          });
-        }
-          
-      // this.paServicesService
-      //   .update(resp, resp.id)
-      //   .subscribe(() => 
-      //     this.onRefresh()
-      // );
-    });
-  }
+  
 }
