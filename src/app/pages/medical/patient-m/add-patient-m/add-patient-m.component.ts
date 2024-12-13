@@ -443,6 +443,29 @@ export class AddPatientMComponent implements OnInit {
     return data;
   }
 
+
+  // eslint-disable-next-line no-debugger
+  onEditPaService(paService: PaServiceV2) {debugger
+    const ref = this.dialog.open(EditPaServiceModalComponent, {
+      data: { paService: paService },
+      width: '300px',
+    });
+    ref.afterClosed().subscribe((resp) => {
+      //cambiar logica para cuando el paciente se este creando
+      const data = {
+        ...this.form.value,
+        patient_id: this.id,
+      }
+      if (resp) {
+        this.paServicesService.create(data).subscribe(() => {
+          // this.onRefresh();
+          console.log(resp);
+          });
+        }
+      }); 
+      
+  }
+
   
 
   
