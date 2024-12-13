@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EditPaServiceModalComponent } from './edit-pa-service-modal.component';
 import { MaterialModule } from 'src/app/shared/material.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 describe('EditPaServiceModalComponent', () => {
   let component: EditPaServiceModalComponent;
@@ -11,7 +12,7 @@ describe('EditPaServiceModalComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ EditPaServiceModalComponent ],
-      imports: [ MaterialModule ]
+      imports: [ MaterialModule, SharedModule ]
     })
     .compileComponents();
 
