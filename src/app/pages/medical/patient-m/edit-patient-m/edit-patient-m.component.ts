@@ -5,7 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of, tap } from 'rxjs';
 import { AuthService } from 'src/app/core/auth/auth.service';
@@ -47,6 +47,7 @@ type PaServiceV2FormControls = {
   selector: 'app-edit-patient-m',
   templateUrl: './edit-patient-m.component.html',
   styleUrls: ['./edit-patient-m.component.scss'],
+  
 })
 export class EditPatientMComponent implements OnInit {
   routes = AppRoutes;
@@ -409,7 +410,5 @@ export class EditPatientMComponent implements OnInit {
     });
   }
 
-  updatePaService(paService: PaServiceV2) {
-    console.log(paService);
-  }
+  
 }
