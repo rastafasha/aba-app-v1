@@ -207,6 +207,8 @@ export class AddPatientMComponent implements OnInit {
       schedule: ['',Validators.required],
       summer_schedule: ['',Validators.required],
       diagnosis_code: ['',Validators.required],
+      referring_provider: ['',Validators.required],
+      npi: ['',Validators.required],
       eqhlid: ['', Validators.required],
       elegibility_date: ['', Validators.required],
       pos_covered: this.fb.control<string[]>([]),
@@ -444,8 +446,7 @@ export class AddPatientMComponent implements OnInit {
   }
 
 
-  // eslint-disable-next-line no-debugger
-  onEditPaService(paService: PaServiceV2) {debugger
+  onEditPaService(paService: PaServiceV2) {
     const ref = this.dialog.open(EditPaServiceModalComponent, {
       data: { paService: paService },
       width: '300px',

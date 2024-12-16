@@ -129,6 +129,8 @@ export class EditPatientMComponent implements OnInit {
       address: this.fb.control(''),
       special_note: this.fb.control(''),
       diagnosis_code: this.fb.control(''),
+      referring_provider: this.fb.control(''),
+      npi: this.fb.control(''),
       schedule: this.fb.control(''),
       summer_schedule: this.fb.control(''),
       location_id: this.fb.control(0),
