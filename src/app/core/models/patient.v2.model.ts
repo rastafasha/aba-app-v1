@@ -52,6 +52,8 @@ export class PatientV2 {
   address: string;
   special_note: string;
   diagnosis_code: string;
+  referring_provider: string;
+  npi: string;
   schedule: string;
   summer_schedule: string;
   location_id: number;
@@ -150,6 +152,8 @@ export class PatientV2 {
       address: StringOrNullOrUndefined(data.address),
       special_note: StringOrNullOrUndefined(data.special_note),
       diagnosis_code: StringOrNullOrUndefined(data.diagnosis_code),
+      referring_provider: StringOrNullOrUndefined(data.referring_provider),
+      npi: StringOrNullOrUndefined(data.npi),
       schedule: StringOrNullOrUndefined(data.schedule),
       summer_schedule: StringOrNullOrUndefined(data.summer_schedule),
       location_id: NumberOrNullOrUndefined(data.location_id),
