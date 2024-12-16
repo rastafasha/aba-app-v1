@@ -488,6 +488,28 @@
                     ></textarea>
                   </div>
                 </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms" [formGroup]="form">
+                    <label>Referring Provider <span class="login-danger">*</span></label>
+                    <input
+                      class="form-control"
+                      name="referring_provider"
+                      formControlName="referring_provider"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms" [formGroup]="form">
+                    <label>NPI <span class="login-danger">*</span></label>
+                    <input
+                      class="form-control"
+                      name="npi"
+                      formControlName="npi"
+                      type="text"
+                    />
+                  </div>
+                </div>
                 <div class="col-12 col-md-6">
                   <div class="form-group local-forms" [formGroup]="form">
                     <label
