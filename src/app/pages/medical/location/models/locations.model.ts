@@ -10,6 +10,12 @@ export interface LocationApi {
   title: string;
   name: string;
   address: string;
+  address2: string;
+  taxid: string;
+  npi: string;
+  taxonomy: string;
+  providerId: string;
+  additional_notes: string;
   state: string;
   user_id: number;
   client_id: number;
