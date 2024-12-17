@@ -32,7 +32,7 @@
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
-                    <label>Title<span class="login-danger">*</span></label>
+                    <label>Name<span class="login-danger">*</span></label>
                     <input
                       class="form-control"
                       name="title"
@@ -41,16 +41,29 @@
                     />
                   </div>
                 </div>
-
-                <div class="col-12 col-md-6 col-xl-4">
+                <div class="clear"></div>
+                <div class="col-12 col-md-6">
                   <div class="form-group local-forms">
-                    <label>Email <span class="login-danger">*</span></label>
-                    <input
+                    <label>Address <span class="login-danger">*</span></label>
+                    <textarea
                       class="form-control"
-                      name="email"
-                      [(ngModel)]="email"
-                      type="email"
-                    />
+                      name="address"
+                      [(ngModel)]="address"
+                      rows="3"
+                      cols="30"
+                    ></textarea>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <div class="form-group local-forms">
+                    <label>Address 2 </label>
+                    <textarea
+                      class="form-control"
+                      name="address2"
+                      [(ngModel)]="address2"
+                      rows="3"
+                      cols="30"
+                    ></textarea>
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
@@ -66,7 +79,7 @@
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
-                    <label>ZIP <span class="login-danger">*</span></label>
+                    <label>ZIP Code<span class="login-danger">*</span></label>
                     <input
                       class="form-control"
                       name="zip"
@@ -86,19 +99,7 @@
                     />
                   </div>
                 </div>
-                <div class="col-12">
-                  <div class="form-group local-forms">
-                    <label>Address <span class="login-danger">*</span></label>
-                    <textarea
-                      class="form-control"
-                      name="address"
-                      [(ngModel)]="address"
-                      rows="3"
-                      cols="30"
-                    ></textarea>
-                  </div>
-                </div>
-
+                
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label>Phone <span class="login-danger">*</span></label>
@@ -132,6 +133,81 @@
                     />
                   </div>
                 </div>
+
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label>Email <span class="login-danger">*</span></label>
+                    <input
+                      class="form-control"
+                      name="email"
+                      [(ngModel)]="email"
+                      type="email"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label>Tax ID <span class="login-danger">*</span></label>
+                    <input
+                      class="form-control"
+                      name="taxid"
+                      [(ngModel)]="taxid"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label>NPI <span class="login-danger">*</span></label>
+                    <input
+                      class="form-control"
+                      name="npi"
+                      [(ngModel)]="npi"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label>Taxonomy <span class="login-danger">*</span></label>
+                    <input
+                      class="form-control"
+                      name="taxonomy"
+                      [(ngModel)]="taxonomy"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label>Provider ID <span class="login-danger">*</span></label>
+                    <input
+                      class="form-control"
+                      name="providerId"
+                      [(ngModel)]="providerId"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div class="clear"></div>
+                <div class="col-12 ">
+                  <div class="form-group local-forms">
+                    <label>Additional Notes <span class="login-danger">*</span></label>
+                    <textarea
+                      class="form-control"
+                      name="additional_notes"
+                      [(ngModel)]="additional_notes"
+                      rows="3"
+                      cols="30"
+                    ></textarea>
+                  </div>
+                </div>
+                
+                
+                
+
+                
+                
 
                 <div class="col-12 col-md-6 col-xl-6">
                   <div class="form-group local-top-form">

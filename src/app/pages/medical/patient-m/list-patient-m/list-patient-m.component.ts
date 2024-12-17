@@ -397,6 +397,13 @@ export class ListPatientMComponent implements OnInit {
   getActionsForPatient(patient: any): any[] {
     const allActions = [
       {
+        title: 'Edit Client',
+        icon: 'fa fa-bars',
+        buttonClass: 'btn-outline-primary',
+        onClick: () =>
+          this.router.navigate([AppRoutes.patients.listEdit, patient.id]),
+      },
+      {
         title: 'BIP Create',
         icon: 'fa fa-address-book',
         buttonClass: 'btn-outline-success',
@@ -441,6 +448,14 @@ export class ListPatientMComponent implements OnInit {
         onClick: () =>
           this.router.navigate([AppRoutes.noteBcba.list, patient.patient_identifier]),
       },
+      
+      // {
+      //   title: 'Delete ',
+      //   icon: 'fa fa-bars',
+      //   buttonClass: 'btn-outline-primary',
+      //   onClick: () =>
+      //     this.router.navigate([AppRoutes.patients.listEdit, patient.patient_id]),
+      // },
       // {
       //   title: 'Log Report',
       //   icon: 'fa fa-check-circle',
@@ -464,6 +479,8 @@ export class ListPatientMComponent implements OnInit {
     }
 
     switch (action.title) {
+      case 'Edit Client':
+        return ['SUPERADMIN', 'MANAGER', ].includes(this.roles);
       case 'BIP Create':
         return ['SUPERADMIN', 'MANAGER', 'LM', 'BCBA'].includes(this.roles);
       case 'BIP View':
