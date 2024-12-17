@@ -27,6 +27,12 @@ export class LocationEditComponent {
   email = '';
   city: any;
   address = '';
+  address2 = '';
+  taxid = '';
+  npi = '';
+  taxonomy = '';
+  providerId = '';
+  additional_notes = '';
 
   location_selected: any;
 
@@ -79,6 +85,12 @@ export class LocationEditComponent {
       this.zip = this.location_selected.zip;
       this.email = this.location_selected.email;
       this.address = this.location_selected.address;
+      this.address2 = this.location_selected.address2;
+      this.taxid = this.location_selected.taxid;
+      this.npi = this.location_selected.npi;
+      this.taxonomy = this.location_selected.taxonomy;
+      this.providerId = this.location_selected.providerId;
+      this.additional_notes = this.location_selected.additional_notes;
       this.city = this.location_selected.city;
       this.state = this.location_selected.state;
       this.IMAGE_PREVISUALIZA = this.location_selected.avatar;
@@ -124,6 +136,24 @@ export class LocationEditComponent {
     }
     if (this.address) {
       formData.append('address', this.address);
+    }
+    if (this.address2) {
+      formData.append('address2', this.address2);
+    }
+    if (this.taxid) {
+      formData.append('taxid', this.taxid);
+    }
+    if (this.npi) {
+      formData.append('npi', this.npi);
+    }
+    if (this.taxonomy) {
+      formData.append('taxonomy', this.taxonomy);
+    }
+    if (this.providerId) {
+      formData.append('providerId', this.providerId);
+    }
+    if (this.additional_notes) {
+      formData.append('additional_notes', this.additional_notes);
     }
     if (this.email) {
       formData.append('email', this.email);

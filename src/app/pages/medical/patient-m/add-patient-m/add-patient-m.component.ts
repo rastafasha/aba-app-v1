@@ -251,6 +251,22 @@ export class AddPatientMComponent implements OnInit {
     
   }
 
+
+  updateReferringCode(event: Event) {
+    const input = event.target as HTMLInputElement; // Hacemos el casting
+  const currentValue = input.value;
+
+  // Verificamos si el valor ya comienza con "DN"
+  if (!currentValue.startsWith('DN')) {
+    this.form.patchValue({
+      referring_code: 'DN' + currentValue // Agregamos "DN" solo si no está presente
+    });
+  } else {
+    this.form.patchValue({
+      referring_code: currentValue // Mantenemos el valor actual si ya tiene "DN"
+    });
+  }
+  }
   goBack() {
     this.locationBack.back(); // <-- go back to previous location on cancel
   }

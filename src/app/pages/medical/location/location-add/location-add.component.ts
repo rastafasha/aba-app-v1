@@ -28,7 +28,13 @@ export class LocationAddComponent {
   email = '';
   city: any;
   address = '';
-
+  address2 = '';
+  taxid = '';
+  npi = '';
+  taxonomy = '';
+  providerId = '';
+  additional_notes = '';
+  
   FILE_AVATAR: any;
   IMAGE_PREVISUALIZA: any = 'assets/img/user-06.jpg';
 
@@ -88,6 +94,12 @@ export class LocationAddComponent {
     formData.append('state', this.state);
     formData.append('zip', this.zip);
     formData.append('address', this.address);
+    formData.append('address2', this.address2);
+    formData.append('taxid', this.taxid);
+    formData.append('npi', this.npi);
+    formData.append('taxonomy', this.taxonomy);
+    formData.append('providerId', this.providerId);
+    formData.append('additional_notes', this.additional_notes);
     formData.append('email', this.email);
 
     if (this.email) {
