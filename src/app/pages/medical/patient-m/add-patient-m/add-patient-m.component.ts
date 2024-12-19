@@ -253,7 +253,7 @@ export class AddPatientMComponent implements OnInit {
   }
 
 
-  updateReferringCode(event: Event) {
+  createReferringCode(event: Event) {
     const input = event.target as HTMLInputElement; // Hacemos el casting
   const currentValue = input.value;
 
