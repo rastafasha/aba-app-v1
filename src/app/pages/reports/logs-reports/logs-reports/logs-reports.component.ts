@@ -103,6 +103,7 @@ export class LogsReportsComponent implements OnInit {
 
   ngOnInit() {
     this.onRefresh();
+    
   }
 
   onRefresh() {
@@ -208,6 +209,7 @@ export class LogsReportsComponent implements OnInit {
       this.notesRbt = combineNotes.filter(isNoteRbtV2);
       this.notesBcba = combineNotes.filter(isNoteBcbaV2);
       this.updateData(false);
+      this.extractTotalCharges();
     });
   }
 
@@ -279,4 +281,24 @@ export class LogsReportsComponent implements OnInit {
   trackByNoteId(_: number, note: Note): string {
     return note.id + note.type;
   }
+
+
+
+  extractTotalCharges() {
+    // const subtotal = session_units_total * unitPrice
+    
+    const total = this.notes.reduce((acc, note) => {
+      if (isNoteRbtV2(note)) {
+        return acc + note.total_units;
+      }
+      if (isNoteBcbaV2(note)) {
+        return acc + note.total_units;
+      }
+      return acc;
+    }, 0);
+    console.log('total Charges',total);
+
+    return total;
+  }
+
 }
