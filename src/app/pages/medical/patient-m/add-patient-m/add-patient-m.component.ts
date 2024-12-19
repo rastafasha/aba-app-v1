@@ -208,6 +208,7 @@ export class AddPatientMComponent implements OnInit {
       summer_schedule: ['',Validators.required],
       diagnosis_code: ['',Validators.required],
       referring_provider: ['',Validators.required],
+      referring_code: ['',Validators.required],
       npi: ['',Validators.required],
       eqhlid: ['', Validators.required],
       elegibility_date: ['', Validators.required],
@@ -389,8 +390,7 @@ export class AddPatientMComponent implements OnInit {
       (this.IMAGE_PREVISUALIZA = reader.result as string);
   }
 
-  // eslint-disable-next-line no-debugger
-  public save(): void {debugger
+  public save(): void {
     if(!this.form.valid) {
       this.text_validation = 'All the fields are required';
       return;
