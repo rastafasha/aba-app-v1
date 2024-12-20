@@ -421,6 +421,12 @@ export class EditNoteRbtComponent implements OnInit {
       });
   }
 
+  onPosChange(event: Event) {
+    const target = event.target as HTMLSelectElement;
+    this.meet_with_client_at = target.value.toString();
+    console.log(this.meet_with_client_at);
+  }
+
   onPaServiceSelect(event: any) {
     const service = event.value;
     if (service) {
