@@ -9,6 +9,7 @@ import { NoteBcbaService } from '../../../../core/services/notes-bcba.service';
 import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
+import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
 
 interface ValidationResult {
   isValid: boolean;
@@ -168,6 +169,8 @@ throw new Error('Method not implemented.');
   pa_services: PaService[] = [];
   selectedPaService: PaService | null = null;
   projectedUnits = 0;
+
+  showPosWarning = false;
 
   constructor(
     private bipService: BipService,
@@ -763,7 +766,6 @@ convertToHours(totalMinutes: number): string {
     const service = event.value;
     if (service) {
       this.selectedValueCode = service.cpt;
-      // console.log(this.selectedValueCode);
       this.showFamily = false;
       this.showMonitoring = false;
 
@@ -773,6 +775,7 @@ convertToHours(totalMinutes: number): string {
       if(service.cpt === '97156' ){
         this.showMonitoring = true;
       }
+      this.checkPosWarning();
     }
   }
 
@@ -817,5 +820,11 @@ convertToHours(totalMinutes: number): string {
     }
 
     this.projectedUnits = totalUnits;
+  }
+
+  checkPosWarning() {
+    const isCpt97151 = this.selectedPaService?.cpt === '97151';
+    const isTelehealth = this.meet_with_client_at === '02';
+    this.showPosWarning = isCpt97151 && isTelehealth;
   }
 }

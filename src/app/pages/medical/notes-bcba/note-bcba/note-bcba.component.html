@@ -30,6 +30,12 @@
                   <h4>Create Note Bcba</h4>
                 </div>
 
+                <app-alert
+                  *ngIf="showPosWarning"
+                  title="Potential erroneous POS selection"
+                  type="warning"
+                  content="Please make sure you have selected the correct POS code for this client."
+                ></app-alert>
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
@@ -40,6 +46,7 @@
                       class="form-control form-select-solid fw-bolder"
                       name="meet_with_client_at"
                       [(ngModel)]="meet_with_client_at"
+                      (ngModelChange)="checkPosWarning()"
                     >
                       <option>-- Select --</option>
                       <option value="03">03 School</option>
