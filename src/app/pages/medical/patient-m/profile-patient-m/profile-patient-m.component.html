@@ -444,20 +444,50 @@
                         </div>
                         <div class="col-xl-3 col-md-6">
                           <div class="detail-personal">
-                            <h2>ZIP Code</h2>
+                            <h2>Patient's ZIP Code</h2>
                             <h3>{{ patient_selected.zip }}</h3>
                           </div>
                         </div>
                         <div class="col-xl-3 col-md-6">
                           <div class="detail-personal">
-                            <h2>City</h2>
+                            <h2>Patient's State</h2>
+                            <h3>{{ patient_selected.state }}</h3>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                          <div class="detail-personal">
+                            <h2>Patient's City</h2>
                             <h3>{{ patient_selected.city }}</h3>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                          <div class="detail-personal">
+                            <h2>Parent's ZIP Code</h2>
+                            <h3>{{ patient_selected.patient_zip }}</h3>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                          <div class="detail-personal">
+                            <h2>Parent's State</h2>
+                            <h3>{{ patient_selected.patient_state }}</h3>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-md-6">
+                          <div class="detail-personal">
+                            <h2>Parent's City</h2>
+                            <h3>{{ patient_selected.patient_city }}</h3>
                           </div>
                         </div>
                         <div class="col-12">
                           <div class="detail-personal">
                             <h2>Patient's Address</h2>
                             <h3>{{ patient_selected.address }}</h3>
+                          </div>
+                        </div>
+                        <div class="col-12">
+                          <div class="detail-personal">
+                            <h2>Parent's Address</h2>
+                            <h3>{{ patient_selected.patient_address }}</h3>
                           </div>
                         </div>
                       </div>
