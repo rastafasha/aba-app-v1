@@ -9,7 +9,7 @@
             <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
             <li class="breadcrumb-item active">Add Note </li>
         </ul>
-          
+
           <div class="doctor-submit text-start">
             <button class="btn btn-primary btn-sm" (click)="goBack()">
               Back
@@ -92,7 +92,7 @@
                           >POS
                           <span class="login-danger">*</span></label
                         >
-          
+
                         <select
                           class="form-control form-select-solid fw-bolder"
                           name="meet_with_client_at"
@@ -131,7 +131,7 @@
                       </div>
                     </div>
 
-                    
+
                     <div class="col-12 col-md-6 col-xl-4">
                       <div class="form-group local-forms">
                         <label>Insurance ID <span class="login-danger">*</span></label>
@@ -148,9 +148,7 @@
                     <!--  units -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
-                    <label
-                      >CPT Code <span class="login-danger">*</span></label
-                    >
+                    <label>CPT Code <span class="login-danger">*</span></label>
                     <mat-select
                       [(ngModel)]="selectedPaService"
                       name="pa_service"
@@ -169,9 +167,17 @@
                   </div>
                 </div>
 
+                <!-- PA Service Calculator Information -->
+                <div class="col-12 col-md-6 col-xl-4">
+                  <app-pa-service-calculator
+                    [selectedPaService]="selectedPaService"
+                    [projectedUnits]="projectedUnits">
+                  </app-pa-service-calculator>
+                </div>
+
                 <div class="col-12 col-md-6 col-xl-4">
                   <app-units-display
-                    [service]="selectedPaService" 
+                    [service]="selectedPaService"
                     [newUnits]="projectedUnits">
                   </app-units-display>
                 </div>
@@ -287,9 +293,9 @@
                                 #toggleTimepicker4
                               ></ngx-material-timepicker>
                             </div>
-                            
+
                           </div>
-                          
+
                         </div>
                       </div>
                       <div class="col-12 col-md-6 col-xl-4">
@@ -377,8 +383,8 @@
                         <h4>Summary Note</h4>
                       </div>
                     </div>
-                    
-                    
+
+
                     <div class="col-12 col-md-4">
                       <div class="form-group local-forms">
                         <label
@@ -645,10 +651,10 @@
                       </div>
                       <!-- previsualizacion de la foto -->
                     </div>
-                    
+
                     <!-- firma -->
-                     
-                    
+
+
                   </div>
 
                   <div class="form-group row" *ngIf="text_validation">

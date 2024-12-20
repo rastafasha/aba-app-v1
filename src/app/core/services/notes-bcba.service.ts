@@ -54,4 +54,9 @@ export class NoteBcbaService extends ApiService<NoteBcba> {
     const URL = url_servicios + '/note_bcba/generate-summary';
     return this.http.post<any>(URL, data);
   }
+
+  getPdf(note_id: number) {
+    const URL = url_servicios + '/v2/note_bcba/pdf/' + note_id;
+    return this.http.get(URL, { responseType: 'arraybuffer' });
+  }
 }
