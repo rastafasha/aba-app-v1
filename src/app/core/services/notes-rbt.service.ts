@@ -62,4 +62,9 @@ export class NoteRbtService extends ApiService<NoteRbt> {
     const URL = url_servicios + '/note_rbt/generate-summary';
     return this.http.post<any>(URL, data);
   }
+
+  getPdf(note_id: number) {
+    const URL = url_servicios + '/v2/note_rbt/pdf/' + note_id;
+    return this.http.get(URL, { responseType: 'arraybuffer' });
+  }
 }

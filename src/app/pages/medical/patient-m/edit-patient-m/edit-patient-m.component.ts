@@ -110,6 +110,9 @@ export class EditPatientMComponent implements OnInit {
       school_number: this.fb.control(''),
       parent_guardian_name: this.fb.control(''),
       relationship: this.fb.control(''),
+      parent_city: this.fb.control(''),
+      parent_state: this.fb.control(''),
+      parent_zip: this.fb.control(''),
 
       parent_gender: this.fb.control(0),
       parent_birth_date: this.fb.control(null as Date),
@@ -127,6 +130,7 @@ export class EditPatientMComponent implements OnInit {
       zip: this.fb.control(''),
       state: this.fb.control(''),
       address: this.fb.control(''),
+      parent_address: this.fb.control(''),
 
       special_note: this.fb.control(''),
       diagnosis_code: this.fb.control(''),

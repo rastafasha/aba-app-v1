@@ -1,0 +1,34 @@
+<div class="form-group local-forms">
+    <label class="mb-2">Weekly Units Usage</label>
+    <div class="units-container">
+        <div class="units-wrapper">
+            <div class="progress-container">
+                <div class="progress-bar"
+                    [style.width.%]="(calculatorResponse?.used_units_this_week / calculatorResponse?.average_units_per_week * 100)"
+                    [class.used]="true"
+                    [class.exceeding]="isExceedingAvailableUnits()">
+                </div>
+                <div *ngIf="projectedUnits > 0" class="progress-bar projected"
+                    [style.left.%]="(calculatorResponse?.used_units_this_week / calculatorResponse?.average_units_per_week * 100)"
+                    [style.width.%]="(projectedUnits / calculatorResponse?.average_units_per_week * 100)"
+                    [class.exceeding]="isExceedingAvailableUnits()">
+                </div>
+            </div>
+            <div class="units-text" *ngIf="calculatorResponse">
+                {{ calculatorResponse.used_units_this_week }}/{{ calculatorResponse.average_units_per_week }} units
+                <span *ngIf="projectedUnits > 0" class="projected-units" [class.exceeding]="isExceedingAvailableUnits()">
+                    (+ {{ projectedUnits }} units)
+                </span>
+                <span *ngIf="isExceedingAvailableUnits()" class="exceeding-text">
+                    - Expected weekly usage exceeded.
+                </span>
+                <div class="week-range text-muted">
+                    Week: {{ calculatorResponse.week_start_date | date:'shortDate' }} - {{ calculatorResponse.week_end_date | date:'shortDate' }}
+                </div>
+            </div>
+            <div class="units-text" *ngIf="!calculatorResponse">
+                Please select a CPT Code
+            </div>
+        </div>
+    </div>
+</div>

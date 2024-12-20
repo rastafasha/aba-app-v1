@@ -535,7 +535,7 @@ convertToHours(totalMinutes: number): string {
     formData.append('bip_id', this.bip_id + '');
 
     formData.append('diagnosis_code', this.diagnosis_code);
-    formData.append('location', this.location);
+    formData.append('location_id', this.patientLocation_id + '');
     formData.append('birth_date', this.birth_date);
 
     formData.append('rendering_provider', this.doctor_id + '');
