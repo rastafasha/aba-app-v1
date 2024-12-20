@@ -50,6 +50,10 @@ export class PatientV2 {
   zip: string;
   state: string;
   address: string;
+  parent_address: string;
+  parent_city: string;
+  parent_state: string;
+  parent_zip: string;
   special_note: string;
   diagnosis_code: string;
   referring_provider: string;
@@ -151,6 +155,10 @@ export class PatientV2 {
       zip: StringOrNullOrUndefined(data.zip),
       state: StringOrNullOrUndefined(data.state),
       address: StringOrNullOrUndefined(data.address),
+      parent_address: StringOrNullOrUndefined(data.parent_address),
+      parent_city: StringOrNullOrUndefined(data.parent_city),
+      parent_state: StringOrNullOrUndefined(data.parent_state),
+      parent_zip: StringOrNullOrUndefined(data.parent_zip),
       special_note: StringOrNullOrUndefined(data.special_note),
       diagnosis_code: StringOrNullOrUndefined(data.diagnosis_code),
       referring_provider: StringOrNullOrUndefined(data.referring_provider),
