@@ -36,10 +36,7 @@
               "src/assets/icons/fontawesome/css/all.min.css",
               "src/assets/icons/fontawesome/css/fontawesome.min.css",
               "src/assets/icons/feather/css/iconfont.css",
-              "src/assets/scss/main.scss",
-              "src/assets/scss/fonts.scss",
-              "src/assets/scss/darkmode.scss",
-              "src/assets/scss/styles.scss"
+              "src/styles.scss"
             ],
             "scripts": [
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
