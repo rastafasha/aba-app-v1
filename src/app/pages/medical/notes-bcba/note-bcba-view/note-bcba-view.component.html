@@ -60,12 +60,13 @@
                           class="btn btn-info follow-btns"
                           >Edit</a
                         >
-                        <button
+                        <!-- <button
                           class="btn btn-info follow-btns"
                           (click)="print()"
                         >
                           Save PDF
-                        </button>
+                        </button> -->
+                        <app-pdf-button [noteType]="'bcba'" [noteId]="note_id"></app-pdf-button>
                       </div>
                     </div>
                   </div>

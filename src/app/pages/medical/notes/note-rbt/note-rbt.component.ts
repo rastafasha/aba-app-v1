@@ -11,7 +11,6 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { AppUser } from 'src/app/core/models/users.model';
 import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 
-
 interface ValidationResult {
   isValid: boolean;
   missingFields: string[];
@@ -187,7 +186,6 @@ export class NoteRbtComponent implements OnInit {
 
   projectedUnits = 0;
 
-
   constructor(
     private bipService: BipService,
     private goalService: GoalService,
@@ -263,7 +261,6 @@ export class NoteRbtComponent implements OnInit {
       this.patient_id = this.client_selected.id;
       this.insurance_id = this.client_selected.insurer_id;
       this.insurance_identifier = this.client_selected.insurance_identifier;
-      // console.log(this.insurance_identifier);
       this.patientLocation_id = this.client_selected.location_id;
       this.selectedValueProviderRBT_id = this.client_selected.rbt_id;
       this.selectedValueBcba_id = this.client_selected.bcba_id;
@@ -392,21 +389,6 @@ export class NoteRbtComponent implements OnInit {
     this.projectedUnits = totalUnits;
   }
 
-  getUsedUnitsPercentage(): number {
-    if (!this.selectedPaService) return 0;
-    return (
-      ((this.selectedPaService.n_units -
-        this.selectedPaService.available_units) /
-        this.selectedPaService.n_units) *
-      100
-    );
-  }
-
-  getProjectedUnitsPercentage(): number {
-    if (!this.selectedPaService) return 0;
-    return (this.projectedUnits / this.selectedPaService.n_units) * 100;
-  }
-
   hourTimeInSelected(value: string) {
     this.selectedValueTimeIn = value;
     this.calculateProjectedUnits();
@@ -477,11 +459,6 @@ convertToHours(totalMinutes: number): string {
 
   selectMaladaptive(behavior: any) {
     this.maladaptiveSelected = behavior;
-  }
-
-  isExceedingAvailableUnits(): boolean {
-    if (!this.selectedPaService) return false;
-    return this.projectedUnits > this.selectedPaService.available_units;
   }
 
   selectReplacement(replacemen: any) {

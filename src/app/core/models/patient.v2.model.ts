@@ -13,8 +13,8 @@ export class PatientV2 {
   first_name: string;
   last_name: string;
   full_name: string;
-  // patient_id: number; 
-  patient_identifier: string; 
+  // patient_id: number;
+  patient_identifier: string;
   avatar: string;
   status: string;
 
@@ -23,7 +23,7 @@ export class PatientV2 {
   insurance_identifier: string;
   insurance_secondary_identifier: string;
   birth_date: Date;
-  
+
   age: number;
   gender: number;
   parent_gender: number;
@@ -56,7 +56,9 @@ export class PatientV2 {
   parent_zip: string;
   special_note: string;
   diagnosis_code: string;
-  referring_provider: string;
+  referring_provider_first_name: string;
+  referring_provider_last_name: string;
+  referring_provider_npi: string;
   referring_code: string;
   npi: string;
   schedule: string;
@@ -95,7 +97,7 @@ export class PatientV2 {
   telehealth: boolean;
   pay: boolean;
 
-  
+
   //
   pa_services: PaServiceV2[];
   pa_assessments: string;
@@ -121,7 +123,7 @@ export class PatientV2 {
       status: StringOrNullOrUndefined(data.status),
 
       birth_date: DateOrNullOrUndefined(data.birth_date),
-     
+
       // patient_id: NumberOrNullOrUndefined(data.patient_id),
       patient_identifier: StringOrNullOrUndefined(data.patient_identifier),
       insurer_id: NumberOrNullOrUndefined(data.insurer_id),
@@ -161,7 +163,9 @@ export class PatientV2 {
       parent_zip: StringOrNullOrUndefined(data.parent_zip),
       special_note: StringOrNullOrUndefined(data.special_note),
       diagnosis_code: StringOrNullOrUndefined(data.diagnosis_code),
-      referring_provider: StringOrNullOrUndefined(data.referring_provider),
+      referring_provider_first_name: StringOrNullOrUndefined(data.referring_provider_first_name),
+      referring_provider_last_name: StringOrNullOrUndefined(data.referring_provider_last_name),
+      referring_provider_npi: StringOrNullOrUndefined(data.referring_provider_npi),
       referring_code: StringOrNullOrUndefined(data.referring_code),
       npi: StringOrNullOrUndefined(data.npi),
       schedule: StringOrNullOrUndefined(data.schedule),
@@ -208,7 +212,7 @@ export class PatientV2 {
       clin_director_id: NumberOrNullOrUndefined(data.clin_director_id),
       telehealth: BooleanOrNullOrUndefined(data.telehealth),
       pay: BooleanOrNullOrUndefined(data.pay),
-     
+
 
       created_at: DateOrNullOrUndefined(data.created_at),
       updated_at: DateOrNullOrUndefined(data.updated_at),

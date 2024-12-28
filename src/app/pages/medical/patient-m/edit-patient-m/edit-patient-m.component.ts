@@ -47,7 +47,7 @@ type PaServiceV2FormControls = {
   selector: 'app-edit-patient-m',
   templateUrl: './edit-patient-m.component.html',
   styleUrls: ['./edit-patient-m.component.scss'],
-  
+
 })
 export class EditPatientMComponent implements OnInit {
   routes = AppRoutes;
@@ -134,7 +134,7 @@ export class EditPatientMComponent implements OnInit {
 
       special_note: this.fb.control(''),
       diagnosis_code: this.fb.control(''),
-      referring_provider: this.fb.control(''),
+      // referring_provider: this.fb.control(''),
       referring_code: this.fb.control(''),
       npi: this.fb.control(''),
 
@@ -179,6 +179,9 @@ export class EditPatientMComponent implements OnInit {
       created_at: this.fb.control(null as Date),
       updated_at: this.fb.control(null as Date),
       deleted_at: this.fb.control(null as Date),
+      referring_provider_first_name: this.fb.control(''),
+      referring_provider_last_name: this.fb.control(''),
+      referring_provider_npi: this.fb.control(''),
     });
 
     this.paForm = this.fb.group<PaServiceV2FormControls>({
@@ -423,13 +426,13 @@ export class EditPatientMComponent implements OnInit {
       width: '300px',
     });
     ref.afterClosed().subscribe((resp) => {
-      
-          
+
+
       this.paServicesService
         .update(resp, resp.id)
         .subscribe(() => this.onRefresh());
     });
   }
 
-  
+
 }

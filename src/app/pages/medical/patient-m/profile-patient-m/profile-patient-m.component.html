@@ -240,9 +240,9 @@
                 </div>
               </div>
             </div>
-            
-            
-            
+
+
+
           </div>
           <div class="col-lg-8">
             <div class="doctor-personals-grp">
@@ -387,7 +387,7 @@
                               <h3>{{ patient_selected.relationship }}</h3>
                             </div>
                           </div>
-                          
+
                           <h5>Is Patient's Condition Related to:</h5>
                           <div class="col-xl-3 col-md-6">
                             <div class="detail-personal">
@@ -435,17 +435,20 @@
                             </div>
                           </div>
                         </div>
-                        
+
                         <div class="col-xl-3 col-md-6">
                           <div class="detail-personal">
-                            <h2>Referring Provider</h2>
-                            <h3>{{ patient_selected.referring_provider }}</h3>
+                            <h2>Referring Provider Name</h2>
+                            <h3>
+                              {{ patient_selected.referring_provider_first_name }}
+                              {{ patient_selected.referring_provider_last_name }}
+                            </h3>
                           </div>
                         </div>
                         <div class="col-xl-3 col-md-6">
                           <div class="detail-personal">
-                            <h2>Referring Code</h2>
-                            <h3>{{ patient_selected.referring_code }}</h3>
+                            <h2>Referring Provider NPI</h2>
+                            <h3>{{ patient_selected.referring_provider_npi }}</h3>
                           </div>
                         </div>
                         <div class="col-xl-3 col-md-6">
@@ -523,7 +526,7 @@
                       </div>
                     </div>
 
-                    
+
                     <div class="personal-list-out">
                       <div class="row">
                         <div class="col-12">
@@ -720,7 +723,7 @@
                   <ng-container *ngIf="option_selected === 4">
                     <div class="activity scrooldiv">
                       <div class="activity-box">
-                        
+
                       </div>
                     </div>
                   </ng-container>
@@ -869,7 +872,7 @@
                 </div>
               </div>
               <!-- Benefits -->
-             
+
               <!-- PAs -->
               <div class="card">
                 <div class="card-header">
@@ -878,7 +881,7 @@
                 <div class="card-body p-0">
                   <div class="personal-list-out">
                     <div class="container">
-                      
+
 
                       <div class="col-xs-12">
                         <div class="table-responsive">

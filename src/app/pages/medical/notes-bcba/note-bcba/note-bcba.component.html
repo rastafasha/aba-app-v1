@@ -29,7 +29,13 @@
                 <div class="col-12 py-4">
                   <h4>Create Note Bcba</h4>
                 </div>
-                
+
+                <app-alert
+                  *ngIf="showPosWarning"
+                  title="Potential erroneous POS selection"
+                  type="warning"
+                  content="Please make sure you have selected the correct POS code for this client."
+                ></app-alert>
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
@@ -40,6 +46,7 @@
                       class="form-control form-select-solid fw-bolder"
                       name="meet_with_client_at"
                       [(ngModel)]="meet_with_client_at"
+                      (ngModelChange)="checkPosWarning()"
                     >
                       <option>-- Select --</option>
                       <option value="03">03 School</option>
@@ -167,7 +174,7 @@
                       placeholder="Select Service"
                     >
                       <mat-option
-                        *ngFor="let service of pa_services "
+                        *ngFor="let service of pa_services"
                         [value]="service"
                       >
                         ({{ service.cpt }})
@@ -176,13 +183,22 @@
                     
                   </div>
                 </div>
+
+                <!-- PA Service Calculator Information -->
+                <div class="col-12 col-md-6 col-xl-4">
+                  <app-pa-service-calculator
+                    [selectedPaService]="selectedPaService"
+                    [projectedUnits]="projectedUnits">
+                  </app-pa-service-calculator>
+                </div>
+
                 <div class="col-12 col-md-6 col-xl-4">
                   <app-units-display
-                    [service]="selectedPaService" 
+                    [service]="selectedPaService"
                     [newUnits]="projectedUnits">
                   </app-units-display>
                 </div>
-                
+
 
                 <div class="col-12 col-md-3">
                   <div class="form-group local-forms">
@@ -297,7 +313,7 @@
                           ></ngx-material-timepicker>
                         </div>
                       </div>
-                      
+
                     </div>
                   </div>
                 </div>
@@ -404,7 +420,7 @@
         </div>
         <!-- fin Monitoring -->
       </ng-container>
-      
+
 
       <!-- Family only 56 -->
        <ng-container  *ngIf="showMonitoring">
@@ -490,11 +506,11 @@
       </div>
     </ng-container>
     <!-- fin Monitoring -->
-       
-      
+
+
       <!-- fin Family -->
-      
-       
+
+
 
       <!-- Summary Note -->
       <div class="col-sm-12">

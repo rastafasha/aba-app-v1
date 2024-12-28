@@ -224,12 +224,12 @@ export class NoteBcbaViewComponent implements OnInit {
       this.selectedValueTimeOut2 = this.note_selected.time_out2;
 
       this.caregivers_training_goalsgroup = this.note_selected.caregiver_goals;
-      const jsonObj = JSON.parse(this.caregivers_training_goalsgroup) || '';
+      const jsonObj = typeof this.caregivers_training_goalsgroup === 'string' ? JSON.parse(this.caregivers_training_goalsgroup) : this.caregivers_training_goalsgroup;
       this.caregivers_training_goals = jsonObj;
       console.log(this.caregivers_training_goals);
 
       this.rbt_training_goalsgroup = this.note_selected.rbt_training_goals;
-      const jsonObj1 = JSON.parse(this.rbt_training_goalsgroup) || '';
+      const jsonObj1 = typeof this.rbt_training_goalsgroup === 'string' ? JSON.parse(this.rbt_training_goalsgroup) : this.rbt_training_goalsgroup;
       this.rbt_training_goals = jsonObj1;
       console.log(this.rbt_training_goals);
 

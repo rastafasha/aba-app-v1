@@ -22,13 +22,19 @@ import { NoInfoComponent } from './no-info/no-info.component';
 import { PipesModule } from './pipes/pipes.module';
 import { PageService } from './services/pages.service';
 import { UnitsDisplayComponent } from './components/units-display/units-display.component';
+import { PdfButtonComponent } from './components/pdf-button/pdf-button.component';
+import { PaServiceCalculatorComponent } from './components/pa-service-calculator/pa-service-calculator.component';
+import { AlertComponent } from './components/alert/alert.component';
 
 const components = [
   NoInfoComponent,
   SkeletonLoaderComponent,
   ActionButtonComponent,
   ActionModalComponent,
-  UnitsDisplayComponent
+  UnitsDisplayComponent,
+  PdfButtonComponent,
+  PaServiceCalculatorComponent,
+  AlertComponent
 ];
 
 @NgModule({
@@ -86,6 +92,9 @@ const components = [
     ActionModalComponent,
     PipesModule,
     TableModule,
+    PdfButtonComponent,
+    PaServiceCalculatorComponent,
+    AlertComponent
   ],
   providers: [DataService, PageService],
 })

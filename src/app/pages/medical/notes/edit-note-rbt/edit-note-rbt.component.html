@@ -106,6 +106,7 @@
                       class="form-control form-select-solid fw-bolder"
                       name="meet_with_client_at"
                       [(ngModel)]="meet_with_client_at"
+                      (change)="onPosChange($event)"
                     >
                       <option>-- Select --</option>
                       <option value="03">03 School</option>

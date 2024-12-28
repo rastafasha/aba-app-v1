@@ -1,16 +1,16 @@
 <div class="form-group local-forms">
-    <label class="mb-2">Units Usage</label>
+    <label class="mb-2">Total Units Usage</label>
     <div class="units-container">
         <div class="units-wrapper">
             <div class="progress-container">
                 <!-- Used units bar -->
-                <div class="progress-bar" 
-                    [style.width.%]="usedUnitsPercentage" 
+                <div class="progress-bar"
+                    [style.width.%]="usedUnitsPercentage"
                     [class.used]="true"
                     [class.exceeding]="isExceedingLimit">
                 </div>
                 <!-- Projected units bar (if newUnits provided) -->
-                <div *ngIf="newUnits" class="progress-bar projected" 
+                <div *ngIf="newUnits" class="progress-bar projected"
                     [style.left.%]="usedUnitsPercentage"
                     [style.width.%]="projectedUnitsPercentage"
                     [class.exceeding]="isExceedingLimit">
