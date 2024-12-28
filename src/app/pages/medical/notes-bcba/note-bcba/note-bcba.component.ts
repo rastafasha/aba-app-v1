@@ -168,6 +168,8 @@ throw new Error('Method not implemented.');
   pa_services: PaService[] = [];
   selectedPaService: PaService | null = null;
   projectedUnits = 0;
+  start_date: Date; // Fecha de inicio
+  end_date: Date; // Fecha de fin
 
   constructor(
     private bipService: BipService,
@@ -186,6 +188,8 @@ throw new Error('Method not implemented.');
     });
     this.getConfig();
     this.getProfileBip();
+    this.start_date = new Date(); // Por ejemplo, fecha actual
+    this.end_date = new Date(); // Por ejemplo, fecha actual
 
     const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
@@ -260,6 +264,7 @@ throw new Error('Method not implemented.');
       this.getMaladaptivesBipByPatientId();
       this.insuranceData();
       this.pa_services = resp.patient.pa_services;
+      console.log(this.pa_services);
     });
   }
 

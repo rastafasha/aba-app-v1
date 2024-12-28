@@ -36,6 +36,9 @@
               "src/assets/icons/fontawesome/css/all.min.css",
               "src/assets/icons/fontawesome/css/fontawesome.min.css",
               "src/assets/icons/feather/css/iconfont.css",
+              "src/main.scss",
+              "src/fonts.scss",
+              "src/darkmode.scss",
               "src/styles.scss"
             ],
             "scripts": [
