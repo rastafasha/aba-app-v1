@@ -22,11 +22,41 @@
       <div class="col-sm-12" *ngIf="patient_selected">
         <div class="card">
           <div class="card-body">
+            
             <div class="row">
               <div class="col-md-12">
                 <div class="about-info mb-10">
                   <h4>Client Profile</h4>
                 </div>
+                
+                <div class="follow-group d-flex justify-content-end mb-3">
+                  <div class="btn-group">
+                    <a
+                  [routerLink]="[
+                    routes.noteRbt.noteRbt,
+                    patient_selected.patient_identifier
+                  ]"
+                  *ngIf=" patient_selected.status === 'active' &&
+                  role === 'SUPERADMIN' || role === 'RBT' 
+                "
+                  class="btn btn-outline-success follow-btns"
+                  >Create Note RBT</a
+                >
+                <a
+                  [routerLink]="[
+                    routes.noteBcba.noteBcba,
+                    patient_selected.patient_identifier
+                  ]"
+                  *ngIf="
+                  patient_selected.status === 'active' &&
+                  role === 'SUPERADMIN' || role === 'BCBA' 
+                "
+                  class="btn btn-outline-success follow-btns"
+                  >Create Note BCBA</a
+                >
+                  </div>
+                  
+                  </div>
                 <div class="doctor-profile-head">
                   <!-- <div class="profile-bg-img">
                                         <img  src="assets/img/profile-bg.jpg"  alt="Profile">
@@ -88,22 +118,23 @@
                     </div>
                     <div class="col-lg-4 col-md-4 d-flex align-items-center">
                       <div class="follow-btn-group">
+                        
                         <a
-                          [routerLink]="[
-                            routes.patients.listEdit,
-                            patient_selected.id
-                          ]"
-                          *ngIf="isPermission('edit_patient')"
-                          class="btn btn-info follow-btns"
-                          >Edit</a
-                        >
-                        <button
-                          class="btn btn-info follow-btns"
-                          (click)="print()"
-                        >
-                          Save PDF
-                        </button>
-                        <!-- <button type="submit" class="btn btn-info message-btns">Message</button> -->
+                        [routerLink]="[
+                          routes.patients.listEdit,
+                          patient_selected.id
+                        ]"
+                        *ngIf="isPermission('edit_patient')"
+                        class="btn btn-info btn-sm follow-btns"
+                        >Edit</a
+                      >
+                      <button
+                        class="btn btn-info btn-sm follow-btns"
+                        (click)="print()"
+                      >
+                        Save PDF
+                      </button>
+                        
                       </div>
                     </div>
                   </div>
@@ -210,9 +241,9 @@
                 </div>
               </div>
             </div>
-            
-            
-            
+
+
+
           </div>
           <div class="col-lg-8">
             <div class="doctor-personals-grp">
@@ -357,7 +388,7 @@
                               <h3>{{ patient_selected.relationship }}</h3>
                             </div>
                           </div>
-                          
+
                           <h5>Is Patient's Condition Related to:</h5>
                           <div class="col-xl-3 col-md-6">
                             <div class="detail-personal">
@@ -405,17 +436,20 @@
                             </div>
                           </div>
                         </div>
-                        
+
                         <div class="col-xl-3 col-md-6">
                           <div class="detail-personal">
-                            <h2>Referring Provider</h2>
-                            <h3>{{ patient_selected.referring_provider }}</h3>
+                            <h2>Referring Provider Name</h2>
+                            <h3>
+                              {{ patient_selected.referring_provider_first_name }}
+                              {{ patient_selected.referring_provider_last_name }}
+                            </h3>
                           </div>
                         </div>
                         <div class="col-xl-3 col-md-6">
                           <div class="detail-personal">
-                            <h2>Referring Code</h2>
-                            <h3>{{ patient_selected.referring_code }}</h3>
+                            <h2>Referring Provider NPI</h2>
+                            <h3>{{ patient_selected.referring_provider_npi }}</h3>
                           </div>
                         </div>
                         <div class="col-xl-3 col-md-6">
@@ -493,7 +527,7 @@
                       </div>
                     </div>
 
-                    
+
                     <div class="personal-list-out">
                       <div class="row">
                         <div class="col-12">
@@ -690,7 +724,7 @@
                   <ng-container *ngIf="option_selected === 4">
                     <div class="activity scrooldiv">
                       <div class="activity-box">
-                        
+
                       </div>
                     </div>
                   </ng-container>
@@ -839,7 +873,7 @@
                 </div>
               </div>
               <!-- Benefits -->
-             
+
               <!-- PAs -->
               <div class="card">
                 <div class="card-header">
@@ -848,7 +882,7 @@
                 <div class="card-body p-0">
                   <div class="personal-list-out">
                     <div class="container">
-                      
+
 
                       <div class="col-xs-12">
                         <div class="table-responsive">

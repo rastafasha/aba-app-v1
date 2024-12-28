@@ -90,6 +90,7 @@ export class ProfilePatientMComponent implements OnInit {
   insurer_id: number;
   insurer_secondary_id: number;
   patient_ident: number;
+  role: string = null;
 
   constructor(
     private patientService: PatientMService,
@@ -116,6 +117,7 @@ export class ProfilePatientMComponent implements OnInit {
     this.user = this.authService.user as AppUser;
     this.doctor_id = this.user.id;
     this.location_id = this.user.location_id;
+    this.role = this.user.roles[0];
   }
 
   goBack() {

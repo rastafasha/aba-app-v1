@@ -740,8 +740,7 @@ table.table {
 }
 .cal-icon {
   &:after {
-    background: transparent url("./img/icons/calendar-icon.svg") no-repeat
-      scroll 0 0;
+    background: transparent url("./img/icons/calendar-icon.svg") no-repeat scroll 0 0;
     bottom: 0;
     content: "";
     display: block;
@@ -1720,8 +1719,7 @@ table.table {
     li {
       .active {
         img {
-          filter: invert(13%) sepia(85%) saturate(7478%) hue-rotate(266deg)
-            brightness(50%) contrast(340%);
+          filter: invert(13%) sepia(85%) saturate(7478%) hue-rotate(266deg) brightness(50%) contrast(340%);
           transition: all 0.5s ease;
           -moz-transition: all 0.5s ease;
           -o-transition: all 0.5s ease;
@@ -1779,8 +1777,7 @@ table.table {
         color: $color_3;
         font-weight: 500;
         img {
-          filter: invert(13%) sepia(85%) saturate(7478%) hue-rotate(266deg)
-            brightness(50%) contrast(340%);
+          filter: invert(13%) sepia(85%) saturate(7478%) hue-rotate(266deg) brightness(50%) contrast(340%);
           transition: all 0.5s ease;
           -moz-transition: all 0.5s ease;
           -o-transition: all 0.5s ease;
@@ -1856,8 +1853,7 @@ table.table {
       &:hover {
         color: $color_17;
         img {
-          filter: invert(13%) sepia(85%) saturate(7478%) hue-rotate(266deg)
-            brightness(50%) contrast(340%);
+          filter: invert(13%) sepia(85%) saturate(7478%) hue-rotate(266deg) brightness(50%) contrast(340%);
           transition: all 0.5s ease;
           -moz-transition: all 0.5s ease;
           -o-transition: all 0.5s ease;
@@ -5754,7 +5750,8 @@ a.voice-icon {
         rgba(255, 255, 255, 0) 160.66%
       ),
       rgba(255, 255, 255, 0.8);
-    box-shadow: 0px 4px 9px #e1ecff,
+    box-shadow:
+      0px 4px 9px #e1ecff,
       inset 0px 0px 15px rgba(255, 255, 255, 0.35);
     backdrop-filter: blur(5px);
     border-radius: 5px;
@@ -8633,8 +8630,7 @@ a.status-grey {
         .set-about-icon {
           background: rgba(46, 55, 164, 0.05);
           img {
-            filter: invert(13%) sepia(85%) saturate(7478%) hue-rotate(266deg)
-              brightness(50%) contrast(340%);
+            filter: invert(13%) sepia(85%) saturate(7478%) hue-rotate(266deg) brightness(50%) contrast(340%);
           }
         }
       }
@@ -8653,8 +8649,7 @@ a.status-grey {
           .set-about-icon {
             background: rgba(46, 55, 164, 0.05);
             img {
-              filter: invert(13%) sepia(85%) saturate(7478%) hue-rotate(266deg)
-                brightness(50%) contrast(340%);
+              filter: invert(13%) sepia(85%) saturate(7478%) hue-rotate(266deg) brightness(50%) contrast(340%);
             }
           }
         }
@@ -9770,8 +9765,7 @@ blockquote {
     a {
       &:hover {
         img {
-          filter: invert(13%) sepia(85%) saturate(7478%) hue-rotate(266deg)
-            brightness(50%) contrast(340%);
+          filter: invert(13%) sepia(85%) saturate(7478%) hue-rotate(266deg) brightness(50%) contrast(340%);
         }
       }
     }
@@ -10609,7 +10603,9 @@ blockquote {
     height: 8px;
     background-color: $background-color_1;
     border-radius: 50%;
-    transition: left 300ms ease, transform 300ms ease;
+    transition:
+      left 300ms ease,
+      transform 300ms ease;
   }
   background-color: $background-color_48;
   border: 1px solid #c4c4c4;
@@ -11317,7 +11313,9 @@ td.add-remove {
     height: 16px;
     background-color: $background-color_49;
     border-radius: 50%;
-    transition: left 300ms ease, transform 300ms ease;
+    transition:
+      left 300ms ease,
+      transform 300ms ease;
   }
 }
 form {
@@ -12847,3 +12845,4 @@ table.sticky-last {
     right: -12px;
   }
 }
+

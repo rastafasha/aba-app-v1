@@ -1,0 +1,335 @@
+$color_1: var(--blanco);
+$color_2: var(--naranja);
+$color_3: #fff;
+$color_4: rgb(83 130 177);
+$color_5: #ffffff;
+$background-color_1: var(--fondo-negro);
+$background-color_2: var(--black);
+$background-color_3: #d2cece;
+$background-color_4: #101010;
+$background-color_5: #282828;
+
+/* elementos */
+/* elementos */
+/* side-menu */
+/* home */
+/* cards  */
+/* tablas */
+/* formularios */
+/* titulo y texto */
+/* tab */
+.globoblack {
+	display: none;
+}
+.globowhite {
+	display: block;
+	height: 24px;
+	width: 24px;
+	margin-top: 17px;
+	cursor: pointer;
+}
+.darkmode {
+	.globoblack {
+		display: block;
+		height: 24px;
+		width: 24px;
+		margin-top: 17px;
+		cursor: pointer;
+	}
+	.globowhite {
+		display: none;
+	}
+	background-color: $background-color_1 !important;
+	background: var(--fondo-negro) !important;
+	.header {
+		background-color: $background-color_1 !important;
+		background: var(--fondo-negro) !important;
+		.menuright {
+			.menu {
+				background-color: $background-color_2;
+				border: 1px solid var(--blanco);
+			}
+		}
+	}
+	.sidebar-menu {
+		background: var(--fondo-negro);
+		border: transparent;
+		background-color: $background-color_1 !important;
+		background: var(--fondo-negro) !important;
+		>ul {
+			>li {
+				>a {
+					color: $color_1;
+				}
+			}
+		}
+	}
+	.sidebar {
+		background: var(--fondo-negro);
+		border: transparent;
+		background-color: $background-color_1 !important;
+		background: var(--fondo-negro) !important;
+	}
+	.sidemenu-toggler {
+		>span {
+			display: block;
+			background-color: $background-color_3;
+			height: 2px;
+		}
+	}
+	.good-morning-blk {
+		background-color: $background-color_2;
+		background: var(--black);
+		color: $color_1;
+	}
+	h4 {
+		color: $color_1;
+	}
+	.chart-title {
+		h4 {
+			color: $color_1;
+		}
+	}
+	.card {
+		.card-header {
+			.card-title {
+				color: $color_1;
+			}
+		}
+		background-color: $background-color_2;
+		border-radius: 18px;
+		border: 1px solid #393939;
+		box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .11), 0 5px 15px 0 rgba(0, 0, 0, .08);
+		width: 100%;
+		color: $color_1;
+		height: auto;
+	}
+	.card-box {
+		background-color: $background-color_2;
+		border-radius: 18px;
+		border: 1px solid #393939;
+		box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .11), 0 5px 15px 0 rgba(0, 0, 0, .08);
+		width: 100%;
+		color: $color_1;
+		height: auto;
+	}
+	.dash-widget {
+		background-color: $background-color_2;
+		border-radius: 18px;
+		border: 1px solid #393939;
+		box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .11), 0 5px 15px 0 rgba(0, 0, 0, .08);
+		width: 100%;
+		color: $color_1;
+		height: auto;
+	}
+	.card-title {
+		color: $color_1;
+	}
+	.modal {
+		background: var(--black);
+		color: $color_1;
+	}
+	.modal-content {
+		background: var(--black);
+		color: $color_1;
+	}
+	.comman-flex-center {
+		filter: invert(1);
+	}
+	a {
+		h4 {
+			color: $color_2 !important;
+		}
+	}
+	.table {
+		color: $color_3;
+		background-color: $background-color_2;
+		background: var(--black);
+		>thead {
+			>tr {
+				>th {
+					color: $color_3;
+					background-color: $background-color_2;
+					background: var(--black);
+				}
+			}
+		}
+		>tbody {
+			>tr {
+				>td {
+					color: $color_3;
+					background-color: $background-color_2;
+					background: var(--black);
+				}
+			}
+		}
+	}
+	.table-responsive {
+		color: $color_3;
+		background-color: $background-color_2;
+		background: var(--black);
+	}
+	.custom-table {
+		tr {
+			color: $color_3;
+			background-color: $background-color_2;
+			background: var(--black);
+		}
+	}
+	.table.custom-table {
+		>thead {
+			>tr {
+				>th {
+					color: $color_3;
+					background-color: $background-color_2;
+					background: var(--black);
+				}
+			}
+		}
+		>tbody {
+			>tr {
+				>td {
+					.darkmode {
+						.table {
+							tr {
+								color: $color_3;
+								background-color: $background-color_2;
+								background: var(--black);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	.table.comman-table {
+		>tbody {
+			>tr {
+				>td {
+					color: $color_3;
+					background-color: $background-color_2;
+					background: var(--black);
+				}
+			}
+		}
+	}
+	.bg-gray {
+		background-color: $background-color_2 !important;
+		color: $color_1;
+	}
+	.form-control {
+		color: $color_1;
+		background-color: $background-color_1;
+		background: var(--fondo-negro);
+		border: 1px solid #393939;
+		box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .11), 0 5px 15px 0 rgba(0, 0, 0, .08);
+		&:disabled {
+			background-color: $background-color_2;
+			opacity: 1;
+			border: 1px solid #393939;
+			box-shadow: 0 15px 30px 0 rgba(0, 0, 0, .11), 0 5px 15px 0 rgba(0, 0, 0, .08);
+		}
+	}
+	.local-forms {
+		label {
+			color: $color_1;
+			background: var(--fondo-negro);
+		}
+	}
+	.login-wrapper {
+		.loginbox {
+			background: var(--fondo-negro);
+			box-shadow: 0 15px 30px 0 rgba(254, 254, 254, 0.11), 0 5px 15px 0 rgba(255, 255, 255, 0.08);
+		}
+	}
+	.detail-personal {
+		h3 {
+			color: $color_1;
+		}
+	}
+	.doctor-follows {
+		h5 {
+			color: $color_1;
+		}
+	}
+	.about-me-list {
+		ul {
+			li {
+				span {
+					color: $color_1;
+				}
+			}
+		}
+	}
+	.breadcrumb-item.active {
+		color: $color_4;
+	}
+	.tab-content-set {
+		.active {
+			text-shadow: 0 15px 30px 0 rgba(0, 0, 0, .11), 0 5px 15px 0 rgba(255, 255, 255, 0.08);
+		}
+		color: $color_1;
+		background-color: $background-color_1;
+		li {
+			a {
+				color: $color_3;
+			}
+		}
+	}
+	b {
+		color: $color_1;
+	}
+	.navbarM {
+		a.active {
+			background: #9c9a9a;
+			color: $color_3;
+		}
+	}
+	.btn-sm {
+		color: $color_3;
+		border: 1px solid #fff;
+	}
+	.info_local {
+		color: $color_3;
+	}
+	.accordion-item {
+		background: var(--fondo-negro);
+		color: $color_1;
+		.accordion-button {
+			color: $color_1;
+			background-color: $background-color_4;
+		}
+	}
+	.accordion-button {
+		&:not(.collapsed) {
+			color: $color_1;
+			background-color: $background-color_4;
+			box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.125);
+		}
+		color: $color_5;
+		background-color: $background-color_5;
+	}
+	.accordion-body {
+		background: #201f1f;
+	}
+	.recibo {
+		color: $color_1;
+		h3 {
+			color: $color_1;
+		}
+	}
+	.legall {
+		color: $color_1;
+		h2 {
+			color: $color_1;
+		}
+		p {
+			color: $color_1;
+		}
+	}
+	.pago {
+		p {
+			color: $color_1;
+		}
+	}
+}

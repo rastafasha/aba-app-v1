@@ -9,6 +9,7 @@ import { NoteBcbaService } from '../../../../core/services/notes-bcba.service';
 import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
+import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
 
 interface ValidationResult {
   isValid: boolean;
@@ -168,6 +169,10 @@ throw new Error('Method not implemented.');
   pa_services: PaService[] = [];
   selectedPaService: PaService | null = null;
   projectedUnits = 0;
+  start_date: Date; // Fecha de inicio
+  end_date: Date; // Fecha de fin
+
+  showPosWarning = false;
 
   constructor(
     private bipService: BipService,
@@ -186,6 +191,8 @@ throw new Error('Method not implemented.');
     });
     this.getConfig();
     this.getProfileBip();
+    this.start_date = new Date(); // Por ejemplo, fecha actual
+    this.end_date = new Date(); // Por ejemplo, fecha actual
 
     const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
@@ -260,6 +267,21 @@ throw new Error('Method not implemented.');
       this.getMaladaptivesBipByPatientId();
       this.insuranceData();
       this.pa_services = resp.patient.pa_services;
+      this.start_date = resp.patient.start_date;
+      this.end_date = resp.patient.end_date;
+      // console.log(this.pa_services);
+      
+      //filtramos lo pa_services usando star_date y end_date comparado con el dia de hoy
+      this.pa_services = this.pa_services.filter((pa) => {
+        const dateStart = new Date(pa.start_date).getTime();
+        const dateEnd = new Date(pa.end_date).getTime();
+        const dateToday = new Date().getTime();
+        return dateStart <= dateToday && dateEnd >= dateToday;
+      });
+      //devolvemos la respuesta da los pa_services disponibles
+      console.log(this.pa_services);
+
+        
     });
   }
 
@@ -763,7 +785,6 @@ convertToHours(totalMinutes: number): string {
     const service = event.value;
     if (service) {
       this.selectedValueCode = service.cpt;
-      // console.log(this.selectedValueCode);
       this.showFamily = false;
       this.showMonitoring = false;
 
@@ -773,6 +794,7 @@ convertToHours(totalMinutes: number): string {
       if(service.cpt === '97156' ){
         this.showMonitoring = true;
       }
+      this.checkPosWarning();
     }
   }
 
@@ -817,5 +839,11 @@ convertToHours(totalMinutes: number): string {
     }
 
     this.projectedUnits = totalUnits;
+  }
+
+  checkPosWarning() {
+    const isCpt97151 = this.selectedPaService?.cpt === '97151';
+    const isTelehealth = this.meet_with_client_at === '02';
+    this.showPosWarning = isCpt97151 && isTelehealth;
   }
 }
