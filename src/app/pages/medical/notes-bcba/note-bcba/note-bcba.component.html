@@ -159,8 +159,7 @@
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label>CPT Code <span class="login-danger">*</span></label>
-                    <span *ngIf="pa_services | filterDisponibilidadCpt: start_date: end_date" >
-                      <mat-select
+                    <mat-select
                       [(ngModel)]="selectedPaService"
                       name="pa_service"
                       (selectionChange)="onPaServiceSelect($event)"
@@ -174,7 +173,6 @@
                         ({{ service.cpt }})
                       </mat-option>
                     </mat-select>
-                    </span>
                     
                   </div>
                 </div>
