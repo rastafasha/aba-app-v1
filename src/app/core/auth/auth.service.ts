@@ -66,6 +66,7 @@ export class AuthService {
     this.storage.remove(AUTH_CONSTS.token);
     this.storage.remove(AUTH_CONSTS.user);
     this.storage.remove(AUTH_CONSTS.auth);
+    localStorage.removeItem('oldDataKey');
     // puede ser posible que sea necesario
     // desconectar desde el backend
     return of(null);

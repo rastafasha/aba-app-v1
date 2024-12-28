@@ -169,6 +169,8 @@ throw new Error('Method not implemented.');
   pa_services: PaService[] = [];
   selectedPaService: PaService | null = null;
   projectedUnits = 0;
+  start_date: Date; // Fecha de inicio
+  end_date: Date; // Fecha de fin
 
   showPosWarning = false;
 
@@ -189,6 +191,8 @@ throw new Error('Method not implemented.');
     });
     this.getConfig();
     this.getProfileBip();
+    this.start_date = new Date(); // Por ejemplo, fecha actual
+    this.end_date = new Date(); // Por ejemplo, fecha actual
 
     const USER = localStorage.getItem('user');
     this.user = JSON.parse(USER ? USER : '');
@@ -263,6 +267,21 @@ throw new Error('Method not implemented.');
       this.getMaladaptivesBipByPatientId();
       this.insuranceData();
       this.pa_services = resp.patient.pa_services;
+      this.start_date = resp.patient.start_date;
+      this.end_date = resp.patient.end_date;
+      // console.log(this.pa_services);
+      
+      //filtramos lo pa_services usando star_date y end_date comparado con el dia de hoy
+      this.pa_services = this.pa_services.filter((pa) => {
+        const dateStart = new Date(pa.start_date).getTime();
+        const dateEnd = new Date(pa.end_date).getTime();
+        const dateToday = new Date().getTime();
+        return dateStart <= dateToday && dateEnd >= dateToday;
+      });
+      //devolvemos la respuesta da los pa_services disponibles
+      console.log(this.pa_services);
+
+        
     });
   }
 
