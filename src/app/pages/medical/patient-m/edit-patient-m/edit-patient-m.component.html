@@ -564,35 +564,36 @@
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms" [formGroup]="form">
-                    <label>Referring Provider <span class="login-danger">*</span></label>
+                    <label>Referring Provider First Name <span class="login-danger">*</span></label>
                     <input
                       class="form-control"
-                      name="referring_provider"
-                      formControlName="referring_provider"
+                      autocomplete="off"
+                      name="referring_provider_first_name"
+                      formControlName="referring_provider_first_name"
                       type="text"
                     />
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms" [formGroup]="form">
-                    <label>Referring Code <span class="login-danger">*</span></label>
+                    <label>Referring Provider Last Name <span class="login-danger">*</span></label>
                     <input
                       class="form-control"
-                      name="referring_code"
-                      formControlName="referring_code"
+                      autocomplete="off"
+                      name="referring_provider_last_name"
+                      formControlName="referring_provider_last_name"
                       type="text"
-                      (input)="updateReferringCode($event)" 
-                        
                     />
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms" [formGroup]="form">
-                    <label>NPI <span class="login-danger">*</span></label>
+                    <label>Referring Provider NPI <span class="login-danger">*</span></label>
                     <input
                       class="form-control"
-                      name="npi"
-                      formControlName="npi"
+                      autocomplete="off"
+                      name="referring_provider_npi"
+                      formControlName="referring_provider_npi"
                       type="text"
                     />
                   </div>
@@ -677,7 +678,7 @@
                     />
                   </div>
                 </div>
-                
+
 
                 <div class="col-12">
                   <div class="doctor-submit text-end">
