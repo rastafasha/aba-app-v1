@@ -36,8 +36,8 @@
                     routes.noteRbt.noteRbt,
                     patient_selected.patient_identifier
                   ]"
-                  *ngIf="
-                  role === 'SUPERADMIN' || role === 'RBT'
+                  *ngIf=" patient_selected.status === 'active' &&
+                  role === 'SUPERADMIN' || role === 'RBT' 
                 "
                   class="btn btn-outline-success follow-btns"
                   >Create Note RBT</a
@@ -48,7 +48,8 @@
                     patient_selected.patient_identifier
                   ]"
                   *ngIf="
-                  role === 'SUPERADMIN' || role === 'BCBA'
+                  patient_selected.status === 'active' &&
+                  role === 'SUPERADMIN' || role === 'BCBA' 
                 "
                   class="btn btn-outline-success follow-btns"
                   >Create Note BCBA</a
