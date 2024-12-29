@@ -183,6 +183,26 @@
                     
                   </div>
                 </div>
+                <div *ngIf=" show97151 || show971511 || show971512 " class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label>Type <span class="login-danger">*</span></label>
+                    <mat-select
+                      [(ngModel)]="selectedPaService1"
+                      name="pa_service"
+                      (selectionChange)="onPaServiceSelect2($event)"
+                      class="form-control select"
+                      placeholder="Select Service"
+                    >
+                      <mat-option
+                        *ngFor="let service of show97151List"
+                        [value]="service"
+                      >
+                        ({{ service.cpt }})
+                      </mat-option>
+                    </mat-select>
+                    
+                  </div>
+                </div>
 
                 <!-- PA Service Calculator Information -->
                 <div class="col-12 col-md-6 col-xl-4">
@@ -220,6 +240,7 @@
                   </div>
                 </div>
                 <div class="clear"></div>
+                <!-- time -->
                 <div class="row">
                   <div class="col-xs-12 col-sm-6">
                     <h5 class="mb-3">Morning Session</h5>
@@ -329,7 +350,31 @@
                     </p>
                   </div>
                 </div>
+                <!-- time -->
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label>Environmental Changes <span class="login-danger">*</span></label>
+                    <input
+                      class="form-control"
+                      name="environmental_changes"
+                      [(ngModel)]="environmental_changes"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label>Present this session <span class="login-danger">*</span></label>
+                    <input
+                      class="form-control"
+                      name="present_this_session"
+                      [(ngModel)]="present_this_session"
+                      type="text"
+                    />
+                  </div>
+                </div>
               </div>
+               
               <!-- paciente -->
             </form>
           </div>
@@ -337,13 +382,13 @@
       </div>
       <!-- fin paciente -->
 
-      <!-- Family only full -->
-      <ng-container  *ngIf="!showFamily && !showMonitoring">
-        <div class="col-xs-12 col-sm-6" >
+      <!-- !show97155 && !show97156 -->
+      <ng-container  *ngIf="!show97155 && !show97156 && !show97151 && !show971512">
+        <div class="col-xs-12" >
           <div class="card">
             <div class="card-body">
               <div class="col-12">
-                <h4>Caregiver Goal</h4>
+                <h5>Caregiver Goal</h5>
                 <p class="text-danger">
                   Note: Please fill out all fields. If you didn't have any
                   reaction, enter "0"
@@ -382,7 +427,7 @@
         </div>
         <!-- fin Family -->
         <!-- Monitoring  full-->
-        <div class="col-xs-12 col-sm-6"  >
+        <!-- <div class="col-xs-12 col-sm-6"  >
           <div class="card">
             <div class="card-body">
               <div class="col-12">
@@ -417,18 +462,114 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <!-- fin Monitoring -->
       </ng-container>
 
-
-      <!-- Family only 56 -->
-       <ng-container  *ngIf="showMonitoring">
-        <div class="col-xs-12 col-sm-6" >
+      <!--  only 56 -->
+      <ng-container  *ngIf="show97156">
+        
+        <!-- Intervention protocols -->
+        <div class="col-xs-12" >
           <div class="card">
             <div class="card-body">
               <div class="col-12">
-                <h4>Caregiver Goal</h4>
+                <h5>Intervention protocols</h5>
+                <div class="table-responsive ">
+                  <table class="table mb-0 table-two-columns">
+                    <thead>
+                      <tr>
+                        <th>please check as needed</th>
+                        <th>Demostrated</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let intervention of interventionsList; let i = index">
+                        <td>{{ intervention.name }}</td>
+                        <td>
+                          <input class="form-check-input" type="checkbox" id="demostrated" value="demostrated" checked aria-label="...">
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Intervention protocols -->
+         <!-- replacements protocols -->
+         <div class="col-xs-12" >
+          <div class="card">
+            <div class="card-body">
+              <div class="col-12">
+                <h5>replacements protocols</h5>
+                <div class="table-responsive ">
+                  <table class="table mb-0 table-two-columns">
+                    <thead>
+                      <tr>
+                        <th>please check as needed</th>
+                        <th>Demostrated</th>
+                        <th>Assessed</th>
+                        <th>Modified</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let goal of rbt_training_goals; let i = index">
+                        <td>{{ goal.lto }}</td>
+                        <td>
+                          <input class="form-check-input" type="checkbox" id="Demostrated" value="Demostrated" checked aria-label="...">
+                        </td>
+                        <td>
+                          <input class="form-check-input" type="checkbox" id="Assessed" value="Assessed" checked aria-label="...">
+                        </td>
+                        <td>
+                          <input class="form-check-input" type="checkbox" id="Modified" value="Modified" aria-label="...">
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- replacements protocols -->
+         <!-- behaviors -->
+         <div class="col-xs-12" >
+          <div class="card">
+            <div class="card-body">
+              <div class="col-12">
+                <h5>Behaviors</h5>
+                <div class="table-responsive ">
+                  <table class="table mb-0 table-two-columns">
+                    <thead>
+                      <tr>
+                        <th>please check as needed</th>
+                        <th>Discused</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let goal of rbt_training_goals; let i = index">
+                        <td>{{ goal.lto }}</td>
+                        <td>
+                          <input class="form-check-input" type="checkbox" id="Demostrated" value="Demostrated" checked aria-label="...">
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- behaviors -->
+         <!-- Caregiver Goal -->
+        <div class="col-xs-12 " >
+          <div class="card">
+            <div class="card-body">
+              <div class="col-12">
+                <h5>Caregiver Goal</h5>
                 <p class="text-danger">
                   Note: Please fill out all fields. If you didn't have any
                   reaction, enter "0"
@@ -465,50 +606,287 @@
             </div>
           </div>
         </div>
-       </ng-container>
-       <!-- Monitoring  only 55-->
-       <ng-container  *ngIf=" showFamily" >
-      <div class="col-xs-12 col-sm-6" >
-        <div class="card">
-          <div class="card-body">
-            <div class="col-12">
-              <h4>RBT Training goals</h4>
-              <p class="text-danger">
-                Note: Please fill out all fields. If you didn't have any
-                reaction, enter "0"
-              </p>
+        <!-- Caregiver Goal -->
+      </ng-container>
+       <!--   only 55-->
+      <ng-container  *ngIf=" show97155" >
+            <!-- RBT Training goals -->
+              <!-- <div class="col-xs-12 col-sm-6" >
+                <div class="card">
+                  <div class="card-body">
+                    <div class="col-12">
+                      <h4>RBT Training goals</h4>
+                      <p class="text-danger">
+                        Note: Please fill out all fields. If you didn't have any
+                        reaction, enter "0"
+                      </p>
+                    </div>
+                    <div class="table-responsive">
+                      <table class="table mb-0">
+                        <thead>
+                          <tr>
+                            <th>RBT Training Goal</th>
+                            <th>% of correct responses</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let goal of rbt_training_goals; let i = index">
+                            <td>{{ goal.lto }}</td>
+                            <td>
+                              <input
+                                class="form-control"
+                                type="number"
+                                [(ngModel)]="goal.porcent_of_correct_response"
+                                (ngModelChange)="updateRbtGoal(i)"
+                              />
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+            <!-- RBT Training goals -->
+            <!-- Intervention protocols -->
+            <div class="col-xs-12" >
+              <div class="card">
+                <div class="card-body">
+                  <div class="col-12">
+                    <h5>Intervention protocols</h5>
+                    <div class="table-responsive ">
+                      <table class="table mb-0 table-two-columns">
+                        <thead>
+                          <tr>
+                            <th>please check as needed</th>
+                            <th>Assessed</th>
+                            <th>Modified</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let intervention of interventionsList; let i = index">
+                            <td>{{ intervention.name }}</td>
+                            <td>
+                              <input class="form-check-input" type="checkbox" id="Assessed" value="Assessed" checked aria-label="...">
+                            </td>
+                            <td>
+                              <input class="form-check-input" type="checkbox" id="Modified" value="Modified" aria-label="...">
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="table-responsive">
-              <table class="table mb-0">
-                <thead>
-                  <tr>
-                    <th>RBT Training Goal</th>
-                    <th>% of correct responses</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let goal of rbt_training_goals; let i = index">
-                    <td>{{ goal.lto }}</td>
-                    <td>
-                      <input
-                        class="form-control"
-                        type="number"
-                        [(ngModel)]="goal.porcent_of_correct_response"
-                        (ngModelChange)="updateRbtGoal(i)"
-                      />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+            <!-- Intervention protocols -->
+            <!-- replacements protocols -->
+            <div class="col-xs-12" >
+              <div class="card">
+                <div class="card-body">
+                  <div class="col-12">
+                    <h5>replacements protocols</h5>
+                    <div class="table-responsive ">
+                      <table class="table mb-0 table-two-columns">
+                        <thead>
+                          <tr>
+                            <th>please check as needed</th>
+                            <th>Assessed</th>
+                            <th>Modified</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let goal of rbt_training_goals; let i = index">
+                            <td>{{ goal.lto }}</td>
+                            <td>
+                              <input class="form-check-input" type="checkbox" id="Assessed" value="Assessed" checked aria-label="...">
+                            </td>
+                            <td>
+                              <input class="form-check-input" type="checkbox" id="Modified" value="Modified" aria-label="...">
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- replacements protocols -->
+            <!-- modifications needed at this time -->
+            <div class="col-xs-12" >
+              <div class="card">
+                <div class="card-body">
+                  <div class="col-12">
+                    <h5>modifications needed at this time</h5>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="yes">
+                      <label class="form-check-label" for="inlineRadio1">Yes</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="no">
+                      <label class="form-check-label" for="inlineRadio2">No</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- modifications needed at this time -->
+            <!-- additional goals or interventions: -->
+            <div class="col-xs-12" >
+              <div class="card">
+                <div class="card-body">
+                  <div class="col-12">
+                    <h5>Additional Goals or Interventions:</h5>
+                    <div class="col-12">
+                      <div class="form-group local-forms">
+                        <textarea
+                          class="form-control"
+                          name="additional_goals_or_interventions"
+                          [(ngModel)]="additional_goals_or_interventions"
+                          rows="4"
+                          cols="30"
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- additional goals or interventions: -->
+      </ng-container>
+       <!--   only 51-->
+      <ng-container  *ngIf=" show971511" >
+            <!-- modifications needed at this time -->
+            <div class="col-xs-12" >
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-12 col-md-6">
+                      <h5>BCBA conducted client observations</h5>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="BCBA_conducted_client_observations" id="inlineRadio1" value="yes">
+                        <label class="form-check-label" for="inlineRadio1">Yes</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="BCBA_conducted_client_observations" id="inlineRadio2" value="no">
+                        <label class="form-check-label" for="inlineRadio2">No</label>
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <h5>BCBA conducted assessments</h5>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="BCBA_conducted_assessments" id="inlineRadio3" value="yes">
+                        <label class="form-check-label" for="inlineRadio3">Yes</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="BCBA_conducted_assessments" id="inlineRadio4" value="no">
+                        <label class="form-check-label" for="inlineRadio4">No</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- modifications needed at this time -->
+            <!-- Intervention protocols -->
+            <div class="col-xs-12" >
+              <div class="card">
+                <div class="card-body">
+                  <div class="col-12">
+                    <!-- <h5>Intervention protocols</h5> -->
+                    <div class="table-responsive ">
+                      <table class="table mb-0 table-two-columns">
+                        <thead>
+                          <tr>
+                            <th>please check as needed</th>
+                            <th>Option</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let iteml of newList; let i = index">
+                            <td>{{ iteml.name }}</td>
+                            <td>
+                              <input class="form-check-input" type="checkbox" id="Assessed" value="Assessed" checked aria-label="...">
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Intervention protocols -->
+            <!-- intake and outcome measures: -->
+            <div class="col-xs-12" >
+              <div class="card">
+                <div class="card-body">
+                  <div class="col-12">
+                    <h5>Intake and Outcome Measures:</h5>
+                    <div class="table-responsive ">
+                      <table class="table mb-0 table-two-columns">
+                        <thead>
+                          <tr>
+                            <th>please check as needed</th>
+                            <th>Option</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let iteml of outcomeList; let i = index">
+                            <td>{{ iteml.name }}</td>
+                            <td>
+                              <input class="form-check-input" type="checkbox" id="Assessed" value="Assessed" checked aria-label="...">
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- intake and outcome measures: -->
+      </ng-container>
+       <!--   only 51-->
+       <ng-container  *ngIf=" show971512" >
+        <!-- modifications needed at this time -->
+        <div class="col-xs-12" >
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12 col-md-6">
+                  <h5>BCBA conducted client observations</h5>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="BCBA_conducted_client_observations" id="inlineRadio1" value="yes">
+                    <label class="form-check-label" for="inlineRadio1">Yes</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="BCBA_conducted_client_observations" id="inlineRadio2" value="no">
+                    <label class="form-check-label" for="inlineRadio2">No</label>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <h5>BCBA conducted assessments</h5>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="BCBA_conducted_assessments" id="inlineRadio3" value="yes">
+                    <label class="form-check-label" for="inlineRadio3">Yes</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="BCBA_conducted_assessments" id="inlineRadio4" value="no">
+                    <label class="form-check-label" for="inlineRadio4">No</label>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </ng-container>
-    <!-- fin Monitoring -->
+        <!-- modifications needed at this time -->
+        </ng-container>
+    <!-- fin  -->
 
 
-      <!-- fin Family -->
 
 
 

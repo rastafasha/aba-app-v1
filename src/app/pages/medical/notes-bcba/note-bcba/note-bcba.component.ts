@@ -29,8 +29,11 @@ throw new Error('Method not implemented.');
   routes = AppRoutes;
   summary_note = '';
   isGeneratingSummary = false;
-  showFamily = false;
-  showMonitoring = false;
+  show97156 = false;
+  show97155 = false;
+  show97151 = false;
+  show971511 = false;
+  show971512 = false;
   valid_form = false;
   valid_form_success = false;
 
@@ -91,7 +94,7 @@ throw new Error('Method not implemented.');
   next_session_is_scheduled_for = '';
   provider_name = '';
   supervisor_name = '';
-
+  
   porcent_of_occurrences = 0;
   porcent_of_correct_response = 0;
   maladaptive = '';
@@ -118,7 +121,7 @@ throw new Error('Method not implemented.');
   FILE_SIGNATURE_BCBA: any;
   IMAGE_PREVISUALIZA_SIGNATURE_BCBA: any;
   IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED: any = 'assets/img/user-06.jpg';
-
+  
   rbt_id: any;
   bcba_id: any;
   maladaptivename: any;
@@ -132,14 +135,14 @@ throw new Error('Method not implemented.');
 
   roles_rbt = [];
   roles_bcba = [];
-
+  
   hours_days = [];
   specialists = [];
   maladaptives = [];
   replacementGoals = [];
   intervention_added = [];
   replacements = [];
-
+  
   maladaptiveSelected: any = null;
   replacementSelected: any = null;
   lto: any = null;
@@ -165,14 +168,63 @@ throw new Error('Method not implemented.');
   patientLocation_id: number;
   insurance_id: number;
   insurance_identifier: string;
-
+  
   pa_services: PaService[] = [];
   selectedPaService: PaService | null = null;
+  selectedPaService1: PaService | null = null;
   projectedUnits = 0;
   start_date: Date; // Fecha de inicio
   end_date: Date; // Fecha de fin
-
+  
+  present_this_session = '';
+  additional_goals_or_interventions = '';
+  BCBA_conducted_client_observations = '';
+  BCBA_conducted_assessments = '';
   showPosWarning = false;
+
+  interventionsSelected = {};
+  interventionsList = [
+    { id: 'token_economy', name: 'Token Economy', value: false,  },
+    { id: 'generalization', name: 'Generalization', value: false },
+    { id: 'NCR', name: 'NCR', value: false },
+    { id: 'behavioral_momentum', name: 'Behavioral Momentum', value: false },
+    { id: 'DRA', name: 'DRA', value: false },
+    { id: 'DRI', name: 'DRI', value: false },
+    { id: 'DRO', name: 'DRO', value: false },
+    { id: 'DRL', name: 'DRL', value: false },
+    { id: 'response_block', name: 'Response Block', value: false },
+    { id: 'errorless_teaching', name: 'Errorless Teaching', value: false },
+    { id: 'extinction', name: 'Extinction', value: false },
+    { id: 'chaining', name: 'Chaining', value: false },
+    { id: 'natural_teaching', name: 'Natural Teaching', value: false },
+    { id: 'redirection', name: 'Redirection', value: false },
+    { id: 'shaping', name: 'Shaping', value: false },
+    { id: 'pairing', name: 'Pairing', value: false },
+  ];
+  newList = [
+    { id: 'FAST', name: 'FAST', value: false,  },
+    { id: 'MAST', name: 'MAST', value: false },
+    { id: 'QABF', name: 'QABF', value: false },
+    { id: 'ABC_data_collection', name: 'ABC Data Collection', value: false },
+    { id: 'VBmapp', name: 'VBmapp', value: false },
+    { id: 'Ablls ', name: 'Ablls ', value: false },
+    { id: 'EFL', name: 'EFL', value: false },
+    { id: 'Peak', name: 'Peak', value: false },
+    { id: 'parent_interview', name: 'Parent interview', value: false },
+    { id: 'reinforcement_questionnaire', name: 'Reinforcement questionnaire', value: false },
+    { id: 'preference_assessment', name: 'Preference assessment', value: false },
+    { id: 'other', name: 'Other', value: false },
+  ];
+  outcomeList = [
+    { id: 'SRS-2', name: 'SRS-2', value: false,  },
+    { id: 'vineland-3', name: 'vineland-3', value: false },
+    { id: 'PDDBI', name: 'PDDBI', value: false },
+    { id: 'PSI-4 short form', name: 'PSI-4 short form', value: false },
+  ];
+  show97151List = [
+    { cpt: '97151-1'  },
+    { cpt: '97151-2'  },
+  ];
 
   constructor(
     private bipService: BipService,
@@ -329,14 +381,7 @@ throw new Error('Method not implemented.');
       // this.services = resp.services;
     });
   }
-  getCPtList(selectedValueCode) {
-    // this.doctorService.showDoctorProfile(selectedValueCode).subscribe((resp:any)=>{
-    //   // console.log(resp);
-    //   this.unitsAsignated = resp.doctor.certificate_number;
-    //   // this.notes = resp.notes;
-    //   // this.services = resp.services;
-    // })
-  }
+  
 
   getMaladaptivesBipByPatientId() {
     this.bipService
@@ -668,6 +713,10 @@ convertToHours(totalMinutes: number): string {
   // }
   //
 
+  onInterventionsChange(updatedInterventions: any[]) {
+    this.intervention_added = updatedInterventions;
+  }
+
 
   generateAISummary() {
     const validationResult = this.checkDataSufficient();
@@ -687,11 +736,11 @@ convertToHours(totalMinutes: number): string {
         startTime2: this.selectedValueTimeIn2 ? this.selectedValueTimeIn2 : null,
         endTime2: this.selectedValueTimeOut2 ? this.selectedValueTimeOut2 : null,
         pos: this.getPos(this.meet_with_client_at),
-        caregiverGoals: this.showMonitoring ? this.caregivers_training_goals.map((g) => ({
+        caregiverGoals: this.show97155 ? this.caregivers_training_goals.map((g) => ({
             goal: g.caregiver_goal,
             percentCorrect: g.porcent_of_correct_response,
         })) : [],
-        rbtTrainingGoals: this.showFamily ? this.rbt_training_goals.map((g) => ({
+        rbtTrainingGoals: this.show97156 ? this.rbt_training_goals.map((g) => ({
             goal: g.lto,
             percentCorrect: g.porcent_of_correct_response,
         })) : [],
@@ -729,7 +778,7 @@ convertToHours(totalMinutes: number): string {
     }
 
     // Only validate caregiver goals if CPT code is 97156
-    if (this.showMonitoring) {
+    if (this.show97156) {
         if (!this.caregivers_training_goals || this.caregivers_training_goals.length === 0) {
             missingFields.push('Caregiver training goals');
         } else {
@@ -745,7 +794,7 @@ convertToHours(totalMinutes: number): string {
     }
 
     // Only validate RBT goals if CPT code is 97155
-    if (this.showFamily) {
+    if (this.show97155) {
         if (!this.rbt_training_goals || this.rbt_training_goals.length === 0) {
             missingFields.push('RBT training goals');
         } else {
@@ -785,18 +834,44 @@ convertToHours(totalMinutes: number): string {
     const service = event.value;
     if (service) {
       this.selectedValueCode = service.cpt;
-      this.showFamily = false;
-      this.showMonitoring = false;
+      this.show97155 = false;
+      this.show97156 = false;
+      this.show97151 = false;
+      this.show971511 = false;
+      this.show971512 = false;
 
       if(service.cpt === '97155' ){
-        this.showFamily = true;
+        this.show97155 = true;
       }
       if(service.cpt === '97156' ){
-        this.showMonitoring = true;
+        this.show97156 = true;
+      }
+      if(service.cpt === '97151' ){
+        this.show97151 = true;
       }
       this.checkPosWarning();
     }
   }
+
+  onPaServiceSelect2(event: any) {
+    const service = event.value;
+    if (service) {
+      this.selectedValueCode = service.cpt;
+      
+      this.show97151 = false;
+      this.show971511 = false;
+      this.show971512 = false;
+
+      if(service.cpt === '97151-1' ){
+        this.show971511 = true;
+      }
+      if(service.cpt === '97151-2' ){
+        this.show971512 = true;
+      }
+      this.checkPosWarning();
+    }
+  }
+  
 
   calculateUnitsFromTime(startTime: string, endTime: string): number {
     if (!startTime || !endTime) return 0;
