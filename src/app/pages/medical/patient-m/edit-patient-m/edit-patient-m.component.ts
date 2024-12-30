@@ -271,8 +271,7 @@ export class EditPatientMComponent implements OnInit {
   }
   }
 
-  // eslint-disable-next-line no-debugger
-  onSave() {debugger
+  onSave() {
     if (this.form.invalid) return;
 
     this.useCases.savePatient(this.form.getRawValue(), this.id).subscribe({

@@ -163,6 +163,7 @@
                     </mat-select>
                   </div>
                 </div>
+                <!-- CPT Code -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label>CPT Code <span class="login-danger">*</span></label>
@@ -183,6 +184,8 @@
                     
                   </div>
                 </div>
+                <!-- CPT Code -->
+                <!-- CPT Code51 -->
                 <div *ngIf=" show97151 || show971511 || show971512 " class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label>Type <span class="login-danger">*</span></label>
@@ -203,6 +206,7 @@
                     
                   </div>
                 </div>
+                 <!-- CPT Code51 -->
 
                 <!-- PA Service Calculator Information -->
                 <div class="col-12 col-md-6 col-xl-4">
@@ -219,7 +223,7 @@
                   </app-units-display>
                 </div>
 
-
+                <!-- DOS -->
                 <div class="col-12 col-md-3">
                   <div class="form-group local-forms">
                     <label>DOS <span class="login-danger">*</span></label>
@@ -239,6 +243,7 @@
                     ></mat-datepicker-toggle>
                   </div>
                 </div>
+                <!-- DOS -->
                 <div class="clear"></div>
                 <!-- time -->
                 <div class="row">
@@ -466,7 +471,162 @@
         <!-- fin Monitoring -->
       </ng-container>
 
-      <!--  only 56 -->
+      
+       <!--   only 51-->
+      <ng-container  *ngIf=" show971511" >
+            <!-- BCBA conducted -->
+            <div class="col-xs-12" >
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-12 col-md-6">
+                      <h5>BCBA conducted client observations</h5>
+                      <div class="form-group ">
+                        <div _ngcontent-rhp-c92="" class="status-toggle d-flex justify-content-between align-items-center">
+                          <input _ngcontent-rhp-c92="" type="checkbox" 
+                          id="BCBA_conducted_client_observations"  class="check"
+                           name="BCBA_conducted_client_observations" [checked]="BCBA_conducted_client_observations === true" 
+                           [ngModelOptions]="{standalone: true}" 
+                           [(ngModel)]="BCBA_conducted_client_observations">
+                          <label _ngcontent-rhp-c92="" for="BCBA_conducted_client_observations" class="checktoggle" value="true">checkbox</label>
+                      </div>
+                    </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                      <h5>BCBA conducted assessments</h5>
+                      <div class="form-group ">
+                        <div _ngcontent-rhp-c92="" class="status-toggle d-flex justify-content-between align-items-center">
+                          <input _ngcontent-rhp-c92="" type="checkbox" 
+                          id="BCBA_conducted_assessments"  class="check"
+                           name="BCBA_conducted_assessments" [checked]="BCBA_conducted_assessments === true" 
+                           [ngModelOptions]="{standalone: true}" 
+                           [(ngModel)]="BCBA_conducted_assessments">
+                          <label _ngcontent-rhp-c92="" for="BCBA_conducted_assessments" class="checktoggle" value="true">checkbox</label>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- BCBA conducted -->
+            <!-- Info -->
+            <div class="col-xs-12" >
+              <div class="card">
+                <div class="card-body">
+                  <div class="col-12">
+                    <!-- <h5>Intervention protocols</h5> -->
+                    <div class="table-responsive content-box">
+                      <table class="table mb-0 ">
+                        <thead>
+                          <tr>
+                            <th>please check as needed</th>
+                            <th>Option</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let iteml of newList; let i = index">
+                            <td>{{ iteml.name }}</td>
+                            <td>
+                              <!-- <input class="form-check-input" type="checkbox" id="Assessed" value="Assessed" checked aria-label="..."> -->
+                              <div class="status-toggle d-flex justify-content-between align-items-center">
+                                <input type="checkbox" [id]="iteml.id" class="check"
+                                       [(ngModel)]="iteml.value"
+                                       [name]="iteml.id"
+                                       >
+                                       <!-- (ngModelChange)="updateitemls()" -->
+                                <label [for]="iteml.id" class="checktoggle">checkbox</label>
+    
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Info -->
+            <!-- intake and outcome measures: -->
+            <div class="col-xs-12" >
+              <div class="card">
+                <div class="card-body">
+                  <div class="col-12">
+                    <h5>Intake and Outcome Measures:</h5>
+                    <div class="table-responsive content-box">
+                      <table class="table mb-0 ">
+                        <thead>
+                          <tr>
+                            <th>please check as needed</th>
+                            <th>Option</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let itemOC of outcomeList; let i = index">
+                            <td>{{ itemOC.name }}</td>
+                            <td>
+                              <!-- <input class="form-check-input" type="checkbox" id="Assessed" value="Assessed" checked aria-label="..."> -->
+                              <div class="status-toggle d-flex justify-content-between align-items-center">
+                                <input type="checkbox" [id]="itemOC.id" class="check"
+                                       [(ngModel)]="itemOC.value"
+                                       [name]="itemOC.id"
+                                       >
+                                       <!-- (ngModelChange)="updateitemOCs()" -->
+                                <label [for]="itemOC.id" class="checktoggle">checkbox</label>
+    
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- intake and outcome measures: -->
+      </ng-container>
+       <!--   only 51-->
+       <ng-container  *ngIf=" show971512" >
+        <!-- modifications needed at this time -->
+        <div class="col-xs-12" >
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12 col-md-6">
+                  <h5>BCBA conducted client observations</h5>
+                  <div class="form-group ">
+                    <div _ngcontent-rhp-c92="" class="status-toggle d-flex justify-content-between align-items-center">
+                      <input _ngcontent-rhp-c92="" type="checkbox" 
+                      id="BCBA_conducted_client_observations"  class="check"
+                       name="BCBA_conducted_client_observations" [checked]="BCBA_conducted_client_observations === true" 
+                       [ngModelOptions]="{standalone: true}" 
+                       [(ngModel)]="BCBA_conducted_client_observations">
+                      <label _ngcontent-rhp-c92="" for="BCBA_conducted_client_observations" class="checktoggle" value="true">checkbox</label>
+                  </div>
+                </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <h5>BCBA conducted assessments</h5>
+                  <div class="form-group ">
+                    <div _ngcontent-rhp-c92="" class="status-toggle d-flex justify-content-between align-items-center">
+                      <input _ngcontent-rhp-c92="" type="checkbox" 
+                      id="BCBA_conducted_assessments"  class="check"
+                       name="BCBA_conducted_assessments" [checked]="BCBA_conducted_assessments === true" 
+                       [ngModelOptions]="{standalone: true}" 
+                       [(ngModel)]="BCBA_conducted_assessments">
+                      <label _ngcontent-rhp-c92="" for="BCBA_conducted_assessments" class="checktoggle" value="true">checkbox</label>
+                  </div>
+                </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- modifications needed at this time -->
+        </ng-container>
+        <!--  only 56 -->
       <ng-container  *ngIf="show97156">
         
         <!-- Intervention protocols -->
@@ -475,8 +635,8 @@
             <div class="card-body">
               <div class="col-12">
                 <h5>Intervention protocols</h5>
-                <div class="table-responsive ">
-                  <table class="table mb-0 table-two-columns">
+                <div class="table-responsive content-box">
+                  <table class="table mb-0 ">
                     <thead>
                       <tr>
                         <th>please check as needed</th>
@@ -487,7 +647,18 @@
                       <tr *ngFor="let intervention of interventionsList; let i = index">
                         <td>{{ intervention.name }}</td>
                         <td>
-                          <input class="form-check-input" type="checkbox" id="demostrated" value="demostrated" checked aria-label="...">
+                          <!-- <input class="form-check-input" type="checkbox" id="demostrated" value="demostrated" checked aria-label="..."> -->
+
+                          <div class="status-toggle d-flex justify-content-between align-items-center">
+                            <input type="checkbox" [id]="intervention.id" class="check"
+                                   [(ngModel)]="intervention.value"
+                                   [name]="intervention.id"
+                                   >
+                                   <!-- (ngModelChange)="updateInterventions()" -->
+                            <label [for]="intervention.id" class="checktoggle">checkbox</label>
+
+                          </div>
+
                         </td>
                       </tr>
                     </tbody>
@@ -505,26 +676,28 @@
               <div class="col-12">
                 <h5>replacements protocols</h5>
                 <div class="table-responsive ">
-                  <table class="table mb-0 table-two-columns">
+                  <table class="table mb-0 ">
                     <thead>
                       <tr>
                         <th>please check as needed</th>
                         <th>Demostrated</th>
-                        <th>Assessed</th>
-                        <th>Modified</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let goal of rbt_training_goals; let i = index">
-                        <td>{{ goal.lto }}</td>
+                      <tr *ngFor="let replac of rbt_training_goals; let i = index">
+                        <td>{{ replac.lto }}</td>
                         <td>
-                          <input class="form-check-input" type="checkbox" id="Demostrated" value="Demostrated" checked aria-label="...">
-                        </td>
-                        <td>
-                          <input class="form-check-input" type="checkbox" id="Assessed" value="Assessed" checked aria-label="...">
-                        </td>
-                        <td>
-                          <input class="form-check-input" type="checkbox" id="Modified" value="Modified" aria-label="...">
+                          <!-- <input class="form-check-input" type="checkbox" id="Demostrated" value="Demostrated" checked aria-label="..."> -->
+
+                          <div class="status-toggle d-flex justify-content-between align-items-center">
+                            <input type="checkbox" [id]="replac.id" class="check"
+                                   [(ngModel)]="replac.value"
+                                   [name]="replac.id"
+                                   >
+                                   <!-- (ngModelChange)="updateInterventions()" -->
+                            <label [for]="replac.id" class="checktoggle">checkbox</label>
+
+                          </div>
                         </td>
                       </tr>
                     </tbody>
@@ -542,7 +715,7 @@
               <div class="col-12">
                 <h5>Behaviors</h5>
                 <div class="table-responsive ">
-                  <table class="table mb-0 table-two-columns">
+                  <table class="table mb-0 ">
                     <thead>
                       <tr>
                         <th>please check as needed</th>
@@ -550,10 +723,19 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let goal of rbt_training_goals; let i = index">
-                        <td>{{ goal.lto }}</td>
+                      <tr *ngFor="let behav of behaviorsList; let i = index">
+                        <td>{{ behav.name }}</td>
                         <td>
-                          <input class="form-check-input" type="checkbox" id="Demostrated" value="Demostrated" checked aria-label="...">
+                          <!-- <input class="form-check-input" type="checkbox" id="Demostrated" value="Demostrated" checked aria-label="..."> -->
+                          <div class="status-toggle d-flex justify-content-between align-items-center">
+                            <input type="checkbox" [id]="behav.id" class="check"
+                                   [(ngModel)]="behav.value"
+                                   [name]="behav.id"
+                                   >
+                                   <!-- (ngModelChange)="updateInterventions()" -->
+                            <label [for]="behav.id" class="checktoggle">checkbox</label>
+
+                          </div>
                         </td>
                       </tr>
                     </tbody>
@@ -564,6 +746,109 @@
           </div>
         </div>
         <!-- behaviors -->
+         <!-- formulario varios -->
+         <div class="col-xs-12" >
+          <div class="card">
+            <div class="card-body">
+              <div class="col-12">
+                <!-- <h5>Behaviors</h5> -->
+                <div class="row">
+                  <div class="col-12 col-md-6 ">
+                    <div class="form-group ">
+                      <div _ngcontent-rhp-c92="" class="card-header d-flex justify-content-between align-items-center">
+                          <h5 _ngcontent-rhp-c92="" class="card-title">Cargiver Participation</h5>
+                          <div _ngcontent-rhp-c92="" class="status-toggle d-flex justify-content-between align-items-center">
+                              <input _ngcontent-rhp-c92="" type="checkbox" 
+                              id="cargiver_participation"  class="check"
+                              name="cargiver_participation" [checked]="cargiver_participation === true" 
+                              [ngModelOptions]="{standalone: true}" 
+                              [(ngModel)]="cargiver_participation">
+                              <label _ngcontent-rhp-c92="" for="cargiver_participation" class="checktoggle" value="true">checkbox</label>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+
+                  <div class="col-12 col-md-6">
+
+                    <div class="form-group ">
+                        <div _ngcontent-rhp-c92="" class="card-header d-flex justify-content-between align-items-center">
+                            <h5 _ngcontent-rhp-c92="" class="card-title">Was the client present</h5>
+                            <div _ngcontent-rhp-c92="" class="status-toggle d-flex justify-content-between align-items-center">
+                                <input _ngcontent-rhp-c92="" type="checkbox" id="was_the_client_present" 
+                                class="check" name="was_the_client_present" [checked]="was_the_client_present === true" 
+                                [ngModelOptions]="{standalone: true}" [(ngModel)]="was_the_client_present">
+                                <label _ngcontent-rhp-c92="" for="was_the_client_present" class="checktoggle" value="true">checkbox</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                  <div class="col-12 col-md-6 ">
+                    <div class="form-group local-forms">
+                      <label
+                        >Asked and clarified questions about the implementation of <span class="login-danger">*</span></label
+                      >
+                      <input
+                        class="form-control"
+                        name="asked_and_clarified_questions_about_the_implementation_of"
+                        
+                        [(ngModel)]="asked_and_clarified_questions_about_the_implementation_of"
+                        type="text"
+                      />
+                    </div>
+                  </div>
+                <div class="col-12 col-md-6 ">
+                  <div class="form-group local-forms">
+                    <label
+                      >Reinforced caregiver strengths in <span class="login-danger">*</span></label
+                    >
+                    <input
+                      class="form-control"
+                      name="reinforced_caregiver_strengths_in"
+                      
+                      [(ngModel)]="reinforced_caregiver_strengths_in"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 ">
+                  <div class="form-group local-forms">
+                    <label
+                      >Gave constructive feedback on <span class="login-danger">*</span></label
+                    >
+                    <input
+                      class="form-control"
+                      name="gave_constructive_feedback_on"
+                      
+                      [(ngModel)]="gave_constructive_feedback_on"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 ">
+                  <div class="form-group local-forms">
+                    <label
+                      >recomended more practice on <span class="login-danger">*</span></label
+                    >
+                    <input
+                      class="form-control"
+                      name="recomended_more_practice_on"
+                      
+                      [(ngModel)]="recomended_more_practice_on"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                </div>
+
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- formulario varios -->
          <!-- Caregiver Goal -->
         <div class="col-xs-12 " >
           <div class="card">
@@ -586,18 +871,19 @@
                   <tbody>
                     <tr
                       *ngFor="
-                        let goal of caregivers_training_goals;
+                        let caregiv of caregivers_training_goals;
                         let i = index
                       "
                     >
-                      <td>{{ goal.caregiver_goal }}</td>
+                      <td>{{ caregiv.caregiver_goal }}</td>
                       <td>
                         <input
                           class="form-control"
                           type="number"
-                          [(ngModel)]="goal.porcent_of_correct_response"
+                          [(ngModel)]="caregiv.porcent_of_correct_response"
                           (ngModelChange)="updateCaregiverGoal(i)"
                         />
+
                       </td>
                     </tr>
                   </tbody>
@@ -654,8 +940,8 @@
                 <div class="card-body">
                   <div class="col-12">
                     <h5>Intervention protocols</h5>
-                    <div class="table-responsive ">
-                      <table class="table mb-0 table-two-columns">
+                    <div class="table-responsive content-box">
+                      <table class="table mb-0 ">
                         <thead>
                           <tr>
                             <th>please check as needed</th>
@@ -664,13 +950,31 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr *ngFor="let intervention of interventionsList; let i = index">
+                          <tr *ngFor="let intervention of interventionsList2; let i = index">
                             <td>{{ intervention.name }}</td>
                             <td>
-                              <input class="form-check-input" type="checkbox" id="Assessed" value="Assessed" checked aria-label="...">
+                              <!-- <input class="form-check-input" type="checkbox" id="Assessed" value="Assessed" checked aria-label="..."> -->
+                              <div class="status-toggle d-flex justify-content-between align-items-center">
+                                <input type="checkbox" [id]="intervention.id + '-assessed'" class="check"
+                                       [(ngModel)]="intervention.value"
+                                       [name]="intervention.id + '-assessed'"
+                                       >
+                                       <!-- (ngModelChange)="updateInterventions()" -->
+                                <label [for]="intervention.id + '-assessed'" class="checktoggle">checkbox</label>
+    
+                              </div>
                             </td>
                             <td>
-                              <input class="form-check-input" type="checkbox" id="Modified" value="Modified" aria-label="...">
+                              <!-- <input class="form-check-input" type="checkbox" id="Modified" value="Modified" aria-label="..."> -->
+                              <div class="status-toggle d-flex justify-content-between align-items-center">
+                                <input type="checkbox" [id]="intervention.id + '-modified'" class="check"
+                                       [(ngModel)]="intervention.value2"
+                                       [name]="intervention.id + '-modified'"
+                                       >
+                                       <!-- (ngModelChange)="updateInterventions()" -->
+                                <label [for]="intervention.id + '-modified'" class="checktoggle">checkbox</label>
+    
+                              </div>
                             </td>
                           </tr>
                         </tbody>
@@ -688,7 +992,7 @@
                   <div class="col-12">
                     <h5>replacements protocols</h5>
                     <div class="table-responsive ">
-                      <table class="table mb-0 table-two-columns">
+                      <table class="table mb-0 ">
                         <thead>
                           <tr>
                             <th>please check as needed</th>
@@ -697,13 +1001,31 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr *ngFor="let goal of rbt_training_goals; let i = index">
-                            <td>{{ goal.lto }}</td>
+                          <tr *ngFor="let replac of rbt_training_goals; let i = index">
+                            <td>{{ replac.lto }}</td>
                             <td>
-                              <input class="form-check-input" type="checkbox" id="Assessed" value="Assessed" checked aria-label="...">
+                              <!-- <input class="form-check-input" type="checkbox" id="Assessed" value="Assessed" checked aria-label="..."> -->
+                              <div class="status-toggle d-flex justify-content-between align-items-center">
+                                <input type="checkbox" [id]="replac.id + '-assessed'" class="check"
+                                       [(ngModel)]="replac.value"
+                                       [name]="replac.id + '-assessed'"
+                                       >
+                                       <!-- (ngModelChange)="updatereplacs()" -->
+                                <label [for]="replac.id + '-assessed'" class="checktoggle">checkbox</label>
+    
+                              </div>
                             </td>
                             <td>
-                              <input class="form-check-input" type="checkbox" id="Modified" value="Modified" aria-label="...">
+                              <!-- <input class="form-check-input" type="checkbox" id="Modified" value="Modified" aria-label="..."> -->
+                              <div class="status-toggle d-flex justify-content-between align-items-center">
+                                <input type="checkbox" [id]="replac.id + '-modified'" class="check"
+                                       [(ngModel)]="replac.value2"
+                                       [name]="replac.id + '-modified'"
+                                       >
+                                       <!-- (ngModelChange)="updatereplacs()" -->
+                                <label [for]="replac.id + '-modified'" class="checktoggle">checkbox</label>
+    
+                              </div>
                             </td>
                           </tr>
                         </tbody>
@@ -719,15 +1041,18 @@
               <div class="card">
                 <div class="card-body">
                   <div class="col-12">
-                    <h5>modifications needed at this time</h5>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="yes">
-                      <label class="form-check-label" for="inlineRadio1">Yes</label>
+                    
+                    <h4 _ngcontent-rhp-c92="" class="card-title">Modifications needed at this time</h4>
+                    <div class="form-group ">
+                      <div _ngcontent-rhp-c92="" class="status-toggle d-flex justify-content-between align-items-center">
+                        <input _ngcontent-rhp-c92="" type="checkbox" 
+                        id="modifications_needed_at_this_time"  class="check"
+                         name="modifications_needed_at_this_time" [checked]="modifications_needed_at_this_time === true" 
+                         [ngModelOptions]="{standalone: true}" 
+                         [(ngModel)]="modifications_needed_at_this_time">
+                        <label _ngcontent-rhp-c92="" for="modifications_needed_at_this_time" class="checktoggle" value="true">checkbox</label>
                     </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="no">
-                      <label class="form-check-label" for="inlineRadio2">No</label>
-                    </div>
+                  </div>
                   </div>
                 </div>
               </div>
@@ -756,134 +1081,6 @@
             </div>
             <!-- additional goals or interventions: -->
       </ng-container>
-       <!--   only 51-->
-      <ng-container  *ngIf=" show971511" >
-            <!-- modifications needed at this time -->
-            <div class="col-xs-12" >
-              <div class="card">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-12 col-md-6">
-                      <h5>BCBA conducted client observations</h5>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="BCBA_conducted_client_observations" id="inlineRadio1" value="yes">
-                        <label class="form-check-label" for="inlineRadio1">Yes</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="BCBA_conducted_client_observations" id="inlineRadio2" value="no">
-                        <label class="form-check-label" for="inlineRadio2">No</label>
-                      </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                      <h5>BCBA conducted assessments</h5>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="BCBA_conducted_assessments" id="inlineRadio3" value="yes">
-                        <label class="form-check-label" for="inlineRadio3">Yes</label>
-                      </div>
-                      <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="BCBA_conducted_assessments" id="inlineRadio4" value="no">
-                        <label class="form-check-label" for="inlineRadio4">No</label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- modifications needed at this time -->
-            <!-- Intervention protocols -->
-            <div class="col-xs-12" >
-              <div class="card">
-                <div class="card-body">
-                  <div class="col-12">
-                    <!-- <h5>Intervention protocols</h5> -->
-                    <div class="table-responsive ">
-                      <table class="table mb-0 table-two-columns">
-                        <thead>
-                          <tr>
-                            <th>please check as needed</th>
-                            <th>Option</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let iteml of newList; let i = index">
-                            <td>{{ iteml.name }}</td>
-                            <td>
-                              <input class="form-check-input" type="checkbox" id="Assessed" value="Assessed" checked aria-label="...">
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- Intervention protocols -->
-            <!-- intake and outcome measures: -->
-            <div class="col-xs-12" >
-              <div class="card">
-                <div class="card-body">
-                  <div class="col-12">
-                    <h5>Intake and Outcome Measures:</h5>
-                    <div class="table-responsive ">
-                      <table class="table mb-0 table-two-columns">
-                        <thead>
-                          <tr>
-                            <th>please check as needed</th>
-                            <th>Option</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let iteml of outcomeList; let i = index">
-                            <td>{{ iteml.name }}</td>
-                            <td>
-                              <input class="form-check-input" type="checkbox" id="Assessed" value="Assessed" checked aria-label="...">
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- intake and outcome measures: -->
-      </ng-container>
-       <!--   only 51-->
-       <ng-container  *ngIf=" show971512" >
-        <!-- modifications needed at this time -->
-        <div class="col-xs-12" >
-          <div class="card">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-12 col-md-6">
-                  <h5>BCBA conducted client observations</h5>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="BCBA_conducted_client_observations" id="inlineRadio1" value="yes">
-                    <label class="form-check-label" for="inlineRadio1">Yes</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="BCBA_conducted_client_observations" id="inlineRadio2" value="no">
-                    <label class="form-check-label" for="inlineRadio2">No</label>
-                  </div>
-                </div>
-                <div class="col-12 col-md-6">
-                  <h5>BCBA conducted assessments</h5>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="BCBA_conducted_assessments" id="inlineRadio3" value="yes">
-                    <label class="form-check-label" for="inlineRadio3">Yes</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="BCBA_conducted_assessments" id="inlineRadio4" value="no">
-                    <label class="form-check-label" for="inlineRadio4">No</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- modifications needed at this time -->
-        </ng-container>
     <!-- fin  -->
 
 
