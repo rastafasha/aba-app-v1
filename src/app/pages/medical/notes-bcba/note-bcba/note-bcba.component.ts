@@ -10,7 +10,10 @@ import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
-
+import {interventionsList, interventionsList2, 
+  newList, replacementList,
+  outcomeList, show97151List, behaviorsList
+} from '../listasSelectData';
 interface ValidationResult {
   isValid: boolean;
   missingFields: string[];
@@ -29,8 +32,11 @@ throw new Error('Method not implemented.');
   routes = AppRoutes;
   summary_note = '';
   isGeneratingSummary = false;
-  showFamily = false;
-  showMonitoring = false;
+  show97156 = false;
+  show97155 = false;
+  show97151 = false;
+  show971511 = false;
+  show971512 = false;
   valid_form = false;
   valid_form_success = false;
 
@@ -65,6 +71,10 @@ throw new Error('Method not implemented.');
   bip_id: string | number;
   user: AppUser;
 
+  patientLocation_id: number;
+  insurance_id: number;
+  insurance_identifier: string;
+
   first_name = '';
   last_name = '';
   diagnosis_code = '';
@@ -91,7 +101,7 @@ throw new Error('Method not implemented.');
   next_session_is_scheduled_for = '';
   provider_name = '';
   supervisor_name = '';
-
+  
   porcent_of_occurrences = 0;
   porcent_of_correct_response = 0;
   maladaptive = '';
@@ -118,7 +128,7 @@ throw new Error('Method not implemented.');
   FILE_SIGNATURE_BCBA: any;
   IMAGE_PREVISUALIZA_SIGNATURE_BCBA: any;
   IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED: any = 'assets/img/user-06.jpg';
-
+  
   rbt_id: any;
   bcba_id: any;
   maladaptivename: any;
@@ -132,14 +142,14 @@ throw new Error('Method not implemented.');
 
   roles_rbt = [];
   roles_bcba = [];
-
+  
   hours_days = [];
   specialists = [];
   maladaptives = [];
   replacementGoals = [];
   intervention_added = [];
   replacements = [];
-
+  
   maladaptiveSelected: any = null;
   replacementSelected: any = null;
   lto: any = null;
@@ -162,17 +172,40 @@ throw new Error('Method not implemented.');
   electronic_signature: any;
   doctor: any;
   full_name: any;
-  patientLocation_id: number;
-  insurance_id: number;
-  insurance_identifier: string;
-
+  
+  
   pa_services: PaService[] = [];
   selectedPaService: PaService | null = null;
+  selectedPaService1: PaService | null = null;
   projectedUnits = 0;
   start_date: Date; // Fecha de inicio
   end_date: Date; // Fecha de fin
-
+  
+  present_this_session = '';
+  additional_goals_or_interventions = '';
+  asked_and_clarified_questions_about_the_implementation_of = '';
+  reinforced_caregiver_strengths_in = '';
+  gave_constructive_feedback_on = '';
+  recomended_more_practice_on = '';
+  BCBA_conducted_client_observations = false;
+  BCBA_conducted_assessments = false;
   showPosWarning = false;
+
+  demostrated= false;
+  modifications_needed_at_this_time= false;
+  cargiver_participation= false;
+  was_the_client_present= false;
+
+  interventionsSelected = {};
+  interventionsList = interventionsList;
+  interventionsList2 = interventionsList2;
+  newList = newList;
+
+  replacementList = replacementList;
+  outcomeList = outcomeList;
+  show97151List = show97151List;
+
+  behaviorsList = behaviorsList;
 
   constructor(
     private bipService: BipService,
@@ -216,8 +249,6 @@ throw new Error('Method not implemented.');
 
   getConfig() {
     this.noteBcbaService.listConfigNote().subscribe((resp) => {
-      // console.log(resp);
-
       this.roles_rbt = resp.roles_rbt;
       this.roles_bcba = resp.roles_bcba;
       this.hours_days = resp.hours;
@@ -307,36 +338,21 @@ throw new Error('Method not implemented.');
         this.rbt_training_goals =
           resp.monitoringEvaluatingPatientIds.data?.[0]?.rbt_training_goals ??
           [];
-
-
       });
   }
 
   specialistData() {
     this.doctorService.showDoctorProfile(this.doctor_id).subscribe((resp) => {
-      // console.log(resp);
       this.provider_credential = resp.doctor.certificate_number;
-      // this.notes = resp.notes;
-      // this.services = resp.services;
     });
   }
 
   specialistDataSupervisor(selectedValueAba) {
     this.doctorService.showDoctorProfile(selectedValueAba).subscribe((resp) => {
-      // console.log(resp);
       this.provider_credential = resp.doctor.certificate_number;
-      // this.notes = resp.notes;
-      // this.services = resp.services;
     });
   }
-  getCPtList(selectedValueCode) {
-    // this.doctorService.showDoctorProfile(selectedValueCode).subscribe((resp:any)=>{
-    //   // console.log(resp);
-    //   this.unitsAsignated = resp.doctor.certificate_number;
-    //   // this.notes = resp.notes;
-    //   // this.services = resp.services;
-    // })
-  }
+  
 
   getMaladaptivesBipByPatientId() {
     this.bipService
@@ -384,16 +400,13 @@ throw new Error('Method not implemented.');
         console.log(resp);
         this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED =
           resp.doctor.electronic_signature;
-        console.log(this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED);
-        // this.notes = resp.notes;
-        // this.services = resp.services;
       });
   }
 
   selectFirmaSpecialistBcba(event) {
     // event = this.selectedValueBCBA;
     this.speciaFirmaDataBcba(this.selectedValueBcba_id);
-    console.log('selectFirmaSpecialistBcba', this.selectedValueBcba_id, event);
+    // console.log('selectFirmaSpecialistBcba', this.selectedValueBcba_id, event);
   }
 
   hourTimeInSelected(value: string) {
@@ -427,8 +440,8 @@ throw new Error('Method not implemented.');
     const totalMinutes = (timeOut1 - timeIn1) + (timeOut2 - timeIn2);
     const totalHours = this.convertToHours(totalMinutes);
     this.total_hour_session = totalHours;
-    console.log(`Total hours: ${totalHours}`);
-    console.log('para el html', this.total_hour_session);
+    // console.log(`Total hours: ${totalHours}`);
+    // console.log('para el html', this.total_hour_session);
 }
 
 convertToMinutes(time: string): number {
@@ -493,8 +506,7 @@ convertToHours(totalMinutes: number): string {
       (this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED = reader2.result);
   }
 
-  // eslint-disable-next-line no-debugger
-  save() {debugger
+  save() {
     this.text_validation = '';
     if (
       // !this.rbt_training_goals ||
@@ -610,9 +622,6 @@ convertToHours(totalMinutes: number): string {
       );
     }
 
-    // formData.append('imagen', this.FILE_SIGNATURE_RBT);
-    // formData.append('imagenn', this.FILE_SIGNATURE_BCBA);
-
     formData.append('provider_signature', this.doctor.electronic_signature);
 
     if (this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED) {
@@ -621,19 +630,6 @@ convertToHours(totalMinutes: number): string {
         this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED
       );
     }
-
-    // if(this.FILE_SIGNATURE_RBT ){
-    //   formData.append('imagen', this.FILE_SIGNATURE_RBT);
-    // }
-    // if(this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED ){
-    //   formData.append('imagen', this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED);
-    // }
-    // if(this.FILE_SIGNATURE_RBT ){
-    //   formData.append('imagenn', this.FILE_SIGNATURE_RBT);
-    // }
-    // if(this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED ){
-    //   formData.append('imagenn', this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED);
-    // }
 
     this.noteBcbaService.create(formData).subscribe((resp) => {
       // console.log(resp);
@@ -648,25 +644,9 @@ convertToHours(totalMinutes: number): string {
       }
     });
   }
-
-  //   class Calculadora {
-  //     sumar(num1, num2) {
-  //         return num1 + num2;
-  //     }
-
-  //     restar(num1, num2) {
-  //         return num1 - num2;
-  //     }
-
-  //     dividir(num1, num2) {
-  //         return num1 / num2;
-  //     }
-
-  //     multiplicar(num1, num2) {
-  //         return num1 * num2;
-  //     }
-  // }
-  //
+  onInterventionsChange(updatedInterventions: any[]) {
+    this.intervention_added = updatedInterventions;
+  }
 
 
   generateAISummary() {
@@ -687,11 +667,11 @@ convertToHours(totalMinutes: number): string {
         startTime2: this.selectedValueTimeIn2 ? this.selectedValueTimeIn2 : null,
         endTime2: this.selectedValueTimeOut2 ? this.selectedValueTimeOut2 : null,
         pos: this.getPos(this.meet_with_client_at),
-        caregiverGoals: this.showMonitoring ? this.caregivers_training_goals.map((g) => ({
+        caregiverGoals: this.show97155 ? this.caregivers_training_goals.map((g) => ({
             goal: g.caregiver_goal,
             percentCorrect: g.porcent_of_correct_response,
         })) : [],
-        rbtTrainingGoals: this.showFamily ? this.rbt_training_goals.map((g) => ({
+        rbtTrainingGoals: this.show97156 ? this.rbt_training_goals.map((g) => ({
             goal: g.lto,
             percentCorrect: g.porcent_of_correct_response,
         })) : [],
@@ -729,7 +709,7 @@ convertToHours(totalMinutes: number): string {
     }
 
     // Only validate caregiver goals if CPT code is 97156
-    if (this.showMonitoring) {
+    if (this.show97156) {
         if (!this.caregivers_training_goals || this.caregivers_training_goals.length === 0) {
             missingFields.push('Caregiver training goals');
         } else {
@@ -745,7 +725,7 @@ convertToHours(totalMinutes: number): string {
     }
 
     // Only validate RBT goals if CPT code is 97155
-    if (this.showFamily) {
+    if (this.show97155) {
         if (!this.rbt_training_goals || this.rbt_training_goals.length === 0) {
             missingFields.push('RBT training goals');
         } else {
@@ -785,18 +765,46 @@ convertToHours(totalMinutes: number): string {
     const service = event.value;
     if (service) {
       this.selectedValueCode = service.cpt;
-      this.showFamily = false;
-      this.showMonitoring = false;
+      this.show97155 = false;
+      this.show97156 = false;
+      this.show97151 = false;
+      this.show971511 = false;
+      this.show971512 = false;
 
       if(service.cpt === '97155' ){
-        this.showFamily = true;
+        this.show97155 = true;
       }
       if(service.cpt === '97156' ){
-        this.showMonitoring = true;
+        this.show97156 = true;
+      }
+      if(service.cpt === '97151' ){
+        this.show97151 = true;
       }
       this.checkPosWarning();
     }
   }
+
+  onPaServiceSelect2(event: any) {
+    const service = event.value;
+    if (service) {
+      this.selectedValueCode = service.cpt;
+      
+      this.show97151 = true;
+      this.show971511 = false;
+      this.show971512 = false;
+
+      if(service.cpt === '97151-1' ){
+        this.show971511 = true;
+        this.show97151 = true;
+      }
+      if(service.cpt === '97151-2' ){
+        this.show971512 = true;
+        this.show97151 = true;
+      }
+      this.checkPosWarning();
+    }
+  }
+  
 
   calculateUnitsFromTime(startTime: string, endTime: string): number {
     if (!startTime || !endTime) return 0;
