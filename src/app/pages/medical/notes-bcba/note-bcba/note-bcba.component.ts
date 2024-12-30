@@ -793,11 +793,11 @@ convertToHours(totalMinutes: number): string {
       this.show971511 = false;
       this.show971512 = false;
 
-      if(service.cpt === '97151-1' ){
+      if(service.cpt === 'Observation' ){
         this.show971511 = true;
         this.show97151 = true;
       }
-      if(service.cpt === '97151-2' ){
+      if(service.cpt === 'Report' ){
         this.show971512 = true;
         this.show97151 = true;
       }
