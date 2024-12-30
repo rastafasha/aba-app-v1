@@ -2,7 +2,13 @@
     display: flex;
 }
 
-.table-two-columns{
-    flex-direction: column;
-    column-count: 2;
+
+
+
+table.table th{
+    font-weight: 400;
+    font-size: 14px;
 }
+.content-box {
+    column-count: 2;
+  }
