@@ -74,8 +74,8 @@ export const outcomeList = [
 ];
 
 export const show97151List = [
-    { cpt: '97151-1' },
-    { cpt: '97151-2' },
+    { cpt: 'Observation' },
+    { cpt: 'Report' },
 ];
 
 export const behaviorsList = [
