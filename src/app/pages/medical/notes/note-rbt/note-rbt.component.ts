@@ -4,6 +4,7 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 import { BipService } from '../../bip/service/bip.service';
 import { GoalService } from '../../bip/service/goal.service';
 import { NoteRbtService } from '../../../../core/services/notes-rbt.service';
+import { NotesRbtV2Service } from '../../../../core/services/notes-rbt.v2.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import Swal from 'sweetalert2';
 import { Location } from '@angular/common';
@@ -192,6 +193,7 @@ export class NoteRbtComponent implements OnInit {
     private router: Router,
     private ativatedRoute: ActivatedRoute,
     private noteRbtService: NoteRbtService,
+    private notesRbtV2Service: NotesRbtV2Service,
     private doctorService: DoctorService,
     private location: Location
   ) {}
@@ -594,202 +596,99 @@ convertToHours(totalMinutes: number): string {
   }
 
   save() {
-    this.text_validation = '';
-    // if (!this.selectedPaService) {
-    //   this.text_validation = 'Please select a service';
-    //   return;
-    // }
-    if (
-      this.maladaptives[0].number_of_occurrences === undefined ||
-      this.replacementGoals[0].number_of_correct_response === undefined ||
-      this.intervention_added.length === 0 ||
-      !this.meet_with_client_at ||
-      !this.environmental_changes ||
-      !this.client_appeared ||
-      !this.as_evidenced_by ||
-      !this.rbt_modeled_and_demonstrated_to_caregiver ||
-      !this.client_response_to_treatment_this_session ||
-      !this.progress_noted_this_session_compared_to_previous_session
-      // !this.selectedValueCode
-    )
-    // {
-    //   this.text_validation = 'All Fields (*) are required';
-    //   Swal.fire('Warning', `All Fields (*) are required`, 'warning');
-    //   return;
-    // }
-
-    if (!this.progress_noted_this_session_compared_to_previous_session) {
-      Swal.fire(
-        'Warning',
-        'Please select a progress noted_this session compared to previous session ',
-        'warning'
-      );
-      return;
-    }
-    if (!this.environmental_changes) {
-      Swal.fire(
-        'Warning',
-        'Please select a environmental ',
-        'warning'
-      );
-      return;
-    }
-    if (!this.as_evidenced_by) {
-      Swal.fire(
-        'Warning',
-        'Please select a as evidenced by',
-        'warning'
-      );
-      return;
-    }
-    if (!this.client_appeared) {
-      Swal.fire(
-        'Warning',
-        'Please select a client appeared',
-        'warning'
-      );
-      return;
-    }
-    if (!this.meet_with_client_at) {
-      Swal.fire(
-        'Warning',
-        'Please select a POS',
-        'warning'
-      );
-      return;
-    }
-    if (!this.validateMaladaptives()) {
-      Swal.fire(
-        'Warning',
-        'Please ensure all maladaptive behaviors have valid values',
-        'warning'
-      );
+    const validation = this.checkDataSufficient();
+    if (!validation.isValid) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Missing Required Fields',
+        text: `Please fill in the following fields: ${validation.missingFields.join(', ')}`,
+      });
       return;
     }
 
-    if (!this.validateReplacements()) {
-      Swal.fire(
-        'Warning',
-        'Please ensure all replacement goals have valid values',
-        'warning'
-      );
-      return;
-    }
+    const noteData = {
+      type: 'rbt',
+      bip_id: this.bip_id,
+      patient_id: this.patient_id,
+      client_id: this.client_id,
+      patient_code: this.patient_identifier,
+      patient_identifier: this.patient_identifier,
+      insurance_identifier: this.insurance_identifier,
+      doctor_id: this.doctor_id,
+      provider_id: this.selectedValueProviderRBT_id,
+      provider_name_g: this.provider_name_g,
+      provider_credential: this.provider_credential,
+      provider_signature: this.provider_signature,
+      provider_name: this.provider_name,
+      supervisor_signature: this.supervisor_signature,
+      supervisor_name: this.supervisor_name,
+      supervisor_id: this.selectedValueBcba_id_id,
+      session_date: this.session_date,
+      time_in: this.selectedValueTimeIn,
+      time_out: this.selectedValueTimeOut,
+      time_in2: this.selectedValueTimeIn2,
+      time_out2: this.selectedValueTimeOut2,
+      session_length_morning_total: this.session_length_total,
+      session_length_afternon_total: this.session_length_total2,
+      total_hours: this.total_hour_session,
+      total_minutes: this.totalMinutos,
+      total_units: this.projectedUnits,
+      environmental_changes: this.environmental_changes,
+      maladaptives: this.maladp_added,
+      replacements: this.replacement_added,
+      interventions: this.intervention_added,
+      summary_note: this.sumary_note,
+      meet_with_client_at: this.meet_with_client_at,
+      client_appeared: this.client_appeared,
+      as_evidenced_by: this.as_evidenced_by,
+      rbt_modeled_and_demonstrated_to_caregiver: this.rbt_modeled_and_demonstrated_to_caregiver,
+      client_response_to_treatment_this_session: this.client_response_to_treatment_this_session,
+      progress_noted_this_session_compared_to_previous_session: this.progress_noted_this_session_compared_to_previous_session,
+      next_session_is_scheduled_for: this.next_session_is_scheduled_for,
+      status: 'pending',
+      cpt_code: this.selectedValueCode,
+      location_id: this.location_id,
+      insurance_id: this.insurance_id,
+      pa_service_id: this.selectedPaService?.id
+    };
 
-    const formData = new FormData();
-    formData.append('patient_identifier', this.patient_identifier);
-    formData.append('patient_id', this.patient_id+'');
-    formData.append('doctor_id', this.doctor_id+'');
-    formData.append('bip_id', this.bip_id);
-    formData.append('first_name', this.first_name);
-    formData.append('last_name', this.last_name);
-    formData.append('diagnosis_code', this.diagnosis_code);
-    formData.append('provider_credential', this.provider_credential);
-    formData.append('location_id', this.patientLocation_id);
-    formData.append('insurance_id', this.insurance_id+''); // id del seguro preferiblemente que solo agarre la data al crear
-    formData.append('insurance_identifier', this.insurance_identifier); // id del seguro preferiblemente que solo agarre la data al crear
-
-    formData.append('session_date', this.session_date);
-
-    formData.append('provider_name_g',this.doctor_id+'');
-    formData.append('provider_name',this.doctor_id+'');
-    formData.append('supervisor_name', this.selectedValueBcba_id+'');
-
-    formData.append('pa_service_id', this.selectedPaService.id.toString());
-    formData.append('cpt_code', this.selectedPaService.cpt);
-
-    formData.append('provider_id', this.doctor_id+'');
-    formData.append('supervisor_id', this.selectedValueBcba_id+'');
-
-
-    if (this.selectedValueTimeIn) {
-      formData.append(
-        'time_in',
-        this.selectedValueTimeIn + '' ? this.selectedValueTimeIn + '' : '0'
-      );
-    }
-    if (this.selectedValueTimeOut) {
-      formData.append(
-        'time_out',
-        this.selectedValueTimeOut + '' ? this.selectedValueTimeOut + '' : '0'
-      );
-    }
-    if (this.selectedValueTimeIn2) {
-      formData.append(
-        'time_in2',
-        this.selectedValueTimeIn2 + '' ? this.selectedValueTimeIn2 + '' : '0'
-      );
-    }
-    if (this.selectedValueTimeOut2) {
-      formData.append(
-        'time_out2',
-        this.selectedValueTimeOut2 + '' ? this.selectedValueTimeOut2 + '' : '0'
-      );
-    }
-
-    formData.append('environmental_changes', this.environmental_changes);
-    formData.append('replacements', JSON.stringify(this.replacementGoals));
-    formData.append('maladaptives', JSON.stringify(this.maladaptives));
-    formData.append('interventions', JSON.stringify(this.intervention_added));
-    formData.append('meet_with_client_at', this.meet_with_client_at);
-    formData.append('client_appeared', this.client_appeared);
-    formData.append('as_evidenced_by', this.as_evidenced_by);
-    formData.append(
-      'client_response_to_treatment_this_session',
-      this.client_response_to_treatment_this_session
-    );
-    formData.append(
-      'rbt_modeled_and_demonstrated_to_caregiver',
-      this.rbt_modeled_and_demonstrated_to_caregiver
-    );
-    formData.append(
-      'progress_noted_this_session_compared_to_previous_session',
-      this.progress_noted_this_session_compared_to_previous_session
-    );
-
-    if (this.next_session_is_scheduled_for) {
-      formData.append(
-        'next_session_is_scheduled_for',
-        this.next_session_is_scheduled_for
-      );
-    }
-
-    formData.append('provider_signature', this.doctor.electronic_signature);
-
-    if (this.FILE_SIGNATURE_RBT) {
-      formData.append('imagen', this.FILE_SIGNATURE_RBT);
-    }
-    if (this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED) {
-      formData.append(
-        'supervisor_signature',
-        this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED
-      );
-    }
-
-    // formData.forEach((value, key) => {});
-
-    this.noteRbtService.create(formData).subscribe(
-      (resp: any) => {
-        if (resp.message === 403) {
-          this.text_validation = resp.message_text;
-          Swal.fire('Warning', resp.message_text, 'warning');
+    this.notesRbtV2Service.create(noteData).subscribe({
+      next: (response) => {
+        if (response.status === 'success') {
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'RBT Note saved successfully!',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          this.router.navigate([this.routes.noteRbt.list, this.patient_identifier]);
         } else {
-          this.text_success = 'Note created';
-          Swal.fire('Created', 'Note RBT Created', 'success');
-          this.router.navigate([AppRoutes.noteRbt.list, this.patient_identifier]);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'There was an error saving the note. Please try again.',
+          });
         }
       },
-      (error) => {
-        if (error.includes('Time conflict')) {
-          this.text_validation =
-            'There is a time conflict with an existing note. Please choose a different time.';
-        } else {
-          this.text_validation =
-            'An error occurred while creating the note. Please try again.';
+      error: (error) => {
+        console.error('Error saving RBT note:', error);
+        let errorMessage = 'There was an error saving the note.';
+
+        if (error.error?.message) {
+          errorMessage = error.error.message;
+        } else if (error.error?.errors) {
+          const errors = Object.values(error.error.errors).flat();
+          errorMessage = errors.join('\n');
         }
-        Swal.fire('Error', this.text_validation, 'error');
+
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: errorMessage,
+        });
       }
-    );
+    });
   }
 
   onDateChange(event: MatDatepickerInputEvent<Date>) {
