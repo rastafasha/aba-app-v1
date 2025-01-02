@@ -256,21 +256,42 @@ export class NoteRbtComponent implements OnInit {
 
   getProfileBip() {
     this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
+      console.log('API Response:', resp);
       this.client_selected = resp.patient;
+      console.log('Client Selected:', this.client_selected);
+
       this.first_name = this.client_selected.first_name;
       this.last_name = this.client_selected.last_name;
       this.patient_identifier = this.client_selected.patient_identifier;
       this.patient_id = this.client_selected.id;
+      this.client_id = this.client_selected.id;
       this.insurance_id = this.client_selected.insurer_id;
       this.insurance_identifier = this.client_selected.insurance_identifier;
       this.patientLocation_id = this.client_selected.location_id;
-      this.selectedValueProviderRBT_id = this.client_selected.rbt_id;
+      this.selectedValueProviderRBT_id = this.doctor_id;
       this.selectedValueBcba_id = this.client_selected.bcba_id;
       this.pos = this.client_selected.pos_covered;
       this.diagnosis_code = this.client_selected.diagnosis_code;
+      this.provider_name_g = this.client_selected.provider_name || '';
+      this.provider_credential = this.client_selected.provider_credential || '';
 
-      console.log(resp.patient.pa_services);
+      console.log('After setting values:', {
+        client_id: this.client_id,
+        provider_id: this.selectedValueProviderRBT_id,
+        supervisor_id: this.selectedValueBcba_id,
+        patient_id: this.patient_id
+      });
+
+      console.log('pa_services:', resp.patient.pa_services);
       this.pa_services = resp.patient.pa_services;
+
+      // Filter pa_services by date
+      this.pa_services = this.pa_services.filter((pa) => {
+        const dateStart = new Date(pa.start_date).getTime();
+        const dateEnd = new Date(pa.end_date).getTime();
+        const dateToday = new Date().getTime();
+        return dateStart <= dateToday && dateEnd >= dateToday;
+      });
 
       this.selectedPaService = resp.patient.pa_services.find(service => service.cpt === '97153') || null;
       console.log('Selected Service:', this.selectedPaService);
@@ -344,8 +365,8 @@ export class NoteRbtComponent implements OnInit {
   }
 
   selectFirmaSpecialistBcba(event) {
+    console.log('selectedValueBcba_id:', this.selectedValueBcba_id);
     this.speciaFirmaDataBcba(this.selectedValueBcba_id);
-    console.log(this.selectedValueBcba_id);
   }
 
   calculateUnitsFromTime(startTime: string, endTime: string): number {
@@ -596,6 +617,13 @@ convertToHours(totalMinutes: number): string {
   }
 
   save() {
+    console.log('Pre-save values:', {
+      client_id: this.client_id,
+      provider_id: this.selectedValueProviderRBT_id,
+      supervisor_id: this.selectedValueBcba_id,
+      patient_id: this.patient_id
+    });
+
     const validation = this.checkDataSufficient();
     if (!validation.isValid) {
       Swal.fire({
@@ -616,13 +644,13 @@ convertToHours(totalMinutes: number): string {
       insurance_identifier: this.insurance_identifier,
       doctor_id: this.doctor_id,
       provider_id: this.selectedValueProviderRBT_id,
+      supervisor_id: this.selectedValueBcba_id,
       provider_name_g: this.provider_name_g,
       provider_credential: this.provider_credential,
       provider_signature: this.provider_signature,
       provider_name: this.provider_name,
       supervisor_signature: this.supervisor_signature,
       supervisor_name: this.supervisor_name,
-      supervisor_id: this.selectedValueBcba_id_id,
       session_date: this.session_date,
       time_in: this.selectedValueTimeIn,
       time_out: this.selectedValueTimeOut,
@@ -634,23 +662,26 @@ convertToHours(totalMinutes: number): string {
       total_minutes: this.totalMinutos,
       total_units: this.projectedUnits,
       environmental_changes: this.environmental_changes,
-      maladaptives: this.maladp_added,
-      replacements: this.replacement_added,
+      maladaptives: this.maladaptives,
+      replacements: this.replacementGoals,
       interventions: this.intervention_added,
       summary_note: this.sumary_note,
-      meet_with_client_at: this.meet_with_client_at,
+      meet_with_client_at: this.getPos(this.meet_with_client_at),
       client_appeared: this.client_appeared,
       as_evidenced_by: this.as_evidenced_by,
       rbt_modeled_and_demonstrated_to_caregiver: this.rbt_modeled_and_demonstrated_to_caregiver,
       client_response_to_treatment_this_session: this.client_response_to_treatment_this_session,
       progress_noted_this_session_compared_to_previous_session: this.progress_noted_this_session_compared_to_previous_session,
-      next_session_is_scheduled_for: this.next_session_is_scheduled_for,
+      next_session_is_scheduled_for: this.next_session_is_scheduled_for.split('T')[0],
       status: 'pending',
       cpt_code: this.selectedValueCode,
-      location_id: this.location_id,
+      location_id: this.patientLocation_id,
       insurance_id: this.insurance_id,
-      pa_service_id: this.selectedPaService?.id
+      pa_service_id: this.selectedPaService?.id,
+      pos: this.getPos(this.meet_with_client_at),
     };
+
+    console.log('Final noteData:', noteData);
 
     this.notesRbtV2Service.create(noteData).subscribe({
       next: (response) => {
@@ -692,7 +723,17 @@ convertToHours(totalMinutes: number): string {
   }
 
   onDateChange(event: MatDatepickerInputEvent<Date>) {
+    if (!event.value) {
+      this.session_date = '';
+      this.next_session_is_scheduled_for = '';
+      return;
+    }
+
     const date = event.value;
+    // Set the session date in ISO format YYYY-MM-DD
+    this.session_date = date.toISOString().split('T')[0];
+
+    // Set next session date
     const nextDate = new Date(date);
     nextDate.setDate(nextDate.getDate() + 1);
     this.next_session_is_scheduled_for = nextDate.toISOString().split('T')[0];
@@ -763,6 +804,16 @@ convertToHours(totalMinutes: number): string {
 
   checkDataSufficient(): ValidationResult {
     const missingFields: string[] = [];
+
+    // Validate session date is not empty and is a valid date
+    if (!this.session_date || this.session_date === '') {
+      missingFields.push('Session date (DOS)');
+    } else {
+      const dateValue = new Date(this.session_date);
+      if (isNaN(dateValue.getTime()) || dateValue.getFullYear() <= 1970) {
+        missingFields.push('Valid session date (DOS)');
+      }
+    }
 
     if (!this.client_selected) {
       missingFields.push('Client information');
