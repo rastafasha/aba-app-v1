@@ -11,16 +11,48 @@ import { Location } from '@angular/common';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { AppUser } from 'src/app/core/models/users.model';
 import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
+import { NoteRbtV2, Maladaptives, Replacements, Interventions } from 'src/app/core/models/note.rbt.v2.model';
 
 interface ValidationResult {
   isValid: boolean;
   missingFields: string[];
 }
+
 export interface POSModel {
   id: number;
   name: string;
   code: string;
 }
+
+interface InterventionItem {
+  id: string;
+  name: string;
+  value: boolean;
+}
+
+interface MaladaptiveBehavior {
+  maladaptive_behavior: string;
+  number_of_occurrences: number;
+  goal?: Goal;
+  total_trials?: number;
+  number_of_correct_response?: number;
+}
+
+interface Goal {
+  id: number;
+  name: string;
+  description?: string;
+  total_trials?: number;
+  number_of_correct_response?: number;
+  goal?: string;
+}
+
+interface ReplacementBehavior extends Replacements {
+  goal?: Goal;
+  total_trials?: number;
+  number_of_correct_response?: number;
+}
+
 @Component({
   selector: 'app-note-rbt',
   templateUrl: './note-rbt.component.html',
@@ -29,7 +61,7 @@ export interface POSModel {
 export class NoteRbtComponent implements OnInit {
   routes = AppRoutes;
 
-  url_media: any;
+  url_media: string | null = null;
   valid_form = false;
   valid_form_success = false;
 
@@ -47,7 +79,6 @@ export class NoteRbtComponent implements OnInit {
   totalMinutos = 0;
   total_hour_session = '';
 
-
   selectedValueRBT!: string;
   selectedValueRenderingProvider!: string;
   selectedValueProviderRBT_id!: number;
@@ -56,15 +87,15 @@ export class NoteRbtComponent implements OnInit {
   selectedValueAbaSupervisor!: string;
   selectedValueBcba_id_id!: number;
 
-  client_id: number;
-  patient_identifier: string;
-  patient_id: number;
-  doctor_id: number;
-  insurer_id: number;
+  client_id!: number;
+  patient_identifier!: string;
+  patient_id!: number;
+  doctor_id!: number;
+  insurer_id!: number;
   patient_selected: any;
   client_selected: any;
-  bip_id: any;
-  user: AppUser;
+  bip_id: number | null = null;
+  user!: AppUser;
 
   first_name = '';
   last_name = '';
@@ -72,7 +103,7 @@ export class NoteRbtComponent implements OnInit {
 
   provider_name_g = '';
   provider_credential = '';
-  pos: POSModel;
+  pos!: POSModel;
   session_date = '';
   time_in = '';
   time_out = '';
@@ -81,7 +112,6 @@ export class NoteRbtComponent implements OnInit {
   session_length_total = '';
   session_length_total2 = '';
   environmental_changes = '';
-
 
   sumary_note = '';
   meet_with_client_at = '';
@@ -94,78 +124,76 @@ export class NoteRbtComponent implements OnInit {
   provider_name = '';
   supervisor_name = '';
 
-  number_of_occurrences: number;
-  number_of_correct_responses: number;
-  total_trials: number;
-  number_of_correct_response: number;
+  number_of_occurrences!: number;
+  number_of_correct_responses!: number;
+  total_trials!: number;
+  number_of_correct_response!: number;
   maladaptive = '';
   replacement = '';
-  interventions: any;
-  provider_signature: any;
-  supervisor_signature: any;
+  interventions!: Interventions;
+  provider_signature: string | null = null;
+  supervisor_signature: string | null = null;
 
-  pairing: any;
-  response_block: any;
-  DRA: any;
-  DRO: any;
-  redirection: any;
-  errorless_teaching: any;
-  NCR: any;
-  shaping: any;
-  chaining: any;
-  token_economy: any;
-  extinction: any;
-  natural_teaching: any;
+  pairing = false;
+  response_block = false;
+  DRA = false;
+  DRO = false;
+  redirection = false;
+  errorless_teaching = false;
+  NCR = false;
+  shaping = false;
+  chaining = false;
+  token_economy = false;
+  extinction = false;
+  natural_teaching = false;
 
-  FILE_SIGNATURE_RBT: any;
+  FILE_SIGNATURE_RBT: File | null = null;
   IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED = 'assets/img/user-06.jpg';
-  FILE_SIGNATURE_BCBA: any;
+  FILE_SIGNATURE_BCBA: File | null = null;
   IMAGE_PREVISUALIZA_SIGNATURE_BCBA = 'assets/img/user-06.jpg';
   IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED = 'assets/img/user-06.jpg';
 
-  rbt_id: any;
-  bcba_id: any;
-  maladaptivename: any;
-  replacementName: any;
-  note_rbt_id: any;
+  rbt_id: number | null = null;
+  bcba_id: number | null = null;
+  maladaptivename: string | null = null;
+  replacementName: string | null = null;
+  note_rbt_id: number | null = null;
   goal: any;
-  note_id: any;
-  porcentage_diario: any;
+  note_id: number | null = null;
+  porcentage_diario: number | null = null;
 
-  roles_rbt = [];
-  roles_bcba = [];
+  roles_rbt: any[] = [];
+  roles_bcba: any[] = [];
 
-  hours_days = [];
-  maladaptives = [];
-  replacementGoals: any;
-  replacements = [];
+  hours_days: string[] = [];
+  maladaptives: MaladaptiveBehavior[] = [];
+  replacementGoals: Goal[] = [];
+  replacements: ReplacementBehavior[] = [];
 
-  maladaptiveSelected: any = null;
-  replacementSelected: any = null;
-  maladp_added = [];
-  replacement_added = [];
-  maladaptive_behavior: any = null;
-  electronic_signature: any;
+  maladaptiveSelected: MaladaptiveBehavior | null = null;
+  replacementSelected: ReplacementBehavior | null = null;
+  maladp_added: MaladaptiveBehavior[] = [];
+  replacement_added: ReplacementBehavior[] = [];
+  maladaptive_behavior: MaladaptiveBehavior | null = null;
+  electronic_signature: string | null = null;
   doctor: any;
-  full_name: any;
-  pa_assessments: any;
-  pa_assessmentsgroup: any;
+  full_name: string | null = null;
+  pa_assessments: any[] = [];
+  pa_assessmentsgroup: any[] = [];
   n_un: any;
   stoGoalinProgress: any;
   target: any;
   provider: any;
   stoInprogressGoal: any;
-  location_id: number;
-  patientLocation_id: any;
-  insuranceId: string;
-  insurance_id: number;
-  insurance_identifier: string;
+  location_id!: number;
+  patientLocation_id: number | null = null;
+  insuranceId!: string;
+  insurance_id!: number;
+  insurance_identifier!: string;
 
-
-
-  intervention_added = [];
-  interventionsSelected = {};
-  interventionsList = [
+  intervention_added: Interventions[] = [];
+  interventionsSelected: { [key: string]: boolean } = {};
+  interventionsList: InterventionItem[] = [
     { id: 'pairing', name: 'Pairing', value: false },
     { id: 'response_block', name: 'Response Block', value: false },
     { id: 'DRA', name: 'DRA', value: false },
@@ -365,7 +393,6 @@ export class NoteRbtComponent implements OnInit {
   }
 
   selectFirmaSpecialistBcba(event) {
-    console.log('selectedValueBcba_id:', this.selectedValueBcba_id);
     this.speciaFirmaDataBcba(this.selectedValueBcba_id);
   }
 
@@ -383,8 +410,9 @@ export class NoteRbtComponent implements OnInit {
 
   parseTime(timeStr: string): Date | null {
     if (!timeStr) return null;
-
-    const [hours, minutes] = timeStr.split(':').map(Number);
+    const timeParts = timeStr.split(':').map(Number);
+    if (timeParts.length !== 2) return null;
+    const [hours, minutes] = timeParts;
     const date = new Date();
     date.setHours(hours, minutes, 0, 0);
     return date;
@@ -480,12 +508,12 @@ convertToHours(totalMinutes: number): string {
 
 
 
-  selectMaladaptive(behavior: any) {
+  selectMaladaptive(behavior: MaladaptiveBehavior) {
     this.maladaptiveSelected = behavior;
   }
 
-  selectReplacement(replacemen: any) {
-    this.replacementSelected = replacemen;
+  selectReplacement(replacement: ReplacementBehavior) {
+    this.replacementSelected = replacement;
   }
 
   back() {
@@ -495,52 +523,62 @@ convertToHours(totalMinutes: number): string {
     this.number_of_correct_response = null;
   }
 
-  addMaladaptive(behavior, i) {
+  addMaladaptive(behavior: MaladaptiveBehavior, index: number) {
     this.maladaptiveSelected = behavior;
-    this.maladaptives[i] = behavior;
 
-    if (this.maladaptiveSelected.number_of_occurrences === undefined) {
-      Swal.fire('Warning', `Must add less one`, 'warning');
+    if (behavior.number_of_occurrences === undefined) {
+      Swal.fire('Warning', `Must add at least one occurrence`, 'warning');
       return;
-    } else {
-      Swal.fire(
-        'Added',
-        ` Maladaptive - ${this.maladaptives[i].maladaptive_behavior} - Added`,
-        'success'
-      );
-
-      this.maladaptiveSelected = null;
-      this.maladaptive_behavior = '';
-      this.number_of_occurrences = null;
     }
+
+    this.maladp_added.push({...behavior});
+    this.maladaptives.splice(index, 1);
+
+    Swal.fire(
+      'Added',
+      `Maladaptive - ${behavior.maladaptive_behavior} - Added`,
+      'success'
+    );
+
+    this.maladaptiveSelected = null;
+    this.maladaptive_behavior = null;
+    this.number_of_occurrences = 0;
   }
 
-  addReplacement(replacemen) {
-    this.replacementSelected = replacemen;
+  addReplacement(replacement: ReplacementBehavior) {
+    this.replacementSelected = replacement;
 
-    if (this.replacementSelected.number_of_correct_response === undefined) {
-      Swal.fire('Warning', `Must add less one`, 'warning');
+    if (replacement.number_of_correct_response === undefined) {
+      Swal.fire('Warning', `Must add at least one correct response`, 'warning');
       return;
-    } else {
-      this.replacementGoals.push({
-        goal: this.replacementSelected.goal,
-        total_trials: this.replacementSelected.total_trials,
-        number_of_correct_response:
-          this.replacementSelected.number_of_correct_response,
-      });
-      this.replacementGoals.splice(this.replacementGoals, 1);
-      Swal.fire(
-        'Updated',
-        ` Replacement - ${this.replacementSelected.goal} - Added`,
-        'success'
-      );
-      this.replacementSelected = null;
-      this.total_trials = null;
-      this.number_of_correct_response = null;
     }
+
+    const newGoal: Goal = {
+      id: replacement.goal?.id || 0,
+      name: replacement.goal?.name || '',
+      total_trials: replacement.total_trials,
+      number_of_correct_response: replacement.number_of_correct_response,
+      goal: replacement.goal?.goal
+    };
+
+    this.replacementGoals.push(newGoal);
+    const index = this.replacements.findIndex(r => r === replacement);
+    if (index > -1) {
+      this.replacements.splice(index, 1);
+    }
+
+    Swal.fire(
+      'Updated',
+      `Replacement - ${replacement.goal?.name || ''} - Added`,
+      'success'
+    );
+
+    this.replacementSelected = null;
+    this.total_trials = 0;
+    this.number_of_correct_response = 0;
   }
 
-  deleteMaladaptive(i: any) {
+  deleteMaladaptive(i: number) {
     this.replacementGoals.splice(i, 1);
   }
 
@@ -594,26 +632,20 @@ convertToHours(totalMinutes: number): string {
   }
 
   validateMaladaptives(): boolean {
-    return this.maladaptives.every(
-      (behavior) =>
-        behavior.number_of_occurrences !== undefined &&
-        behavior.number_of_occurrences >= 0
+    return this.maladp_added.every(m =>
+      m.number_of_occurrences !== undefined &&
+      m.number_of_occurrences >= 0
     );
   }
 
-  isValidCorrectResponse(replacement: any): boolean {
-    return (
-      replacement.number_of_correct_response !== undefined &&
-      replacement.number_of_correct_response >= 0 &&
-      replacement.number_of_correct_response <= replacement.total_trials
-    );
+  isValidCorrectResponse(replacement: ReplacementBehavior): boolean {
+    return replacement.number_of_correct_response !== undefined &&
+           replacement.total_trials !== undefined &&
+           replacement.number_of_correct_response <= replacement.total_trials;
   }
 
   validateReplacements(): boolean {
-    return this.replacementGoals.every(
-      (replacement) =>
-        replacement.total_trials > 0 && this.isValidCorrectResponse(replacement)
-    );
+    return this.replacement_added.every(r => this.isValidCorrectResponse(r));
   }
 
   save() {
