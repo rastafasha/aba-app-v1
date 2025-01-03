@@ -113,8 +113,9 @@ export class NoteRbtComponent implements OnInit {
   session_length_total = '';
   session_length_total2 = '';
   environmental_changes = '';
+  participants: '';
 
-  summary_note = '';
+  sumary_note = '';
   meet_with_client_at = '';
   client_appeared = '';
   as_evidenced_by = '';
@@ -186,6 +187,7 @@ export class NoteRbtComponent implements OnInit {
   target: any;
   provider: any;
   stoInprogressGoal: any;
+
   location_id!: number;
   patientLocation_id: number | null = null;
   insuranceId!: string;

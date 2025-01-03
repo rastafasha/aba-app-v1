@@ -181,7 +181,7 @@ throw new Error('Method not implemented.');
   start_date: Date; // Fecha de inicio
   end_date: Date; // Fecha de fin
   
-  present_this_session = '';
+  participants = '';
   additional_goals_or_interventions = '';
   asked_and_clarified_questions_about_the_implementation_of = '';
   reinforced_caregiver_strengths_in = '';
