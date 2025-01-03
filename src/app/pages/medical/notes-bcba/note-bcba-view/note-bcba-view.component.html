@@ -83,6 +83,12 @@
                   <ng-container *ngIf="option_selected === 1">
                     <div class="personal-list-out">
                       <div class="row">
+                        <div class="col-xl-3 col-md-3">
+                          <div class="detail-personal">
+                            <h2>POS</h2>
+                            <p>{{ note_selected.meet_with_client_at }}</p>
+                          </div>
+                        </div>
                         <div class="col-xl-3 col-md-6">
                           <div class="detail-personal">
                             <h2>Full Name</h2>
@@ -111,12 +117,7 @@
                             <p>{{ patient_selected.insurance_identifier }}</p>
                           </div>
                         </div>
-                        <div class="col-xl-3 col-md-3">
-                          <div class="detail-personal">
-                            <h2>POS</h2>
-                            <p>{{ note_selected.meet_with_client_at }}</p>
-                          </div>
-                        </div>
+                        
                         <div class="col-xl-3 col-md-3">
                           <div class="detail-personal">
                             <h2>Rendering Provider</h2>
