@@ -83,7 +83,7 @@ export class EditNoteRbtComponent implements OnInit {
   environmental_changes = '';
   totalMinutos = 0;
   total_hour_session = '';
-  present_this_session = '';
+  participants = '';
 
   sumary_note = '';
   meet_with_client_at = '';
