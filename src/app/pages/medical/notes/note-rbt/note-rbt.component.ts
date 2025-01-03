@@ -78,6 +78,7 @@ export class NoteRbtComponent implements OnInit {
   isGeneratingSummary = false;
   totalMinutos = 0;
   total_hour_session = '';
+  participants = '';
 
   selectedValueRBT!: string;
   selectedValueRenderingProvider!: string;
@@ -113,7 +114,7 @@ export class NoteRbtComponent implements OnInit {
   session_length_total2 = '';
   environmental_changes = '';
 
-  sumary_note = '';
+  summary_note = '';
   meet_with_client_at = '';
   client_appeared = '';
   as_evidenced_by = '';
@@ -688,6 +689,7 @@ convertToHours(totalMinutes: number): string {
       time_out: this.selectedValueTimeOut,
       time_in2: this.selectedValueTimeIn2,
       time_out2: this.selectedValueTimeOut2,
+      participants: this.participants,
       session_length_morning_total: this.session_length_total,
       session_length_afternon_total: this.session_length_total2,
       total_hours: this.total_hour_session,
@@ -697,8 +699,8 @@ convertToHours(totalMinutes: number): string {
       maladaptives: this.maladaptives,
       replacements: this.replacementGoals,
       interventions: this.intervention_added,
-      summary_note: this.sumary_note,
-      meet_with_client_at: this.getPos(this.meet_with_client_at),
+      summary_note: this.summary_note,
+      meet_with_client_at: this.meet_with_client_at,
       client_appeared: this.client_appeared,
       as_evidenced_by: this.as_evidenced_by,
       rbt_modeled_and_demonstrated_to_caregiver: this.rbt_modeled_and_demonstrated_to_caregiver,
@@ -710,7 +712,7 @@ convertToHours(totalMinutes: number): string {
       location_id: this.patientLocation_id,
       insurance_id: this.insurance_id,
       pa_service_id: this.selectedPaService?.id,
-      pos: this.getPos(this.meet_with_client_at),
+      pos: this.meet_with_client_at,
     };
 
     console.log('Final noteData:', noteData);
@@ -805,6 +807,7 @@ convertToHours(totalMinutes: number): string {
         behavior: m.maladaptive_behavior,
         frequency: m.number_of_occurrences,
       })),
+      clientResponseToTreatmentThisSession: this.client_response_to_treatment_this_session,
       replacements: this.replacementGoals.map((r) => ({
         name: r.goal,
         totalTrials: r.total_trials,
@@ -820,7 +823,7 @@ convertToHours(totalMinutes: number): string {
 
     this.noteRbtService.generateAISummary(data).subscribe(
       (response: any) => {
-        this.client_response_to_treatment_this_session = response.summary;
+        this.summary_note = response.summary;
         this.isGeneratingSummary = false;
       },
       (error) => {
