@@ -26,7 +26,7 @@
     </div>
     <!-- /Page Header -->
     <div class="row" id="contentToConvert" #contentToConvert>
-      <div class="col-sm-12" *ngIf="patient_selected">
+      <div class="col-sm-12" >
         <div class="card">
           <div class="card-body">
             <div class="row">
@@ -34,7 +34,7 @@
                 <div class="about-info mb-10">
                   <h4>Client Note BCBA</h4>
                 </div>
-                <div class="doctor-profile-head">
+                <div class="doctor-profile-head" style="background-color: white">
                   <div class="row">
                     <div class="col-lg-8">
                       <div class="profile-user-box align-items-left "style="padding-top: 10px">
@@ -48,7 +48,7 @@
                       </div>
                     </div>
 
-                    <div class="col-lg-4 col-md-4 d-flex align-items-center">
+                    <div class="col-sm-4 d-flex align-items-center d-print-none">
                       <div class="follow-btn-group">
                         <a
                           [routerLink]="[routes.noteBcba.edit, note_id]"
@@ -83,12 +83,7 @@
                   <ng-container *ngIf="option_selected === 1">
                     <div class="personal-list-out">
                       <div class="row">
-                        <div class="col-xl-3 col-md-6">
-                          <div class="detail-personal">
-                            <h2>Patient Id</h2>
-                            <p>{{ note_selected.patient_identifier }}</p>
-                          </div>
-                        </div>
+                        
                         <div class="col-xl-3 col-md-6">
                           <div class="detail-personal">
                             <h2>Full Name</h2>
@@ -100,10 +95,24 @@
                         </div>
                         <div class="col-xl-3 col-md-6">
                           <div class="detail-personal">
+                            <h2>Patient Id</h2>
+                            <p>{{ note_selected.patient_identifier }}</p>
+                          </div>
+                        </div>
+                        
+                        <div class="col-xl-3 col-md-6">
+                          <div class="detail-personal">
                             <h2>Diagnosis code</h2>
                             <p>{{ patient_selected.diagnosis_code }}</p>
                           </div>
                         </div>
+                        <div class="col-xl-3 col-sm-6 col-lg-3">
+                          <div class="detail-personal">
+                            <h2>Insurance Id</h2>
+                            <p>{{ patient_selected.insurance_identifier }}</p>
+                          </div>
+                        </div>
+                        
                         <div class="col-xl-3 col-md-3">
                           <div class="detail-personal">
                             <h2>Rendering Provider</h2>
@@ -116,18 +125,7 @@
                             <p>{{ doctor_selected_full_name_supervisor }}</p>
                           </div>
                         </div>
-                        <div class="col-xl-3 col-md-3">
-                          <div class="detail-personal">
-                            <h2>CPT Code</h2>
-                            <p>{{ note_selected.cpt_code }}</p>
-                          </div>
-                        </div>
-                        <div class="col-xl-3 col-md-3">
-                          <div class="detail-personal">
-                            <h2>POS</h2>
-                            <p>{{ note_selected.meet_with_client_at }}</p>
-                          </div>
-                        </div>
+                        <div class="clear"></div>
                         <div class="col-xl-3 col-xs-6">
                           <div class="detail-personal">
                             <h2>Modifier</h2>
@@ -146,10 +144,20 @@
                             <p>{{ note_selected.md3 }}</p>
                           </div>
                         </div>
+                        
+                        
+                        <div class="clear"></div>
                         <div class="col-xl-3 col-xs-6">
                           <div class="detail-personal">
                             <h2>DOS</h2>
                             <p>{{ note_selected.session_date |  date : "shortDate" }}</p>
+                          </div>
+                        </div>
+                        <!-- POS -->
+                        <div class="col-xl-3 col-md-3">
+                          <div class="detail-personal">
+                            <h2>POS</h2>
+                            <p>{{ note_selected.meet_with_client_at }}</p>
                           </div>
                         </div>
                         <div class="col-xl-3 col-xs-6 ">
@@ -203,7 +211,26 @@
                             <p>{{ note_selected.session_length_afternon_total }}</p>
                           </div>
                         </div>
-
+                        <div class="clear"></div>
+                        <!-- CPT -->
+                        <div class="col-xl-3 col-md-3">
+                          <div class="detail-personal">
+                            <h2>CPT </h2>
+                            <p>{{ note_selected.cpt_code }}</p>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 col-lg-3">
+                          <div class="detail-personal">
+                            <h2>Environmental Changes</h2>
+                            <!-- <p>{{ note_selected.environmental_changes }}</p> -->
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 col-lg-3">
+                          <div class="detail-personal">
+                            <h2>Present this Session</h2>
+                            <p></p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </ng-container>

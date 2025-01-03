@@ -90,12 +90,7 @@
                   <ng-container *ngIf="option_selected === 1">
                     <div class="personal-list-out">
                       <div class="row">
-                        <div class="col-xl-3 col-sm-6 col-lg-3">
-                          <div class="detail-personal">
-                            <h2>Patient Id</h2>
-                            <p>{{ patient_selected.patient_identifier }}</p>
-                          </div>
-                        </div>
+                        
                         <div class="col-xl-3 col-sm-6 col-lg-3">
                           <div class="detail-personal">
                             <h2>Full Name</h2>
@@ -107,7 +102,14 @@
                         </div>
                         <div class="col-xl-3 col-sm-6 col-lg-3">
                           <div class="detail-personal">
-                            <h2>Diagnosis code</h2>
+                            <h2>Patient Id</h2>
+                            <p>{{ patient_selected.patient_identifier }}</p>
+                          </div>
+                        </div>
+                        
+                        <div class="col-xl-3 col-sm-6 col-lg-3">
+                          <div class="detail-personal">
+                            <h2>Diagnosis Code</h2>
                             <p>{{ patient_selected.diagnosis_code }}</p>
                           </div>
                         </div>
@@ -118,12 +120,7 @@
                             <p>{{ patient_selected.insurance_identifier }}</p>
                           </div>
                         </div>
-                        <div class="col-xl-3 col-md-6 col-lg-3">
-                          <div class="detail-personal">
-                            <h2>POS</h2>
-                            <p>{{ note_selected.meet_with_client_at }}</p>
-                          </div>
-                        </div>
+                        
                         <div class="col-xl-3 col-sm-6 col-lg-3">
                           <div class="detail-personal">
                             <h2>Provider Name</h2>
@@ -142,6 +139,7 @@
                             <p>{{ doctor_selected_full_name_bcba }}</p>
                           </div>
                         </div>
+                       
                         <div class="clear"></div>
                         <div class="col-xl-3 col-sm-6 col-lg-3">
                           <div class="detail-personal">
@@ -161,10 +159,18 @@
                             <p>{{ note_selected.md3 ?? "&nbsp;" }}</p>
                           </div>
                         </div>
+                        <div class="clear"></div>
                         <div class="col-xl-3 col-sm-6 col-lg-3">
                           <div class="detail-personal">
                             <h2>DOS</h2>
                             <p>{{ note_selected.session_date |  date : "shortDate" }}</p>
+                          </div>
+                        </div>
+                        <!-- POS -->
+                        <div class="col-xl-3 col-md-6 col-lg-3">
+                          <div class="detail-personal">
+                            <h2>POS</h2>
+                            <p>{{ note_selected.meet_with_client_at }}</p>
                           </div>
                         </div>
                         <div class="col-xl-3 col-sm-6 col-lg-3">
@@ -235,10 +241,24 @@
                             </p>
                           </div>
                         </div>
+                        <div class="clear"></div>
+                         <!-- CPT -->
+                         <div class="col-xl-3 col-sm-6 col-lg-3">
+                          <div class="detail-personal">
+                            <h2>CPT</h2>
+                            <p>{{ note_selected.cpt_code  }}</p>
+                          </div>
+                        </div>
                         <div class="col-xl-3 col-sm-6 col-lg-3">
                           <div class="detail-personal">
                             <h2>Environmental Changes</h2>
                             <p>{{ note_selected.environmental_changes }}</p>
+                          </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 col-lg-3">
+                          <div class="detail-personal">
+                            <h2>Present this Session</h2>
+                            <p></p>
                           </div>
                         </div>
                       </div>
@@ -250,6 +270,7 @@
               <div class="page-break" style="page-break-after: always"></div>
               <!-- Break -->
               <div class="row">
+                <!-- Maladaptive -->
                 <div class="col-xs-12 col-sm-6">
                   <div class="card">
                     <div class="card-header">
@@ -300,6 +321,7 @@
                     </div>
                   </div>
                 </div>
+                <!-- Replacements -->
                 <div class="col-xs-12 col-sm-6">
                   <div class="card">
                     <div class="card-header">
@@ -330,7 +352,7 @@
                                     <h2
                                       style="font-size: 12px; font-weight: 500"
                                     >
-                                      # of correct responses
+                                      # of Correct Responses
                                     </h2>
                                   </th>
                                 </tr>
@@ -692,11 +714,11 @@
                                 />
                               </div>
                               <div class="detail-personal">
-                                <h2 style="margin: 0">Provider name RBT</h2>
+                                <h2 style="margin: 0">Provider Name RBT</h2>
                                 <p style="margin-bottom: 8px">
                                   {{ doctor_selected_full_name }}
                                 </p>
-                                <h2 style="margin: 0">Signature date</h2>
+                                <h2 style="margin: 0">Signature Date</h2>
                                 <p>{{ note_selected.session_date | date : "shortDate"  }}</p>
                               </div>
                             </div>
@@ -715,11 +737,11 @@
                                 />
                               </div>
                               <div class="detail-personal">
-                                <h2 style="margin: 0">Supervisor name BCBA</h2>
+                                <h2 style="margin: 0">Supervisor Name BCBA</h2>
                                 <p style="margin-bottom: 8px">
                                   {{ doctor_selected_full_name_bcba }}
                                 </p>
-                                <h2 style="margin: 0">Signature date</h2>
+                                <h2 style="margin: 0">Signature Date</h2>
                                 <p>{{ note_selected.session_date  | date : "shortDate" }}</p>
                               </div>
                             </div>

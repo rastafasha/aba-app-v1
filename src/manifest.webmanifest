@@ -1,14 +1,14 @@
 {
   "dir": "ltr",
-  "name": "ABA Therapy",
-  "short_name": "aba-therapy",
+  "name": "PMC",
+  "short_name": "",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",
   "start_url": "index.html",
   "orientation": "landscape",
-  "description": "Aba Therapy",
+  "description": "PMC Aba therapy",
   "icons": [
     {
       "src": "assets/icons/72.png",
