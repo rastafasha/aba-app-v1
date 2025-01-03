@@ -26,6 +26,7 @@ export class NoteRbtV2 {
   supervisor_id: number;
 
   session_date: string | Date;
+  participants: string;
   time_in: string;
   time_out: string;
   time_in2: string;
@@ -95,6 +96,7 @@ export class NoteRbtV2 {
       pa_service_id: NumberOrNullOrUndefined(data.pa_service_id),
 
       session_date: StringOrNullOrUndefined(data.session_date),
+      participants: StringOrNullOrUndefined(data.participants),
       time_in: StringOrNullOrUndefined(data.time_in),
       time_out: StringOrNullOrUndefined(data.time_out),
       time_in2: StringOrNullOrUndefined(data.time_in2),

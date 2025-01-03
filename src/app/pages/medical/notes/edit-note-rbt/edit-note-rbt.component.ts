@@ -271,6 +271,7 @@ export class EditNoteRbtComponent implements OnInit {
       this.insurance_identifier = this.note_selected.insurance_identifier;
       this.patient_identifier = this.note_selected.patient_identifier;
 
+      this.participants = this.note_selected.participants;
       this.provider_credential = this.note_selected.provider_credential;
       this.as_evidenced_by = this.note_selected.as_evidenced_by;
       this.client_appeared = this.note_selected.client_appeared;
@@ -811,6 +812,9 @@ convertToHours(totalMinutes: number): string {
       formData.append('meet_with_client_at', this.meet_with_client_at);
     }
 
+    if (this.participants) {
+      formData.append('participants', this.participants);
+    }
 
     if (this.selectedValueTimeIn) {
       formData.append(
@@ -976,6 +980,7 @@ convertToHours(totalMinutes: number): string {
       birthDate: this.client_selected.patient?.birth_date
         ? this.client_selected.patient.birth_date
         : null,
+      participants: this.participants ? `${this.participants}`.trim() : null,
       startTime: this.selectedValueTimeIn
         ? `${this.selectedValueTimeIn}`.trim()
         : null,
