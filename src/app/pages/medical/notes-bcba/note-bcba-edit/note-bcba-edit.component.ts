@@ -39,6 +39,7 @@ export class NoteBcbaEditComponent implements OnInit {
   selectedValueTimeOut2 = '';
   totalMinutos = 0;
   total_hour_session = '';
+  present_this_session = '';
 
 
 

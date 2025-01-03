@@ -40,27 +40,7 @@
                 <div class="col-12 py-4">
                   <h4>Edit Note Rbt</h4>
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label
-                      >POS
-                      <span class="login-danger">*</span></label
-                    >
-
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="meet_with_client_at"
-                      [(ngModel)]="meet_with_client_at"
-                      (change)="onPosChange($event)"
-                    >
-                      <option>-- Select --</option>
-                      <option value="03">03 School</option>
-                      <option value="12">12 Home</option>
-                      <option value="02">02 Telehealth</option>
-                      <option value="99">99 Other</option>
-                    </select>
-                  </div>
-                </div>
+                
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
@@ -169,57 +149,8 @@
 
 
                 
-                <!--  units -->
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label
-                      >CPT Code<span class="login-danger">*</span></label
-                    >
-                    <mat-select
-                      [(ngModel)]="selectedPaService"
-                      name="pa_service"
-                      disabled
-                      (selectionChange)="onPaServiceSelect($event)"
-                      class="form-control select"
-                      placeholder="Select Service"
-                    >
-                      <mat-option
-                        *ngFor="let service of paServices | rbtFilter"
-                        [value]="service"
-                      >
-                        {{ service.pa_service }} ({{ service.cpt }})
-                      </mat-option>
-                    </mat-select>
-                  </div>
-                </div>
-
-                <div class="col-12 col-md-6 col-xl-4" *ngIf="selectedPaService">
-                  <div class="form-group local-forms">
-                    <label class="mb-2">Available Units</label>
-                    <div class="units-container">
-                      <div class="units-wrapper">
-                        <div class="progress-container">
-                          <div
-                            class="progress-bar"
-                            [style.width.%]="
-                              ((selectedPaService.n_units -
-                                selectedPaService.available_units) /
-                                selectedPaService.n_units) *
-                              100
-                            "
-                          ></div>
-                        </div>
-                        <div class="units-text">
-                          {{ selectedPaService.available_units }}/{{
-                            selectedPaService.n_units
-                          }}
-                          units
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!--  fin units -->
+                
+                <!-- DOS -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label>DOS <span class="login-danger">*</span></label>
@@ -237,6 +168,28 @@
                       matIconSuffix
                       [for]="pickerSesDate"
                     ></mat-datepicker-toggle>
+                  </div>
+                </div>
+                <!-- POS -->
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label
+                      >POS
+                      <span class="login-danger">*</span></label
+                    >
+
+                    <select
+                      class="form-control form-select-solid fw-bolder"
+                      name="meet_with_client_at"
+                      [(ngModel)]="meet_with_client_at"
+                      (change)="onPosChange($event)"
+                    >
+                      <option>-- Select --</option>
+                      <option value="03">03 School</option>
+                      <option value="12">12 Home</option>
+                      <option value="02">02 Telehealth</option>
+                      <option value="99">99 Other</option>
+                    </select>
                   </div>
                 </div>
                 <div class="clear"></div>
@@ -351,6 +304,58 @@
                   </div>
                 </div>
 
+                <!--  units -->
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label
+                      >CPT Code<span class="login-danger">*</span></label
+                    >
+                    <mat-select
+                      [(ngModel)]="selectedPaService"
+                      name="pa_service"
+                      disabled
+                      (selectionChange)="onPaServiceSelect($event)"
+                      class="form-control select"
+                      placeholder="Select Service"
+                    >
+                      <mat-option
+                        *ngFor="let service of paServices | rbtFilter"
+                        [value]="service"
+                      >
+                        {{ service.pa_service }} ({{ service.cpt }})
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-4" *ngIf="selectedPaService">
+                  <div class="form-group local-forms">
+                    <label class="mb-2">Available Units</label>
+                    <div class="units-container">
+                      <div class="units-wrapper">
+                        <div class="progress-container">
+                          <div
+                            class="progress-bar"
+                            [style.width.%]="
+                              ((selectedPaService.n_units -
+                                selectedPaService.available_units) /
+                                selectedPaService.n_units) *
+                              100
+                            "
+                          ></div>
+                        </div>
+                        <div class="units-text">
+                          {{ selectedPaService.available_units }}/{{
+                            selectedPaService.n_units
+                          }}
+                          units
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--  fin units -->
+
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
@@ -362,6 +367,17 @@
                       class="form-control"
                       name="environmental_changes"
                       [(ngModel)]="environmental_changes"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label>Present this session <span class="login-danger">*</span></label>
+                    <input
+                      class="form-control"
+                      name="present_this_session"
+                      [(ngModel)]="present_this_session"
                       type="text"
                     />
                   </div>

@@ -36,26 +36,7 @@
                   type="warning"
                   content="Please make sure you have selected the correct POS code for this client."
                 ></app-alert>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label
-                      >POS
-                      <span class="login-danger">*</span></label
-                    >
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="meet_with_client_at"
-                      [(ngModel)]="meet_with_client_at"
-                      (ngModelChange)="checkPosWarning()"
-                    >
-                      <option>-- Select --</option>
-                      <option value="03">03 School</option>
-                      <option value="12">12 Home</option>
-                      <option value="02">02 Telehealth</option>
-                      <option value="99">99 Other</option>
-                    </select>
-                  </div>
-                </div>
+                
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
@@ -163,65 +144,7 @@
                     </mat-select>
                   </div>
                 </div>
-                <!-- CPT Code -->
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>CPT Code <span class="login-danger">*</span></label>
-                    <mat-select
-                      [(ngModel)]="selectedPaService"
-                      name="pa_service"
-                      (selectionChange)="onPaServiceSelect($event)"
-                      class="form-control select"
-                      placeholder="Select Service"
-                    >
-                      <mat-option
-                        *ngFor="let service of pa_services"
-                        [value]="service"
-                      >
-                        ({{ service.cpt }})
-                      </mat-option>
-                    </mat-select>
-                    
-                  </div>
-                </div>
-                <!-- CPT Code -->
-                <!-- CPT Code51 -->
-                <div *ngIf=" show97151 || show971511 || show971512 " class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>Type <span class="login-danger">*</span></label>
-                    <mat-select
-                      [(ngModel)]="selectedPaService1"
-                      name="pa_service"
-                      (selectionChange)="onPaServiceSelect2($event)"
-                      class="form-control select"
-                      placeholder="Select Service"
-                    >
-                      <mat-option
-                        *ngFor="let service of show97151List"
-                        [value]="service"
-                      >
-                        ({{ service.cpt }})
-                      </mat-option>
-                    </mat-select>
-                    
-                  </div>
-                </div>
-                 <!-- CPT Code51 -->
-
-                <!-- PA Service Calculator Information -->
-                <div class="col-12 col-md-6 col-xl-4">
-                  <app-pa-service-calculator
-                    [selectedPaService]="selectedPaService"
-                    [projectedUnits]="projectedUnits">
-                  </app-pa-service-calculator>
-                </div>
-
-                <div class="col-12 col-md-6 col-xl-4">
-                  <app-units-display
-                    [service]="selectedPaService"
-                    [newUnits]="projectedUnits">
-                  </app-units-display>
-                </div>
+                
 
                 <!-- DOS -->
                 <div class="col-12 col-md-3">
@@ -244,6 +167,27 @@
                   </div>
                 </div>
                 <!-- DOS -->
+
+                <!-- POS -->
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label
+                      >POS
+                      <span class="login-danger">*</span></label
+                    >
+                    <select
+                      class="form-control form-select-solid fw-bolder"
+                      name="meet_with_client_at"
+                      [(ngModel)]="meet_with_client_at"
+                    >
+                      <option>-- Select --</option>
+                      <option value="03">03 School</option>
+                      <option value="12">12 Home</option>
+                      <option value="02">02 Telehealth</option>
+                      <option value="99">99 Other</option>
+                    </select>
+                  </div>
+                </div>
                 <div class="clear"></div>
                 <!-- time -->
                 <div class="row">
@@ -356,6 +300,66 @@
                   </div>
                 </div>
                 <!-- time -->
+
+                <!-- CPT Code -->
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label>CPT Code <span class="login-danger">*</span></label>
+                    <mat-select
+                      [(ngModel)]="selectedPaService"
+                      name="pa_service"
+                      (selectionChange)="onPaServiceSelect($event)"
+                      class="form-control select"
+                      placeholder="Select Service"
+                    >
+                      <mat-option
+                        *ngFor="let service of pa_services"
+                        [value]="service"
+                      >
+                        ({{ service.cpt }})
+                      </mat-option>
+                    </mat-select>
+                    
+                  </div>
+                </div>
+                <!-- CPT Code -->
+                <!-- CPT Code51 -->
+                <div *ngIf=" show97151 || show971511 || show971512 " class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label>Type <span class="login-danger">*</span></label>
+                    <mat-select
+                      [(ngModel)]="selectedPaService1"
+                      name="pa_service"
+                      (selectionChange)="onPaServiceSelect2($event)"
+                      class="form-control select"
+                      placeholder="Select Service"
+                    >
+                      <mat-option
+                        *ngFor="let service of show97151List"
+                        [value]="service"
+                      >
+                        ({{ service.cpt }})
+                      </mat-option>
+                    </mat-select>
+                    
+                  </div>
+                </div>
+                 <!-- CPT Code51 -->
+
+                <!-- PA Service Calculator Information -->
+                <div class="col-12 col-md-6 col-xl-4">
+                  <app-pa-service-calculator
+                    [selectedPaService]="selectedPaService"
+                    [projectedUnits]="projectedUnits">
+                  </app-pa-service-calculator>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-4">
+                  <app-units-display
+                    [service]="selectedPaService"
+                    [newUnits]="projectedUnits">
+                  </app-units-display>
+                </div>
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label>Environmental Changes <span class="login-danger">*</span></label>
