@@ -11,6 +11,8 @@
     --gris: #a8a8a8;
     --black: #202020;
     --color_1: #333448;
+    --azul-logo: #0E4D61;
+
 
     --font-family_1: "Poppins-Regular", sans-serif;
     --font-family_2: "FontAwesome";
@@ -52,6 +54,10 @@ p, a, ul, li{
   height: 10px; 
   width: 10px; 
   cursor:pointer
+}
+
+.azullogo-relleno{
+  background-color: var(--azul-logo) !important;
 }
 
 

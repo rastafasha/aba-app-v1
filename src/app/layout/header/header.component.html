@@ -3,34 +3,49 @@
     <span *ngIf="role === 'SUPERADMIN'">
       <a [routerLink]="routes.dashboard.admin" class="logo">
         <img
-          src="assets/webp/aba-logo-new.webp"
-          width="35"
-          height="27"
+          src="assets/svg/logo-solo.svg"
+          width="45"
           alt=""
         />
-        <span><b>PMC</b></span>
+        <span>
+          <img
+            src="assets/svg/logoPmc-tipo.svg"
+            width="115"
+            alt=""
+          />
+        </span>
       </a>
     </span>
     <span *ngIf="role === 'RBT' || role === 'BCBA'">
       <a [routerLink]="[routes.doctors.profile, user.id]" class="logo">
         <img
-          src="assets/webp/aba-logo-new.webp"
-          width="35"
-          height="27"
+          src="assets/svg/logo-solo.svg"
+          width="45"
           alt=""
         />
-       <span><b>PMC</b></span>
+        <span>
+          <img
+            src="assets/svg/logoPmc-tipo.svg"
+            width="115"
+            alt=""
+          />
+        </span>
       </a>
     </span>
     <span *ngIf="role === 'MANAGER'">
       <a [routerLink]="[routes.location.view, user.location_id]" class="logo">
         <img
-          src="assets/webp/aba-logo-new.webp"
-          width="35"
-          height="27"
+          src="assets/svg/logo-solo.svg"
+          width="45"
           alt=""
         />
-       <span><b>PMC</b></span>
+        <span>
+          <img
+            src="assets/svg/logoPmc-tipo.svg"
+            width="115"
+            alt=""
+          />
+        </span>
       </a>
     </span>
   </div>
