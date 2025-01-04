@@ -324,6 +324,7 @@ export class NoteRbtComponent implements OnInit {
 
       this.selectedPaService = resp.patient.pa_services.find(service => service.cpt === '97153') || null;
       console.log('Selected Service:', this.selectedPaService);
+      this.selectedValueCode = this.selectedPaService?.cpt || '';
 
       this.getMaladaptivesBipByPatientId();
       this.getReplacementsByPatientId();
