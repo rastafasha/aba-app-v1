@@ -78,7 +78,6 @@ export class NoteRbtComponent implements OnInit {
   isGeneratingSummary = false;
   totalMinutos = 0;
   total_hour_session = '';
-  participants = '';
 
   selectedValueRBT!: string;
   selectedValueRenderingProvider!: string;
@@ -113,8 +112,9 @@ export class NoteRbtComponent implements OnInit {
   session_length_total = '';
   session_length_total2 = '';
   environmental_changes = '';
+  participants: '';
 
-  summary_note = '';
+  sumary_note = '';
   meet_with_client_at = '';
   client_appeared = '';
   as_evidenced_by = '';
@@ -186,6 +186,7 @@ export class NoteRbtComponent implements OnInit {
   target: any;
   provider: any;
   stoInprogressGoal: any;
+
   location_id!: number;
   patientLocation_id: number | null = null;
   insuranceId!: string;
@@ -700,7 +701,7 @@ convertToHours(totalMinutes: number): string {
       maladaptives: this.maladaptives,
       replacements: this.replacementGoals,
       interventions: this.intervention_added,
-      summary_note: this.summary_note,
+      sumary_note: this.sumary_note,
       meet_with_client_at: this.meet_with_client_at,
       client_appeared: this.client_appeared,
       as_evidenced_by: this.as_evidenced_by,
@@ -824,7 +825,7 @@ convertToHours(totalMinutes: number): string {
 
     this.noteRbtService.generateAISummary(data).subscribe(
       (response: any) => {
-        this.summary_note = response.summary;
+        this.sumary_note = response.summary;
         this.isGeneratingSummary = false;
       },
       (error) => {

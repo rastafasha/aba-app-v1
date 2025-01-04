@@ -31,27 +31,8 @@
                     <div class="col-12 py-4">
                       <h4>Create Note rbt</h4>
                     </div>
-                    <div class="col-12 col-md-6 col-xl-4">
-                      <div class="form-group local-forms">
-                        <label
-                          >POS
-                          <span class="login-danger">*</span></label
-                        >
-
-                        <select
-                          class="form-control form-select-solid fw-bolder"
-                          name="meet_with_client_at"
-                          [(ngModel)]="meet_with_client_at"
-                        >
-                          <option>-- Select --</option>
-                          <option value="03">03 School</option>
-                          <option value="12">12 Home</option>
-                          <option value="02">02 Telehealth</option>
-                          <option value="99">99 Other</option>
-                        </select>
-                      </div>
-                    </div>
                     
+                    <!-- First Name -->
                     <div class="col-12 col-md-6 col-xl-4">
                       <div class="form-group local-forms">
                         <label
@@ -66,6 +47,7 @@
                         />
                       </div>
                     </div>
+                    <!-- Last Name -->
                     <div class="col-12 col-md-6 col-xl-4">
                       <div class="form-group local-forms">
                         <label>Last Name <span class="login-danger">*</span></label>
@@ -78,6 +60,7 @@
                         />
                       </div>
                     </div>
+                    <!-- Patient ID  -->
                     <div class="col-12 col-md-6 col-xl-4">
                       <div class="form-group local-forms">
                         <label
@@ -92,6 +75,7 @@
                         />
                       </div>
                     </div>
+                    <!-- Diagnosis Code -->
                     <div class="col-12 col-md-6 col-xl-4">
                       <div class="form-group local-forms">
                         <label
@@ -106,6 +90,7 @@
                         />
                       </div>
                     </div>
+                    <!-- Insurance ID -->
                     <div class="col-12 col-md-6 col-xl-4">
                       <div class="form-group local-forms">
                         <label>Insurance ID <span class="login-danger">*</span></label>
@@ -119,7 +104,7 @@
                       </div>
                     </div>
 
-                    
+                    <!-- Provider Name  -->
                     <div class="col-12 col-md-6 col-xl-4">
                       <div class="form-group local-forms">
                         <label
@@ -128,7 +113,7 @@
                         <p style="padding: 10px">{{ doctor?.full_name }}</p>
                       </div>
                     </div>
-
+                    <!-- Provider Credential -->
                     <div class="col-12 col-md-6 col-xl-4">
                       <div class="form-group local-forms">
                         <label
@@ -147,44 +132,8 @@
 
 
                     
-                    <!--  units -->
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>CPT Code <span class="login-danger">*</span></label>
-                    <mat-select
-                      [(ngModel)]="selectedPaService"
-                      name="pa_service"
-                      disabled
-                      (selectionChange)="onPaServiceSelect($event)"
-                      class="form-control select"
-                      placeholder="Select Service"
-                    >
-                      <mat-option
-                        *ngFor="let service of pa_services | rbtFilter"
-                        [value]="service"
-                      >
-                        ({{ service.cpt }})
-                      </mat-option>
-                    </mat-select>
-                  </div>
-                </div>
-
-                <!-- PA Service Calculator Information -->
-                <div class="col-12 col-md-6 col-xl-4">
-                  <app-pa-service-calculator
-                    [selectedPaService]="selectedPaService"
-                    [projectedUnits]="projectedUnits">
-                  </app-pa-service-calculator>
-                </div>
-
-                <div class="col-12 col-md-6 col-xl-4">
-                  <app-units-display
-                    [service]="selectedPaService"
-                    [newUnits]="projectedUnits">
-                  </app-units-display>
-                </div>
-                <!--  fin units -->
-
+                    
+                <!-- DOS -->
                     <div class="col-12 col-md-6 col-xl-4">
                       <div class="form-group local-forms">
                         <label>DOS <span class="login-danger">*</span></label>
@@ -205,7 +154,29 @@
                         ></mat-datepicker-toggle>
                       </div>
                     </div>
+                    <!-- POS -->
+                    <div class="col-12 col-md-6 col-xl-4">
+                      <div class="form-group local-forms">
+                        <label
+                          >POS
+                          <span class="login-danger">*</span></label
+                        >
+
+                        <select
+                          class="form-control form-select-solid fw-bolder"
+                          name="meet_with_client_at"
+                          [(ngModel)]="meet_with_client_at"
+                        >
+                          <option>-- Select --</option>
+                          <option value="03">03 School</option>
+                          <option value="12">12 Home</option>
+                          <option value="02">02 Telehealth</option>
+                          <option value="99">99 Other</option>
+                        </select>
+                      </div>
+                    </div>
                     <div class="clear"></div>
+                    <!-- time -->
                     <div class="row">
                       <!-- time -->
                       <div class="col-xs-12 col-sm-6">
@@ -314,24 +285,68 @@
                         </div>
                       </div>
                       <!-- time -->
-                      <div class="col-12 col-md-6 col-xl-4">
-                        <div class="form-group local-forms">
-                          <label>Present this session<span class="login-danger">*</span></label>
-                          <input class="form-control" name="participants" [(ngModel)]="participants" type="text" />
-                        </div>
-                      </div>
-                      <div class="col-12 col-md-6 col-xl-4">
-                        <div class="form-group local-forms">
-                          <label>Environmental Changes <span class="login-danger">*</span></label>
-                          <input
-                            class="form-control"
-                            name="environmental_changes"
-                            [(ngModel)]="environmental_changes"
-                            type="text"
-                          />
-                        </div>
-                      </div>
+
                     </div>
+                    <!--  units -->
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label>CPT Code <span class="login-danger">*</span></label>
+                    <mat-select
+                      [(ngModel)]="selectedPaService"
+                      name="pa_service"
+                      disabled
+                      (selectionChange)="onPaServiceSelect($event)"
+                      class="form-control select"
+                      placeholder="Select Service"
+                    >
+                      <mat-option
+                        *ngFor="let service of pa_services | rbtFilter"
+                        [value]="service"
+                      >
+                        ({{ service.cpt }})
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+
+                <!-- PA Service Calculator Information -->
+                <div class="col-12 col-md-6 col-xl-4">
+                  <app-pa-service-calculator
+                    [selectedPaService]="selectedPaService"
+                    [projectedUnits]="projectedUnits">
+                  </app-pa-service-calculator>
+                </div>
+
+                <div class="col-12 col-md-6 col-xl-4">
+                  <app-units-display
+                    [service]="selectedPaService"
+                    [newUnits]="projectedUnits">
+                  </app-units-display>
+                </div>
+                <!--  fin units -->
+
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label>Environmental Changes <span class="login-danger">*</span></label>
+                    <input
+                      class="form-control"
+                      name="environmental_changes"
+                      [(ngModel)]="environmental_changes"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label>Present this session <span class="login-danger">*</span></label>
+                    <input
+                      class="form-control"
+                      name="participants"
+                      [(ngModel)]="participants"
+                      type="text"
+                    />
+                  </div>
+                </div>
                     <!-- paciente -->
                   </div>
               </div>
@@ -567,7 +582,7 @@
                             <textarea
                               class="form-control"
                               name="summary_note"
-                              [(ngModel)]="summary_note"
+                              [(ngModel)]="sumary_note"
                               rows="4"
                               cols="30"
                             ></textarea>
