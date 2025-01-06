@@ -1,0 +1,373 @@
+<div class="col-sm-12">
+  <div class="card">
+    <div class="card-body">
+      <form autocomplete="false">
+        <div class="row">
+          <div class="row align-items-center">
+            <div class="col-12">
+              <div class="card-box">
+                <div class="card-block">
+                  <h3 class="card-title">Interventions</h3>
+
+                  <div class="row align-items-center">
+                    <div class="col-xs-12">
+                      <div class="row">
+                        <p>
+                          The teaching strategies described will be used either
+                          through Discrete Trials interventions or Natural
+                          Environment approaches:
+                        </p>
+                        <div class="col-xs-12 col-sm-6">
+                          <h4>
+                            Differential Reinforcement of Alternative Behaviors
+                          </h4>
+                          <p>
+                            Differential reinforcement of alternative behaviors
+                            will involve delivery of reinforcement each time the
+                            alternative behavior occurs while extinguishing
+                            problem behavior. Initially, reinforcement (praise,
+                            small edibles, access to tangibles) will be provided
+                            on a continuous schedule and then thinned to an
+                            intermittent schedule.
+                          </p>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                          <h4>Redirection</h4>
+                          <p>
+                            This will be used to redirect the consumer to
+                            alternative activities when she engages in
+                            elopement, Physical aggression, etc. Redirection
+                            will be used either during precursor behaviors or
+                            after a period of no maladaptives if a maladaptive
+                            behavior has occurred.
+                          </p>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                          <h4>Response Block</h4>
+                          <p>
+                            When Client attempts to engage in aggression,
+                            elopement, caregiver will use response block to
+                            prevent it, while minimizing eye contact and
+                            talking. The response block should not last for more
+                            than 15 seconds. This technique does not involve
+                            restraint. Problem behavior responses are blocked
+                            without grabbing the individual. The parent and
+                            behavior analyst will block by placing their arm or
+                            open hand between Client and the area being
+                            targeted.
+                          </p>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                          <h4>Premack Principle</h4>
+                          <p>
+                            Client will engage in high-probability behavior,
+                            contingent upon completing programming, or chores
+                            (less probability behavior). Restricting the
+                            high-probability activity to below baseline rates
+                            will increase its reinforcing efficacy. To ensure
+                            that the high-probability activity will function as
+                            a reinforcer, this activity will only be available
+                            contingent upon the completion of the
+                            low-probability activity.
+                          </p>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                          <h4>Shaping</h4>
+                          <p>
+                            Will be used to build target behaviors that do not
+                            yet exist such as waiting for tangibles, requesting
+                            tangibles, sharing/taking turns, interacting with
+                            peers, etc. Approximations to the target behavior
+                            will be consistently reinforced.
+                          </p>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                          <h4>Escape Extinction</h4>
+                          <p>
+                            As some of her behaviors are reinforced by escape
+                            from demands, extinction will be utilized to
+                            eliminate escape after the mentioned maladaptive
+                            behaviors. Client will be given a direction to
+                            complete a task, if maladaptive behaviors occur,
+                            then physical guidance (gently placing hand on her
+                            back and or hand over hand) will be used so that
+                            Client will not be able to escape from the demand or
+                            task. Regardless of how long Client engages in these
+                            behaviors caregivers will continue to present the
+                            demand and use physical guidance for two minutes
+                            maximum to prevent escape. Praise will be provided
+                            as Client completes each step of the task and a
+                            tangible when she completes all the steps. Escape
+                            independent response delivery
+                          </p>
+                        </div>
+
+                        <div class="col-12 mb-3 doctor-submit text-end">
+                          <button
+                            class="btn btn-primary btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"
+                          >
+                            Add Intervention
+                          </button>
+                        </div>
+
+                        <!-- modal crear -->
+
+                        <div
+                          class="modal fade"
+                          id="exampleModal"
+                          tabindex="-1"
+                          aria-labelledby="exampleModalLabel"
+                          aria-hidden="true"
+                        >
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1
+                                  class="modal-title fs-5"
+                                  id="exampleModalLabel"
+                                >
+                                  Modal title
+                                </h1>
+                                <button
+                                  type="button"
+                                  class="btn-close"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                ></button>
+                              </div>
+                              <div class="modal-body">
+                                <div class="col-xs-12">
+                                  <form action="">
+                                    <div class="row">
+                                      <div class="col-xs-12">
+                                        <div class="form-group local-forms">
+                                          <label
+                                            >Title<span class="login-danger"
+                                              >*</span
+                                            ></label
+                                          >
+                                          <input
+                                            class="form-control"
+                                            name="titleIntervention"
+                                            [(ngModel)]="
+                                              newIntervention.titleIntervention
+                                            "
+                                            type="text"
+                                          />
+                                        </div>
+                                      </div>
+                                      <div class="col-xs-12">
+                                        <div class="form-group local-forms">
+                                          <label
+                                            >Description<span
+                                              class="login-danger"
+                                              >*</span
+                                            ></label
+                                          >
+                                          <textarea
+                                            class="form-control"
+                                            name="descriptionIntervention"
+                                            [(ngModel)]="
+                                              newIntervention.descriptionIntervention
+                                            "
+                                            rows="4"
+                                            cols="30"
+                                          ></textarea>
+                                        </div>
+                                      </div>
+
+                                      <div
+                                        class="col-12 mb-3 doctor-submit text-end"
+                                      >
+                                        <button
+                                          class="btn btn-primary btn-sm"
+                                          (click)="addIntervention()"
+                                          data-bs-dismiss="modal"
+                                          aria-label="Close"
+                                        >
+                                          Add Intervention
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer"></div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <ng-container
+                          *ngFor="
+                            let intervention of interventions;
+                            let i = index
+                          "
+                        >
+                          <div class="col-xs-12 col-sm-6">
+                            <div class="botone-right">
+                              <button
+                                class="btn btn-outline-success btn-sm"
+                                (click)="seleccionarParaEdit(intervention)"
+                                data-bs-toggle="modal"
+                                [attr.data-bs-target]="
+                                  '#edit-intervention-' + i
+                                "
+                              >
+                                <i class="fa fa-pencil"></i>
+                              </button>
+                              <button
+                                class="btn btn-outline-danger btn-sm"
+                                (click)="deleteIntervention(i)"
+                              >
+                                <i class="fa fa-trash"></i>
+                              </button>
+                            </div>
+                            <h4>{{ intervention?.titleIntervention }}</h4>
+                            <p>{{ intervention?.descriptionIntervention }}</p>
+                          </div>
+
+                          <!-- modal edit -->
+
+                          <div
+                            [id]="'edit-intervention-' + i"
+                            class="modal fade"
+                            role="dialog"
+                          >
+                            <div
+                              class="modal-dialog modal-dialog-centered modal-lg"
+                            >
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5
+                                    class="modal-title"
+                                    id="modalIntervention"
+                                  >
+                                    {{ newIntervention.titleIntervention }}
+                                  </h5>
+                                  <a
+                                    href="javascript:void(0);"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                    class="btn btn-white me-1"
+                                    >Close</a
+                                  >
+                                </div>
+                                <div class="modal-body text-center">
+                                  <div class="col-xs-12">
+                                    <form action="">
+                                      <div class="row">
+                                        <div class="col-12">
+                                          <div class="form-group local-forms">
+                                            <label
+                                              >title
+                                              <span class="login-danger"
+                                                >*</span
+                                              ></label
+                                            >
+                                            <input
+                                              class="form-control"
+                                              name="titleIntervention"
+                                              [(ngModel)]="
+                                                newIntervention.titleIntervention
+                                              "
+                                              type="text"
+                                            />
+                                          </div>
+                                        </div>
+                                        <div class="col-12">
+                                          <div class="form-group local-forms">
+                                            <label
+                                              >Description
+                                              <span class="login-danger"
+                                                >*</span
+                                              ></label
+                                            >
+                                            <textarea
+                                              class="form-control"
+                                              name="descriptionIntervention"
+                                              [(ngModel)]="
+                                                newIntervention.descriptionIntervention
+                                              "
+                                              rows="4"
+                                              cols="30"
+                                            ></textarea>
+                                          </div>
+                                        </div>
+
+                                        <div
+                                          class="col-12 mb-3 doctor-submit text-end"
+                                        >
+                                          <button
+                                            class="btn btn-primary btn-sm"
+                                            (click)="
+                                              updateIntervention(
+                                                newIntervention
+                                              )
+                                            "
+                                          >
+                                            Update Info
+                                          </button>
+                                        </div>
+                                      </div>
+                                    </form>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- modal edit -->
+                        </ng-container>
+
+                        <br />
+                        <hr />
+                        <br />
+                        <!-- validaciones -->
+
+                        <div class="form-group row" *ngIf="text_validation">
+                          <div class="col-md-12">
+                            <div
+                              class="alert alert-danger alert-dismissible fade show"
+                              role="alert"
+                            >
+                              <strong>!</strong> {{ text_validation }}.
+                              <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="alert"
+                                aria-label="Close"
+                              >
+                                <span aria-hidden="true"> </span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- validaciones -->
+
+                        <div class="col-12">
+                          <div class="doctor-submit text-end">
+                            <button
+                              type="button"
+                              class="btn btn-primary submit-form me-2"
+                              (click)="onSave()"
+                            >
+                              Save
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -126,7 +126,7 @@ export class ChartReplacementComponent {
   promedio_porcentual_semanal: any[];
   stoName: any[];
   stoStatus: any;
-  existgrfic: any =[];
+  existgrfic: any = [];
   loading: boolean;
 
   //datos reales
@@ -147,40 +147,39 @@ export class ChartReplacementComponent {
 
     this.activatedRoute.params.subscribe((resp) => {
       this.patient_identifier = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
-      
-      
+
       this.getProfileBip(); // se pide el perfil del paciente por el bip relacionado
       this.getBip(); // se pide el perfil del paciente por el bip relacionado
       // setTimeout(() => {
       // }, 3000);
-      
     });
-
   }
 
   getBip() {
     this.bipService.getBipByUser(this.patient_identifier).subscribe((resp) => {
-      this.created_at = resp.bip.created_at;
+      this.created_at = new Date(resp.bip.created_at);
     });
   }
 
   getProfileBip() {
-    this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
-      this.client_selected = resp; // asignamos el objeto a nuestra variable
-      this.patient_identifier = resp.patient.patient_identifier;
-      this.patient_ident = resp.patient.id;
-      //traemos la info del usuario
-      if (this.client_selected.type !== null) {
-        // si hay o no informacion del paciente
-        if (this.client_selected.eligibility === 'yes') {
-          // si el status es positivo para proceder
-          this.patient_identifier = this.client_selected.patient_identifier;
+    this.bipService
+      .showBipProfile(this.patient_identifier)
+      .subscribe((resp) => {
+        this.client_selected = resp; // asignamos el objeto a nuestra variable
+        this.patient_identifier = resp.patient.patient_identifier;
+        this.patient_ident = resp.patient.id;
+        //traemos la info del usuario
+        if (this.client_selected.type !== null) {
+          // si hay o no informacion del paciente
+          if (this.client_selected.eligibility === 'yes') {
+            // si el status es positivo para proceder
+            this.patient_identifier = this.client_selected.patient_identifier;
+          }
         }
-      }
-      setTimeout(() => {
-        this.getGoalsReductions();
-      }, 50);
-    });
+        setTimeout(() => {
+          this.getGoalsReductions();
+        }, 50);
+      });
   }
 
   // obtenemos todos las notas filtrandose con el nombre seleccionado traido como input.. this.goal
@@ -202,9 +201,9 @@ export class ChartReplacementComponent {
         this.graphData = replacementsParsed;
         const number_of_correct_response = [];
         const array = this.graphData;
-        replacementsParsed.forEach(item => {
+        replacementsParsed.forEach((item) => {
           number_of_correct_response.push(item.number_of_correct_response);
-        })
+        });
 
         const number_of_trials: number[] = [];
         array.forEach((element) => {
@@ -225,10 +224,10 @@ export class ChartReplacementComponent {
           (item) => item.session_date
         );
         this.sessions_dates.unshift(this.created_at);
-        this.sessions_dates = this.sessions_dates.map(date => {
+        this.sessions_dates = this.sessions_dates.map((date) => {
           const dateAux = new Date(date);
-          const mes = String(dateAux.getUTCMonth() + 1).padStart(2, "0");
-          const dia = String(dateAux.getUTCDate()).padStart(2, "0");
+          const mes = String(dateAux.getUTCMonth() + 1).padStart(2, '0');
+          const dia = String(dateAux.getUTCDate()).padStart(2, '0');
           const anio = dateAux.getUTCFullYear();
           return `${mes}-${dia}-${anio}`;
         });
@@ -236,15 +235,14 @@ export class ChartReplacementComponent {
       });
   }
 
-
   public setChart(): void {
     this.chartOptionsOne = {
       chart: {
         height: 370,
         type: 'line',
-            toolbar: {
-              show: false,
-            },
+        toolbar: {
+          show: false,
+        },
       },
       grid: {
         show: true,
@@ -267,7 +265,7 @@ export class ChartReplacementComponent {
       },
       series: [
         {
-          type: "scatter",
+          type: 'scatter',
           data: [0],
         },
         {
@@ -280,7 +278,6 @@ export class ChartReplacementComponent {
         categories: this.sessions_dates,
       },
     };
-    
   }
   selecedList: data[] = [
     { value: '01' },

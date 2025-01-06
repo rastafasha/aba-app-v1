@@ -176,6 +176,8 @@ export interface RecentPatient {
 }
 
 export interface Maladaptive {
+  index?: number;
+  name?: string;
   baseline_date: string;
   baseline_level: number;
   current_intensity?: number;

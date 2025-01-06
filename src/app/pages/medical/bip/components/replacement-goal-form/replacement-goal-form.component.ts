@@ -161,15 +161,20 @@ export class ReplacementGoalFormComponent {
 
   //obtenemos el bip por el id
   getBip() {
-    if (this.patient_identifier !== null && this.patient_identifier !== undefined) {
-      this.bipService.getBipByUser(this.patient_identifier).subscribe((resp) => {
-        // console.log('bip',resp);
+    if (
+      this.patient_identifier !== null &&
+      this.patient_identifier !== undefined
+    ) {
+      this.bipService
+        .getBipByUser(this.patient_identifier)
+        .subscribe((resp) => {
+          // console.log('bip',resp);
 
-        this.bip_selected = resp; //convertimos la respuesta en un variable
-        this.bip_selectedId = resp.id; //convertimos la respuesta en un variable
-        this.bip_selectedIdd = this.bip_selected.bip.id; //convertimos la respuesta en un variable
-        this.maladaptives = this.bip_selected.maladaptives; //convertimos la respuesta en un variable
-      });
+          this.bip_selected = resp.bip; //convertimos la respuesta en un variable
+          this.bip_selectedId = this.bip_selected.id; //convertimos la respuesta en un variable
+          this.bip_selectedIdd = this.bip_selected.bip.id; //convertimos la respuesta en un variable
+          this.maladaptives = this.bip_selected.maladaptives; //convertimos la respuesta en un variable
+        });
     }
   }
 
@@ -179,7 +184,6 @@ export class ReplacementGoalFormComponent {
     this.goalSustitutionService
       .getGoalSustitutionbyPatientId(patient_identifier)
       .subscribe((resp) => {
-       
         this.goals = resp.sustitutiongoalPatientIds.data;
       });
   }
@@ -383,7 +387,6 @@ export class ReplacementGoalFormComponent {
 
   cambiarStatusSto(goalsto: any) {
     this.sustitution_status_sto_edit = goalsto;
-   
 
     const data = {
       goalstos: this.golstoSustiutions,
@@ -402,7 +405,7 @@ export class ReplacementGoalFormComponent {
 
   cambiarStatusLto(goallto: any) {
     this.sustitution_status_lto_edit = goallto;
-    
+
     const data = {
       goalstos: this.golstoSustiutions,
       goalltos: this.golltoSustiution,
@@ -420,7 +423,6 @@ export class ReplacementGoalFormComponent {
 
   cambiarStatusCreatedLto(goallto: any) {
     this.createdgoal_status_lto_edit2 = goallto;
-    
 
     const data = {
       goalltos: this.golltoCreateds,
