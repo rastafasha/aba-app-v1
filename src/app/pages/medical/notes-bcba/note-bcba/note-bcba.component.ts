@@ -107,6 +107,7 @@ throw new Error('Method not implemented.');
   maladaptive = '';
   replacement = '';
   interventions: any;
+  interventions2: any;
   provider_signature: any;
   supervisor_signature: any;
 
@@ -148,6 +149,11 @@ throw new Error('Method not implemented.');
   maladaptives = [];
   replacementGoals = [];
   intervention_added = [];
+  intervention2_added = [];
+  replacements_added = [];
+  intakeoutcome_added = [];
+  newlist_added = [];
+  behaviorsList_added = [];
   replacements = [];
   
   maladaptiveSelected: any = null;
@@ -180,6 +186,7 @@ throw new Error('Method not implemented.');
   projectedUnits = 0;
   start_date: Date; // Fecha de inicio
   end_date: Date; // Fecha de fin
+  showPosWarning = false;
   
   participants = '';
   additional_goals_or_interventions = '';
@@ -187,9 +194,9 @@ throw new Error('Method not implemented.');
   reinforced_caregiver_strengths_in = '';
   gave_constructive_feedback_on = '';
   recomended_more_practice_on = '';
+  type = '';
   BCBA_conducted_client_observations = false;
   BCBA_conducted_assessments = false;
-  showPosWarning = false;
 
   demostrated= false;
   modifications_needed_at_this_time= false;
@@ -595,6 +602,46 @@ convertToHours(totalMinutes: number): string {
       JSON.stringify(this.caregivers_training_goals)
     );
 
+
+    formData.append(
+      'interventions',
+      JSON.stringify(this.intervention_added)
+    );
+    formData.append(
+      'interventions2',
+      JSON.stringify(this.intervention2_added)
+    );
+
+    formData.append(
+      'replacements',
+      JSON.stringify(this.replacements_added)
+    );
+
+    formData.append(
+      'intake_outcome',
+      JSON.stringify(this.intakeoutcome_added)
+    );
+   
+    formData.append(
+      'behaviors',
+      JSON.stringify(this.behaviorsList_added)
+    );
+
+    formData.append('modifications_needed_at_this_time', this.modifications_needed_at_this_time ? '1' : '0');
+    formData.append('cargiver_participation', this.cargiver_participation ? '1' : '0');
+    formData.append('was_the_client_present', this.was_the_client_present ? '1' : '0');
+    formData.append('BCBA_conducted_assessments', this.BCBA_conducted_assessments ? '1' : '0');
+    formData.append('BCBA_conducted_client_observations', this.BCBA_conducted_client_observations ? '1' : '0');
+
+    formData.append('additional_goals_or_interventions', this.additional_goals_or_interventions);
+    formData.append('asked_and_clarified_questions_about_the_implementation_of', this.asked_and_clarified_questions_about_the_implementation_of);
+    formData.append('reinforced_caregiver_strengths_in', this.reinforced_caregiver_strengths_in);
+    formData.append('gave_constructive_feedback_on', this.gave_constructive_feedback_on);
+    formData.append('participants', this.participants);
+    formData.append('environmental_changes', this.environmental_changes);
+    formData.append('type', this.type);
+
+
     formData.append('session_date', this.session_date);
 
     if (this.selectedValueTimeIn) {
@@ -646,6 +693,23 @@ convertToHours(totalMinutes: number): string {
   }
   onInterventionsChange(updatedInterventions: any[]) {
     this.intervention_added = updatedInterventions;
+  }
+  onReplacementChange(updatedReplacements) {
+    this.replacements_added = updatedReplacements;
+  }
+  
+
+  onInterventions2Change(updatedInterventions2: any[]) {
+    this.intervention2_added = updatedInterventions2;
+  }
+  onIntakeoutcomeChange(updatedIntakeoutcome) {
+    this.intakeoutcome_added = updatedIntakeoutcome;
+  }
+  onNewListChange(updatedNewList) {
+    this.newlist_added = updatedNewList;
+  }
+  onBehaviorChange(updatedbehaviorsList) {
+    this.behaviorsList_added = updatedbehaviorsList;
   }
 
 

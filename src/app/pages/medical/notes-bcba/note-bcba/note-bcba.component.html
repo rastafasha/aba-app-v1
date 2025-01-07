@@ -476,7 +476,7 @@
       </ng-container>
 
       
-       <!--   only 51-->
+       <!--   only 51 -1-->
       <ng-container  *ngIf=" show971511" >
             <!-- BCBA conducted -->
             <div class="col-xs-12" >
@@ -514,84 +514,32 @@
               </div>
             </div>
             <!-- BCBA conducted -->
-            <!-- Info -->
+            <!-- newList -->
             <div class="col-xs-12" >
               <div class="card">
                 <div class="card-body">
-                  <div class="col-12">
-                    <!-- <h5>Intervention protocols</h5> -->
-                    <div class="table-responsive content-box">
-                      <table class="table mb-0 ">
-                        <thead>
-                          <tr>
-                            <th>please check as needed</th>
-                            <th>Option</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let iteml of newList; let i = index">
-                            <td>{{ iteml.name }}</td>
-                            <td>
-                              <!-- <input class="form-check-input" type="checkbox" id="Assessed" value="Assessed" checked aria-label="..."> -->
-                              <div class="status-toggle d-flex justify-content-between align-items-center">
-                                <input type="checkbox" [id]="iteml.id" class="check"
-                                       [(ngModel)]="iteml.value"
-                                       [name]="iteml.id"
-                                       >
-                                       <!-- (ngModelChange)="updateitemls()" -->
-                                <label [for]="iteml.id" class="checktoggle">checkbox</label>
-    
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
+                  <app-newlist
+                  [newList]="newList"
+                  (interventionsChange)="onNewListChange($event)"
+                  ></app-newlist>
                 </div>
               </div>
             </div>
-            <!-- Info -->
+            <!-- newList -->
             <!-- intake and outcome measures: -->
             <div class="col-xs-12" >
               <div class="card">
                 <div class="card-body">
-                  <div class="col-12">
-                    <h5>Intake and Outcome Measures:</h5>
-                    <div class="table-responsive content-box">
-                      <table class="table mb-0 ">
-                        <thead>
-                          <tr>
-                            <th>please check as needed</th>
-                            <th>Option</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let itemOC of outcomeList; let i = index">
-                            <td>{{ itemOC.name }}</td>
-                            <td>
-                              <!-- <input class="form-check-input" type="checkbox" id="Assessed" value="Assessed" checked aria-label="..."> -->
-                              <div class="status-toggle d-flex justify-content-between align-items-center">
-                                <input type="checkbox" [id]="itemOC.id" class="check"
-                                       [(ngModel)]="itemOC.value"
-                                       [name]="itemOC.id"
-                                       >
-                                       <!-- (ngModelChange)="updateitemOCs()" -->
-                                <label [for]="itemOC.id" class="checktoggle">checkbox</label>
-    
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
+                  <app-intakeoutcome
+                  [outcomeList]="outcomeList"
+                  (interventionsChange)="onIntakeoutcomeChange($event)"
+                  ></app-intakeoutcome>
                 </div>
               </div>
             </div>
             <!-- intake and outcome measures: -->
       </ng-container>
-       <!--   only 51-->
+       <!--   only 51 -2-->
        <ng-container  *ngIf=" show971512" >
         <!-- modifications needed at this time -->
         <div class="col-xs-12" >
@@ -630,6 +578,7 @@
         </div>
         <!-- modifications needed at this time -->
         </ng-container>
+
         <!--  only 56 -->
       <ng-container  *ngIf="show97156">
         
@@ -637,38 +586,10 @@
         <div class="col-xs-12" >
           <div class="card">
             <div class="card-body">
-              <div class="col-12">
-                <h5>Intervention protocols</h5>
-                <div class="table-responsive content-box">
-                  <table class="table mb-0 ">
-                    <thead>
-                      <tr>
-                        <th>please check as needed</th>
-                        <th>Demostrated</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let intervention of interventionsList; let i = index">
-                        <td>{{ intervention.name }}</td>
-                        <td>
-                          <!-- <input class="form-check-input" type="checkbox" id="demostrated" value="demostrated" checked aria-label="..."> -->
-
-                          <div class="status-toggle d-flex justify-content-between align-items-center">
-                            <input type="checkbox" [id]="intervention.id" class="check"
-                                   [(ngModel)]="intervention.value"
-                                   [name]="intervention.id"
-                                   >
-                                   <!-- (ngModelChange)="updateInterventions()" -->
-                            <label [for]="intervention.id" class="checktoggle">checkbox</label>
-
-                          </div>
-
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+              <app-interventions3
+              [interventionsList]="interventionsList"
+              (interventionsChange)="onInterventions2Change($event)"
+              ></app-interventions3>
             </div>
           </div>
         </div>
@@ -677,37 +598,8 @@
          <div class="col-xs-12" >
           <div class="card">
             <div class="card-body">
-              <div class="col-12">
-                <h5>replacements protocols</h5>
-                <div class="table-responsive ">
-                  <table class="table mb-0 ">
-                    <thead>
-                      <tr>
-                        <th>please check as needed</th>
-                        <th>Demostrated</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let replac of rbt_training_goals; let i = index">
-                        <td>{{ replac.lto }}</td>
-                        <td>
-                          <!-- <input class="form-check-input" type="checkbox" id="Demostrated" value="Demostrated" checked aria-label="..."> -->
-
-                          <div class="status-toggle d-flex justify-content-between align-items-center">
-                            <input type="checkbox" [id]="replac.id" class="check"
-                                   [(ngModel)]="replac.value"
-                                   [name]="replac.id"
-                                   >
-                                   <!-- (ngModelChange)="updateInterventions()" -->
-                            <label [for]="replac.id" class="checktoggle">checkbox</label>
-
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+              <app-replacements [rbt_training_goals]="rbt_training_goals"
+                  (replacementChange)="onReplacementChange($event)"></app-replacements>
             </div>
           </div>
         </div>
@@ -716,36 +608,8 @@
          <div class="col-xs-12" >
           <div class="card">
             <div class="card-body">
-              <div class="col-12">
-                <h5>Behaviors</h5>
-                <div class="table-responsive ">
-                  <table class="table mb-0 ">
-                    <thead>
-                      <tr>
-                        <th>please check as needed</th>
-                        <th>Discused</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let behav of behaviorsList; let i = index">
-                        <td>{{ behav.name }}</td>
-                        <td>
-                          <!-- <input class="form-check-input" type="checkbox" id="Demostrated" value="Demostrated" checked aria-label="..."> -->
-                          <div class="status-toggle d-flex justify-content-between align-items-center">
-                            <input type="checkbox" [id]="behav.id" class="check"
-                                   [(ngModel)]="behav.value"
-                                   [name]="behav.id"
-                                   >
-                                   <!-- (ngModelChange)="updateInterventions()" -->
-                            <label [for]="behav.id" class="checktoggle">checkbox</label>
-
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+              <app-behaviors [behaviorsList]="behaviorsList"
+                  (replacementChange)="onBehaviorChange($event)"></app-behaviors>
             </div>
           </div>
         </div>
@@ -755,7 +619,6 @@
           <div class="card">
             <div class="card-body">
               <div class="col-12">
-                <!-- <h5>Behaviors</h5> -->
                 <div class="row">
                   <div class="col-12 col-md-6 ">
                     <div class="form-group ">
@@ -772,8 +635,6 @@
                       </div>
                     </div>
                   </div>
-                  
-
                   <div class="col-12 col-md-6">
 
                     <div class="form-group ">
@@ -853,138 +714,18 @@
           </div>
         </div>
         <!-- formulario varios -->
-         <!-- Caregiver Goal -->
-        <div class="col-xs-12 " >
-          <div class="card">
-            <div class="card-body">
-              <div class="col-12">
-                <h5>Caregiver Goal</h5>
-                <p class="text-danger">
-                  Note: Please fill out all fields. If you didn't have any
-                  reaction, enter "0"
-                </p>
-              </div>
-              <div class="table-responsive">
-                <table class="table mb-0">
-                  <thead>
-                    <tr>
-                      <th>Caregiver Goal</th>
-                      <th>% of Occurrences</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr
-                      *ngFor="
-                        let caregiv of caregivers_training_goals;
-                        let i = index
-                      "
-                    >
-                      <td>{{ caregiv.caregiver_goal }}</td>
-                      <td>
-                        <input
-                          class="form-control"
-                          type="number"
-                          [(ngModel)]="caregiv.porcent_of_correct_response"
-                          (ngModelChange)="updateCaregiverGoal(i)"
-                        />
-
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- Caregiver Goal -->
       </ng-container>
        <!--   only 55-->
       <ng-container  *ngIf=" show97155" >
-            <!-- RBT Training goals -->
-              <!-- <div class="col-xs-12 col-sm-6" >
-                <div class="card">
-                  <div class="card-body">
-                    <div class="col-12">
-                      <h4>RBT Training goals</h4>
-                      <p class="text-danger">
-                        Note: Please fill out all fields. If you didn't have any
-                        reaction, enter "0"
-                      </p>
-                    </div>
-                    <div class="table-responsive">
-                      <table class="table mb-0">
-                        <thead>
-                          <tr>
-                            <th>RBT Training Goal</th>
-                            <th>% of correct responses</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let goal of rbt_training_goals; let i = index">
-                            <td>{{ goal.lto }}</td>
-                            <td>
-                              <input
-                                class="form-control"
-                                type="number"
-                                [(ngModel)]="goal.porcent_of_correct_response"
-                                (ngModelChange)="updateRbtGoal(i)"
-                              />
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
-            <!-- RBT Training goals -->
+           
             <!-- Intervention protocols -->
             <div class="col-xs-12" >
               <div class="card">
                 <div class="card-body">
-                  <div class="col-12">
-                    <h5>Intervention protocols</h5>
-                    <div class="table-responsive content-box">
-                      <table class="table mb-0 ">
-                        <thead>
-                          <tr>
-                            <th>please check as needed</th>
-                            <th>Assessed</th>
-                            <th>Modified</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let intervention of interventionsList2; let i = index">
-                            <td>{{ intervention.name }}</td>
-                            <td>
-                              <!-- <input class="form-check-input" type="checkbox" id="Assessed" value="Assessed" checked aria-label="..."> -->
-                              <div class="status-toggle d-flex justify-content-between align-items-center">
-                                <input type="checkbox" [id]="intervention.id + '-assessed'" class="check"
-                                       [(ngModel)]="intervention.value"
-                                       [name]="intervention.id + '-assessed'"
-                                       >
-                                       <!-- (ngModelChange)="updateInterventions()" -->
-                                <label [for]="intervention.id + '-assessed'" class="checktoggle">checkbox</label>
-    
-                              </div>
-                            </td>
-                            <td>
-                              <!-- <input class="form-check-input" type="checkbox" id="Modified" value="Modified" aria-label="..."> -->
-                              <div class="status-toggle d-flex justify-content-between align-items-center">
-                                <input type="checkbox" [id]="intervention.id + '-modified'" class="check"
-                                       [(ngModel)]="intervention.value2"
-                                       [name]="intervention.id + '-modified'"
-                                       >
-                                       <!-- (ngModelChange)="updateInterventions()" -->
-                                <label [for]="intervention.id + '-modified'" class="checktoggle">checkbox</label>
-    
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
+                  <app-interventions2
+                  [interventionsList2]="interventionsList2"
+                  (interventionsChange)="onInterventionsChange($event)"
+                  ></app-interventions2>
                 </div>
               </div>
             </div>
@@ -993,49 +734,8 @@
             <div class="col-xs-12" >
               <div class="card">
                 <div class="card-body">
-                  <div class="col-12">
-                    <h5>replacements protocols</h5>
-                    <div class="table-responsive ">
-                      <table class="table mb-0 ">
-                        <thead>
-                          <tr>
-                            <th>please check as needed</th>
-                            <th>Assessed</th>
-                            <th>Modified</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let replac of rbt_training_goals; let i = index">
-                            <td>{{ replac.lto }}</td>
-                            <td>
-                              <!-- <input class="form-check-input" type="checkbox" id="Assessed" value="Assessed" checked aria-label="..."> -->
-                              <div class="status-toggle d-flex justify-content-between align-items-center">
-                                <input type="checkbox" [id]="replac.id + '-assessed'" class="check"
-                                       [(ngModel)]="replac.value"
-                                       [name]="replac.id + '-assessed'"
-                                       >
-                                       <!-- (ngModelChange)="updatereplacs()" -->
-                                <label [for]="replac.id + '-assessed'" class="checktoggle">checkbox</label>
-    
-                              </div>
-                            </td>
-                            <td>
-                              <!-- <input class="form-check-input" type="checkbox" id="Modified" value="Modified" aria-label="..."> -->
-                              <div class="status-toggle d-flex justify-content-between align-items-center">
-                                <input type="checkbox" [id]="replac.id + '-modified'" class="check"
-                                       [(ngModel)]="replac.value2"
-                                       [name]="replac.id + '-modified'"
-                                       >
-                                       <!-- (ngModelChange)="updatereplacs()" -->
-                                <label [for]="replac.id + '-modified'" class="checktoggle">checkbox</label>
-    
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
+                  <app-replacements [rbt_training_goals]="rbt_training_goals"
+                  (replacementChange)="onReplacementChange($event)"></app-replacements>
                 </div>
               </div>
             </div>
