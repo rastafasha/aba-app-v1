@@ -119,7 +119,7 @@ export class NoteRbtComponent implements OnInit {
   client_appeared = '';
   as_evidenced_by = '';
   rbt_modeled_and_demonstrated_to_caregiver = '';
-  client_response_to_treatment_this_session = '';
+  // client_response_to_treatment_this_session = '';
   progress_noted_this_session_compared_to_previous_session = '';
   next_session_is_scheduled_for = '';
   provider_name = '';
@@ -705,7 +705,7 @@ convertToHours(totalMinutes: number): string {
       client_appeared: this.client_appeared,
       as_evidenced_by: this.as_evidenced_by,
       rbt_modeled_and_demonstrated_to_caregiver: this.rbt_modeled_and_demonstrated_to_caregiver,
-      client_response_to_treatment_this_session: this.client_response_to_treatment_this_session,
+      // client_response_to_treatment_this_session: this.client_response_to_treatment_this_session,
       progress_noted_this_session_compared_to_previous_session: this.progress_noted_this_session_compared_to_previous_session,
       next_session_is_scheduled_for: this.next_session_is_scheduled_for.split('T')[0],
       status: 'pending',
@@ -808,7 +808,7 @@ convertToHours(totalMinutes: number): string {
         behavior: m.maladaptive_behavior,
         frequency: m.number_of_occurrences,
       })),
-      clientResponseToTreatmentThisSession: this.client_response_to_treatment_this_session,
+      // clientResponseToTreatmentThisSession: this.client_response_to_treatment_this_session,
       replacements: this.replacementGoals.map((r) => ({
         name: r.goal,
         totalTrials: r.total_trials,

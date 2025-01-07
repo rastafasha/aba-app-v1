@@ -541,7 +541,7 @@
               ></textarea>
             </div>
           </div>
-          <div class="col-12 col-md-6">
+          <!-- <div class="col-12 col-md-6">
             <div class="form-group local-forms">
               <label
                 >Client response to treatment this session
@@ -568,8 +568,8 @@
                 }}
               </button>
             </div>
-          </div>
-          <div class="col-xs-12 col-sm-7">
+          </div> -->
+          <div class="col-xs-12 col-sm-6">
             <p>
               Responding this session could have been affected by
               environmental changes above
@@ -592,6 +592,35 @@
                 <option value="good">Good</option>
                 <option value="minimal">Minimal</option>
               </select>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="row">
+              <div class="col-12 col-md-10">
+                <div class="form-group local-forms">
+                  <label>Note's Summary <span class="login-danger">*</span></label>
+                  <textarea
+                    class="form-control"
+                    name="summary_note"
+                    [(ngModel)]="sumary_note"
+                    rows="4"
+                    cols="30"
+                  ></textarea>
+                </div>
+              </div>
+              <div class="col-12 col-md-2 d-flex align-items-center">
+                <button
+                  class="btn btn-primary btn-sm"
+                  (click)="generateAISummary()"
+                  [disabled]="isGeneratingSummary"
+                >
+                  {{
+                    isGeneratingSummary
+                      ? "Generating..."
+                      : "Generate AI Summary"
+                  }}
+                </button>
+              </div>
             </div>
           </div>
           <div class="col-xs-12 col-sm-5">
@@ -679,18 +708,6 @@
             </div>
             <!-- previsualizacion de la foto -->
           </div>
-          <!-- <div class="col-12 col-md-4 col-xl-4">
-            <div class="form-group local-top-form">
-              <label class="local-top"
-                >Created At
-                <span class="login-danger">*</span></label
-              >
-              <p style="padding: 10px">
-                {{ note_selected.session_date | date: 'shortDate' }}
-              </p>
-            </div>
-          </div> -->
-
           <div class="col-12 col-md-4 col-xl-6">
             <div class="form-group local-forms">
               <div class="form-group local-forms">

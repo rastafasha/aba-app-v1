@@ -90,7 +90,7 @@ export class EditNoteRbtComponent implements OnInit {
   client_appeared = '';
   as_evidenced_by = '';
   rbt_modeled_and_demonstrated_to_caregiver = '';
-  client_response_to_treatment_this_session = '';
+  // client_response_to_treatment_this_session = '';
   progress_noted_this_session_compared_to_previous_session = '';
   next_session_is_scheduled_for = '';
   provider_name = '';
@@ -275,8 +275,8 @@ export class EditNoteRbtComponent implements OnInit {
       this.provider_credential = this.note_selected.provider_credential;
       this.as_evidenced_by = this.note_selected.as_evidenced_by;
       this.client_appeared = this.note_selected.client_appeared;
-      this.client_response_to_treatment_this_session =
-        this.note_selected.client_response_to_treatment_this_session;
+      // this.client_response_to_treatment_this_session =
+      //   this.note_selected.client_response_to_treatment_this_session;
 
       this.selectedValueCode = this.note_selected.cpt_code;
 
@@ -872,12 +872,12 @@ convertToHours(totalMinutes: number): string {
     if (this.client_appeared) {
       formData.append('client_appeared', this.client_appeared);
     }
-    if (this.client_response_to_treatment_this_session) {
-      formData.append(
-        'client_response_to_treatment_this_session',
-        this.client_response_to_treatment_this_session
-      );
-    }
+    // if (this.client_response_to_treatment_this_session) {
+    //   formData.append(
+    //     'client_response_to_treatment_this_session',
+    //     this.client_response_to_treatment_this_session
+    //   );
+    // }
     if (this.next_session_is_scheduled_for) {
       formData.append(
         'next_session_is_scheduled_for',
@@ -1014,7 +1014,7 @@ convertToHours(totalMinutes: number): string {
 
     this.noteRbtService.generateAISummary(data).subscribe(
       (response: any) => {
-        this.client_response_to_treatment_this_session = response.summary;
+        this.sumary_note = response.summary;
         this.isGeneratingSummary = false;
       },
       (error) => {
