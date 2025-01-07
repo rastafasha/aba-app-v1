@@ -277,6 +277,7 @@ export class EditNoteRbtComponent implements OnInit {
       this.client_appeared = this.note_selected.client_appeared;
       // this.client_response_to_treatment_this_session =
       //   this.note_selected.client_response_to_treatment_this_session;
+      this.sumary_note = this.note_selected.sumary_note;
 
       this.selectedValueCode = this.note_selected.cpt_code;
 
@@ -878,6 +879,12 @@ convertToHours(totalMinutes: number): string {
     //     this.client_response_to_treatment_this_session
     //   );
     // }
+    if (this.sumary_note) {
+      formData.append(
+        'sumary_note',
+        this.sumary_note
+      );
+    }
     if (this.next_session_is_scheduled_for) {
       formData.append(
         'next_session_is_scheduled_for',
