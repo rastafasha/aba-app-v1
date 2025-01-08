@@ -11,6 +11,7 @@ import { InsuranceService } from '../../../../core/services/insurances.service';
 import { Location } from '@angular/common';
 import { AppUser } from 'src/app/core/models/users.model';
 import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
+import { behaviorsList, interventionsList, interventionsList2, newList, outcomeList, show97151List } from '../listasSelectData';
 
 
 
@@ -26,8 +27,13 @@ export class NoteBcbaEditComponent implements OnInit {
 
   valid_form = false;
   valid_form_success = false;
-  showFamily = false;
-  showMonitoring = false;
+
+  show97156 = false;
+  show97155 = false;
+  show97151 = false;
+  show971511 = false;
+  show971512 = false;
+  showPosWarning = false;
   text_success = '';
   text_validation = '';
 
@@ -140,9 +146,15 @@ export class NoteBcbaEditComponent implements OnInit {
   specialists = [];
   maladaptives = [];
   replacementGoals = [];
-  intervention_added = [];
   replacements = [];
   interventionsgroup = [];
+
+  intervention_added = [];
+  intervention2_added = [];
+  replacements_added = [];
+  intakeoutcome_added = [];
+  newlist_added = [];
+  behaviorsList_added = [];
 
   maladaptivegroup = [];
   replacementgroup = [];
@@ -176,6 +188,7 @@ export class NoteBcbaEditComponent implements OnInit {
 
   pa_services: PaService[] = [];
   selectedPaService: PaService | null = null;
+  selectedPaService1: PaService | null = null;
   projectedUnits = 0;
 
   provider: any = [];
@@ -185,6 +198,28 @@ export class NoteBcbaEditComponent implements OnInit {
 
   fromParam: string | null = null;
 
+  
+
+  additional_goals_or_interventions = '';
+  asked_and_clarified_questions_about_the_implementation_of = '';
+  reinforced_caregiver_strengths_in = '';
+  gave_constructive_feedback_on = '';
+  recomended_more_practice_on = '';
+  type = '';
+  BCBA_conducted_client_observations = false;
+  BCBA_conducted_assessments = false;
+
+  demostrated= false;
+  modifications_needed_at_this_time= false;
+  cargiver_participation= false;
+  was_the_client_present= false;
+
+  interventionsList = interventionsList;
+    interventionsList2 = interventionsList2;
+    newList = newList;
+    outcomeList = outcomeList;
+    show97151List = show97151List;
+    behaviorsList = behaviorsList;
 
   constructor(
     private bipService: BipService,
@@ -252,6 +287,18 @@ export class NoteBcbaEditComponent implements OnInit {
         this.note_selected.client_response_to_treatment_this_session;
       this.pos = this.note_selected.pos;
 
+      this.additional_goals_or_interventions  = this.note_selected.additional_goals_or_interventions ;
+      this.asked_and_clarified_questions_about_the_implementation_of = this.note_selected.asked_and_clarified_questions_about_the_implementation_of;
+      this.reinforced_caregiver_strengths_in = this.note_selected.reinforced_caregiver_strengths_in;
+      this.gave_constructive_feedback_on = this.note_selected.gave_constructive_feedback_on;
+      this.recomended_more_practice_on = this.note_selected.recomended_more_practice_on;
+      this.BCBA_conducted_client_observations = this.note_selected.BCBA_conducted_client_observations;
+      this.BCBA_conducted_assessments = this.note_selected.BCBA_conducted_assessments;
+      this.demostrated = this.note_selected.demostrated;
+      this.modifications_needed_at_this_time = this.note_selected.modifications_needed_at_this_time;
+      this.cargiver_participation = this.note_selected.cargiver_participation;
+      this.was_the_client_present = this.note_selected.was_the_client_present;
+
       this.caregivers_training_goalsgroup = resp.caregiver_goals;
       const jsonObj = JSON.parse(this.caregivers_training_goalsgroup) || '';
       this.caregivers_training_goals = jsonObj;
@@ -303,6 +350,25 @@ export class NoteBcbaEditComponent implements OnInit {
         this.note_selected.supervisor_signature;
 
       this.getProfileBip(noteServiceId);
+
+      if(this.note_selected.cpt_code === '97155' ){
+        this.show97155 = true;
+      }
+      if(this.note_selected.cpt_code === '97156' ){
+        this.show97156 = true;
+      }
+      if(this.note_selected.cpt_code === '97151' ){
+        this.show97151 = true;
+      }
+
+      if( this.note_selected.cpt_code === '97151' && this.note_selected.type === 'Observation' ){
+        this.show971511 = true;
+        this.show97151 = true;
+      }
+      if(this.note_selected.cpt_code === '97151' && this.note_selected.type === 'Report' ){
+        this.show971512 = true;
+        this.show97151 = true;
+      }
     });
   }
 
@@ -574,6 +640,35 @@ convertToHours(totalMinutes: number): string {
     this.speciaFirmaDataBcba(this.selectedValueBcba_id);
   }
 
+
+
+
+  onInterventionsChange(updatedInterventions: any[]) {
+    this.intervention_added = updatedInterventions;
+  }
+
+  
+
+  onInterventions2Change(updatedInterventions2: any[]) {
+    this.intervention2_added = updatedInterventions2;
+  }
+  onReplacementChange(updatedReplacements) {
+    this.replacements_added = updatedReplacements;
+  }
+  onReplacement2Change(updatedReplacements2) {
+    this.replacements_added = updatedReplacements2;
+  }
+  
+  onIntakeoutcomeChange(updatedIntakeoutcome) {
+    this.intakeoutcome_added = updatedIntakeoutcome;
+  }
+  onNewListChange(updatedNewList) {
+    this.newlist_added = updatedNewList;
+  }
+  onBehaviorChange(updatedbehaviorsList) {
+    this.behaviorsList_added = updatedbehaviorsList;
+  }
+
   save() {
     this.text_validation = '';
     // if(!this.name||!this.email ||!this.surname ){
@@ -806,15 +901,43 @@ convertToHours(totalMinutes: number): string {
     const service = event.value;
     if (service) {
       this.selectedValueCode = service.cpt;
-      this.showFamily = false;
-      this.showMonitoring = false;
+      this.show97155 = false;
+      this.show97156 = false;
+      this.show97151 = false;
+      this.show971511 = false;
+      this.show971512 = false;
 
       if(service.cpt === '97155' ){
-        this.showFamily = true;
+        this.show97155 = true;
       }
       if(service.cpt === '97156' ){
-        this.showMonitoring = true;
+        this.show97156 = true;
       }
+      if(service.cpt === '97151' ){
+        this.show97151 = true;
+      }
+      this.checkPosWarning();
+    }
+  }
+
+  onPaServiceSelect2(event: any) {
+    const service = event.value;
+    if (service) {
+      this.selectedValueCode = service.cpt;
+      
+      this.show97151 = true;
+      this.show971511 = false;
+      this.show971512 = false;
+
+      if(service.cpt === 'Observation' ){
+        this.show971511 = true;
+        this.show97151 = true;
+      }
+      if(service.cpt === 'Report' ){
+        this.show971512 = true;
+        this.show97151 = true;
+      }
+      this.checkPosWarning();
     }
   }
 
@@ -859,6 +982,12 @@ convertToHours(totalMinutes: number): string {
     }
 
     this.projectedUnits = totalUnits;
+  }
+
+  checkPosWarning() {
+    const isCpt97151 = this.selectedPaService?.cpt === '97151';
+    const isTelehealth = this.meet_with_client_at === '02';
+    this.showPosWarning = isCpt97151 && isTelehealth;
   }
 
 

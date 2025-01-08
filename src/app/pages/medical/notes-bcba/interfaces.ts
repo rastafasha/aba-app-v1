@@ -49,17 +49,20 @@ export interface NoteNewList {
     other: boolean;
     
 }
-export interface OutcomeList {
+export interface NoteOutcomeList {
     SRS_2: boolean;
     vineland_3: boolean;
     PDDBI: boolean;
     PSI_4_short_form: boolean;
     
 }
-export interface BehaviorsList {
+export interface NoteBehaviorsList {
     behavior1: boolean;
     behavior2: boolean;
     behavior3: boolean;
     behavior4: boolean;
     
 }
+
+
+

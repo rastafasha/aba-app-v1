@@ -13,8 +13,8 @@ import { Supervisor } from 'src/app/core/models/notes.model';
 import { 
   NoteIntervention, 
   NoteNewList,
-  OutcomeList,
-  BehaviorsList,
+  NoteOutcomeList,
+  NoteBehaviorsList,
   NoteIntervention2,
 } from '../interfaces';
 
@@ -221,13 +221,13 @@ export class NoteBcbaViewComponent implements OnInit {
     preference_assessment: false,
     other: false,
   };
-  outcomeList: OutcomeList = {
+  outcomeList: NoteOutcomeList = {
     SRS_2: false,
     vineland_3: false,
     PDDBI: false,
     PSI_4_short_form: false,
   };
-  behaviorsList: BehaviorsList = {
+  behaviorsList: NoteBehaviorsList = {
     behavior1: false,
     behavior2: false,
     behavior3: false,

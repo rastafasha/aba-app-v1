@@ -34,6 +34,12 @@ interface replacementList {
   name: string;
   value: boolean;
 }
+interface replacementList2 {
+  id: string;
+  name: string;
+  value: boolean;
+  value2: boolean;
+}
 interface newList {
   id: string;
   name: string;
@@ -165,16 +171,16 @@ throw new Error('Method not implemented.');
   IMAGE_PREVISUALIZA_SIGNATURE_BCBA: any;
   IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED: any = 'assets/img/user-06.jpg';
   
-  rbt_id: any;
-  bcba_id: any;
-  maladaptivename: any;
-  replacementName: any;
-  note_rbt_id: any;
+  rbt_id: number;
+  bcba_id: number;
+  maladaptivename: string;
+  replacementName: string;
+  note_rbt_id: number;
   goal: any;
-  note_id: any;
+  note_id: number;
   location: any;
   birth_date = '';
-  rendering_provider: any;
+  rendering_provider: number;
 
   roles_rbt = [];
   roles_bcba = [];
@@ -183,13 +189,14 @@ throw new Error('Method not implemented.');
   specialists = [];
   maladaptives = [];
   replacementGoals = [];
+  replacements = [];
+
   intervention_added = [];
   intervention2_added = [];
   replacements_added = [];
   intakeoutcome_added = [];
   newlist_added = [];
   behaviorsList_added = [];
-  replacements = [];
   
   maladaptiveSelected: any = null;
   replacementSelected: any = null;
@@ -204,15 +211,15 @@ throw new Error('Method not implemented.');
   caregivers_training_goals = [];
   rbt_training_goals = [];
   posGruoup = [];
-  note_description: any;
-  insurer_name: any;
+  note_description: string;
+  insurer_name: string;
   services: any;
-  insurer_id: any;
+  insurer_id: number;
   cpt: number;
   roles: string[];
-  electronic_signature: any;
+  electronic_signature: string;
   doctor: any;
-  full_name: any;
+  full_name: string;
   
   
   pa_services: PaService[] = [];
@@ -245,7 +252,6 @@ throw new Error('Method not implemented.');
   newList = newList;
   outcomeList = outcomeList;
   show97151List = show97151List;
-
   behaviorsList = behaviorsList;
 
   constructor(
@@ -523,6 +529,33 @@ convertToHours(totalMinutes: number): string {
       (this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED = reader2.result);
   }
 
+
+  onInterventionsChange(updatedInterventions: any[]) {
+    this.intervention_added = updatedInterventions;
+  }
+
+  
+
+  onInterventions2Change(updatedInterventions2: any[]) {
+    this.intervention2_added = updatedInterventions2;
+  }
+  onReplacementChange(updatedReplacements) {
+    this.replacements_added = updatedReplacements;
+  }
+  onReplacement2Change(updatedReplacements2) {
+    this.replacements_added = updatedReplacements2;
+  }
+  
+  onIntakeoutcomeChange(updatedIntakeoutcome) {
+    this.intakeoutcome_added = updatedIntakeoutcome;
+  }
+  onNewListChange(updatedNewList) {
+    this.newlist_added = updatedNewList;
+  }
+  onBehaviorChange(updatedbehaviorsList) {
+    this.behaviorsList_added = updatedbehaviorsList;
+  }
+
   save() {
     this.text_validation = '';
     if (
@@ -701,26 +734,8 @@ convertToHours(totalMinutes: number): string {
       }
     });
   }
-  onInterventionsChange(updatedInterventions: any[]) {
-    this.intervention_added = updatedInterventions;
-  }
-  onReplacementChange(updatedReplacements) {
-    this.replacements_added = updatedReplacements;
-  }
-  
 
-  onInterventions2Change(updatedInterventions2: any[]) {
-    this.intervention2_added = updatedInterventions2;
-  }
-  onIntakeoutcomeChange(updatedIntakeoutcome) {
-    this.intakeoutcome_added = updatedIntakeoutcome;
-  }
-  onNewListChange(updatedNewList) {
-    this.newlist_added = updatedNewList;
-  }
-  onBehaviorChange(updatedbehaviorsList) {
-    this.behaviorsList_added = updatedbehaviorsList;
-  }
+
 
 
   generateAISummary() {

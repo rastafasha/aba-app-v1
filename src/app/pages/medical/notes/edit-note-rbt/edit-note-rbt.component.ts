@@ -894,18 +894,7 @@ convertToHours(totalMinutes: number): string {
     formData.append('pa_service_id', this.selectedPaService.id.toString());
     formData.append('cpt_code', this.selectedPaService.cpt);
 
-    // if(this.FILE_SIGNATURE_RBT ){
-    //   formData.append('imagen', this.FILE_SIGNATURE_RBT);
-    // }
-    // if(this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED ){
-    //   formData.append('imagen', this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED);
-    // }
-    // if(this.FILE_SIGNATURE_RBT ){
-    //   formData.append('imagenn', this.FILE_SIGNATURE_RBT);
-    // }
-    // if(this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED ){
-    //   formData.append('imagenn', this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED);
-    // }
+    
 
     if (this.FILE_SIGNATURE_RBT) {
       formData.append('imagen', this.FILE_SIGNATURE_RBT);
@@ -956,23 +945,6 @@ convertToHours(totalMinutes: number): string {
     );
   }
 
-  //   class Calculadora {
-  //     sumar(num1, num2) {
-  //         return num1 + num2;
-  //     }
-
-  //     restar(num1, num2) {
-  //         return num1 - num2;
-  //     }
-
-  //     dividir(num1, num2) {
-  //         return num1 / num2;
-  //     }
-
-  //     multiplicar(num1, num2) {
-  //         return num1 * num2;
-  //     }
-  // }
 
   generateAISummary() {
     if (!this.checkDataSufficient()) {

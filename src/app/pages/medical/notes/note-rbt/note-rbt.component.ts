@@ -650,6 +650,14 @@ convertToHours(totalMinutes: number): string {
     return this.replacement_added.every(r => this.isValidCorrectResponse(r));
   }
 
+  onMaladaptivesChange(updatedMaladaptives: any[]) {
+    this.maladaptives = updatedMaladaptives;
+  }
+
+  onReplacementsChange(updatedReplacements: any[]) {
+    this.replacementGoals = updatedReplacements;
+  }
+
   save() {
     console.log('Pre-save values:', {
       client_id: this.client_id,
@@ -774,13 +782,7 @@ convertToHours(totalMinutes: number): string {
     this.next_session_is_scheduled_for = nextDate.toISOString().split('T')[0];
   }
 
-  onMaladaptivesChange(updatedMaladaptives: any[]) {
-    this.maladaptives = updatedMaladaptives;
-  }
-
-  onReplacementsChange(updatedReplacements: any[]) {
-    this.replacementGoals = updatedReplacements;
-  }
+  
 
   generateAISummary() {
     const validationResult = this.checkDataSufficient();

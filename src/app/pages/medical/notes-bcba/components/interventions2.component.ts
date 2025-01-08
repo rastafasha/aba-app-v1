@@ -29,7 +29,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
                     [name]="intervention.id"
                   />
                   <label [for]="intervention.id" class="checktoggle"
-                  (ngModelChange)="updateInterventions2()"
+                  (ngModelChange)="updatedInterventions2()"
                     >checkbox</label
                   >
                 </div>
@@ -45,7 +45,7 @@ export class Interventions2Component {
   @Input() interventionsList: any[];
   @Output() interventionsChange = new EventEmitter<any>();
 
-  updateInterventions2() {
+  updatedInterventions2() {
     const interventionsObj = this.interventionsList
       .filter((intervention) => intervention.value)
       .reduce((acc, intervention) => {
