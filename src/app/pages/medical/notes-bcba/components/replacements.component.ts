@@ -36,8 +36,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
                                        [(ngModel)]="replac.value2"
                                        [name]="replac.id + '-modified'"
                                        >
-                                       <!-- (ngModelChange)="updatereplacs()" -->
-                                <label [for]="replac.id + '-modified'" class="checktoggle">checkbox</label>
+                                <label [for]="replac.id + '-modified'" class="checktoggle"
+                                (ngModelChange)="updateReplacements()">checkbox</label>
     
                               </div>
                             </td>

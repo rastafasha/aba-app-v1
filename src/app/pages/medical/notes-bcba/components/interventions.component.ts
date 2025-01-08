@@ -49,10 +49,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
                     [(ngModel)]="intervention.value2"
                     [name]="intervention.id + '-modified'"
                   />
-                  <!-- (ngModelChange)="updateInterventions()" -->
                   <label
                     [for]="intervention.id + '-modified'"
                     class="checktoggle"
+                    (ngModelChange)="updateInterventions()"
                     >checkbox</label
                   >
                 </div>

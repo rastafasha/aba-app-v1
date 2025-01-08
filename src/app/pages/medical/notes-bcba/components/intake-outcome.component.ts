@@ -17,14 +17,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
                           <tr *ngFor="let itemOC of outcomeList; let i = index">
                             <td>{{ itemOC.name }}</td>
                             <td>
-                              <!-- <input class="form-check-input" type="checkbox" id="Assessed" value="Assessed" checked aria-label="..."> -->
                               <div class="status-toggle d-flex justify-content-between align-items-center">
                                 <input type="checkbox" [id]="itemOC.id" class="check"
                                        [(ngModel)]="itemOC.value"
                                        [name]="itemOC.id"
                                        >
-                                       <!-- (ngModelChange)="updateitemOCs()" -->
-                                <label [for]="itemOC.id" class="checktoggle">checkbox</label>
+                                <label [for]="itemOC.id" class="checktoggle"
+                                (ngModelChange)="updateIntakeOutcomes()">checkbox</label>
     
                               </div>
                             </td>

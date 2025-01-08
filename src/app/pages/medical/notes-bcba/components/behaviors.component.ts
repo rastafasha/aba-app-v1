@@ -27,8 +27,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
                     [(ngModel)]="behav.value"
                     [name]="behav.id"
                   />
-                  <!-- (ngModelChange)="updateInterventions()" -->
-                  <label [for]="behav.id" class="checktoggle">checkbox</label>
+                  <label [for]="behav.id" class="checktoggle"
+                  (ngModelChange)="updateBehaviors()">checkbox</label>
                 </div>
               </td>
             </tr>

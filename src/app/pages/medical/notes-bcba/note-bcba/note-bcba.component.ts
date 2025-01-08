@@ -11,12 +11,47 @@ import { DoctorService } from '../../doctors/service/doctor.service';
 import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
 import {interventionsList, interventionsList2, 
-  newList, replacementList,
+  newList, 
   outcomeList, show97151List, behaviorsList
 } from '../listasSelectData';
 interface ValidationResult {
   isValid: boolean;
   missingFields: string[];
+}
+interface interventionsList {
+  id: string;
+  name: string;
+  value: boolean;
+}
+interface interventionsList2 {
+  id: string;
+  name: string;
+  value: boolean;
+  value2: boolean;
+}
+interface replacementList {
+  id: string;
+  name: string;
+  value: boolean;
+}
+interface newList {
+  id: string;
+  name: string;
+  value: boolean;
+}
+interface outcomeList {
+  id: string;
+  name: string;
+  value: boolean;
+}
+interface show97151List {
+  cpt: string;
+}
+
+interface behaviorsList {
+  id: string;
+  name: string;
+  value: boolean;
 }
 
 
@@ -204,11 +239,10 @@ throw new Error('Method not implemented.');
   was_the_client_present= false;
 
   interventionsSelected = {};
+
   interventionsList = interventionsList;
   interventionsList2 = interventionsList2;
   newList = newList;
-
-  replacementList = replacementList;
   outcomeList = outcomeList;
   show97151List = show97151List;
 
@@ -281,13 +315,7 @@ throw new Error('Method not implemented.');
       this.patientLocation_id = this.client_selected.location_id;
       this.insurance_id = resp.patient.insurer_id;
       this.insurance_identifier = resp.patient.insurance_identifier;
-
-      // this.pos = JSON.parse(resp.patient.pos_covered) ;
-
-      // let jsonObjPOS = JSON.parse(this.pos) || '';
-      // this.posGruoup = jsonObjPOS;
-      // console.log(this.posGruoup);
-      console.log(this.pos);
+      
 
       this.birth_date = this.client_selected.birth_date
         ? new Date(this.client_selected.birth_date).toISOString()
@@ -307,7 +335,6 @@ throw new Error('Method not implemented.');
       this.pa_services = resp.patient.pa_services;
       this.start_date = resp.patient.start_date;
       this.end_date = resp.patient.end_date;
-      // console.log(this.pa_services);
       
       //filtramos lo pa_services usando star_date y end_date comparado con el dia de hoy
       this.pa_services = this.pa_services.filter((pa) => {
@@ -317,7 +344,7 @@ throw new Error('Method not implemented.');
         return dateStart <= dateToday && dateEnd >= dateToday;
       });
       //devolvemos la respuesta da los pa_services disponibles
-      console.log(this.pa_services);
+      // console.log(this.pa_services);
 
         
     });
@@ -325,9 +352,7 @@ throw new Error('Method not implemented.');
 
   insuranceData() {
     this.insuranceService.get(this.insurer_id).subscribe((resp) => {
-      console.log(resp);
       this.insurer_name = resp.insurer_name;
-      // this.notes = resp.notes;
       this.services = resp.services;
     });
   }
@@ -365,21 +390,12 @@ throw new Error('Method not implemented.');
     this.bipService
       .getBipProfilePatient_id(this.patient_identifier)
       .subscribe((resp) => {
-        console.log(resp);
-        // this.maladaptives = resp.bip.maladaptives;
         this.bip_id = resp.id;
       });
   }
 
-  // selectSpecialist(event:any){
-  //   event = this.selectedValueRendering;
-  //   this.specialistData(this.selectedValueRendering);
-  //   console.log(this.selectedValueRendering);
-
-  // }
   selectSpecialistab(event) {
     this.selectedValueAba = event.value;
-    // event = this.selectedValueAba;
     this.specialistDataSupervisor(this.selectedValueAba);
   }
 
@@ -389,8 +405,6 @@ throw new Error('Method not implemented.');
       console.log(resp);
       this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED =
         resp.doctor.electronic_signature;
-      // this.notes = resp.notes;
-      // this.services = resp.services;
     });
   }
 
@@ -411,9 +425,7 @@ throw new Error('Method not implemented.');
   }
 
   selectFirmaSpecialistBcba(event) {
-    // event = this.selectedValueBCBA;
     this.speciaFirmaDataBcba(this.selectedValueBcba_id);
-    // console.log('selectFirmaSpecialistBcba', this.selectedValueBcba_id, event);
   }
 
   hourTimeInSelected(value: string) {
@@ -447,8 +459,6 @@ throw new Error('Method not implemented.');
     const totalMinutes = (timeOut1 - timeIn1) + (timeOut2 - timeIn2);
     const totalHours = this.convertToHours(totalMinutes);
     this.total_hour_session = totalHours;
-    // console.log(`Total hours: ${totalHours}`);
-    // console.log('para el html', this.total_hour_session);
 }
 
 convertToMinutes(time: string): number {
@@ -639,8 +649,10 @@ convertToHours(totalMinutes: number): string {
     formData.append('gave_constructive_feedback_on', this.gave_constructive_feedback_on);
     formData.append('participants', this.participants);
     formData.append('environmental_changes', this.environmental_changes);
-    formData.append('type', this.type);
-
+    
+    if (this.selectedPaService1) {
+      formData.append('type', this.selectedPaService1.cpt.toString());
+    }
 
     formData.append('session_date', this.session_date);
 
@@ -679,13 +691,11 @@ convertToHours(totalMinutes: number): string {
     }
 
     this.noteBcbaService.create(formData).subscribe((resp) => {
-      // console.log(resp);
 
       if (resp.message === 403) {
         this.text_validation = resp.message_text;
       } else {
         this.text_success = 'Note BCBA created';
-        // this.ngOnInit();
         Swal.fire('Created', ` Note BCBA Created`, 'success');
         this.router.navigate([AppRoutes.noteBcba.list, this.patient_identifier]);
       }
@@ -872,19 +882,15 @@ convertToHours(totalMinutes: number): string {
 
   calculateUnitsFromTime(startTime: string, endTime: string): number {
     if (!startTime || !endTime) return 0;
-
     const start = this.parseTime(startTime);
     const end = this.parseTime(endTime);
-
     if (!start || !end) return 0;
-
     const durationMinutes = (end.getTime() - start.getTime()) / (1000 * 60);
     return Math.ceil(durationMinutes / 15);
   }
 
   parseTime(timeStr: string): Date | null {
     if (!timeStr) return null;
-
     const [hours, minutes] = timeStr.split(':').map(Number);
     const date = new Date();
     date.setHours(hours, minutes, 0, 0);

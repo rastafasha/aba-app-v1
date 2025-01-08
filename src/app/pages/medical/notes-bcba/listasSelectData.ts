@@ -1,4 +1,4 @@
-export const interventionsList = [
+export const interventionsList  = [
     { id: 'token_economy', name: 'Token Economy', value: false },
     { id: 'generalization', name: 'Generalization', value: false },
     { id: 'NCR', name: 'NCR', value: false },
@@ -51,26 +51,12 @@ export const newList = [
     { id: 'other', name: 'Other', value: false },
 ];
 
-export const replacementList = [
-    { id: 'FAST', name: 'FAST', value: false },
-    { id: 'MAST', name: 'MAST', value: false },
-    { id: 'QABF', name: 'QABF', value: false },
-    { id: 'ABC_data_collection', name: 'ABC Data Collection', value: false },
-    { id: 'VBmapp', name: 'VBmapp', value: false },
-    { id: 'Ablls', name: 'Ablls', value: false },
-    { id: 'EFL', name: 'EFL', value: false },
-    { id: 'Peak', name: 'Peak', value: false },
-    { id: 'parent_interview', name: 'Parent interview', value: false },
-    { id: 'reinforcement_questionnaire', name: 'Reinforcement questionnaire', value: false },
-    { id: 'preference_assessment', name: 'Preference assessment', value: false },
-    { id: 'other', name: 'Other', value: false },
-];
 
 export const outcomeList = [
-    { id: 'SRS-2', name: 'SRS-2', value: false },
-    { id: 'vineland-3', name: 'vineland-3', value: false },
+    { id: 'SRS_2', name: 'SRS-2', value: false },
+    { id: 'vineland_3', name: 'vineland-3', value: false },
     { id: 'PDDBI', name: 'PDDBI', value: false },
-    { id: 'PSI-4 short form', name: 'PSI-4 short form', value: false },
+    { id: 'PSI_4_short_form', name: 'PSI-4 short form', value: false },
 ];
 
 export const show97151List = [

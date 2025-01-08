@@ -8,6 +8,11 @@ import { Replacements2Component } from './replacements2.component';
 import { BehaviorsComponent } from './behaviors.component';
 import { IntakeOutcomeComponent } from './intake-outcome.component';
 import { NewListComponent } from './newlist.component';
+import { InterventionViewComponent } from './interventions-vew.component';
+import { BehaviorViewComponent } from './behaviors-vew.component';
+import { Intervention2ViewComponent } from './interventions2-vew.component';
+import { NewlistViewComponent } from './newlist-vew.component';
+import { IntakeOutcomeViewComponent } from './intake-out-view.component';
 
 
 
@@ -20,7 +25,13 @@ import { NewListComponent } from './newlist.component';
         Replacements2Component,
         BehaviorsComponent,
         IntakeOutcomeComponent,
-        NewListComponent
+        NewListComponent,
+        InterventionViewComponent,
+        BehaviorViewComponent,
+        Intervention2ViewComponent,
+        NewlistViewComponent,
+        IntakeOutcomeViewComponent
+
   ],
   exports: [
 
@@ -30,7 +41,12 @@ import { NewListComponent } from './newlist.component';
         Replacements2Component,
         BehaviorsComponent,
         IntakeOutcomeComponent,
-        NewListComponent
+        NewListComponent,
+        InterventionViewComponent,
+        BehaviorViewComponent,
+        Intervention2ViewComponent,
+        NewlistViewComponent,
+        IntakeOutcomeViewComponent
   ],
   imports: [
     CommonModule,

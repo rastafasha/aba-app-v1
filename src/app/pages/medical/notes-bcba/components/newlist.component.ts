@@ -17,7 +17,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
             <tr *ngFor="let iteml of newList; let i = index">
               <td>{{ iteml.name }}</td>
               <td>
-                <!-- <input class="form-check-input" type="checkbox" id="Assessed" value="Assessed" checked aria-label="..."> -->
                 <div
                   class="status-toggle d-flex justify-content-between align-items-center"
                 >
@@ -28,8 +27,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
                     [(ngModel)]="iteml.value"
                     [name]="iteml.id"
                   />
-                  <!-- (ngModelChange)="updateitemls()" -->
-                  <label [for]="iteml.id" class="checktoggle">checkbox</label>
+                  <label [for]="iteml.id" class="checktoggle"
+                  (ngModelChange)="updatenewLists()">checkbox</label>
                 </div>
               </td>
             </tr>

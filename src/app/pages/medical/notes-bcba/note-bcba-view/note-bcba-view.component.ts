@@ -10,6 +10,15 @@ import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { NoteBcbaService } from '../../../../core/services/notes-bcba.service';
 import { Supervisor } from 'src/app/core/models/notes.model';
+import { 
+  NoteIntervention, 
+  NoteNewList,
+  OutcomeList,
+  BehaviorsList,
+  NoteIntervention2,
+} from '../interfaces';
+
+
 
 @Component({
   selector: 'app-note-bcba-view',
@@ -27,6 +36,12 @@ export class NoteBcbaViewComponent implements OnInit {
 
   showFamily = false;
   showMonitoring = false;
+
+  show97156 = false;
+  show97155 = false;
+  show97151 = false;
+  show971511 = false;
+  show971512 = false;
 
   selectedValueProvider!: string;
   selectedValueRBT!: string;
@@ -144,6 +159,7 @@ export class NoteBcbaViewComponent implements OnInit {
   lto: any = null;
   caregiver_goal: any = null;
   cpt_code: any = null;
+  type: string = null;
   doctor_selected: any = null;
   doctor_selected_full_name: any = null;
   doctor_selected_rbt: any = null;
@@ -154,6 +170,69 @@ export class NoteBcbaViewComponent implements OnInit {
   pa_assessmentsgroup = [];
 
   fromParam: string | null = null;
+
+  intervention: NoteIntervention = {
+    token_economy: false,
+    generalization: false,
+    NCR: false,
+    behavioral_momentum: false,
+    DRA: false,
+    DRI: false,
+    DRO: false,
+    DRL: false,
+    response_block: false,
+    errorless_teaching: false,
+    extinction: false,
+    chaining: false,
+    natural_teaching: false,
+    redirection: false,
+    shaping: false,
+    pairing: false,
+  };
+  intervention2: NoteIntervention2 = {
+    token_economy: false,
+    generalization: false,
+    NCR: false,
+    behavioral_momentum: false,
+    DRA: false,
+    DRI: false,
+    DRO: false,
+    DRL: false,
+    response_block: false,
+    errorless_teaching: false,
+    extinction: false,
+    chaining: false,
+    natural_teaching: false,
+    redirection: false,
+    shaping: false,
+    pairing: false,
+  };
+  newlist: NoteNewList = {
+    FAST: false,
+    MAST: false,
+    QABF: false,
+    ABC_data_collection: false,
+    VBmapp: false,
+    Ablls: false,
+    EFL: false,
+    Peak: false,
+    parent_interview: false,
+    reinforcement_questionnaire: false,
+    preference_assessment: false,
+    other: false,
+  };
+  outcomeList: OutcomeList = {
+    SRS_2: false,
+    vineland_3: false,
+    PDDBI: false,
+    PSI_4_short_form: false,
+  };
+  behaviorsList: BehaviorsList = {
+    behavior1: false,
+    behavior2: false,
+    behavior3: false,
+    behavior4: false,
+  };
 
   constructor(
     private noteBcbaService: NoteBcbaService,
@@ -210,6 +289,7 @@ export class NoteBcbaViewComponent implements OnInit {
       this.client_appeared = this.note_selected.client_appeared;
       this.diagnosis_code = this.note_selected.diagnosis_code;
       this.cpt_code = this.note_selected.cpt_code;
+      this.type = this.note_selected.type;
       this.note_description = this.note_selected.note_description;
       this.client_response_to_treatment_this_session =
         this.note_selected.client_response_to_treatment_this_session;
@@ -251,10 +331,16 @@ export class NoteBcbaViewComponent implements OnInit {
       this.getDoctorBcba();
 
       if(this.cpt_code === '97155' ){
-        this.showFamily = true;
+        this.show97155 = true;
       }
       if(this.cpt_code === '97156' ){
-        this.showMonitoring = true;
+        this.show97156 = true;
+      }
+      if(this.type === 'Observation' ){
+        this.show971511 = true;
+      }
+      if(this.type === 'Report' ){
+        this.show971512 = true;
       }
     });
   }
