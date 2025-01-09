@@ -10,7 +10,7 @@ import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
-import {interventionsList, interventionsList2, 
+import {interventionsList, interventionsList2,
   newList, replacementList,
   outcomeList, show97151List, behaviorsList
 } from '../listasSelectData';
@@ -101,7 +101,7 @@ throw new Error('Method not implemented.');
   next_session_is_scheduled_for = '';
   provider_name = '';
   supervisor_name = '';
-  
+
   porcent_of_occurrences = 0;
   porcent_of_correct_response = 0;
   maladaptive = '';
@@ -128,7 +128,7 @@ throw new Error('Method not implemented.');
   FILE_SIGNATURE_BCBA: any;
   IMAGE_PREVISUALIZA_SIGNATURE_BCBA: any;
   IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED: any = 'assets/img/user-06.jpg';
-  
+
   rbt_id: any;
   bcba_id: any;
   maladaptivename: any;
@@ -142,14 +142,14 @@ throw new Error('Method not implemented.');
 
   roles_rbt = [];
   roles_bcba = [];
-  
+
   hours_days = [];
   specialists = [];
   maladaptives = [];
   replacementGoals = [];
   intervention_added = [];
   replacements = [];
-  
+
   maladaptiveSelected: any = null;
   replacementSelected: any = null;
   lto: any = null;
@@ -172,15 +172,15 @@ throw new Error('Method not implemented.');
   electronic_signature: any;
   doctor: any;
   full_name: any;
-  
-  
+
+
   pa_services: PaService[] = [];
   selectedPaService: PaService | null = null;
   selectedPaService1: PaService | null = null;
   projectedUnits = 0;
   start_date: Date; // Fecha de inicio
   end_date: Date; // Fecha de fin
-  
+
   participants = '';
   additional_goals_or_interventions = '';
   asked_and_clarified_questions_about_the_implementation_of = '';
@@ -301,7 +301,7 @@ throw new Error('Method not implemented.');
       this.start_date = resp.patient.start_date;
       this.end_date = resp.patient.end_date;
       // console.log(this.pa_services);
-      
+
       //filtramos lo pa_services usando star_date y end_date comparado con el dia de hoy
       this.pa_services = this.pa_services.filter((pa) => {
         const dateStart = new Date(pa.start_date).getTime();
@@ -312,7 +312,7 @@ throw new Error('Method not implemented.');
       //devolvemos la respuesta da los pa_services disponibles
       console.log(this.pa_services);
 
-        
+
     });
   }
 
@@ -352,7 +352,7 @@ throw new Error('Method not implemented.');
       this.provider_credential = resp.doctor.certificate_number;
     });
   }
-  
+
 
   getMaladaptivesBipByPatientId() {
     this.bipService
@@ -654,7 +654,7 @@ convertToHours(totalMinutes: number): string {
 
     if (!validationResult.isValid) {
         const missingFieldsList = validationResult.missingFields.join('\n• ');
-        Swal.fire('Warning', `Please fill all the required fields:\n\n• ${missingFieldsList}`, 'warning');
+      Swal.fire('Warning', `Oops! It looks like you’re missing the following information. Please review and complete the required fields before proceeding:\n\n• ${missingFieldsList}`, 'warning');
         return;
     }
 
@@ -788,7 +788,7 @@ convertToHours(totalMinutes: number): string {
     const service = event.value;
     if (service) {
       this.selectedValueCode = service.cpt;
-      
+
       this.show97151 = true;
       this.show971511 = false;
       this.show971512 = false;
@@ -804,7 +804,7 @@ convertToHours(totalMinutes: number): string {
       this.checkPosWarning();
     }
   }
-  
+
 
   calculateUnitsFromTime(startTime: string, endTime: string): number {
     if (!startTime || !endTime) return 0;
