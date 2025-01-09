@@ -330,18 +330,156 @@
               </div>
               <!-- all -->
 
-              <!-- all -->
-              <div class="row">
+              <!-- show97151 -->
+              <div class="col-xs-12" *ngIf="show971511">
+                <div class="col-xs-12">
+                  <div class="card">
+                    <div class="card-header">
+                    </div>
+                    <div class="card-body p-0">
+                      <div class="personal-list-out">
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-xs-12 col-sm-4">
+                              <div class="d-flex justify-content-between align-items-center">
+                                <span>BCBA conducted client observations</span>
+                                <div class="d-flex justify-content-between align-items-center">
+                                  <i *ngIf="note_selected?.BCBA_conducted_client_observations" class="fa fa-check"></i>
+                                  <i *ngIf="!note_selected?.BCBA_conducted_client_observations" class="fa fa-times"></i>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-4">
+                              <div class="d-flex justify-content-between align-items-center">
+                                <span>BCBA conducted assessments</span>
+                                <div class="d-flex justify-content-between align-items-center">
+                                  <i *ngIf="note_selected?.BCBA_conducted_assessments" class="fa fa-check"></i>
+                                  <i *ngIf="!note_selected?.BCBA_conducted_assessments" class="fa fa-times"></i>
+                                </div>
+                              </div>
+                            </div>
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- newlist -->
+                  <div class="card">
+                    <app-newlist-view [newlist]="newlist"></app-newlist-view>
+                  </div>
+                  <!-- newlist -->
+                  <!-- outcomeList -->
+                  <div class="card">
+                    <app-intakeoutcome-view [outcomeList]="outcomeList"></app-intakeoutcome-view>
+                  </div>
+                  <!-- outcomeList -->
+                </div>
+              </div>
+              <!-- show971512 -->
+              <div class="col-xs-12" *ngIf="show971512">
+                <div class="col-xs-12">
+                  <div class="card">
+                    <div class="card-header">
+                    </div>
+                    <div class="card-body p-0">
+                      <div class="personal-list-out">
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-xs-12 col-sm-4">
+                              <div class="d-flex justify-content-between align-items-center">
+                                <span>BCBA conducted client observations</span>
+                                <div class="d-flex justify-content-between align-items-center">
+                                  <i *ngIf="note_selected?.BCBA_conducted_client_observations" class="fa fa-check"></i>
+                                  <i *ngIf="!note_selected?.BCBA_conducted_client_observations" class="fa fa-times"></i>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-4">
+                              <div class="d-flex justify-content-between align-items-center">
+                                <span>BCBA conducted assessments</span>
+                                <div class="d-flex justify-content-between align-items-center">
+                                  <i *ngIf="note_selected?.BCBA_conducted_assessments" class="fa fa-check"></i>
+                                  <i *ngIf="!note_selected?.BCBA_conducted_assessments" class="fa fa-times"></i>
+                                </div>
+                              </div>
+                            </div>
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+
+              <!-- show97156 -->
+                <!-- show97155 -->
+                <div class="col-xs-12" *ngIf="show97155">
+                  <div class="card">
+                    <app-intervention-view [interventions]="interventions"></app-intervention-view>
+                  </div>
+                  <div class="card">
+                    <div class="card-header">
+                      <!-- <h4 class="card-title">Modifications needed at this time</h4> -->
+                    </div>
+                    <!-- body card -->
+                    <div class="card-body p-0">
+                      <div class="personal-list-out">
+                        <div class="container">
+                          <div class="col-xs-12">
+                            <div class="row">
+                              <div class="col-xs-12 col-sm-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                  <span>Modifications needed at this time</span>
+                                  <div class="d-flex justify-content-between align-items-center">
+                                    <i *ngIf="note_selected?.modifications_needed_at_this_time" class="fa fa-check"></i>
+                                    <i *ngIf="!note_selected?.modifications_needed_at_this_time"
+                                      class="fa fa-times"></i>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Additional Goals or Interventions -->
+                  <div class="card">
+                    <div class="card-header">
+                    </div>
+                    <div class="card-body p-0">
+                      <div class="personal-list-out">
+                        <div class="container">
+                          <div class="col-xs-12">
+                            <div class="row">
+                              <div class="col-xs-12">
+                                <div class="detail-personal">
+                                  <h2>Additional Goals or Interventions</h2>
+                                  <p>{{note_selected.additional_goals_or_interventions}}</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Additional Goals or Interventions -->
+                </div>
                 <!-- show97156 -->
                 <div class="col-xs-12 " *ngIf="show97156">
                   <div class="card">
-                    <app-intervention-view [intervention]="intervention"></app-intervention-view>
+                    
+                    <app-intervention2-view [interventions2]="interventions2"></app-intervention2-view>
                   </div>
                   <!-- replacement protocols -->
                   <!-- replacement protocols -->
                   <!-- behaviors -->
                   <div class="card">
-                    <app-behaviorslist-view [maladaptives]="maladaptives"></app-behaviorslist-view>
+                    <app-behaviorslist-view [behaviors]="behaviors"></app-behaviorslist-view>
                   </div>
                   <!-- behaviors -->
 
@@ -406,194 +544,9 @@
                   </div>
 
                   <!-- info -->
-                  <!-- cargiver goal -->
-                  <div class="col-xs-12">
-                    <div class="card">
-                      <div class="card-header">
-                        <h4 class="card-title">Caregiver Goal</h4>
-                      </div>
-                      <div class="card-body p-0">
-                        <div class="personal-list-out">
-                          <div class="container">
-                            <div class="row">
-                              <table class="table mb-0">
-                                <thead>
-                                  <tr>
-                                    <th>
-                                      <h2 style="font-size: 12px; font-weight: 500">
-                                        Caregiver Goal
-                                      </h2>
-                                    </th>
-                                    <th>
-                                      <h2 style="font-size: 12px; font-weight: 500">
-                                        % of Occurrences
-                                      </h2>
-                                    </th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr *ngFor="
-                                        let behavior of caregivers_training_goals;
-                                        let i = index
-                                      ">
-                                    <td>
-                                      <p>{{ behavior.caregiver_goal }}</p>
-                                    </td>
-                                    <td>
-                                      <p>
-                                        {{ behavior.porcent_of_correct_response }}
-                                      </p>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- cargiver goal -->
+                  
                 </div>
-                <!-- show97155 -->
-                <div class="col-xs-12" *ngIf="show97155">
-                  <div class="card">
-                    <app-intervention2-view [interventions2]="interventions2"></app-intervention2-view>
-                  </div>
-                  <div class="card">
-                    <div class="card-header">
-                      <!-- <h4 class="card-title">Modifications needed at this time</h4> -->
-                    </div>
-                    <!-- body card -->
-                    <div class="card-body p-0">
-                      <div class="personal-list-out">
-                        <div class="container">
-                          <div class="col-xs-12">
-                            <div class="row">
-                              <div class="col-xs-12 col-sm-3">
-                                <div class="d-flex justify-content-between align-items-center">
-                                  <span>Modifications needed at this time</span>
-                                  <div class="d-flex justify-content-between align-items-center">
-                                    <i *ngIf="note_selected?.modifications_needed_at_this_time" class="fa fa-check"></i>
-                                    <i *ngIf="!note_selected?.modifications_needed_at_this_time"
-                                      class="fa fa-times"></i>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Additional Goals or Interventions -->
-                  <div class="card">
-                    <div class="card-header">
-                    </div>
-                    <div class="card-body p-0">
-                      <div class="personal-list-out">
-                        <div class="container">
-                          <div class="col-xs-12">
-                            <div class="row">
-                              <div class="col-xs-12">
-                                <div class="detail-personal">
-                                  <h2>Additional Goals or Interventions</h2>
-                                  <p>{{note_selected.additional_goals_or_interventions}}</p>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Additional Goals or Interventions -->
-                </div>
-
-                <!-- show97151 -->
-                <div class="col-xs-12" *ngIf="show971511">
-                  <div class="col-xs-12">
-                    <div class="card">
-                      <div class="card-header">
-                      </div>
-                      <div class="card-body p-0">
-                        <div class="personal-list-out">
-                          <div class="container">
-                            <div class="row">
-                              <div class="col-xs-12 col-sm-4">
-                                <div class="d-flex justify-content-between align-items-center">
-                                  <span>BCBA conducted client observations</span>
-                                  <div class="d-flex justify-content-between align-items-center">
-                                    <i *ngIf="note_selected?.BCBA_conducted_client_observations" class="fa fa-check"></i>
-                                    <i *ngIf="!note_selected?.BCBA_conducted_client_observations" class="fa fa-times"></i>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-xs-12 col-sm-4">
-                                <div class="d-flex justify-content-between align-items-center">
-                                  <span>BCBA conducted assessments</span>
-                                  <div class="d-flex justify-content-between align-items-center">
-                                    <i *ngIf="note_selected?.BCBA_conducted_assessments" class="fa fa-check"></i>
-                                    <i *ngIf="!note_selected?.BCBA_conducted_assessments" class="fa fa-times"></i>
-                                  </div>
-                                </div>
-                              </div>
-                              
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- newlist -->
-                    <div class="card">
-                      <app-newlist-view [newlist]="newlist"></app-newlist-view>
-                    </div>
-                    <!-- newlist -->
-                    <!-- outcomeList -->
-                    <div class="card">
-                      <app-intakeoutcome-view [outcomeList]="outcomeList"></app-intakeoutcome-view>
-                    </div>
-                    <!-- outcomeList -->
-                  </div>
-                </div>
-                <!-- show971512 -->
-                <div class="col-xs-12" *ngIf="show971512">
-                  <div class="col-xs-12">
-                    <div class="card">
-                      <div class="card-header">
-                      </div>
-                      <div class="card-body p-0">
-                        <div class="personal-list-out">
-                          <div class="container">
-                            <div class="row">
-                              <div class="col-xs-12 col-sm-4">
-                                <div class="d-flex justify-content-between align-items-center">
-                                  <span>BCBA conducted client observations</span>
-                                  <div class="d-flex justify-content-between align-items-center">
-                                    <i *ngIf="note_selected?.BCBA_conducted_client_observations" class="fa fa-check"></i>
-                                    <i *ngIf="!note_selected?.BCBA_conducted_client_observations" class="fa fa-times"></i>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-xs-12 col-sm-4">
-                                <div class="d-flex justify-content-between align-items-center">
-                                  <span>BCBA conducted assessments</span>
-                                  <div class="d-flex justify-content-between align-items-center">
-                                    <i *ngIf="note_selected?.BCBA_conducted_assessments" class="fa fa-check"></i>
-                                    <i *ngIf="!note_selected?.BCBA_conducted_assessments" class="fa fa-times"></i>
-                                  </div>
-                                </div>
-                              </div>
-                              
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    
-                  </div>
-                </div>
-              </div>
+              
               <!-- all -->
 
 

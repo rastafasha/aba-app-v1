@@ -3,6 +3,7 @@ import { Outcome } from '../interfaces';
 
 @Component({
   selector: 'app-intakeoutcome',
+  styleUrls: ['../note-bcba/note-bcba.component.scss'],
   template: `
     <div class="col-12">
                     <h5>Intake and Outcome Measures:</h5>

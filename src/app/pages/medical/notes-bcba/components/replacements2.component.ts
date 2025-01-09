@@ -26,7 +26,7 @@ import { ReplacementL } from '../interfaces';
                     [id]="replacement.id"
                     class="check"
                     [(ngModel)]="replacement.value"
-                    [name]="replacement.id"
+                    [name]="replacement.goal"
                     (ngModelChange)="updateReplacements()"
                   />
                   <label
@@ -51,7 +51,7 @@ export class Replacements2Component {
     const replacementsObj = this.replacementList
       .filter((replacement) => replacement.value)
       .reduce((acc, replacement) => {
-        acc[replacement.id] = { demostrated: !!replacement.value, name: replacement.goal };
+        acc[replacement.goal] = { demostrated: !!replacement.value, name: replacement.goal };
         return acc;
       }, {});
 

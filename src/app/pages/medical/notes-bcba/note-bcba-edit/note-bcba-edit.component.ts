@@ -107,6 +107,7 @@ export class NoteBcbaEditComponent implements OnInit {
   replacement = '';
   maladaptive_behavior = '';
   interventions: any;
+  interventions2: any;
   provider_signature: any;
   supervisor_signature: any;
 
@@ -152,12 +153,14 @@ export class NoteBcbaEditComponent implements OnInit {
   replacementGoals = [];
   replacements = [];
   interventionsgroup = [];
+  interventionsgroup2 = [];
 
   intervention_added :object;
   intervention2_added :object;
   replacements_added = [];
+  replacements2_added = [];
   intakeoutcome_added = [];
-  newlist_added = [];
+  newlist_added :object;
   behaviorsList_added :object;
 
   maladaptivegroup = [];
@@ -219,7 +222,7 @@ export class NoteBcbaEditComponent implements OnInit {
   was_the_client_present= false;
 
   interventionsList = interventionsList;
-    interventionsList2 = interventionsList2;
+  interventionsList2 = interventionsList2;
     newList = newList;
     outcomeList = outcomeList;
     show97151List = show97151List;
@@ -261,8 +264,6 @@ export class NoteBcbaEditComponent implements OnInit {
 
   getConfig() {
     this.noteBcbaService.listConfigNote().subscribe((resp) => {
-      // console.log(resp);
-
       this.roles_rbt = resp.roles_rbt;
       this.roles_bcba = resp.roles_bcba;
       this.hours_days = resp.hours;
@@ -291,6 +292,9 @@ export class NoteBcbaEditComponent implements OnInit {
       this.client_response_to_treatment_this_session =
         this.note_selected.client_response_to_treatment_this_session;
       this.pos = this.note_selected.pos;
+      this.environmental_changes = this.note_selected.environmental_changes;
+      this.participants = this.note_selected.participants;
+      
 
       this.additional_goals_or_interventions  = this.note_selected.additional_goals_or_interventions ;
       this.asked_and_clarified_questions_about_the_implementation_of = this.note_selected.asked_and_clarified_questions_about_the_implementation_of;
@@ -307,20 +311,16 @@ export class NoteBcbaEditComponent implements OnInit {
       this.caregivers_training_goalsgroup = resp.caregiver_goals;
       const jsonObj = JSON.parse(this.caregivers_training_goalsgroup) || '';
       this.caregivers_training_goals = jsonObj;
-      // console.log(this.caregivers_training_goals);
 
       this.rbt_training_goalsgroup = resp.rbt_training_goals;
       const jsonObj1 = JSON.parse(this.rbt_training_goalsgroup) || '';
       this.rbt_training_goals = jsonObj1;
-      // console.log(this.rbt_training_goals);
 
       this.selectedValueRBT = resp.noteBcba.provider.name;
       this.selectedValueProviderRBT_id =resp.noteBcba.provider_id;
 
       this.selectedValueBCBA = resp.noteBcba.supervisor.name;
       this.selectedValueBcba_id =resp.noteBcba.supervisor_id;
-      // console.log(this.selectedValueRendering );
-
 
       this.session_date = this.note_selected.session_date
         ? new Date(this.note_selected.session_date).toISOString()
@@ -329,11 +329,6 @@ export class NoteBcbaEditComponent implements OnInit {
       this.session_length_morning_total = this.note_selected.session_length_morning_total;
       this.session_length_afternon_total = this.note_selected.session_length_afternon_total;
       this.session_length_total = this.note_selected.session_length_total;
-
-      // this.selectedValueTimeIn = this.note_selected.time_in;
-      // this.selectedValueTimeOut = this.note_selected.time_out;
-      // this.selectedValueTimeIn2 = this.note_selected.time_in2;
-      // this.selectedValueTimeOut2 = this.note_selected.time_out2;
 
       this.selectedValueTimeIn = this.formatTime(this.note_selected.time_in);
       this.selectedValueTimeOut = this.formatTime(this.note_selected.time_out);
@@ -375,10 +370,160 @@ export class NoteBcbaEditComponent implements OnInit {
         this.show97151 = true;
       }
 
-      this.maladaptives = this.note_selected.maladaptives;
-      this.replacements = this.note_selected.replacements;
-      console.log(this.replacements);
+      this.interventions = this.note_selected.interventions;
+      // const jsonObj3 = JSON.parse(this.note_selected.interventions) || '';
+      // this.interventionsgroup = [...jsonObj3];
+
+      // this.interventionsList = this.convertToInterventions(
+      //   this.interventionsgroup[0]
+      // );
+      
+      this.interventions2 = this.note_selected.interventions2;
+      // const jsonObj4 = JSON.parse(this.note_selected.interventions2) || '';
+      // this.interventionsgroup2 = [...jsonObj4];
+
+      // this.interventionsList2 = this.convertToInterventions2(
+      //   this.interventionsgroup2[0]
+      // );
+      
+      this.behaviorList = this.note_selected.behaviors;
     });
+  }
+
+  private convertToInterventions(input: { [x: string]: boolean }) {
+    return [
+      {
+        id: 'token_economy',
+        name: 'Token Economy',
+        value: input['token_economy'] || false,
+      },
+      {
+        id: 'generalization',
+        name: 'Generalization',
+        value: input['generalization'] || false,
+      },
+      { id: 'NCR', name: 'NCR', value: input['NCR'] || false },
+      { id: 'behavioral_momentum', name: 'Behavioral Momentum', 
+        value: input['Behavioral Momentum'] || false 
+      },
+      { id: 'DRA', name: 'DRA', value: input['DRA'] || false },
+      { id: 'DRI', name: 'DRI', value: input['DRI'] || false },
+      { id: 'DRO', name: 'DRO', value: input['DRO'] || false },
+      { id: 'DRL', name: 'DRL', value: input['DRL'] || false },
+      
+      {
+        id: 'response_block',
+        name: 'Response Block',
+        value: input['response_block'] || false,
+      },
+      {
+        id: 'errorless_teaching',
+        name: 'Errorless Teaching',
+        value: input['errorless_teaching'] || false,
+      },
+      {
+        id: 'extinction',
+        name: 'Extinction',
+        value: input['extinction'] || false,
+      },
+      { id: 'chaining', name: 'Chaining', value: input['chaining'] || false },
+      {
+        id: 'natural_teaching',
+        name: 'Natural Teaching',
+        value: input['natural_teaching'] || false,
+      },
+      {
+        id: 'redirection',
+        name: 'Redirection',
+        value: input['redirection'] || false,
+      },
+      { id: 'shaping', name: 'Shaping', value: input['shaping'] || false },
+      { id: 'pairing', name: 'Pairing', value: input['pairing'] || false },
+    ];
+  }
+
+  private convertToInterventions2(input: { [x: string]: boolean }) {
+    return [
+      {
+        id: 'token_economy',
+        name: 'Token Economy',
+        value: input['token_economy'] || false,
+        value2: input['token_economy'] || false,
+      },
+      {
+        id: 'generalization',
+        name: 'Generalization',
+        value: input['generalization'] || false,
+        value2: input['generalization'] || false,
+      },
+      { id: 'NCR', name: 'NCR', 
+        value: input['NCR'] || false ,
+        value2: input['NCR'] || false ,
+      },
+      { id: 'behavioral_momentum', name: 'Behavioral Momentum', 
+        value: input['Behavioral Momentum'] || false ,
+        value2: input['Behavioral Momentum'] || false 
+      },
+      { id: 'DRA', name: 'DRA',
+         value: input['DRA'] || false,
+         value2: input['DRA'] || false
+         },
+      { id: 'DRI', name: 'DRI',
+         value: input['DRI'] || false,
+         value2: input['DRI'] || false
+         },
+      { id: 'DRO', name: 'DRO',
+         value: input['DRO'] || false,
+         value2: input['DRO'] || false
+         },
+      { id: 'DRL', name: 'DRL',
+         value: input['DRL'] || false,
+         value2: input['DRL'] || false
+         },
+      
+      {
+        id: 'response_block',
+        name: 'Response Block',
+        value: input['response_block'] || false,
+        value2: input['response_block'] || false,
+      },
+      {
+        id: 'errorless_teaching',
+        name: 'Errorless Teaching',
+        value: input['errorless_teaching'] || false,
+        value2: input['errorless_teaching'] || false,
+      },
+      {
+        id: 'extinction',
+        name: 'Extinction',
+        value: input['extinction'] || false,
+        value2: input['extinction'] || false,
+      },
+      { id: 'chaining', name: 'Chaining', 
+        value: input['chaining'] || false, 
+        value2: input['chaining'] || false, 
+      },
+      {
+        id: 'natural_teaching',
+        name: 'Natural Teaching',
+        value: input['natural_teaching'] || false,
+        value2: input['natural_teaching'] || false,
+      },
+      {
+        id: 'redirection',
+        name: 'Redirection',
+        value: input['redirection'] || false,
+        value2: input['redirection'] || false,
+      },
+      { id: 'shaping', name: 'Shaping', 
+        value: input['shaping'] || false,
+        value2: input['shaping'] || false,
+       },
+      { id: 'pairing', name: 'Pairing', 
+        value: input['pairing'] || false,
+        value2: input['pairing'] || false,
+       },
+    ];
   }
 
   private formatTime(timeString: string | null): string {
@@ -396,7 +541,7 @@ export class NoteBcbaEditComponent implements OnInit {
     this.bipService
       .getBipProfilePatient_id(this.patient_identifier)
       .subscribe((resp) => {
-        // console.log(resp);
+        console.log(resp);
         this.client_selected = resp.patient;
 
         this.first_name = this.client_selected.first_name;
@@ -404,11 +549,11 @@ export class NoteBcbaEditComponent implements OnInit {
         this.patient_id = this.client_selected.id;
         this.patient_identifier = this.client_selected.patient_identifier;
         this.patientLocation_id = this.client_selected.location_id;
-        this.insurance_id = resp.patient.insurer_id;
         this.insurance_identifier = resp.patient.insurance_identifier;
+        this.insurance_id = resp.patient.insurer_id;
+        // this.insuranceData();
         
         this.pos = this.client_selected.pos_covered;
-        this.insuranceData();
         this.getReplacementsByPatientId();
         this.pa_services = this.client_selected.pa_services;
 
@@ -420,25 +565,22 @@ export class NoteBcbaEditComponent implements OnInit {
         return dateStart <= dateToday && dateEnd >= dateToday;
       });
       //devolvemos la respuesta da los pa_services disponibles
-      // console.log(this.pa_services);
         if (noteServiceId) {
           this.setPaService(noteServiceId);
         }
-
         this.birth_date = this.client_selected.birth_date
         ? new Date(this.client_selected.birth_date).toISOString()
         : '';
-
-        this.behaviorList = resp.bip.maladaptives;
+        
 
       });
   }
 
   private setPaService(noteServiceId: number) {
-    console.log('Setting PA Service:', {
-      noteServiceId,
-      availableServices: this.pa_services,
-    });
+    // console.log('Setting PA Service:', {
+    //   noteServiceId,
+    //   availableServices: this.pa_services,
+    // });
 
     if (this.pa_services?.length && noteServiceId) {
       this.selectedPaService =
@@ -470,10 +612,9 @@ export class NoteBcbaEditComponent implements OnInit {
   }
 
   insuranceData() {
-    this.insuranceService.get(this.insurer_id).subscribe((resp) => {
-      // console.log(resp);
+    this.insuranceService.get(this.insurance_id).subscribe((resp) => {
+      console.log(resp);
       this.insurer_name = resp.insurer_name;
-      // this.notes = resp.notes;
       this.services = resp.services;
     });
   }
@@ -482,10 +623,7 @@ export class NoteBcbaEditComponent implements OnInit {
     this.doctorService
       .showDoctorProfile(selectedValueInsurer)
       .subscribe((resp) => {
-        // console.log(resp);
         this.provider_credential = resp.doctor.certificate_number;
-        // this.notes = resp.notes;
-        // this.services = resp.services;
       });
   }
 
@@ -651,16 +789,17 @@ convertToHours(totalMinutes: number): string {
   }
 
 
-
-
   onInterventionsChange(updatedInterventions: object) {
-    this.intervention_added = updatedInterventions;
+    this.interventionsgroup = [
+      this.convertToInterventionsGroup(this.interventionsList),
+    ];
+    console.log(this.interventionsgroup);
   }
-
-  
-
   onInterventions2Change(updatedInterventions2:object) {
-    this.intervention2_added = updatedInterventions2;
+    this.interventionsgroup2 = [
+      this.convertToInterventionsGroup2(this.interventionsList2),
+    ];
+    console.log(this.interventionsgroup2);
   }
 
   onReplacementChange(updatedReplacements) {
@@ -673,11 +812,37 @@ convertToHours(totalMinutes: number): string {
   onIntakeoutcomeChange(updatedIntakeoutcome) {
     this.intakeoutcome_added = updatedIntakeoutcome;
   }
-  onNewListChange(updatedNewList) {
+  onNewListChange(updatedNewList:object) {
     this.newlist_added = updatedNewList;
   }
   onBehaviorChange(updatedbehaviorsList:object) {
     this.behaviorsList_added = updatedbehaviorsList;
+  }
+
+  private convertToInterventionsGroup(
+    interventions: { id: string; name: string; value: boolean }[]
+  ) {
+    const group = {};
+    for (const intervention of interventions) {
+      if (intervention.value) {
+        group[intervention.id] = true;
+      }
+    }
+    return group;
+  }
+  private convertToInterventionsGroup2(
+    interventions2: { id: string; name: string; value: boolean; value2: boolean }[]
+  ) {
+    const group = {};
+    for (const intervention of interventions2) {
+      if (intervention.value) {
+        group[intervention.id] = true;
+      }
+      if (intervention.value2) {
+        group[intervention.id] = true;
+      }
+    }
+    return group;
   }
 
   save() {
@@ -705,6 +870,8 @@ convertToHours(totalMinutes: number): string {
     formData.append('insurance_id', this.insurance_id+''); // id del seguro preferiblemente que solo agarre la data al crear
     formData.append('insurance_identifier', this.insurance_identifier); // id del seguro preferiblemente que solo agarre la data al crear
 
+
+    
 
     if (this.summary_note) {
       formData.append('summary_note', this.summary_note);
@@ -761,9 +928,6 @@ convertToHours(totalMinutes: number): string {
       formData.append('meet_with_client_at', this.meet_with_client_at);
     }
 
-    // if (this.note_description) {
-    //   formData.append('note_description', this.note_description);
-    // }
     if (this.rbt_training_goals) {
       formData.append(
         'rbt_training_goals',
@@ -776,6 +940,86 @@ convertToHours(totalMinutes: number): string {
         JSON.stringify(this.caregivers_training_goals)
       );
     }
+    //variaciones nota bcba
+    if (this.intervention_added) {
+      formData.append(
+        'interventions',
+        JSON.stringify(this.intervention_added)
+      );
+    }
+
+    if (this.intervention2_added) {
+      formData.append(
+        'interventions2',
+        JSON.stringify(this.intervention2_added)
+      );
+    }
+
+    if (this.replacements_added) {
+      formData.append(
+        'replacements',
+        JSON.stringify(this.replacements_added)
+      );
+    }
+
+    if (this.replacements2_added) {
+      formData.append(
+        'replacements2',
+        JSON.stringify(this.replacements2_added)
+      );
+    }
+
+    if (this.intakeoutcome_added) {
+      formData.append(
+        'intake_outcome',
+        JSON.stringify(this.intakeoutcome_added)
+      );
+    }
+
+    if (this.behaviorsList_added) {
+      formData.append(
+        'behaviors',
+        JSON.stringify(this.behaviorsList_added)
+      );
+    }
+
+    if (this.modifications_needed_at_this_time) {
+      formData.append('modifications_needed_at_this_time', this.modifications_needed_at_this_time ? '1' : '0');
+    }
+    if (this.cargiver_participation) {
+      formData.append('cargiver_participation', this.cargiver_participation ? '1' : '0');
+    }
+    if (this.was_the_client_present) {
+      formData.append('was_the_client_present', this.was_the_client_present ? '1' : '0');
+    }
+    if (this.BCBA_conducted_assessments) {
+      formData.append('BCBA_conducted_assessments', this.BCBA_conducted_assessments ? '1' : '0');
+    }
+    if (this.BCBA_conducted_client_observations) {
+      formData.append('BCBA_conducted_client_observations', this.BCBA_conducted_client_observations ? '1' : '0');
+    }
+    if (this.additional_goals_or_interventions) {
+      formData.append('additional_goals_or_interventions', this.additional_goals_or_interventions);
+    }
+    if (this.asked_and_clarified_questions_about_the_implementation_of) {
+      formData.append('asked_and_clarified_questions_about_the_implementation_of', this.asked_and_clarified_questions_about_the_implementation_of);
+    }
+    if (this.reinforced_caregiver_strengths_in) {
+      formData.append('reinforced_caregiver_strengths_in', this.reinforced_caregiver_strengths_in);
+    }
+    if (this.gave_constructive_feedback_on) {
+      formData.append('gave_constructive_feedback_on', this.gave_constructive_feedback_on);
+    }
+    if (this.recomended_more_practice_on) {
+      formData.append('recomended_more_practice_on', this.recomended_more_practice_on);
+    }
+    if (this.participants) {
+      formData.append('participants', this.participants);
+    }
+    if (this.environmental_changes) {
+      formData.append('environmental_changes', this.environmental_changes);
+    }
+    //variaciones nota bcba
 
     if (this.FILE_SIGNATURE_RBT) {
       formData.append('imagen', this.FILE_SIGNATURE_RBT);
@@ -799,13 +1043,9 @@ convertToHours(totalMinutes: number): string {
     this.noteBcbaService
       .update(formData as any, this.note_selectedId)
       .subscribe((resp) => {
-        // console.log(resp);
-
         if (resp.message === 403) {
           this.text_validation = resp.message_text;
         } else {
-          // this.text_success = 'Employer created';
-          // this.ngOnInit();
           Swal.fire('Updated', ` Note Rbt Updated`, 'success');
           this.router.navigate([AppRoutes.noteBcba.list, this.patient_identifier]);
         }

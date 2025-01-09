@@ -26,7 +26,7 @@ import { Maladaptives } from '../interfaces';
                   [id]="'check-' + behavior.id"
                   class="check"
                   [(ngModel)]="behavior.value"
-                  [name]="'check-' + behavior.id"
+                  [name]="'check-' + behavior.maladaptive_behavior"
                   (ngModelChange)="updateBehaviors()"
                 />
                 <label [for]="'check-' + behavior.id" class="checktoggle"
@@ -48,7 +48,7 @@ export class BehaviorsComponent {
     const result = this.behaviorList
       .filter((behavior) => behavior.value)
       .reduce((acc, behavior) => {
-        acc[behavior.id] = { discused: !!behavior.value, name: behavior.maladaptive_behavior };
+        acc[behavior.maladaptive_behavior] = { discused: !!behavior.value };
         return acc;
       }, {}); // Valor inicial para el acumulador
     console.log(result);

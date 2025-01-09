@@ -158,6 +158,7 @@ throw new Error('Method not implemented.');
   intervention_added : object;
   intervention2_added : object;
   replacements_added = [];
+  replacements2_added = [];
   intakeoutcome_added = [];
   newlist_added :object;
   behaviorsList_added :object;
@@ -303,7 +304,8 @@ throw new Error('Method not implemented.');
 
       this.getReplacementsByPatientId();
       this.getMaladaptivesBipByPatientId();
-      this.insuranceData();
+      // this.insuranceData();
+      
       this.pa_services = resp.patient.pa_services;
       this.start_date = resp.patient.start_date;
       this.end_date = resp.patient.end_date;
@@ -319,6 +321,8 @@ throw new Error('Method not implemented.');
       
       this.behaviorList = resp.bip.maladaptives;
       this.replacementList = resp.replacements;
+      // this.interventionsList = resp.interventions;
+      // this.interventionsList2 = resp.interventions2;
       console.log(this.behaviorList);
       console.log(this.replacements);
 
@@ -606,6 +610,9 @@ convertToHours(totalMinutes: number): string {
     formData.append('insurance_id', this.insurance_id+''); // id del seguro preferiblemente que solo agarre la data al crear
     formData.append('insurance_identifier', this.insurance_identifier); // id del seguro preferiblemente que solo agarre la data al crear
 
+    formData.append('participants', this.participants);
+    formData.append('environmental_changes', this.environmental_changes);
+
     formData.append(
       'rbt_training_goals',
       JSON.stringify(this.rbt_training_goals)
@@ -614,44 +621,80 @@ convertToHours(totalMinutes: number): string {
       'caregiver_goals',
       JSON.stringify(this.caregivers_training_goals)
     );
+    if (this.intervention_added) {
+      formData.append(
+        'interventions',
+        JSON.stringify(this.intervention_added)
+      );
+    }
 
+    if (this.intervention2_added) {
+      formData.append(
+        'interventions2',
+        JSON.stringify(this.intervention2_added)
+      );
+    }
 
-    formData.append(
-      'interventions',
-      JSON.stringify(this.intervention_added)
-    );
-    formData.append(
-      'interventions2',
-      JSON.stringify(this.intervention2_added)
-    );
+    if (this.replacements_added) {
+      formData.append(
+        'replacements',
+        JSON.stringify(this.replacements_added)
+      );
+    }
 
-    formData.append(
-      'replacements',
-      JSON.stringify(this.replacements_added)
-    );
+    if (this.replacements2_added) {
+      formData.append(
+        'replacements2',
+        JSON.stringify(this.replacements2_added)
+      );
+    }
 
-    formData.append(
-      'intake_outcome',
-      JSON.stringify(this.intakeoutcome_added)
-    );
+    if (this.intakeoutcome_added) {
+      formData.append(
+        'intake_outcome',
+        JSON.stringify(this.intakeoutcome_added)
+      );
+    }
+
+    if (this.behaviorsList_added) {
+      formData.append(
+        'behaviors',
+        JSON.stringify(this.behaviorsList_added)
+      );
+    }
    
-    formData.append(
-      'behaviors',
-      JSON.stringify(this.behaviorsList_added)
-    );
-
-    formData.append('modifications_needed_at_this_time', this.modifications_needed_at_this_time ? '1' : '0');
-    formData.append('cargiver_participation', this.cargiver_participation ? '1' : '0');
-    formData.append('was_the_client_present', this.was_the_client_present ? '1' : '0');
-    formData.append('BCBA_conducted_assessments', this.BCBA_conducted_assessments ? '1' : '0');
-    formData.append('BCBA_conducted_client_observations', this.BCBA_conducted_client_observations ? '1' : '0');
-
-    formData.append('additional_goals_or_interventions', this.additional_goals_or_interventions);
-    formData.append('asked_and_clarified_questions_about_the_implementation_of', this.asked_and_clarified_questions_about_the_implementation_of);
-    formData.append('reinforced_caregiver_strengths_in', this.reinforced_caregiver_strengths_in);
-    formData.append('gave_constructive_feedback_on', this.gave_constructive_feedback_on);
-    formData.append('participants', this.participants);
-    formData.append('environmental_changes', this.environmental_changes);
+    
+    if (this.modifications_needed_at_this_time) {
+      formData.append('modifications_needed_at_this_time', this.modifications_needed_at_this_time ? '1' : '0');
+    }
+    if (this.cargiver_participation) {
+      formData.append('cargiver_participation', this.cargiver_participation ? '1' : '0');
+    }
+    if (this.was_the_client_present) {
+      formData.append('was_the_client_present', this.was_the_client_present ? '1' : '0');
+    }
+    if (this.BCBA_conducted_assessments) {
+      formData.append('BCBA_conducted_assessments', this.BCBA_conducted_assessments ? '1' : '0');
+    }
+    if (this.BCBA_conducted_client_observations) {
+      formData.append('BCBA_conducted_client_observations', this.BCBA_conducted_client_observations ? '1' : '0');
+    }
+    if (this.additional_goals_or_interventions) {
+      formData.append('additional_goals_or_interventions', this.additional_goals_or_interventions);
+    }
+    if (this.asked_and_clarified_questions_about_the_implementation_of) {
+      formData.append('asked_and_clarified_questions_about_the_implementation_of', this.asked_and_clarified_questions_about_the_implementation_of);
+    }
+    if (this.reinforced_caregiver_strengths_in) {
+      formData.append('reinforced_caregiver_strengths_in', this.reinforced_caregiver_strengths_in);
+    }
+    if (this.gave_constructive_feedback_on) {
+      formData.append('gave_constructive_feedback_on', this.gave_constructive_feedback_on);
+    }
+    if (this.recomended_more_practice_on) {
+      formData.append('recomended_more_practice_on', this.recomended_more_practice_on);
+    }
+    
     
     if (this.selectedPaService1) {
       formData.append('type', this.selectedPaService1.cpt.toString());

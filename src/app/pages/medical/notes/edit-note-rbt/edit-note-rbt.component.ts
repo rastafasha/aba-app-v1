@@ -213,42 +213,53 @@ export class EditNoteRbtComponent implements OnInit {
 
   private convertToInterventions(input: { [x: string]: boolean }) {
     return [
-      { id: 'pairing', name: 'Pairing', value: input['pairing'] || false },
-      {
-        id: 'response_block',
-        name: 'Response Block',
-        value: input['response_block'] || false,
-      },
-      { id: 'DRA', name: 'DRA', value: input['DRA'] || false },
-      { id: 'DRO', name: 'DRO', value: input['DRO'] || false },
-      {
-        id: 'redirection',
-        name: 'Redirection',
-        value: input['redirection'] || false,
-      },
-      {
-        id: 'errorless_teaching',
-        name: 'Errorless Teaching',
-        value: input['errorless_teaching'] || false,
-      },
-      { id: 'NCR', name: 'NCR', value: input['NCR'] || false },
-      { id: 'shaping', name: 'Shaping', value: input['shaping'] || false },
-      { id: 'chaining', name: 'Chaining', value: input['chaining'] || false },
       {
         id: 'token_economy',
         name: 'Token Economy',
         value: input['token_economy'] || false,
       },
       {
+        id: 'generalization',
+        name: 'Generalization',
+        value: input['generalization'] || false,
+      },
+      { id: 'NCR', name: 'NCR', value: input['NCR'] || false },
+      { id: 'behavioral_momentum', name: 'Behavioral Momentum', 
+        value: input['Behavioral Momentum'] || false 
+      },
+      { id: 'DRA', name: 'DRA', value: input['DRA'] || false },
+      { id: 'DRI', name: 'DRI', value: input['DRI'] || false },
+      { id: 'DRO', name: 'DRO', value: input['DRO'] || false },
+      { id: 'DRL', name: 'DRL', value: input['DRL'] || false },
+      
+      {
+        id: 'response_block',
+        name: 'Response Block',
+        value: input['response_block'] || false,
+      },
+      {
+        id: 'errorless_teaching',
+        name: 'Errorless Teaching',
+        value: input['errorless_teaching'] || false,
+      },
+      {
         id: 'extinction',
         name: 'Extinction',
         value: input['extinction'] || false,
       },
+      { id: 'chaining', name: 'Chaining', value: input['chaining'] || false },
       {
         id: 'natural_teaching',
         name: 'Natural Teaching',
         value: input['natural_teaching'] || false,
       },
+      {
+        id: 'redirection',
+        name: 'Redirection',
+        value: input['redirection'] || false,
+      },
+      { id: 'shaping', name: 'Shaping', value: input['shaping'] || false },
+      { id: 'pairing', name: 'Pairing', value: input['pairing'] || false },
     ];
   }
 

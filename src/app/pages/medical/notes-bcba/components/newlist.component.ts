@@ -3,6 +3,7 @@ import { NewList } from '../interfaces';
 
 @Component({
   selector: 'app-newlist',
+  styleUrls: ['../note-bcba/note-bcba.component.scss'],
   template: `
     <div class="col-12">
       <!-- <h5>Intervention protocols</h5> -->

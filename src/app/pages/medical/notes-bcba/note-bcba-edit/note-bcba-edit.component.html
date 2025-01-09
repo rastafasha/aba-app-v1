@@ -364,32 +364,7 @@
                 </div>
                  <!-- CPT Code51 -->
 
-                <!-- <div class="col-12 col-md-6 col-xl-4" *ngIf="selectedPaService">
-                  <div class="form-group local-forms">
-                    <label class="mb-2">Available Units</label>
-                    <div class="units-container">
-                      <div class="units-wrapper">
-                        <div class="progress-container">
-                          <div
-                            class="progress-bar"
-                            [style.width.%]="
-                              ((selectedPaService.n_units -
-                                selectedPaService.available_units) /
-                                selectedPaService.n_units) *
-                              100
-                            "
-                          ></div>
-                        </div>
-                        <div class="units-text">
-                          {{ selectedPaService.available_units }}/{{
-                            selectedPaService.n_units
-                          }}
-                          units
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div> -->
+               
                 <!-- PA Service Calculator Information -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <app-pa-service-calculator
@@ -635,8 +610,8 @@
           <div class="card">
             <div class="card-body">
               <app-interventions3
-              [interventionsList]="interventionsList"
-              (interventionsChange)="onInterventions2Change($event)"
+              [interventionsList2]="interventionsList2"
+              (update)="onInterventions2Change($event)"
               ></app-interventions3>
             </div>
           </div>
@@ -771,7 +746,7 @@
               <div class="card">
                 <div class="card-body">
                   <app-interventions2
-                  [interventionsList2]="interventionsList2"
+                  [interventionsList]="interventionsList"
                   (interventionsChange)="onInterventionsChange($event)"
                   ></app-interventions2>
                 </div>

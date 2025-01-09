@@ -17,6 +17,7 @@ import {
   NoteBehaviorsList,
   NoteIntervention2,
 } from '../interfaces';
+import { PatientsV2Service } from 'src/app/core/services';
 
 
 
@@ -133,7 +134,7 @@ export class NoteBcbaViewComponent implements OnInit {
   roles_bcba = [];
 
   hours_days = [];
-  maladaptives = [];
+  behaviors = [];
   replacementGoals = [];
   intervention_added = [];
   replacements = [];
@@ -237,6 +238,7 @@ export class NoteBcbaViewComponent implements OnInit {
     private pageService: PageService,
     private doctorService: DoctorService,
     private bipService: BipService,
+    private patientService: PatientsV2Service,
     private locations: Location
   ) {}
 
@@ -274,6 +276,7 @@ export class NoteBcbaViewComponent implements OnInit {
       this.note_selected = resp.noteBcba;
       this.note_selectedId = resp.noteBcba.id;
       this.patient_identifier = this.note_selected.patient_identifier;
+      this.patient_id = this.note_selected.patient_id;
       this.bip_id = this.note_selected.bip_id;
       this.location = this.note_selected.location;
       // this.birth_date = this.note_selected.birth_date;
@@ -291,7 +294,7 @@ export class NoteBcbaViewComponent implements OnInit {
       this.client_response_to_treatment_this_session =
         this.note_selected.client_response_to_treatment_this_session;
       this.pos = this.note_selected.pos;
-      this.maladaptives = this.note_selected.behaviors;
+      
 
       this.session_length_total = this.note_selected.session_length_total;
       this.session_length_total2 = this.note_selected.session_length_total2;
@@ -323,7 +326,7 @@ export class NoteBcbaViewComponent implements OnInit {
       this.IMAGE_PREVISUALIZA_SIGNATURE_SUPERVISOR_CREATED =
         this.note_selected.supervisor_signature;
 
-      this.getProfileBip();
+      this.getProfilePatient();
 
       //para traer datos del doctor usado
       this.getDoctor();
@@ -342,6 +345,10 @@ export class NoteBcbaViewComponent implements OnInit {
       if(this.type === 'Report' ){
         this.show971512 = true;
       }
+
+      this.behaviors = this.note_selected.behaviors;
+      this.interventions = this.note_selected.interventions;
+      this.interventions2 = this.note_selected.interventions2;
     });
   }
 
@@ -357,29 +364,22 @@ export class NoteBcbaViewComponent implements OnInit {
 
   getDoctorRbt() {
     this.doctorService.showDoctor(this.aba_supervisor).subscribe((resp) => {
-      console.log(resp);
+      // console.log(resp);
       this.doctor_selected_rbt = resp.user;
       this.doctor_selected_full_name_supervisor = resp.user.full_name;
     });
   }
   getDoctorBcba() {
     this.doctorService.showDoctor(this.selectedValueBCBA).subscribe((resp) => {
-      console.log(resp);
+      // console.log(resp);
       this.doctor_selected_bcba = resp.user;
       this.doctor_selected_full_name_bcba = resp.user.full_name;
     });
   }
 
-  getProfileBip() {
-    this.bipService.getBipProfilePatient_id(this.patient_identifier).subscribe((resp:any) => {
-        console.log(resp);
-        this.patient_selected = resp.patient;
-
-        this.first_name = this.patient_selected.first_name;
-        this.last_name = this.patient_selected.last_name;
-        this.patient_identifier = resp.patient.patient_identifier;
-        this.diagnosis_code = this.patient_selected.diagnosis_code;
-
+  getProfilePatient() {
+    this.patientService.get(this.patient_id).subscribe((resp) => {
+        this.patient_selected = resp.data;
       });
   }
 
