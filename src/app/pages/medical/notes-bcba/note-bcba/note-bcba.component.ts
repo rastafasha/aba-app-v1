@@ -2,64 +2,22 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppUser } from 'src/app/core/models/users.model';
+import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
 import { InsuranceService } from '../../../../core/services/insurances.service';
 import { NoteBcbaService } from '../../../../core/services/notes-bcba.service';
 import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
-import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
-import {interventionsList, interventionsList2, 
-  newList, 
-  outcomeList, show97151List, behaviorsList
+import {
+  interventionsList, interventionsList2,
+  newList,
+  outcomeList, show97151List
 } from '../listasSelectData';
-interface ValidationResult {
-  isValid: boolean;
-  missingFields: string[];
-}
-interface interventionsList {
-  id: string;
-  name: string;
-  value: boolean;
-}
-interface interventionsList2 {
-  id: string;
-  name: string;
-  value: boolean;
-  value2: boolean;
-}
-interface replacementList {
-  id: string;
-  name: string;
-  value: boolean;
-}
-interface replacementList2 {
-  id: string;
-  name: string;
-  value: boolean;
-  value2: boolean;
-}
-interface newList {
-  id: string;
-  name: string;
-  value: boolean;
-}
-interface outcomeList {
-  id: string;
-  name: string;
-  value: boolean;
-}
-interface show97151List {
-  cpt: string;
-}
 
-interface behaviorsList {
-  id: string;
-  name: string;
-  value: boolean;
-}
-
+import {
+  ValidationResult
+} from '../interfaces';
 
 @Component({
   selector: 'app-note-bcba',
@@ -67,6 +25,7 @@ interface behaviorsList {
   styleUrls: ['./note-bcba.component.scss'],
 })
 export class NoteBcbaComponent implements OnInit {
+
 Number(arg0: string) {
 throw new Error('Method not implemented.');
 }
@@ -152,18 +111,22 @@ throw new Error('Method not implemented.');
   provider_signature: any;
   supervisor_signature: any;
 
-  pairing: any;
-  response_block: any;
-  DRA: any;
-  DRO: any;
-  redirection: any;
-  errorless_teaching: any;
-  NCR: any;
-  shaping: any;
-  chaining: any;
-  token_economy: any;
-  extinction: any;
-  natural_teaching: any;
+  token_economy= false;
+    generalization= false;
+    NCR= false;
+    behavioral_momentum= false;
+    DRA= false;
+    DRI= false;
+    DRO= false;
+    DRL= false;
+    response_block= false;
+    errorless_teaching= false;
+    extinction= false;
+    chaining= false;
+    natural_teaching= false;
+    redirection= false;
+    shaping= false;
+    pairing= false;
 
   FILE_SIGNATURE_RBT: any;
   IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED: any = 'assets/img/user-06.jpg';
@@ -189,27 +152,30 @@ throw new Error('Method not implemented.');
   specialists = [];
   maladaptives = [];
   replacementGoals = [];
+  replacementList = [];
   replacements = [];
 
-  intervention_added = [];
-  intervention2_added = [];
+  intervention_added : object;
+  intervention2_added : object;
   replacements_added = [];
   intakeoutcome_added = [];
-  newlist_added = [];
-  behaviorsList_added = [];
+  newlist_added :object;
+  behaviorsList_added :object;
   
   maladaptiveSelected: any = null;
   replacementSelected: any = null;
   lto: any = null;
   caregiver_goal: any = null;
-  maladp_added = [];
-  replacement_added = [];
+ 
+  
   pa_assessments: string;
   pa_assessmentsgroup = [];
+  
   familiEnvolments = [];
   monitoringEvaluatingPatientIds = [];
   caregivers_training_goals = [];
   rbt_training_goals = [];
+
   posGruoup = [];
   note_description: string;
   insurer_name: string;
@@ -249,10 +215,10 @@ throw new Error('Method not implemented.');
 
   interventionsList = interventionsList;
   interventionsList2 = interventionsList2;
+  behaviorList :any[];
   newList = newList;
   outcomeList = outcomeList;
   show97151List = show97151List;
-  behaviorsList = behaviorsList;
 
   constructor(
     private bipService: BipService,
@@ -350,7 +316,11 @@ throw new Error('Method not implemented.');
         return dateStart <= dateToday && dateEnd >= dateToday;
       });
       //devolvemos la respuesta da los pa_services disponibles
-      // console.log(this.pa_services);
+      
+      this.behaviorList = resp.bip.maladaptives;
+      this.replacementList = resp.replacements;
+      console.log(this.behaviorList);
+      console.log(this.replacements);
 
         
     });
@@ -530,15 +500,13 @@ convertToHours(totalMinutes: number): string {
   }
 
 
-  onInterventionsChange(updatedInterventions: any[]) {
+  onInterventionsChange(updatedInterventions: object) {
     this.intervention_added = updatedInterventions;
   }
-
-  
-
-  onInterventions2Change(updatedInterventions2: any[]) {
+  onInterventions2Change(updatedInterventions2:object) {
     this.intervention2_added = updatedInterventions2;
   }
+
   onReplacementChange(updatedReplacements) {
     this.replacements_added = updatedReplacements;
   }
@@ -549,10 +517,12 @@ convertToHours(totalMinutes: number): string {
   onIntakeoutcomeChange(updatedIntakeoutcome) {
     this.intakeoutcome_added = updatedIntakeoutcome;
   }
-  onNewListChange(updatedNewList) {
+
+  onNewListChange(updatedNewList:object) {
     this.newlist_added = updatedNewList;
   }
-  onBehaviorChange(updatedbehaviorsList) {
+
+  onBehaviorChange(updatedbehaviorsList:object) {
     this.behaviorsList_added = updatedbehaviorsList;
   }
 

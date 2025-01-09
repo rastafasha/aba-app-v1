@@ -64,9 +64,3 @@ export const show97151List = [
     { cpt: 'Report' },
 ];
 
-export const behaviorsList = [
-    { id: 'behavior1', name: 'Behavior', value: false },
-    { id: 'behavior2', name: 'Behavior 2', value: false },
-    { id: 'behavior3', name: 'Behavior 3', value: false },
-    { id: 'behavior4', name: 'Behavior 4', value: false },
-];

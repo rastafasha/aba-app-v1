@@ -520,7 +520,7 @@
                 <div class="card-body">
                   <app-newlist
                   [newList]="newList"
-                  (interventionsChange)="onNewListChange($event)"
+                  (newListChange)="onNewListChange($event)"
                   ></app-newlist>
                 </div>
               </div>
@@ -578,8 +578,78 @@
         </div>
         <!-- modifications needed at this time -->
         </ng-container>
+       <!--   only 55-->
+      <ng-container  *ngIf=" show97155" >
+           
+            <!-- Intervention protocols -->
+            <div class="col-xs-12" >
+              <div class="card">
+                <div class="card-body">
+                  <app-interventions2
+                  [interventionsList2]="interventionsList2"
+                  (interventionsChange)="onInterventionsChange($event)"
+                  ></app-interventions2>
+                </div>
+              </div>
+            </div>
+            <!-- Intervention protocols -->
+            <!-- replacements protocols -->
+            <div class="col-xs-12" >
+              <div class="card">
+                <div class="card-body">
+                  <app-replacements2 [replacementList]="replacementList"
+                  (replacementChange)="onReplacementChange($event)"></app-replacements2>
+                </div>
+              </div>
+            </div>
+            <!-- replacements protocols -->
+            <!-- modifications needed at this time -->
+            <div class="col-xs-12" >
+              <div class="card">
+                <div class="card-body">
+                  <div class="col-12">
+                    
+                    <h4 _ngcontent-rhp-c92="" class="card-title">Modifications needed at this time</h4>
+                    <div class="form-group ">
+                      <div _ngcontent-rhp-c92="" class="status-toggle d-flex justify-content-between align-items-center">
+                        <input _ngcontent-rhp-c92="" type="checkbox" 
+                        id="modifications_needed_at_this_time"  class="check"
+                         name="modifications_needed_at_this_time" [checked]="modifications_needed_at_this_time === true" 
+                         [ngModelOptions]="{standalone: true}" 
+                         [(ngModel)]="modifications_needed_at_this_time">
+                        <label _ngcontent-rhp-c92="" for="modifications_needed_at_this_time" class="checktoggle" value="true">checkbox</label>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- modifications needed at this time -->
+            <!-- additional goals or interventions: -->
+            <div class="col-xs-12" >
+              <div class="card">
+                <div class="card-body">
+                  <div class="col-12">
+                    <h5>Additional Goals or Interventions:</h5>
+                    <div class="col-12">
+                      <div class="form-group local-forms">
+                        <textarea
+                          class="form-control"
+                          name="additional_goals_or_interventions"
+                          [(ngModel)]="additional_goals_or_interventions"
+                          rows="4"
+                          cols="30"
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- additional goals or interventions: -->
+      </ng-container>
 
-        <!--  only 56 -->
+      <!--  only 56 -->
       <ng-container  *ngIf="show97156">
         
         <!-- Intervention protocols -->
@@ -588,7 +658,7 @@
             <div class="card-body">
               <app-interventions3
               [interventionsList]="interventionsList"
-              (interventionsChange)="onInterventions2Change($event)"
+              (update)="onInterventions2Change($event)"
               ></app-interventions3>
             </div>
           </div>
@@ -598,8 +668,9 @@
          <div class="col-xs-12" >
           <div class="card">
             <div class="card-body">
-              <app-replacements [rbt_training_goals]="rbt_training_goals"
+              <app-replacements [replacementList]="replacementList"
                   (replacementChange)="onReplacementChange($event)"></app-replacements>
+                  
             </div>
           </div>
         </div>
@@ -608,8 +679,8 @@
          <div class="col-xs-12" >
           <div class="card">
             <div class="card-body">
-              <app-behaviors [behaviorsList]="behaviorsList"
-                  (replacementChange)="onBehaviorChange($event)"></app-behaviors>
+              <app-behaviors [behaviorList]="behaviorList"
+                  (behaviorsChange)="onBehaviorChange($event)"></app-behaviors>
             </div>
           </div>
         </div>
@@ -714,76 +785,6 @@
           </div>
         </div>
         <!-- formulario varios -->
-      </ng-container>
-       <!--   only 55-->
-      <ng-container  *ngIf=" show97155" >
-           
-            <!-- Intervention protocols -->
-            <div class="col-xs-12" >
-              <div class="card">
-                <div class="card-body">
-                  <app-interventions2
-                  [interventionsList2]="interventionsList2"
-                  (interventionsChange)="onInterventionsChange($event)"
-                  ></app-interventions2>
-                </div>
-              </div>
-            </div>
-            <!-- Intervention protocols -->
-            <!-- replacements protocols -->
-            <div class="col-xs-12" >
-              <div class="card">
-                <div class="card-body">
-                  <app-replacements2 [rbt_training_goals]="rbt_training_goals"
-                  (replacementChange)="onReplacementChange($event)"></app-replacements2>
-                </div>
-              </div>
-            </div>
-            <!-- replacements protocols -->
-            <!-- modifications needed at this time -->
-            <div class="col-xs-12" >
-              <div class="card">
-                <div class="card-body">
-                  <div class="col-12">
-                    
-                    <h4 _ngcontent-rhp-c92="" class="card-title">Modifications needed at this time</h4>
-                    <div class="form-group ">
-                      <div _ngcontent-rhp-c92="" class="status-toggle d-flex justify-content-between align-items-center">
-                        <input _ngcontent-rhp-c92="" type="checkbox" 
-                        id="modifications_needed_at_this_time"  class="check"
-                         name="modifications_needed_at_this_time" [checked]="modifications_needed_at_this_time === true" 
-                         [ngModelOptions]="{standalone: true}" 
-                         [(ngModel)]="modifications_needed_at_this_time">
-                        <label _ngcontent-rhp-c92="" for="modifications_needed_at_this_time" class="checktoggle" value="true">checkbox</label>
-                    </div>
-                  </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- modifications needed at this time -->
-            <!-- additional goals or interventions: -->
-            <div class="col-xs-12" >
-              <div class="card">
-                <div class="card-body">
-                  <div class="col-12">
-                    <h5>Additional Goals or Interventions:</h5>
-                    <div class="col-12">
-                      <div class="form-group local-forms">
-                        <textarea
-                          class="form-control"
-                          name="additional_goals_or_interventions"
-                          [(ngModel)]="additional_goals_or_interventions"
-                          rows="4"
-                          cols="30"
-                        ></textarea>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- additional goals or interventions: -->
       </ng-container>
     <!-- fin  -->
 

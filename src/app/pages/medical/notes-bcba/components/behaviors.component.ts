@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Maladaptives } from '../interfaces';
 
 @Component({
   selector: 'app-behaviors',
@@ -14,22 +15,23 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let behav of behaviorsList; let i = index">
-              <td>{{ behav.name }}</td>
+            <tr *ngFor="let behavior of behaviorList">
+              <td>{{ behavior.maladaptive_behavior }}</td>
               <td>
-                <div
-                  class="status-toggle d-flex justify-content-between align-items-center"
-                >
-                  <input
-                    type="checkbox"
-                    [id]="behav.id"
-                    class="check"
-                    [(ngModel)]="behav.value"
-                    [name]="behav.id"
-                  />
-                  <label [for]="behav.id" class="checktoggle"
-                  (ngModelChange)="updateBehaviors()">checkbox</label>
-                </div>
+              <div
+                class="status-toggle d-flex justify-content-between align-items-center"
+              >
+                <input
+                  type="checkbox"
+                  [id]="'check-' + behavior.id"
+                  class="check"
+                  [(ngModel)]="behavior.value"
+                  [name]="'check-' + behavior.id"
+                  (ngModelChange)="updateBehaviors()"
+                />
+                <label [for]="'check-' + behavior.id" class="checktoggle"
+                  >checkbox</label>
+              </div>
               </td>
             </tr>
           </tbody>
@@ -39,16 +41,17 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   `,
 })
 export class BehaviorsComponent {
-  @Input() behaviorsList: any[];
-  @Output() behaviorsChange = new EventEmitter<any>();
+  @Input() behaviorList: Maladaptives[];
+  @Output() behaviorsChange = new EventEmitter<object>();
 
   updateBehaviors() {
-    const behaviorsObj = this.behaviorsList
+    const result = this.behaviorList
       .filter((behavior) => behavior.value)
       .reduce((acc, behavior) => {
-        acc[behavior.id] = true;
+        acc[behavior.id] = { discused: !!behavior.value, name: behavior.maladaptive_behavior };
         return acc;
-      }, {});
-    this.behaviorsChange.emit([behaviorsObj]);
+      }, {}); // Valor inicial para el acumulador
+    console.log(result);
+    this.behaviorsChange.emit(result);
   }
 }

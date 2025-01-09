@@ -57,11 +57,57 @@ export interface NoteOutcomeList {
     
 }
 export interface NoteBehaviorsList {
-    behavior1: boolean;
-    behavior2: boolean;
-    behavior3: boolean;
-    behavior4: boolean;
+  maladaptive_behavior: string;
     
+}
+
+
+//crear nota
+
+export interface ValidationResult {
+  isValid: boolean;
+  missingFields: string[];
+}
+export interface Intervention {
+  id: string;
+  name: string;
+  value: boolean;
+}
+export interface Interventions2 {
+  id: string;
+  name: string;
+  value: boolean;
+  value2: boolean;
+}
+export interface ReplacementL {
+  id: string;
+  goal: string;
+  value: boolean;
+}
+export interface ReplacementL2 {
+  id: string;
+  goal: string;
+  value: boolean;
+  value2: boolean;
+}
+export interface NewList {
+  id: string;
+  name: string;
+  value: boolean;
+}
+export interface Outcome {
+  id: string;
+  name: string;
+  value: boolean;
+}
+export interface show97151L {
+  cpt: string;
+}
+
+export interface Maladaptives {
+  id: string;
+  maladaptive_behavior: string;
+  value: boolean;
 }
 
 

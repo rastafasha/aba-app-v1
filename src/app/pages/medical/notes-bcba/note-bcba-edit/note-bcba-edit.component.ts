@@ -11,7 +11,7 @@ import { InsuranceService } from '../../../../core/services/insurances.service';
 import { Location } from '@angular/common';
 import { AppUser } from 'src/app/core/models/users.model';
 import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
-import { behaviorsList, interventionsList, interventionsList2, newList, outcomeList, show97151List } from '../listasSelectData';
+import { interventionsList, interventionsList2, newList, outcomeList, show97151List } from '../listasSelectData';
 
 
 
@@ -110,18 +110,22 @@ export class NoteBcbaEditComponent implements OnInit {
   provider_signature: any;
   supervisor_signature: any;
 
-  pairing: any;
-  response_block: any;
-  DRA: any;
-  DRO: any;
-  redirection: any;
-  errorless_teaching: any;
-  NCR: any;
-  shaping: any;
-  chaining: any;
-  token_economy: any;
-  extinction: any;
-  natural_teaching: any;
+  token_economy= false;
+    generalization= false;
+    NCR= false;
+    behavioral_momentum= false;
+    DRA= false;
+    DRI= false;
+    DRO= false;
+    DRL= false;
+    response_block= false;
+    errorless_teaching= false;
+    extinction= false;
+    chaining= false;
+    natural_teaching= false;
+    redirection= false;
+    shaping= false;
+    pairing= false;
 
   FILE_SIGNATURE_RBT: any;
   IMAGE_PREVISUALIZA_SIGNATURE__RBT: any;
@@ -149,12 +153,12 @@ export class NoteBcbaEditComponent implements OnInit {
   replacements = [];
   interventionsgroup = [];
 
-  intervention_added = [];
-  intervention2_added = [];
+  intervention_added :object;
+  intervention2_added :object;
   replacements_added = [];
   intakeoutcome_added = [];
   newlist_added = [];
-  behaviorsList_added = [];
+  behaviorsList_added :object;
 
   maladaptivegroup = [];
   replacementgroup = [];
@@ -219,7 +223,8 @@ export class NoteBcbaEditComponent implements OnInit {
     newList = newList;
     outcomeList = outcomeList;
     show97151List = show97151List;
-    behaviorsList = behaviorsList;
+    behaviorList :any[];
+    replacementList = this.replacements;
 
   constructor(
     private bipService: BipService,
@@ -256,7 +261,7 @@ export class NoteBcbaEditComponent implements OnInit {
 
   getConfig() {
     this.noteBcbaService.listConfigNote().subscribe((resp) => {
-      console.log(resp);
+      // console.log(resp);
 
       this.roles_rbt = resp.roles_rbt;
       this.roles_bcba = resp.roles_bcba;
@@ -267,7 +272,7 @@ export class NoteBcbaEditComponent implements OnInit {
 
   getNote() {
     this.noteBcbaService.getNote(this.note_id).subscribe((resp) => {
-      console.log('respuesta de getNote', resp);
+      // console.log('respuesta de getNote', resp);
       this.note_selected = resp.noteBcba;
       this.note_selectedId = resp.noteBcba.id;
       this.patient_identifier = this.note_selected.patient_identifier;
@@ -307,7 +312,7 @@ export class NoteBcbaEditComponent implements OnInit {
       this.rbt_training_goalsgroup = resp.rbt_training_goals;
       const jsonObj1 = JSON.parse(this.rbt_training_goalsgroup) || '';
       this.rbt_training_goals = jsonObj1;
-      console.log(this.rbt_training_goals);
+      // console.log(this.rbt_training_goals);
 
       this.selectedValueRBT = resp.noteBcba.provider.name;
       this.selectedValueProviderRBT_id =resp.noteBcba.provider_id;
@@ -369,6 +374,10 @@ export class NoteBcbaEditComponent implements OnInit {
         this.show971512 = true;
         this.show97151 = true;
       }
+
+      this.maladaptives = this.note_selected.maladaptives;
+      this.replacements = this.note_selected.replacements;
+      console.log(this.replacements);
     });
   }
 
@@ -387,7 +396,7 @@ export class NoteBcbaEditComponent implements OnInit {
     this.bipService
       .getBipProfilePatient_id(this.patient_identifier)
       .subscribe((resp) => {
-        console.log(resp);
+        // console.log(resp);
         this.client_selected = resp.patient;
 
         this.first_name = this.client_selected.first_name;
@@ -411,7 +420,7 @@ export class NoteBcbaEditComponent implements OnInit {
         return dateStart <= dateToday && dateEnd >= dateToday;
       });
       //devolvemos la respuesta da los pa_services disponibles
-      console.log(this.pa_services);
+      // console.log(this.pa_services);
         if (noteServiceId) {
           this.setPaService(noteServiceId);
         }
@@ -419,6 +428,8 @@ export class NoteBcbaEditComponent implements OnInit {
         this.birth_date = this.client_selected.birth_date
         ? new Date(this.client_selected.birth_date).toISOString()
         : '';
+
+        this.behaviorList = resp.bip.maladaptives;
 
       });
   }
@@ -460,7 +471,7 @@ export class NoteBcbaEditComponent implements OnInit {
 
   insuranceData() {
     this.insuranceService.get(this.insurer_id).subscribe((resp) => {
-      console.log(resp);
+      // console.log(resp);
       this.insurer_name = resp.insurer_name;
       // this.notes = resp.notes;
       this.services = resp.services;
@@ -520,8 +531,7 @@ export class NoteBcbaEditComponent implements OnInit {
     const totalMinutes = (timeOut1 - timeIn1) + (timeOut2 - timeIn2);
     const totalHours = this.convertToHours(totalMinutes);
     this.total_hour_session = totalHours;
-    console.log(`Total hours: ${totalHours}`);
-    console.log('para el html', this.total_hour_session);
+    
 }
 
 convertToMinutes(time: string): number {
@@ -643,15 +653,16 @@ convertToHours(totalMinutes: number): string {
 
 
 
-  onInterventionsChange(updatedInterventions: any[]) {
+  onInterventionsChange(updatedInterventions: object) {
     this.intervention_added = updatedInterventions;
   }
 
   
 
-  onInterventions2Change(updatedInterventions2: any[]) {
+  onInterventions2Change(updatedInterventions2:object) {
     this.intervention2_added = updatedInterventions2;
   }
+
   onReplacementChange(updatedReplacements) {
     this.replacements_added = updatedReplacements;
   }
@@ -665,7 +676,7 @@ convertToHours(totalMinutes: number): string {
   onNewListChange(updatedNewList) {
     this.newlist_added = updatedNewList;
   }
-  onBehaviorChange(updatedbehaviorsList) {
+  onBehaviorChange(updatedbehaviorsList:object) {
     this.behaviorsList_added = updatedbehaviorsList;
   }
 

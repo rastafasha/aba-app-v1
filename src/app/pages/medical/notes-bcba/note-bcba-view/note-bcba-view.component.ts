@@ -189,7 +189,7 @@ export class NoteBcbaViewComponent implements OnInit {
     shaping: false,
     pairing: false,
   };
-  intervention2: NoteIntervention2 = {
+  interventions2: NoteIntervention2 = {
     token_economy: false,
     generalization: false,
     NCR: false,
@@ -228,10 +228,7 @@ export class NoteBcbaViewComponent implements OnInit {
     PSI_4_short_form: false,
   };
   behaviorsList: NoteBehaviorsList = {
-    behavior1: false,
-    behavior2: false,
-    behavior3: false,
-    behavior4: false,
+    maladaptive_behavior: '',
   };
 
   constructor(
@@ -267,7 +264,7 @@ export class NoteBcbaViewComponent implements OnInit {
 
   getConfig() {
     this.noteBcbaService.listConfigNote().subscribe((resp) => {
-      console.log(resp);
+      // console.log(resp);
     });
   }
 
@@ -294,6 +291,7 @@ export class NoteBcbaViewComponent implements OnInit {
       this.client_response_to_treatment_this_session =
         this.note_selected.client_response_to_treatment_this_session;
       this.pos = this.note_selected.pos;
+      this.maladaptives = this.note_selected.behaviors;
 
       this.session_length_total = this.note_selected.session_length_total;
       this.session_length_total2 = this.note_selected.session_length_total2;
@@ -306,12 +304,12 @@ export class NoteBcbaViewComponent implements OnInit {
       this.caregivers_training_goalsgroup = this.note_selected.caregiver_goals;
       const jsonObj = typeof this.caregivers_training_goalsgroup === 'string' ? JSON.parse(this.caregivers_training_goalsgroup) : this.caregivers_training_goalsgroup;
       this.caregivers_training_goals = jsonObj;
-      console.log(this.caregivers_training_goals);
+      // console.log(this.caregivers_training_goals);
 
       this.rbt_training_goalsgroup = this.note_selected.rbt_training_goals;
       const jsonObj1 = typeof this.rbt_training_goalsgroup === 'string' ? JSON.parse(this.rbt_training_goalsgroup) : this.rbt_training_goalsgroup;
       this.rbt_training_goals = jsonObj1;
-      console.log(this.rbt_training_goals);
+      // console.log(this.rbt_training_goals);
 
       this.aba_supervisor = resp.noteBcba.supervisor_id;
       this.selectedValueRendering = resp.noteBcba.provider_id;
@@ -326,9 +324,11 @@ export class NoteBcbaViewComponent implements OnInit {
         this.note_selected.supervisor_signature;
 
       this.getProfileBip();
+
+      //para traer datos del doctor usado
       this.getDoctor();
       this.getDoctorRbt();
-      this.getDoctorBcba();
+      // this.getDoctorBcba();
 
       if(this.cpt_code === '97155' ){
         this.show97155 = true;
@@ -349,7 +349,7 @@ export class NoteBcbaViewComponent implements OnInit {
     this.doctorService
       .showDoctor(this.selectedValueRendering)
       .subscribe((resp) => {
-        console.log(resp);
+        // console.log(resp);
         this.doctor_selected = resp.user;
         this.doctor_selected_full_name = resp.user.full_name;
       });
@@ -371,21 +371,15 @@ export class NoteBcbaViewComponent implements OnInit {
   }
 
   getProfileBip() {
-    this.bipService
-      .getBipProfilePatient_id(this.patient_identifier)
-      .subscribe((resp) => {
+    this.bipService.getBipProfilePatient_id(this.patient_identifier).subscribe((resp:any) => {
         console.log(resp);
         this.patient_selected = resp.patient;
 
         this.first_name = this.patient_selected.first_name;
         this.last_name = this.patient_selected.last_name;
         this.patient_identifier = resp.patient.patient_identifier;
-        // console.log(this.patient_id);
         this.diagnosis_code = this.patient_selected.diagnosis_code;
 
-        // this.pa_assessments = resp.patient.pa_assessments;
-        //   const jsonObj = JSON.parse(this.pa_assessments) || '';
-        //   this.pa_assessmentsgroup = jsonObj;
       });
   }
 

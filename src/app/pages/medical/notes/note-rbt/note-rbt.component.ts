@@ -135,18 +135,22 @@ export class NoteRbtComponent implements OnInit {
   provider_signature: string | null = null;
   supervisor_signature: string | null = null;
 
-  pairing = false;
-  response_block = false;
-  DRA = false;
-  DRO = false;
-  redirection = false;
-  errorless_teaching = false;
-  NCR = false;
-  shaping = false;
-  chaining = false;
-  token_economy = false;
-  extinction = false;
-  natural_teaching = false;
+  token_economy= false;
+    generalization= false;
+    NCR= false;
+    behavioral_momentum= false;
+    DRA= false;
+    DRI= false;
+    DRO= false;
+    DRL= false;
+    response_block= false;
+    errorless_teaching= false;
+    extinction= false;
+    chaining= false;
+    natural_teaching= false;
+    redirection= false;
+    shaping= false;
+    pairing= false;
 
   FILE_SIGNATURE_RBT: File | null = null;
   IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED = 'assets/img/user-06.jpg';
@@ -196,18 +200,22 @@ export class NoteRbtComponent implements OnInit {
   intervention_added: Interventions[] = [];
   interventionsSelected: { [key: string]: boolean } = {};
   interventionsList: InterventionItem[] = [
-    { id: 'pairing', name: 'Pairing', value: false },
-    { id: 'response_block', name: 'Response Block', value: false },
-    { id: 'DRA', name: 'DRA', value: false },
-    { id: 'DRO', name: 'DRO', value: false },
-    { id: 'redirection', name: 'Redirection', value: false },
-    { id: 'errorless_teaching', name: 'Errorless Teaching', value: false },
-    { id: 'NCR', name: 'NCR', value: false },
-    { id: 'shaping', name: 'Shaping', value: false },
-    { id: 'chaining', name: 'Chaining', value: false },
     { id: 'token_economy', name: 'Token Economy', value: false },
+    { id: 'generalization', name: 'Generalization', value: false },
+    { id: 'NCR', name: 'NCR', value: false },
+    { id: 'behavioral_momentum', name: 'Behavioral Momentum', value: false },
+    { id: 'DRA', name: 'DRA', value: false },
+    { id: 'DRI', name: 'DRI', value: false },
+    { id: 'DRO', name: 'DRO', value: false },
+    { id: 'DRL', name: 'DRL', value: false },
+    { id: 'response_block', name: 'Response Block', value: false },
+    { id: 'errorless_teaching', name: 'Errorless Teaching', value: false },
     { id: 'extinction', name: 'Extinction', value: false },
+    { id: 'chaining', name: 'Chaining', value: false },
     { id: 'natural_teaching', name: 'Natural Teaching', value: false },
+    { id: 'redirection', name: 'Redirection', value: false },
+    { id: 'shaping', name: 'Shaping', value: false },
+    { id: 'pairing', name: 'Pairing', value: false },
   ];
 
   pa_services: PaService[] = [];

@@ -8,102 +8,33 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
         <h4 class="card-title">Behaviors</h4>
       </div>
       <!-- body card -->
-      <div class="card-body p-0">
-        <div class="personal-list-out">
-          <div class="container">
-            <div class="col-xs-12">
-              <div class="row">
-                <div class="col-xs-12 col-sm-3">
-                  <div
-                    class="d-flex justify-content-between align-items-center"
-                  >
-                    <span>behavior1</span>
-                    <div
-                      class="d-flex justify-content-between align-items-center"
-                    >
-                      <i
-                        *ngIf="behaviorsList?.behavior1"
-                        class="fa fa-check"
-                      ></i>
-                      <i
-                        *ngIf="!behaviorsList?.behavior1"
-                        class="fa fa-times"
-                      ></i>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xs-12 col-sm-3">
-                  <div
-                    class="d-flex justify-content-between align-items-center"
-                  >
-                    <span>behavior2</span>
-                    <div
-                      class="d-flex justify-content-between align-items-center"
-                    >
-                      <i
-                        *ngIf="behaviorsList?.behavior2"
-                        class="fa fa-check"
-                      ></i>
-                      <i
-                        *ngIf="!behaviorsList?.behavior2"
-                        class="fa fa-times"
-                      ></i>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xs-12 col-sm-3">
-                  <div
-                    class="d-flex justify-content-between align-items-center"
-                  >
-                    <span>behavior3</span>
-                    <div
-                      class="d-flex justify-content-between align-items-center"
-                    >
-                      <i
-                        *ngIf="behaviorsList?.behavior3"
-                        class="fa fa-check"
-                      ></i>
-                      <i
-                        *ngIf="!behaviorsList?.behavior3"
-                        class="fa fa-times"
-                      ></i>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xs-12 col-sm-3">
-                  <div
-                    class="d-flex justify-content-between align-items-center"
-                  >
-                    <span>behavior4</span>
-                    <div
-                      class="d-flex justify-content-between align-items-center"
-                    >
-                      <i
-                        *ngIf="behaviorsList?.behavior4"
-                        class="fa fa-check"
-                      ></i>
-                      <i
-                        *ngIf="!behaviorsList?.behavior4"
-                        class="fa fa-times"
-                      ></i>
-                    </div>
-                  </div>
-                </div>
-                
-
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="table-responsive ">
+        <table class="table mb-0 ">
+          <thead>
+            <tr>
+              <th>please check as needed</th>
+              <th>Discused</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let behav of maladaptives; let i = index">
+              <td>{{ behav.maladaptive_behavior }}</td>
+              <td>
+              <i *ngIf="behav?.maladaptive_behavior" class="fa fa-check"></i>
+              <i *ngIf="!behav?.maladaptive_behavior" class="fa fa-times"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   `,
 })
 export class BehaviorViewComponent {
-  @Input() behaviorsList;
+  @Input() maladaptives;
 
   updateInterventions() {
-    const behaviorsListsObj = this.behaviorsList
+    const behaviorsListsObj = this.maladaptives
       .filter((behaviorsList) => behaviorsList.value)
       .reduce((acc, behaviorsList) => {
         acc[behaviorsList.id] = true;

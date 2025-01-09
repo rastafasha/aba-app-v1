@@ -107,18 +107,22 @@ export class EditNoteRbtComponent implements OnInit {
   provider_signature: any;
   supervisor_signature: any;
 
-  pairing: any;
-  response_block: any;
-  DRA: any;
-  DRO: any;
-  redirection: any;
-  errorless_teaching: any;
-  NCR: any;
-  shaping: any;
-  chaining: any;
-  token_economy: any;
-  extinction: any;
-  natural_teaching: any;
+  token_economy: boolean;
+    generalization: boolean;
+    NCR: boolean;
+    behavioral_momentum: boolean;
+    DRA: boolean;
+    DRI: boolean;
+    DRO: boolean;
+    DRL: boolean;
+    response_block: boolean;
+    errorless_teaching: boolean;
+    extinction: boolean;
+    chaining: boolean;
+    natural_teaching: boolean;
+    redirection: boolean;
+    shaping: boolean;
+    pairing: boolean;
 
   FILE_SIGNATURE_RBT: any;
   IMAGE_PREVISUALIZA_SIGNATURE__RBT: any;

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Interventions2 } from '../interfaces';
 
 @Component({
   selector: 'app-interventions2',
@@ -18,7 +19,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
             <tr *ngFor="let intervention of interventionsList2; let i = index">
               <td>{{ intervention.name }}</td>
               <td>
-                <!-- <input class="form-check-input" type="checkbox" id="Assessed" value="Assessed" checked aria-label="..."> -->
                 <div
                   class="status-toggle d-flex justify-content-between align-items-center"
                 >
@@ -28,8 +28,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
                     class="check"
                     [(ngModel)]="intervention.value"
                     [name]="intervention.id + '-assessed'"
+                    (ngModelChange)="updatedInterventions()"
                   />
-                  <!-- (ngModelChange)="updateInterventions()" -->
                   <label
                     [for]="intervention.id + '-assessed'"
                     class="checktoggle"
@@ -38,7 +38,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
                 </div>
               </td>
               <td>
-                <!-- <input class="form-check-input" type="checkbox" id="Modified" value="Modified" aria-label="..."> -->
                 <div
                   class="status-toggle d-flex justify-content-between align-items-center"
                 >
@@ -48,11 +47,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
                     class="check"
                     [(ngModel)]="intervention.value2"
                     [name]="intervention.id + '-modified'"
+                    (ngModelChange)="updatedInterventions()"
                   />
                   <label
                     [for]="intervention.id + '-modified'"
                     class="checktoggle"
-                    (ngModelChange)="updatedInterventions()"
+                    
                     >checkbox</label
                   >
                 </div>
@@ -65,16 +65,17 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   `,
 })
 export class InterventionsComponent {
-  @Input() interventionsList2: any[];
-  @Output() interventionsChange = new EventEmitter<any>();
+  @Input() interventionsList2: Interventions2[];
+  @Output() interventionsChange = new EventEmitter<object>();
 
   updatedInterventions() {
     const interventionsObj = this.interventionsList2
       .filter((intervention) => intervention.value)
       .reduce((acc, intervention) => {
-        acc[intervention.id] = true;
+        acc[intervention.id] = {modified:!!intervention.value2, assessed:!!intervention.value};
         return acc;
       }, {});
+      console.log(interventionsObj);
     this.interventionsChange.emit([interventionsObj]);
   }
 }

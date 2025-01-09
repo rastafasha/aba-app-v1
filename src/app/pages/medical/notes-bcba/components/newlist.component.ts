@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NewList } from '../interfaces';
 
 @Component({
   selector: 'app-newlist',
@@ -26,9 +27,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
                     class="check"
                     [(ngModel)]="iteml.value"
                     [name]="iteml.id"
+                    (ngModelChange)="updatenewLists()"
                   />
                   <label [for]="iteml.id" class="checktoggle"
-                  (ngModelChange)="updatenewLists()">checkbox</label>
+                  >checkbox</label>
                 </div>
               </td>
             </tr>
@@ -39,16 +41,17 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   `,
 })
 export class NewListComponent {
-  @Input() newList: any[];
-  @Output() newListChange = new EventEmitter<any>();
+  @Input() newList: NewList[];
+  @Output() newListChange = new EventEmitter<object>();
 
   updatenewLists() {
     const newListsObj = this.newList
-      .filter((newList) => newList.value)
-      .reduce((acc, newList) => {
-        acc[newList.id] = true;
+      .filter((iteml) => iteml.value)
+      .reduce((acc, iteml) => {
+        acc[iteml.id] = {option:!!iteml.value}
         return acc;
       }, {});
+      console.log(newListsObj);
     this.newListChange.emit([newListsObj]);
   }
 }

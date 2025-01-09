@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Outcome } from '../interfaces';
 
 @Component({
   selector: 'app-intakeoutcome',
@@ -14,16 +15,17 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
                           </tr>
                         </thead>
                         <tbody>
-                          <tr *ngFor="let itemOC of outcomeList; let i = index">
-                            <td>{{ itemOC.name }}</td>
+                          <tr *ngFor="let intakeoutcome of outcomeList; let i = index">
+                            <td>{{ intakeoutcome.name }}</td>
                             <td>
                               <div class="status-toggle d-flex justify-content-between align-items-center">
-                                <input type="checkbox" [id]="itemOC.id" class="check"
-                                       [(ngModel)]="itemOC.value"
-                                       [name]="itemOC.id"
+                                <input type="checkbox" [id]="intakeoutcome.id" class="check"
+                                       [(ngModel)]="intakeoutcome.value"
+                                       [name]="intakeoutcome.id"
+                                       (ngModelChange)="updateIntakeOutcomes()"
                                        >
-                                <label [for]="itemOC.id" class="checktoggle"
-                                (ngModelChange)="updateIntakeOutcomes()">checkbox</label>
+                                <label [for]="intakeoutcome.id" class="checktoggle"
+                                >checkbox</label>
     
                               </div>
                             </td>
@@ -35,16 +37,17 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   `,
 })
 export class IntakeOutcomeComponent {
-  @Input() outcomeList: any[];
-  @Output() intakeoutcomeChange = new EventEmitter<any>();
+  @Input() outcomeList: Outcome[];
+  @Output() intakeoutcomeChange = new EventEmitter<object>();
 
   updateIntakeOutcomes() {
     const intakeoutcomesObj = this.outcomeList
       .filter((intakeoutcome) => intakeoutcome.value)
       .reduce((acc, intakeoutcome) => {
-        acc[intakeoutcome.id] = true;
+        acc[intakeoutcome.id] = {option:!!intakeoutcome.value}
         return acc;
       }, {});
+      console.log(intakeoutcomesObj);
     this.intakeoutcomeChange.emit([intakeoutcomesObj]);
   }
 }

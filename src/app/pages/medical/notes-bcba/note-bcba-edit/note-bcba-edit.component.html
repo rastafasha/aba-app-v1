@@ -646,7 +646,7 @@
          <div class="col-xs-12" >
           <div class="card">
             <div class="card-body">
-              <app-replacements [rbt_training_goals]="rbt_training_goals"
+              <app-replacements [replacementList]="replacementList"
                   (replacementChange)="onReplacementChange($event)"></app-replacements>
             </div>
           </div>
@@ -656,8 +656,8 @@
          <div class="col-xs-12" >
           <div class="card">
             <div class="card-body">
-              <app-behaviors [behaviorsList]="behaviorsList"
-                  (replacementChange)="onBehaviorChange($event)"></app-behaviors>
+              <app-behaviors [behaviorList]="behaviorList"
+                  (behaviorsChange)="onBehaviorChange($event)"></app-behaviors>
             </div>
           </div>
         </div>
@@ -782,7 +782,7 @@
             <div class="col-xs-12" >
               <div class="card">
                 <div class="card-body">
-                  <app-replacements2 [rbt_training_goals]="rbt_training_goals"
+                  <app-replacements2 [replacementList]="replacementList"
                   (replacementChange)="onReplacementChange($event)"></app-replacements2>
                 </div>
               </div>
