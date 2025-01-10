@@ -41,6 +41,9 @@ import { Maladaptives } from '../interfaces';
   `,
 })
 export class BehaviorsComponent {
+  
+
+  
   @Input() behaviorList: Maladaptives[];
   @Output() behaviorsChange = new EventEmitter<object>();
 
@@ -48,10 +51,11 @@ export class BehaviorsComponent {
     const result = this.behaviorList
       .filter((behavior) => behavior.value)
       .reduce((acc, behavior) => {
-        acc[behavior.maladaptive_behavior] = { discused: !!behavior.value };
+        acc[behavior.index] = { discused: !!behavior.value };
         return acc;
       }, {}); // Valor inicial para el acumulador
     console.log(result);
     this.behaviorsChange.emit(result);
   }
+  
 }

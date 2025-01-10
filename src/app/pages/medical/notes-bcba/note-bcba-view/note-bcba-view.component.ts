@@ -19,6 +19,11 @@ import {
 } from '../interfaces';
 import { PatientsV2Service } from 'src/app/core/services';
 
+interface Behavior {
+  index: number;
+  discused: boolean;
+  maladaptive_behavior: string;
+}
 
 
 @Component({
@@ -135,6 +140,8 @@ export class NoteBcbaViewComponent implements OnInit {
 
   hours_days = [];
   behaviors = [];
+  behaviorsview = [];
+  behavior_selected: string;
   replacementGoals = [];
   intervention_added = [];
   replacements = [];
@@ -329,12 +336,15 @@ export class NoteBcbaViewComponent implements OnInit {
       this.IMAGE_PREVISUALIZA_SIGNATURE_SUPERVISOR_CREATED =
         this.note_selected.supervisor_signature;
 
+
+
       this.getProfilePatient();
 
       //para traer datos del doctor usado
       this.getDoctor();
       this.getDoctorRbt();
       // this.getDoctorBcba();
+      // this.getDataBip();
 
       if(this.cpt_code === '97155' ){
         this.show97155 = true;
@@ -349,13 +359,89 @@ export class NoteBcbaViewComponent implements OnInit {
         this.show971512 = true;
       }
 
-      this.behaviors = this.note_selected.behaviors;
+     
       this.interventions = this.note_selected.interventions;
       this.interventions2 = this.note_selected.interventions2;
       this.replacements = this.note_selected.replacements;
       this.replacements2 = this.note_selected.replacements2;
       this.newlist_added = this.note_selected.newlist_added;
       this.intake_outcome = this.note_selected.intake_outcome;
+
+
+        
+      //extraemos desde el bip los behaviors para obtener el nombre
+      this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
+        this.client_selected = resp.patient;
+        this.behaviors = resp.bip.maladaptives;
+        this.replacements = resp.replacements;
+        this.replacements2 = resp.replacements;
+
+        
+        this.note_selected.behaviors = this.note_selected.behaviors || {};
+        
+        // Convierte behaviors en un array de valores
+        const behaviorsArray = Object.values(this.note_selected.behaviors) as Behavior[];
+        
+        //muestro el resultado en consola
+        console.log('behaviors:', this.note_selected.behaviors);
+        
+        //filtro los behaviors que estan en el array
+        const newBehaviors = this.behaviors.map((element) => {
+          // Add null check for element.mal
+          const behavior = behaviorsArray.find(
+            (behavior) => behavior.maladaptive_behavior === element.maladaptive_behavior
+          );
+        
+          if (behavior) {
+            return {
+              index: element.index,
+              maladaptive_behavior: element.maladaptive_behavior,
+              discused: behavior ? behavior.discused : false,
+            };
+          } else {
+            console.warn(`Behavior with index ${element.index} not found.`);
+            return {
+              index: element.index,
+              maladaptive_behavior: '', // Provide a default value
+              discused: undefined,
+            };
+          }
+        });
+        
+        const mergedBehaviors = newBehaviors.map((behavior, index) => {
+          const noteBehavior = this.note_selected.behaviors[behavior.index];
+          return {
+            ...behavior,
+            maladaptive_behavior: behavior.maladaptive_behavior || '', // Provide a default value
+            discused: noteBehavior ? noteBehavior.discused : behavior.discused,
+          };
+        });
+        
+        console.log('Merged Behaviors:', mergedBehaviors);
+        this.behaviorsview = mergedBehaviors;
+        console.log(this.behaviorsview);
+
+          
+      });
+
+      
+      
+        
+
+    });
+
+    
+  }
+
+  getDataBip(){
+    this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
+      this.client_selected = resp.patient;
+      console.log('cliente',resp);
+      this.behaviors = resp.bip.maladaptives;
+      this.replacements = resp.replacements;
+      this.replacements2 = resp.replacements;
+
+        
     });
   }
 

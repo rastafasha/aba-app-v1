@@ -228,6 +228,7 @@ export class NoteBcbaEditComponent implements OnInit {
     show97151List = show97151List;
     behaviorList :any[];
     replacementList = this.replacements;
+    replacementList2 = this.replacements;
 
   constructor(
     private bipService: BipService,
@@ -292,6 +293,7 @@ export class NoteBcbaEditComponent implements OnInit {
       this.client_response_to_treatment_this_session =
         this.note_selected.client_response_to_treatment_this_session;
       this.pos = this.note_selected.pos;
+
       this.environmental_changes = this.note_selected.environmental_changes;
       this.participants = this.note_selected.participants;
       
@@ -370,27 +372,27 @@ export class NoteBcbaEditComponent implements OnInit {
         this.show97151 = true;
       }
 
-      this.interventions = this.note_selected.interventions;
-      // const jsonObj3 = JSON.parse(this.note_selected.interventions) || '';
-      // this.interventionsgroup = [...jsonObj3];
+      this.replacementList = this.note_selected.replacements;
+      this.replacementList2 = this.note_selected.replacements2;
 
-      // this.interventionsList = this.convertToInterventions(
-      //   this.interventionsgroup[0]
-      // );
+      this.interventions = this.note_selected.interventions;
+      this.interventionsList = this.convertToInterventions(
+        this.interventions
+      );
       
       this.interventions2 = this.note_selected.interventions2;
-      // const jsonObj4 = JSON.parse(this.note_selected.interventions2) || '';
-      // this.interventionsgroup2 = [...jsonObj4];
-
-      // this.interventionsList2 = this.convertToInterventions2(
-      //   this.interventionsgroup2[0]
-      // );
+      this.interventionsList2 = this.convertToInterventions2(
+        this.interventions2
+      );
       
       this.behaviorList = this.note_selected.behaviors;
     });
   }
 
   private convertToInterventions(input: { [x: string]: boolean }) {
+    if (!input) {
+      return [];
+    }
     return [
       {
         id: 'token_economy',
@@ -443,6 +445,9 @@ export class NoteBcbaEditComponent implements OnInit {
   }
 
   private convertToInterventions2(input: { [x: string]: boolean }) {
+    if (!input) {
+      return [];
+    }
     return [
       {
         id: 'token_economy',
@@ -461,8 +466,8 @@ export class NoteBcbaEditComponent implements OnInit {
         value2: input['NCR'] || false ,
       },
       { id: 'behavioral_momentum', name: 'Behavioral Momentum', 
-        value: input['Behavioral Momentum'] || false ,
-        value2: input['Behavioral Momentum'] || false 
+        value: input['behavioral_momentum'] || false ,
+        value2: input['behavioral_momentum'] || false 
       },
       { id: 'DRA', name: 'DRA',
          value: input['DRA'] || false,
@@ -554,6 +559,7 @@ export class NoteBcbaEditComponent implements OnInit {
         // this.insuranceData();
         
         this.pos = this.client_selected.pos_covered;
+
         this.getReplacementsByPatientId();
         this.pa_services = this.client_selected.pa_services;
 
@@ -571,9 +577,16 @@ export class NoteBcbaEditComponent implements OnInit {
         this.birth_date = this.client_selected.birth_date
         ? new Date(this.client_selected.birth_date).toISOString()
         : '';
-        
-
       });
+      this.getDataBip();
+  }
+
+  getDataBip(){
+    this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
+      this.client_selected = resp.patient;
+      this.behaviorList = resp.bip.maladaptives;
+      this.replacementList = resp.replacements;
+    });
   }
 
   private setPaService(noteServiceId: number) {

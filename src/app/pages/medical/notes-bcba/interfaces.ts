@@ -106,6 +106,7 @@ export interface show97151L {
 
 export interface Maladaptives {
   id: string;
+  index: number;
   maladaptive_behavior: string;
   value: boolean;
 }

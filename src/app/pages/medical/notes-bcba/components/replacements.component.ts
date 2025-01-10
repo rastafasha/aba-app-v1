@@ -54,7 +54,7 @@ export class ReplacementsComponent {
     const replacementsObj = this.replacementList
       .filter((replacement) => replacement.value)
       .reduce((acc, replacement) => {
-        acc[replacement.goal] = { demostrated: !!replacement.value};
+        acc[replacement.id] = { demostrated: !!replacement.value};
         return acc;
       }, {});
 

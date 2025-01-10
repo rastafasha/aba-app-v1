@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-replacement-view',
+  selector: 'app-replacements-view',
   template: `
     <!-- Interventions -->
     <div class="card">
@@ -20,7 +20,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
           </thead>
           <tbody>
             <tr *ngFor="let replaceme of replacements; let i = index">
-              <td>{{ replaceme[0].goal }}</td>
+              <td>{{ replaceme[0]?.goal }}</td>
               <td>
               <i *ngIf="replaceme[0]?.goal?.demostrated === true"   class="fa fa-check"  ></i>
                 <i *ngIf="replaceme[0]?.goal?.demostrated === false "  class="fa fa-times" ></i>
@@ -36,6 +36,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class ReplacementViewComponent {
   @Input() replacements;
+  
 
   updatereplacements() {
     const replacementsObj = this.replacements
@@ -44,5 +45,7 @@ export class ReplacementViewComponent {
         acc[replacements.id] = true;
         return acc;
       }, {});
+
+      
   }
 }

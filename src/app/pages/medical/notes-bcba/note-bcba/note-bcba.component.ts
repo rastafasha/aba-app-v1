@@ -293,7 +293,6 @@ throw new Error('Method not implemented.');
       this.birth_date = this.client_selected.birth_date
         ? new Date(this.client_selected.birth_date).toISOString()
         : '';
-      console.log(this.birth_date);
       this.diagnosis_code = this.client_selected.diagnosis_code;
       this.insurer_id = this.client_selected.insurer_id;
 
@@ -323,8 +322,6 @@ throw new Error('Method not implemented.');
       this.replacementList = resp.replacements;
       // this.interventionsList = resp.interventions;
       // this.interventionsList2 = resp.interventions2;
-      console.log(this.behaviorList);
-      console.log(this.replacements);
 
         
     });
