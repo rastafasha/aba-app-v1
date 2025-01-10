@@ -65,7 +65,7 @@ import {  ReplacementL2 } from '../interfaces';
 })
 export class Replacements2Component {
   @Input() replacementList: ReplacementL2[];
-  @Output() replacementsChange = new EventEmitter<object>();
+  @Output() replacementsChange2 = new EventEmitter<object>();
 
   
 
@@ -73,10 +73,10 @@ export class Replacements2Component {
     const replacementsObj = this.replacementList
       .filter((replacement) => replacement.value || replacement.value2)
       .reduce((acc, replacement) => {
-        acc[replacement.id] = {modified:!!replacement.value2, assessed:!!replacement.value};
+        acc[replacement.id] = {modified:!!replacement.value2, assessed:!!replacement.value, goal:replacement.goal};
         return acc;
       }, {});
       console.log(replacementsObj);
-    this.replacementsChange.emit(replacementsObj);
+    this.replacementsChange2.emit(replacementsObj);
   }
 }

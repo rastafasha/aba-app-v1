@@ -51,7 +51,7 @@ export class BehaviorsComponent {
     const result = this.behaviorList
       .filter((behavior) => behavior.value)
       .reduce((acc, behavior) => {
-        acc[behavior.index] = { discused: !!behavior.value };
+        acc[behavior.index] = { discused: !!behavior.value, maladaptive_behavior: behavior.maladaptive_behavior };
         return acc;
       }, {}); // Valor inicial para el acumulador
     console.log(result);

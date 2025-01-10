@@ -16,6 +16,7 @@ import {
   NoteOutcomeList,
   NoteBehaviorsList,
   NoteIntervention2,
+  ReplacementL2,
 } from '../interfaces';
 import { PatientsV2Service } from 'src/app/core/services';
 
@@ -23,6 +24,12 @@ interface Behavior {
   index: number;
   discused: boolean;
   maladaptive_behavior: string;
+}
+interface Replacement {
+  index: number;
+  goal:string;
+  assessed:boolean;
+  modified:boolean;
 }
 
 
@@ -143,6 +150,7 @@ export class NoteBcbaViewComponent implements OnInit {
   behaviorsview = [];
   behavior_selected: string;
   replacementGoals = [];
+  replacementsview = [];
   intervention_added = [];
   replacements = [];
   replacements2 = [];
@@ -382,10 +390,10 @@ export class NoteBcbaViewComponent implements OnInit {
         // Convierte behaviors en un array de valores
         const behaviorsArray = Object.values(this.note_selected.behaviors) as Behavior[];
         
-        //muestro el resultado en consola
+        //muestro el resultado de la nota 
         console.log('behaviors:', this.note_selected.behaviors);
         
-        //filtro los behaviors que estan en el array
+        //filtro los behaviors 
         const newBehaviors = this.behaviors.map((element) => {
           // Add null check for element.mal
           const behavior = behaviorsArray.find(
@@ -407,7 +415,7 @@ export class NoteBcbaViewComponent implements OnInit {
             };
           }
         });
-        
+        //los uno con el resultado que trae la nota
         const mergedBehaviors = newBehaviors.map((behavior, index) => {
           const noteBehavior = this.note_selected.behaviors[behavior.index];
           return {
@@ -421,8 +429,61 @@ export class NoteBcbaViewComponent implements OnInit {
         this.behaviorsview = mergedBehaviors;
         console.log(this.behaviorsview);
 
-          
+
+        //replacements
+
+      // Convierte replacements en un array de valores
+      const replacementsArray = Object.values(this.note_selected.replacements) as Replacement[];
+
+      // Muestra el resultado de la nota
+      console.log('replacements:', this.note_selected.replacements);
+
+      
+      //filtro los replacements 
+      const newReplacements = this.replacements.map((element) => {
+        // Add null check for element.mal
+        const replacement = replacementsArray.find(
+          (replacement) => replacement.goal === element.goal
+        );
+      
+        if (replacement) {
+          return {
+            index: element.index,
+            goal: element.goal,
+            assessed: replacement ? replacement.assessed : false,
+            modified: replacement ? replacement.modified : false,
+          };
+        } else {
+          console.warn(`replacements with id ${element.index} not found.`);
+          return {
+            index: element.index,
+            goal: '', // Provide a default value
+            assessed: undefined,
+            modified: undefined,
+          };
+        }
       });
+      //los uno con el resultado que trae la nota
+      const mergedReplacements = newReplacements.map((replacement, index) => {
+        const noteReplacement = this.note_selected.replacements[replacement.index];
+        return {
+          ...replacement,
+          goal: replacement.goal || '', // Provide a default value
+          assessed: noteReplacement ? noteReplacement.assessed : replacement.assessed,
+          modified: noteReplacement ? noteReplacement.modified : replacement.modified,
+        };
+      });
+      
+      console.log('Merged Replacements:', mergedReplacements);
+      this.replacementsview = mergedReplacements;
+      console.log(this.replacementsview);
+
+        
+    
+      });
+
+
+      
 
       
       

@@ -20,15 +20,15 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
               </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let replaceme of replacements2; let i = index">
-              <td>{{ replaceme.goal }}</td>
+            <tr *ngFor="let replace of replacementsview; let i = index">
+              <td>{{ replace.goal }}</td>
               <td>
-              <i *ngIf="replaceme?.goal.assessed === true"   class="fa fa-check"  ></i>
-                <i *ngIf="replaceme?.goal.assessed === false "  class="fa fa-times" ></i>
+              <i *ngIf="replace.assessed === true"   class="fa fa-check"  ></i>
+                <i *ngIf="replace.assessed === false "  class="fa fa-times" ></i>
               </td>
               <td>
-              <i *ngIf="replaceme?.goal.modified === true"   class="fa fa-check"  ></i>
-                <i *ngIf="replaceme?.goal.modified === false "  class="fa fa-times" ></i>
+              <i *ngIf="replace.modified === true"   class="fa fa-check"  ></i>
+                <i *ngIf="replace.modified === false "  class="fa fa-times" ></i>
               </td>
             </tr>
           </tbody>
@@ -40,10 +40,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   `,
 })
 export class Replacement2ViewComponent {
-  @Input() replacements2;
+  @Input() replacementsview;
 
   updatereplacements() {
-    const replacementsObj = this.replacements2
+    const replacementsObj = this.replacementsview
       .filter((replacements2) => replacements2.value)
       .reduce((acc, replacements2) => {
         acc[replacements2.id] = true;
