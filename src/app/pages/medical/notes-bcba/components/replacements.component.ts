@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {  ReplacementL2 } from '../interfaces';
+import {  ReplacementL } from '../interfaces';
 
 @Component({
   selector: 'app-replacements',
@@ -47,14 +47,14 @@ import {  ReplacementL2 } from '../interfaces';
   `,
 })
 export class ReplacementsComponent {
-  @Input() replacementList: ReplacementL2[];
+  @Input() replacementList: ReplacementL[];
   @Output() replacementChange = new EventEmitter<object>();
 
   updateReplacements() {
     const replacementsObj = this.replacementList
       .filter((replacement) => replacement.value)
       .reduce((acc, replacement) => {
-        acc[replacement.goal] = { demostrated: !!replacement.value, name: replacement.goal };
+        acc[replacement.goal] = { demostrated: !!replacement.value};
         return acc;
       }, {});
 

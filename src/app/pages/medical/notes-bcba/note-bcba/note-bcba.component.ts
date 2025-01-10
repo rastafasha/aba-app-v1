@@ -157,8 +157,8 @@ throw new Error('Method not implemented.');
 
   intervention_added : object;
   intervention2_added : object;
-  replacements_added = [];
-  replacements2_added = [];
+  replacements_added :object;
+  replacements2_added :object;
   intakeoutcome_added : object;
   newlist_added :object;
   behaviorsList_added :object;
@@ -511,10 +511,10 @@ convertToHours(totalMinutes: number): string {
     this.intervention2_added = updatedInterventions2;
   }
 
-  onReplacementChange(updatedReplacements) {
+  onReplacementChange(updatedReplacements:object) {
     this.replacements_added = updatedReplacements;
   }
-  onReplacement2Change(updatedReplacements2) {
+  onReplacement2Change(updatedReplacements2:object) {
     this.replacements_added = updatedReplacements2;
   }
   

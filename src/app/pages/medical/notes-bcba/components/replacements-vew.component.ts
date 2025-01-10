@@ -20,10 +20,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
           </thead>
           <tbody>
             <tr *ngFor="let replaceme of replacements; let i = index">
-              <td>{{ replaceme.goal }}</td>
+              <td>{{ replaceme[0].goal }}</td>
               <td>
-              <i *ngIf="replaceme?.goal.demostrated === true"   class="fa fa-check"  ></i>
-                <i *ngIf="replaceme?.goal.demostrated === false "  class="fa fa-times" ></i>
+              <i *ngIf="replaceme[0]?.goal?.demostrated === true"   class="fa fa-check"  ></i>
+                <i *ngIf="replaceme[0]?.goal?.demostrated === false "  class="fa fa-times" ></i>
               </td>
             </tr>
           </tbody>
