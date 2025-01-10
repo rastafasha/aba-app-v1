@@ -532,7 +532,7 @@
                 <div class="card-body">
                   <app-intakeoutcome
                   [outcomeList]="outcomeList"
-                  (interventionsChange)="onIntakeoutcomeChange($event)"
+                  (intakeoutcomeChange)="onIntakeoutcomeChange($event)"
                   ></app-intakeoutcome>
                 </div>
               </div>
@@ -597,8 +597,9 @@
             <div class="col-xs-12" >
               <div class="card">
                 <div class="card-body">
-                  <app-replacements2 [replacementList]="replacementList"
-                  (replacementChange)="onReplacementChange($event)"></app-replacements2>
+                  
+                  <app-replacements [replacementList]="replacementList"
+                  (replacementChange)="onReplacementChange($event)"></app-replacements>
                 </div>
               </div>
             </div>
@@ -668,8 +669,8 @@
          <div class="col-xs-12" >
           <div class="card">
             <div class="card-body">
-              <app-replacements [replacementList]="replacementList"
-                  (replacementChange)="onReplacementChange($event)"></app-replacements>
+              <app-replacements2 [replacementList]="replacementList"
+                  (replacementChange)="onReplacementChange($event)"></app-replacements2>
                   
             </div>
           </div>

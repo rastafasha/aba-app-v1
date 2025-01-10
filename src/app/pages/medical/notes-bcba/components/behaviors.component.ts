@@ -23,13 +23,13 @@ import { Maladaptives } from '../interfaces';
               >
                 <input
                   type="checkbox"
-                  [id]="'check-' + behavior.id"
+                  [id]="'check-' + behavior.maladaptive_behavior"
                   class="check"
                   [(ngModel)]="behavior.value"
                   [name]="'check-' + behavior.maladaptive_behavior"
                   (ngModelChange)="updateBehaviors()"
                 />
-                <label [for]="'check-' + behavior.id" class="checktoggle"
+                <label [for]="'check-' + behavior.maladaptive_behavior" class="checktoggle"
                   >checkbox</label>
               </div>
               </td>

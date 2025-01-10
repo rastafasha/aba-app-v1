@@ -975,6 +975,12 @@ convertToHours(totalMinutes: number): string {
         JSON.stringify(this.intakeoutcome_added)
       );
     }
+    if (this.newlist_added) {
+      formData.append(
+        'newlist_added',
+        JSON.stringify(this.newlist_added)
+      );
+    }
 
     if (this.behaviorsList_added) {
       formData.append(

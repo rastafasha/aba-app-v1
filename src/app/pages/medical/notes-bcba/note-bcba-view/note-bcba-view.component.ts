@@ -138,6 +138,9 @@ export class NoteBcbaViewComponent implements OnInit {
   replacementGoals = [];
   intervention_added = [];
   replacements = [];
+  replacements2 = [];
+  newlist_added = [];
+  intake_outcome = [];
   interventionsgroup = [];
 
   maladaptivegroup = [];
@@ -349,6 +352,10 @@ export class NoteBcbaViewComponent implements OnInit {
       this.behaviors = this.note_selected.behaviors;
       this.interventions = this.note_selected.interventions;
       this.interventions2 = this.note_selected.interventions2;
+      this.replacements = this.note_selected.replacements;
+      this.replacements2 = this.note_selected.replacements2;
+      this.newlist_added = this.note_selected.newlist_added;
+      this.intake_outcome = this.note_selected.intake_outcome;
     });
   }
 

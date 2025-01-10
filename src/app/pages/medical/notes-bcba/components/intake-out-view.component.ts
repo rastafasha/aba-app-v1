@@ -9,104 +9,62 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
       </div>
       <!-- body card -->
       <div class="card-body p-0">
-        <div class="personal-list-out">
-          <div class="container">
-            <div class="col-xs-12">
-              <div class="row">
-                <div class="col-xs-12 col-sm-3">
-                  <div
-                    class="d-flex justify-content-between align-items-center"
-                  >
-                    <span>SRS_2</span>
-                    <div
-                      class="d-flex justify-content-between align-items-center"
-                    >
-                      <i
-                        *ngIf="outcomeList?.SRS_2"
-                        class="fa fa-check"
-                      ></i>
-                      <i
-                        *ngIf="!outcomeList?.SRS_2"
-                        class="fa fa-times"
-                      ></i>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xs-12 col-sm-3">
-                  <div
-                    class="d-flex justify-content-between align-items-center"
-                  >
-                    <span>vineland_3</span>
-                    <div
-                      class="d-flex justify-content-between align-items-center"
-                    >
-                      <i
-                        *ngIf="outcomeList?.vineland_3"
-                        class="fa fa-check"
-                      ></i>
-                      <i
-                        *ngIf="!outcomeList?.vineland_3"
-                        class="fa fa-times"
-                      ></i>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xs-12 col-sm-3">
-                  <div
-                    class="d-flex justify-content-between align-items-center"
-                  >
-                    <span>PDDBI</span>
-                    <div
-                      class="d-flex justify-content-between align-items-center"
-                    >
-                      <i
-                        *ngIf="outcomeList?.PDDBI"
-                        class="fa fa-check"
-                      ></i>
-                      <i
-                        *ngIf="!outcomeList?.PDDBI"
-                        class="fa fa-times"
-                      ></i>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xs-12 col-sm-3">
-                  <div
-                    class="d-flex justify-content-between align-items-center"
-                  >
-                    <span>PSI_4_short_form</span>
-                    <div
-                      class="d-flex justify-content-between align-items-center"
-                    >
-                      <i
-                        *ngIf="outcomeList?.PSI_4_short_form"
-                        class="fa fa-check"
-                      ></i>
-                      <i
-                        *ngIf="!outcomeList?.PSI_4_short_form"
-                        class="fa fa-times"
-                      ></i>
-                    </div>
-                  </div>
-                </div>
+      <div class="table-responsive content-box">
+          <table class="table mb-0 ">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Option</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr >
+                <td>SRS-2</td>
+                <td>
+                <i *ngIf="intake_outcome[0]?.SRS_2?.option === true"   class="fa fa-check"  ></i>
+                <i *ngIf="intake_outcome[0]?.SRS_2?.option === false "  class="fa fa-times" ></i>
+                </td>
                 
-
-              </div>
-            </div>
-          </div>
+              </tr>
+              <tr >
+                <td>vineland-3</td>
+                <td>
+                <i *ngIf="intake_outcome[0]?.vineland_3?.option === true"   class="fa fa-check"  ></i>
+                <i *ngIf="intake_outcome[0]?.vineland_3?.option === false "  class="fa fa-times" ></i>
+                </td>
+                
+              </tr>
+              <tr >
+                <td>PDDBI</td>
+                <td>
+                <i *ngIf="intake_outcome[0]?.PDDBI?.option === true"   class="fa fa-check"  ></i>
+                <i *ngIf="intake_outcome[0]?.PDDBI?.option === false "  class="fa fa-times" ></i>
+                </td>
+              </tr>
+              <tr >
+                <td>PSI-4 short form</td>
+                <td>
+                <i *ngIf="intake_outcome[0]?.PSI_4_short_form?.option === true"   class="fa fa-check"  ></i>
+                <i *ngIf="intake_outcome[0]?.PSI_4_short_form?.option === false "  class="fa fa-times" ></i>
+                </td>
+              </tr>
+              
+              
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   `,
 })
 export class IntakeOutcomeViewComponent {
-  @Input() outcomeList: any;
+  @Input() intake_outcome: any;
 
   updateIntakeOutcomes() {
-    const outcomeListObj = this.outcomeList
-      .filter((outcomeList) => outcomeList.value)
-      .reduce((acc, outcomeList) => {
-        acc[outcomeList.id] = true;
+    const outcomeListObj = this.intake_outcome
+      .filter((intake_outcome) => intake_outcome.value)
+      .reduce((acc, intake_outcome) => {
+        acc[intake_outcome.id] = true;
         return acc;
       }, {});
   }

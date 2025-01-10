@@ -6,7 +6,7 @@ import { Outcome } from '../interfaces';
   styleUrls: ['../note-bcba/note-bcba.component.scss'],
   template: `
     <div class="col-12">
-                    <h5>Intake and Outcome Measures:</h5>
+                    <h5>Intake and Outcome Measures</h5>
                     <div class="table-responsive content-box">
                       <table class="table mb-0 ">
                         <thead>

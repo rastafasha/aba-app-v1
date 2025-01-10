@@ -366,12 +366,12 @@
                   </div>
                   <!-- newlist -->
                   <div class="card">
-                    <app-newlist-view [newlist]="newlist"></app-newlist-view>
+                    <app-newlist-view [newlist_added]="newlist_added"></app-newlist-view>
                   </div>
                   <!-- newlist -->
                   <!-- outcomeList -->
                   <div class="card">
-                    <app-intakeoutcome-view [outcomeList]="outcomeList"></app-intakeoutcome-view>
+                    <app-intakeoutcome-view [intake_outcome]="intake_outcome"></app-intakeoutcome-view>
                   </div>
                   <!-- outcomeList -->
                 </div>
@@ -420,6 +420,12 @@
                   <div class="card">
                     <app-intervention-view [interventions]="interventions"></app-intervention-view>
                   </div>
+                  <!-- replacement protocols -->
+                  <div class="card">
+                    <app-replacement-view [replacements]="replacements"></app-replacement-view>
+                </div>
+                <!-- replacement protocols -->
+                  
                   <div class="card">
                     <div class="card-header">
                       <!-- <h4 class="card-title">Modifications needed at this time</h4> -->
@@ -472,10 +478,12 @@
                 <!-- show97156 -->
                 <div class="col-xs-12 " *ngIf="show97156">
                   <div class="card">
-                    
                     <app-intervention2-view [interventions2]="interventions2"></app-intervention2-view>
                   </div>
                   <!-- replacement protocols -->
+                  <div class="card">
+                    <app-replacements2-view [replacements2]="replacements2"></app-replacements2-view>
+                  </div>
                   <!-- replacement protocols -->
                   <!-- behaviors -->
                   <div class="card">

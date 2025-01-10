@@ -44,9 +44,9 @@ export const newList = [
     { id: 'VBmapp', name: 'VBmapp', value: false },
     { id: 'Ablls', name: 'Ablls', value: false },
     { id: 'EFL', name: 'EFL', value: false },
-    { id: 'Peak', name: 'Peak', value: false },
-    { id: 'parent_interview', name: 'Parent interview', value: false },
-    { id: 'reinforcement_questionnaire', name: 'Reinforcement questionnaire', value: false },
+    { id: 'peak', name: 'Peak', value: false },
+    { id: 'parent_interview', name: 'Parent Interview', value: false },
+    { id: 'reinforcement_questionnaire', name: 'Reinforcement Questionnaire', value: false },
     { id: 'preference_assessment', name: 'Preference assessment', value: false },
     { id: 'other', name: 'Other', value: false },
 ];

@@ -15,6 +15,8 @@ import { BehaviorViewComponent } from './behaviors-vew.component';
 import { interventions2ViewComponent } from './interventions2-vew.component';
 import { NewlistViewComponent } from './newlist-vew.component';
 import { IntakeOutcomeViewComponent } from './intake-out-view.component';
+import { ReplacementViewComponent } from './replacements-vew.component';
+import { Replacement2ViewComponent } from './replacements2-vew.component';
 
 
 
@@ -32,7 +34,9 @@ import { IntakeOutcomeViewComponent } from './intake-out-view.component';
         BehaviorViewComponent,
         interventions2ViewComponent,
         NewlistViewComponent,
-        IntakeOutcomeViewComponent
+        IntakeOutcomeViewComponent,
+        ReplacementViewComponent,
+        Replacement2ViewComponent
 
   ],
   exports: [
@@ -48,7 +52,9 @@ import { IntakeOutcomeViewComponent } from './intake-out-view.component';
         BehaviorViewComponent,
         interventions2ViewComponent,
         NewlistViewComponent,
-        IntakeOutcomeViewComponent
+        IntakeOutcomeViewComponent,
+        ReplacementViewComponent,
+        Replacement2ViewComponent
   ],
   imports: [
     CommonModule,

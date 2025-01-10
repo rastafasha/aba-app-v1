@@ -4,15 +4,14 @@ import {  ReplacementL2 } from '../interfaces';
 @Component({
   selector: 'app-replacements',
   template: `
-    <div class="col-12">
+<div class="col-12">
       <h5>replacements protocols</h5>
       <div class="table-responsive ">
         <table class="table mb-0 ">
           <thead>
             <tr>
               <th>please check as needed</th>
-              <th>Assessed</th>
-              <th>Modified</th>
+              <th>Demostrated</th>
             </tr>
           </thead>
           <tbody>
@@ -24,34 +23,15 @@ import {  ReplacementL2 } from '../interfaces';
                 >
                   <input
                     type="checkbox"
-                    [id]="replacement.id + '-assessed'"
+                    [id]="replacement.id"
                     class="check"
                     [(ngModel)]="replacement.value"
-                    [name]="replacement.id + '-assessed'"
-                    (ngModelChange)="updateReplacements()"
-                  />
-                  <label [for]="replacement.id + '-assessed'" class="checktoggle"
-                  
-                    >checkbox</label
-                  >
-                </div>
-              </td>
-              <td>
-                <div
-                  class="status-toggle d-flex justify-content-between align-items-center"
-                >
-                  <input
-                    type="checkbox"
-                    [id]="replacement.id + '-modified'"
-                    class="check"
-                    [(ngModel)]="replacement.value2"
-                    [name]="replacement.goal + '-modified'"
+                    [name]="replacement.goal"
                     (ngModelChange)="updateReplacements()"
                   />
                   <label
-                    [for]="replacement.id + '-modified'"
+                    [for]="replacement.id"
                     class="checktoggle"
-                    
                     >checkbox</label
                   >
                 </div>
@@ -61,6 +41,9 @@ import {  ReplacementL2 } from '../interfaces';
         </table>
       </div>
     </div>
+
+
+    
   `,
 })
 export class ReplacementsComponent {
@@ -69,12 +52,13 @@ export class ReplacementsComponent {
 
   updateReplacements() {
     const replacementsObj = this.replacementList
-      .filter((replacement) => replacement.value || replacement.value2)
+      .filter((replacement) => replacement.value)
       .reduce((acc, replacement) => {
-        acc[replacement.goal] = {modified:!!replacement.value2, assessed:!!replacement.value};
+        acc[replacement.goal] = { demostrated: !!replacement.value, name: replacement.goal };
         return acc;
       }, {});
+
       console.log(replacementsObj);
-    this.replacementChange.emit(replacementsObj);
+    this.replacementChange.emit([replacementsObj]);
   }
 }
