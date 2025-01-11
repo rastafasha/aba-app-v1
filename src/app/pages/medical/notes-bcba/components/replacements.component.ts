@@ -23,14 +23,14 @@ import {  ReplacementL } from '../interfaces';
                 >
                   <input
                     type="checkbox"
-                    [id]="replacement.id"
+                    [id]="replacement.id + '-demostrated'"
                     class="check"
                     [(ngModel)]="replacement.value"
-                    [name]="replacement.goal"
+                    [name]="replacement.goal + '-demostrated'"
                     (ngModelChange)="updateReplacements()"
                   />
                   <label
-                    [for]="replacement.id"
+                    [for]="replacement.id + '-demostrated'"
                     class="checktoggle"
                     >checkbox</label
                   >

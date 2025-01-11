@@ -51,7 +51,6 @@ import {  ReplacementL2 } from '../interfaces';
                   <label
                     [for]="replacement.id + '-modified'"
                     class="checktoggle"
-                    
                     >checkbox</label
                   >
                 </div>

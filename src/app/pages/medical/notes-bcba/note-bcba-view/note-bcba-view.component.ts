@@ -31,6 +31,11 @@ interface Replacement {
   assessed:boolean;
   modified:boolean;
 }
+interface Replacement1 {
+  index: number;
+  goal:string;
+  demostrated:boolean;
+}
 
 
 @Component({
@@ -151,6 +156,7 @@ export class NoteBcbaViewComponent implements OnInit {
   behavior_selected: string;
   replacementGoals = [];
   replacementsview = [];
+  replacementsview1 = [];
   intervention_added = [];
   replacements = [];
   replacements2 = [];
@@ -430,7 +436,7 @@ export class NoteBcbaViewComponent implements OnInit {
         console.log(this.behaviorsview);
 
 
-        //replacements
+        //replacements dos valores
 
       // Convierte replacements en un array de valores
       const replacementsArray = Object.values(this.note_selected.replacements) as Replacement[];
@@ -463,32 +469,67 @@ export class NoteBcbaViewComponent implements OnInit {
           };
         }
       });
-      //los uno con el resultado que trae la nota
-      const mergedReplacements = newReplacements.map((replacement, index) => {
-        const noteReplacement = this.note_selected.replacements[replacement.index];
-        return {
-          ...replacement,
-          goal: replacement.goal || '', // Provide a default value
-          assessed: noteReplacement ? noteReplacement.assessed : replacement.assessed,
-          modified: noteReplacement ? noteReplacement.modified : replacement.modified,
-        };
+        //los uno con el resultado que trae la nota
+        const mergedReplacements = newReplacements.map((replacement, index) => {
+          const noteReplacement = this.note_selected.replacements[replacement.index];
+          return {
+            ...replacement,
+            goal: replacement.goal || '', // Provide a default value
+            assessed: noteReplacement ? noteReplacement.assessed : replacement.assessed,
+            modified: noteReplacement ? noteReplacement.modified : replacement.modified,
+          };
+        });
+      
+        console.log('Merged Replacements:', mergedReplacements);
+        this.replacementsview = mergedReplacements;
+        console.log(this.replacementsview);
+
+
+        //replacements 1 valor
+
+      // Convierte replacements en un array de valores
+      const replacements1Array = Object.values(this.note_selected.replacements) as Replacement1[];
+
+      // Muestra el resultado de la nota
+      console.log('replacements:', this.note_selected.replacements);
+
+      
+      //filtro los replacements 
+      const newReplacements1 = this.replacements.map((element) => {
+        // Add null check for element.mal
+        const replacement1 = replacements1Array.find(
+          (replacement1) => replacement1.goal === element.goal
+        );
+      
+        if (replacement1) {
+          return {
+            index: element.index,
+            goal: element.goal,
+            demostrated: replacement1 ? replacement1.demostrated : false,
+          };
+        } else {
+          console.warn(`replacements with id ${element.index} not found.`);
+          return {
+            index: element.index,
+            goal: '', // Provide a default value
+            demostrated: undefined,
+          };
+        }
       });
+        //los uno con el resultado que trae la nota
+        const mergedReplacements1 = newReplacements1.map((replacement1, index) => {
+          const noteReplacement = this.note_selected.replacements[replacement1.index];
+          return {
+            ...replacement1,
+            goal: replacement1.goal || '', // Provide a default value
+            demostrated: noteReplacement ? noteReplacement.demostrated : replacement1.demostrated,
+          };
+        });
       
-      console.log('Merged Replacements:', mergedReplacements);
-      this.replacementsview = mergedReplacements;
-      console.log(this.replacementsview);
-
-        
-    
+        console.log('Merged Replacements1:', mergedReplacements1);
+        this.replacementsview1 = mergedReplacements1;
+        console.log(this.replacementsview1);
       });
-
-
-      
-
-      
-      
-        
-
     });
 
     
