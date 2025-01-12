@@ -1,0 +1,92 @@
+<div mat-dialog-title class="h3" style="font-size: 1.5rem !important">LTO</div>
+<div mat-dialog-content>
+  <div class="container mt-4">
+    <div class="row align-items-center">
+      <div class="col-xs-12 col-md-3">
+        <div class="form-group local-forms">
+          <label>LTO <span class="login-danger">*</span></label>
+          <input
+            class="form-control"
+            name="lto"
+            [(ngModel)]="lto.name"
+            type="text"
+          />
+        </div>
+      </div>
+      <div class="col-12 col-md-3">
+        <div class="form-group local-forms">
+          <label>Status<span class="login-danger">*</span></label>
+          <select
+            class="form-control form-select-solid fw-bolder"
+            name="lto.status"
+            [ngModelOptions]="{ standalone: true }"
+            [(ngModel)]="lto.status"
+          >
+            <option>-- Select --</option>
+            <option value="inprogress">in progress</option>
+            <option value="initiated">Initiated</option>
+            <option value="mastered">mastered</option>
+            <option value="on hold">On Hold</option>
+            <option value="discontinued">Discontinued</option>
+            <option value="maintenance">Maintenance</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-12 col-md-3">
+        <div class="form-group local-forms">
+          <label>Initial Date<span class="login-danger">*</span></label>
+          <input
+            class="form-control datetimepicker"
+            name="lto.initial_date"
+            [(ngModel)]="lto.initial_date"
+            type="text"
+            matInput
+            [matDatepicker]="pickerDateLTO"
+          />
+          <mat-datepicker #pickerDateLTO></mat-datepicker>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="pickerDateLTO"
+          ></mat-datepicker-toggle>
+        </div>
+      </div>
+      <div class="col-12 col-md-3">
+        <div class="form-group local-forms">
+          <label>End Date<span class="login-danger">*</span></label>
+          <input
+            class="form-control datetimepicker"
+            name="lto.end_date"
+            [(ngModel)]="lto.end_date"
+            type="text"
+            matInput
+            [matDatepicker]="pickerDateLTO1"
+          />
+          <mat-datepicker #pickerDateLTO1></mat-datepicker>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="pickerDateLTO1"
+          ></mat-datepicker-toggle>
+        </div>
+      </div>
+    </div>
+    <div class="row align-items-center">
+      <div class="col-xs-12">
+        <div class="form-group local-forms">
+          <label>Description LTO <span class="login-danger">*</span></label>
+          <textarea
+            class="form-control"
+            name="lto.decription"
+            [(ngModel)]="lto.description"
+            rows="4"
+            cols="30"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <div class="col-12 mb-3 doctor-submit text-end">
+    <button class="btn btn-primary btn-sm" (click)="onSave()">Save</button>
+  </div>
+</div>

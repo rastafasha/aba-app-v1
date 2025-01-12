@@ -1,4 +1,56 @@
-import { Maladaptive } from 'src/app/pages/dashboard/models/dashboard.models';
+import { isString } from 'src/app/shared/utils';
+type ObjectiveStatus =
+  | 'inprogress'
+  | 'initiated'
+  | 'mastered'
+  | 'on hold'
+  | 'discontinued'
+  | 'maintenance';
+export class Objective {
+  id: number;
+  name: string;
+  maladaptive_id: number;
+  status: ObjectiveStatus;
+  initial_date: Date;
+  end_date: Date;
+  description: string;
+  target: number;
+  created_at: Date;
+  updated_at: Date;
+  deleted_at: Date;
+  order?: number;
+  index?: number;
+}
+
+export class Goal {
+  id: number;
+  bip_id: number;
+  patient_identifier: string;
+  client_id: number;
+  current_status: 'active' | 'inactive';
+  maladaptive: string;
+  baseline: number;
+  created_at: Date;
+  updated_at: Date;
+  deleted_at: string;
+  long_term_objective: Objective;
+  short_term_objectives: Objective[];
+}
+
+export class Maladaptive {
+  index?: number;
+  baseline_date: Date;
+  baseline_level: number;
+  current_intensity?: number;
+  initial_intensity: number;
+  name: string;
+  description: string;
+  constructor(data: Partial<Maladaptive>) {
+    Object.assign(this, data);
+    this.name = data.name ?? data['maladaptive_behavior'];
+    this.description = data.description ?? data['topografical_definition'];
+  }
+}
 export type Intervention = {
   index?: number;
   titleIntervention: string;
@@ -70,6 +122,7 @@ export class BipV2 {
   current_treatment_and_progress: string;
   education_status: string;
   phisical_and_medical_status: string;
+  phiysical_and_medical: string;
   phisical_and_medical: Medication[];
   assestment_conducted: string | null;
   strengths: string;
@@ -134,5 +187,14 @@ export class BipV2 {
 
   constructor(data: Partial<BipV2>) {
     Object.assign(this, data);
+    console.log(this.maladaptives);
+
+    if (isString(this.maladaptives)) {
+      this.maladaptives = JSON.parse(this.maladaptives);
+    }
+    this.maladaptives = (this.maladaptives ?? []).map(
+      (item) => new Maladaptive(item)
+    );
+    console.log(this.maladaptives);
   }
 }

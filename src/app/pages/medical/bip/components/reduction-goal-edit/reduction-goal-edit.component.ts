@@ -1,11 +1,21 @@
-import { Component, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { DatePipe } from '@angular/common';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  LOCALE_ID,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { Goal, Maladaptive, Objective } from 'src/app/core/models';
+import { ListAndFormComponent } from 'src/app/shared/components/list-and-form/list-and-form.component';
+import {
+  ListOption,
+  ListRender,
+} from 'src/app/shared/components/list/list.component';
 import { AppRoutes } from 'src/app/shared/routes/routes';
-import Swal from 'sweetalert2';
-import { BipService } from '../../service/bip.service';
-import { GoalService } from '../../service/goal.service';
-import { AppUser } from 'src/app/core/models/users.model';
-import { AuthService } from 'src/app/core/auth/auth.service';
+import { ListFormStrategy } from '../bip-form/list-form.strategy';
 
 @Component({
   selector: 'app-reduction-goal-edit',
@@ -13,11 +23,134 @@ import { AuthService } from 'src/app/core/auth/auth.service';
   styleUrls: ['./reduction-goal-edit.component.scss'],
 })
 export class ReductionGoalEditComponent {
-  @Input() maladap: any;
-
   routes = AppRoutes;
-  valid_form_success = false;
+  @Output() save = new EventEmitter<void>();
+  @Input() maladaptive: Maladaptive;
+  @Input() goal: Goal;
+  @Output() goalChange = new EventEmitter<Goal>();
+  //
+  @ViewChild('stoListForm') stoListForm: ListAndFormComponent<Objective>;
+  @ViewChild('ltoListForm') ltoListForm: ListAndFormComponent<Objective>;
+
+  //
+  ltos: Objective[];
+  ltosChange = new EventEmitter<Objective[]>();
+  newLto: Objective = {
+    id: 0,
+    name: 'lto',
+    maladaptive_id: 0,
+    status: 'initiated',
+    initial_date: new Date(),
+    end_date: new Date(),
+    description: '',
+    target: 0,
+    created_at: new Date(),
+    updated_at: new Date(),
+    deleted_at: new Date(),
+  };
+  ltoStrategy = new ListFormStrategy<Objective>(this.ltosChange, this.newLto);
+
+  //
+  stos: Objective[] = [];
+  stosChange = new EventEmitter<Objective[]>();
+  newSto: Objective = {
+    id: 0,
+    name: 'sto',
+    maladaptive_id: 0,
+    status: 'initiated',
+    initial_date: new Date(),
+    end_date: new Date(),
+    description: '',
+    target: 0,
+    created_at: new Date(),
+    updated_at: new Date(),
+    deleted_at: new Date(),
+  };
+  stoStrategy = new ListFormStrategy<Objective>(this.stosChange, this.newSto);
+  stoOptions: ListOption<Objective>[] = [
+    {
+      text: 'Edit',
+      icon: 'fa fa-pencil',
+      class: 'btn btn-outline-success btn-sm',
+      action: (item: Objective) => this.onSelectSto(item),
+    },
+    {
+      text: 'Delete',
+      icon: 'fa fa-trash-alt',
+      class: 'btn btn-outline-danger btn-sm',
+      action: (item: Objective) => this.onDeleteSto(item),
+    },
+  ];
+  //
+  ltoOptions: ListOption<Objective>[] = [
+    {
+      text: 'Edit',
+      icon: 'fa fa-pencil',
+      class: 'btn btn-outline-success btn-sm',
+      action: (item: Objective) => this.onSelectLto(item),
+    },
+    {
+      text: 'Delete',
+      icon: 'fa fa-trash-alt',
+      class: 'btn btn-outline-danger btn-sm',
+      action: (item: Objective) => this.onDeleteLto(item),
+    },
+  ];
+
+  //
   text_validation = '';
+  //
+  locale = inject(LOCALE_ID);
+  renders: ListRender<Objective> = {
+    name: (x) => `<b>${x.name}</b>`,
+    initial_date: (x) =>
+      new DatePipe(this.locale).transform(x.initial_date, 'shortDate'),
+    end_date: (x) =>
+      new DatePipe(this.locale).transform(x.end_date, 'shortDate'),
+  };
+
+  onSelectSto(sto: Objective) {
+    this.newSto = this.stoStrategy.select(this.stos, sto);
+    this.stoListForm.open();
+  }
+  onDeleteSto(sto: Objective) {
+    this.stos = this.stoStrategy.delete(this.stos.indexOf(sto), this.stos);
+    this.stos = [...this.stos];
+  }
+
+  onSaveSto(sto: Objective) {
+    const resp = this.stoStrategy.add(() => this.validateSto(), this.stos, sto);
+    this.newSto = resp.item;
+    this.stos = resp.items;
+    this.stos = [...this.stos];
+    this.stoListForm.close();
+  }
+
+  onSelectLto(lto: Objective) {
+    this.newLto = this.ltoStrategy.select(this.ltos, lto);
+    this.ltoListForm.open();
+  }
+  onDeleteLto(lto: Objective) {
+    this.ltos = this.ltoStrategy.delete(this.ltos.indexOf(lto), this.ltos);
+    this.ltos = [...this.ltos];
+  }
+
+  onSaveLto(lto: Objective) {
+    const resp = this.ltoStrategy.add(() => this.validateLto(), this.ltos, lto);
+    this.newLto = resp.item;
+    this.ltos = resp.items;
+    this.ltos = [...this.ltos];
+    this.ltoListForm.close();
+  }
+
+  private validateSto() {
+    return !!this.newSto;
+  }
+  private validateLto() {
+    return !!this.newLto;
+  }
+  /*
+  valid_form_success = false;
   text_success = '';
 
   client_id: any;
@@ -52,7 +185,6 @@ export class ReductionGoalEditComponent {
   client_id_goal: any;
   goalid: any;
   goal_id: any;
-  maladaptive: any;
 
   //grafico
   maladaptive_child: any;
@@ -76,7 +208,6 @@ export class ReductionGoalEditComponent {
   goalpatient_selected: any;
   goal_selected: any;
   goalsbybipid: any;
-  goals = [];
   goalReductions = [];
 
   golsto_edit: any = {};
@@ -106,15 +237,18 @@ export class ReductionGoalEditComponent {
     this.getGoalsMaladaptives();
   }
 
-  
-
   //obtenemos el bip por el id
   getBip() {
-    if (this.patient_identifier !== null && this.patient_identifier !== undefined) {
-      this.bipService.getBipByUser(this.patient_identifier).subscribe((resp) => {
-        // console.log('bip',resp);
-        this.bip_selectedIdd = resp.bip.id; //convertimos la respuesta en un variable
-      });
+    if (
+      this.patient_identifier !== null &&
+      this.patient_identifier !== undefined
+    ) {
+      this.bipService
+        .getBipByUser(this.patient_identifier)
+        .subscribe((resp) => {
+          // console.log('bip',resp);
+          this.bip_selectedIdd = resp.bip.id; //convertimos la respuesta en un variable
+        });
     }
   }
 
@@ -122,10 +256,7 @@ export class ReductionGoalEditComponent {
   //obtenemos los maladaptives iniciales para poder relacionarlos con los goals
   getGoalsMaladaptives() {
     this.goalService
-      .listMaladaptivesGoals(
-        this.maladap?.maladaptive_behavior,
-        this.patient_identifier
-      )
+      .listMaladaptivesGoals(this.maladaptive?.name, this.patient_identifier)
       .subscribe((resp) => {
         console.log(resp);
         //  this.bip_selectedIdd = resp.goalsmaladaptive.data[0].bip_id;
@@ -192,7 +323,7 @@ export class ReductionGoalEditComponent {
     if (this.golsto) {
       this.golsto.push({
         index: this.golsto.length + 1,
-        maladaptive: this.maladap?.maladaptive_behavior,
+        maladaptive: this.maladaptive?.name,
         sto: this.sto,
         status_sto: this.status_sto,
         status_sto_edit: this.status_sto,
@@ -204,7 +335,7 @@ export class ReductionGoalEditComponent {
       this.golsto = [
         {
           index: 1, // initial index
-          maladaptive: this.maladap?.maladaptive_behavior,
+          maladaptive: this.maladaptive?.name,
           sto: this.sto,
           status_sto: this.status_sto,
           status_sto_edit: this.status_sto,
@@ -363,7 +494,7 @@ export class ReductionGoalEditComponent {
     this.ngOnInit();
   }
 
-  saveGoal() {
+  onSaveGoal() {
     this.text_validation = '';
     // if(!this.maladaptive || !this.current_status || !this.golsto){
     //   this.text_validation = 'Is required this information ';
@@ -373,7 +504,7 @@ export class ReductionGoalEditComponent {
     const data = {
       id: this.goalmaladaptiveid,
       bip_id: this.bip_selectedIdd,
-      maladaptive: this.maladap?.maladaptive_behavior,
+      maladaptive: this.maladaptive?.name,
       patient_identifier: this.patient_identifier,
       current_status: this.current_status,
       goalstos: this.golsto,
@@ -408,4 +539,5 @@ export class ReductionGoalEditComponent {
       });
     }
   }
+    */
 }

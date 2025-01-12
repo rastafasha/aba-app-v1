@@ -36,14 +36,12 @@ export abstract class RepositoryV2Service<T> {
 
   create(data) {
     const URL = this.endpoint;
-    return this.http
-      .post<CreateResponse<T>>(URL, this.untransform(data))
-      .pipe(
-        map((response) => ({
-          ...response,
-          data: this.transform(response.data),
-        }))
-      );
+    return this.http.post<CreateResponse<T>>(URL, this.untransform(data)).pipe(
+      map((response) => ({
+        ...response,
+        data: this.transform(response.data),
+      }))
+    );
   }
 
   update(data: T, id: number) {

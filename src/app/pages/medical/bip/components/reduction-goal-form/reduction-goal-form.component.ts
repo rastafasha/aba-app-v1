@@ -1,16 +1,54 @@
-import { Component, Input, SimpleChanges, OnChanges, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { AppRoutes } from 'src/app/shared/routes/routes';
-import { BipService } from '../../service/bip.service';
-import { GoalService } from '../../service/goal.service';
-import { AppUser } from 'src/app/core/models/users.model';
-import { AuthService } from 'src/app/core/auth/auth.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Maladaptive } from 'src/app/core/models';
+import { ListFormStrategy } from '../bip-form/list-form.strategy';
 @Component({
   selector: 'app-reduction-goal-form',
   templateUrl: './reduction-goal-form.component.html',
   styleUrls: ['./reduction-goal-form.component.scss'],
 })
-export class ReductionGoalFormComponent implements OnChanges, OnInit {
+export class ReductionGoalFormComponent {
+  state: 'list' | 'edit' | 'viewGraph' = 'list';
+  @Input() maladaptives: Maladaptive[] = [];
+  @Output() maladaptivesChange = new EventEmitter<Maladaptive[]>();
+  newMaladaptive: Maladaptive = {
+    baseline_date: new Date(),
+    baseline_level: 0,
+    current_intensity: 0,
+    initial_intensity: 0,
+    name: '',
+    description: '',
+  };
+  maladaptiveStrategy = new ListFormStrategy<Maladaptive>(
+    this.maladaptivesChange,
+    this.newMaladaptive
+  );
+  //
+  newMaladaptiveSon = { ...this.newMaladaptive };
+  //
+  text_validation = '';
+
+  onEdit(maladaptive: Maladaptive) {
+    this.newMaladaptive = this.maladaptiveStrategy.select(
+      this.maladaptives,
+      maladaptive
+    );
+    this.state = 'edit';
+  }
+  onViewGraph(maladaptive: Maladaptive) {
+    this.newMaladaptiveSon = this.maladaptiveStrategy.select(
+      this.maladaptives,
+      maladaptive
+    );
+    this.state = 'viewGraph';
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  onDelete(maladaptive: Maladaptive) {
+    throw new Error('Method not implemented.');
+  }
+  onBack() {
+    this.state = 'list';
+  }
+  /*
   // created comments by Malcolm Cordova at 10 feb 2004
   // mercadocreativo@gmail.com
   // @malcolmcordova
@@ -22,16 +60,16 @@ export class ReductionGoalFormComponent implements OnChanges, OnInit {
   text_validation = '';
   text_success = '';
 
-  client_id: any;
+  clientSelected.id: any;
   user: AppUser;
   doctor_id: any;
-  patient_identifier: string;
+  clientSelected.patient_identifier: string;
   client_selected: any;
 
   bip_id: any;
-  bip_selectedId: any;
-  bip_selectedIdd: any;
-  maladaptives = [];
+  bipSelected.id: any;
+  bipSelected.id: any;
+  bipSelected.maladaptives = [];
 
   goalSustitutions = [];
   client_id_goalSustitution: any;
@@ -96,7 +134,7 @@ export class ReductionGoalFormComponent implements OnChanges, OnInit {
   ngOnInit(): void {
     //me subcribo al id recibido por el parametro de la url
     this.ativatedRoute.params.subscribe((resp) => {
-      this.patient_identifier = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
+      this.clientSelected.patient_identifier = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
       // this.getProfileBip(); // se solicita la info del perfil del usuario
       // console.log(this.patient_id);
     });
@@ -119,18 +157,23 @@ export class ReductionGoalFormComponent implements OnChanges, OnInit {
 
   private handleBipSelectedChange() {
     if (this.bipSelected) {
-      this.bip_selectedId = this.bipSelected.bip.id;
-      this.bip_selectedIdd = this.bipSelected.bip.id;
-      this.maladaptives = this.bipSelected.maladaptives;
+      this.bipSelected.id = this.bipSelected.bip.id;
+      this.bipSelected.id = this.bipSelected.bip.id;
+      this.bipSelected.maladaptives = this.bipSelected.maladaptives;
     }
   }
 
   private handleClientSelectedChange() {
     if (this.clientSelected) {
-      this.client_id = this.clientSelected.patient.id;
-      this.patient_identifier = this.clientSelected.patient.patient_identifier;
-      if (this.patient_identifier !== null) {
-        this.getPatientGoals(this.patient_identifier);
+      this.clientSelected.id = this.clientSelected.patient.id;
+      this.clientSelected.patient_identifier = this.clientSelected.patient.patient_identifier;
+      if (this.clientSelected.patient_identifier !== null) {
+
+
+        this.getPatientGoals(this.clientSelected.patient_identifier);
+
+
+
       }
     }
   }
@@ -178,7 +221,7 @@ export class ReductionGoalFormComponent implements OnChanges, OnInit {
 
   //obtenemos los goals por el id del bip //revisar
   getGoalsByBip() {
-    this.goalService.getGoalbyBipId(this.bip_selectedId).subscribe((resp) => {
+    this.goalService.getGoalbyBipId(this.bipSelected.id).subscribe((resp) => {
       // console.log(resp);
       this.goal_selected = resp.goalreductions;
       // console.log(this.goal_selected);
@@ -222,7 +265,7 @@ export class ReductionGoalFormComponent implements OnChanges, OnInit {
     this.goalService
       .listMaladaptivesGoals(
         this.maladaptiveSelectedSon.maladaptive_behavior,
-        this.patient_identifier
+        this.clientSelected.patient_identifier
       )
       .subscribe((resp) => {
         // console.log( resp);
@@ -240,4 +283,5 @@ export class ReductionGoalFormComponent implements OnChanges, OnInit {
         // this.ngOnInit();
       });
   }
+      */
 }

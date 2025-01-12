@@ -1,0 +1,19 @@
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>
+
+<app-list
+  [title]="title"
+  [dataSource]="dataSource"
+  [displayedColumns]="displayedColumns"
+  [options]="options"
+  [noDataText]="noDataText"
+  [renders]="renders"
+>
+</app-list>
+
+<div class="col-12 my-1 doctor-submit text-end">
+  <button class="btn btn-primary btn-sm" (click)="onOpen()">
+    {{ openButtonText ?? "Open" }}
+  </button>
+</div>

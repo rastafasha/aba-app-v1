@@ -25,6 +25,9 @@ import { ReductionGoalEditComponent } from './reduction-goal-edit/reduction-goal
 import { ReductionGoalFormComponent } from './reduction-goal-form/reduction-goal-form.component';
 import { ReplacementGoalFormComponent } from './replacement-goal-form/replacement-goal-form.component';
 import { SustitutionListComponent } from './sustitution-list/sustitution-list.component';
+import { MaladaptiveGoalsTableComponent } from './reduction-goal-form/maladaptive-goals-table/maladaptive-goals-table.component';
+import { StoFormComponent } from './sto-form/sto-form.component';
+import { LtoFormComponent } from './lto-form/lto-form.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +52,9 @@ import { SustitutionListComponent } from './sustitution-list/sustitution-list.co
     PrevalentSettingComponent,
     HypothesisBasedInterventionsComponent,
     InterventionsComponent,
+    MaladaptiveGoalsTableComponent,
+    StoFormComponent,
+    LtoFormComponent,
   ],
   exports: [
     PatientFormComponent,

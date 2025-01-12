@@ -1,9 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { url_servicios } from 'src/app/config/config';
-import { AuthService } from 'src/app/core/auth/auth.service';
-import { BipV2 } from 'src/app/core/models';
-import { Maladaptive } from 'src/app/pages/dashboard/models/dashboard.models';
+import { BipV2, Maladaptive } from 'src/app/core/models';
 
 @Injectable({
   providedIn: 'root',

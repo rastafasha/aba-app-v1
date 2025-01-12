@@ -1,3 +1,5 @@
+import { Maladaptive } from 'src/app/core/models';
+
 export interface PaAssessment {
   id: number;
   patient_id: string;
@@ -173,17 +175,6 @@ export interface RecentPatient {
   created_at: string;
   updated_at: string;
   deleted_at: string | null;
-}
-
-export interface Maladaptive {
-  index?: number;
-  name?: string;
-  baseline_date: string;
-  baseline_level: number;
-  current_intensity?: number;
-  initial_interesting: number;
-  maladaptive_behavior: string;
-  topografical_definition: string;
 }
 
 export interface AssessmentConductedOption {

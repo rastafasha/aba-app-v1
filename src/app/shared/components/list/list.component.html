@@ -1,0 +1,57 @@
+<div class="table-responsive">
+  <h3 class="card-title">{{ title }}</h3>
+  <table mat-table [dataSource]="dataSource" class="border rounded">
+    <tr *matNoDataRow>
+      <td
+        style="height: 52px; padding: 1rem"
+        innerHTML="{{ noDataText ?? 'No data found' }}"
+      ></td>
+    </tr>
+
+    <tr
+      mat-header-row
+      *matHeaderRowDef="
+        displayedColumns | listColumns : ['___options'] : options?.length
+      "
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="
+        let row;
+        columns: displayedColumns
+          | listColumns : ['___options'] : options?.length
+      "
+    ></tr>
+
+    <ng-container *ngFor="let item of displayedColumns">
+      <ng-container [matColumnDef]="$any(item)">
+        <th mat-header-cell *matHeaderCellDef>
+          {{ $any(item) | clearText | titlecase }}
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          innerHtml="{{ element|cellRender :item : renders?.[item] }}"
+        ></td>
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="options?.length">
+      <ng-container [matColumnDef]="'___options'">
+        <th mat-header-cell *matHeaderCellDef>Options</th>
+        <td mat-cell *matCellDef="let element">
+          <ng-container *ngFor="let option of options">
+            <button
+              class="btn btn-sm"
+              [ngClass]="option.class"
+              (click)="onClick(option, element)"
+            >
+              <i *ngIf="option.icon" [class]="option.icon"></i>
+              {{ option.text }}
+            </button>
+          </ng-container>
+        </td>
+      </ng-container>
+    </ng-container>
+  </table>
+</div>

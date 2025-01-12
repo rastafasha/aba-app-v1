@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTableModule } from '@angular/material/table';
 
 const modules = [
   MatRippleModule,
@@ -20,6 +21,7 @@ const modules = [
   MatProgressBarModule,
   MatSortModule,
   MatDialogModule,
+  MatTableModule,
 ];
 @NgModule({
   declarations: [],

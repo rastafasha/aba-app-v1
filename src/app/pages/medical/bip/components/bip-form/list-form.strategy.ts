@@ -8,6 +8,9 @@ export class ListFormStrategy<T extends ListItem> {
   constructor(private emiter: EventEmitter<T[]>, private defaultItem: T) {
     this.defaultItem = { ...this.defaultItem };
   }
+  getDefault(): T {
+    return { ...this.defaultItem };
+  }
 
   select(items: T[], search: T): T {
     const selected = items.find((item) => item.index === search.index);
@@ -46,8 +49,10 @@ export class ListFormStrategy<T extends ListItem> {
       return { text: 'Please enter all fields', items, item };
     }
     items ??= [];
-    item.index = items.length + 1;
-    items.push({ ...item });
+    if (!items.find((i) => i.index === item.index)) {
+      item.index = items.length + 1;
+      items.push({ ...item });
+    }
     this.emiter.emit(items);
     return { text: '', items, item: { ...this.defaultItem } };
   }

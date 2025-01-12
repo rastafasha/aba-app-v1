@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Maladaptive } from 'src/app/pages/dashboard/models/dashboard.models';
+import { Maladaptive } from 'src/app/core/models';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -14,13 +14,12 @@ export class MaladaptivesComponent {
   text_validation = '';
   newMaladaptive: Maladaptive = {
     index: 0,
-    name: '',
     current_intensity: 0,
-    baseline_date: '',
+    baseline_date: new Date(),
     baseline_level: 0,
-    initial_interesting: 0,
-    maladaptive_behavior: '',
-    topografical_definition: '',
+    initial_intensity: 0,
+    name: '',
+    description: '',
   };
 
   addMaladaptive() {
@@ -28,9 +27,9 @@ export class MaladaptivesComponent {
       !this.newMaladaptive.baseline_date ||
       !this.newMaladaptive.baseline_level ||
       !this.newMaladaptive.current_intensity ||
-      !this.newMaladaptive.initial_interesting ||
-      !this.newMaladaptive.maladaptive_behavior ||
-      !this.newMaladaptive.topografical_definition
+      !this.newMaladaptive.initial_intensity ||
+      !this.newMaladaptive.name ||
+      !this.newMaladaptive.description
     ) {
       this.text_validation = 'All fields are required';
       return;
@@ -43,13 +42,12 @@ export class MaladaptivesComponent {
     });
     this.newMaladaptive = {
       index: 0,
-      name: '',
       current_intensity: 0,
-      baseline_date: '',
+      baseline_date: new Date(),
       baseline_level: 0,
-      initial_interesting: 0,
-      maladaptive_behavior: '',
-      topografical_definition: '',
+      initial_intensity: 0,
+      name: '',
+      description: '',
     };
     this.maladaptivesChange.emit(this.maladaptives);
   }
@@ -65,7 +63,6 @@ export class MaladaptivesComponent {
     );
     if (selectedMaladaptive) {
       this.newMaladaptive = selectedMaladaptive;
-      selectedMaladaptive.name = 'Nuevo nombre';
     }
   }
 

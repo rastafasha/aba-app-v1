@@ -28,6 +28,10 @@ const routes: Routes = [
       },
       {
         path: lastRoutes(AppRoutes.bip.edit, 2, '/:id'),
+        redirectTo: lastRoutes(AppRoutes.bip.edit, 2, '/:id/1'),
+      },
+      {
+        path: lastRoutes(AppRoutes.bip.edit, 2, '/:id/:selected'),
         component: BipAttentionComponent,
         resolve: { patient: patientResolver },
       },

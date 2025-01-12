@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { switchMap } from 'rxjs';
 import { BipV2, PatientV2 } from 'src/app/core/models';
+import { BipV2Service } from 'src/app/core/services';
 import { AppRoutes } from 'src/app/shared/routes/routes';
-import { BipService } from '../service/bip.service';
+import Swal from 'sweetalert2';
 import { BIP_ATTENTION_OPTIONS } from './bip-attention.const';
-import { Maladaptive } from 'src/app/pages/dashboard/models/dashboard.models';
 
 @Component({
   selector: 'app-bip-attention',
@@ -17,12 +18,10 @@ export class BipAttentionComponent implements OnInit {
   optionSelected = 1;
   patient: PatientV2;
   bip: BipV2;
-  typeOfAssessment = 0;
-  documentsReviewed: { index: number; title: string }[] = [];
-  maladaptives: Maladaptive[] = [];
   constructor(
-    private bipService: BipService,
-    private activatedRoute: ActivatedRoute
+    private bipService: BipV2Service,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -30,20 +29,31 @@ export class BipAttentionComponent implements OnInit {
       this.patient = data['patient'];
       this.getBip();
     });
+    this.activatedRoute.paramMap.subscribe((params) => {
+      this.optionSelected = Number(params.get('selected'));
+    });
   }
-
+  onSelectOption(value: number) {
+    this.router.navigate([this.routes.bip.edit, this.patient.id, value]);
+  }
   getBip() {
     this.bipService
-      .getBipByUser(this.patient.patient_identifier)
+      .list({ client_id: this.patient.id })
+      .pipe(switchMap((resp) => this.bipService.get(resp.data[0].id)))
       .subscribe((resp) => {
-        this.bip = resp.bip;
-        this.typeOfAssessment = resp.type_of_assessment;
-        this.documentsReviewed = resp.documents_reviewed;
-        this.maladaptives = resp.maladaptives;
+        this.bip = resp.data;
       });
   }
 
-  onSelectOption(value: number) {
-    this.optionSelected = value;
+  onSave() {
+    this.bipService.update(this.bip, this.bip.id).subscribe({
+      next: () => {
+        Swal.fire('Updated', `Bip Updated successfully!`, 'success');
+      },
+      error: (error) => {
+        Swal.fire('Error', `Error updating Bip`, 'error');
+        console.log(error);
+      },
+    });
   }
 }

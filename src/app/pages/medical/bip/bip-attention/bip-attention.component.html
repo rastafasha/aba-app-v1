@@ -40,21 +40,15 @@
       </div>
       <!-- bip -->
       <ng-container *ngIf="optionSelected === 1">
-        <app-bip-form
-          [patient]="patient"
-          [bip]="bip"
-          [typeOfAssessment]="typeOfAssessment"
-          [documentsReviewed]="documentsReviewed"
-          [maladaptives]="maladaptives"
-        ></app-bip-form>
+        <app-bip-form [(bip)]="bip" (save)="onSave()"></app-bip-form>
       </ng-container>
       <!-- fin bip -->
       <!--  -->
       <ng-container *ngIf="optionSelected === 2">
         <!-- Reduction Goal -->
         <app-reduction-goal-form
-          [clientSelected]="patient"
-          [bipSelected]="bip"
+          *ngIf="bip"
+          [(maladaptives)]="bip.maladaptives"
         ></app-reduction-goal-form>
         <!-- fin Reduction Goal -->
       </ng-container>
