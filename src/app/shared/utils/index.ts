@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 //@index('./*.ts', f => `export * from '${f.path}';`)
 export * from './BooleanOrNullOrUndefined';
 export * from './DateOrNullOrUndefined';
@@ -36,4 +37,23 @@ export function compareObjects(obj1: object, obj2: object): object {
   }
   compare(obj1, obj2);
   return differences;
+}
+
+export function ArrayOrNullOrUndefined<T>(value: T[]): T[] | null {
+  return value === undefined
+    ? undefined
+    : value === null
+    ? null
+    : (value as any) === 'null'
+    ? null
+    : (value as any) === 'undefined'
+    ? undefined
+    : (value as any) === '[]'
+    ? []
+    : typeof (value as any) === 'string'
+    ? JSON.parse(value as any)
+    : (value as T[]);
+}
+export function ForceArray<T>(value: T[]): T[] {
+  return ArrayOrNullOrUndefined(value) ?? [];
 }

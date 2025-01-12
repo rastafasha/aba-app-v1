@@ -1,4 +1,9 @@
-import { Maladaptive } from 'src/app/core/models';
+import {
+  FamilyEnvolment,
+  Goal,
+  Maladaptive,
+  MonitoringEvaluating,
+} from 'src/app/core/models';
 
 export interface PaAssessment {
   id: number;
@@ -7,18 +12,6 @@ export interface PaAssessment {
   status: string;
   created_at: string;
   updated_at: string;
-}
-
-export interface MonitoringEvaluating {
-  id: number;
-  bip_id: number;
-  patient_id: string;
-  client_id: number;
-  treatment_fidelity: string | null;
-  rbt_training_goals: string;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
 }
 
 export interface GeneralizationTraining {
@@ -196,38 +189,6 @@ export interface Intervention {
   descriptionIntervention: string;
 }
 
-export interface Goal {
-  id: number;
-  maladaptive: string;
-  current_status: string;
-  patient_id: string;
-  client_id: number | null;
-  bip_id: number;
-  goalstos: string;
-  goalltos: string;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
-}
-
-export interface FamilyInvolvement {
-  id: number;
-  bip_id: number;
-  patient_id: string;
-  client_id: number;
-  caregivers_training_goals: string;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
-}
-
-export interface Tangible {
-  index: number;
-  manager_strategies: string;
-  replacement_skills: string;
-  preventive_strategies: string;
-}
-
 export interface Attention {
   index: number;
   manager_strategies_a: string;
@@ -292,7 +253,7 @@ export interface Bip {
   phiysical_and_medical_status: PhysicalAndMedicalStatus[]; // Define if needed
   reduction_goal: Goal[];
   sustitution_goal: Goal[];
-  family_envolment: FamilyInvolvement[];
+  family_envolment: FamilyEnvolment[];
   monitoring_evalutating: MonitoringEvaluating[]; // Define if needed
   generalization_training: GeneralizationTraining[]; // Define if needed
   crisis_plan: CrisisPlan[]; // Define if needed

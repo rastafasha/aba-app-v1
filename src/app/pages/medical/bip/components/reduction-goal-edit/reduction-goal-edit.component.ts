@@ -33,7 +33,7 @@ export class ReductionGoalEditComponent {
   @ViewChild('ltoListForm') ltoListForm: ListAndFormComponent<Objective>;
 
   //
-  ltos: Objective[];
+  ltos: Objective[] = [];
   ltosChange = new EventEmitter<Objective[]>();
   newLto: Objective = {
     id: 0,
