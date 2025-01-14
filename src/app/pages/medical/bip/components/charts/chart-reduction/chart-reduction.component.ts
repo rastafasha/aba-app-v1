@@ -1,66 +1,12 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import {
-  ApexAxisChartSeries,
-  ApexChart,
-  ApexDataLabels,
-  ApexFill,
-  ApexGrid,
-  ApexLegend,
-  ApexMarkers,
-  ApexPlotOptions,
-  ApexResponsive,
-  ApexStroke,
-  ApexTitleSubtitle,
-  ApexTooltip,
-  ApexXAxis,
-  ApexYAxis,
-  ChartComponent,
-} from 'ng-apexcharts';
-import { DataService } from 'src/app/shared/data/data.service';
-import { PatientDashboard } from 'src/app/core/models';
+import { ChartComponent } from 'ng-apexcharts';
+import { ChartOptions, GoalV2, PatientV2 } from 'src/app/core/models';
 
-import { ActivatedRoute } from '@angular/router';
-import { BipService } from '../../../service/bip.service';
 import { GraphicReductionService } from '../../../service/graphic-reduction.service';
-import { AppUser } from 'src/app/core/models/users.model';
 interface data {
   value: string;
 }
 
-export type ChartOptions = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  series: ApexAxisChartSeries | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  chart: ApexChart | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  xaxis: ApexXAxis | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  dataLabels: ApexDataLabels | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  grid: ApexGrid | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  fill: ApexFill | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  markers: ApexMarkers | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  yaxis: ApexYAxis | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  stroke: ApexStroke | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  title: ApexTitleSubtitle | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  labels: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  responsive: ApexResponsive[] | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  plotOptions: ApexPlotOptions | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  tooltip: ApexTooltip | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  legend: ApexLegend | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-};
 @Component({
   selector: 'app-chart-reduction',
   templateUrl: './chart-reduction.component.html',
@@ -69,123 +15,30 @@ export type ChartOptions = {
 export class ChartReductionComponent {
   selectedValue = '03';
   @ViewChild('chart') chart!: ChartComponent;
-
-  @Input() maladaptiveSelectedSon: any;
-  @Input() maladaptive_behavior: any;
-  @Input() initial_interesting: any;
-  @Input() baseline_level: any;
-  @Input() baseline_date: Date | 'shortTime';
-  // @Output() cursoD: EventEmitter<any>  = new EventEmitter();// envia la data
-
+  @Input() maladaptive: GoalV2;
+  @Input() patient: PatientV2;
+  existgrfic: any[];
+  loading = false;
   chartOptionsOne: Partial<ChartOptions>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  carousel1 = [];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  carousel2 = [];
-  dataSource!: MatTableDataSource<PatientDashboard>;
-  slideConfig = {
-    slidesToShow: 3,
-    slidesToScroll: 3,
-    centerMode: true,
-    centerPadding: '30px',
-  };
 
-  //datos reales
-  bips = [];
-  user: AppUser;
-  maladaptiveSelected: any;
-  maladaptive: any;
-  patient_identifier: string;
-  client_id: any;
-  created_at: any;
-  session_date = [];
-  maladaptives: any = null;
-  session_dates = [];
-  number_of_occurrences: number;
-  patient_selected = [];
-  client_selected: any = null;
-  sessionDates = [];
+  private maladaptives: any = null;
 
-  maladaptiveBehaviors = [];
-  maladaptivess = [];
-  existgrfic: any;
-  loading: boolean;
-  patient_ident: number;
+  private sessions_dates = [];
+  private number_of_occurrence = [];
+  private query_income_year = [];
+  private graphData = [];
+  private notesRbts = [];
 
-  maladaptivesCol: any[];
-  sessions_dates = [];
-  number_of_occurrence: any[];
-  noteRbt: any[];
-  dates: any[];
-
-  query_patient_by_genders = [];
-  query_patients_specialities = [];
-  query_patients_speciality_porcentaje = [];
-  query_income_year = [];
-  notesRbts = [];
-  graphData = [];
-  dataChartMaladative = [];
-
-  respuestas: any[] = [{}];
-  dataGrafico = [];
-  replacementsExtractedGoal: any[] = [{}];
-  //datos reales
-
-  constructor(
-    private data: DataService,
-    private activatedRoute: ActivatedRoute,
-    private graphicReductionService: GraphicReductionService,
-    private bipService: BipService
-  ) {
-    this.carousel1 = this.data.carousel1;
-    this.carousel2 = this.data.carousel2;
-  }
+  constructor(private graphicReductionService: GraphicReductionService) {}
 
   ngOnInit(): void {
-    this.maladaptive_behavior;
-    this.initial_interesting;
-    this.baseline_date;
-    this.baseline_level;
-
-    this.activatedRoute.params.subscribe((resp) => {
-      this.patient_identifier = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
-      // console.log(this.patient_id);
-      this.getBip(); // se pide el perfil del paciente por el bip relacionado
-      this.getProfileBip(); // se pide el perfil del paciente por el bip relacionado
-    });
-    //  this.getGraphicPatientMonth();
+    this.getProfileBip();
   }
-
-  // traemos la fecha inicial que viene de la creacion del bip
-  getBip() {
-    this.bipService.getBipByUser(this.patient_identifier).subscribe((resp) => {
-      // console.log(resp);
-      this.created_at = resp.bip.created_at;
-      // console.log('creacion bip',this.created_at);
-    });
-  }
-
   //traemos la info del paciente o cliente
   getProfileBip() {
-    this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
-      console.log(resp);
-      this.client_selected = resp; // asignamos el objeto a nuestra variable
-      this.patient_identifier = resp.patient.patient_identifier;
-      this.patient_ident = resp.patient.id;
-      // console.log(this.patient_id);
-
-      //traemos la info del usuario
-      if (this.client_selected.type !== null) {
-        // si hay o no informacion del paciente
-        if (this.client_selected.eligibility === 'yes') {
-          // si el status es positivo para proceder
-          this.patient_identifier = this.client_selected.patient_identifier;
-        }
-      }
-      setTimeout(() => {
-        this.getGraphicMaladaptive();
-      }, 50);
-    });
+    setTimeout(() => {
+      this.getGraphicMaladaptive();
+    }, 50);
   }
 
   // obtenemos todos las notas filtrandose con el nombre seleccionado traido como input.. this.maladaptive_behavior
@@ -193,10 +46,11 @@ export class ChartReductionComponent {
 
   getGraphicMaladaptive() {
     this.graphicReductionService
-      .listMaladaptivesGraphics(this.maladaptive_behavior, this.patient_identifier)
+      .listMaladaptivesGraphics(
+        this.maladaptive.name,
+        this.patient.patient_identifier
+      )
       .subscribe((resp) => {
-        // console.log(resp);
-
         this.existgrfic = resp.maladaptivesCol;
 
         //funcion de pablo alcorta
@@ -206,7 +60,7 @@ export class ChartReductionComponent {
         data?.maladaptivesCol.forEach((maladaptive) => {
           const maladaptiveParsed = parsearMaladaptivesCol(
             maladaptive,
-            this.maladaptive_behavior
+            this.maladaptive.name
           );
           maladaptivesParsed.push(maladaptiveParsed);
         });
@@ -257,8 +111,8 @@ export class ChartReductionComponent {
         resp.sessions_dates.forEach((element) => {
           this.sessions_dates.push(element.session_date);
         });
-        this.sessions_dates.unshift(this.baseline_date); // con unshift lo unimos y colocamos de primero
-        this.number_of_occurrence.unshift(this.baseline_level); // con unshift lo unimos y colocamos de primero
+        this.sessions_dates.unshift(this.maladaptive.baseline_date); // con unshift lo unimos y colocamos de primero
+        this.number_of_occurrence.unshift(this.maladaptive.baseline_level); // con unshift lo unimos y colocamos de primero
         // console.log(this.sessions_dates);
         // console.log(this.number_of_occurrence);
         // console.log(resp)
@@ -299,7 +153,7 @@ export class ChartReductionComponent {
             }
           });
           this.sessions_dates = [
-            this.baseline_date.toString().substr(0, 10),
+            this.maladaptive.baseline_date.toString().substr(0, 10),
           ].concat(arrayLabelSemanal);
           this.number_of_occurrence = [this.number_of_occurrence[0]].concat(
             acumuladorDeSemanas

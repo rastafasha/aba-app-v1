@@ -5,7 +5,7 @@ import { BipV2 } from '../models';
 import { RepositoryV2Service } from './repository.v2.service';
 
 @Injectable({ providedIn: 'root' })
-export class BipV2Service extends RepositoryV2Service<BipV2> {
+export class BipsV2Service extends RepositoryV2Service<BipV2> {
   constructor(protected http: HttpClient) {
     super(http, url_servicios + '/v2/bips');
   }

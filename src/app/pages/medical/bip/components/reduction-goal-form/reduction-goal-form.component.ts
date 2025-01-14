@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Maladaptive } from 'src/app/core/models';
+import { GoalV2 } from 'src/app/core/models';
 import { ListFormStrategy } from '../bip-form/list-form.strategy';
 @Component({
   selector: 'app-reduction-goal-form',
@@ -8,17 +8,10 @@ import { ListFormStrategy } from '../bip-form/list-form.strategy';
 })
 export class ReductionGoalFormComponent {
   state: 'list' | 'edit' | 'viewGraph' = 'list';
-  @Input() maladaptives: Maladaptive[] = [];
-  @Output() maladaptivesChange = new EventEmitter<Maladaptive[]>();
-  newMaladaptive: Maladaptive = {
-    baseline_date: new Date(),
-    baseline_level: 0,
-    current_intensity: 0,
-    initial_intensity: 0,
-    name: '',
-    description: '',
-  };
-  maladaptiveStrategy = new ListFormStrategy<Maladaptive>(
+  @Input() maladaptives: GoalV2[] = [];
+  @Output() maladaptivesChange = new EventEmitter<GoalV2[]>();
+  newMaladaptive: GoalV2 = GoalV2.getDefault();
+  maladaptiveStrategy = new ListFormStrategy<GoalV2>(
     this.maladaptivesChange,
     this.newMaladaptive
   );
@@ -27,14 +20,14 @@ export class ReductionGoalFormComponent {
   //
   text_validation = '';
 
-  onEdit(maladaptive: Maladaptive) {
+  onEdit(maladaptive: GoalV2) {
     this.newMaladaptive = this.maladaptiveStrategy.select(
       this.maladaptives,
       maladaptive
     );
     this.state = 'edit';
   }
-  onViewGraph(maladaptive: Maladaptive) {
+  onViewGraph(maladaptive: GoalV2) {
     this.newMaladaptiveSon = this.maladaptiveStrategy.select(
       this.maladaptives,
       maladaptive
@@ -42,7 +35,7 @@ export class ReductionGoalFormComponent {
     this.state = 'viewGraph';
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  onDelete(maladaptive: Maladaptive) {
+  onDelete(maladaptive: GoalV2) {
     throw new Error('Method not implemented.');
   }
   onBack() {

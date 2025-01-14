@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Maladaptive } from 'src/app/core/models';
+import { GoalV2 } from 'src/app/core/models';
 import { ListOption } from 'src/app/shared/components/list/list.component';
 
 @Component({
@@ -8,11 +8,11 @@ import { ListOption } from 'src/app/shared/components/list/list.component';
   styleUrls: ['./maladaptive-goals-table.component.scss'],
 })
 export class MaladaptiveGoalsTableComponent {
-  @Input() maladaptives: Maladaptive[] = [];
-  @Output() edit = new EventEmitter<Maladaptive>();
-  @Output() viewGraph = new EventEmitter<Maladaptive>();
-  @Output() delete = new EventEmitter<Maladaptive>();
-  options: ListOption<Maladaptive>[] = [
+  @Input() maladaptives: GoalV2[] = [];
+  @Output() edit = new EventEmitter<GoalV2>();
+  @Output() viewGraph = new EventEmitter<GoalV2>();
+  @Output() delete = new EventEmitter<GoalV2>();
+  options: ListOption<GoalV2>[] = [
     {
       text: 'Edit',
       class: 'btn btn-outline-primary btn-sm',

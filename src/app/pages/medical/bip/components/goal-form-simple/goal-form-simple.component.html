@@ -1,0 +1,28 @@
+<div class="row align-items-center">
+  <div class="col-xs-12 col-md-6">
+    <div class="form-group local-forms">
+      <label>Goal: <span class="login-danger">*</span></label>
+      <input
+        disabled
+        class="form-control"
+        name="maladaptive_title"
+        [(ngModel)]="goal.name"
+        (ngModelChange)="goalChange(goal)"
+        type="text"
+        placeholder="Maladaptive title"
+      />
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-6">
+    <div class="form-group local-forms">
+      <label>Current Status <span class="login-danger">*</span></label>
+      <input
+        class="form-control"
+        name="current_status"
+        [(ngModel)]="goal.status"
+        (ngModelChange)="goalChange(goal)"
+        type="text"
+      />
+    </div>
+  </div>
+</div>

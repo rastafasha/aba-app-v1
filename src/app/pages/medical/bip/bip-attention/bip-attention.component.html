@@ -57,8 +57,8 @@
         <!-- Reduction Goal -->
         <!-- <app-sustitution-goal-form></app-sustitution-goal-form> -->
         <app-sustitution-list
-          [clientSelected]="patient"
-          [bipSelected]="bip"
+          *ngIf="bip"
+          [(goals)]="bip.replacements"
         ></app-sustitution-list>
         <!-- fin Reduction Goal -->
       </ng-container>

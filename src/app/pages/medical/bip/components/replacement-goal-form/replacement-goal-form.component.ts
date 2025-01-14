@@ -1,19 +1,63 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  LOCALE_ID,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { GoalV2, Objective } from 'src/app/core/models';
+import { AppUser } from 'src/app/core/models/users.model';
+import { ListAndFormComponent } from 'src/app/shared/components/list-and-form/list-and-form.component';
+import { ListRender } from 'src/app/shared/components/list/list.component';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
 import { GoalSustitutionService } from '../../service/goal-sustitution.service';
-import { AppUser } from 'src/app/core/models/users.model';
+import { ListFormStrategy } from '../bip-form/list-form.strategy';
 @Component({
   selector: 'app-replacement-goal-form',
   templateUrl: './replacement-goal-form.component.html',
   styleUrls: ['./replacement-goal-form.component.scss'],
 })
 export class ReplacementGoalFormComponent {
-  @Input() goal: any;
-  @Input() clientSelected: any;
+  @ViewChild('stoListForm') stoListForm: ListAndFormComponent<Objective>;
+  @ViewChild('ltoListForm') ltoListForm: ListAndFormComponent<Objective>;
+
   routes = AppRoutes;
+  @Input() goal: GoalV2;
+  @Input() clientSelected: any;
+  locale = inject(LOCALE_ID);
+  renders: ListRender<Objective> = {
+    name: (x) => `<b>${x.name}</b>`,
+    initial_date: (x) =>
+      new DatePipe(this.locale).transform(x.initial_date, 'shortDate'),
+    end_date: (x) =>
+      new DatePipe(this.locale).transform(x.end_date, 'shortDate'),
+  };
+  stosChange = new EventEmitter<Objective[]>();
+  newSto = Objective.getDefault();
+  stoStrategy = new ListFormStrategy(this.stosChange, this.newSto);
+
+  onSaveSto(sto: Objective) {
+    const resp = this.stoStrategy.add(
+      () => this.validateSto(),
+      this.goal.objectives,
+      sto
+    );
+    this.newSto = resp.item;
+    this.goal.objectives = resp.items;
+    this.goal.objectives = [...this.goal.objectives];
+    this.stoListForm.close();
+  }
+
+  validateSto() {
+    return true;
+  }
+
   valid_form_success = false;
   text_validation = '';
   text_success = '';
@@ -193,10 +237,10 @@ export class ReplacementGoalFormComponent {
   createGoal() {
     this.createSelected = true;
 
-    (this.goal = ''),
-      (this.current_sustitution = ''),
-      (this.description = ''),
-      (this.sustitution_sto = '');
+    this.goal.name = '';
+    this.current_sustitution = '';
+    this.description = '';
+    this.sustitution_sto = '';
     this.target = '';
     // this.initial_interesting = '';
     this.sustitution_status_sto = '';
@@ -463,10 +507,10 @@ export class ReplacementGoalFormComponent {
     this.goalSelectedSon = null;
     this.goalSelectedGraphic = null;
     this.current_status = '';
-    (this.goal = ''),
-      (this.current_status = ''),
-      (this.description = ''),
-      (this.sustitution_sto = '');
+    this.goal.name = '';
+    this.current_status = '';
+    this.description = '';
+    this.sustitution_sto = '';
     this.initial_interesting = '';
     this.sustitution_status_sto = '';
     this.sustitution_status_sto_edit = '';

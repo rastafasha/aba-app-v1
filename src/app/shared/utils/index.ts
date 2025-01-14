@@ -1,4 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { Type } from '@angular/core';
+
 //@index('./*.ts', f => `export * from '${f.path}';`)
 export * from './BooleanOrNullOrUndefined';
 export * from './DateOrNullOrUndefined';
@@ -56,4 +59,16 @@ export function ArrayOrNullOrUndefined<T>(value: T[]): T[] | null {
 }
 export function ForceArray<T>(value: T[]): T[] {
   return ArrayOrNullOrUndefined(value) ?? [];
+}
+
+export function ForceMap<T>(value: T[], constructor: Type<T>): T[] {
+  return ForceArray<T>(value).map((item) => new constructor(item));
+}
+
+export function TypeOrNullOrUndefined<T>(value: T, constructor: Type<T>): T {
+  return value === undefined || value === 'undefined'
+    ? undefined
+    : value === null || value === 'null'
+    ? null
+    : new constructor(value);
 }

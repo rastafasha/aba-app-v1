@@ -1,17 +1,87 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { AppUser } from 'src/app/core/models/users.model';
-import { AppRoutes } from 'src/app/shared/routes/routes';
-import Swal from 'sweetalert2';
-import { BipService } from '../../service/bip.service';
-import { GoalSustitutionService } from '../../service/goal-sustitution.service';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  LOCALE_ID,
+  Output,
+  ViewChildren,
+} from '@angular/core';
+import { GoalV2 } from 'src/app/core/models';
+import { ListFormStrategy } from '../bip-form/list-form.strategy';
+import {
+  ListOption,
+  ListRender,
+} from 'src/app/shared/components/list/list.component';
+import { DatePipe } from '@angular/common';
+import { ListAndFormComponent } from 'src/app/shared/components/list-and-form/list-and-form.component';
 
 @Component({
   selector: 'app-sustitution-list',
   templateUrl: './sustitution-list.component.html',
   styleUrls: ['./sustitution-list.component.scss'],
 })
-export class SustitutionListComponent implements OnInit, OnChanges {
+export class SustitutionListComponent {
+  @ViewChildren('goalsListAndForm')
+  goalsListAndForm: ListAndFormComponent<GoalV2>;
+  //
+  @Input()
+  goals: GoalV2[];
+  @Output() goalsChange = new EventEmitter<GoalV2[]>();
+  newGoal: GoalV2 = GoalV2.getDefault();
+  goalsStrategy = new ListFormStrategy(this.goalsChange, this.newGoal);
+  private locale = inject(LOCALE_ID);
+  private datePipe = new DatePipe(this.locale);
+  renders: ListRender<GoalV2> = {
+    created_at: (item) => this.datePipe.transform(item.created_at, 'shortDate'),
+  };
+  options: ListOption<GoalV2>[] = [
+    {
+      text: 'Edit',
+      icon: 'fa fa-edit',
+      class: 'btn btn-outline-primary btn-sm',
+      action: (item: GoalV2) => this.onEditGoal(item),
+    },
+    {
+      text: 'View',
+      icon: 'fa fa-bar-chart',
+      class: 'btn btn-outline-success btn-sm',
+      action: (item: GoalV2) => this.onViewGoal(item),
+    },
+    {
+      text: 'Delete',
+      icon: 'fa fa-trash-alt',
+      class: 'btn btn-outline-danger btn-sm',
+      action: (item: GoalV2) => this.onDeleteGoal(item),
+    },
+  ];
+
+  //
+  state: 'view' | 'edit' | 'list' | 'create' = 'list';
+  onCreateGoal() {
+    this.state = 'create';
+    this.newGoal = GoalV2.getDefault();
+  }
+
+  onViewGoal(goal: GoalV2) {
+    this.newGoal = this.goalsStrategy.select(this.goals, goal);
+    this.state = 'view';
+  }
+  onEditGoal(goal: GoalV2) {
+    this.newGoal = goal;
+    this.state = 'edit';
+  }
+  onDeleteGoal(goal: GoalV2) {
+    this.goals = this.goalsStrategy.delete(goal.index, this.goals);
+    this.goals = [...this.goals];
+  }
+  //
+  onBack() {
+    this.state = 'list';
+  }
+  //
+}
+/*
   @Input() clientSelected: any;
   @Input() bipSelected: any;
 
@@ -397,7 +467,7 @@ export class SustitutionListComponent implements OnInit, OnChanges {
 
   cambiarStatusSto(goalsto: any) {
     this.sustitution_status_sto_edit = goalsto;
-   
+
     const data = {
       goalstos: this.golstoSustiutions,
       goalltos: this.golltoSustiution,
@@ -415,7 +485,7 @@ export class SustitutionListComponent implements OnInit, OnChanges {
 
   cambiarStatusLto(goallto: any) {
     this.sustitution_status_lto_edit = goallto;
-   
+
     const data = {
       goalstos: this.golstoSustiutions,
       goalltos: this.golltoSustiution,
@@ -594,3 +664,4 @@ export class SustitutionListComponent implements OnInit, OnChanges {
     this.goalSelectedGraphic = goal;
   }
 }
+*/

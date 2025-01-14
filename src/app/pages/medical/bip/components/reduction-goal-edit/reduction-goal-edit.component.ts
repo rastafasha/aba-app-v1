@@ -8,7 +8,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { Goal, Maladaptive, Objective } from 'src/app/core/models';
+import { GoalV2, Objective } from 'src/app/core/models';
 import { ListAndFormComponent } from 'src/app/shared/components/list-and-form/list-and-form.component';
 import {
   ListOption,
@@ -25,9 +25,9 @@ import { ListFormStrategy } from '../bip-form/list-form.strategy';
 export class ReductionGoalEditComponent {
   routes = AppRoutes;
   @Output() save = new EventEmitter<void>();
-  @Input() maladaptive: Maladaptive;
-  @Input() goal: Goal;
-  @Output() goalChange = new EventEmitter<Goal>();
+  @Input() maladaptive: GoalV2;
+  @Input() goal: GoalV2;
+  @Output() goalChange = new EventEmitter<GoalV2>();
   //
   @ViewChild('stoListForm') stoListForm: ListAndFormComponent<Objective>;
   @ViewChild('ltoListForm') ltoListForm: ListAndFormComponent<Objective>;
@@ -35,19 +35,7 @@ export class ReductionGoalEditComponent {
   //
   ltos: Objective[] = [];
   ltosChange = new EventEmitter<Objective[]>();
-  newLto: Objective = {
-    id: 0,
-    name: 'lto',
-    maladaptive_id: 0,
-    status: 'initiated',
-    initial_date: new Date(),
-    end_date: new Date(),
-    description: '',
-    target: 0,
-    created_at: new Date(),
-    updated_at: new Date(),
-    deleted_at: new Date(),
-  };
+  newLto: Objective = Objective.getDefault();
   ltoStrategy = new ListFormStrategy<Objective>(this.ltosChange, this.newLto);
 
   //

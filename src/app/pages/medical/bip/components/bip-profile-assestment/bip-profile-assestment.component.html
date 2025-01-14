@@ -1,0 +1,82 @@
+<div class="row">
+  <div class="col-12">
+    <div class="personal-list-out">
+      <div class="card">
+        <div class="card-body">
+          <div class="about-info mb-10">
+            <h4>Assessments Conducted</h4>
+          </div>
+          <div class="row">
+            <div
+              *ngIf="
+                !bip.assestment_conducted_options ||
+                bip.assestment_conducted_options === null
+              "
+            >
+              <app-no-info></app-no-info>
+            </div>
+            <div class="col-xs-12">
+              <div class="detail-personal">
+                <p>{{ bip.assestment_conducted }}</p>
+              </div>
+            </div>
+            <ng-container
+              *ngFor="let assesst of bip.assestment_conducted_options"
+            >
+              <div class="col-xs-12 col-sm-6">
+                <div class="detail-personal">
+                  <h2>Assessments title</h2>
+                  <p>{{ assesst.assestment_title }}</p>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                <div class="detail-personal">
+                  <h2>Documents Status</h2>
+                  <p>{{ assesst.assestment_status }}</p>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="about-info mb-10">
+            <h4>Evaluation Settings</h4>
+          </div>
+          <div class="row">
+            <div
+              *ngIf="
+                !bip.assestmentEvaluationSettings ||
+                bip.assestmentEvaluationSettings === null
+              "
+            >
+              <app-no-info></app-no-info>
+            </div>
+            <ng-container
+              *ngFor="let evaluationSt of bip.assestmentEvaluationSettings"
+            >
+              <div class="col-xs-12 col-sm-6">
+                <div class="detail-personal">
+                  <h2>Tangible</h2>
+                  <p>{{ evaluationSt.tangible }}</p>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                <div class="detail-personal">
+                  <h2>Activities</h2>
+                  <p>{{ evaluationSt.activities }}</p>
+                </div>
+              </div>
+              <div class="col-xs-12">
+                <div class="detail-personal">
+                  <h2>Other</h2>
+                  <p>{{ evaluationSt.other }}</p>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

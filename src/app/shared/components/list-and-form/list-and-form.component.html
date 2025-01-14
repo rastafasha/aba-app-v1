@@ -12,8 +12,8 @@
 >
 </app-list>
 
-<div class="col-12 my-1 doctor-submit text-end">
+<div *ngIf="hadButton" class="col-12 my-1 doctor-submit text-end">
   <button class="btn btn-primary btn-sm" (click)="onOpen()">
-    {{ openButtonText ?? "Open" }}
+    {{ openButtonText ?? "Add" }}
   </button>
 </div>

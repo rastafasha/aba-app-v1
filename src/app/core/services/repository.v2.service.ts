@@ -54,6 +54,7 @@ export abstract class RepositoryV2Service<T> {
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   updateStatus(data: any, id: number) {
     const URL = this.endpoint + '/update-status/' + id;
     return this.http.put<ApiV2Response<T>>(URL, this.untransform(data)).pipe(

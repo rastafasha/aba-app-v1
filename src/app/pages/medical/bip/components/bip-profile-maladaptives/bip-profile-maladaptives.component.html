@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="col-12">
+    <div class="personal-list-out">
+      <div class="card">
+        <div class="card-body">
+          <div class="about-info mb-10">
+            <h4>Maladaptive Behaviors</h4>
+          </div>
+          <div class="row">
+            <div *ngIf="!maladaptives">
+              <app-no-info></app-no-info>
+            </div>
+            <ng-container *ngFor="let maladaptive of maladaptives">
+              <div class="col-xs-12 col-sm-4">
+                <div class="detail-personal">
+                  <h2>Behavior</h2>
+                  <p>{{ maladaptive.name }}</p>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-4">
+                <div class="detail-personal">
+                  <h2>Topografical Definition</h2>
+                  <p>{{ maladaptive.description }}</p>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-4">
+                <div class="detail-personal">
+                  <h2>Baseline level</h2>
+                  <p>{{ maladaptive.baseline_level }}</p>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-4">
+                <div class="detail-personal">
+                  <h2>Intensity Initial</h2>
+                  <p>{{ maladaptive.initial_intensity }}</p>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-4">
+                <div class="detail-personal">
+                  <h2>Baseline Date</h2>
+                  <p>{{ maladaptive.baseline_date | date : "shortDate" }}</p>
+                </div>
+              </div>
+              <!-- <h2 class="text-center">Grafico</h2> -->
+              <app-chart-reduction
+                [patient]="patient"
+                [maladaptive]="maladaptive"
+              ></app-chart-reduction>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

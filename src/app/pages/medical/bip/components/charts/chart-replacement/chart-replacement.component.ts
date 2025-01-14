@@ -18,7 +18,7 @@ import {
   ChartComponent,
 } from 'ng-apexcharts';
 import { DataService } from 'src/app/shared/data/data.service';
-import { PatientDashboard } from 'src/app/core/models';
+import { ChartOptions, GoalV2, PatientDashboard } from 'src/app/core/models';
 
 import { ActivatedRoute } from '@angular/router';
 import { BipService } from '../../../service/bip.service';
@@ -28,39 +28,6 @@ interface data {
   value: string;
 }
 
-export type ChartOptions = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  series: ApexAxisChartSeries | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  chart: ApexChart | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  xaxis: ApexXAxis | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  dataLabels: ApexDataLabels | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  grid: ApexGrid | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  fill: ApexFill | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  markers: ApexMarkers | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  yaxis: ApexYAxis | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  stroke: ApexStroke | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  title: ApexTitleSubtitle | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  labels: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  responsive: ApexResponsive[] | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  plotOptions: ApexPlotOptions | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  tooltip: ApexTooltip | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  legend: ApexLegend | any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-};
 @Component({
   selector: 'app-chart-replacement',
   templateUrl: './chart-replacement.component.html',
@@ -70,8 +37,8 @@ export class ChartReplacementComponent {
   selectedValue = '03';
   @ViewChild('chart') chart!: ChartComponent;
 
-  @Input() goal: any;
-  @Input() baseline_d: string;
+  @Input() goal: string;
+  @Input() baseline_d: string | Date;
   // @Output() cursoD: EventEmitter<any>  = new EventEmitter();// envia la data
 
   chartOptionsOne: Partial<ChartOptions>;

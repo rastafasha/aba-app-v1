@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ListComponent } from './list.component';
+import { StoListAndFormComponent } from './sto-list-and-form.component';
 
-describe('ListComponent', () => {
-  let component: ListComponent;
-  let fixture: ComponentFixture<ListComponent>;
+describe('StoListAndFormComponent', () => {
+  let component: StoListAndFormComponent;
+  let fixture: ComponentFixture<StoListAndFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ListComponent ]
+      declarations: [ StoListAndFormComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ListComponent);
+    fixture = TestBed.createComponent(StoListAndFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

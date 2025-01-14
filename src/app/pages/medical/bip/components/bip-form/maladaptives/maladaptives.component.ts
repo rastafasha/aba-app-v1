@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Maladaptive } from 'src/app/core/models';
+import { GoalV2 } from 'src/app/core/models';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -8,19 +8,11 @@ import Swal from 'sweetalert2';
   styleUrls: ['./maladaptives.component.scss'],
 })
 export class MaladaptivesComponent {
-  @Input() maladaptives: Maladaptive[];
-  @Output() maladaptivesChange = new EventEmitter<Maladaptive[]>();
-  @Output() save = new EventEmitter<Maladaptive[]>();
+  @Input() maladaptives: GoalV2[];
+  @Output() maladaptivesChange = new EventEmitter<GoalV2[]>();
+  @Output() save = new EventEmitter<GoalV2[]>();
   text_validation = '';
-  newMaladaptive: Maladaptive = {
-    index: 0,
-    current_intensity: 0,
-    baseline_date: new Date(),
-    baseline_level: 0,
-    initial_intensity: 0,
-    name: '',
-    description: '',
-  };
+  newMaladaptive: GoalV2 = GoalV2.getDefault();
 
   addMaladaptive() {
     if (
@@ -40,15 +32,7 @@ export class MaladaptivesComponent {
       ...this.newMaladaptive,
       index: this.maladaptives.length + 1,
     });
-    this.newMaladaptive = {
-      index: 0,
-      current_intensity: 0,
-      baseline_date: new Date(),
-      baseline_level: 0,
-      initial_intensity: 0,
-      name: '',
-      description: '',
-    };
+    this.newMaladaptive = GoalV2.getDefault();
     this.maladaptivesChange.emit(this.maladaptives);
   }
 
@@ -57,7 +41,7 @@ export class MaladaptivesComponent {
     this.maladaptivesChange.emit(this.maladaptives);
   }
 
-  seleccionarParaEditMal(maladap: Maladaptive) {
+  seleccionarParaEditMal(maladap: GoalV2) {
     const selectedMaladaptive = this.maladaptives.find(
       (item) => item.index === maladap.index
     );
@@ -66,7 +50,7 @@ export class MaladaptivesComponent {
     }
   }
 
-  updateMaladaptive(maladap: Maladaptive) {
+  updateMaladaptive(maladap: GoalV2) {
     const index = this.maladaptives.findIndex(
       (item) => item.index === maladap.index
     );

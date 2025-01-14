@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { url_servicios } from 'src/app/config/config';
-import { BipV2, Maladaptive } from 'src/app/core/models';
+import { BipV2, GoalV2 } from 'src/app/core/models';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +24,7 @@ export class BipService {
       bip: BipV2;
       type_of_assessment: number;
       documents_reviewed: { index: number; title: string }[];
-      maladaptives: Maladaptive[];
+      maladaptives: GoalV2[];
     }>(URL);
   }
   getBipByPatient_id(patient_id: any) {

@@ -1,0 +1,132 @@
+<div class="row">
+  <div class="col-12">
+    <div class="personal-list-out">
+      <div class="card">
+        <div class="card-body">
+          <div class="about-info mb-10">
+            <h4>Hypothesis-based interventions</h4>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="detail-personal">
+                <h2>Hypothesis-based interventions</h2>
+                <p>{{ bip.hypothesis_based_intervention }}</p>
+              </div>
+            </div>
+
+            <div class="about-info mb-10">
+              <h4>Tangibles</h4>
+            </div>
+
+            <ng-container *ngFor="let access of bip.tangibles">
+              <div *ngIf="!bip.tangibles">
+                <app-no-info></app-no-info>
+              </div>
+              <div class="col-xs-12 col-sm-4">
+                <div class="detail-personal">
+                  <h2>Preventtive Strategies</h2>
+                  <p>{{ access.preventive_strategies }}</p>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-4">
+                <div class="detail-personal">
+                  <h2>Replacement Skills</h2>
+                  <p>{{ access.replacement_skills }}</p>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-4">
+                <div class="detail-personal">
+                  <h2>Manager Strategies</h2>
+                  <p>{{ access.manager_strategies }}</p>
+                </div>
+              </div>
+            </ng-container>
+            <div class="about-info mb-10">
+              <h4>Attention</h4>
+            </div>
+
+            <ng-container *ngFor="let access of bip.attention">
+              <div *ngIf="!bip.attention">
+                <app-no-info></app-no-info>
+              </div>
+              <div class="col-xs-12 col-sm-4">
+                <div class="detail-personal">
+                  <h2>Preventtive Strategies</h2>
+                  <p>{{ access.preventive_strategies_a }}</p>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-4">
+                <div class="detail-personal">
+                  <h2>Replacement Skills</h2>
+                  <p>{{ access.replacement_skills_a }}</p>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-4">
+                <div class="detail-personal">
+                  <h2>Manager Strategies</h2>
+                  <p>{{ access.manager_strategies_a }}</p>
+                </div>
+              </div>
+            </ng-container>
+
+            <div class="about-info mb-10">
+              <h4>Escape</h4>
+            </div>
+
+            <ng-container *ngFor="let access of bip.escape">
+              <div *ngIf="!bip.escape">
+                <app-no-info></app-no-info>
+              </div>
+              <div class="col-xs-12 col-sm-4">
+                <div class="detail-personal">
+                  <h2>Preventtive Strategies</h2>
+                  <p>{{ access.preventive_strategies_e }}</p>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-4">
+                <div class="detail-personal">
+                  <h2>Replacement Skills</h2>
+                  <p>{{ access.replacement_skills_e }}</p>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-4">
+                <div class="detail-personal">
+                  <h2>Manager Strategies</h2>
+                  <p>{{ access.manager_strategies_e }}</p>
+                </div>
+              </div>
+            </ng-container>
+
+            <div class="about-info mb-10">
+              <h4>Sensory</h4>
+            </div>
+
+            <ng-container *ngFor="let access of bip.sensory">
+              <div *ngIf="!bip.sensory">
+                <app-no-info></app-no-info>
+              </div>
+              <div class="col-xs-12 col-sm-4">
+                <div class="detail-personal">
+                  <h2>Preventtive Strategies</h2>
+                  <p>{{ access.preventive_strategies_s }}</p>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-4">
+                <div class="detail-personal">
+                  <h2>Replacement Skills</h2>
+                  <p>{{ access.replacement_skills_s }}</p>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-4">
+                <div class="detail-personal">
+                  <h2>Manager Strategies</h2>
+                  <p>{{ access.manager_strategies_s }}</p>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,133 @@
+<div class="row">
+  <div class="col-12">
+    <div class="personal-list-out">
+      <div class="card">
+        <div class="card-body">
+          <div class="about-info mb-10">
+            <h4>Replacement Goals</h4>
+          </div>
+          <div class="row">
+            <div *ngIf="!bip.sustitution_goal || bip.sustitution_goal === null">
+              <app-no-info></app-no-info>
+            </div>
+            <ng-container *ngFor="let itemsg of bip.sustitution_goal">
+              <div class="col-xs-12 bg-gray">
+                <div class="row">
+                  <div class="col-xs-12 col-sm-4">
+                    <div class="detail-personal">
+                      <h2>Goal</h2>
+                      <p>{{ itemsg.name }}</p>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-4">
+                    <div class="detail-personal">
+                      <h2>Current Status</h2>
+                      <p>{{ itemsg.status }}</p>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-4">
+                    <div class="detail-personal">
+                      <h2>Created at</h2>
+                      <p>
+                        {{ itemsg.created_at | date : "shortDate" }}
+                      </p>
+                    </div>
+                  </div>
+                  <div class="col-xs-12">
+                    <div class="detail-personal">
+                      <h2>Description</h2>
+                      <p>{{ itemsg.description }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr />
+              <ng-container
+                *ngFor="let itemsgst of bip.sustitution_goal?.[0]?.stos"
+              >
+                <div class="row">
+                  <p style="font-size: 1.2rem; padding: 20px 10px">Goal Sto</p>
+                  <div class="col-xs-12 col-sm-3">
+                    <div class="detail-personal">
+                      <h2>Sto</h2>
+                      <p>{{ itemsgst.name }}</p>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12 col-sm-3">
+                    <div class="detail-personal">
+                      <h2>Target</h2>
+                      <p>{{ itemsgst.target }}</p>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-3">
+                    <div class="detail-personal">
+                      <h2>Sustitution Status</h2>
+                      <p>{{ itemsgst.status }}</p>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12 col-sm-3">
+                    <div class="detail-personal">
+                      <h2>Date</h2>
+                      <p>
+                        {{ itemsgst.initial_date | date : "shortDate" }}
+                      </p>
+                    </div>
+                  </div>
+                  <div class="col-xs-12">
+                    <div class="detail-personal">
+                      <h2>Description</h2>
+                      <p>{{ itemsgst.description }}</p>
+                    </div>
+                  </div>
+                </div>
+                <hr />
+              </ng-container>
+              <ng-container
+                *ngFor="let itemglt of bip.sustitution_goal?.[0]?.ltos"
+              >
+                <div class="row">
+                  <p style="font-size: 1.2rem; padding: 20px 10px">Goal Lto</p>
+                  <div class="col-xs-12 col-sm-3">
+                    <div class="detail-personal">
+                      <h2>Lto</h2>
+                      <p>{{ itemglt.name }}</p>
+                    </div>
+                  </div>
+
+                  <div class="col-xs-12 col-sm-3">
+                    <div class="detail-personal">
+                      <h2>sustitution Status</h2>
+                      <p>{{ itemglt.status }}</p>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-3">
+                    <div class="detail-personal">
+                      <h2>decription</h2>
+                      <p>{{ itemglt.description }}</p>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-3">
+                    <div class="detail-personal">
+                      <h2>date</h2>
+                      <p>
+                        {{ itemglt.initial_date | date : "shortDate" }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <hr />
+              </ng-container>
+              <!-- <h2 class="text-center">Grafico</h2> -->
+              <app-chart-replacement
+                [goal]="itemsg.name"
+                [baseline_d]="itemsg.created_at"
+              ></app-chart-replacement>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

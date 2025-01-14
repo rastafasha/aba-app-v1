@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap } from 'rxjs';
 import { BipV2, PatientV2 } from 'src/app/core/models';
-import { BipV2Service } from 'src/app/core/services';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
+import { BipUseCasesService } from '../services/bip-use-cases.service';
 import { BIP_ATTENTION_OPTIONS } from './bip-attention.const';
 
 @Component({
@@ -19,7 +18,7 @@ export class BipAttentionComponent implements OnInit {
   patient: PatientV2;
   bip: BipV2;
   constructor(
-    private bipService: BipV2Service,
+    private useCases: BipUseCasesService,
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {}
@@ -37,16 +36,13 @@ export class BipAttentionComponent implements OnInit {
     this.router.navigate([this.routes.bip.edit, this.patient.id, value]);
   }
   getBip() {
-    this.bipService
-      .list({ client_id: this.patient.id })
-      .pipe(switchMap((resp) => this.bipService.get(resp.data[0].id)))
-      .subscribe((resp) => {
-        this.bip = resp.data;
-      });
+    this.useCases.getBipByClientId(this.patient.id).subscribe((resp) => {
+      this.bip = resp.data;
+    });
   }
 
   onSave() {
-    this.bipService.update(this.bip, this.bip.id).subscribe({
+    this.useCases.updateBip(this.bip).subscribe({
       next: () => {
         Swal.fire('Updated', `Bip Updated successfully!`, 'success');
       },
