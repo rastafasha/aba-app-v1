@@ -1,10 +1,17 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import { BipService } from '../../service/bip.service';
 import { GoalFamilyEnvolmentService } from '../../service/goal-family-envolment.service';
 import { DeEscalationTechniqueService } from '../../service/de-escalation-technique.service';
 import { AppUser } from 'src/app/core/models/users.model';
+import { DeEscalationTechnique } from 'src/app/core/models';
 
 @Component({
   selector: 'app-de-escalation-tecniques',
@@ -14,6 +21,7 @@ import { AppUser } from 'src/app/core/models/users.model';
 export class DeEscalationTecniquesComponent implements OnInit, OnChanges {
   @Input() clientSelected: any;
   @Input() bipSelected: any;
+  @Input() de_escalation_techniques: DeEscalationTechnique[];
   valid_form_success = false;
   text_validation = '';
   text_success = '';
@@ -46,8 +54,6 @@ export class DeEscalationTecniquesComponent implements OnInit, OnChanges {
   client_id_deEscalalationsTechs: any;
   deEscalalationsTechid: any;
   goalFamilyid: any;
-
-  
 
   constructor(
     private bipService: BipService,
@@ -102,7 +108,6 @@ export class DeEscalationTecniquesComponent implements OnInit, OnChanges {
       }
     }
   }
-
 
   //obtenemos el perfil  del paciente por el id de la ruta
   // getProfileBip() {

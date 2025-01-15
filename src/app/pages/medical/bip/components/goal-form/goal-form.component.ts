@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { GoalV2 } from 'src/app/core/models';
+import { PlanV2 } from 'src/app/core/models';
 
 @Component({
   selector: 'app-goal-form',
@@ -7,5 +7,5 @@ import { GoalV2 } from 'src/app/core/models';
   styleUrls: ['./goal-form.component.scss'],
 })
 export class GoalFormComponent {
-  @Input() goal: GoalV2;
+  @Input() goal: PlanV2;
 }

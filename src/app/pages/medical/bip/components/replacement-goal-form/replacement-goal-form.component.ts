@@ -9,7 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { GoalV2, Objective } from 'src/app/core/models';
+import { PlanV2, Objective } from 'src/app/core/models';
 import { AppUser } from 'src/app/core/models/users.model';
 import { ListAndFormComponent } from 'src/app/shared/components/list-and-form/list-and-form.component';
 import { ListRender } from 'src/app/shared/components/list/list.component';
@@ -28,7 +28,7 @@ export class ReplacementGoalFormComponent {
   @ViewChild('ltoListForm') ltoListForm: ListAndFormComponent<Objective>;
 
   routes = AppRoutes;
-  @Input() goal: GoalV2;
+  @Input() goal: PlanV2;
   @Input() clientSelected: any;
   locale = inject(LOCALE_ID);
   renders: ListRender<Objective> = {

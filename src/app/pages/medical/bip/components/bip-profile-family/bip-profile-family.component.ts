@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { GoalV2 } from 'src/app/core/models';
+import { PlanV2 } from 'src/app/core/models';
 
 @Component({
   selector: 'app-bip-profile-family',
@@ -7,5 +7,5 @@ import { GoalV2 } from 'src/app/core/models';
   styleUrls: ['./bip-profile-family.component.scss'],
 })
 export class BipProfileFamilyComponent {
-  @Input() family_envolment: GoalV2[];
+  @Input() family_envolment: PlanV2[];
 }

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { GoalV2 } from 'src/app/core/models';
+import { PlanV2 } from 'src/app/core/models';
 
 @Component({
   selector: 'app-bip-profile-monotoring',
@@ -7,5 +7,5 @@ import { GoalV2 } from 'src/app/core/models';
   styleUrls: ['./bip-profile-monotoring.component.scss'],
 })
 export class BipProfileMonotoringComponent {
-  @Input() rbt_training_goals: GoalV2[];
+  @Input() rbt_training_goals: PlanV2[];
 }

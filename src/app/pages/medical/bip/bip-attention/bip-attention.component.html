@@ -49,17 +49,16 @@
         <app-reduction-goal-form
           *ngIf="bip"
           [(maladaptives)]="bip.maladaptives"
-        ></app-reduction-goal-form>
+        >
+        </app-reduction-goal-form>
         <!-- fin Reduction Goal -->
       </ng-container>
       <!--  -->
       <ng-container *ngIf="optionSelected === 3">
         <!-- Reduction Goal -->
         <!-- <app-sustitution-goal-form></app-sustitution-goal-form> -->
-        <app-sustitution-list
-          *ngIf="bip"
-          [(goals)]="bip.replacements"
-        ></app-sustitution-list>
+        <app-sustitution-list *ngIf="bip" [(goals)]="bip.replacements">
+        </app-sustitution-list>
         <!-- fin Reduction Goal -->
       </ng-container>
       <!--  -->
@@ -68,7 +67,8 @@
         <app-family-involvement-goal-form
           [clientSelected]="patient"
           [bipSelected]="bip"
-        ></app-family-involvement-goal-form>
+        >
+        </app-family-involvement-goal-form>
         <!-- fin Reduction Goal -->
       </ng-container>
       <!--  -->
@@ -77,7 +77,8 @@
         <app-monitoring-evaluating
           [clientSelected]="patient"
           [bipSelected]="bip"
-        ></app-monitoring-evaluating>
+        >
+        </app-monitoring-evaluating>
         <!-- fin Reduction Goal -->
       </ng-container>
       <!--  -->
@@ -92,16 +93,15 @@
         <app-generalization-training
           [clientSelected]="patient"
           [bipSelected]="bip"
-        ></app-generalization-training>
+        >
+        </app-generalization-training>
         <!-- fin Reduction Goal -->
       </ng-container>
       <!--  -->
       <ng-container *ngIf="optionSelected === 8">
         <!-- Reduction Goal -->
-        <app-crisis-plan
-          [clientSelected]="patient"
-          [bipSelected]="bip"
-        ></app-crisis-plan>
+        <app-crisis-plan [clientSelected]="patient" [bipSelected]="bip">
+        </app-crisis-plan>
         <!-- fin Reduction Goal -->
       </ng-container>
       <!--  -->
@@ -110,16 +110,19 @@
         <app-de-escalation-tecniques
           [clientSelected]="patient"
           [bipSelected]="bip"
-        ></app-de-escalation-tecniques>
+          [de_escalation_techniques]="bip.de_escalation_techniques"
+        >
+        </app-de-escalation-tecniques>
         <!-- fin Reduction Goal -->
       </ng-container>
       <!--  -->
       <ng-container *ngIf="optionSelected === 10">
         <!-- Reduction Goal -->
         <app-consent-treatment-form
-          [clientSelected]="patient"
-          [bipSelected]="bip"
-        ></app-consent-treatment-form>
+          [(consent_to_treatment)]="bip.consent_to_treatments[0]"
+          (save)="onSave()"
+        >
+        </app-consent-treatment-form>
         <!-- fin Reduction Goal -->
       </ng-container>
     </div>

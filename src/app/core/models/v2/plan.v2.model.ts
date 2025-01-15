@@ -6,7 +6,7 @@ import {
 } from 'src/app/shared/utils';
 import { Objective } from './bip.v2.model';
 
-export class GoalV2 {
+export class PlanV2 {
   index?: number;
   id: number;
   bip_id: number;
@@ -14,7 +14,7 @@ export class GoalV2 {
   description: string;
   baseline_level: number;
   baseline_date: Date;
-  end_date?: Date;
+  end_date: Date;
   initial_intensity: number;
   current_intensity: number;
   category: 'maladaptive' | 'sustitution';
@@ -23,8 +23,8 @@ export class GoalV2 {
   updated_at?: Date;
   deleted_at?: Date;
   objectives: Objective[];
-  constructor(data: Partial<GoalV2>) {
-    const self: GoalV2 = {
+  constructor(data: Partial<PlanV2>) {
+    const self: PlanV2 = {
       ...data,
       id: NumberOrNullOrUndefined(data.id),
       bip_id: NumberOrNullOrUndefined(data.bip_id),
@@ -32,6 +32,7 @@ export class GoalV2 {
       description: StringOrNullOrUndefined(data.description),
       baseline_level: NumberOrNullOrUndefined(data.baseline_level),
       baseline_date: DateOrNullOrUndefined(data.baseline_date),
+      end_date: DateOrNullOrUndefined(data.end_date),
       initial_intensity: NumberOrNullOrUndefined(data.initial_intensity),
       current_intensity: NumberOrNullOrUndefined(data.current_intensity),
       category: StringOrNullOrUndefined(data.category) as 'maladaptive',
@@ -41,8 +42,8 @@ export class GoalV2 {
     return self;
   }
 
-  static getDefault(): GoalV2 {
-    return new GoalV2({
+  static getDefault(): PlanV2 {
+    return new PlanV2({
       id: 0,
       bip_id: 0,
       name: '',

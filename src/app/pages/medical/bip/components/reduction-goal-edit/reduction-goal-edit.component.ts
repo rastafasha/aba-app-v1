@@ -8,7 +8,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { GoalV2, Objective } from 'src/app/core/models';
+import { PlanV2, Objective } from 'src/app/core/models';
 import { ListAndFormComponent } from 'src/app/shared/components/list-and-form/list-and-form.component';
 import {
   ListOption,
@@ -25,9 +25,9 @@ import { ListFormStrategy } from '../bip-form/list-form.strategy';
 export class ReductionGoalEditComponent {
   routes = AppRoutes;
   @Output() save = new EventEmitter<void>();
-  @Input() maladaptive: GoalV2;
-  @Input() goal: GoalV2;
-  @Output() goalChange = new EventEmitter<GoalV2>();
+  @Input() maladaptive: PlanV2;
+  @Input() goal: PlanV2;
+  @Output() goalChange = new EventEmitter<PlanV2>();
   //
   @ViewChild('stoListForm') stoListForm: ListAndFormComponent<Objective>;
   @ViewChild('ltoListForm') ltoListForm: ListAndFormComponent<Objective>;

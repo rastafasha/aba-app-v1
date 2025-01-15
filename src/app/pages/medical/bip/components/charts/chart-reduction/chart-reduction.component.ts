@@ -1,6 +1,6 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { ChartComponent } from 'ng-apexcharts';
-import { ChartOptions, GoalV2, PatientV2 } from 'src/app/core/models';
+import { ChartOptions, PlanV2, PatientV2 } from 'src/app/core/models';
 
 import { GraphicReductionService } from '../../../service/graphic-reduction.service';
 interface data {
@@ -15,7 +15,7 @@ interface data {
 export class ChartReductionComponent {
   selectedValue = '03';
   @ViewChild('chart') chart!: ChartComponent;
-  @Input() maladaptive: GoalV2;
+  @Input() maladaptive: PlanV2;
   @Input() patient: PatientV2;
   existgrfic: any[];
   loading = false;

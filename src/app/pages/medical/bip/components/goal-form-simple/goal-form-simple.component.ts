@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { GoalV2 } from 'src/app/core/models';
+import { PlanV2 } from 'src/app/core/models';
 
 @Component({
   selector: 'app-goal-form-simple',
@@ -7,6 +7,6 @@ import { GoalV2 } from 'src/app/core/models';
   styleUrls: ['./goal-form-simple.component.scss'],
 })
 export class GoalFormSimpleComponent {
-  @Input() goal: GoalV2;
-  @Output() goalChange = new EventEmitter<GoalV2>();
+  @Input() goal: PlanV2;
+  @Output() goalChange = new EventEmitter<PlanV2>();
 }

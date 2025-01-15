@@ -18,7 +18,7 @@ import {
   ChartComponent,
 } from 'ng-apexcharts';
 import { DataService } from 'src/app/shared/data/data.service';
-import { ChartOptions, GoalV2, PatientDashboard } from 'src/app/core/models';
+import { ChartOptions, PlanV2, PatientDashboard } from 'src/app/core/models';
 
 import { ActivatedRoute } from '@angular/router';
 import { BipService } from '../../../service/bip.service';

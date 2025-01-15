@@ -1,11 +1,12 @@
 import {
+  compareObjects,
   DateOrNullOrUndefined,
   ForceMap,
   NumberOrNullOrUndefined,
   StringOrNullOrUndefined,
   TypeOrNullOrUndefined,
 } from 'src/app/shared/utils';
-import { GoalV2 } from './goal.v2.model';
+import { PlanV2 } from './plan.v2.model';
 type ObjectiveStatus =
   | 'inprogress'
   | 'initiated'
@@ -278,7 +279,7 @@ export class Homicidality {
   }
 }
 
-export class Sustitution extends GoalV2 {
+export class Sustitution extends PlanV2 {
   stos: Objective[];
   ltos: Objective[];
   constructor(data: Partial<Sustitution>) {
@@ -330,6 +331,7 @@ export class DocumentReviewed {
   document_title: string;
   document_status: string;
   constructor(data: Partial<DocumentReviewed>) {
+    Object.assign(this, data);
     this.document_title = StringOrNullOrUndefined(data.document_title);
     this.document_status = StringOrNullOrUndefined(data.document_status);
   }
@@ -337,6 +339,7 @@ export class DocumentReviewed {
 
 export class BipV2 {
   id: number;
+  client_id: number;
   type_of_assessment: number;
   doctor_id: number;
   doctor: Doctor;
@@ -352,8 +355,8 @@ export class BipV2 {
   strengths: string;
   weakneses: string;
   documents_reviewed: DocumentV2[];
-  maladaptives: GoalV2[];
-  replacements: GoalV2[];
+  maladaptives: PlanV2[];
+  replacements: PlanV2[];
   assestment_conducted_options: AssestmentConductedOption[];
   assestmentEvaluationSettings: AssestmentEvaluationSetting[];
   prevalent_setting_event_and_atecedents: PrevalentSettingEventAndAntecedent[];
@@ -365,28 +368,32 @@ export class BipV2 {
   attention: Attention[];
   escape: Escape[];
   sensory: Sensory[];
-  reduction_goal: GoalV2[];
+  reduction_goal: PlanV2[];
   sustitution_goal: Sustitution[];
-  family_envolment: GoalV2[];
-  rbt_training_goals: GoalV2[];
+  family_envolment: PlanV2[];
+  rbt_trainings: PlanV2[];
   monitoring_evalutating: MonitoringEvaluating[];
-  generalization_training: GeneralizationTraining[];
-  crisis_plan: CrisisPlan[];
-  de_escalation_technique: DeEscalationTechnique[];
-  consent_to_treatment: ConsentToTreatment;
+  generalization_trainings: GeneralizationTraining[];
+  crisis_plans: CrisisPlan[];
+  de_escalation_techniques: DeEscalationTechnique[];
+  consent_to_treatments: ConsentToTreatment[];
+  caregiver_trainings: PlanV2[];
   created_at?: Date;
+  updated_at?: Date;
+  deleted_at?: Date;
 
   constructor(data: Partial<BipV2>) {
     const self: BipV2 = {
       ...data,
       id: NumberOrNullOrUndefined(data.id),
+      client_id: NumberOrNullOrUndefined(data.client_id),
       type_of_assessment: NumberOrNullOrUndefined(data.type_of_assessment),
       doctor_id: NumberOrNullOrUndefined(data.doctor_id),
       doctor: TypeOrNullOrUndefined(data.doctor, Doctor),
       patient_identifier: StringOrNullOrUndefined(data.patient_identifier),
       phiysical_and_medical: StringOrNullOrUndefined(data.phisical_and_medical),
-      maladaptives: ForceMap(data.maladaptives, GoalV2),
-      replacements: ForceMap(data.replacements, GoalV2),
+      maladaptives: ForceMap(data.maladaptives, PlanV2),
+      replacements: ForceMap(data.replacements, PlanV2),
       strengths: StringOrNullOrUndefined(data.strengths),
       weakneses: StringOrNullOrUndefined(data.weakneses),
       assestmentEvaluationSettings: ForceMap(
@@ -405,7 +412,7 @@ export class BipV2 {
         data.current_treatment_and_progress
       ),
       education_status: StringOrNullOrUndefined(data.education_status),
-      family_envolment: ForceMap(data.family_envolment, GoalV2),
+      family_envolment: ForceMap(data.family_envolment, PlanV2),
       goal_ltos: StringOrNullOrUndefined(data.goal_ltos),
       goal_stos: StringOrNullOrUndefined(data.goal_stos),
       hypothesis_based_intervention: StringOrNullOrUndefined(
@@ -423,32 +430,34 @@ export class BipV2 {
       previus_treatment_and_result: StringOrNullOrUndefined(
         data.previus_treatment_and_result
       ),
-      rbt_training_goals: ForceMap(data.rbt_training_goals, GoalV2),
-      reduction_goal: ForceMap(data.reduction_goal, GoalV2),
+      rbt_trainings: ForceMap(data.rbt_trainings, PlanV2),
+      reduction_goal: ForceMap(data.reduction_goal, PlanV2),
       sensory: ForceMap(data.sensory, Sensory),
       sustitution_goal: ForceMap(data.sustitution_goal, Sustitution),
       tangibles: ForceMap(data.tangibles, Tangible),
       attention: ForceMap(data.attention, Attention),
       escape: ForceMap(data.escape, Escape),
-      de_escalation_technique: ForceMap(
-        data.de_escalation_technique,
+      de_escalation_techniques: ForceMap(
+        data.de_escalation_techniques,
         DeEscalationTechnique
       ),
-      consent_to_treatment: TypeOrNullOrUndefined(
-        data.consent_to_treatment,
+      consent_to_treatments: ForceMap(
+        data.consent_to_treatments,
         ConsentToTreatment
       ),
       documents_reviewed: ForceMap(data.documents_reviewed, DocumentV2),
-      generalization_training: ForceMap(
-        data.generalization_training,
+      generalization_trainings: ForceMap(
+        data.generalization_trainings,
         GeneralizationTraining
       ),
-      crisis_plan: ForceMap(data.crisis_plan, CrisisPlan),
+      crisis_plans: ForceMap(data.crisis_plans, CrisisPlan),
       prevalent_setting_event_and_atecedents: ForceMap(
         data.prevalent_setting_event_and_atecedents,
         PrevalentSettingEventAndAntecedent
       ),
+      caregiver_trainings: ForceMap(data.caregiver_trainings, PlanV2),
     };
+    console.table(compareObjects(data, self));
     return self;
   }
 }

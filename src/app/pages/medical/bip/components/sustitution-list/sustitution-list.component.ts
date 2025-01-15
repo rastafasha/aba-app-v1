@@ -7,7 +7,7 @@ import {
   Output,
   ViewChildren,
 } from '@angular/core';
-import { GoalV2 } from 'src/app/core/models';
+import { PlanV2 } from 'src/app/core/models';
 import { ListFormStrategy } from '../bip-form/list-form.strategy';
 import {
   ListOption,
@@ -23,36 +23,36 @@ import { ListAndFormComponent } from 'src/app/shared/components/list-and-form/li
 })
 export class SustitutionListComponent {
   @ViewChildren('goalsListAndForm')
-  goalsListAndForm: ListAndFormComponent<GoalV2>;
+  goalsListAndForm: ListAndFormComponent<PlanV2>;
   //
   @Input()
-  goals: GoalV2[];
-  @Output() goalsChange = new EventEmitter<GoalV2[]>();
-  newGoal: GoalV2 = GoalV2.getDefault();
+  goals: PlanV2[];
+  @Output() goalsChange = new EventEmitter<PlanV2[]>();
+  newGoal: PlanV2 = PlanV2.getDefault();
   goalsStrategy = new ListFormStrategy(this.goalsChange, this.newGoal);
   private locale = inject(LOCALE_ID);
   private datePipe = new DatePipe(this.locale);
-  renders: ListRender<GoalV2> = {
+  renders: ListRender<PlanV2> = {
     created_at: (item) => this.datePipe.transform(item.created_at, 'shortDate'),
   };
-  options: ListOption<GoalV2>[] = [
+  options: ListOption<PlanV2>[] = [
     {
       text: 'Edit',
       icon: 'fa fa-edit',
       class: 'btn btn-outline-primary btn-sm',
-      action: (item: GoalV2) => this.onEditGoal(item),
+      action: (item: PlanV2) => this.onEditGoal(item),
     },
     {
       text: 'View',
       icon: 'fa fa-bar-chart',
       class: 'btn btn-outline-success btn-sm',
-      action: (item: GoalV2) => this.onViewGoal(item),
+      action: (item: PlanV2) => this.onViewGoal(item),
     },
     {
       text: 'Delete',
       icon: 'fa fa-trash-alt',
       class: 'btn btn-outline-danger btn-sm',
-      action: (item: GoalV2) => this.onDeleteGoal(item),
+      action: (item: PlanV2) => this.onDeleteGoal(item),
     },
   ];
 
@@ -60,18 +60,18 @@ export class SustitutionListComponent {
   state: 'view' | 'edit' | 'list' | 'create' = 'list';
   onCreateGoal() {
     this.state = 'create';
-    this.newGoal = GoalV2.getDefault();
+    this.newGoal = PlanV2.getDefault();
   }
 
-  onViewGoal(goal: GoalV2) {
+  onViewGoal(goal: PlanV2) {
     this.newGoal = this.goalsStrategy.select(this.goals, goal);
     this.state = 'view';
   }
-  onEditGoal(goal: GoalV2) {
+  onEditGoal(goal: PlanV2) {
     this.newGoal = goal;
     this.state = 'edit';
   }
-  onDeleteGoal(goal: GoalV2) {
+  onDeleteGoal(goal: PlanV2) {
     this.goals = this.goalsStrategy.delete(goal.index, this.goals);
     this.goals = [...this.goals];
   }

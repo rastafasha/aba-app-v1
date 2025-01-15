@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { GoalV2, PatientV2 } from 'src/app/core/models';
+import { PlanV2, PatientV2 } from 'src/app/core/models';
 
 @Component({
   selector: 'app-bip-profile-maladaptives[patient]',
@@ -7,6 +7,6 @@ import { GoalV2, PatientV2 } from 'src/app/core/models';
   styleUrls: ['./bip-profile-maladaptives.component.scss'],
 })
 export class BipProfileMaladaptivesComponent {
-  @Input() maladaptives: GoalV2[];
+  @Input() maladaptives: PlanV2[];
   @Input() patient: PatientV2;
 }
