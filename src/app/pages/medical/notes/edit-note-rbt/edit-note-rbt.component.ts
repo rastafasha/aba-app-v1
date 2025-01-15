@@ -9,6 +9,7 @@ import { NoteRbtService } from '../../../../core/services/notes-rbt.service';
 import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { MaladaptivesComponent } from "../components/maladaptives/maladaptives.component";
+import { PaServiceV2 } from 'src/app/core/models';
 
 @Component({
   selector: 'app-edit-note-rbt',
@@ -165,8 +166,8 @@ export class EditNoteRbtComponent implements OnInit {
   cpt_code: any = null;
   provider: any = null;
 
-  paServices: PaService[] = [];
-  selectedPaService: PaService | null = null;
+  paServices: PaServiceV2[] = [];
+  selectedPaService: PaServiceV2 | null = null;
 
   fromParam: string | null = null;
 

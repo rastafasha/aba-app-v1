@@ -21,6 +21,7 @@ import {
 import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
 import { PatientMService } from '../../patient-m/service/patient-m.service';
 import { AuthService } from 'src/app/core/auth/auth.service';
+import { PaServiceV2 } from 'src/app/core/models';
 
 @Component({
   selector: 'app-note-bcba',
@@ -193,8 +194,8 @@ throw new Error('Method not implemented.');
   
   
   pa_services: PaService[] = [];
-  selectedPaService: PaService | null = null;
-  selectedPaService1: PaService | null = null;
+  selectedPaService: PaServiceV2 | null = null;
+  selectedPaService1: PaServiceV2 | null = null;
   projectedUnits = 0;
   start_date: Date; // Fecha de inicio
   end_date: Date; // Fecha de fin
@@ -320,19 +321,19 @@ throw new Error('Method not implemented.');
   }
 
   getBipV2(){
-    this.bipV2Service.get(this.patient_id).subscribe((resp)=>{
+    this.bipV2Service.list({client_id: this.patient_id}).subscribe((resp)=>{
       console.log('BIP',resp);
-      this.bip_id = resp.data.id;
-      this.familiEnvolments = resp.data.family_envolments;
+      this.bip_id = resp.data[0].id;
+      // this.familiEnvolments = resp.data.family_envolments;
       // this.caregivers_training_goals =
       // resp.data.family_envolments?.[0]?.caregivers_training_goals ?? [];
       
       // this.caregivers_training_goals = JSON.parse(this.caregivers_training_goals);
       
-      this.monitoringEvaluating =resp.data.monitoring_evalutatings;
+      // this.monitoringEvaluating =resp.data.monitoring_evalutatings;
 
-      this.behaviorList = resp.data.maladaptives;
-      this.replacementList = resp.data.replacements;
+      this.behaviorList = resp.data[0].maladaptives;
+      this.replacementList = resp.data[0].replacements;
     })
   }
 

@@ -17,6 +17,7 @@ export class PaServiceV2 {
   updated_at?: Date;
   deleted_at?: Date;
   deleted?: boolean;
+  available_units?: number;
   constructor(data: Partial<PaServiceV2>) {
     if (!data) return null;
     const result: PaServiceV2 = {
@@ -26,6 +27,7 @@ export class PaServiceV2 {
       pa_service: StringOrNullOrUndefined(data.pa_service),
       cpt: StringOrNullOrUndefined(data.cpt),
       n_units: NumberOrNullOrUndefined(data.n_units),
+      available_units: NumberOrNullOrUndefined(data.available_units),
       spent_units: NumberOrNullOrUndefined(data.spent_units),
       start_date: DateOrNullOrUndefined(data.start_date),
       end_date: DateOrNullOrUndefined(data.end_date),

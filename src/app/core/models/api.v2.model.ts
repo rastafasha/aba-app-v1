@@ -25,6 +25,6 @@ export interface ListResponse<T> {
 }
 
 export interface ListParameters {
-  per_page: number;
+  per_page?: number;
   [key: string]: string | number | boolean;
 }

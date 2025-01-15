@@ -12,6 +12,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { AppUser } from 'src/app/core/models/users.model';
 import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 import { NoteRbtV2, Maladaptives, Replacements, Interventions } from 'src/app/core/models/note.rbt.v2.model';
+import { PaServiceV2 } from 'src/app/core/models';
 
 interface ValidationResult {
   isValid: boolean;
@@ -219,7 +220,7 @@ export class NoteRbtComponent implements OnInit {
   ];
 
   pa_services: PaService[] = [];
-  selectedPaService: PaService | null = null;
+  selectedPaService: PaServiceV2 | null = null;
 
   selectedValueCode = '';
 

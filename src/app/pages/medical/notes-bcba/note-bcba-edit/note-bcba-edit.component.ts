@@ -11,6 +11,11 @@ import { AppUser } from 'src/app/core/models/users.model';
 import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 import { interventionsList, interventionsList2, newList, outcomeList, show97151List } from '../listasSelectData';
 import { AuthService } from 'src/app/core/auth/auth.service';
+import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
+import { PatientMService } from '../../patient-m/service/patient-m.service';
+import { PatientsV2Service } from 'src/app/core/services';
+import { PaServicesV2Service } from 'src/app/core/services/pa-services.v2.service';
+import { PaServiceV2 } from 'src/app/core/models';
 
 
 
@@ -190,8 +195,8 @@ export class NoteBcbaEditComponent implements OnInit {
   services: any = [];
   insurer_id: number;
 
-  pa_services: PaService[] = [];
-  selectedPaService: PaService | null = null;
+  pa_services: PaServiceV2[] = [];
+  selectedPaService: PaServiceV2 | null = null;
   selectedPaService1: PaService | null = null;
   projectedUnits = 0;
 
@@ -225,6 +230,8 @@ export class NoteBcbaEditComponent implements OnInit {
     replacementList = this.replacements;
     replacementList2 = this.replacements;
 
+    noteServiceId:number;
+
   constructor(
     private bipService: BipService,
     private router: Router,
@@ -233,6 +240,9 @@ export class NoteBcbaEditComponent implements OnInit {
     private doctorService: DoctorService,
     private locations: Location,
     private authService: AuthService,
+    private bipV2Service: BipsV2Service,
+    private patientService: PatientsV2Service,
+    private paServicesService: PaServicesV2Service,
   ) {}
 
   ngOnInit(): void {
@@ -274,6 +284,7 @@ export class NoteBcbaEditComponent implements OnInit {
       this.note_selected = resp.noteBcba;
       this.note_selectedId = resp.noteBcba.id;
       this.patient_identifier = this.note_selected.patient_identifier;
+      this.patient_id = this.note_selected.patient_id;
       this.bip_id = this.note_selected.bip_id;
       this.location = this.note_selected.location;
 
@@ -335,19 +346,19 @@ export class NoteBcbaEditComponent implements OnInit {
         this.note_selected.time_out2
       );
 
-      const noteServiceId = resp.noteBcba.pa_service_id;
-      if (this.pa_services?.length && noteServiceId) {
-        this.selectedPaService =
-          this.pa_services.find((service) => service.id === noteServiceId) ||
-          null;
-      }
+      this.noteServiceId = resp.noteBcba.pa_service_id;
+      // if (this.pa_services?.length && this.noteServiceId) {
+      //   this.selectedPaService =
+      //     this.pa_services.find((service) => service.id === this.noteServiceId) ||
+      //     null;
+      // }
 
       this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED =
         this.note_selected.provider_signature;
       this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED =
         this.note_selected.supervisor_signature;
 
-      this.getProfileBip(noteServiceId);
+      // this.getProfileBip(noteServiceId);
 
       if(this.note_selected.cpt_code === '97155' ){
         this.show97155 = true;
@@ -382,6 +393,8 @@ export class NoteBcbaEditComponent implements OnInit {
       );
       
       this.behaviorList = this.note_selected.behaviors;
+
+      this.getPatient();
 
     });
   }
@@ -528,6 +541,27 @@ export class NoteBcbaEditComponent implements OnInit {
     ];
   }
 
+  getPatient(){
+    console.log('patient_id',this.patient_id);
+    this.patientService.get(this.patient_id).subscribe((resp)=>{
+      console.log('patient',resp);
+      this.client_selected = resp.data;
+      this.paServicesService.get( this.noteServiceId, this.patient_id).subscribe((resp)=>{
+        console.log('paServices',resp.data);
+
+        this.selectedPaService = resp.data;
+        
+        this.selectedValueCode = this.selectedPaService.cpt;
+        this.pa_services = [this.selectedPaService];
+
+        
+      })
+
+
+    })
+  }
+
+
   private formatTime(timeString: string | null): string {
     console.log('formatting time: ', timeString);
     if (!timeString) return '';
@@ -541,35 +575,29 @@ export class NoteBcbaEditComponent implements OnInit {
       noteServiceId,
       availableServices: this.pa_services,
     });
-    this.bipService
-      .getBipProfilePatient_id(this.patient_identifier)
+    this.bipV2Service
+      .get(this.bip_id)
       .subscribe((resp) => {
         console.log(resp);
-        this.client_selected = resp.patient;
+        // this.bip = resp.data[0];
 
-        this.first_name = this.client_selected.first_name;
-        this.last_name = this.client_selected.last_name;
-        this.patient_id = this.client_selected.id;
-        this.patient_identifier = this.client_selected.patient_identifier;
-        this.patientLocation_id = this.client_selected.location_id;
-        this.insurance_identifier = resp.patient.insurance_identifier;
-        this.insurance_id = resp.patient.insurer_id;
-        this.pos = this.client_selected.pos_covered;
+        // this.first_name = this.client_selected.first_name;
+        // this.last_name = this.client_selected.last_name;
+        // this.patient_id = this.client_selected.id;
+        // this.patient_identifier = this.client_selected.patient_identifier;
+        // this.patientLocation_id = this.client_selected.location_id;
+        // this.insurance_identifier = resp.patient.insurance_identifier;
+        // this.insurance_id = resp.patient.insurer_id;
+        // this.pos = this.client_selected.pos_covered;
 
         this.getReplacementsByPatientId();
         this.pa_services = this.client_selected.pa_services;
 
-        //filtramos lo pa_services usando star_date y end_date comparado con el dia de hoy
-      this.pa_services = this.pa_services.filter((pa) => {
-        const dateStart = new Date(pa.start_date).getTime();
-        const dateEnd = new Date(pa.end_date).getTime();
-        const dateToday = new Date().getTime();
-        return dateStart <= dateToday && dateEnd >= dateToday;
-      });
+        
       //devolvemos la respuesta da los pa_services disponibles
-        if (noteServiceId) {
-          this.setPaService(noteServiceId);
-        }
+        // if (noteServiceId) {
+        //   this.setPaService(noteServiceId);
+        // }
         this.birth_date = this.client_selected.birth_date
         ? new Date(this.client_selected.birth_date).toISOString()
         : '';
@@ -585,15 +613,15 @@ export class NoteBcbaEditComponent implements OnInit {
     });
   }
 
-  private setPaService(noteServiceId: number) {
-    if (this.pa_services?.length && noteServiceId) {
-      this.selectedPaService =
-        this.pa_services.find((service) => service.id === noteServiceId) || null;
-      if (this.selectedPaService) {
-        this.selectedValueCode = this.selectedPaService.cpt;
-      }
-    }
-  }
+  // private setPaService(noteServiceId: number) {
+  //   if (this.pa_services?.length && noteServiceId) {
+  //     this.selectedPaService =
+  //       this.pa_services.find((service) => service.id === noteServiceId) || null;
+  //     if (this.selectedPaService) {
+  //       this.selectedValueCode = this.selectedPaService.cpt;
+  //     }
+  //   }
+  // }
 
   getReplacementsByPatientId() {
     this.noteBcbaService
