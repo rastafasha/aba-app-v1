@@ -16,20 +16,20 @@ import { Maladaptives } from '../interfaces';
           </thead>
           <tbody>
             <tr *ngFor="let behavior of behaviorList">
-              <td>{{ behavior.maladaptive_behavior }}</td>
+              <td>{{ behavior.name }}</td>
               <td>
               <div
                 class="status-toggle d-flex justify-content-between align-items-center"
               >
                 <input
                   type="checkbox"
-                  [id]="'check-' + behavior.maladaptive_behavior"
+                  [id]="'check-' + behavior.name"
                   class="check"
                   [(ngModel)]="behavior.value"
-                  [name]="'check-' + behavior.maladaptive_behavior"
+                  [name]="'check-' + behavior.name"
                   (ngModelChange)="updateBehaviors()"
                 />
-                <label [for]="'check-' + behavior.maladaptive_behavior" class="checktoggle"
+                <label [for]="'check-' + behavior.name" class="checktoggle"
                   >checkbox</label>
               </div>
               </td>
@@ -51,7 +51,7 @@ export class BehaviorsComponent {
     const result = this.behaviorList
       .filter((behavior) => behavior.value)
       .reduce((acc, behavior) => {
-        acc[behavior.index] = { discused: !!behavior.value, maladaptive_behavior: behavior.maladaptive_behavior };
+        acc[behavior.id] = { discused: !!behavior.value, maladaptive_behavior: behavior.name };
         return acc;
       }, {}); // Valor inicial para el acumulador
     console.log(result);

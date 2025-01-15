@@ -6,6 +6,25 @@ import {
 } from 'src/app/shared/utils';
 import { Objective } from './bip.v2.model';
 
+
+export class Caregiver {
+  index: number;
+  nombre: string;
+  criteria: string;
+  initiation: Date;
+  caregiver_goal: string;
+  current_status: string;
+  outcome_measure: string;
+  constructor(data: Partial<Caregiver>) {
+    this.nombre = StringOrNullOrUndefined(data.nombre);
+    this.criteria = StringOrNullOrUndefined(data.criteria);
+    this.criteria = StringOrNullOrUndefined(data.criteria);
+    this.initiation = DateOrNullOrUndefined(data.initiation);
+    this.caregiver_goal = StringOrNullOrUndefined(data.caregiver_goal);
+    this.current_status = StringOrNullOrUndefined(data.current_status);
+    this.outcome_measure = StringOrNullOrUndefined(data.outcome_measure);
+  }
+}
 export class GoalV2 {
   index?: number;
   id: number;
@@ -23,6 +42,7 @@ export class GoalV2 {
   updated_at?: Date;
   deleted_at?: Date;
   objectives: Objective[];
+  caregivers_training_goals?: Caregiver[];
   constructor(data: Partial<GoalV2>) {
     const self: GoalV2 = {
       ...data,
@@ -41,6 +61,8 @@ export class GoalV2 {
     return self;
   }
 
+  
+
   static getDefault(): GoalV2 {
     return new GoalV2({
       id: 0,
@@ -56,4 +78,6 @@ export class GoalV2 {
       objectives: [],
     });
   }
+
+  
 }

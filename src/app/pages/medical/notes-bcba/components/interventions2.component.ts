@@ -28,6 +28,7 @@ import { Interventions2 } from '../interfaces';
                     [id]="intervention.id + '-assessed'"
                     class="check"
                     [(ngModel)]="intervention.value"
+                    disabled
                     [name]="intervention.id + '-assessed'"
                     (ngModelChange)="updatedInterventions2()"
                   />

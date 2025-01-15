@@ -21,7 +21,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
             </thead>
             <tbody>
             <tr *ngFor="let replace of replacementsview; let i = index">
-              <td>{{ replace.goal }}</td>
+              <td>{{ replace.name }}</td>
               <td>
               <i *ngIf="replace.assessed === true"   class="fa fa-check"  ></i>
                 <i *ngIf="replace.assessed === false "  class="fa fa-times" ></i>

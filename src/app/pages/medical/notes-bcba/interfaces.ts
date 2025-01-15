@@ -80,13 +80,13 @@ export interface Interventions2 {
   value2: boolean;
 }
 export interface ReplacementL {
-  id: string;
-  goal: string;
+  id: number;
+  name: string;
   value: boolean;
 }
 export interface ReplacementL2 {
-  id: string;
-  goal: string;
+  id: number;
+  name: string;
   value: boolean;
   value2: boolean;
 }
@@ -105,9 +105,8 @@ export interface show97151L {
 }
 
 export interface Maladaptives {
-  id: string;
-  index: number;
-  maladaptive_behavior: string;
+  id: number;
+  name: string;
   value: boolean;
 }
 

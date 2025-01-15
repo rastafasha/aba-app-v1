@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { BipService } from '../../bip/service/bip.service';
-import { GoalService } from '../../bip/service/goal.service';
-import { PatientMService } from '../../patient-m/service/patient-m.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import Swal from 'sweetalert2';
 import { NoteBcbaService } from '../../../../core/services/notes-bcba.service';
@@ -12,6 +10,7 @@ import { Location } from '@angular/common';
 import { AppUser } from 'src/app/core/models/users.model';
 import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 import { interventionsList, interventionsList2, newList, outcomeList, show97151List } from '../listasSelectData';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
 
 
@@ -46,8 +45,6 @@ export class NoteBcbaEditComponent implements OnInit {
   totalMinutos = 0;
   total_hour_session = '';
   participants = '';
-
-
 
   selectedValueRBT!: string;
   selectedValueRenderingProvider!: string;
@@ -205,8 +202,6 @@ export class NoteBcbaEditComponent implements OnInit {
 
   fromParam: string | null = null;
 
-  
-
   additional_goals_or_interventions = '';
   asked_and_clarified_questions_about_the_implementation_of = '';
   reinforced_caregiver_strengths_in = '';
@@ -236,8 +231,8 @@ export class NoteBcbaEditComponent implements OnInit {
     private ativatedRoute: ActivatedRoute,
     private noteBcbaService: NoteBcbaService,
     private doctorService: DoctorService,
-    private insuranceService: InsuranceService,
-    private locations: Location
+    private locations: Location,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -250,10 +245,8 @@ export class NoteBcbaEditComponent implements OnInit {
     });
 
     this.getConfig();
-    this.getNote();
-
-    const USER = localStorage.getItem('user');
-    this.user = JSON.parse(USER ? USER : '');
+    this.getNote(); 
+    this.user = this.authService.user as AppUser;
     this.doctor_id = this.user.id;
   }
 
@@ -272,9 +265,12 @@ export class NoteBcbaEditComponent implements OnInit {
     });
   }
 
+
+  
+
   getNote() {
     this.noteBcbaService.getNote(this.note_id).subscribe((resp) => {
-      // console.log('respuesta de getNote', resp);
+      console.log('respuesta de getNote', resp);
       this.note_selected = resp.noteBcba;
       this.note_selectedId = resp.noteBcba.id;
       this.patient_identifier = this.note_selected.patient_identifier;
@@ -386,6 +382,7 @@ export class NoteBcbaEditComponent implements OnInit {
       );
       
       this.behaviorList = this.note_selected.behaviors;
+
     });
   }
 
@@ -538,6 +535,7 @@ export class NoteBcbaEditComponent implements OnInit {
     return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
   }
 
+
   getProfileBip(noteServiceId?: number) {
     console.log('Getting profile BIP:', {
       noteServiceId,
@@ -556,8 +554,6 @@ export class NoteBcbaEditComponent implements OnInit {
         this.patientLocation_id = this.client_selected.location_id;
         this.insurance_identifier = resp.patient.insurance_identifier;
         this.insurance_id = resp.patient.insurer_id;
-        // this.insuranceData();
-        
         this.pos = this.client_selected.pos_covered;
 
         this.getReplacementsByPatientId();
@@ -590,17 +586,9 @@ export class NoteBcbaEditComponent implements OnInit {
   }
 
   private setPaService(noteServiceId: number) {
-    // console.log('Setting PA Service:', {
-    //   noteServiceId,
-    //   availableServices: this.pa_services,
-    // });
-
     if (this.pa_services?.length && noteServiceId) {
       this.selectedPaService =
         this.pa_services.find((service) => service.id === noteServiceId) || null;
-
-      console.log('Selected PA Service:', this.selectedPaService);
-
       if (this.selectedPaService) {
         this.selectedValueCode = this.selectedPaService.cpt;
       }
@@ -611,7 +599,6 @@ export class NoteBcbaEditComponent implements OnInit {
     this.noteBcbaService
       .showReplacementbyPatient(this.patient_identifier)
       .subscribe((resp) => {
-        console.log(resp);
         this.familiEnvolments = resp.familiEnvolments;
         this.caregivers_training_goals =
           resp.familiEnvolments.data?.[0]?.caregivers_training_goals ?? [];
@@ -622,14 +609,6 @@ export class NoteBcbaEditComponent implements OnInit {
           [];
 
       });
-  }
-
-  insuranceData() {
-    this.insuranceService.get(this.insurance_id).subscribe((resp) => {
-      console.log(resp);
-      this.insurer_name = resp.insurer_name;
-      this.services = resp.services;
-    });
   }
 
   specialistData(selectedValueInsurer) {
@@ -860,15 +839,6 @@ convertToHours(totalMinutes: number): string {
 
   save() {
     this.text_validation = '';
-    // if(!this.name||!this.email ||!this.surname ){
-    //   this.text_validation = 'Los campos con * son obligatorios';
-    //   return;
-    // }
-
-    // if(this.password !== this.password_confirmation  ){
-    //   this.text_validation = 'Las contraseña debe ser igual';
-    //   return;
-    // }
 
     const formData = new FormData();
     formData.append('patient_id', this.patient_id+'');

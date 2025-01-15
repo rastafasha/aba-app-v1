@@ -18,6 +18,9 @@ import {
 import {
   ValidationResult
 } from '../interfaces';
+import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
+import { PatientMService } from '../../patient-m/service/patient-m.service';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
 @Component({
   selector: 'app-note-bcba',
@@ -62,7 +65,7 @@ throw new Error('Method not implemented.');
   selectedValueProviderRBT_id:number
   selectedValueBcba_id:number
 
-  client_id: string | number;
+  client_id: number;
   patient_id: number;
   patient_identifier: string ;
   doctor_id: string | number;
@@ -173,7 +176,7 @@ throw new Error('Method not implemented.');
   pa_assessmentsgroup = [];
   
   familiEnvolments = [];
-  monitoringEvaluatingPatientIds = [];
+  monitoringEvaluating = [];
   caregivers_training_goals = [];
   rbt_training_goals = [];
 
@@ -223,12 +226,15 @@ throw new Error('Method not implemented.');
 
   constructor(
     private bipService: BipService,
+    private bipV2Service: BipsV2Service,
+    private patientService: PatientMService,
     private router: Router,
     private ativatedRoute: ActivatedRoute,
     private noteBcbaService: NoteBcbaService,
     private doctorService: DoctorService,
     private insuranceService: InsuranceService,
-    private locations: Location
+    private locations: Location,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -237,16 +243,15 @@ throw new Error('Method not implemented.');
       this.patient_identifier = resp['patient_id'];
     });
     this.getConfig();
-    this.getProfileBip();
     this.start_date = new Date(); // Por ejemplo, fecha actual
     this.end_date = new Date(); // Por ejemplo, fecha actual
 
-    const USER = localStorage.getItem('user');
-    this.user = JSON.parse(USER ? USER : '');
+    this.user = this.authService.user as AppUser;
     this.roles = this.user.roles;
     this.doctor_id = this.user.id;
     this.getDoctor();
     this.specialistData();
+    this.getPatient();
   }
 
   goBack() {
@@ -272,43 +277,36 @@ throw new Error('Method not implemented.');
       this.FILE_SIGNATURE_BCBA = resp.roles_bcba.electronic_signature;
     });
   }
-
-  getProfileBip() {
-    this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
+  getPatient(){
+    this.patientService.getPatientByPatientId(this.patient_identifier).subscribe((resp)=>{
+      console.log('patient',resp);
       this.client_selected = resp.patient;
-      console.log('cliente',resp);
-
+      this.patient_id = resp.patient.id;
       this.first_name = this.client_selected.first_name;
       this.last_name = this.client_selected.last_name;
       this.patientLocation_id = this.client_selected.location_id;
       this.pos = this.client_selected.pos_covered;
-
-      this.patient_id = this.client_selected.id;
       this.patient_identifier = this.client_selected.patient_identifier;
       this.patientLocation_id = this.client_selected.location_id;
-      this.insurance_id = resp.patient.insurer_id;
-      this.insurance_identifier = resp.patient.insurance_identifier;
-      
-
+      this.insurance_id = this.client_selected.insurer_id;
+      this.insurance_identifier = this.client_selected.insurance_identifier;
       this.birth_date = this.client_selected.birth_date
         ? new Date(this.client_selected.birth_date).toISOString()
         : '';
-      this.diagnosis_code = this.client_selected.diagnosis_code;
-      this.insurer_id = this.client_selected.insurer_id;
+
+        this.diagnosis_code = this.client_selected.diagnosis_code;
+        this.insurer_id = this.client_selected.insurer_id;
 
       this.selectedValueAba = resp.patient.clin_director_id;
       this.selectedValueRendering = resp.patient.bcba_id;
       this.selectedValueBCBA = resp.patient.clin_director_id;
       this.selectedValueRBT = resp.patient.bcba_id;
 
-      this.getReplacementsByPatientId();
-      this.getMaladaptivesBipByPatientId();
-      // this.insuranceData();
-      
       this.pa_services = resp.patient.pa_services;
       this.start_date = resp.patient.start_date;
       this.end_date = resp.patient.end_date;
-      
+
+
       //filtramos lo pa_services usando star_date y end_date comparado con el dia de hoy
       this.pa_services = this.pa_services.filter((pa) => {
         const dateStart = new Date(pa.start_date).getTime();
@@ -317,38 +315,27 @@ throw new Error('Method not implemented.');
         return dateStart <= dateToday && dateEnd >= dateToday;
       });
       //devolvemos la respuesta da los pa_services disponibles
+      this.getBipV2();
+    })
+  }
+
+  getBipV2(){
+    this.bipV2Service.get(this.patient_id).subscribe((resp)=>{
+      console.log('BIP',resp);
+      this.bip_id = resp.data.id;
+      this.familiEnvolments = resp.data.family_envolments;
+      // this.caregivers_training_goals =
+      // resp.data.family_envolments?.[0]?.caregivers_training_goals ?? [];
       
-      this.behaviorList = resp.bip.maladaptives;
-      this.replacementList = resp.replacements;
-      // this.interventionsList = resp.interventions;
-      // this.interventionsList2 = resp.interventions2;
+      // this.caregivers_training_goals = JSON.parse(this.caregivers_training_goals);
+      
+      this.monitoringEvaluating =resp.data.monitoring_evalutatings;
 
-        
-    });
+      this.behaviorList = resp.data.maladaptives;
+      this.replacementList = resp.data.replacements;
+    })
   }
 
-  insuranceData() {
-    this.insuranceService.get(this.insurer_id).subscribe((resp) => {
-      this.insurer_name = resp.insurer_name;
-      this.services = resp.services;
-    });
-  }
-
-  getReplacementsByPatientId() {
-    this.noteBcbaService
-      .showReplacementbyPatient(this.patient_identifier)
-      .subscribe((resp) => {
-        console.log(resp, 'resp in getReplacementsByPatientId');
-        this.familiEnvolments = resp.familiEnvolments;
-        this.caregivers_training_goals =
-          resp.familiEnvolments.data?.[0]?.caregivers_training_goals ?? [];
-        this.monitoringEvaluatingPatientIds =
-          resp.monitoringEvaluatingPatientIds;
-        this.rbt_training_goals =
-          resp.monitoringEvaluatingPatientIds.data?.[0]?.rbt_training_goals ??
-          [];
-      });
-  }
 
   specialistData() {
     this.doctorService.showDoctorProfile(this.doctor_id).subscribe((resp) => {
@@ -362,15 +349,6 @@ throw new Error('Method not implemented.');
     });
   }
   
-
-  getMaladaptivesBipByPatientId() {
-    this.bipService
-      .getBipProfilePatient_id(this.patient_identifier)
-      .subscribe((resp) => {
-        this.bip_id = resp.id;
-      });
-  }
-
   selectSpecialistab(event) {
     this.selectedValueAba = event.value;
     this.specialistDataSupervisor(this.selectedValueAba);
@@ -602,7 +580,7 @@ convertToHours(totalMinutes: number): string {
     formData.append('meet_with_client_at', this.meet_with_client_at);
 
     formData.append('provider_name', this.doctor_id + '');
-    formData.append('supervisor_name', this.selectedValueBCBA);
+    formData.append('supervisor_name', this.selectedValueBcba_id+'');
 
     formData.append('insurance_id', this.insurance_id+''); // id del seguro preferiblemente que solo agarre la data al crear
     formData.append('insurance_identifier', this.insurance_identifier); // id del seguro preferiblemente que solo agarre la data al crear

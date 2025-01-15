@@ -17,7 +17,7 @@ import {  ReplacementL2 } from '../interfaces';
           </thead>
           <tbody>
             <tr *ngFor="let replacement of replacementList; let i = index">
-              <td>{{ replacement.goal }}</td>
+              <td>{{ replacement.name }}</td>
               <td>
                 <div
                   class="status-toggle d-flex justify-content-between align-items-center"
@@ -45,7 +45,7 @@ import {  ReplacementL2 } from '../interfaces';
                     [id]="replacement.id + '-modified'"
                     class="check"
                     [(ngModel)]="replacement.value2"
-                    [name]="replacement.goal + '-modified'"
+                    [name]="replacement.name + '-modified'"
                     (ngModelChange)="updateReplacements()"
                   />
                   <label
@@ -72,7 +72,7 @@ export class Replacements2Component {
     const replacementsObj = this.replacementList
       .filter((replacement) => replacement.value || replacement.value2)
       .reduce((acc, replacement) => {
-        acc[replacement.id] = {modified:!!replacement.value2, assessed:!!replacement.value, goal:replacement.goal};
+        acc[replacement.id] = {modified:!!replacement.value2, assessed:!!replacement.value, goal:replacement.name};
         return acc;
       }, {});
       console.log(replacementsObj);

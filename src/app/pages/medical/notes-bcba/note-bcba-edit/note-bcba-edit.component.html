@@ -677,10 +677,11 @@
         <div class="col-xs-12">
           <div class="card">
             <div class="card-body">
-              <app-interventions2
-                [interventionsList]="interventionsList"
-                (interventionsChange)="onInterventionsChange($event)"
-              ></app-interventions2>
+              
+              <app-interventions3
+                [interventionsList2]="interventionsList2"
+                (update)="onInterventions2Change($event)"
+              ></app-interventions3>
             </div>
           </div>
         </div>
@@ -689,10 +690,11 @@
         <div class="col-xs-12">
           <div class="card">
             <div class="card-body">
-              <app-replacements
+              
+              <app-replacements2
                 [replacementList]="replacementList"
                 (replacementChange)="onReplacementChange($event)"
-              ></app-replacements>
+              ></app-replacements2>
             </div>
           </div>
         </div>
@@ -763,10 +765,10 @@
         <div class="col-xs-12">
           <div class="card">
             <div class="card-body">
-              <app-interventions3
-                [interventionsList2]="interventionsList2"
-                (update)="onInterventions2Change($event)"
-              ></app-interventions3>
+              <app-interventions2
+                [interventionsList]="interventionsList"
+                (interventionsChange)="onInterventionsChange($event)"
+              ></app-interventions2>
             </div>
           </div>
         </div>
@@ -775,10 +777,10 @@
         <div class="col-xs-12">
           <div class="card">
             <div class="card-body">
-              <app-replacements2
+              <app-replacements
                 [replacementList]="replacementList"
                 (replacementChange)="onReplacementChange($event)"
-              ></app-replacements2>
+              ></app-replacements>
             </div>
           </div>
         </div>

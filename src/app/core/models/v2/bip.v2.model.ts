@@ -368,8 +368,10 @@ export class BipV2 {
   reduction_goal: GoalV2[];
   sustitution_goal: Sustitution[];
   family_envolment: GoalV2[];
+  family_envolments: GoalV2[];
   rbt_training_goals: GoalV2[];
   monitoring_evalutating: MonitoringEvaluating[];
+  monitoring_evalutatings: MonitoringEvaluating[];
   generalization_training: GeneralizationTraining[];
   crisis_plan: CrisisPlan[];
   de_escalation_technique: DeEscalationTechnique[];
@@ -406,6 +408,7 @@ export class BipV2 {
       ),
       education_status: StringOrNullOrUndefined(data.education_status),
       family_envolment: ForceMap(data.family_envolment, GoalV2),
+      family_envolments: ForceMap(data.family_envolments, GoalV2),
       goal_ltos: StringOrNullOrUndefined(data.goal_ltos),
       goal_stos: StringOrNullOrUndefined(data.goal_stos),
       hypothesis_based_intervention: StringOrNullOrUndefined(
@@ -414,6 +417,10 @@ export class BipV2 {
       interventions: ForceMap(data.interventions, Intervention),
       monitoring_evalutating: ForceMap(
         data.monitoring_evalutating,
+        MonitoringEvaluating
+      ),
+      monitoring_evalutatings: ForceMap(
+        data.monitoring_evalutatings,
         MonitoringEvaluating
       ),
       phisical_and_medical: ForceMap(data.phisical_and_medical, Medication),
