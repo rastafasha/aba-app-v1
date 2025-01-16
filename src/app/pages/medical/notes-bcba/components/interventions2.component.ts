@@ -17,23 +17,23 @@ import { Interventions2 } from '../interfaces';
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let intervention of interventionsList2; let i = index">
-              <td>{{ intervention.name }}</td>
+            <tr *ngFor="let intervent of interventionsList2; let i = index">
+              <td>{{ intervent.name }}</td>
               <td>
                 <div
                   class="status-toggle d-flex justify-content-between align-items-center"
                 >
                   <input
                     type="checkbox"
-                    [id]="intervention.id + '-assessed'"
+                    [id]="intervent.id + '-assessed'"
                     class="check"
-                    [(ngModel)]="intervention.value"
+                    [(ngModel)]="intervent.value"
                     disabled
-                    [name]="intervention.id + '-assessed'"
+                    [name]="intervent.id + '-assessed'"
                     (ngModelChange)="updatedInterventions2()"
                   />
                   <label
-                    [for]="intervention.id + '-assessed'"
+                    [for]="intervent.id + '-assessed'"
                     class="checktoggle"
                     >checkbox</label
                   >
@@ -45,14 +45,14 @@ import { Interventions2 } from '../interfaces';
                 >
                   <input
                     type="checkbox"
-                    [id]="intervention.id + '-modified'"
+                    [id]="intervent.id + '-modified'"
                     class="check"
-                    [(ngModel)]="intervention.value2"
-                    [name]="intervention.id + '-modified'"
+                    [(ngModel)]="intervent.value2"
+                    [name]="intervent.id + '-modified'"
                     (ngModelChange)="updatedInterventions2()"
                   />
                   <label
-                    [for]="intervention.id + '-modified'"
+                    [for]="intervent.id + '-modified'"
                     class="checktoggle"
                     
                     >checkbox</label
@@ -73,9 +73,10 @@ export class Interventions2Component {
 
   updatedInterventions2() {
     const result = this.interventionsList2
-      .filter((intervention) => intervention.value)
-      .reduce((acc, intervention) => {
-        acc[intervention.id] = { assessed:!!intervention.value, modified:!!intervention.value2,};
+      .filter((intervent) => intervent.value || intervent.value2)
+      .reduce((acc, intervent) => {
+        acc[intervent.id] = { assessed:!!intervent.value, modified:!!intervent.value2,};
+        
         return acc;
       }, {});
       console.log(result);

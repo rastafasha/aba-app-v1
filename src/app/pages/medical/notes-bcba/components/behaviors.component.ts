@@ -15,21 +15,22 @@ import { Maladaptives } from '../interfaces';
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let behavior of behaviorList">
-              <td>{{ behavior.name }}</td>
+            <tr *ngFor="let behav of behaviorList; let i = index">
+              <td>{{ behav.name }}</td>
               <td>
               <div
                 class="status-toggle d-flex justify-content-between align-items-center"
               >
                 <input
                   type="checkbox"
-                  [id]="'check-' + behavior.name"
+                  [id]=" behav.id + '-discussed'"
                   class="check"
-                  [(ngModel)]="behavior.value"
-                  [name]="'check-' + behavior.name"
+                  [(ngModel)]="behav.value"
+                  [name]="behav.name + '-discussed'"
                   (ngModelChange)="updateBehaviors()"
                 />
-                <label [for]="'check-' + behavior.name" class="checktoggle"
+                <label [for]="behav.id +'-discussed'"
+                 class="checktoggle"
                   >checkbox</label>
               </div>
               </td>
@@ -41,19 +42,20 @@ import { Maladaptives } from '../interfaces';
   `,
 })
 export class BehaviorsComponent {
-  
-
-  
   @Input() behaviorList: Maladaptives[];
   @Output() behaviorsChange = new EventEmitter<object>();
 
   updateBehaviors() {
     const result = this.behaviorList
-      .filter((behavior) => behavior.value)
-      .reduce((acc, behavior) => {
-        acc[behavior.id] = { discused: !!behavior.value, maladaptive_behavior: behavior.name };
+      .filter((behav) => behav.value)
+      .reduce((acc, behav) => {
+        acc = {
+          id:behav.id, 
+          discused: !!behav.value, 
+          name: behav.name 
+        };
         return acc;
-      }, {}); // Valor inicial para el acumulador
+      }, {}); 
     console.log(result);
     this.behaviorsChange.emit(result);
   }

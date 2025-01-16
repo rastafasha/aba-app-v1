@@ -221,21 +221,21 @@ export class NoteRbtViewComponent implements OnInit {
       //TODO Remove
       this.intervention = this.interventionsgroup[0];
 
-      this.maladaptive = resp.maladaptives;
-      const jsonObj1 =
-        typeof this.maladaptive === 'string'
-          ? JSON.parse(this.maladaptive)
-          : this.maladaptive;
-      this.maladaptivegroup = jsonObj1;
+      this.maladaptives = resp.maladaptives;
+      // const jsonObj1 =
+      //   typeof this.maladaptive === 'string'
+      //     ? JSON.parse(this.maladaptive)
+      //     : this.maladaptive;
+      // this.maladaptivegroup = jsonObj1;
       // console.log(this.maladaptivegroup);
 
 
-      this.replacement = this.note_selected.replacements;
-      const jsonObj2 =
-        typeof this.replacement === 'string'
-          ? JSON.parse(this.replacement)
-          : this.replacement;
-      this.replacementgroup = jsonObj2;
+      this.replacements = this.note_selected.replacements;
+      // const jsonObj2 =
+      //   typeof this.replacement === 'string'
+      //     ? JSON.parse(this.replacement)
+      //     : this.replacement;
+      // this.replacementgroup = jsonObj2;
       // console.log(this.replacementgroup);
 
 

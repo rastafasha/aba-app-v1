@@ -16,21 +16,21 @@ import {  ReplacementL2 } from '../interfaces';
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let replacement of replacementList; let i = index">
-              <td>{{ replacement.name }}</td>
+            <tr *ngFor="let replac of replacementList; let i = index">
+              <td>{{ replac.name }}</td>
               <td>
                 <div
                   class="status-toggle d-flex justify-content-between align-items-center"
                 >
                   <input
                     type="checkbox"
-                    [id]="replacement.id + '-assessed'"
+                    [id]="replac.id + '-assessed'"
                     class="check"
-                    [(ngModel)]="replacement.value"
-                    [name]="replacement.id + '-assessed'"
+                    [(ngModel)]="replac.value"
+                    [name]="replac.id + '-assessed'"
                     (ngModelChange)="updateReplacements()"
                   />
-                  <label [for]="replacement.id + '-assessed'" class="checktoggle"
+                  <label [for]="replac.id + '-assessed'" class="checktoggle"
                   
                     >checkbox</label
                   >
@@ -42,14 +42,14 @@ import {  ReplacementL2 } from '../interfaces';
                 >
                   <input
                     type="checkbox"
-                    [id]="replacement.id + '-modified'"
+                    [id]="replac.id + '-modified'"
                     class="check"
-                    [(ngModel)]="replacement.value2"
-                    [name]="replacement.name + '-modified'"
+                    [(ngModel)]="replac.value2"
+                    [name]="replac.name + '-modified'"
                     (ngModelChange)="updateReplacements()"
                   />
                   <label
-                    [for]="replacement.id + '-modified'"
+                    [for]="replac.id + '-modified'"
                     class="checktoggle"
                     >checkbox</label
                   >
@@ -70,9 +70,13 @@ export class Replacements2Component {
 
   updateReplacements() {
     const replacementsObj = this.replacementList
-      .filter((replacement) => replacement.value || replacement.value2)
-      .reduce((acc, replacement) => {
-        acc[replacement.id] = {modified:!!replacement.value2, assessed:!!replacement.value, goal:replacement.name};
+      .filter((replac) => replac.value || replac.value2)
+      .reduce((acc, replac) => {
+        acc[replac.id] = {
+          id: replac.id, 
+          modified:!!replac.value2, 
+          assessed:!!replac.value, 
+          name:replac.name};
         return acc;
       }, {});
       console.log(replacementsObj);

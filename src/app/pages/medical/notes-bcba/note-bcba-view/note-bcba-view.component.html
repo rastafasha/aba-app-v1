@@ -233,7 +233,7 @@
               </div>
               <!-- all -->
               <div class="row" *ngIf="!show97155 && !show97156 && !show971511 && !show971512">
-                <div class="col-xs-12 col-sm-6">
+                <div class="col-xs-12">
                   <div class="card">
                     <div class="card-header">
                       <h4 class="card-title">Caregiver Goal</h4>
@@ -263,7 +263,7 @@
                                     let i = index
                                   ">
                                   <td>
-                                    <p>{{ behavior.caregiver_goal }}</p>
+                                    <p>{{ behavior.name }}</p>
                                   </td>
                                   <td>
                                     <p>
@@ -279,54 +279,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-xs-12 col-sm-6">
-                  <div class="card">
-                    <div class="card-header">
-                      <h4 class="card-title">RBT Training goals</h4>
-                    </div>
-                    <div class="card-body p-0">
-                      <div class="personal-list-out">
-                        <div class="container">
-                          <div class="row">
-                            <table class="table mb-0">
-                              <thead>
-                                <tr>
-                                  <th>
-                                    <h2 style="font-size: 12px; font-weight: 500">
-                                      Caregiver Goal
-                                    </h2>
-                                  </th>
-                                  <th>
-                                    <h2 style="font-size: 12px; font-weight: 500">
-                                      % of correct responses
-                                    </h2>
-                                  </th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr *ngFor="
-                                    let replacemen of rbt_training_goals;
-                                    let i = index
-                                  ">
-                                  <td>
-                                    <p>{{ replacemen.lto }}</p>
-                                  </td>
-                                  <td>
-                                    <p>
-                                      {{
-                                      replacemen.porcent_of_correct_response
-                                      }}
-                                    </p>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+               
               </div>
               <!-- all -->
 
@@ -422,7 +375,7 @@
                   </div>
                   <!-- replacement protocols -->
                   <div class="card">
-                    <app-replacements2-view [replacementsview]="replacementsview"></app-replacements2-view>
+                    <app-replacements2-view [replacements2]="replacements2"></app-replacements2-view>
                     
                 </div>
                 <!-- replacement protocols -->
@@ -484,12 +437,12 @@
                   </div>
                   <!-- replacement protocols -->
                   <div class="card">
-                    <app-replacements-view [replacementsview1]="replacementsview1"></app-replacements-view>
+                    <app-replacements-view [replacements2]="replacements2"></app-replacements-view>
                   </div>
                   <!-- replacement protocols -->
                   <!-- behaviors -->
                   <div class="card">
-                    <app-behaviorslist-view [behaviorsview]="behaviorsview"></app-behaviorslist-view>
+                    <app-behaviorslist-view [behaviors]="behaviors"></app-behaviorslist-view>
                   </div>
                   <!-- behaviors -->
 

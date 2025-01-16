@@ -19,7 +19,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let replaceme of replacementsview1; let i = index">
+            <tr *ngFor="let replaceme of replacements2; let i = index">
               <td>{{ replaceme.name }}</td>
               <td>
               <i *ngIf="replaceme.name?.demostrated === true"   class="fa fa-check"  ></i>
@@ -35,11 +35,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   `,
 })
 export class ReplacementViewComponent {
-  @Input() replacementsview1;
+  @Input() replacements2;
   
 
   updatereplacements() {
-    const replacementsObj = this.replacementsview1
+    const replacementsObj = this.replacements2
       .filter((replacements) => replacements.value)
       .reduce((acc, replacements) => {
         acc[replacements.id] = true;

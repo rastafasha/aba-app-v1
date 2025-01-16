@@ -80,12 +80,12 @@ export interface Interventions2 {
   value2: boolean;
 }
 export interface ReplacementL {
-  id: number;
+  id: string;
   name: string;
   value: boolean;
 }
 export interface ReplacementL2 {
-  id: number;
+  id: string;
   name: string;
   value: boolean;
   value2: boolean;

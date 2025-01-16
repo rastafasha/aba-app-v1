@@ -17,8 +17,8 @@ import { Intervention } from '../interfaces';
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let intervention of interventionsList; let i = index">
-          <td>{{ intervention.name }}</td>
+        <tr *ngFor="let interv of interventionsList; let i = index">
+          <td>{{ interv.name }}</td>
           <td>
            
             <div
@@ -26,16 +26,14 @@ import { Intervention } from '../interfaces';
             >
               <input
                 type="checkbox"
-                [id]="intervention.id"
+                [id]="interv.id"
                 class="check"
-                [(ngModel)]="intervention.value"
-                [name]="intervention.id"
+                [(ngModel)]="interv.value"
+                [name]="interv.id"
                 (ngModelChange)="updatedInterventions()"
               />
-              <label [for]="intervention.id" class="checktoggle"
-              
-                >checkbox</label
-              >
+              <label [for]="interv.id" class="checktoggle"
+                >checkbox</label>
             </div>
           </td>
         </tr>
@@ -51,9 +49,9 @@ export class InterventionsComponent {
 
   updatedInterventions() {
     const interventionsObj = this.interventionsList
-      .filter((intervention) => intervention.value)
-      .reduce((acc, intervention) => {
-        acc[intervention.id] = {demostrated:!!intervention.value};
+      .filter((interv) => interv.value)
+      .reduce((acc, interv) => {
+        acc[interv.id] = {demostrated:!!interv.value};
         return acc;
       }, {});
       console.log(interventionsObj);

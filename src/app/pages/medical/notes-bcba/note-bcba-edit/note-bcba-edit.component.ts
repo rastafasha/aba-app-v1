@@ -1,23 +1,36 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/core/auth/auth.service';
+import { PaServiceV2 } from 'src/app/core/models';
+import { AppUser } from 'src/app/core/models/users.model';
+import { PatientsV2Service } from 'src/app/core/services';
+import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
+import { PaServicesV2Service } from 'src/app/core/services/pa-services.v2.service';
+import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 import { AppRoutes } from 'src/app/shared/routes/routes';
-import { BipService } from '../../bip/service/bip.service';
-import { DoctorService } from '../../doctors/service/doctor.service';
 import Swal from 'sweetalert2';
 import { NoteBcbaService } from '../../../../core/services/notes-bcba.service';
-import { InsuranceService } from '../../../../core/services/insurances.service';
-import { Location } from '@angular/common';
-import { AppUser } from 'src/app/core/models/users.model';
-import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
+import { BipService } from '../../bip/service/bip.service';
+import { DoctorService } from '../../doctors/service/doctor.service';
 import { interventionsList, interventionsList2, newList, outcomeList, show97151List } from '../listasSelectData';
-import { AuthService } from 'src/app/core/auth/auth.service';
-import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
-import { PatientMService } from '../../patient-m/service/patient-m.service';
-import { PatientsV2Service } from 'src/app/core/services';
-import { PaServicesV2Service } from 'src/app/core/services/pa-services.v2.service';
-import { PaServiceV2 } from 'src/app/core/models';
 
-
+interface Behavior {
+  index: number;
+  discused: boolean;
+  maladaptive_behavior: string;
+}
+interface Replacement {
+  index: number;
+  goal:string;
+  assessed:boolean;
+  modified:boolean;
+}
+interface Replacement1 {
+  index: number;
+  goal:string;
+  demostrated:boolean;
+}
 
 @Component({
   selector: 'app-note-bcba-edit',
@@ -154,6 +167,8 @@ export class NoteBcbaEditComponent implements OnInit {
   maladaptives = [];
   replacementGoals = [];
   replacements = [];
+  behaviors = [];
+  behaviorsview = [];
   interventionsgroup = [];
   interventionsgroup2 = [];
 
@@ -179,7 +194,7 @@ export class NoteBcbaEditComponent implements OnInit {
   caregivers_training_goals = [];
   rbt_training_goals = [];
   rbt_training_goalsgroup: any;
-  caregivers_training_goalsgroup: any;
+  caregivers_training_goalsgroup: any[];
   pa_assessmentsgroup = [];
   pa_assessments: string;
   n_un = [];
@@ -226,11 +241,13 @@ export class NoteBcbaEditComponent implements OnInit {
     newList = newList;
     outcomeList = outcomeList;
     show97151List = show97151List;
-    behaviorList :any[];
+    behaviorList = this.behaviors;
     replacementList = this.replacements;
     replacementList2 = this.replacements;
 
     noteServiceId:number;
+
+    
 
   constructor(
     private bipService: BipService,
@@ -287,7 +304,9 @@ export class NoteBcbaEditComponent implements OnInit {
       this.patient_id = this.note_selected.patient_id;
       this.bip_id = this.note_selected.bip_id;
       this.location = this.note_selected.location;
-
+      
+      this.selectedPaService1 = this.note_selected.type;
+      
       this.summary_note = resp.noteBcba.summary_note || '';
 
       this.provider_credential = this.note_selected.provider_credential;
@@ -299,6 +318,7 @@ export class NoteBcbaEditComponent implements OnInit {
       this.note_description = this.note_selected.note_description;
       this.client_response_to_treatment_this_session =
         this.note_selected.client_response_to_treatment_this_session;
+      
       this.pos = this.note_selected.pos;
 
       this.environmental_changes = this.note_selected.environmental_changes;
@@ -316,15 +336,6 @@ export class NoteBcbaEditComponent implements OnInit {
       this.modifications_needed_at_this_time = this.note_selected.modifications_needed_at_this_time;
       this.cargiver_participation = this.note_selected.cargiver_participation;
       this.was_the_client_present = this.note_selected.was_the_client_present;
-
-      this.caregivers_training_goalsgroup = resp.caregiver_goals;
-      const jsonObj = JSON.parse(this.caregivers_training_goalsgroup) || '';
-      this.caregivers_training_goals = jsonObj;
-
-      this.rbt_training_goalsgroup = resp.rbt_training_goals;
-      const jsonObj1 = JSON.parse(this.rbt_training_goalsgroup) || '';
-      this.rbt_training_goals = jsonObj1;
-
       this.selectedValueRBT = resp.noteBcba.provider.name;
       this.selectedValueProviderRBT_id =resp.noteBcba.provider_id;
 
@@ -358,8 +369,6 @@ export class NoteBcbaEditComponent implements OnInit {
       this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED =
         this.note_selected.supervisor_signature;
 
-      // this.getProfileBip(noteServiceId);
-
       if(this.note_selected.cpt_code === '97155' ){
         this.show97155 = true;
       }
@@ -379,8 +388,15 @@ export class NoteBcbaEditComponent implements OnInit {
         this.show97151 = true;
       }
 
-      this.replacementList = this.note_selected.replacements;
-      this.replacementList2 = this.note_selected.replacements2;
+      // this.caregivers_training_goals = this.note_selected.caregiver_goals;
+
+      // this.caregivers_training_goalsgroup = resp.caregiver_goals;
+      // const jsonObj = JSON.parse(this.caregivers_training_goalsgroup) || '';
+      // this.caregivers_training_goals = jsonObj;
+      // console.log(this.caregivers_training_goalsgroup);
+
+      // this.replacementList = this.note_selected.replacements;
+      // this.replacementList2 = this.note_selected.replacements2;
 
       this.interventions = this.note_selected.interventions;
       this.interventionsList = this.convertToInterventions(
@@ -392,9 +408,73 @@ export class NoteBcbaEditComponent implements OnInit {
         this.interventions2
       );
       
-      this.behaviorList = this.note_selected.behaviors;
+      this.outcomeList = this.note_selected?.intake_outcome;
+      // const lista = Object.entries(this.outcomeList).map(
+      //     ([key, value])=>{
+      //       return{
+      //         id: key,
+      //         name: key,
+      //         value: value['option']
+      //       }
+      //     }
+      // );
+      //   console.log(lista);
+      //   console.log(this.outcomeList );
 
+      // this.newList = this.note_selected.newlist_added[0];
       this.getPatient();
+
+
+      this.bipV2Service.get(this.bip_id).subscribe((resp)=>{
+        console.log('BIP',resp);
+        this.bip_id = resp.data.id;
+        this.caregivers_training_goals = resp.data.caregiver_trainings;
+        this.behaviorList = resp.data.maladaptives;
+        this.replacementList = resp.data.replacements;
+        this.replacementList2 = resp.data.replacements;
+        
+        this.note_selected.behaviors = this.note_selected.behaviors || {};
+         // Convierte behaviors en un array de valores
+         const behaviorsArray = Object.values(this.note_selected.behaviors) as Behavior[];
+         //muestro el resultado de la nota 
+        console.log('behaviors:', this.note_selected.behaviors);
+        //filtro los behaviors 
+        const newBehaviors = this.behaviors.map((element) => {
+          // Add null check for element.mal
+          const behavior = behaviorsArray.find(
+            (behavior) => behavior.maladaptive_behavior === element.maladaptive_behavior
+          );
+        
+          if (behavior) {
+            return {
+              index: element.index,
+              maladaptive_behavior: element.maladaptive_behavior,
+              discused: behavior ? behavior.discused : false,
+            };
+          } else {
+            console.warn(`Behavior with index ${element.index} not found.`);
+            return {
+              index: element.index,
+              maladaptive_behavior: '', // Provide a default value
+              discused: undefined,
+            };
+          }
+        });
+        //los uno con el resultado que trae la nota
+        const mergedBehaviors = newBehaviors.map((behavior, index) => {
+          const noteBehavior = this.note_selected.behaviors[behavior.index];
+          return {
+            ...behavior,
+            maladaptive_behavior: behavior.maladaptive_behavior || '', // Provide a default value
+            discused: noteBehavior ? noteBehavior.discused : behavior.discused,
+          };
+        });
+        
+        console.log('Merged Behaviors:', mergedBehaviors);
+        this.behaviorsview = mergedBehaviors;
+        console.log(this.behaviorsview);
+        
+      })
 
     });
   }
@@ -542,76 +622,67 @@ export class NoteBcbaEditComponent implements OnInit {
   }
 
   getPatient(){
-    console.log('patient_id',this.patient_id);
     this.patientService.get(this.patient_id).subscribe((resp)=>{
-      console.log('patient',resp);
       this.client_selected = resp.data;
+      this.first_name = this.client_selected.first_name;
+      this.last_name = this.client_selected.last_name;
+      this.birth_date = this.client_selected.birth_date;
+      this.diagnosis_code = this.client_selected.diagnosis_code;
       this.paServicesService.get( this.noteServiceId, this.patient_id).subscribe((resp)=>{
-        console.log('paServices',resp.data);
-
-        this.selectedPaService = resp.data;
-        
+       this.selectedPaService = resp.data;
         this.selectedValueCode = this.selectedPaService.cpt;
         this.pa_services = [this.selectedPaService];
-
         
       })
-
-
     })
   }
 
+  
+
 
   private formatTime(timeString: string | null): string {
-    console.log('formatting time: ', timeString);
+    // console.log('formatting time: ', timeString);
     if (!timeString) return '';
     const [hours, minutes] = timeString.replace(/ /g, '').split(':');
     return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
   }
 
 
-  getProfileBip(noteServiceId?: number) {
-    console.log('Getting profile BIP:', {
-      noteServiceId,
-      availableServices: this.pa_services,
-    });
-    this.bipV2Service
-      .get(this.bip_id)
-      .subscribe((resp) => {
-        console.log(resp);
-        // this.bip = resp.data[0];
+  // getProfileBip(noteServiceId?: number) {
+  //   console.log('Getting profile BIP:', {
+  //     noteServiceId,
+  //     availableServices: this.pa_services,
+  //   });
+  //   this.bipV2Service
+  //     .get(this.bip_id)
+  //     .subscribe((resp) => {
+  //       console.log(resp);
+  //       // this.bip = resp.data[0];
 
-        // this.first_name = this.client_selected.first_name;
-        // this.last_name = this.client_selected.last_name;
-        // this.patient_id = this.client_selected.id;
-        // this.patient_identifier = this.client_selected.patient_identifier;
-        // this.patientLocation_id = this.client_selected.location_id;
-        // this.insurance_identifier = resp.patient.insurance_identifier;
-        // this.insurance_id = resp.patient.insurer_id;
-        // this.pos = this.client_selected.pos_covered;
+  //       // this.first_name = this.client_selected.first_name;
+  //       // this.last_name = this.client_selected.last_name;
+  //       // this.patient_id = this.client_selected.id;
+  //       // this.patient_identifier = this.client_selected.patient_identifier;
+  //       // this.patientLocation_id = this.client_selected.location_id;
+  //       // this.insurance_identifier = resp.patient.insurance_identifier;
+  //       // this.insurance_id = resp.patient.insurer_id;
+  //       // this.pos = this.client_selected.pos_covered;
 
-        this.getReplacementsByPatientId();
-        this.pa_services = this.client_selected.pa_services;
+  //       this.getReplacementsByPatientId();
+  //       this.pa_services = this.client_selected.pa_services;
 
         
-      //devolvemos la respuesta da los pa_services disponibles
-        // if (noteServiceId) {
-        //   this.setPaService(noteServiceId);
-        // }
-        this.birth_date = this.client_selected.birth_date
-        ? new Date(this.client_selected.birth_date).toISOString()
-        : '';
-      });
-      this.getDataBip();
-  }
+  //     //devolvemos la respuesta da los pa_services disponibles
+  //       // if (noteServiceId) {
+  //       //   this.setPaService(noteServiceId);
+  //       // }
+  //       this.birth_date = this.client_selected.birth_date
+  //       ? new Date(this.client_selected.birth_date).toISOString()
+  //       : '';
+  //     });
+  // }
 
-  getDataBip(){
-    this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
-      this.client_selected = resp.patient;
-      this.behaviorList = resp.bip.maladaptives;
-      this.replacementList = resp.replacements;
-    });
-  }
+  
 
   // private setPaService(noteServiceId: number) {
   //   if (this.pa_services?.length && noteServiceId) {
@@ -813,20 +884,18 @@ convertToHours(totalMinutes: number): string {
     this.interventionsgroup = [
       this.convertToInterventionsGroup(this.interventionsList),
     ];
-    console.log(this.interventionsgroup);
   }
   onInterventions2Change(updatedInterventions2:object) {
     this.interventionsgroup2 = [
       this.convertToInterventionsGroup2(this.interventionsList2),
     ];
-    console.log(this.interventionsgroup2);
   }
 
   onReplacementChange(updatedReplacements) {
     this.replacements_added = updatedReplacements;
   }
   onReplacement2Change(updatedReplacements2) {
-    this.replacements_added = updatedReplacements2;
+    this.replacements2_added = updatedReplacements2;
   }
   
   onIntakeoutcomeChange(updatedIntakeoutcome) {
@@ -880,9 +949,6 @@ convertToHours(totalMinutes: number): string {
     formData.append('location_id', this.patientLocation_id + '');
     formData.append('insurance_id', this.insurance_id+''); // id del seguro preferiblemente que solo agarre la data al crear
     formData.append('insurance_identifier', this.insurance_identifier); // id del seguro preferiblemente que solo agarre la data al crear
-
-
-    
 
     if (this.summary_note) {
       formData.append('summary_note', this.summary_note);

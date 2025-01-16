@@ -15,13 +15,13 @@ import {
   outcomeList, show97151List
 } from '../listasSelectData';
 
+import { AuthService } from 'src/app/core/auth/auth.service';
+import { PaServiceV2 } from 'src/app/core/models';
+import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
+import { PatientMService } from '../../patient-m/service/patient-m.service';
 import {
   ValidationResult
 } from '../interfaces';
-import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
-import { PatientMService } from '../../patient-m/service/patient-m.service';
-import { AuthService } from 'src/app/core/auth/auth.service';
-import { PaServiceV2 } from 'src/app/core/models';
 
 @Component({
   selector: 'app-note-bcba',
@@ -224,16 +224,15 @@ throw new Error('Method not implemented.');
   newList = newList;
   outcomeList = outcomeList;
   show97151List = show97151List;
+  objectives = [];
 
   constructor(
-    private bipService: BipService,
     private bipV2Service: BipsV2Service,
     private patientService: PatientMService,
     private router: Router,
     private ativatedRoute: ActivatedRoute,
     private noteBcbaService: NoteBcbaService,
     private doctorService: DoctorService,
-    private insuranceService: InsuranceService,
     private locations: Location,
     private authService: AuthService,
   ) {}
@@ -324,16 +323,13 @@ throw new Error('Method not implemented.');
     this.bipV2Service.list({client_id: this.patient_id}).subscribe((resp)=>{
       console.log('BIP',resp);
       this.bip_id = resp.data[0].id;
-      // this.familiEnvolments = resp.data.family_envolments;
-      // this.caregivers_training_goals =
-      // resp.data.family_envolments?.[0]?.caregivers_training_goals ?? [];
+      this.caregivers_training_goals = resp.data[0].caregiver_trainings;
       
-      // this.caregivers_training_goals = JSON.parse(this.caregivers_training_goals);
-      
-      // this.monitoringEvaluating =resp.data.monitoring_evalutatings;
-
       this.behaviorList = resp.data[0].maladaptives;
       this.replacementList = resp.data[0].replacements;
+      //extraemos de los  replacementList los objectives en status in progress
+      this.replacementList = this.replacementList.filter(goal => goal.status === 'active');
+      
     })
   }
 
@@ -419,7 +415,7 @@ throw new Error('Method not implemented.');
 
 convertToMinutes(time: string): number {
   if (!time || !time.includes(':')) {
-    console.error(`Invalid time format: ${time}`);
+    // console.error(`Invalid time format: ${time}`);
         return 0; // O manejar el error de otra manera
     }
 
@@ -427,7 +423,7 @@ convertToMinutes(time: string): number {
 
     // Validar que hours y minutes sean números válidos
     if (isNaN(hours) || isNaN(minutes) || hours < 0 || minutes < 0 || minutes >= 60) {
-        console.error(`Invalid time values: hours=${hours}, minutes=${minutes}`);
+        // console.error(`Invalid time values: hours=${hours}, minutes=${minutes}`);
         return 0; // O manejar el error de otra manera
     }
 
@@ -441,15 +437,15 @@ convertToHours(totalMinutes: number): string {
 }
 
 
-  updateCaregiverGoal(index: number) {
+  updateCaregiverGoal(id: number) {
     console.log(
       'Caregiver goal updated:',
-      this.caregivers_training_goals[index]
+      this.caregivers_training_goals[id]
     );
   }
 
-  updateRbtGoal(index: number) {
-    console.log('RBT goal updated:', this.rbt_training_goals[index]);
+  updateRbtGoal(id: number) {
+    console.log('RBT goal updated:', this.rbt_training_goals[id]);
   }
 
   //funcion para la primera imagen.. funciona
@@ -491,7 +487,7 @@ convertToHours(totalMinutes: number): string {
     this.replacements_added = updatedReplacements;
   }
   onReplacement2Change(updatedReplacements2:object) {
-    this.replacements_added = updatedReplacements2;
+    this.replacements2_added = updatedReplacements2;
   }
   
   onIntakeoutcomeChange(updatedIntakeoutcome: object) {
@@ -593,10 +589,13 @@ convertToHours(totalMinutes: number): string {
       'rbt_training_goals',
       JSON.stringify(this.rbt_training_goals)
     );
-    formData.append(
-      'caregiver_goals',
-      JSON.stringify(this.caregivers_training_goals)
-    );
+   
+    if (this.caregivers_training_goals) {
+      formData.append(
+        'caregiver_goals',
+        JSON.stringify(this.caregivers_training_goals)
+      );
+    }
     if (this.intervention_added) {
       formData.append(
         'interventions',

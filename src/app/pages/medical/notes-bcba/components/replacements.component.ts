@@ -15,25 +15,24 @@ import {  ReplacementL } from '../interfaces';
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let replacement of replacementList; let i = index">
-              <td>{{ replacement.name }}</td>
+            <tr *ngFor="let replac of replacementList; let i = index">
+              <td>{{ replac.name }}</td>
               <td>
                 <div
                   class="status-toggle d-flex justify-content-between align-items-center"
                 >
                   <input
                     type="checkbox"
-                    [id]="replacement.id + '-demostrated'"
+                    [id]="replac.id + '-demostrated'"
                     class="check"
-                    [(ngModel)]="replacement.value"
-                    [name]="replacement.name + '-demostrated'"
+                    [(ngModel)]="replac.value"
+                    [name]="replac.name + '-demostrated'"
                     (ngModelChange)="updateReplacements()"
                   />
                   <label
-                    [for]="replacement.id + '-demostrated'"
+                    [for]="replac.id + '-demostrated'"
                     class="checktoggle"
-                    >checkbox</label
-                  >
+                    >checkbox</label >
                 </div>
               </td>
             </tr>
@@ -52,9 +51,12 @@ export class ReplacementsComponent {
 
   updateReplacements() {
     const replacementsObj = this.replacementList
-      .filter((replacement) => replacement.value)
-      .reduce((acc, replacement) => {
-        acc[replacement.id] = { demostrated: !!replacement.value, goal: replacement.name };
+      .filter((replac) => replac.value)
+      .reduce((acc, replac) => {
+        acc[replac.id] = {
+          id: replac.id, 
+          demostrated: !!replac.value, 
+          name: replac.name };
         return acc;
       }, {});
 

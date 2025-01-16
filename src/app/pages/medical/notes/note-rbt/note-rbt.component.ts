@@ -13,6 +13,8 @@ import { AppUser } from 'src/app/core/models/users.model';
 import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 import { NoteRbtV2, Maladaptives, Replacements, Interventions } from 'src/app/core/models/note.rbt.v2.model';
 import { PaServiceV2 } from 'src/app/core/models';
+import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
+import { PatientMService } from '../../patient-m/service/patient-m.service';
 
 interface ValidationResult {
   isValid: boolean;
@@ -32,7 +34,7 @@ interface InterventionItem {
 }
 
 interface MaladaptiveBehavior {
-  maladaptive_behavior: string;
+  name: string;
   number_of_occurrences: number;
   goal?: Goal;
   total_trials?: number;
@@ -46,9 +48,11 @@ interface Goal {
   total_trials?: number;
   number_of_correct_response?: number;
   goal?: string;
+  status:string;
 }
 
 interface ReplacementBehavior extends Replacements {
+  status: any;
   goal?: Goal;
   total_trials?: number;
   number_of_correct_response?: number;
@@ -172,7 +176,8 @@ export class NoteRbtComponent implements OnInit {
   roles_bcba: any[] = [];
 
   hours_days: string[] = [];
-  maladaptives: MaladaptiveBehavior[] = [];
+  maladaptives: any [];
+  // maladaptives: MaladaptiveBehavior[] = [];
   replacementGoals: Goal[] = [];
   replacements: ReplacementBehavior[] = [];
 
@@ -181,6 +186,7 @@ export class NoteRbtComponent implements OnInit {
   maladp_added: MaladaptiveBehavior[] = [];
   replacement_added: ReplacementBehavior[] = [];
   maladaptive_behavior: MaladaptiveBehavior | null = null;
+  name: MaladaptiveBehavior | null = null;
   electronic_signature: string | null = null;
   doctor: any;
   full_name: string | null = null;
@@ -229,6 +235,8 @@ export class NoteRbtComponent implements OnInit {
   constructor(
     private bipService: BipService,
     private goalService: GoalService,
+    private bipV2Service: BipsV2Service,
+    private patientService: PatientMService,
     private router: Router,
     private ativatedRoute: ActivatedRoute,
     private noteRbtService: NoteRbtService,
@@ -248,7 +256,7 @@ export class NoteRbtComponent implements OnInit {
     });
 
     this.getConfig();
-    this.getProfileBip();
+    this.getPatient();
 
     this.specialistData();
 
@@ -292,9 +300,8 @@ export class NoteRbtComponent implements OnInit {
       this.selectedValueProviderCredential = resp.roles_rbt.certificate_number;
     });
   }
-
-  getProfileBip() {
-    this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
+  getPatient(){
+    this.patientService.getPatientByPatientId(this.patient_identifier).subscribe((resp)=>{
       console.log('API Response:', resp);
       this.client_selected = resp.patient;
       console.log('Client Selected:', this.client_selected);
@@ -321,7 +328,6 @@ export class NoteRbtComponent implements OnInit {
         patient_id: this.patient_id
       });
 
-      console.log('pa_services:', resp.patient.pa_services);
       this.pa_services = resp.patient.pa_services;
 
       // Filter pa_services by date
@@ -333,12 +339,25 @@ export class NoteRbtComponent implements OnInit {
       });
 
       this.selectedPaService = resp.patient.pa_services.find(service => service.cpt === '97153') || null;
-      console.log('Selected Service:', this.selectedPaService);
+      // console.log('Selected Service:', this.selectedPaService);
 
-      this.getMaladaptivesBipByPatientId();
-      this.getReplacementsByPatientId();
+      this.getBipV2();
+    })
+  }
+
+  getBipV2(){
+    this.bipV2Service.list({client_id: this.patient_id}).subscribe((resp)=>{
+      console.log('BIP',resp);
+      this.bip_id = resp.data[0].id;
+      this.maladaptives = resp.data[0].maladaptives;
+      this.replacementGoals = resp.data[0].replacements;
+      
+      //extraemos los replacementGoals con status in progress o active
+      this.replacementGoals = this.replacementGoals.filter(goal => goal.status === 'active');
+      
     });
   }
+
 
 
 
@@ -354,29 +373,22 @@ export class NoteRbtComponent implements OnInit {
     event.value = this.selectedValueCode;
   }
 
-  getMaladaptivesBipByPatientId() {
-    this.bipService
-      .getBipProfilePatient_id(this.patient_identifier)
-      .subscribe((resp) => {
-        this.maladaptives = resp.maladaptives;
-        this.bip_id = resp.id;
-      });
-  }
-  getReplacementsByPatientId() {
-    this.noteRbtService
-      .showReplacementbyPatient(this.patient_identifier)
-      .subscribe((resp) => {
-        this.replacementGoals = [];
-        resp['replacementGoals'].forEach((element) => {
-          const goalSto = JSON.parse(element.goalstos).find(
-            (item) => item.sustitution_status_sto_edit === 'inprogress'
-          );
-          if (goalSto) {
-            this.replacementGoals.push({ ...element, target: goalSto.target });
-          }
-        });
-      });
-  }
+  
+  // getReplacementsByPatientId() {
+  //   this.noteRbtService
+  //     .showReplacementbyPatient(this.patient_identifier)
+  //     .subscribe((resp) => {
+  //       this.replacementGoals = [];
+  //       resp['replacementGoals'].forEach((element) => {
+  //         const goalSto = JSON.parse(element.goalstos).find(
+  //           (item) => item.sustitution_status_sto_edit === 'inprogress'
+  //         );
+  //         if (goalSto) {
+  //           this.replacementGoals.push({ ...element, target: goalSto.target });
+  //         }
+  //       });
+  //     });
+  // }
 
   specialistData() {
     this.doctorService.showDoctorProfile(this.doctor_id).subscribe((resp) => {
@@ -496,7 +508,7 @@ export class NoteRbtComponent implements OnInit {
 
 convertToMinutes(time: string): number {
   if (!time || !time.includes(':')) {
-    console.error(`Invalid time format: ${time}`);
+    // console.error(`Invalid time format: ${time}`);
         return 0; // O manejar el error de otra manera
     }
 
@@ -504,7 +516,7 @@ convertToMinutes(time: string): number {
 
     // Validar que hours y minutes sean números válidos
     if (isNaN(hours) || isNaN(minutes) || hours < 0 || minutes < 0 || minutes >= 60) {
-        console.error(`Invalid time values: hours=${hours}, minutes=${minutes}`);
+        // console.error(`Invalid time values: hours=${hours}, minutes=${minutes}`);
         return 0; // O manejar el error de otra manera
     }
 
@@ -547,12 +559,12 @@ convertToHours(totalMinutes: number): string {
 
     Swal.fire(
       'Added',
-      `Maladaptive - ${behavior.maladaptive_behavior} - Added`,
+      `Maladaptive - ${behavior.name} - Added`,
       'success'
     );
 
     this.maladaptiveSelected = null;
-    this.maladaptive_behavior = null;
+    this.name = null;
     this.number_of_occurrences = 0;
   }
 
@@ -569,7 +581,8 @@ convertToHours(totalMinutes: number): string {
       name: replacement.goal?.name || '',
       total_trials: replacement.total_trials,
       number_of_correct_response: replacement.number_of_correct_response,
-      goal: replacement.goal?.goal
+      goal: replacement.goal?.goal,
+      status: replacement.status?.status,
     };
 
     this.replacementGoals.push(newGoal);
@@ -816,12 +829,12 @@ convertToHours(totalMinutes: number): string {
       mood: this.client_appeared,
       pos: this.getPos(this.meet_with_client_at),
       maladaptives: this.maladaptives.map((m) => ({
-        behavior: m.maladaptive_behavior,
+        behavior: m.name,
         frequency: m.number_of_occurrences,
       })),
       // clientResponseToTreatmentThisSession: this.client_response_to_treatment_this_session,
       replacements: this.replacementGoals.map((r) => ({
-        name: r.goal,
+        name: r.name,
         totalTrials: r.total_trials,
         correctResponses: r.number_of_correct_response,
       })),
@@ -885,7 +898,7 @@ convertToHours(totalMinutes: number): string {
     } else {
       const allMaladaptivesValid = this.maladaptives.every(
         (m) =>
-          m.maladaptive_behavior &&
+          m.name &&
           m.number_of_occurrences !== undefined &&
           m.number_of_occurrences !== null
       );

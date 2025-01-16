@@ -455,7 +455,7 @@
                         let i = index
                       "
                     >
-                      <td>{{ goal.caregiver_goal }}</td>
+                      <td>{{ goal.name }}</td>
                       <td>
                         <input
                           class="form-control"
@@ -693,7 +693,7 @@
               
               <app-replacements2
                 [replacementList]="replacementList"
-                (replacementChange)="onReplacementChange($event)"
+                (replacementsChange2)="onReplacement2Change($event)"
               ></app-replacements2>
             </div>
           </div>
