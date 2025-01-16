@@ -1,0 +1,45 @@
+<div class="col-xs-12" *ngIf="show971511">
+                <div class="col-xs-12">
+                  <div class="card">
+                    <div class="card-header">
+                    </div>
+                    <div class="card-body p-0">
+                      <div class="personal-list-out">
+                        <div class="container">
+                          <div class="row">
+                            <div class="col-xs-12 col-sm-4">
+                              <div class="d-flex justify-content-between align-items-center">
+                                <span>BCBA conducted client observations</span>
+                                <div class="d-flex justify-content-between align-items-center">
+                                  <i *ngIf="note_selected?.BCBA_conducted_client_observations" class="fa fa-check"></i>
+                                  <i *ngIf="!note_selected?.BCBA_conducted_client_observations" class="fa fa-times"></i>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-4">
+                              <div class="d-flex justify-content-between align-items-center">
+                                <span>BCBA conducted assessments</span>
+                                <div class="d-flex justify-content-between align-items-center">
+                                  <i *ngIf="note_selected?.BCBA_conducted_assessments" class="fa fa-check"></i>
+                                  <i *ngIf="!note_selected?.BCBA_conducted_assessments" class="fa fa-times"></i>
+                                </div>
+                              </div>
+                            </div>
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- newlist -->
+                  <div class="card">
+                    <app-newlist-view [newlist_added]="newlist_added"></app-newlist-view>
+                  </div>
+                  <!-- newlist -->
+                  <!-- outcomeList -->
+                  <div class="card">
+                    <app-intakeoutcome-view [intake_outcome]="intake_outcome"></app-intakeoutcome-view>
+                  </div>
+                  <!-- outcomeList -->
+                </div>
+              </div>

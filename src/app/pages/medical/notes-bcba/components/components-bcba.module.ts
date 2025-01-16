@@ -17,6 +17,14 @@ import { NewlistViewComponent } from './newlist-vew.component';
 import { IntakeOutcomeViewComponent } from './intake-out-view.component';
 import { ReplacementViewComponent } from './replacements-vew.component';
 import { Replacement2ViewComponent } from './replacements2-vew.component';
+import { Show91756Component } from '../note-bcba/show91756/show91756.component';
+import { Show91755Component } from '../note-bcba/show91755/show91755.component';
+import { Show917512Component } from '../note-bcba/show917512/show917512.component';
+import { Show917511Component } from '../note-bcba/show917511/show917511.component';
+import { View917511Component } from '../note-bcba-view/view917511/view917511.component';
+import { View917512Component } from '../note-bcba-view/view917512/view917512.component';
+import { View91755Component } from '../note-bcba-view/view91755/view91755.component';
+import { View91756Component } from '../note-bcba-view/view91756/view91756.component';
 
 
 
@@ -36,7 +44,15 @@ import { Replacement2ViewComponent } from './replacements2-vew.component';
         NewlistViewComponent,
         IntakeOutcomeViewComponent,
         ReplacementViewComponent,
-        Replacement2ViewComponent
+        Replacement2ViewComponent,
+        Show91756Component,
+        Show91755Component,
+        Show917512Component,
+        Show917511Component,
+        View917511Component,
+            View917512Component,
+            View91755Component,
+            View91756Component,
 
   ],
   exports: [
@@ -54,7 +70,15 @@ import { Replacement2ViewComponent } from './replacements2-vew.component';
         NewlistViewComponent,
         IntakeOutcomeViewComponent,
         ReplacementViewComponent,
-        Replacement2ViewComponent
+        Replacement2ViewComponent,
+        Show91756Component,
+        Show91755Component,
+        Show917512Component,
+        Show917511Component,
+        View917511Component,
+    View917512Component,
+    View91755Component,
+    View91756Component,
   ],
   imports: [
     CommonModule,

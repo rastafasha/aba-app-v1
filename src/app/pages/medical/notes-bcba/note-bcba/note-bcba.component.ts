@@ -16,7 +16,7 @@ import {
 } from '../listasSelectData';
 
 import { AuthService } from 'src/app/core/auth/auth.service';
-import { PaServiceV2 } from 'src/app/core/models';
+import { PaServiceV2, PatientV2 } from 'src/app/core/models';
 import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
 import { PatientMService } from '../../patient-m/service/patient-m.service';
 import {
@@ -71,7 +71,7 @@ throw new Error('Method not implemented.');
   patient_identifier: string ;
   doctor_id: string | number;
   patient_selected: any;
-  client_selected: any;
+  client_selected: PatientV2;
   bip_id: string | number;
   user: AppUser;
 
@@ -282,17 +282,11 @@ throw new Error('Method not implemented.');
       console.log('patient',resp);
       this.client_selected = resp.patient;
       this.patient_id = resp.patient.id;
-      this.first_name = this.client_selected.first_name;
-      this.last_name = this.client_selected.last_name;
       this.patientLocation_id = this.client_selected.location_id;
-      this.pos = this.client_selected.pos_covered;
       this.patient_identifier = this.client_selected.patient_identifier;
       this.patientLocation_id = this.client_selected.location_id;
       this.insurance_id = this.client_selected.insurer_id;
       this.insurance_identifier = this.client_selected.insurance_identifier;
-      this.birth_date = this.client_selected.birth_date
-        ? new Date(this.client_selected.birth_date).toISOString()
-        : '';
 
         this.diagnosis_code = this.client_selected.diagnosis_code;
         this.insurer_id = this.client_selected.insurer_id;
@@ -335,11 +329,11 @@ throw new Error('Method not implemented.');
       this.replacementList = this.replacementList.filter(goal => goal.status === 'active');
 
       // Recorrer la lista replacementList y extraemos los objectives
-      this.objectives = this.replacementList.map(objective => objective.objectives);
+      this.objectives = this.replacementList.flatMap(objective => objective.objectives);
       console.log('Objetives', this.objectives );
       
       // filtrado los que estan en status in progress
-      const objetivosEnProgreso = this.objectives[0].filter(objetivo => objetivo.status === "in progress");
+      const objetivosEnProgreso = this.objectives.filter(objetivo => objetivo.status === "in progress");
 
       console.log(objetivosEnProgreso);
       this.obj_inprogress = objetivosEnProgreso;

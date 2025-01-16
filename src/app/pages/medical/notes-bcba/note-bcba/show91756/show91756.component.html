@@ -1,0 +1,136 @@
+<ng-container  *ngIf="show97156">
+        
+        <!-- Intervention protocols -->
+        <div class="col-xs-12" >
+          <div class="card">
+            <div class="card-body">
+              <app-interventions2
+              [interventionsList]="interventionsList"
+              (interventionsChange)="onInterventionsChange($event)"
+              ></app-interventions2>
+            </div>
+          </div>
+        </div>
+        <!-- Intervention protocols -->
+         <!-- replacements protocols -->
+         <div class="col-xs-12" >
+          <div class="card">
+            <div class="card-body">
+              <app-replacements [obj_inprogress]="obj_inprogress"
+                  (replacementChange)="onReplacementChange($event)"></app-replacements>
+                  
+            </div>
+          </div>
+        </div>
+        <!-- replacements protocols -->
+         <!-- behaviors -->
+         <div class="col-xs-12" >
+          <div class="card">
+            <div class="card-body">
+              <app-behaviors [behaviorList]="behaviorList"
+                  (behaviorsChange)="onBehaviorChange($event)"></app-behaviors>
+            </div>
+          </div>
+        </div>
+        <!-- behaviors -->
+         <!-- formulario varios -->
+         <div class="col-xs-12" >
+          <div class="card">
+            <div class="card-body">
+              <div class="col-12">
+                <div class="row">
+                  <div class="col-12 col-md-6 ">
+                    <div class="form-group ">
+                      <div _ngcontent-rhp-c92="" class="card-header d-flex justify-content-between align-items-center">
+                          <h5 _ngcontent-rhp-c92="" class="card-title">Cargiver Participation</h5>
+                          <div _ngcontent-rhp-c92="" class="status-toggle d-flex justify-content-between align-items-center">
+                              <input _ngcontent-rhp-c92="" type="checkbox" 
+                              id="cargiver_participation"  class="check"
+                              name="cargiver_participation" [checked]="cargiver_participation === true" 
+                              [ngModelOptions]="{standalone: true}" 
+                              [(ngModel)]="cargiver_participation">
+                              <label _ngcontent-rhp-c92="" for="cargiver_participation" class="checktoggle" value="true">checkbox</label>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12 col-md-6">
+
+                    <div class="form-group ">
+                        <div _ngcontent-rhp-c92="" class="card-header d-flex justify-content-between align-items-center">
+                            <h5 _ngcontent-rhp-c92="" class="card-title">Was the client present</h5>
+                            <div _ngcontent-rhp-c92="" class="status-toggle d-flex justify-content-between align-items-center">
+                                <input _ngcontent-rhp-c92="" type="checkbox" id="was_the_client_present" 
+                                class="check" name="was_the_client_present" [checked]="was_the_client_present === true" 
+                                [ngModelOptions]="{standalone: true}" [(ngModel)]="was_the_client_present">
+                                <label _ngcontent-rhp-c92="" for="was_the_client_present" class="checktoggle" value="true">checkbox</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                  <div class="col-12 col-md-6 ">
+                    <div class="form-group local-forms">
+                      <label
+                        >Asked and clarified questions about the implementation of <span class="login-danger">*</span></label
+                      >
+                      <input
+                        class="form-control"
+                        name="asked_and_clarified_questions_about_the_implementation_of"
+                        
+                        [(ngModel)]="asked_and_clarified_questions_about_the_implementation_of"
+                        type="text"
+                      />
+                    </div>
+                  </div>
+                <div class="col-12 col-md-6 ">
+                  <div class="form-group local-forms">
+                    <label
+                      >Reinforced caregiver strengths in <span class="login-danger">*</span></label
+                    >
+                    <input
+                      class="form-control"
+                      name="reinforced_caregiver_strengths_in"
+                      
+                      [(ngModel)]="reinforced_caregiver_strengths_in"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 ">
+                  <div class="form-group local-forms">
+                    <label
+                      >Gave constructive feedback on <span class="login-danger">*</span></label
+                    >
+                    <input
+                      class="form-control"
+                      name="gave_constructive_feedback_on"
+                      
+                      [(ngModel)]="gave_constructive_feedback_on"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 ">
+                  <div class="form-group local-forms">
+                    <label
+                      >recomended more practice on <span class="login-danger">*</span></label
+                    >
+                    <input
+                      class="form-control"
+                      name="recomended_more_practice_on"
+                      
+                      [(ngModel)]="recomended_more_practice_on"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                </div>
+
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- formulario varios -->
+      </ng-container>

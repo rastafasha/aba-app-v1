@@ -76,7 +76,6 @@ export class Interventions2Component {
       .filter((intervent) => intervent.value || intervent.value2)
       .reduce((acc, intervent) => {
         acc[intervent.id] = { assessed:!!intervent.value, modified:!!intervent.value2,};
-        
         return acc;
       }, {});
       console.log(result);

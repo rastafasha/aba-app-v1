@@ -18,6 +18,7 @@ import { ComponentsBCBAModule } from './components/components-bcba.module';
 
 @NgModule({
   declarations: [
+    
     NotesBcbaComponent,
     NoteBcbaViewComponent,
     NoteBcbaByClientComponent,

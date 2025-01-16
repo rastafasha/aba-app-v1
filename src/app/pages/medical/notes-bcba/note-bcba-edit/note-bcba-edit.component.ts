@@ -247,7 +247,8 @@ export class NoteBcbaEditComponent implements OnInit {
 
     noteServiceId:number;
 
-    
+    objectives = [];
+  obj_inprogress = [];
 
   constructor(
     private bipService: BipService,
@@ -300,42 +301,14 @@ export class NoteBcbaEditComponent implements OnInit {
       console.log('respuesta de getNote', resp);
       this.note_selected = resp.noteBcba;
       this.note_selectedId = resp.noteBcba.id;
-      this.patient_identifier = this.note_selected.patient_identifier;
-      this.patient_id = this.note_selected.patient_id;
       this.bip_id = this.note_selected.bip_id;
       this.location = this.note_selected.location;
-      
-      this.selectedPaService1 = this.note_selected.type;
-      
-      this.summary_note = resp.noteBcba.summary_note || '';
+      this.patient_id = this.note_selected.patient_id;
 
-      this.provider_credential = this.note_selected.provider_credential;
-      this.as_evidenced_by = this.note_selected.as_evidenced_by;
-      this.client_appeared = this.note_selected.client_appeared;
-      this.diagnosis_code = this.note_selected.diagnosis_code;
+      this.selectedPaService1 = this.note_selected.type;
       this.selectedValueCode = this.note_selected.cpt_code;
-      this.meet_with_client_at = this.note_selected.meet_with_client_at;
-      this.note_description = this.note_selected.note_description;
-      this.client_response_to_treatment_this_session =
-        this.note_selected.client_response_to_treatment_this_session;
-      
       this.pos = this.note_selected.pos;
 
-      this.environmental_changes = this.note_selected.environmental_changes;
-      this.participants = this.note_selected.participants;
-      
-
-      this.additional_goals_or_interventions  = this.note_selected.additional_goals_or_interventions ;
-      this.asked_and_clarified_questions_about_the_implementation_of = this.note_selected.asked_and_clarified_questions_about_the_implementation_of;
-      this.reinforced_caregiver_strengths_in = this.note_selected.reinforced_caregiver_strengths_in;
-      this.gave_constructive_feedback_on = this.note_selected.gave_constructive_feedback_on;
-      this.recomended_more_practice_on = this.note_selected.recomended_more_practice_on;
-      this.BCBA_conducted_client_observations = this.note_selected.BCBA_conducted_client_observations;
-      this.BCBA_conducted_assessments = this.note_selected.BCBA_conducted_assessments;
-      this.demostrated = this.note_selected.demostrated;
-      this.modifications_needed_at_this_time = this.note_selected.modifications_needed_at_this_time;
-      this.cargiver_participation = this.note_selected.cargiver_participation;
-      this.was_the_client_present = this.note_selected.was_the_client_present;
       this.selectedValueRBT = resp.noteBcba.provider.name;
       this.selectedValueProviderRBT_id =resp.noteBcba.provider_id;
 
@@ -348,7 +321,6 @@ export class NoteBcbaEditComponent implements OnInit {
 
       this.session_length_morning_total = this.note_selected.session_length_morning_total;
       this.session_length_afternon_total = this.note_selected.session_length_afternon_total;
-      this.session_length_total = this.note_selected.session_length_total;
 
       this.selectedValueTimeIn = this.formatTime(this.note_selected.time_in);
       this.selectedValueTimeOut = this.formatTime(this.note_selected.time_out);
@@ -624,17 +596,48 @@ export class NoteBcbaEditComponent implements OnInit {
   getPatient(){
     this.patientService.get(this.patient_id).subscribe((resp)=>{
       this.client_selected = resp.data;
-      this.first_name = this.client_selected.first_name;
-      this.last_name = this.client_selected.last_name;
-      this.birth_date = this.client_selected.birth_date;
-      this.diagnosis_code = this.client_selected.diagnosis_code;
+      this.first_name = resp.data.first_name;
+      this.last_name = resp.data.last_name;
+      this.patient_identifier = resp.data.patient_identifier;
+      this.diagnosis_code = resp.data.diagnosis_code;
+      this.birth_date = resp.data.birth_date;
+      
       this.paServicesService.get( this.noteServiceId, this.patient_id).subscribe((resp)=>{
        this.selectedPaService = resp.data;
         this.selectedValueCode = this.selectedPaService.cpt;
         this.pa_services = [this.selectedPaService];
         
-      })
+      });
+      this.getBipV2();
     })
+  }
+
+  getBipV2(){
+    this.bipV2Service.list({client_id: this.patient_id}).subscribe((resp)=>{
+      console.log('BIP',resp);
+      this.bip_id = resp.data[0].id;
+      this.caregivers_training_goals = resp.data[0].caregiver_trainings;
+      
+      this.behaviorList = resp.data[0].maladaptives;
+      this.replacementList = resp.data[0].replacements;
+
+      // Verificar la lista replacementList
+      console.log('replacementList', this.replacementList);
+  
+      // Filtrar la lista replacementList por estado
+      this.replacementList = this.replacementList.filter(goal => goal.status === 'active');
+
+      // Recorrer la lista replacementList y extraemos los objectives
+      this.objectives = this.replacementList.flatMap(objective => objective.objectives);
+      console.log('Objetives', this.objectives );
+      
+      // filtrado los que estan en status in progress
+      const objetivosEnProgreso = this.objectives.filter(objetivo => objetivo.status === "in progress");
+
+      console.log(objetivosEnProgreso);
+      this.obj_inprogress = objetivosEnProgreso;
+      
+    });
   }
 
   // getProfileBip(noteServiceId?: number) {

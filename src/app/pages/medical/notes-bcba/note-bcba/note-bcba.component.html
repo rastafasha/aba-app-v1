@@ -5,10 +5,11 @@
       <div class="row">
         <div class="col-sm-12">
           <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a [routerLink]="[routes.noteBcba.list, patient_identifier]">BCBA Notes </a></li>
+            <li class="breadcrumb-item"><a [routerLink]="[routes.noteBcba.list, patient_identifier]">BCBA Notes </a>
+            </li>
             <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
             <li class="breadcrumb-item active">Add Note </li>
-        </ul>
+          </ul>
           <div class="doctor-submit text-start">
             <button class="btn btn-primary btn-sm" (click)="goBack()">
               Back
@@ -30,140 +31,86 @@
                   <h4>Create Note Bcba</h4>
                 </div>
 
-                <app-alert
-                  *ngIf="showPosWarning"
-                  title="Potential erroneous POS selection"
-                  type="warning"
-                  content="Please make sure you have selected the correct POS code for this client."
-                ></app-alert>
-                
+                <app-alert *ngIf="showPosWarning" title="Potential erroneous POS selection" type="warning"
+                  content="Please make sure you have selected the correct POS code for this client."></app-alert>
+                <!-- patient -->
+                <!-- First Name  -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
-                    <label
-                      >First Name <span class="login-danger">*</span></label
-                    >
-                    <input
-                      class="form-control"
-                      name="first_name"
-                      disabled
-                      [(ngModel)]="first_name"
-                      type="text"
-                    />
+                    <label>First Name <span class="login-danger">*</span></label>
+                    <input class="form-control" name="first_name" disabled [(ngModel)]="client_selected.first_name"
+                      type="text" />
                   </div>
                 </div>
+                <!-- Last Name  -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label>Last Name <span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      name="last_name"
-                      disabled
-                      [(ngModel)]="last_name"
-                      type="text"
-                    />
+                    <input class="form-control" name="last_name" disabled [(ngModel)]="client_selected.last_name"
+                      type="text" />
                   </div>
                 </div>
+                <!-- Patient ID -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
-                    <label
-                      >Patient ID <span class="login-danger">*</span></label
-                    >
-                    <input
-                      class="form-control"
-                      name="patient_identifier"
-                      disabled
-                      [(ngModel)]="patient_identifier"
-                      type="text"
-                    />
+                    <label>Patient ID <span class="login-danger">*</span></label>
+                    <input class="form-control" name="patient_identifier" disabled
+                      [(ngModel)]="client_selected.patient_identifier" type="text" />
                   </div>
                 </div>
+                <!-- Diagnosis Code -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
-                    <label
-                      >Diagnosis Code <span class="login-danger">*</span></label
-                    >
-                    <input
-                      class="form-control"
-                      name="diagnosis_code"
-                      disabled
-                      [(ngModel)]="diagnosis_code"
-                      type="text"
-                    />
+                    <label>Diagnosis Code <span class="login-danger">*</span></label>
+                    <input class="form-control" name="diagnosis_code" disabled
+                      [(ngModel)]="client_selected.diagnosis_code" type="text" />
                   </div>
                 </div>
+                <!-- Birth day -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label>Birth day <span class="login-danger">*</span></label>
-                    <input
-                      class="form-control datetimepicker"
-                      disabled
-                      name="birth_date"
-                      [(ngModel)]="birth_date"
-                      type="text"
-                      matInput
-                      [matDatepicker]="picker"
-                    />
+                    <input class="form-control datetimepicker" disabled name="birth_date"
+                      [(ngModel)]="client_selected.birth_date" type="text" matInput [matDatepicker]="picker" />
                     <mat-datepicker #picker></mat-datepicker>
-                    <mat-datepicker-toggle
-                      matIconSuffix
-                      [for]="picker"
-                    ></mat-datepicker-toggle>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                   </div>
                 </div>
+                <!-- patient -->
+                <!-- Rendering Provider -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
-                    <label
-                      >Rendering Provider
-                      <span class="login-danger">*</span></label
-                    >
+                    <label>Rendering Provider
+                      <span class="login-danger">*</span></label>
 
                     <p style="padding: 10px">
                       {{ doctor?.full_name ?? "" }}
                     </p>
                   </div>
                 </div>
+                <!-- Supervisor -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label>
                       Supervisor<span class="login-danger">*</span>
                     </label>
-                    <mat-select
-                      [(ngModel)]="selectedValueAba"
-                      name="aba_supervisor"
-                      [ngModelOptions]="{ standalone: true }"
-                      class="form-control select"
-                      (selectionChange)="selectSpecialistab($event)"
-                      placeholder="Select Specialist"
-                    >
-                      <mat-option
-                        *ngFor="let data of specialists; let i = index"
-                        [value]="data.id"
-                      >
+                    <mat-select [(ngModel)]="selectedValueAba" name="aba_supervisor"
+                      [ngModelOptions]="{ standalone: true }" class="form-control select"
+                      (selectionChange)="selectSpecialistab($event)" placeholder="Select Specialist">
+                      <mat-option *ngFor="let data of specialists; let i = index" [value]="data.id">
                         {{ data?.name }} {{ data?.surname }}
                       </mat-option>
                     </mat-select>
                   </div>
                 </div>
-                
-
                 <!-- DOS -->
                 <div class="col-12 col-md-3">
                   <div class="form-group local-forms">
                     <label>DOS <span class="login-danger">*</span></label>
-                    <input
-                      class="form-control datetimepicker"
-                      autocomplete="false"
-                      name="session_date"
-                      [(ngModel)]="session_date"
-                      type="text"
-                      matInput
-                      [matDatepicker]="pickerSesDate"
-                    />
+                    <input class="form-control datetimepicker" autocomplete="false" name="session_date"
+                      [(ngModel)]="session_date" type="text" matInput [matDatepicker]="pickerSesDate" />
                     <mat-datepicker #pickerSesDate></mat-datepicker>
-                    <mat-datepicker-toggle
-                      matIconSuffix
-                      [for]="pickerSesDate"
-                    ></mat-datepicker-toggle>
+                    <mat-datepicker-toggle matIconSuffix [for]="pickerSesDate"></mat-datepicker-toggle>
                   </div>
                 </div>
                 <!-- DOS -->
@@ -171,15 +118,10 @@
                 <!-- POS -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
-                    <label
-                      >POS
-                      <span class="login-danger">*</span></label
-                    >
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="meet_with_client_at"
-                      [(ngModel)]="meet_with_client_at"
-                    >
+                    <label>POS
+                      <span class="login-danger">*</span></label>
+                    <select class="form-control form-select-solid fw-bolder" name="meet_with_client_at"
+                      [(ngModel)]="meet_with_client_at">
                       <option>-- Select --</option>
                       <option value="03">03 School</option>
                       <option value="12">12 Home</option>
@@ -196,45 +138,23 @@
                     <div class="row">
                       <div class="col-xs-12 col-sm-6">
                         <div class="form-group local-forms">
-                          <label
-                            >Time In <span class="login-danger">*</span></label
-                          >
+                          <label>Time In <span class="login-danger">*</span></label>
 
                           <!-- [max]="'12:00'" -->
-                          <input
-                            [ngxTimepicker]="toggleTimepicker"
-                            [(ngModel)]="selectedValueTimeIn"
-                            readonly
-                            [format]="24"
-                            class="form-control"
-                            [value]="selectedValueTimeIn"
-                            name="time_in"
-                          />
-                          <ngx-material-timepicker
-                            (timeChanged)="hourTimeInSelected($event)"
-                            #toggleTimepicker
-                          ></ngx-material-timepicker>
+                          <input [ngxTimepicker]="toggleTimepicker" [(ngModel)]="selectedValueTimeIn" readonly
+                            [format]="24" class="form-control" [value]="selectedValueTimeIn" name="time_in" />
+                          <ngx-material-timepicker (timeChanged)="hourTimeInSelected($event)"
+                            #toggleTimepicker></ngx-material-timepicker>
                         </div>
                       </div>
                       <div class="col-xs-12 col-sm-6">
                         <div class="form-group local-forms">
-                          <label
-                            >Time Out <span class="login-danger">*</span></label
-                          >
+                          <label>Time Out <span class="login-danger">*</span></label>
 
-                          <input
-                            [ngxTimepicker]="toggleTimepicker2"
-                            readonly
-                            [value]="selectedValueTimeOut"
-                            [(ngModel)]="selectedValueTimeOut"
-                            [format]="24"
-                            class="form-control"
-                            name="time_out"
-                          />
-                          <ngx-material-timepicker
-                            (timeChanged)="hourTimeOutSelected($event)"
-                            #toggleTimepicker2
-                          ></ngx-material-timepicker>
+                          <input [ngxTimepicker]="toggleTimepicker2" readonly [value]="selectedValueTimeOut"
+                            [(ngModel)]="selectedValueTimeOut" [format]="24" class="form-control" name="time_out" />
+                          <ngx-material-timepicker (timeChanged)="hourTimeOutSelected($event)"
+                            #toggleTimepicker2></ngx-material-timepicker>
                         </div>
                       </div>
                     </div>
@@ -244,43 +164,21 @@
                     <div class="row">
                       <div class="col-xs-12 col-sm-6">
                         <div class="form-group local-forms">
-                          <label
-                            >Time In <span class="login-danger">*</span></label
-                          >
+                          <label>Time In <span class="login-danger">*</span></label>
 
-                          <input
-                            [ngxTimepicker]="toggleTimepicker3"
-                            [(ngModel)]="selectedValueTimeIn2"
-                            readonly
-                            [value]="selectedValueTimeIn2"
-                            [format]="24"
-                            class="form-control"
-                            name="time_in2"
-                          />
-                          <ngx-material-timepicker
-                            (timeChanged)="hourTimeIn2Selected($event)"
-                            #toggleTimepicker3
-                          ></ngx-material-timepicker>
+                          <input [ngxTimepicker]="toggleTimepicker3" [(ngModel)]="selectedValueTimeIn2" readonly
+                            [value]="selectedValueTimeIn2" [format]="24" class="form-control" name="time_in2" />
+                          <ngx-material-timepicker (timeChanged)="hourTimeIn2Selected($event)"
+                            #toggleTimepicker3></ngx-material-timepicker>
                         </div>
                       </div>
                       <div class="col-xs-12 col-sm-6">
                         <div class="form-group local-forms">
-                          <label
-                            >Time Out <span class="login-danger">*</span></label
-                          >
-                          <input
-                            [ngxTimepicker]="toggleTimepicker4"
-                            [(ngModel)]="selectedValueTimeOut2"
-                            readonly
-                            [value]="selectedValueTimeOut2"
-                            [format]="24"
-                            class="form-control"
-                            name="time_out2"
-                          />
-                          <ngx-material-timepicker
-                            (timeChanged)="hourTimeOut2Selected($event)"
-                            #toggleTimepicker4
-                          ></ngx-material-timepicker>
+                          <label>Time Out <span class="login-danger">*</span></label>
+                          <input [ngxTimepicker]="toggleTimepicker4" [(ngModel)]="selectedValueTimeOut2" readonly
+                            [value]="selectedValueTimeOut2" [format]="24" class="form-control" name="time_out2" />
+                          <ngx-material-timepicker (timeChanged)="hourTimeOut2Selected($event)"
+                            #toggleTimepicker4></ngx-material-timepicker>
                         </div>
                       </div>
 
@@ -289,11 +187,7 @@
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
-                    <label
-                      >Session Length Total<span class="login-danger"
-                        >*</span
-                      ></label
-                    >
+                    <label>Session Length Total<span class="login-danger">*</span></label>
                     <p class="text-center p-3">
                       {{total_hour_session}}
                     </p>
@@ -305,21 +199,14 @@
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label>CPT Code <span class="login-danger">*</span></label>
-                    <mat-select
-                      [(ngModel)]="selectedPaService"
-                      name="pa_service"
-                      (selectionChange)="onPaServiceSelect($event)"
-                      class="form-control select"
-                      placeholder="Select Service"
-                    >
-                      <mat-option
-                        *ngFor="let service of pa_services"
-                        [value]="service"
-                      >
+                    <mat-select [(ngModel)]="selectedPaService" name="pa_service"
+                      (selectionChange)="onPaServiceSelect($event)" class="form-control select"
+                      placeholder="Select Service">
+                      <mat-option *ngFor="let service of pa_services" [value]="service">
                         ({{ service.cpt }})
                       </mat-option>
                     </mat-select>
-                    
+
                   </div>
                 </div>
                 <!-- CPT Code -->
@@ -327,63 +214,43 @@
                 <div *ngIf=" show97151 || show971511 || show971512 " class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label>Type <span class="login-danger">*</span></label>
-                    <mat-select
-                      [(ngModel)]="selectedPaService1"
-                      name="pa_service"
-                      (selectionChange)="onPaServiceSelect2($event)"
-                      class="form-control select"
-                      placeholder="Select Service"
-                    >
-                      <mat-option
-                        *ngFor="let service of show97151List"
-                        [value]="service"
-                      >
+                    <mat-select [(ngModel)]="selectedPaService1" name="pa_service"
+                      (selectionChange)="onPaServiceSelect2($event)" class="form-control select"
+                      placeholder="Select Service">
+                      <mat-option *ngFor="let service of show97151List" [value]="service">
                         ({{ service.cpt }})
                       </mat-option>
                     </mat-select>
-                    
+
                   </div>
                 </div>
-                 <!-- CPT Code51 -->
+                <!-- CPT Code51 -->
 
                 <!-- PA Service Calculator Information -->
                 <div class="col-12 col-md-6 col-xl-4">
-                  <app-pa-service-calculator
-                    [selectedPaService]="selectedPaService"
-                    [projectedUnits]="projectedUnits">
+                  <app-pa-service-calculator [selectedPaService]="selectedPaService" [projectedUnits]="projectedUnits">
                   </app-pa-service-calculator>
                 </div>
 
                 <div class="col-12 col-md-6 col-xl-4">
-                  <app-units-display
-                    [service]="selectedPaService"
-                    [newUnits]="projectedUnits">
+                  <app-units-display [service]="selectedPaService" [newUnits]="projectedUnits">
                   </app-units-display>
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label>Environmental Changes <span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      name="environmental_changes"
-                      [(ngModel)]="environmental_changes"
-                      type="text"
-                    />
+                    <input class="form-control" name="environmental_changes" [(ngModel)]="environmental_changes"
+                      type="text" />
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label>Present this session <span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      name="participants"
-                      [(ngModel)]="participants"
-                      type="text"
-                    />
+                    <input class="form-control" name="participants" [(ngModel)]="participants" type="text" />
                   </div>
                 </div>
               </div>
-               
+
               <!-- paciente -->
             </form>
           </div>
@@ -392,8 +259,8 @@
       <!-- fin paciente -->
 
       <!-- !show97155 && !show97156 -->
-      <ng-container  *ngIf="!show97155 && !show97156 && !show97151 && !show971512">
-        <div class="col-xs-12" >
+      <ng-container *ngIf="!show97155 && !show97156 && !show97151 && !show971512">
+        <div class="col-xs-12">
           <div class="card">
             <div class="card-body">
               <div class="col-12">
@@ -412,20 +279,14 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr
-                      *ngFor="
+                    <tr *ngFor="
                         let goal of caregivers_training_goals;
                         let i = index
-                      "
-                    >
+                      ">
                       <td>{{ goal.name }}</td>
                       <td>
-                        <input
-                          class="form-control"
-                          type="number"
-                          [(ngModel)]="goal.porcent_of_correct_response"
-                          (ngModelChange)="updateCaregiverGoal(i)"
-                        />
+                        <input class="form-control" type="number" [(ngModel)]="goal.porcent_of_correct_response"
+                          (ngModelChange)="updateCaregiverGoal(i)" />
                       </td>
                     </tr>
                   </tbody>
@@ -475,321 +336,36 @@
         <!-- fin Monitoring -->
       </ng-container>
 
-      
-       <!--   only 51 -1-->
-      <ng-container  *ngIf=" show971511" >
-            <!-- BCBA conducted -->
-            <div class="col-xs-12" >
-              <div class="card">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-12 col-md-6">
-                      <h5>BCBA conducted client observations</h5>
-                      <div class="form-group ">
-                        <div _ngcontent-rhp-c92="" class="status-toggle d-flex justify-content-between align-items-center">
-                          <input _ngcontent-rhp-c92="" type="checkbox" 
-                          id="BCBA_conducted_client_observations"  class="check"
-                           name="BCBA_conducted_client_observations" [checked]="BCBA_conducted_client_observations === true" 
-                           [ngModelOptions]="{standalone: true}" 
-                           [(ngModel)]="BCBA_conducted_client_observations">
-                          <label _ngcontent-rhp-c92="" for="BCBA_conducted_client_observations" class="checktoggle" value="true">checkbox</label>
-                      </div>
-                    </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                      <h5>BCBA conducted assessments</h5>
-                      <div class="form-group ">
-                        <div _ngcontent-rhp-c92="" class="status-toggle d-flex justify-content-between align-items-center">
-                          <input _ngcontent-rhp-c92="" type="checkbox" 
-                          id="BCBA_conducted_assessments"  class="check"
-                           name="BCBA_conducted_assessments" [checked]="BCBA_conducted_assessments === true" 
-                           [ngModelOptions]="{standalone: true}" 
-                           [(ngModel)]="BCBA_conducted_assessments">
-                          <label _ngcontent-rhp-c92="" for="BCBA_conducted_assessments" class="checktoggle" value="true">checkbox</label>
-                      </div>
-                    </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- BCBA conducted -->
-            <!-- newList -->
-            <div class="col-xs-12" >
-              <div class="card">
-                <div class="card-body">
-                  <app-newlist
-                  [newList]="newList"
-                  (newListChange)="onNewListChange($event)"
-                  ></app-newlist>
-                </div>
-              </div>
-            </div>
-            <!-- newList -->
-            <!-- intake and outcome measures: -->
-            <div class="col-xs-12" >
-              <div class="card">
-                <div class="card-body">
-                  <app-intakeoutcome
-                  [outcomeList]="outcomeList"
-                  (intakeoutcomeChange)="onIntakeoutcomeChange($event)"
-                  ></app-intakeoutcome>
-                </div>
-              </div>
-            </div>
-            <!-- intake and outcome measures: -->
-      </ng-container>
-       <!--   only 51 -2-->
-       <ng-container  *ngIf=" show971512" >
-        <!-- modifications needed at this time -->
-        <div class="col-xs-12" >
-          <div class="card">
-            <div class="card-body">
-              <div class="row">
-                <div class="col-12 col-md-6">
-                  <h5>BCBA conducted client observations</h5>
-                  <div class="form-group ">
-                    <div _ngcontent-rhp-c92="" class="status-toggle d-flex justify-content-between align-items-center">
-                      <input _ngcontent-rhp-c92="" type="checkbox" 
-                      id="BCBA_conducted_client_observations"  class="check"
-                       name="BCBA_conducted_client_observations" [checked]="BCBA_conducted_client_observations === true" 
-                       [ngModelOptions]="{standalone: true}" 
-                       [(ngModel)]="BCBA_conducted_client_observations">
-                      <label _ngcontent-rhp-c92="" for="BCBA_conducted_client_observations" class="checktoggle" value="true">checkbox</label>
-                  </div>
-                </div>
-                </div>
-                <div class="col-12 col-md-6">
-                  <h5>BCBA conducted assessments</h5>
-                  <div class="form-group ">
-                    <div _ngcontent-rhp-c92="" class="status-toggle d-flex justify-content-between align-items-center">
-                      <input _ngcontent-rhp-c92="" type="checkbox" 
-                      id="BCBA_conducted_assessments"  class="check"
-                       name="BCBA_conducted_assessments" [checked]="BCBA_conducted_assessments === true" 
-                       [ngModelOptions]="{standalone: true}" 
-                       [(ngModel)]="BCBA_conducted_assessments">
-                      <label _ngcontent-rhp-c92="" for="BCBA_conducted_assessments" class="checktoggle" value="true">checkbox</label>
-                  </div>
-                </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- modifications needed at this time -->
-        </ng-container>
-       <!--   only 55-->
-      <ng-container  *ngIf=" show97155" >
-           
-            <!-- Intervention protocols -->
-            <div class="col-xs-12" >
-              <div class="card">
-                <div class="card-body">
-                  
-                  <app-interventions3
-              [interventionsList2]="interventionsList2"
-              (update)="onInterventions2Change($event)"
-              ></app-interventions3>
-                </div>
-              </div>
-            </div>
-            <!-- Intervention protocols -->
-            <!-- replacements protocols -->
-            <div class="col-xs-12" >
-              <div class="card">
-                <div class="card-body">
-                  
-                  
-                  <app-replacements2 [obj_inprogress]="obj_inprogress"
-                  (replacementsChange2)="onReplacement2Change($event)"></app-replacements2>
-                </div>
-              </div>
-            </div>
-            <!-- replacements protocols -->
-            <!-- modifications needed at this time -->
-            <div class="col-xs-12" >
-              <div class="card">
-                <div class="card-body">
-                  <div class="col-12">
-                    
-                    <h4 _ngcontent-rhp-c92="" class="card-title">Modifications needed at this time</h4>
-                    <div class="form-group ">
-                      <div _ngcontent-rhp-c92="" class="status-toggle d-flex justify-content-between align-items-center">
-                        <input _ngcontent-rhp-c92="" type="checkbox" 
-                        id="modifications_needed_at_this_time"  class="check"
-                         name="modifications_needed_at_this_time" [checked]="modifications_needed_at_this_time === true" 
-                         [ngModelOptions]="{standalone: true}" 
-                         [(ngModel)]="modifications_needed_at_this_time">
-                        <label _ngcontent-rhp-c92="" for="modifications_needed_at_this_time" class="checktoggle" value="true">checkbox</label>
-                    </div>
-                  </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- modifications needed at this time -->
-            <!-- additional goals or interventions: -->
-            <div class="col-xs-12" >
-              <div class="card">
-                <div class="card-body">
-                  <div class="col-12">
-                    <h5>Additional Goals or Interventions:</h5>
-                    <div class="col-12">
-                      <div class="form-group local-forms">
-                        <textarea
-                          class="form-control"
-                          name="additional_goals_or_interventions"
-                          [(ngModel)]="additional_goals_or_interventions"
-                          rows="4"
-                          cols="30"
-                        ></textarea>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- additional goals or interventions: -->
-      </ng-container>
+
+      <!--   only 51 -1-->
+      <!-- [$event]="$event" -->
+      <app-show917511 [show971511]="show971511"
+        [BCBA_conducted_client_observations]="BCBA_conducted_client_observations"
+        [BCBA_conducted_assessments]="BCBA_conducted_assessments" [newList]="newList"
+        [onNewListChange]="onNewListChange" [outcomeList]="outcomeList"
+        [onIntakeoutcomeChange]="onIntakeoutcomeChange"></app-show917511>
+      <!--   only 51 -2-->
+      <!-- [$event]="$event" -->
+      <app-show917512 [show971512]="show971512"
+        [BCBA_conducted_client_observations]="BCBA_conducted_client_observations"
+        [BCBA_conducted_assessments]="BCBA_conducted_assessments"></app-show917512>
+      <!--   only 55-->
+      <app-show91755 [show97155]="show97155" [interventionsList2]="interventionsList2"
+        [onInterventions2Change]="onInterventions2Change" [obj_inprogress]="obj_inprogress"
+        [onReplacement2Change]="onReplacement2Change"
+        [modifications_needed_at_this_time]="modifications_needed_at_this_time"
+        [additional_goals_or_interventions]="additional_goals_or_interventions"></app-show91755>
 
       <!--  only 56 -->
-      <ng-container  *ngIf="show97156">
-        
-        <!-- Intervention protocols -->
-        <div class="col-xs-12" >
-          <div class="card">
-            <div class="card-body">
-              <app-interventions2
-              [interventionsList]="interventionsList"
-              (interventionsChange)="onInterventionsChange($event)"
-              ></app-interventions2>
-            </div>
-          </div>
-        </div>
-        <!-- Intervention protocols -->
-         <!-- replacements protocols -->
-         <div class="col-xs-12" >
-          <div class="card">
-            <div class="card-body">
-              <app-replacements [obj_inprogress]="obj_inprogress"
-                  (replacementChange)="onReplacementChange($event)"></app-replacements>
-                  
-            </div>
-          </div>
-        </div>
-        <!-- replacements protocols -->
-         <!-- behaviors -->
-         <div class="col-xs-12" >
-          <div class="card">
-            <div class="card-body">
-              <app-behaviors [behaviorList]="behaviorList"
-                  (behaviorsChange)="onBehaviorChange($event)"></app-behaviors>
-            </div>
-          </div>
-        </div>
-        <!-- behaviors -->
-         <!-- formulario varios -->
-         <div class="col-xs-12" >
-          <div class="card">
-            <div class="card-body">
-              <div class="col-12">
-                <div class="row">
-                  <div class="col-12 col-md-6 ">
-                    <div class="form-group ">
-                      <div _ngcontent-rhp-c92="" class="card-header d-flex justify-content-between align-items-center">
-                          <h5 _ngcontent-rhp-c92="" class="card-title">Cargiver Participation</h5>
-                          <div _ngcontent-rhp-c92="" class="status-toggle d-flex justify-content-between align-items-center">
-                              <input _ngcontent-rhp-c92="" type="checkbox" 
-                              id="cargiver_participation"  class="check"
-                              name="cargiver_participation" [checked]="cargiver_participation === true" 
-                              [ngModelOptions]="{standalone: true}" 
-                              [(ngModel)]="cargiver_participation">
-                              <label _ngcontent-rhp-c92="" for="cargiver_participation" class="checktoggle" value="true">checkbox</label>
-                          </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-6">
-
-                    <div class="form-group ">
-                        <div _ngcontent-rhp-c92="" class="card-header d-flex justify-content-between align-items-center">
-                            <h5 _ngcontent-rhp-c92="" class="card-title">Was the client present</h5>
-                            <div _ngcontent-rhp-c92="" class="status-toggle d-flex justify-content-between align-items-center">
-                                <input _ngcontent-rhp-c92="" type="checkbox" id="was_the_client_present" 
-                                class="check" name="was_the_client_present" [checked]="was_the_client_present === true" 
-                                [ngModelOptions]="{standalone: true}" [(ngModel)]="was_the_client_present">
-                                <label _ngcontent-rhp-c92="" for="was_the_client_present" class="checktoggle" value="true">checkbox</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                  <div class="col-12 col-md-6 ">
-                    <div class="form-group local-forms">
-                      <label
-                        >Asked and clarified questions about the implementation of <span class="login-danger">*</span></label
-                      >
-                      <input
-                        class="form-control"
-                        name="asked_and_clarified_questions_about_the_implementation_of"
-                        
-                        [(ngModel)]="asked_and_clarified_questions_about_the_implementation_of"
-                        type="text"
-                      />
-                    </div>
-                  </div>
-                <div class="col-12 col-md-6 ">
-                  <div class="form-group local-forms">
-                    <label
-                      >Reinforced caregiver strengths in <span class="login-danger">*</span></label
-                    >
-                    <input
-                      class="form-control"
-                      name="reinforced_caregiver_strengths_in"
-                      
-                      [(ngModel)]="reinforced_caregiver_strengths_in"
-                      type="text"
-                    />
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 ">
-                  <div class="form-group local-forms">
-                    <label
-                      >Gave constructive feedback on <span class="login-danger">*</span></label
-                    >
-                    <input
-                      class="form-control"
-                      name="gave_constructive_feedback_on"
-                      
-                      [(ngModel)]="gave_constructive_feedback_on"
-                      type="text"
-                    />
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 ">
-                  <div class="form-group local-forms">
-                    <label
-                      >recomended more practice on <span class="login-danger">*</span></label
-                    >
-                    <input
-                      class="form-control"
-                      name="recomended_more_practice_on"
-                      
-                      [(ngModel)]="recomended_more_practice_on"
-                      type="text"
-                    />
-                  </div>
-                </div>
-                </div>
-
-                
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- formulario varios -->
-      </ng-container>
-    <!-- fin  -->
+      <app-show91756 [show97156]="show97156" [interventionsList]="interventionsList"
+        [onInterventionsChange]="onInterventionsChange" [obj_inprogress]="obj_inprogress"
+        [onReplacementChange]="onReplacementChange" [behaviorList]="behaviorList" [onBehaviorChange]="onBehaviorChange"
+        [cargiver_participation]="cargiver_participation" [was_the_client_present]="was_the_client_present"
+        [asked_and_clarified_questions_about_the_implementation_of]="asked_and_clarified_questions_about_the_implementation_of"
+        [reinforced_caregiver_strengths_in]="reinforced_caregiver_strengths_in"
+        [gave_constructive_feedback_on]="gave_constructive_feedback_on"
+        [recomended_more_practice_on]="recomended_more_practice_on"></app-show91756>
+      <!-- fin  -->
 
 
 
@@ -803,22 +379,14 @@
               <div class="col-12">
                 <div class="form-group local-forms">
                   <label>Summary Note<span class="login-danger">*</span></label>
-                  <textarea
-                    class="form-control"
-                    name="summary_note"
-                    [(ngModel)]="summary_note"
-                    rows="4"
-                    cols="30"
-                  ></textarea>
-                  <button
-                    class="btn btn-primary ml-2 btn-sm"
-                    (click)="generateAISummary()"
-                    [disabled]="isGeneratingSummary"
-                  >
+                  <textarea class="form-control" name="summary_note" [(ngModel)]="summary_note" rows="4"
+                    cols="30"></textarea>
+                  <button class="btn btn-primary ml-2 btn-sm" (click)="generateAISummary()"
+                    [disabled]="isGeneratingSummary">
                     {{
-                      isGeneratingSummary
-                        ? "Generating..."
-                        : "Generate AI Summary"
+                    isGeneratingSummary
+                    ? "Generating..."
+                    : "Generate AI Summary"
                     }}
                   </button>
                 </div>
@@ -832,35 +400,20 @@
                     <p style="padding: 10px">
                       {{ doctor?.full_name ?? "" }}
                     </p>
-                    <!-- <mat-select [(ngModel)]="selectedValueRBT" name="rbt" [ngModelOptions]="{standalone: true}" class="form-control select"  placeholder="Select Specialist" (selectionChange)="selectFirmaSpecialistRbt($event)">
-                                            <mat-option *ngFor="let data of roles_bcba" [value]="data.id">
-                                            {{data.name}} {{data.surname}}
-                                            </mat-option>
-                                        </mat-select> -->
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-6">
                   <div class="form-group local-top-form">
-                    <label class="local-top"
-                      >Provider Signature
-                      <span class="login-danger">*</span></label
-                    >
+                    <label class="local-top">Provider Signature
+                      <span class="login-danger">*</span></label>
                   </div>
 
                   <!-- previsualizacion de la foto -->
                   <div *ngIf="FILE_SIGNATURE_RBT">
-                    <img
-                      [src]="electronic_signature"
-                      style="width: 250px"
-                      alt=""
-                    />
+                    <img [src]="electronic_signature" style="width: 250px" alt="" />
                   </div>
                   <div *ngIf="IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED">
-                    <img
-                      [src]="electronic_signature"
-                      style="width: 250px"
-                      alt=""
-                    />
+                    <img [src]="electronic_signature" style="width: 250px" alt="" />
                   </div>
                   <!-- previsualizacion de la foto -->
                 </div>
@@ -868,22 +421,12 @@
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <div class="form-group local-forms">
-                      <label
-                        >Supervisor name BCBA
-                        <span class="login-danger">*</span></label
-                      >
-                      <mat-select
-                        [(ngModel)]="selectedValueBcba_id"
-                        name="bcba"
-                        [ngModelOptions]="{ standalone: true }"
-                        class="form-control select"
-                        placeholder="Select Specialist"
-                        (selectionChange)="selectSpecialistab($event)"
-                      >
-                        <mat-option
-                          *ngFor="let data of specialists"
-                          [value]="data.id"
-                        >
+                      <label>Supervisor name BCBA
+                        <span class="login-danger">*</span></label>
+                      <mat-select [(ngModel)]="selectedValueBcba_id" name="bcba" [ngModelOptions]="{ standalone: true }"
+                        class="form-control select" placeholder="Select Specialist"
+                        (selectionChange)="selectSpecialistab($event)">
+                        <mat-option *ngFor="let data of specialists" [value]="data.id">
                           {{ data.name }} {{ data.surname }}
                         </mat-option>
                       </mat-select>
@@ -892,25 +435,16 @@
                 </div>
                 <div class="col-12 col-md-6 col-xl-6">
                   <div class="form-group local-top-form">
-                    <label class="local-top"
-                      >Supervisor Signature
+                    <label class="local-top">Supervisor Signature
                       <span class="login-danger">*</span></label>
                   </div>
 
                   <!-- previsualizacion de la foto -->
                   <div *ngIf="FILE_SIGNATURE_BCBA">
-                    <img
-                      [src]="IMAGE_PREVISUALIZA_SIGNATURE_BCBA"
-                      style="width: 250px"
-                      alt=""
-                    />
+                    <img [src]="IMAGE_PREVISUALIZA_SIGNATURE_BCBA" style="width: 250px" alt="" />
                   </div>
                   <div *ngIf="IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED">
-                    <img
-                      [src]="IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED"
-                      style="width: 250px"
-                      alt=""
-                    />
+                    <img [src]="IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED" style="width: 250px" alt="" />
                   </div>
                   <!-- previsualizacion de la foto -->
                 </div>
@@ -919,17 +453,9 @@
 
               <div class="form-group row" *ngIf="text_validation">
                 <div class="col-md-12">
-                  <div
-                    class="alert alert-danger alert-dismissible fade show"
-                    role="alert"
-                  >
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <strong>!</strong> {{ text_validation }}.
-                    <button
-                      type="button"
-                      class="btn-close"
-                      data-bs-dismiss="alert"
-                      aria-label="Close"
-                    >
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                       <span aria-hidden="true"> </span>
                     </button>
                   </div>
@@ -937,11 +463,7 @@
               </div>
               <div class="col-12">
                 <div class="doctor-submit text-end">
-                  <button
-                    type="button"
-                    class="btn btn-primary submit-form me-2"
-                    (click)="save()"
-                  >
+                  <button type="button" class="btn btn-primary submit-form me-2" (click)="save()">
                     Save
                   </button>
                 </div>

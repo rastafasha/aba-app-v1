@@ -162,6 +162,9 @@ export class NoteBcbaViewComponent implements OnInit {
   intake_outcome = [];
   interventionsgroup = [];
 
+  objectives = [];
+  obj_inprogress = [];
+
   maladaptivegroup = [];
   replacementgroup = [];
 
@@ -386,102 +389,119 @@ export class NoteBcbaViewComponent implements OnInit {
 
          //replacements dos valores
 
-      // Convierte replacements en un array de valores
-      const replacementsArray = Object.values(this.note_selected?.replacements2) as Replacement[];
 
-      // Muestra el resultado de la nota
-      console.log('replacements2:', this.note_selected.replacements2);
+         // Verificar la lista replacements
+      console.log('replacementList', this.replacements);
+  
+      // Filtrar la lista replacements por estado
+      this.replacements = this.replacements.filter(goal => goal.status === 'active');
+
+      // Recorrer la lista replacements y extraemos los objectives
+      this.objectives = this.replacements.flatMap(objective => objective.objectives);
+      console.log('Objetives', this.objectives );
+      
+      // filtrado los que estan en status in progress
+      const objetivosEnProgreso = this.objectives.filter(objetivo => objetivo.status === "in progress");
+
+      console.log(objetivosEnProgreso);
+      this.obj_inprogress = objetivosEnProgreso;
+
+      // Convierte replacements en un array de valores
+      // const replacementsArray = Object.values(this.note_selected?.replacements2) as Replacement[];
+
+      // // Muestra el resultado de la nota
+      // console.log('replacements2:', this.note_selected.replacements2);
 
       
       //filtro los replacements 
-      const newReplacements = this.replacements.map((element) => {
-        if (!element || !element.id || !element.name) {
-          console.warn('Invalid replacements element:', element);
-          return null;
-      }
-        const replacement = replacementsArray.find(
-          (replacement) => replacement.name === element.name
-        );
+      // const newReplacements = this.replacements.map((element) => {
+      //   if (!element || !element.id || !element.name) {
+      //     console.warn('Invalid replacements element:', element);
+      //     return null;
+      // }
+      //   const replacement = replacementsArray.find(
+      //     (replacement) => replacement.name === element.name
+      //   );
       
-        if (replacement) {
-          return {
-            id: element.id,
-            name: element.name,
-            assessed: replacement ? replacement.assessed : false,
-            modified: replacement ? replacement.modified : false,
-          };
-        } else {
-          console.warn(`replacements with id ${element.id} not found.`);
-          return {
-            id: element.id,
-            name: '', // Provide a default value
-            assessed: undefined,
-            modified: undefined,
-          };
-        }
-      });
-        //los uno con el resultado que trae la nota
-        const mergedReplacements = newReplacements.map((replacement, id) => {
-          const noteReplacement = this.note_selected?.replacements[replacement.id];
-          return {
-            ...replacement,
-            name: replacement.name || '', // Provide a default value
-            assessed: noteReplacement ? noteReplacement.assessed : replacement.assessed,
-            modified: noteReplacement ? noteReplacement.modified : replacement.modified,
-          };
-        });
+      //   if (replacement) {
+      //     return {
+      //       id: element.id,
+      //       name: element.name,
+      //       assessed: replacement ? replacement.assessed : false,
+      //       modified: replacement ? replacement.modified : false,
+      //     };
+      //   } else {
+      //     console.warn(`replacements with id ${element.id} not found.`);
+      //     return {
+      //       id: element.id,
+      //       name: '', // Provide a default value
+      //       assessed: undefined,
+      //       modified: undefined,
+      //     };
+      //   }
+      // });
+      //   //los uno con el resultado que trae la nota
+      //   const mergedReplacements = newReplacements.map((replacement, id) => {
+      //     const noteReplacement = this.note_selected?.replacements[replacement.id];
+      //     return {
+      //       ...replacement,
+      //       name: replacement.name || '', // Provide a default value
+      //       assessed: noteReplacement ? noteReplacement.assessed : replacement.assessed,
+      //       modified: noteReplacement ? noteReplacement.modified : replacement.modified,
+      //     };
+      //   });
       
-        console.log('Merged Replacements:', mergedReplacements);
-        this.replacementsview = mergedReplacements;
-        console.log(this.replacementsview);
+      //   console.log('Merged Replacements:', mergedReplacements);
+      //   this.replacementsview = mergedReplacements;
+      //   console.log(this.replacementsview);
 
-        //replacements 1 valor
+      //   //replacements 1 valor
 
-      // Convierte replacements en un array de valores
-      const replacements1Array = Object.values(this.note_selected?.replacements) as Replacement1[];
+      // // Convierte replacements en un array de valores
+      // const replacements1Array = Object.values(this.note_selected?.replacements) as Replacement1[];
 
-      // Muestra el resultado de la nota
-      console.log('replacements:', this.note_selected?.replacements);
+      // // Muestra el resultado de la nota
+      // console.log('replacements:', this.note_selected?.replacements);
 
       
       //filtro los replacements 
-      const newReplacements1 = this.replacements.map((element) => {
-        if (!element || !element.id || !element.name) {
-          console.warn('Invalid replacements element:', element);
-          return null;
-      }
-        const replacement1 = replacements1Array.find(
-          (replacement1) => replacement1.name === element.name
-        );
+      // const newReplacements1 = this.replacements.map((element) => {
+      //   if (!element || !element.id || !element.name) {
+      //     console.warn('Invalid replacements element:', element);
+      //     return null;
+      // }
+      //   const replacement1 = replacements1Array.find(
+      //     (replacement1) => replacement1.name === element.name
+      //   );
       
-        if (replacement1) {
-          return {
-            id: element.id,
-            name: element.name,
-            demostrated: replacement1 ? replacement1.demostrated : false,
-          };
-        } else {
-          console.warn(`replacements with id ${element.id} not found.`);
-          return {
-            id: element.id,
-            name: '', // Provide a default value
-            demostrated: undefined,
-          };
-        }
-      });
-        //los uno con el resultado que trae la nota
-        const mergedReplacements1 = newReplacements1.map((replacement1, id) => {
-          const noteReplacement = this.note_selected?.replacements[replacement1.id];
-          return {
-            ...replacement1,
-            name: replacement1.name || '', // Provide a default value
-            demostrated: noteReplacement ? noteReplacement.demostrated : replacement1.demostrated,
-          };
-        });
+      //   if (replacement1) {
+      //     return {
+      //       id: element.id,
+      //       name: element.name,
+      //       demostrated: replacement1 ? replacement1.demostrated : false,
+      //     };
+      //   } else {
+      //     console.warn(`replacements with id ${element.id} not found.`);
+      //     return {
+      //       id: element.id,
+      //       name: '', // Provide a default value
+      //       demostrated: undefined,
+      //     };
+      //   }
+      // });
+      //   //los uno con el resultado que trae la nota
+      //   const mergedReplacements1 = newReplacements1.map((replacement1, id) => {
+      //     const noteReplacement = this.note_selected?.replacements[replacement1.id];
+      //     return {
+      //       ...replacement1,
+      //       name: replacement1.name || '', // Provide a default value
+      //       demostrated: noteReplacement ? noteReplacement.demostrated : replacement1.demostrated,
+      //     };
+      //   });
       
-        console.log('Merged Replacements1:', mergedReplacements1);
-        this.replacementsview1 = mergedReplacements1;
-        console.log(this.replacementsview1);
+      //   console.log('Merged Replacements1:', mergedReplacements1);
+      //   this.replacementsview1 = mergedReplacements1;
+      //   console.log(this.replacementsview1);
         
       });
       

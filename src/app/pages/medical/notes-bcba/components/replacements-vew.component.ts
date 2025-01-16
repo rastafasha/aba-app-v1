@@ -19,11 +19,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let replaceme of replacements2; let i = index">
-              <td>{{ replaceme.name }}</td>
+            <tr *ngFor="let replaceme of obj_inprogress; let i = index">
+              <td>{{ replaceme.description }}</td>
               <td>
-              <i *ngIf="replaceme.name?.demostrated === true"   class="fa fa-check"  ></i>
-                <i *ngIf="replaceme.name?.demostrated === false "  class="fa fa-times" ></i>
+              <i *ngIf="replaceme.description?.demostrated === true"   class="fa fa-check"  ></i>
+                <i *ngIf="replaceme.description?.demostrated === false "  class="fa fa-times" ></i>
               </td>
             </tr>
           </tbody>
@@ -35,11 +35,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   `,
 })
 export class ReplacementViewComponent {
-  @Input() replacements2;
+  @Input() obj_inprogress;
   
 
   updatereplacements() {
-    const replacementsObj = this.replacements2
+    const replacementsObj = this.obj_inprogress
       .filter((replacements) => replacements.value)
       .reduce((acc, replacements) => {
         acc[replacements.id] = true;

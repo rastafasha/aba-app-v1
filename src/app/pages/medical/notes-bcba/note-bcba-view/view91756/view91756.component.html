@@ -1,0 +1,79 @@
+<div class="col-xs-12 " *ngIf="show97156">
+                  <div class="card">
+                    
+                    <app-intervention-view [interventions]="interventions"></app-intervention-view>
+                  </div>
+                  <!-- replacement protocols -->
+                  <div class="card">
+                    <app-replacements-view [obj_inprogress]="obj_inprogress"></app-replacements-view>
+                  </div>
+                  <!-- replacement protocols -->
+                  <!-- behaviors -->
+                  <div class="card">
+                    <app-behaviorslist-view [behaviors]="behaviors"></app-behaviorslist-view>
+                  </div>
+                  <!-- behaviors -->
+
+                  <!-- info -->
+                  <div class="col-xs-12">
+                    <div class="card">
+                      <div class="card-header">
+                        <!-- <h4 class="card-title">Caregiver Goal</h4> -->
+                      </div>
+                      <div class="card-body p-0">
+                        <div class="personal-list-out">
+                          <div class="container">
+                            <div class="row">
+                              <div class="col-xs-12 col-sm-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                  <span>Cargiver Participation</span>
+                                  <div class="d-flex justify-content-between align-items-center">
+                                    <i *ngIf="note_selected?.cargiver_participation" class="fa fa-check"></i>
+                                    <i *ngIf="!note_selected?.cargiver_participation" class="fa fa-times"></i>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-xs-12 col-sm-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                  <span>Was the client present</span>
+                                  <div class="d-flex justify-content-between align-items-center">
+                                    <i *ngIf="note_selected?.was_the_client_present" class="fa fa-check"></i>
+                                    <i *ngIf="!note_selected?.was_the_client_present" class="fa fa-times"></i>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="clear"></div><br>
+                              <div class="col-xs-12 col-sm-6 ">
+                                <div class="detail-personal">
+                                  <h2>Asked and clarified questions about the implementation of</h2>
+                                  <p>{{note_selected.asked_and_clarified_questions_about_the_implementation_of}}</p>
+                                </div>
+                              </div>
+                              <div class="col-xs-12 col-sm-6 ">
+                                <div class="detail-personal">
+                                  <h2>Reinforced caregiver strengths in</h2>
+                                  <p>{{note_selected.reinforced_caregiver_strengths_in}}</p>
+                                </div>
+                              </div>
+                              <div class="col-xs-12 col-sm-6 ">
+                                <div class="detail-personal">
+                                  <h2>Gave constructive feedback on</h2>
+                                  <p>{{note_selected.gave_constructive_feedback_on}}</p>
+                                </div>
+                              </div>
+                              <div class="col-xs-12 col-sm-6 ">
+                                <div class="detail-personal">
+                                  <h2>Recomended more practice on</h2>
+                                  <p>{{note_selected.recomended_more_practice_on}}</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- info -->
+                  
+                </div>
