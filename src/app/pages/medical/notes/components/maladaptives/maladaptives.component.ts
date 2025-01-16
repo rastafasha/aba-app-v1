@@ -43,6 +43,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   `,
 })
 export class MaladaptivesComponent {
-  @Input() maladaptives = [];
+  @Input() maladaptives: any[] = [];
   @Output() maladaptivesChange = new EventEmitter<any[]>();
 }

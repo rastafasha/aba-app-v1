@@ -10,15 +10,19 @@ import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
-import {interventionsList, interventionsList2, 
-  newList, replacementList,
-  outcomeList, show97151List, behaviorsList
+import {
+  interventionsList,
+  interventionsList2,
+  newList,
+  replacementList,
+  outcomeList,
+  show97151List,
+  behaviorsList,
 } from '../listasSelectData';
 interface ValidationResult {
   isValid: boolean;
   missingFields: string[];
 }
-
 
 @Component({
   selector: 'app-note-bcba',
@@ -26,9 +30,9 @@ interface ValidationResult {
   styleUrls: ['./note-bcba.component.scss'],
 })
 export class NoteBcbaComponent implements OnInit {
-Number(arg0: string) {
-throw new Error('Method not implemented.');
-}
+  Number(arg0: string) {
+    throw new Error('Method not implemented.');
+  }
   routes = AppRoutes;
   summary_note = '';
   isGeneratingSummary = false;
@@ -59,12 +63,12 @@ throw new Error('Method not implemented.');
   totalMinutos = 0;
   total_hour_session = '';
 
-  selectedValueProviderRBT_id:number
-  selectedValueBcba_id:number
+  selectedValueProviderRBT_id: number;
+  selectedValueBcba_id: number;
 
   client_id: string | number;
   patient_id: number;
-  patient_identifier: string ;
+  patient_identifier: string;
   doctor_id: string | number;
   patient_selected: any;
   client_selected: any;
@@ -101,7 +105,7 @@ throw new Error('Method not implemented.');
   next_session_is_scheduled_for = '';
   provider_name = '';
   supervisor_name = '';
-  
+
   porcent_of_occurrences = 0;
   porcent_of_correct_response = 0;
   maladaptive = '';
@@ -128,7 +132,7 @@ throw new Error('Method not implemented.');
   FILE_SIGNATURE_BCBA: any;
   IMAGE_PREVISUALIZA_SIGNATURE_BCBA: any;
   IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED: any = 'assets/img/user-06.jpg';
-  
+
   rbt_id: any;
   bcba_id: any;
   maladaptivename: any;
@@ -142,14 +146,14 @@ throw new Error('Method not implemented.');
 
   roles_rbt = [];
   roles_bcba = [];
-  
+
   hours_days = [];
   specialists = [];
   maladaptives = [];
   replacementGoals = [];
   intervention_added = [];
   replacements = [];
-  
+
   maladaptiveSelected: any = null;
   replacementSelected: any = null;
   lto: any = null;
@@ -172,15 +176,14 @@ throw new Error('Method not implemented.');
   electronic_signature: any;
   doctor: any;
   full_name: any;
-  
-  
+
   pa_services: PaService[] = [];
   selectedPaService: PaService | null = null;
   selectedPaService1: PaService | null = null;
   projectedUnits = 0;
   start_date: Date; // Fecha de inicio
   end_date: Date; // Fecha de fin
-  
+
   participants = '';
   additional_goals_or_interventions = '';
   asked_and_clarified_questions_about_the_implementation_of = '';
@@ -191,10 +194,10 @@ throw new Error('Method not implemented.');
   BCBA_conducted_assessments = false;
   showPosWarning = false;
 
-  demostrated= false;
-  modifications_needed_at_this_time= false;
-  cargiver_participation= false;
-  was_the_client_present= false;
+  demostrated = false;
+  modifications_needed_at_this_time = false;
+  cargiver_participation = false;
+  was_the_client_present = false;
 
   interventionsSelected = {};
   interventionsList = interventionsList;
@@ -260,60 +263,60 @@ throw new Error('Method not implemented.');
   }
 
   getProfileBip() {
-    this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
-      this.client_selected = resp.patient;
-      console.log('cliente',resp);
+    this.bipService
+      .showBipProfile(this.patient_identifier)
+      .subscribe((resp) => {
+        this.client_selected = resp.patient;
+        console.log('cliente', resp);
 
-      this.first_name = this.client_selected.first_name;
-      this.last_name = this.client_selected.last_name;
-      this.patientLocation_id = this.client_selected.location_id;
-      this.pos = this.client_selected.pos_covered;
+        this.first_name = this.client_selected.first_name;
+        this.last_name = this.client_selected.last_name;
+        this.patientLocation_id = this.client_selected.location_id;
+        this.pos = this.client_selected.pos_covered;
 
-      this.patient_id = this.client_selected.id;
-      this.patient_identifier = this.client_selected.patient_identifier;
-      this.patientLocation_id = this.client_selected.location_id;
-      this.insurance_id = resp.patient.insurer_id;
-      this.insurance_identifier = resp.patient.insurance_identifier;
+        this.patient_id = this.client_selected.id;
+        this.patient_identifier = this.client_selected.patient_identifier;
+        this.patientLocation_id = this.client_selected.location_id;
+        this.insurance_id = resp.patient.insurer_id;
+        this.insurance_identifier = resp.patient.insurance_identifier;
 
-      // this.pos = JSON.parse(resp.patient.pos_covered) ;
+        // this.pos = JSON.parse(resp.patient.pos_covered) ;
 
-      // let jsonObjPOS = JSON.parse(this.pos) || '';
-      // this.posGruoup = jsonObjPOS;
-      // console.log(this.posGruoup);
-      console.log(this.pos);
+        // let jsonObjPOS = JSON.parse(this.pos) || '';
+        // this.posGruoup = jsonObjPOS;
+        // console.log(this.posGruoup);
+        console.log(this.pos);
 
-      this.birth_date = this.client_selected.birth_date
-        ? new Date(this.client_selected.birth_date).toISOString()
-        : '';
-      console.log(this.birth_date);
-      this.diagnosis_code = this.client_selected.diagnosis_code;
-      this.insurer_id = this.client_selected.insurer_id;
+        this.birth_date = this.client_selected.birth_date
+          ? new Date(this.client_selected.birth_date).toISOString()
+          : '';
+        console.log(this.birth_date);
+        this.diagnosis_code = this.client_selected.diagnosis_code;
+        this.insurer_id = this.client_selected.insurer_id;
 
-      this.selectedValueAba = resp.patient.clin_director_id;
-      this.selectedValueRendering = resp.patient.bcba_id;
-      this.selectedValueBCBA = resp.patient.clin_director_id;
-      this.selectedValueRBT = resp.patient.bcba_id;
+        this.selectedValueAba = resp.patient.clin_director_id;
+        this.selectedValueRendering = resp.patient.bcba_id;
+        this.selectedValueBCBA = resp.patient.clin_director_id;
+        this.selectedValueRBT = resp.patient.bcba_id;
 
-      this.getReplacementsByPatientId();
-      this.getMaladaptivesBipByPatientId();
-      this.insuranceData();
-      this.pa_services = resp.patient.pa_services;
-      this.start_date = resp.patient.start_date;
-      this.end_date = resp.patient.end_date;
-      // console.log(this.pa_services);
-      
-      //filtramos lo pa_services usando star_date y end_date comparado con el dia de hoy
-      this.pa_services = this.pa_services.filter((pa) => {
-        const dateStart = new Date(pa.start_date).getTime();
-        const dateEnd = new Date(pa.end_date).getTime();
-        const dateToday = new Date().getTime();
-        return dateStart <= dateToday && dateEnd >= dateToday;
+        this.getReplacementsByPatientId();
+        this.getMaladaptivesBipByPatientId();
+        this.insuranceData();
+        this.pa_services = resp.patient.pa_services;
+        this.start_date = resp.patient.start_date;
+        this.end_date = resp.patient.end_date;
+        // console.log(this.pa_services);
+
+        //filtramos lo pa_services usando star_date y end_date comparado con el dia de hoy
+        this.pa_services = this.pa_services.filter((pa) => {
+          const dateStart = new Date(pa.start_date).getTime();
+          const dateEnd = new Date(pa.end_date).getTime();
+          const dateToday = new Date().getTime();
+          return dateStart <= dateToday && dateEnd >= dateToday;
+        });
+        //devolvemos la respuesta da los pa_services disponibles
+        console.log(this.pa_services);
       });
-      //devolvemos la respuesta da los pa_services disponibles
-      console.log(this.pa_services);
-
-        
-    });
   }
 
   insuranceData() {
@@ -352,7 +355,6 @@ throw new Error('Method not implemented.');
       this.provider_credential = resp.doctor.certificate_number;
     });
   }
-  
 
   getMaladaptivesBipByPatientId() {
     this.bipService
@@ -375,7 +377,6 @@ throw new Error('Method not implemented.');
     // event = this.selectedValueAba;
     this.specialistDataSupervisor(this.selectedValueAba);
   }
-
 
   speciaFirmaData(selectedValueRBT) {
     this.doctorService.showDoctorProfile(selectedValueRBT).subscribe((resp) => {
@@ -430,43 +431,47 @@ throw new Error('Method not implemented.');
     this.calculateTotalHours();
   }
 
-
   calculateTotalHours() {
     const timeIn1 = this.convertToMinutes(this.selectedValueTimeIn);
     const timeOut1 = this.convertToMinutes(this.selectedValueTimeOut);
     const timeIn2 = this.convertToMinutes(this.selectedValueTimeIn2);
     const timeOut2 = this.convertToMinutes(this.selectedValueTimeOut2);
 
-    const totalMinutes = (timeOut1 - timeIn1) + (timeOut2 - timeIn2);
+    const totalMinutes = timeOut1 - timeIn1 + (timeOut2 - timeIn2);
     const totalHours = this.convertToHours(totalMinutes);
     this.total_hour_session = totalHours;
     // console.log(`Total hours: ${totalHours}`);
     // console.log('para el html', this.total_hour_session);
-}
+  }
 
-convertToMinutes(time: string): number {
-  if (!time || !time.includes(':')) {
-    console.error(`Invalid time format: ${time}`);
-        return 0; // O manejar el error de otra manera
+  convertToMinutes(time: string): number {
+    if (!time || !time.includes(':')) {
+      console.error(`Invalid time format: ${time}`);
+      return 0; // O manejar el error de otra manera
     }
 
     const [hours, minutes] = time.split(':').map(Number);
 
     // Validar que hours y minutes sean números válidos
-    if (isNaN(hours) || isNaN(minutes) || hours < 0 || minutes < 0 || minutes >= 60) {
-        console.error(`Invalid time values: hours=${hours}, minutes=${minutes}`);
-        return 0; // O manejar el error de otra manera
+    if (
+      isNaN(hours) ||
+      isNaN(minutes) ||
+      hours < 0 ||
+      minutes < 0 ||
+      minutes >= 60
+    ) {
+      console.error(`Invalid time values: hours=${hours}, minutes=${minutes}`);
+      return 0; // O manejar el error de otra manera
     }
 
     return hours * 60 + minutes;
-}
+  }
 
-convertToHours(totalMinutes: number): string {
+  convertToHours(totalMinutes: number): string {
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes % 60;
     return `${hours}h ${minutes}m`;
-}
-
+  }
 
   updateCaregiverGoal(index: number) {
     console.log(
@@ -506,7 +511,7 @@ convertToHours(totalMinutes: number): string {
       (this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED = reader2.result);
   }
 
-  save() {
+  onSave() {
     this.text_validation = '';
     if (
       // !this.rbt_training_goals ||
@@ -514,49 +519,33 @@ convertToHours(totalMinutes: number): string {
       !this.meet_with_client_at ||
       !this.session_date
     )
-    // {
-    //   this.text_validation = 'All Fields (*) are required';
-    //   return;
-    // }
-    if (!this.selectedValueAba) {
-      // this.text_validation = 'ABA Supervisor must be selected';
-      // return;
-      Swal.fire(
-        'Warning',
-        'ABA Supervisor must be selected ',
-        'warning'
-      );
-      return;
-    }
+      if (!this.selectedValueAba) {
+        // {
+        //   this.text_validation = 'All Fields (*) are required';
+        //   return;
+        // }
+        // this.text_validation = 'ABA Supervisor must be selected';
+        // return;
+        Swal.fire('Warning', 'ABA Supervisor must be selected ', 'warning');
+        return;
+      }
 
     if (!this.selectedPaService) {
       // this.text_validation = 'Please select a service';
       // return;
-      Swal.fire(
-        'Warning',
-        'Please select a service ',
-        'warning'
-      );
+      Swal.fire('Warning', 'Please select a service ', 'warning');
       return;
     }
     if (!this.meet_with_client_at) {
       // this.text_validation = 'Please select a POS';
       // return;
-      Swal.fire(
-        'Warning',
-        'Please select a POS ',
-        'warning'
-      );
+      Swal.fire('Warning', 'Please select a POS ', 'warning');
       return;
     }
     if (!this.session_date) {
       // this.text_validation = 'Please select a session date';
       // return;
-      Swal.fire(
-        'Warning',
-        'Please select a session date ',
-        'warning'
-      );
+      Swal.fire('Warning', 'Please select a session date ', 'warning');
       return;
     }
 
@@ -583,7 +572,7 @@ convertToHours(totalMinutes: number): string {
     formData.append('provider_name', this.doctor_id + '');
     formData.append('supervisor_name', this.selectedValueBCBA);
 
-    formData.append('insurance_id', this.insurance_id+''); // id del seguro preferiblemente que solo agarre la data al crear
+    formData.append('insurance_id', this.insurance_id + ''); // id del seguro preferiblemente que solo agarre la data al crear
     formData.append('insurance_identifier', this.insurance_identifier); // id del seguro preferiblemente que solo agarre la data al crear
 
     formData.append(
@@ -640,7 +629,10 @@ convertToHours(totalMinutes: number): string {
         this.text_success = 'Note BCBA created';
         // this.ngOnInit();
         Swal.fire('Created', ` Note BCBA Created`, 'success');
-        this.router.navigate([AppRoutes.noteBcba.list, this.patient_identifier]);
+        this.router.navigate([
+          AppRoutes.noteBcba.list,
+          this.patient_identifier,
+        ]);
       }
     });
   }
@@ -648,46 +640,57 @@ convertToHours(totalMinutes: number): string {
     this.intervention_added = updatedInterventions;
   }
 
-
   generateAISummary() {
     const validationResult = this.checkDataSufficient();
 
     if (!validationResult.isValid) {
-        const missingFieldsList = validationResult.missingFields.join('\n• ');
-        Swal.fire('Warning', `Please fill all the required fields:\n\n• ${missingFieldsList}`, 'warning');
-        return;
+      const missingFieldsList = validationResult.missingFields.join('\n• ');
+      Swal.fire(
+        'Warning',
+        `Please fill all the required fields:\n\n• ${missingFieldsList}`,
+        'warning'
+      );
+      return;
     }
 
     this.isGeneratingSummary = true;
     const data = {
-        diagnosis: this.diagnosis_code,
-        birthDate: this.birth_date || null,
-        startTime: this.selectedValueTimeIn ? this.selectedValueTimeIn : null,
-        endTime: this.selectedValueTimeOut ? this.selectedValueTimeOut : null,
-        startTime2: this.selectedValueTimeIn2 ? this.selectedValueTimeIn2 : null,
-        endTime2: this.selectedValueTimeOut2 ? this.selectedValueTimeOut2 : null,
-        pos: this.getPos(this.meet_with_client_at),
-        caregiverGoals: this.show97155 ? this.caregivers_training_goals.map((g) => ({
+      diagnosis: this.diagnosis_code,
+      birthDate: this.birth_date || null,
+      startTime: this.selectedValueTimeIn ? this.selectedValueTimeIn : null,
+      endTime: this.selectedValueTimeOut ? this.selectedValueTimeOut : null,
+      startTime2: this.selectedValueTimeIn2 ? this.selectedValueTimeIn2 : null,
+      endTime2: this.selectedValueTimeOut2 ? this.selectedValueTimeOut2 : null,
+      pos: this.getPos(this.meet_with_client_at),
+      caregiverGoals: this.show97155
+        ? this.caregivers_training_goals.map((g) => ({
             goal: g.caregiver_goal,
             percentCorrect: g.porcent_of_correct_response,
-        })) : [],
-        rbtTrainingGoals: this.show97156 ? this.rbt_training_goals.map((g) => ({
+          }))
+        : [],
+      rbtTrainingGoals: this.show97156
+        ? this.rbt_training_goals.map((g) => ({
             goal: g.lto,
             percentCorrect: g.porcent_of_correct_response,
-        })) : [],
-        noteDescription: this.note_description,
+          }))
+        : [],
+      noteDescription: this.note_description,
     };
 
     this.noteBcbaService.generateAISummary(data).subscribe(
-        (response: any) => {
-            this.summary_note = response.summary;
-            this.isGeneratingSummary = false;
-        },
-        (error) => {
-            console.error('Error generating AI summary:', error);
-            Swal.fire('Error', 'Error generating AI summary. Please try again.', 'error');
-            this.isGeneratingSummary = false;
-        }
+      (response: any) => {
+        this.summary_note = response.summary;
+        this.isGeneratingSummary = false;
+      },
+      (error) => {
+        console.error('Error generating AI summary:', error);
+        Swal.fire(
+          'Error',
+          'Error generating AI summary. Please try again.',
+          'error'
+        );
+        this.isGeneratingSummary = false;
+      }
     );
   }
 
@@ -695,54 +698,63 @@ convertToHours(totalMinutes: number): string {
     const missingFields: string[] = [];
 
     if (!this.client_selected) {
-        missingFields.push('Client information');
+      missingFields.push('Client information');
     }
 
     const hasTime1 = this.selectedValueTimeIn && this.selectedValueTimeOut;
     const hasTime2 = this.selectedValueTimeIn2 && this.selectedValueTimeOut2;
     if (!hasTime1 && !hasTime2) {
-        missingFields.push('At least one session time period (Time In/Out)');
+      missingFields.push('At least one session time period (Time In/Out)');
     }
 
     if (!this.meet_with_client_at) {
-        missingFields.push('POS');
+      missingFields.push('POS');
     }
 
     // Only validate caregiver goals if CPT code is 97156
     if (this.show97156) {
-        if (!this.caregivers_training_goals || this.caregivers_training_goals.length === 0) {
-            missingFields.push('Caregiver training goals');
-        } else {
-            const allCaregiverGoalsValid = this.caregivers_training_goals.every(
-                (g) => g.caregiver_goal &&
-                g.porcent_of_correct_response !== undefined &&
-                g.porcent_of_correct_response !== null
-            );
-            if (!allCaregiverGoalsValid) {
-                missingFields.push('Complete caregiver goal information (goals and percentages)');
-            }
+      if (
+        !this.caregivers_training_goals ||
+        this.caregivers_training_goals.length === 0
+      ) {
+        missingFields.push('Caregiver training goals');
+      } else {
+        const allCaregiverGoalsValid = this.caregivers_training_goals.every(
+          (g) =>
+            g.caregiver_goal &&
+            g.porcent_of_correct_response !== undefined &&
+            g.porcent_of_correct_response !== null
+        );
+        if (!allCaregiverGoalsValid) {
+          missingFields.push(
+            'Complete caregiver goal information (goals and percentages)'
+          );
         }
+      }
     }
 
     // Only validate RBT goals if CPT code is 97155
     if (this.show97155) {
-        if (!this.rbt_training_goals || this.rbt_training_goals.length === 0) {
-            missingFields.push('RBT training goals');
-        } else {
-            const allRbtGoalsValid = this.rbt_training_goals.every(
-                (g) => g.lto &&
-                g.porcent_of_correct_response !== undefined &&
-                g.porcent_of_correct_response !== null
-            );
-            if (!allRbtGoalsValid) {
-                missingFields.push('Complete RBT goal information (goals and percentages)');
-            }
+      if (!this.rbt_training_goals || this.rbt_training_goals.length === 0) {
+        missingFields.push('RBT training goals');
+      } else {
+        const allRbtGoalsValid = this.rbt_training_goals.every(
+          (g) =>
+            g.lto &&
+            g.porcent_of_correct_response !== undefined &&
+            g.porcent_of_correct_response !== null
+        );
+        if (!allRbtGoalsValid) {
+          missingFields.push(
+            'Complete RBT goal information (goals and percentages)'
+          );
         }
+      }
     }
 
     return {
-        isValid: missingFields.length === 0,
-        missingFields
+      isValid: missingFields.length === 0,
+      missingFields,
     };
   }
 
@@ -771,13 +783,13 @@ convertToHours(totalMinutes: number): string {
       this.show971511 = false;
       this.show971512 = false;
 
-      if(service.cpt === '97155' ){
+      if (service.cpt === '97155') {
         this.show97155 = true;
       }
-      if(service.cpt === '97156' ){
+      if (service.cpt === '97156') {
         this.show97156 = true;
       }
-      if(service.cpt === '97151' ){
+      if (service.cpt === '97151') {
         this.show97151 = true;
       }
       this.checkPosWarning();
@@ -788,23 +800,22 @@ convertToHours(totalMinutes: number): string {
     const service = event.value;
     if (service) {
       this.selectedValueCode = service.cpt;
-      
+
       this.show97151 = true;
       this.show971511 = false;
       this.show971512 = false;
 
-      if(service.cpt === 'Observation' ){
+      if (service.cpt === 'Observation') {
         this.show971511 = true;
         this.show97151 = true;
       }
-      if(service.cpt === 'Report' ){
+      if (service.cpt === 'Report') {
         this.show971512 = true;
         this.show97151 = true;
       }
       this.checkPosWarning();
     }
   }
-  
 
   calculateUnitsFromTime(startTime: string, endTime: string): number {
     if (!startTime || !endTime) return 0;

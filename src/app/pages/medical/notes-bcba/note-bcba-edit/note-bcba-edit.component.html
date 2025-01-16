@@ -5,18 +5,36 @@
       <div class="row">
         <div class="col-sm-12">
           <ul class="breadcrumb">
-            <ng-container *ngIf="fromParam?.toLowerCase() === 'log'; else defaultBreadcrumb">
-              <li class="breadcrumb-item"><a [routerLink]="['/reports/logs']">Log Report</a></li>
-              <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+            <ng-container
+              *ngIf="fromParam?.toLowerCase() === 'log'; else defaultBreadcrumb"
+            >
               <li class="breadcrumb-item">
-                <a [routerLink]="[routes.noteBcba.view, note_id]" [queryParams]="{ from: fromParam }">View Note</a>
+                <a [routerLink]="['/reports/logs']">Log Report</a>
               </li>
-              <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+              <li class="breadcrumb-item">
+                <i class="feather icon-chevron-right"></i>
+              </li>
+              <li class="breadcrumb-item">
+                <a
+                  [routerLink]="[routes.noteBcba.view, note_id]"
+                  [queryParams]="{ from: fromParam }"
+                  >View Note</a
+                >
+              </li>
+              <li class="breadcrumb-item">
+                <i class="feather icon-chevron-right"></i>
+              </li>
               <li class="breadcrumb-item active">Edit Note</li>
             </ng-container>
             <ng-template #defaultBreadcrumb>
-              <li class="breadcrumb-item"><a [routerLink]="[routes.noteBcba.list, patient_identifier]">BCBA Notes</a></li>
-              <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
+              <li class="breadcrumb-item">
+                <a [routerLink]="[routes.noteBcba.list, patient_identifier]"
+                  >BCBA Notes</a
+                >
+              </li>
+              <li class="breadcrumb-item">
+                <i class="feather icon-chevron-right"></i>
+              </li>
               <li class="breadcrumb-item active">Edit Note</li>
             </ng-template>
           </ul>
@@ -40,7 +58,7 @@
                 <div class="col-12 py-4">
                   <h4>Edit Note Bcba</h4>
                 </div>
-                
+
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
@@ -139,9 +157,7 @@
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
-                    <label
-                      >Supervisor<span class="login-danger">*</span></label
-                    >
+                    <label>Supervisor<span class="login-danger">*</span></label>
                     <mat-select
                       [(ngModel)]="selectedValueBcba_id"
                       name="aba_supervisor"
@@ -159,10 +175,6 @@
                     </mat-select>
                   </div>
                 </div>
-
-                
-
-
 
                 <!-- DOS -->
                 <div class="col-12 col-md-3">
@@ -187,10 +199,7 @@
                 <!-- POS -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
-                    <label
-                      >POS
-                      <span class="login-danger">*</span></label
-                    >
+                    <label>POS <span class="login-danger">*</span></label>
                     <select
                       class="form-control form-select-solid fw-bolder"
                       name="meet_with_client_at"
@@ -313,7 +322,7 @@
                       ></label
                     >
                     <p class="text-center p-3">
-                      {{session_length_total}}
+                      {{ session_length_total }}
                     </p>
                   </div>
                 </div>
@@ -321,9 +330,7 @@
                 <!--  units -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
-                    <label
-                      >CPT Code <span class="login-danger">*</span></label
-                    >
+                    <label>CPT Code <span class="login-danger">*</span></label>
                     <mat-select
                       [(ngModel)]="selectedPaService"
                       name="pa_service"
@@ -371,20 +378,25 @@
                 <div class="col-12 col-md-6 col-xl-4">
                   <app-pa-service-calculator
                     [selectedPaService]="selectedPaService"
-                    [projectedUnits]="projectedUnits">
+                    [projectedUnits]="projectedUnits"
+                  >
                   </app-pa-service-calculator>
                 </div>
 
                 <div class="col-12 col-md-6 col-xl-4">
                   <app-units-display
                     [service]="selectedPaService"
-                    [newUnits]="projectedUnits">
+                    [newUnits]="projectedUnits"
+                  >
                   </app-units-display>
                 </div>
                 <!--  fin units -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
-                    <label>Environmental Changes <span class="login-danger">*</span></label>
+                    <label
+                      >Environmental Changes
+                      <span class="login-danger">*</span></label
+                    >
                     <input
                       class="form-control"
                       name="environmental_changes"
@@ -395,7 +407,10 @@
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
-                    <label>Present this session <span class="login-danger">*</span></label>
+                    <label
+                      >Present this session
+                      <span class="login-danger">*</span></label
+                    >
                     <input
                       class="form-control"
                       name="participants"
@@ -404,8 +419,6 @@
                     />
                   </div>
                 </div>
-
-
               </div>
               <!-- paciente -->
             </form>
@@ -415,8 +428,8 @@
       <!-- fin paciente -->
 
       <!-- Family full-->
-      <ng-container  *ngIf="!showFamily && !showMonitoring">
-        <div class="col-xs-12 col-sm-6" >
+      <ng-container *ngIf="!showFamily && !showMonitoring">
+        <div class="col-xs-12 col-sm-6">
           <div class="card">
             <div class="card-body">
               <div class="col-12">
@@ -459,7 +472,7 @@
         </div>
         <!-- fin Family full-->
         <!-- Monitoring  full -->
-        <div class="col-xs-12 col-sm-6" >
+        <div class="col-xs-12 col-sm-6">
           <div class="card">
             <div class="card-body">
               <div class="col-12">
@@ -496,8 +509,7 @@
           </div>
         </div>
         <!-- fin Monitoring  full -->
-        </ng-container>
-
+      </ng-container>
 
       <!-- Family only 56 -->
       <div class="col-xs-12 col-sm-6" *ngIf="showMonitoring">
@@ -543,7 +555,7 @@
       </div>
       <!-- fin Family only 56 -->
       <!-- Monitoring  only 55 -->
-      <div class="col-xs-12 col-sm-6" *ngIf=" showFamily">
+      <div class="col-xs-12 col-sm-6" *ngIf="showFamily">
         <div class="card">
           <div class="card-body">
             <div class="col-12">
@@ -724,7 +736,7 @@
                   <button
                     type="button"
                     class="btn btn-primary submit-form me-2"
-                    (click)="save()"
+                    (click)="onSave()"
                   >
                     Save
                   </button>

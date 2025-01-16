@@ -138,8 +138,8 @@ export class AddDoctorComponent implements OnInit {
       this.selectedValue = role;
       console.log(this.selectedValue);
       this.isManager = false;
-      
-      if(role === 2 ){
+
+      if (role === 2) {
         this.isManager = true;
       }
     }
@@ -192,7 +192,7 @@ export class AddDoctorComponent implements OnInit {
       (this.IMAGE_PREVISUALIZA_SIGNATURE = reader.result as string);
   }
 
-  save() {
+  onSave() {
     this.text_validation = '';
     if (
       !this.name ||
@@ -335,7 +335,7 @@ export class AddDoctorComponent implements OnInit {
     formData.append('contract_type', this.contract_type);
     formData.append('salary', this.salary + '');
     let locations = '';
-    
+
     this.locations_selected.forEach((location, index) => {
       if (index !== 0) {
         locations += `,${location.toString()}`;

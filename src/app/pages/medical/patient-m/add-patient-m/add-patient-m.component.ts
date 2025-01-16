@@ -391,7 +391,7 @@ export class AddPatientMComponent implements OnInit {
       (this.IMAGE_PREVISUALIZA = reader.result as string);
   }
 
-  public save(): void {
+  public onSave(): void {
     if (!this.form.valid) {
       this.text_validation = 'All the fields are required';
       return;

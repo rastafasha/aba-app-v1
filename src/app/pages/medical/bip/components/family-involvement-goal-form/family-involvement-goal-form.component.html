@@ -1,242 +1,122 @@
- <!-- other -->
- <div class="col-sm-12">
-    <div class="card">
-        <div class="card-body">
-            
-            <form autocomplete="false">
-                <div class="row" >
+<!-- other -->
+<div class="col-sm-12">
+  <div class="card">
+    <div class="card-body">
+      <form autocomplete="false">
+        <div class="row">
+          <!-- documents -->
+          <div class="col-12">
+            <div class="card-box">
+              <div class="card-block">
+                <h3 class="card-title">Family / Caregiver Involvement</h3>
+                <p>
+                  “All training provided is in relevant context/routines to
+                  caregivers supporting client once on-going treatment begins.
+                  During visit, clinicians will teach and train the behavior
+                  plan to caregivers. The behavior analyst will describe, model,
+                  and/or prompt use of the procedures, making sure that the
+                  interventions fit well within existing routines and are
+                  feasible. The expectation is that the caregiver or school
+                  staff will initially be implementing the plan with the
+                  assistance and support of the behavior assistant. If
+                  necessary, behavioral staff will provide simplified versions
+                  of the behavior and teaching plans to facilitate
+                  implementation. The analyst will observe caregivers and
+                  provide feedback, gradually fading the assistance they
+                  provide. Parent training will occur weekly by the BCBA but
+                  modeling of appropriate interventions and procedures will
+                  occur daily by RBT/lead analyst, depending on who is providing
+                  the service. All implementation of fidelity procedures, data
+                  collection, and analyzing of data will occur under the
+                  direction and guidance of the lead analyst; revisions will
+                  occur as needed. Participation by the parents or caregivers
+                  are expected, and continued authorization for ABA services
+                  will take consideration of their participation in at least 85%
+                  of planned sessions.Teaching Methods: To develop the
+                  acquisition skills and replacement behaviors, the behavioral
+                  intervention professionals and caregivers will task analyze
+                  complex skills, develop routine-specific instructional plans,
+                  and use appropriate chaining, shaping, and prompting methods.
+                  Specifically, these will include natural environment training,
+                  incidental or milieu teaching, peer mediated instruction, and
+                  role play-based intervention. Teaching plans will be developed
+                  for complex skills and will include the environments in which
+                  the instruction is taking place. These teaching plans will
+                  include the specific skills or skill sequences to be taught,
+                  environmental arrangements to promote skill use (e.g., social
+                  stories, videos, token boards, timers, visual schedules), and
+                  other specific instructional procedures. Routines and skills
+                  targeted for instruction will be prioritized by the
+                  caregivers, addressing the most essential areas first.
+                  Caregivers will be taught a variety of behavior interventions
+                  throughout the session. This will allow parents to
+                  successfully work with client and any of his problem behaviors
+                  when the behavior assistant and analyst are not present.
+                  Ongoing training and monitoring will continue to occur on a
+                  weekly basis to ensure proper implementation of the behavior
+                  program. Each month, clinicians will conduct competency checks
+                  of the caregivers to ensure proper program implementation."
+                </p>
 
-                    <!-- documents -->
-                    <div class="col-12">
-                        <div class="card-box">
-                            <div class="card-block">
-                                <h3 class="card-title">Family / Caregiver Involvement</h3>
-                                <p>“All training provided is in relevant context/routines to caregivers supporting client once on-going treatment begins. During visit, clinicians will teach and train the behavior plan to caregivers. The behavior analyst will describe, model, and/or prompt use of the procedures, making sure that the interventions fit well within existing routines and are feasible. The expectation is that the caregiver or school staff will initially be implementing the plan with the assistance and support of the behavior assistant. If necessary, behavioral staff will provide simplified versions of the behavior and teaching plans to facilitate implementation. The analyst will observe caregivers and provide feedback, gradually fading the assistance they provide. Parent training will occur weekly by the BCBA but modeling of appropriate interventions and procedures will occur daily by RBT/lead analyst, depending on who is providing the service.  All implementation of fidelity procedures, data collection, and analyzing of data will occur under the direction and guidance of the lead analyst; revisions will occur as needed. Participation by the parents or caregivers are expected, and continued authorization for ABA services will take consideration of their participation in at least 85% of planned sessions.Teaching Methods: To develop the acquisition skills and replacement behaviors, the behavioral intervention professionals and caregivers will task analyze complex skills, develop routine-specific instructional plans, and use appropriate chaining, shaping, and prompting methods.  Specifically, these will include natural environment training, incidental or milieu teaching, peer mediated instruction, and role play-based intervention.             Teaching plans will be developed for complex skills and will include the environments in which the instruction is taking place. These teaching plans will include the specific skills or skill sequences to be taught, environmental arrangements to promote skill use (e.g., social stories, videos, token boards, timers, visual schedules), and other specific instructional procedures.  Routines and skills targeted for instruction will be prioritized by the caregivers, addressing the most essential areas first.  Caregivers will be taught a variety of behavior interventions throughout the session. This will allow parents to successfully work with client and any of his problem behaviors when the behavior assistant and analyst are not present. Ongoing training and monitoring will continue to occur on a weekly basis to ensure proper implementation of the behavior program. Each month, clinicians will conduct competency checks of the caregivers to ensure proper program implementation."</p>
-                                
-                                <h4 class="card-title">Caregiver Training Goals</h4>
-                                <div class="row align-items-center" >
-                                    <div class="col-xs-12">
-                                        <form autocomplete="off">
-                                            <div class="row">
-                                                <div class="col-12 col-sm-6">
-                                                    <div class="form-group local-forms">
-                                                        <label>Caregiver Goal <span class="login-danger">*</span></label>
-                                                        <textarea class="form-control" name="caregiver_goal" [(ngModel)]="caregiver_goal" rows="4" cols="30"></textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-sm-6">
-                                                    <div class="form-group local-forms">
-                                                        <label>Outcome measure <span class="login-danger">*</span></label>
-                                                        <textarea class="form-control" name="outcome_measure" [(ngModel)]="outcome_measure" rows="4" cols="30"></textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-3">  
-                                                    <div class="form-group local-forms">
-                                                        <label >Criteria<span class="login-danger">*</span></label>
-                                                        <input class="form-control" name="criteria"  [(ngModel)]="criteria" type="text"  >
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-md-3">
-                                                    <div class="form-group local-forms">
-                                                        <label >Initiation<span class="login-danger">*</span></label>
-                                                        <input class="form-control datetimepicker" autocomplete="false" [ngModelOptions]="{standalone: true}" name="initiation"  [(ngModel)]="initiation" type="text" matInput [matDatepicker]="pickerInitiation"  >
-                                                        <mat-datepicker #pickerInitiation></mat-datepicker>
-                                                        <mat-datepicker-toggle matIconSuffix [for]="pickerInitiation"></mat-datepicker-toggle>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 col-sm-3">
-                                                    <div class="form-group local-forms">
-                                                        <label >End Date <span class="login-danger">*</span></label>
-                                                        <input class="form-control datetimepicker"  name="end_date" [ngModelOptions]="{standalone: true}" [(ngModel)]="end_date" type="text" matInput [matDatepicker]="picker"  >
-                                                        <mat-datepicker #picker></mat-datepicker>
-                                                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-12 col-sm-3">  
-                                                    <div class="form-group local-forms">
-                                                        <label >Current Status<span class="login-danger">*</span></label>
-                                                        <select class="form-control form-select-solid fw-bolder"
-                                                        name="current_status" [(ngModel)]="current_status" 
-                                                        placeholder="state">
-                                                        <option>-- Select --</option>
-                                                        <option value="new">New</option>
-                                                        <option value="in progress">In Progress</option>
-                                                        <option value="mastered date">Mastered Date</option>
-                                                        <option value="initiate date">Initiate Date</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12 mb-3 doctor-submit text-end">
-                                                    <button class="btn btn-primary btn-sm" (click)="addDocument()">Update List</button>
-                                                </div>
-                                            </div>
+                <h4 class="card-title">Caregiver Training Goals</h4>
 
-                                        </form>
-                                    </div>
-                                    <div class="col-xs-12 ">
-                                        <div class="table-responsive">
-                                            <table class="table mb-0">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Caregiver Goal </th>
-                                                        <th>Outcome Measure</th>
-                                                        <th>Criteria</th>
-                                                        <th>Initiation</th>
-                                                        <th>End Date</th>
-                                                        <th>Current Status</th>
-                                                        <th>Options</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr *ngFor="let caregiver of caregivers; let i = index">
-                                                        <td>
-                                                            {{caregiver.caregiver_goal}}
-                                                        </td>
-                                                        <td>
-                                                             {{caregiver.outcome_measure}}
-                                                             
-                                                        </td>
-                                                        <td>
-                                                             {{caregiver.criteria}}
-                                                             
-                                                        </td>
-                                                        <td>
-                                                             {{caregiver.initiation | date : "shortDate"}}
-                                                             
-                                                        </td>
-                                                        <td>
-                                                             {{caregiver.end_date | date : "shortDate"}}
-                                                             
-                                                        </td>
-                                                        <td>
-                                                             {{caregiver.current_status}}
-                                                             
-                                                        </td>
-                                                        <td>
-                                                            <button class="btn btn-outline-success btn-sm" (click)="seleccionarParaEdit(caregiver)" 
-                                                            data-bs-toggle="modal" [attr.data-bs-target]="'#edit-family-'+caregiver.i"
-                                                            ><i class="fa fa-pencil"></i> Edit</button>
-                                                            <button class="btn btn-outline-danger btn-sm" (click)="deleteDocument(caregiver)">x Delete</button>
-                                                        </td>
-
-                                                         <!-- modal -->
-           
-                                                         <div [id]="'edit-family-'+caregiver.i" class="modal  add-modal" role="dialog">
-                                                            <div class="modal-dialog modal-dialog-centered modal-lg">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="modalFamily">{{selectedCaregiver.caregiver_goal}} | {{selectedCaregiver.i}}</h5>
-                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                    </div>
-                                                                    <div class="modal-body text-center">
-                                                                        <div class="col-xs-12 ">
-                                                                            <form autocomplete="off">
-                                                                                <div class="row">
-                                                
-                                                                                    <div class="col-12 col-sm-6">
-                                                                                        <div class="form-group local-forms">
-                                                                                            <label>Caregiver Goal <span class="login-danger">*</span></label>
-                                                                                            <textarea class="form-control" name="caregiver_goal_edit" 
-                                                                                             [(ngModel)]="selectedCaregiver.caregiver_goal" rows="4" cols="30"></textarea>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-12 col-sm-6">
-                                                                                        <div class="form-group local-forms">
-                                                                                            <label>Outcome measure <span class="login-danger">*</span></label>
-                                                                                            <textarea class="form-control" name="outcome_measure_edit" [(ngModel)]="selectedCaregiver.outcome_measure" rows="4" cols="30"></textarea>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-xs-12 col-sm-3">  
-                                                                                        <div class="form-group local-forms">
-                                                                                            <label >Criteria<span class="login-danger">*</span></label>
-                                                                                            <input class="form-control" name="criteria_edit"  [(ngModel)]="selectedCaregiver.criteria" type="text"  >
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-12 col-md-3">
-                                                                                        <div class="form-group local-forms">
-                                                                                            <label >Initiation<span class="login-danger">*</span></label>
-                                                                                            <input class="form-control datetimepicker" autocomplete="false" [ngModelOptions]="{standalone: true}" name="initiation_edit"  [(ngModel)]="selectedCaregiver.initiation" type="text" matInput [matDatepicker]="pickerInitiation"  >
-                                                                                            <mat-datepicker #pickerInitiation></mat-datepicker>
-                                                                                            <mat-datepicker-toggle matIconSuffix [for]="pickerInitiation"></mat-datepicker-toggle>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-12 col-sm-3">
-                                                                                        <div class="form-group local-forms">
-                                                                                            <label >End Date <span class="login-danger">*</span></label>
-                                                                                            <input class="form-control datetimepicker"  name="end_date_edit" [ngModelOptions]="{standalone: true}" [(ngModel)]="selectedCaregiver.end_date" type="text" matInput [matDatepicker]="picker"  >
-                                                                                            <mat-datepicker #picker></mat-datepicker>
-                                                                                            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-xs-12 col-sm-3">  
-                                                                                        <div class="form-group local-forms">
-                                                                                            <label >Current Status<span class="login-danger">*</span></label>
-                                                                                            <select class="form-control form-select-solid fw-bolder"
-                                                                                            name="current_status_edit" [(ngModel)]="selectedCaregiver.current_status" 
-                                                                                            placeholder="state">
-                                                                                            <option>-- Select --</option>
-                                                                                            <option value="new">New</option>
-                                                                                            <option value="in progress">In Progress</option>
-                                                                                            <option value="mastered date">Mastered Date</option>
-                                                                                            <option value="initiate date">Initiate Date</option>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div class="col-12 mb-3 doctor-submit text-end">
-                                                                                        <button class="btn btn-primary btn-sm" (click)="updateItem(selectedCaregiver)">Update Info</button>
-                                                                                    </div>
-                                                                                </div>
-
-                                                                            </form>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <!-- modal -->
-                                                        
-                                                    </tr>
-                                                    
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
-                    <!-- documents -->
-                    
-                        
-                    </div>
-                    <!-- validaciones -->
-                    
-
-                    <div class="form-group row" *ngIf="text_validation">
-                        <div class="col-12">
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                <strong>!</strong> {{ text_validation }}.
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true"> </span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- validaciones -->
-                    
-                    <div class="col-12">
-                        <div class="doctor-submit text-end">
-                            <button type="button" class="btn btn-primary submit-form me-2" (click)="save()">Save</button>
-                        </div>
-                    </div>
-                
-            </form>
-            
+                <div class="row align-items-center">
+                  <app-list-and-form
+                    #caregiverGoalForm
+                    [default]="newCaregiver"
+                    [(dataSource)]="input.objectives"
+                    [displayedColumns]="[
+                      'name',
+                      'description',
+                      'target',
+                      'initial_date',
+                      'end_date',
+                      'status'
+                    ]"
+                  >
+                    <app-sto-form [(sto)]="newCaregiver"></app-sto-form>
+                  </app-list-and-form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- documents -->
         </div>
+        <!-- validaciones -->
+
+        <div class="form-group row" *ngIf="text_validation">
+          <div class="col-12">
+            <div
+              class="alert alert-danger alert-dismissible fade show"
+              role="alert"
+            >
+              <strong>!</strong> {{ text_validation }}.
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+              >
+                <span aria-hidden="true"> </span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- validaciones -->
+
+        <div class="col-12">
+          <div class="doctor-submit text-end">
+            <button
+              type="button"
+              class="btn btn-primary submit-form me-2"
+              (click)="onSave()"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
-        
+  </div>
 </div>
-<!-- fin other -->					
+<!-- fin other -->

@@ -1,16 +1,26 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { AppUser } from 'src/app/core/models/users.model';
-import Swal from 'sweetalert2';
-import { BipService } from '../../service/bip.service';
-import { GoalFamilyEnvolmentService } from '../../service/goal-family-envolment.service';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Objective, PlanV2 } from 'src/app/core/models';
 
 @Component({
   selector: 'app-family-involvement-goal-form',
   templateUrl: './family-involvement-goal-form.component.html',
   styleUrls: ['./family-involvement-goal-form.component.scss'],
 })
-export class FamilyInvolvementGoalFormComponent implements OnInit, OnChanges {
+export class FamilyInvolvementGoalFormComponent {
+  @Input() input: PlanV2;
+  @Output() inputChange = new EventEmitter<PlanV2>();
+  @Output() save = new EventEmitter<PlanV2>();
+  //
+  newCaregiver = Objective.getDefault();
+  //
+  text_validation = '';
+  //
+  onSave() {
+    this.inputChange.emit(this.input);
+    this.save.emit(this.input);
+  }
+}
+/*
   @Input() clientSelected: any;
   @Input() bipSelected: any;
   valid_form_success = false;
@@ -225,7 +235,7 @@ export class FamilyInvolvementGoalFormComponent implements OnInit, OnChanges {
     this.current_status = '';
   }
 
-  save() {
+  onSave() {
     this.text_validation = '';
     // if(!this.goalFamilyEnvolmentid
     //   || !this.caregivers
@@ -272,3 +282,4 @@ export class FamilyInvolvementGoalFormComponent implements OnInit, OnChanges {
     }
   }
 }
+*/

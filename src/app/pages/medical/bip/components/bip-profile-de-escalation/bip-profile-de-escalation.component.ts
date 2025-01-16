@@ -7,5 +7,5 @@ import { DeEscalationTechnique } from 'src/app/core/models';
   styleUrls: ['./bip-profile-de-escalation.component.scss'],
 })
 export class BipProfileDeEscalationComponent {
-  @Input() de_escalation_technique: DeEscalationTechnique[];
+  @Input() de_escalation_techniques: DeEscalationTechnique[];
 }

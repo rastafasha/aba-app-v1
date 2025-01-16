@@ -1,16 +1,28 @@
-import { Component, Input, OnInit, OnChanges,SimpleChanges } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import Swal from 'sweetalert2';
-import { BipService } from '../../service/bip.service';
-import { MonitoringEvaluatingService } from '../../service/monitoring-evaluating.service';
-import { AppUser } from 'src/app/core/models/users.model';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MonitoringEvaluating, Objective } from 'src/app/core/models';
 
 @Component({
   selector: 'app-monitoring-evaluating',
   templateUrl: './monitoring-evaluating.component.html',
   styleUrls: ['./monitoring-evaluating.component.scss'],
 })
-export class MonitoringEvaluatingComponent implements OnInit, OnChanges {
+export class MonitoringEvaluatingComponent {
+  @Input() monitoring_evalutating: MonitoringEvaluating;
+  @Output() monitoring_evalutatingChange =
+    new EventEmitter<MonitoringEvaluating>();
+  @Output() save = new EventEmitter<MonitoringEvaluating>();
+  //
+  newRbtTrainingGoal = Objective.getDefault();
+  //
+  text_validation = '';
+  //
+  onSave() {
+    this.monitoring_evalutatingChange.emit(this.monitoring_evalutating);
+    this.save.emit(this.monitoring_evalutating);
+  }
+}
+/*
+
   @Input() clientSelected: any;
   @Input() bipSelected: any;
 
@@ -46,7 +58,6 @@ export class MonitoringEvaluatingComponent implements OnInit, OnChanges {
   gollto_edit: any = {};
 
   current_status: any;
-  
 
   constructor(
     private bipService: BipService,
@@ -136,9 +147,9 @@ export class MonitoringEvaluatingComponent implements OnInit, OnChanges {
         this.monitorings = resp.monitoringEvaluatingPatientIds.data;
         if (this.monitorings.length > 0) {
           this.training_goals = this.monitorings[0].rbt_training_goals || []; // Ensure it's an array
-      } else {
+        } else {
           this.training_goals = []; // Fallback to an empty array
-      }
+        }
         this.monitoringtid = resp.monitoringEvaluatingPatientIds.data[0]?.id;
         // this.training_goals =
         //   resp.monitoringEvaluatingPatientIds.data[0].rbt_training_goals;
@@ -242,7 +253,7 @@ export class MonitoringEvaluatingComponent implements OnInit, OnChanges {
       });
   }
 
-  save() {
+  onSave() {
     this.text_validation = '';
     if (!this.training_goals) {
       this.text_validation = 'Is required this information ';
@@ -287,3 +298,4 @@ export class MonitoringEvaluatingComponent implements OnInit, OnChanges {
     }
   }
 }
+*/

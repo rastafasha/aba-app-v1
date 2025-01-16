@@ -661,7 +661,7 @@ export class NoteRbtComponent implements OnInit {
     return this.replacement_added.every((r) => this.isValidCorrectResponse(r));
   }
 
-  save() {
+  onSave() {
     console.log('Pre-save values:', {
       client_id: this.client_id,
       provider_id: this.selectedValueProviderRBT_id,

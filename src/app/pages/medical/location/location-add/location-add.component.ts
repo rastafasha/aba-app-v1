@@ -34,7 +34,7 @@ export class LocationAddComponent {
   taxonomy = '';
   providerId = '';
   additional_notes = '';
-  
+
   FILE_AVATAR: any;
   IMAGE_PREVISUALIZA: any = 'assets/img/user-06.jpg';
 
@@ -76,7 +76,7 @@ export class LocationAddComponent {
     reader.onloadend = () => (this.IMAGE_PREVISUALIZA = reader.result);
   }
 
-  save() {
+  onSave() {
     this.text_validation = '';
     if (!this.title || !this.address) {
       this.text_validation = 'Los campos con * son obligatorios';

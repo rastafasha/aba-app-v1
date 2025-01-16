@@ -8,9 +8,10 @@ import {
 } from 'src/app/shared/utils';
 import { PlanV2 } from './plan.v2.model';
 type ObjectiveStatus =
-  | 'inprogress'
-  | 'initiated'
+  | 'no started'
+  | 'in progress'
   | 'mastered'
+  | 'initiated'
   | 'on hold'
   | 'discontinued'
   | 'maintenance';
@@ -36,7 +37,7 @@ export class Objective {
       id: 0,
       name: '',
       maladaptive_id: 0,
-      status: 'inprogress',
+      status: 'no started',
       initial_date: new Date(),
       end_date: new Date(),
       description: '',
@@ -137,13 +138,14 @@ export class MonitoringEvaluating {
   bip_id: number;
   patient_id: string;
   client_id: number;
-  treatment_fidelity: string | null;
-  rbt_training_goals: string;
+  treatment_fidelity: string;
+  rbt_training_goals: Objective[];
   created_at: string;
   updated_at: string;
   deleted_at: string | null;
   constructor(data: Partial<MonitoringEvaluating>) {
     Object.assign(this, data);
+    this.rbt_training_goals = ForceMap(data.rbt_training_goals, Objective);
   }
 }
 
@@ -185,6 +187,7 @@ export class ConsentToTreatment {
   }
 }
 export class Recomendation {
+  index?: number;
   cpt: string;
   nombre: string;
   num_units: number;
@@ -193,6 +196,16 @@ export class Recomendation {
   description_service: string;
   constructor(data: Partial<Recomendation>) {
     Object.assign(this, data);
+  }
+  static getDefault(): Recomendation {
+    return {
+      cpt: '',
+      nombre: '',
+      num_units: 0,
+      breakdown_per_week: '',
+      location: '',
+      description_service: '',
+    };
   }
 }
 
@@ -224,17 +237,17 @@ export class CrisisPlan {
   crisis_description: string;
   crisis_note: string;
   caregiver_requirements_for_prevention_of_crisis: string;
-  risk_factors: RiskFactor[];
-  suicidalities: Suicidality[];
-  homicidalities: Homicidality[];
+  risk_factors: RiskFactor;
+  suicidalities: Suicidality;
+  homicidalities: Homicidality;
   created_at?: Date;
   updated_at?: Date;
   deleted_at?: Date;
   constructor(data: Partial<CrisisPlan>) {
     Object.assign(this, data);
-    this.risk_factors = ForceMap(data.risk_factors, RiskFactor);
-    this.suicidalities = ForceMap(data.suicidalities, Suicidality);
-    this.homicidalities = ForceMap(data.homicidalities, Homicidality);
+    this.risk_factors = new RiskFactor(data.risk_factors);
+    this.suicidalities = new Suicidality(data.suicidalities);
+    this.homicidalities = new Homicidality(data.homicidalities);
   }
 }
 export class RiskFactor {
@@ -256,6 +269,23 @@ export class RiskFactor {
   other: string;
   constructor(data: Partial<RiskFactor>) {
     Object.assign(this, data);
+    this.do_not_apply = !!data.do_not_apply;
+    this.elopement = !!data.elopement;
+    this.assaultive_behavior = !!data.assaultive_behavior;
+    this.aggression = !!data.aggression;
+    this.self_injurious_behavior = !!data.self_injurious_behavior;
+    this.sexually_offending_behavior = !!data.sexually_offending_behavior;
+    this.fire_setting = !!data.fire_setting;
+    this.current_substance_abuse = !!data.current_substance_abuse;
+    this.impulsive_behavior = !!data.impulsive_behavior;
+    this.psychotic_symptoms = !!data.psychotic_symptoms;
+    this.self_mutilation_cutting = !!data.self_mutilation_cutting;
+    this.caring_for_ill_family_recipient =
+      !!data.caring_for_ill_family_recipient;
+    this.current_family_violence = !!data.current_family_violence;
+    this.dealing_with_significant = !!data.dealing_with_significant;
+    this.prior_psychiatric_inpatient_admission =
+      !!data.prior_psychiatric_inpatient_admission;
   }
 }
 export class Suicidality {
@@ -266,16 +296,26 @@ export class Suicidality {
   prior_attempt: boolean;
   constructor(data: Partial<Suicidality>) {
     Object.assign(this, data);
+    this.not_present = !!data.not_present;
+    this.ideation = !!data.ideation;
+    this.plan = !!data.plan;
+    this.means = !!data.means;
+    this.prior_attempt = !!data.prior_attempt;
   }
 }
 export class Homicidality {
-  not_present_homicidality: boolean;
-  ideation_homicidality: boolean;
-  plan_homicidality: boolean;
-  means_homicidality: boolean;
-  prior_attempt_homicidality: boolean;
+  not_present: boolean;
+  ideation: boolean;
+  plan: boolean;
+  means: boolean;
+  prior_attempt: boolean;
   constructor(data: Partial<Homicidality>) {
     Object.assign(this, data);
+    this.not_present = !!data.not_present;
+    this.ideation = !!data.ideation;
+    this.plan = !!data.plan;
+    this.means = !!data.means;
+    this.prior_attempt = !!data.prior_attempt;
   }
 }
 
@@ -315,6 +355,19 @@ export class GeneralizationTraining {
     this.updated_at = DateOrNullOrUndefined(data.updated_at);
     this.deleted_at = DateOrNullOrUndefined(data.deleted_at);
   }
+  static getDefault(): GeneralizationTraining {
+    return {
+      id: null,
+      bip_id: null,
+      patient_id: null,
+      client_id: null,
+      discharge_plan: null,
+      transition_fading_plans: [],
+      created_at: undefined,
+      updated_at: undefined,
+      deleted_at: undefined,
+    };
+  }
 }
 
 export class TransitionFadingPlan {
@@ -324,6 +377,12 @@ export class TransitionFadingPlan {
     Object.assign(this, data);
     this.phase = StringOrNullOrUndefined(data.phase);
     this.description = StringOrNullOrUndefined(data.description);
+  }
+  static getDefault(): TransitionFadingPlan {
+    return {
+      phase: '',
+      description: '',
+    };
   }
 }
 

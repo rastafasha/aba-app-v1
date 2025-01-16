@@ -39,17 +39,23 @@ import { FamilyInvolvementGoalFormComponent } from './family-involvement-goal-fo
 import { GeneralizationTrainingComponent } from './generalization-training/generalization-training.component';
 import { GoalFormSimpleComponent } from './goal-form-simple/goal-form-simple.component';
 import { GoalFormComponent } from './goal-form/goal-form.component';
+import { HomicidalitiesComponent } from './homicidalities/homicidalities.component';
 import { LtoFormComponent } from './lto-form/lto-form.component';
 import { LtoListAndFormComponent } from './lto-list-and-form/lto-list-and-form.component';
 import { MonitoringEvaluatingComponent } from './monitoring-evaluating/monitoring-evaluating.component';
 import { PatientFormComponent } from './patient-form/patient-form.component';
+import { RecomendationFormComponent } from './recomendation-form/recomendation-form.component';
 import { ReductionGoalEditComponent } from './reduction-goal-edit/reduction-goal-edit.component';
 import { MaladaptiveGoalsTableComponent } from './reduction-goal-form/maladaptive-goals-table/maladaptive-goals-table.component';
 import { ReductionGoalFormComponent } from './reduction-goal-form/reduction-goal-form.component';
 import { ReplacementGoalFormComponent } from './replacement-goal-form/replacement-goal-form.component';
+import { RiskFactorsComponent } from './risk-factors/risk-factors.component';
 import { StoFormComponent } from './sto-form/sto-form.component';
 import { StoListAndFormComponent } from './sto-list-and-form/sto-list-and-form.component';
+import { SuicidalitiesComponent } from './suicidalities/suicidalities.component';
 import { SustitutionListComponent } from './sustitution-list/sustitution-list.component';
+import { TransitionFadingPlanFormComponent } from './transition-fading-plan-form/transition-fading-plan-form.component';
+import { RbtTrainingGoalFormComponent } from './rbt-training-goal-form/rbt-training-goal-form.component';
 
 const components = [
   BipFormComponent,
@@ -98,9 +104,13 @@ const components = [
   BipProfileCrisisPlanComponent,
   BipProfileConsentComponent,
   BipProfileDeEscalationComponent,
+  RecomendationFormComponent,
+  RiskFactorsComponent,
+  SuicidalitiesComponent,
+  HomicidalitiesComponent,
 ];
 @NgModule({
-  declarations: [...components],
+  declarations: [...components, TransitionFadingPlanFormComponent, RbtTrainingGoalFormComponent],
   exports: [...components],
   imports: [
     CommonModule,

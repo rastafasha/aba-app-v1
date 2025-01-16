@@ -86,4 +86,14 @@ export class ListAndFormComponent<T> {
     this.dataSourceChange.emit(this.dataSource);
     this.delete.emit(item);
   }
+  onAdd(item: T, validation = () => true) {
+    this.dataSource = this.strategy.add(
+      validation,
+      this.dataSource,
+      item
+    ).items;
+    this.dataSource = [...this.dataSource];
+    this.dataSourceChange.emit(this.dataSource);
+    this.add.emit(this);
+  }
 }

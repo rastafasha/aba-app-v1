@@ -1,206 +1,40 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import Swal from 'sweetalert2';
-import { BipService } from '../../service/bip.service';
-import { GoalFamilyEnvolmentService } from '../../service/goal-family-envolment.service';
-import { DeEscalationTechniqueService } from '../../service/de-escalation-technique.service';
-import { AppUser } from 'src/app/core/models/users.model';
-import { DeEscalationTechnique } from 'src/app/core/models';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { DeEscalationTechnique, Recomendation } from 'src/app/core/models';
 
 @Component({
   selector: 'app-de-escalation-tecniques',
   templateUrl: './de-escalation-tecniques.component.html',
   styleUrls: ['./de-escalation-tecniques.component.scss'],
 })
-export class DeEscalationTecniquesComponent implements OnInit, OnChanges {
-  @Input() clientSelected: any;
-  @Input() bipSelected: any;
-  @Input() de_escalation_techniques: DeEscalationTechnique[];
-  valid_form_success = false;
+export class DeEscalationTecniquesComponent {
+  @Input() de_escalation_technique: DeEscalationTechnique;
+  @Output() de_escalation_techniqueChange =
+    new EventEmitter<DeEscalationTechnique>();
+  @Output() save = new EventEmitter<DeEscalationTechnique>();
+  // Recomendations
+  newRecomendation: Recomendation = Recomendation.getDefault();
   text_validation = '';
-  text_success = '';
-  description: any;
-  service_recomendation: any;
 
-  cpt: any;
-  description_service: any;
-  num_units: any;
-  breakdown_per_week: any;
-  location: any;
-
-  caregivers_training_goals = [];
-  deEscalationopts = [];
-  escalation_edit: any = {};
-
-  client_id: any;
-  user: AppUser;
-  doctor_id: any;
-  client_selected: any;
-  patient_identifier: string;
-  bip_selected: any;
-  bip_selectedId: any;
-  bip_selectedIdd: any;
-  maladaptives: any;
-
-  location_edit: any;
-
-  deEscalalationsTechs: any;
-  client_id_deEscalalationsTechs: any;
-  deEscalalationsTechid: any;
-  goalFamilyid: any;
-
-  constructor(
-    private bipService: BipService,
-    private deEscalationTechniqueService: DeEscalationTechniqueService,
-    private ativatedRoute: ActivatedRoute
-  ) {}
-
-  ngOnInit(): void {
-    // //inicia la vista siempre desde arriba
-
-    //me subcribo al id recibido por el parametro de la url
-    this.ativatedRoute.params.subscribe((resp) => {
-      this.patient_identifier = resp['patient_id']; // la respuesta se comienza a relacionar  en este momento con un cliente especifico
-      // this.getProfileBip(); // se solicita la info del perfil del usuario
-      // this.getGoalbyPatient(); // se solicita la info del perfil del usuario
-    });
-
-    // this.ativatedRoute.params.subscribe(({ id }) => this.getBip()); // se solicita la info del perfil del bip
-    // this.ativatedRoute.params.subscribe( ({id}) => this.getGoal(id)); // se solicita la info del perfil del bip
-    // this.ativatedRoute.params.subscribe( ({id}) => this.getGoal(id)); // se solicita la info del perfil del goal
-    const USER = localStorage.getItem('user'); // se solicita el usuario logueado
-    this.user = JSON.parse(USER ? USER : ''); //  si no hay un usuario en el localstorage retorna un objeto vacio
-    this.doctor_id = this.user.id; //se asigna el doctor logueado a este campo para poderlo enviar en los
+  onSave() {
+    this.de_escalation_techniqueChange.emit(this.de_escalation_technique);
+    this.save.emit(this.de_escalation_technique);
   }
-
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['clientSelected']) {
-      this.handleClientSelectedChange();
-      console.log('clientSelected changed:', this.clientSelected);
-    }
-    if (changes['bipSelected']) {
-      this.handleBipSelectedChange();
-      console.log('bipSelected changed:', this.bipSelected);
-    }
-  }
-
-  private handleBipSelectedChange() {
-    if (this.bipSelected) {
-      this.bip_selected = this.bipSelected;
-      this.bip_selectedId = this.bipSelected.id;
-      this.bip_selectedIdd = this.bipSelected.bip.id;
-      this.maladaptives = this.bipSelected.maladaptives;
-    }
-  }
-
-  private handleClientSelectedChange() {
-    if (this.clientSelected) {
-      this.client_selected = this.clientSelected;
-      this.client_id = this.clientSelected.patient.id;
-      if (this.patient_identifier !== null) {
-        this.getPatientGoalFamilyEnvolments(this.patient_identifier);
-      }
-    }
-  }
-
-  //obtenemos el perfil  del paciente por el id de la ruta
-  // getProfileBip() {
-  //   this.bipService.showBipProfile(this.patient_identifier).subscribe((resp) => {
-  //     // console.log('profilebip', resp);
-  //     this.client_selected = resp; //convertimos la respuesta en un variable
-
-  //     this.client_id = this.client_selected.patient.id;
-  //     if (this.patient_identifier !== null) {
-  //       this.getPatientGoalFamilyEnvolments(this.patient_identifier);
-  //     }
-  //   });
-  // }
-
-  //obtenemos el bip por el id
-  // getBip() {
-  //   if (this.patient_identifier !== null && this.patient_identifier !== undefined) {
-  //     this.bipService.getBipByUser(this.patient_identifier).subscribe((resp) => {
-  //       // console.log('bip',resp);
-  //       this.bip_selected = resp; //convertimos la respuesta en un variable
-  //       this.bip_selectedId = resp.id; //convertimos la respuesta en un variable
-  //       this.bip_selectedIdd = this.bip_selected.bip.id; //convertimos la respuesta en un variable
-  //       this.maladaptives = this.bip_selected.maladaptives; //convertimos la respuesta en un variable
-  //     });
-  //   }
-  // }
-
-  //obtenemos los tipo goals: sustituions del paciente por el patient_identifier si existe,
-  //si existe enviamos el client_id_goal para actualizar el goal del paciente
-  getPatientGoalFamilyEnvolments(patient_identifier) {
-    this.deEscalationTechniqueService
-      .getDeEscalationTechniquebyPatientId(patient_identifier)
-      .subscribe((resp) => {
-        // console.log('goals sustition by patientid',resp);
-        this.deEscalalationsTechs = resp.deEscalationTechniquePatientIds.data;
-        this.deEscalalationsTechid =
-          resp.deEscalationTechniquePatientIds.data[0]?.id;
-        this.description =
-          resp.deEscalationTechniquePatientIds.data[0]?.description;
-        this.deEscalationopts =
-          resp.deEscalationTechniquePatientIds.data[0]?.recomendation_lists;
-        this.service_recomendation =
-          resp.deEscalationTechniquePatientIds.data[0]?.service_recomendation;
-        this.client_id_deEscalalationsTechs =
-          resp.deEscalationTechniquePatientIds.data[0]?.client_id;
-        // this.goals = resp.goalReductionPatientIds;
-        // console.log(this.goals);
-      });
-  }
-
-  addDocument() {
-    if (this.deEscalationopts) {
-      this.deEscalationopts.push({
-        index: this.deEscalationopts.length + 1,
-        cpt: this.cpt,
-        description_service: this.description_service,
-        num_units: this.num_units,
-        breakdown_per_week: this.breakdown_per_week,
-        location: this.location,
-      });
-    } else {
-      this.deEscalationopts = [
-        {
-          index: 1, // initial index
-          cpt: this.cpt,
-          description_service: this.description_service,
-          num_units: this.num_units,
-          breakdown_per_week: this.breakdown_per_week,
-          location: this.location,
-        },
-      ];
-    }
-
-    this.cpt = '';
-    this.description_service = '';
-    this.num_units = '';
-    this.breakdown_per_week = '';
-    this.location = '';
-  }
-
+}
+/*
   deleteDocument(escalation: any) {
-    const index = this.deEscalationopts.findIndex(
+    const index = this.de_escalation_technique.recomendation_lists.findIndex(
       (element) => element.index === escalation.index
     );
     if (index !== -1) {
-      this.deEscalationopts.splice(index, 1);
+      this.de_escalation_technique.recomendation_lists.splice(index, 1);
     }
   }
 
   seleccionarParaEdit(escalation: any) {
-    const selectedEscalation = this.deEscalationopts.find(
-      (item) => item.index === escalation.index
-    );
+    const selectedEscalation =
+      this.de_escalation_technique.recomendation_lists.find(
+        (item) => item.index === escalation.index
+      );
     if (selectedEscalation) {
       this.escalation_edit = selectedEscalation;
       // Ahora puedes editar el objeto selectedCaregiver
@@ -209,11 +43,11 @@ export class DeEscalationTecniquesComponent implements OnInit, OnChanges {
   }
 
   updateEscalation(escalation: any) {
-    const index = this.deEscalationopts.findIndex(
+    const index = this.de_escalation_technique.recomendation_lists.findIndex(
       (item) => item.index === escalation.index
     );
     if (index !== -1) {
-      this.deEscalationopts[index] = escalation;
+      this.de_escalation_technique.recomendation_lists[index] = escalation;
       Swal.fire(
         'Updated',
         `Updated item List successfully, if you finish the list, now press button save!`,
@@ -222,9 +56,9 @@ export class DeEscalationTecniquesComponent implements OnInit, OnChanges {
     }
   }
 
-  save() {
+  onSave() {
     this.text_validation = '';
-    if (!this.deEscalationopts) {
+    if (!this.de_escalation_technique.recomendation_lists) {
       this.text_validation = 'All Fields (*) are required';
       return;
     }
@@ -236,7 +70,7 @@ export class DeEscalationTecniquesComponent implements OnInit, OnChanges {
       client_id: this.client_id,
       description: this.description,
       service_recomendation: this.service_recomendation,
-      recomendation_lists: this.deEscalationopts,
+      recomendation_lists: this.de_escalation_technique.recomendation_lists,
     };
 
     if (this.client_id_deEscalalationsTechs && this.deEscalalationsTechid) {
@@ -274,7 +108,7 @@ export class DeEscalationTecniquesComponent implements OnInit, OnChanges {
     // console.log(this.location_edit.location);
 
     const data = {
-      recomendation_lists: this.deEscalationopts,
+      recomendation_lists: this.de_escalation_technique.recomendation_lists,
     };
 
     this.deEscalationTechniqueService
@@ -287,3 +121,4 @@ export class DeEscalationTecniquesComponent implements OnInit, OnChanges {
       });
   }
 }
+*/

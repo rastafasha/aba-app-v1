@@ -84,7 +84,7 @@
         <!-- Family Involvement end-->
         <!-- Monitoring Evaluating-->
         <app-bip-profile-monotoring
-          [rbt_training_goals]="bip.rbt_training_goals"
+          [rbt_training_goals]="bip.rbt_trainings"
         ></app-bip-profile-monotoring>
 
         <!-- Monitoring Evaluating end-->
@@ -95,27 +95,27 @@
 
         <!-- Generalization Training-->
         <app-bip-profile-generalization
-          [generalization_training]="bip.generalization_training[0]"
+          [generalization_training]="bip.generalization_trainings[0]"
         ></app-bip-profile-generalization>
 
         <!-- Generalization Training end-->
 
         <!-- Crisis Plan-->
         <app-bip-profile-crisis-plan
-          [crisis_plan]="bip.crisis_plan[0]"
+          [crisis_plan]="bip.crisis_plans[0]"
         ></app-bip-profile-crisis-plan>
 
         <!-- Crisis Plan end-->
         <!-- De-escalation Techniques-->
 
         <app-bip-profile-de-escalation
-          [de_escalation_technique]="bip.de_escalation_technique"
+          [de_escalation_techniques]="bip.de_escalation_techniques"
         ></app-bip-profile-de-escalation>
 
         <!-- De-escalation Techniques end-->
         <!-- Consent to Treatment-->
         <app-bip-profile-consent
-          [consent_to_treatment]="bip.consent_to_treatment"
+          [consent_to_treatment]="bip.consent_to_treatments[0]"
         ></app-bip-profile-consent>
 
         <!-- Consent to Treatment end-->

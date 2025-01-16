@@ -1,0 +1,36 @@
+<div class="col-xs-12">
+  <div class="row">
+    <div class="col-xs-12 col-sm-3">
+      <div class="form-group local-forms">
+        <label>Phase:<span class="login-danger">*</span> </label>
+        <input
+          class="form-control"
+          name="criteria"
+          [(ngModel)]="input.phase"
+          type="text"
+        />
+      </div>
+    </div>
+    <div class="col-12 col-sm-9">
+      <div class="form-group local-forms">
+        <label
+          >Description
+          <span class="login-danger">*</span>
+        </label>
+        <textarea
+          class="form-control"
+          name="description"
+          [(ngModel)]="input.description"
+          rows="4"
+          cols="30"
+        >
+        </textarea>
+      </div>
+    </div>
+    <div class="col-12 mb-3 doctor-submit text-end">
+      <button class="btn btn-primary btn-sm" (click)="onSave()">
+        Update List
+      </button>
+    </div>
+  </div>
+</div>

@@ -12,8 +12,6 @@ import { Location } from '@angular/common';
 import { AppUser } from 'src/app/core/models/users.model';
 import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 
-
-
 @Component({
   selector: 'app-note-bcba-edit',
   templateUrl: './note-bcba-edit.component.html',
@@ -40,8 +38,6 @@ export class NoteBcbaEditComponent implements OnInit {
   totalMinutos = 0;
   total_hour_session = '';
   participants = '';
-
-
 
   selectedValueRBT!: string;
   selectedValueRenderingProvider!: string;
@@ -185,7 +181,6 @@ export class NoteBcbaEditComponent implements OnInit {
 
   fromParam: string | null = null;
 
-
   constructor(
     private bipService: BipService,
     private router: Router,
@@ -201,7 +196,7 @@ export class NoteBcbaEditComponent implements OnInit {
       this.note_id = resp['id'];
     });
 
-    this.ativatedRoute.queryParams.subscribe(params => {
+    this.ativatedRoute.queryParams.subscribe((params) => {
       this.fromParam = params['from'];
     });
 
@@ -212,8 +207,6 @@ export class NoteBcbaEditComponent implements OnInit {
     this.user = JSON.parse(USER ? USER : '');
     this.doctor_id = this.user.id;
   }
-
-
 
   goBack() {
     this.locations.back(); // <-- go back to previous location on cancel
@@ -263,19 +256,20 @@ export class NoteBcbaEditComponent implements OnInit {
       console.log(this.rbt_training_goals);
 
       this.selectedValueRBT = resp.noteBcba.provider.name;
-      this.selectedValueProviderRBT_id =resp.noteBcba.provider_id;
+      this.selectedValueProviderRBT_id = resp.noteBcba.provider_id;
 
       this.selectedValueBCBA = resp.noteBcba.supervisor.name;
-      this.selectedValueBcba_id =resp.noteBcba.supervisor_id;
+      this.selectedValueBcba_id = resp.noteBcba.supervisor_id;
       // console.log(this.selectedValueRendering );
-
 
       this.session_date = this.note_selected.session_date
         ? new Date(this.note_selected.session_date).toISOString()
         : '';
 
-      this.session_length_morning_total = this.note_selected.session_length_morning_total;
-      this.session_length_afternon_total = this.note_selected.session_length_afternon_total;
+      this.session_length_morning_total =
+        this.note_selected.session_length_morning_total;
+      this.session_length_afternon_total =
+        this.note_selected.session_length_afternon_total;
       this.session_length_total = this.note_selected.session_length_total;
 
       // this.selectedValueTimeIn = this.note_selected.time_in;
@@ -331,29 +325,28 @@ export class NoteBcbaEditComponent implements OnInit {
         this.patientLocation_id = this.client_selected.location_id;
         this.insurance_id = resp.patient.insurer_id;
         this.insurance_identifier = resp.patient.insurance_identifier;
-        
+
         this.pos = this.client_selected.pos_covered;
         this.insuranceData();
         this.getReplacementsByPatientId();
         this.pa_services = this.client_selected.pa_services;
 
         //filtramos lo pa_services usando star_date y end_date comparado con el dia de hoy
-      this.pa_services = this.pa_services.filter((pa) => {
-        const dateStart = new Date(pa.start_date).getTime();
-        const dateEnd = new Date(pa.end_date).getTime();
-        const dateToday = new Date().getTime();
-        return dateStart <= dateToday && dateEnd >= dateToday;
-      });
-      //devolvemos la respuesta da los pa_services disponibles
-      console.log(this.pa_services);
+        this.pa_services = this.pa_services.filter((pa) => {
+          const dateStart = new Date(pa.start_date).getTime();
+          const dateEnd = new Date(pa.end_date).getTime();
+          const dateToday = new Date().getTime();
+          return dateStart <= dateToday && dateEnd >= dateToday;
+        });
+        //devolvemos la respuesta da los pa_services disponibles
+        console.log(this.pa_services);
         if (noteServiceId) {
           this.setPaService(noteServiceId);
         }
 
         this.birth_date = this.client_selected.birth_date
-        ? new Date(this.client_selected.birth_date).toISOString()
-        : '';
-
+          ? new Date(this.client_selected.birth_date).toISOString()
+          : '';
       });
   }
 
@@ -365,7 +358,8 @@ export class NoteBcbaEditComponent implements OnInit {
 
     if (this.pa_services?.length && noteServiceId) {
       this.selectedPaService =
-        this.pa_services.find((service) => service.id === noteServiceId) || null;
+        this.pa_services.find((service) => service.id === noteServiceId) ||
+        null;
 
       console.log('Selected PA Service:', this.selectedPaService);
 
@@ -388,7 +382,6 @@ export class NoteBcbaEditComponent implements OnInit {
         this.rbt_training_goals =
           resp.monitoringEvaluatingPatientIds.data?.[0]?.rbt_training_goals ??
           [];
-
       });
   }
 
@@ -416,7 +409,6 @@ export class NoteBcbaEditComponent implements OnInit {
     event = this.selectedValueProviderRBT_id;
     this.specialistData(this.selectedValueProviderRBT_id);
     console.log(this.selectedValueProviderRBT_id);
-
   }
   selectSpecialistBCBA(event) {
     event = this.selectedValueBcba_id;
@@ -451,36 +443,41 @@ export class NoteBcbaEditComponent implements OnInit {
     const timeIn2 = this.convertToMinutes(this.selectedValueTimeIn2);
     const timeOut2 = this.convertToMinutes(this.selectedValueTimeOut2);
 
-    const totalMinutes = (timeOut1 - timeIn1) + (timeOut2 - timeIn2);
+    const totalMinutes = timeOut1 - timeIn1 + (timeOut2 - timeIn2);
     const totalHours = this.convertToHours(totalMinutes);
     this.total_hour_session = totalHours;
     console.log(`Total hours: ${totalHours}`);
     console.log('para el html', this.total_hour_session);
-}
+  }
 
-convertToMinutes(time: string): number {
-  if (!time || !time.includes(':')) {
-    console.error(`Invalid time format: ${time}`);
-        return 0; // O manejar el error de otra manera
+  convertToMinutes(time: string): number {
+    if (!time || !time.includes(':')) {
+      console.error(`Invalid time format: ${time}`);
+      return 0; // O manejar el error de otra manera
     }
 
     const [hours, minutes] = time.split(':').map(Number);
 
     // Validar que hours y minutes sean números válidos
-    if (isNaN(hours) || isNaN(minutes) || hours < 0 || minutes < 0 || minutes >= 60) {
-        console.error(`Invalid time values: hours=${hours}, minutes=${minutes}`);
-        return 0; // O manejar el error de otra manera
+    if (
+      isNaN(hours) ||
+      isNaN(minutes) ||
+      hours < 0 ||
+      minutes < 0 ||
+      minutes >= 60
+    ) {
+      console.error(`Invalid time values: hours=${hours}, minutes=${minutes}`);
+      return 0; // O manejar el error de otra manera
     }
 
     return hours * 60 + minutes;
-}
+  }
 
-convertToHours(totalMinutes: number): string {
+  convertToHours(totalMinutes: number): string {
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes % 60;
     return `${hours}h ${minutes}m`;
-}
-
+  }
 
   private recalculateSessionLength() {
     this.session_length_morning_total =
@@ -550,13 +547,11 @@ convertToHours(totalMinutes: number): string {
       console.log(resp);
       this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED =
         resp.doctor.electronic_signature;
-      
     });
   }
   selectFirmaSpecialistRbt(event) {
     event = this.selectedValueProviderRBT_id;
     this.speciaFirmaDataRbt(this.selectedValueProviderRBT_id);
-    
   }
 
   speciaFirmaDataBcba(selectedValueBCBA) {
@@ -565,7 +560,6 @@ convertToHours(totalMinutes: number): string {
       .subscribe((resp) => {
         this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED =
           resp.doctor.electronic_signature;
-        
       });
   }
 
@@ -574,7 +568,7 @@ convertToHours(totalMinutes: number): string {
     this.speciaFirmaDataBcba(this.selectedValueBcba_id);
   }
 
-  save() {
+  onSave() {
     this.text_validation = '';
     // if(!this.name||!this.email ||!this.surname ){
     //   this.text_validation = 'Los campos con * son obligatorios';
@@ -587,18 +581,17 @@ convertToHours(totalMinutes: number): string {
     // }
 
     const formData = new FormData();
-    formData.append('patient_id', this.patient_id+'');
-    formData.append('doctor_id', this.selectedValueProviderRBT_id+'');
-    formData.append('bip_id', this.bip_id+'');
+    formData.append('patient_id', this.patient_id + '');
+    formData.append('doctor_id', this.selectedValueProviderRBT_id + '');
+    formData.append('bip_id', this.bip_id + '');
     formData.append('diagnosis_code', this.diagnosis_code);
     formData.append('location', this.location);
     formData.append('birth_date', this.birth_date);
     formData.append('session_date', this.session_date);
     formData.append('patient_identifier', this.patient_identifier);
     formData.append('location_id', this.patientLocation_id + '');
-    formData.append('insurance_id', this.insurance_id+''); // id del seguro preferiblemente que solo agarre la data al crear
+    formData.append('insurance_id', this.insurance_id + ''); // id del seguro preferiblemente que solo agarre la data al crear
     formData.append('insurance_identifier', this.insurance_identifier); // id del seguro preferiblemente que solo agarre la data al crear
-
 
     if (this.summary_note) {
       formData.append('summary_note', this.summary_note);
@@ -630,26 +623,30 @@ convertToHours(totalMinutes: number): string {
     }
 
     if (this.selectedValueRenderingProvider) {
-      formData.append('rendering_provider', this.selectedValueRenderingProvider);
+      formData.append(
+        'rendering_provider',
+        this.selectedValueRenderingProvider
+      );
     }
     if (this.selectedValueAbaSupervisor) {
-      formData.append('aba_supervisor', this.selectedValueAbaSupervisor.toString());
+      formData.append(
+        'aba_supervisor',
+        this.selectedValueAbaSupervisor.toString()
+      );
     }
 
     if (this.selectedValueProviderRBT_id) {
-      formData.append('provider_id', this.selectedValueProviderRBT_id+'');
+      formData.append('provider_id', this.selectedValueProviderRBT_id + '');
     }
     if (this.selectedValueBcba_id) {
-      formData.append('supervisor_id', this.selectedValueBcba_id+'');
+      formData.append('supervisor_id', this.selectedValueBcba_id + '');
     }
-
 
     if (this.selectedValueCode) {
       formData.append('cpt_code', this.selectedValueCode);
     }
     if (this.selectedPaService) {
       formData.append('pa_service_id', this.selectedPaService.id.toString());
-
     }
     if (this.meet_with_client_at) {
       formData.append('meet_with_client_at', this.meet_with_client_at);
@@ -701,12 +698,14 @@ convertToHours(totalMinutes: number): string {
           // this.text_success = 'Employer created';
           // this.ngOnInit();
           Swal.fire('Updated', ` Note Rbt Updated`, 'success');
-          this.router.navigate([AppRoutes.noteBcba.list, this.patient_identifier]);
+          this.router.navigate([
+            AppRoutes.noteBcba.list,
+            this.patient_identifier,
+          ]);
         }
       });
   }
 
-  
   generateAISummary() {
     if (!this.checkDataSufficient()) {
       Swal.fire('Warning', 'Please fill all the required fields', 'warning');
@@ -800,8 +799,6 @@ convertToHours(totalMinutes: number): string {
     }
   }
 
-
-
   onPaServiceSelect(event: any) {
     const service = event.value;
     if (service) {
@@ -809,10 +806,10 @@ convertToHours(totalMinutes: number): string {
       this.showFamily = false;
       this.showMonitoring = false;
 
-      if(service.cpt === '97155' ){
+      if (service.cpt === '97155') {
         this.showFamily = true;
       }
-      if(service.cpt === '97156' ){
+      if (service.cpt === '97156') {
         this.showMonitoring = true;
       }
     }
@@ -860,7 +857,4 @@ convertToHours(totalMinutes: number): string {
 
     this.projectedUnits = totalUnits;
   }
-
-
-
 }
