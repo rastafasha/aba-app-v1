@@ -678,26 +678,6 @@ convertToHours(totalMinutes: number): string {
     this.replacementGoals.splice(i, 1);
   }
 
-  // countValue(){
-  //   const countElement = document.querySelector('.count') as HTMLInputElement;
-  //   // const countElement = behavior;
-  //   countElement.disabled = false;
-
-  //   document.addEventListener('click', (event) => {
-  //     const target = event.target as HTMLElement;
-  //     if (target.classList.contains('plus')) {
-  //       countElement.value = (parseInt(countElement.value, 10) + 1).toString();
-  //     } else if (target.classList.contains('minus')) {
-  //       let currentValue = parseInt(countElement.value, 10);
-  //       if (currentValue === 0) {
-  //         currentValue = 1;
-  //       } else {
-  //         currentValue -= 1;
-  //       }
-  //       countElement.value = currentValue.toString();
-  //     }
-  //   });
-  // }
 
   countValue1() {
     const min = 0; // Minimum of 0
@@ -735,22 +715,7 @@ convertToHours(totalMinutes: number): string {
     });
   }
 
-  cambiarStatus(goalsto: any) {
-    // this.status_sto_edit = goalsto;
-    // console.log(this.status_sto_edit.status_sto);
-    // let data ={
-    //   goalstos: this.golsto,
-    //   goalltos: this.gollto,
-    // }
-    // this.goalService.editGoal(data, this.goalmaladaptiveid).subscribe(
-    //   resp =>{
-    //     // console.log(resp);
-    //     // this.getTableData();
-    //     Swal.fire('Updated', `Goal Updated successfully!`, 'success');
-    //     this.ngOnInit();
-    //   }
-    // )
-  }
+ 
 
   //funcion para la primera imagen.. funciona
   loadFile($event) {

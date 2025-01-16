@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {  ReplacementL } from '../interfaces';
+import {  Objetives1, ReplacementL } from '../interfaces';
 
 @Component({
   selector: 'app-replacements',
@@ -15,8 +15,8 @@ import {  ReplacementL } from '../interfaces';
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let replac of replacementList; let i = index">
-              <td>{{ replac.name }}</td>
+            <tr *ngFor="let replac of obj_inprogress; let i = index">
+              <td>{{ replac.description }}</td>
               <td>
                 <div
                   class="status-toggle d-flex justify-content-between align-items-center"
@@ -26,7 +26,7 @@ import {  ReplacementL } from '../interfaces';
                     [id]="replac.id + '-demostrated'"
                     class="check"
                     [(ngModel)]="replac.value"
-                    [name]="replac.name + '-demostrated'"
+                    [name]="replac.description + '-demostrated'"
                     (ngModelChange)="updateReplacements()"
                   />
                   <label
@@ -46,17 +46,17 @@ import {  ReplacementL } from '../interfaces';
   `,
 })
 export class ReplacementsComponent {
-  @Input() replacementList: ReplacementL[];
+  @Input() obj_inprogress: Objetives1[];
   @Output() replacementChange = new EventEmitter<object>();
 
   updateReplacements() {
-    const replacementsObj = this.replacementList
+    const replacementsObj = this.obj_inprogress
       .filter((replac) => replac.value)
       .reduce((acc, replac) => {
         acc[replac.id] = {
           id: replac.id, 
           demostrated: !!replac.value, 
-          name: replac.name };
+          name: replac.description };
         return acc;
       }, {});
 

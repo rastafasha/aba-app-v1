@@ -637,17 +637,6 @@ export class NoteBcbaEditComponent implements OnInit {
     })
   }
 
-  
-
-
-  private formatTime(timeString: string | null): string {
-    // console.log('formatting time: ', timeString);
-    if (!timeString) return '';
-    const [hours, minutes] = timeString.replace(/ /g, '').split(':');
-    return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
-  }
-
-
   // getProfileBip(noteServiceId?: number) {
   //   console.log('Getting profile BIP:', {
   //     noteServiceId,
@@ -694,21 +683,7 @@ export class NoteBcbaEditComponent implements OnInit {
   //   }
   // }
 
-  getReplacementsByPatientId() {
-    this.noteBcbaService
-      .showReplacementbyPatient(this.patient_identifier)
-      .subscribe((resp) => {
-        this.familiEnvolments = resp.familiEnvolments;
-        this.caregivers_training_goals =
-          resp.familiEnvolments.data?.[0]?.caregivers_training_goals ?? [];
-        this.monitoringEvaluatingPatientIds =
-          resp.monitoringEvaluatingPatientIds;
-        this.rbt_training_goals =
-          resp.monitoringEvaluatingPatientIds.data?.[0]?.rbt_training_goals ??
-          [];
-
-      });
-  }
+  
 
   specialistData(selectedValueInsurer) {
     this.doctorService
@@ -750,6 +725,14 @@ export class NoteBcbaEditComponent implements OnInit {
     this.recalculateSessionLength();
     this.calculateTotalHours();
   }
+
+  private formatTime(timeString: string | null): string {
+    // console.log('formatting time: ', timeString);
+    if (!timeString) return '';
+    const [hours, minutes] = timeString.replace(/ /g, '').split(':');
+    return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
+  }
+
 
   calculateTotalHours() {
     const timeIn1 = this.convertToMinutes(this.selectedValueTimeIn);
@@ -819,9 +802,6 @@ convertToHours(totalMinutes: number): string {
     );
   }
 
-  updateRbtGoal(index: number) {
-    console.log('RBT goal updated:', this.rbt_training_goals[index]);
-  }
 
   //funcion para la primera imagen.. funciona
   loadFile($event) {

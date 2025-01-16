@@ -90,6 +90,19 @@ export interface ReplacementL2 {
   value: boolean;
   value2: boolean;
 }
+export interface Objetives1 {
+  id: string;
+  description: string;
+  status: string;
+  value: boolean;
+}
+export interface Objetives {
+  id: string;
+  description: string;
+  status: string;
+  value: boolean;
+  value2: boolean;
+}
 export interface NewList {
   id: string;
   name: string;

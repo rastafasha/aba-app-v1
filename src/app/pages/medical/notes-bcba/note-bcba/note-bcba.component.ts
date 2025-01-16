@@ -225,6 +225,7 @@ throw new Error('Method not implemented.');
   outcomeList = outcomeList;
   show97151List = show97151List;
   objectives = [];
+  obj_inprogress = [];
 
   constructor(
     private bipV2Service: BipsV2Service,
@@ -243,8 +244,8 @@ throw new Error('Method not implemented.');
       this.patient_identifier = resp['patient_id'];
     });
     this.getConfig();
-    this.start_date = new Date(); // Por ejemplo, fecha actual
-    this.end_date = new Date(); // Por ejemplo, fecha actual
+    this.start_date = new Date(); //  fecha actual
+    this.end_date = new Date(); // fecha actual
 
     this.user = this.authService.user as AppUser;
     this.roles = this.user.roles;
@@ -272,7 +273,6 @@ throw new Error('Method not implemented.');
       this.roles_bcba = resp.roles_bcba;
       this.hours_days = resp.hours;
       this.specialists = resp.specialists;
-
       this.FILE_SIGNATURE_RBT = resp.roles_rbt.electronic_signature;
       this.FILE_SIGNATURE_BCBA = resp.roles_bcba.electronic_signature;
     });
@@ -327,10 +327,24 @@ throw new Error('Method not implemented.');
       
       this.behaviorList = resp.data[0].maladaptives;
       this.replacementList = resp.data[0].replacements;
-      //extraemos de los  replacementList los objectives en status in progress
+
+      // Verificar la lista replacementList
+      console.log('replacementList', this.replacementList);
+  
+      // Filtrar la lista replacementList por estado
       this.replacementList = this.replacementList.filter(goal => goal.status === 'active');
+
+      // Recorrer la lista replacementList y extraemos los objectives
+      this.objectives = this.replacementList.map(objective => objective.objectives);
+      console.log('Objetives', this.objectives );
       
-    })
+      // filtrado los que estan en status in progress
+      const objetivosEnProgreso = this.objectives[0].filter(objetivo => objetivo.status === "in progress");
+
+      console.log(objetivosEnProgreso);
+      this.obj_inprogress = objetivosEnProgreso;
+      
+    });
   }
 
 
