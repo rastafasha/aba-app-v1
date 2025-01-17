@@ -1,12 +1,17 @@
 <div class="table_footer">
-  <div class="col-sm-12 col-md-5">
+  <div class="col-sm-12 col-md-3">
     <div class="dataTables_info">
       Showing {{ 1 + pageSize * (page - 1) }} to
       {{ pageSize * page | min : total }} of {{ total }} entries
     </div>
   </div>
+  <div class="col-sm-12 col-md-6 totals">
+    <div><span><b> Total units: </b> {{totalUnits}}</span></div>
+    <div><span><b> Total hours: </b> {{totalHours}}</span></div>
+    <div><span><b> Total charges: </b> ${{totalCharges}}</span></div>
+  </div>
 
-  <div class="col-sm-12 col-md-7">
+  <div class="col-sm-12 col-md-3">
     <div class="pagination_section">
       <ul class="pagination">
         <li
