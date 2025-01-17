@@ -49,7 +49,10 @@ export class NewListComponent {
     const newListsObj = this.newList
       .filter((iteml) => iteml.value)
       .reduce((acc, iteml) => {
-        acc[iteml.id] = {id: iteml.id, option:!!iteml.value}
+        acc[iteml.id] = {
+          id: iteml.id, 
+          option:!!iteml.value
+        }
         return acc;
       }, {});
       console.log(newListsObj);

@@ -162,6 +162,7 @@ export class NoteBcbaViewComponent implements OnInit {
   newlist_added = [];
   intake_outcome = [];
   interventionsgroup = [];
+  newlistgroup = [];
 
   objectives = [];
   obj_inprogress = [];
@@ -328,11 +329,12 @@ export class NoteBcbaViewComponent implements OnInit {
 
      
       this.interventions = this.note_selected.interventions;
+
       this.interventions2 = this.note_selected.interventions2;
-      console.log(this.interventions2);
-
-
+      
+      
       this.newlist_added = this.note_selected.newlist_added;
+
       this.intake_outcome = this.note_selected.intake_outcome;
 
 

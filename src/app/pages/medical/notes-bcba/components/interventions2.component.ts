@@ -5,7 +5,7 @@ import { Interventions2 } from '../interfaces';
   selector: 'app-interventions3',
   styleUrls: ['../note-bcba/note-bcba.component.scss'],
   template: `
-  <div class="col-12">
+    <div class="col-12">
       <h5>Intervention protocols</h5>
       <div class="table-responsive content-box">
         <table class="table mb-0 ">
@@ -32,9 +32,7 @@ import { Interventions2 } from '../interfaces';
                     [name]="intervent.id + '-assessed'"
                     (ngModelChange)="updatedInterventions2()"
                   />
-                  <label
-                    [for]="intervent.id + '-assessed'"
-                    class="checktoggle"
+                  <label [for]="intervent.id + '-assessed'" class="checktoggle"
                     >checkbox</label
                   >
                 </div>
@@ -51,10 +49,7 @@ import { Interventions2 } from '../interfaces';
                     [name]="intervent.id + '-modified'"
                     (ngModelChange)="updatedInterventions2()"
                   />
-                  <label
-                    [for]="intervent.id + '-modified'"
-                    class="checktoggle"
-                    
+                  <label [for]="intervent.id + '-modified'" class="checktoggle"
                     >checkbox</label
                   >
                 </div>
@@ -64,8 +59,7 @@ import { Interventions2 } from '../interfaces';
         </table>
       </div>
     </div>
-`,
-  
+  `,
 })
 export class Interventions2Component {
   @Input() interventionsList2: Interventions2[];
@@ -75,10 +69,14 @@ export class Interventions2Component {
     const result = this.interventionsList2
       .filter((intervent) => intervent.value || intervent.value2)
       .reduce((acc, intervent) => {
-        acc[intervent.id] = { assessed:!!intervent.value, modified:!!intervent.value2,};
+        acc[intervent.id] = {
+          id: intervent.id,
+          assessed: !!intervent.value,
+          modified: !!intervent.value2,
+        };
         return acc;
       }, {});
-      console.log(result);
+    console.log(result);
     this.update.emit(result);
   }
 }

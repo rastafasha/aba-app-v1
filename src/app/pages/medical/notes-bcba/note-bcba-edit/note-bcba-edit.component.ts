@@ -175,11 +175,11 @@ export class NoteBcbaEditComponent implements OnInit {
 
   intervention_added :object;
   intervention2_added :object;
-  replacements_added = [];
-  replacements2_added = [];
-  intakeoutcome_added = [];
   newlist_added :object;
   behaviorsList_added :object;
+  intakeoutcome_added = [];
+  replacements_added = [];
+  replacements2_added = [];
 
   maladaptivegroup = [];
   replacementgroup = [];
@@ -335,8 +335,9 @@ export class NoteBcbaEditComponent implements OnInit {
       this.additional_goals_or_interventions= this.note_selected.additional_goals_or_interventions;
       
       this.summary_note=this.note_selected.summary_note;
-      this.newlist_added=this.note_selected.newlist_added;
-      this.intakeoutcome_added=this.note_selected.intake_outcome;
+
+      
+     
       
       this.session_date = this.note_selected.session_date
         ? new Date(this.note_selected.session_date).toISOString()
@@ -384,8 +385,11 @@ export class NoteBcbaEditComponent implements OnInit {
       }
 
 
-      this.interventions = this.note_selected.interventions;
-      this.interventions2 = this.note_selected.interventions2;
+      this.newlist_added=this.note_selected.newlist_added;
+      this.intakeoutcome_added=this.note_selected.intake_outcome;
+      this.interventionsList = this.note_selected.interventions;
+      this.interventionsList2 = this.note_selected.interventions2;
+
       // this.replacementList = this.note_selected.replacements;
       // this.replacementList2 = this.note_selected.replacements2;
       
@@ -399,6 +403,8 @@ export class NoteBcbaEditComponent implements OnInit {
       //   this.interventions2
       // );
       
+      
+      this.newList = this.note_selected?.newlist_added;
       this.outcomeList = this.note_selected?.intake_outcome;
       
       this.bipV2Service.get(this.bip_id).subscribe((resp)=>{
@@ -907,13 +913,14 @@ convertToHours(totalMinutes: number): string {
   }
 
 
-  onInterventionsChange(updatedInterventions: object) {
+  onInterventionsChange(updatedInterventions) {
     // this.interventionsgroup = [
     //   this.convertToInterventionsGroup(this.interventionsList),
     // ];
     this.intervention_added = updatedInterventions;
   }
-  onInterventions2Change(updatedInterventions2:object) {
+  
+  onInterventions2Change(updatedInterventions2) {
     // this.interventionsgroup2 = [
     //   this.convertToInterventionsGroup2(this.interventionsList2),
     // ];
@@ -930,7 +937,7 @@ convertToHours(totalMinutes: number): string {
   onIntakeoutcomeChange(updatedIntakeoutcome) {
     this.intakeoutcome_added = updatedIntakeoutcome;
   }
-  onNewListChange(updatedNewList:object) {
+  onNewListChange(updatedNewList) {
     this.newlist_added = updatedNewList;
   }
   onBehaviorChange(updatedbehaviorsList:object) {
@@ -963,7 +970,8 @@ convertToHours(totalMinutes: number): string {
     return group;
   }
 
-  save() {
+  // eslint-disable-next-line no-debugger
+  save() {debugger
     this.text_validation = '';
 
     const formData = new FormData();
@@ -1057,14 +1065,14 @@ convertToHours(totalMinutes: number): string {
       );
     }
     //variaciones nota bcba
-    if (this.intervention_added) {
+    if (this.interventionsList) {
       formData.append(
         'interventions',
-        JSON.stringify(this.intervention_added)
+        JSON.stringify(this.interventionsList)
       );
     }
 
-    if (this.intervention2_added) {
+    if (this.interventionsList2) {
       formData.append(
         'interventions2',
         JSON.stringify(this.intervention2_added)

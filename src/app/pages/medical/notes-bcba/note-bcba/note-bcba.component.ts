@@ -517,7 +517,8 @@ convertToHours(totalMinutes: number): string {
     this.behaviorsList_added = updatedbehaviorsList;
   }
   
-  save() {
+  // eslint-disable-next-line no-debugger
+  save() {debugger
     this.text_validation = '';
     if (
       // !this.rbt_training_goals ||
@@ -618,10 +619,16 @@ convertToHours(totalMinutes: number): string {
       );
     }
 
-    if (this.intervention2_added) {
+    // if (this.intervention2_added) {
+    //   formData.append(
+    //     'interventions2',
+    //     JSON.stringify(this.intervention2_added)
+    //   );
+    // }
+    if (this.interventionsList2) {
       formData.append(
         'interventions2',
-        JSON.stringify(this.intervention2_added)
+        JSON.stringify(this.interventionsList2)
       );
     }
 

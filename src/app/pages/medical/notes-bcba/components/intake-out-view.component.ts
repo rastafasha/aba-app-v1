@@ -21,31 +21,31 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
               <tr >
                 <td>SRS-2</td>
                 <td>
-                <i *ngIf="intake_outcome[0]?.SRS_2?.option === true"   class="fa fa-check"  ></i>
-                <i *ngIf="intake_outcome[0]?.SRS_2?.option === false "  class="fa fa-times" ></i>
+                <i *ngIf="intake_outcome?.SRS_2?.option === true"   class="fa fa-check"  ></i>
+                <i *ngIf="intake_outcome?.SRS_2?.option === false "  class="fa fa-times" ></i>
                 </td>
                 
               </tr>
               <tr >
                 <td>vineland-3</td>
                 <td>
-                <i *ngIf="intake_outcome[0]?.vineland_3?.option === true"   class="fa fa-check"  ></i>
-                <i *ngIf="intake_outcome[0]?.vineland_3?.option === false "  class="fa fa-times" ></i>
+                <i *ngIf="intake_outcome?.vineland_3?.option === true"   class="fa fa-check"  ></i>
+                <i *ngIf="intake_outcome?.vineland_3?.option === false "  class="fa fa-times" ></i>
                 </td>
                 
               </tr>
               <tr >
                 <td>PDDBI</td>
                 <td>
-                <i *ngIf="intake_outcome[0]?.PDDBI?.option === true"   class="fa fa-check"  ></i>
-                <i *ngIf="intake_outcome[0]?.PDDBI?.option === false "  class="fa fa-times" ></i>
+                <i *ngIf="intake_outcome?.PDDBI?.option === true"   class="fa fa-check"  ></i>
+                <i *ngIf="intake_outcome?.PDDBI?.option === false "  class="fa fa-times" ></i>
                 </td>
               </tr>
               <tr >
                 <td>PSI-4 short form</td>
                 <td>
-                <i *ngIf="intake_outcome[0]?.PSI_4_short_form?.option === true"   class="fa fa-check"  ></i>
-                <i *ngIf="intake_outcome[0]?.PSI_4_short_form?.option === false "  class="fa fa-times" ></i>
+                <i *ngIf="intake_outcome?.PSI_4_short_form?.option === true"   class="fa fa-check"  ></i>
+                <i *ngIf="intake_outcome?.PSI_4_short_form?.option === false "  class="fa fa-times" ></i>
                 </td>
               </tr>
               
@@ -60,16 +60,16 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class IntakeOutcomeViewComponent {
   @Input() intake_outcome: any;
 
-  ngOnInit(): void {
-    console.log('intake_outcome', this.intake_outcome); // Verifica que la data esté siendo recibida
-  }
-
-  // updateIntakeOutcomes() {
-  //   const outcomeListObj = this.intake_outcome
-  //     .filter((intake_outcome) => intake_outcome.value)
-  //     .reduce((acc, intake_outcome) => {
-  //       acc[intake_outcome.id] = true;
-  //       return acc;
-  //     }, {});
+  // ngOnInit(): void {
+  //   console.log('intake_outcome', this.intake_outcome); // Verifica que la data esté siendo recibida
   // }
+
+  updateIntakeOutcomes() {
+    const outcomeListObj = this.intake_outcome
+      .filter((intake_outcome) => intake_outcome.value)
+      .reduce((acc, intake_outcome) => {
+        acc[intake_outcome.id] = true;
+        return acc;
+      }, {});
+  }
 }
