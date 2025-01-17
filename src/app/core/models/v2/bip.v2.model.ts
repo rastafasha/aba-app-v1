@@ -53,6 +53,12 @@ export class DocumentV2 {
   constructor(data: Partial<DocumentV2>) {
     Object.assign(this, data);
   }
+  static getDefault(): DocumentV2 {
+    return {
+      index: 0,
+      title: '',
+    };
+  }
 }
 
 export class Intervention {
@@ -158,6 +164,16 @@ export class Medication {
   preescribing_physician: string;
   constructor(data: Partial<Medication>) {
     Object.assign(this, data);
+  }
+  static getDefault(): Medication {
+    return {
+      index: 0,
+      medication: '',
+      dose: '',
+      frecuency: '',
+      reason: '',
+      preescribing_physician: '',
+    };
   }
 }
 

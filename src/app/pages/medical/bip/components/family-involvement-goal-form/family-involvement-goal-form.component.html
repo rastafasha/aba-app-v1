@@ -63,7 +63,7 @@
                 <div class="row align-items-center">
                   <app-list-and-form
                     #caregiverGoalForm
-                    [default]="newCaregiver"
+                    [(newItem)]="newCaregiver"
                     [(dataSource)]="input.objectives"
                     [displayedColumns]="[
                       'name',

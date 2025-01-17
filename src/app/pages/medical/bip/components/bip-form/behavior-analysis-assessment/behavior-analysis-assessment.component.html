@@ -3,121 +3,38 @@
     <div class="card-body">
       <form autocomplete="false">
         <div class="row">
-          <!-- documents -->
-          <div class="col-12">
-            <div class="card-box">
-              <div class="card-block">
-                <h3 class="card-title">Behavior Analysis Assessment</h3>
-                <div class="col-12 col-md-4 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label
-                      >Type of Assessment:<span class="login-danger">*</span>
-                    </label>
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="type_of_assessment"
-                      [(ngModel)]="type_of_assessment"
-                      (ngModelChange)="type_of_assessmentChange.emit($event)"
-                    >
-                      <option>-- Select --</option>
-                      <option [value]="1">Assessment</option>
-                      <option [value]="2">Reassessment</option>
-                      <option [value]="3">Initial</option>
-                    </select>
-                  </div>
-                </div>
-                <h4 class="card-title">Documents Reviewed</h4>
-                <div class="row align-items-center">
-                  <div class="col-xs-12">
-                    <div class="row">
-                      <div class="col-xs-12 col-sm-6">
-                        <div class="form-group local-forms">
-                          <label
-                            >Document Title<span class="login-danger">*</span>
-                          </label>
-                          <input
-                            class="form-control"
-                            name="document_title"
-                            [(ngModel)]="newDocument.title"
-                            type="text"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-12 mb-3 doctor-submit text-end">
-                        <button
-                          class="btn btn-primary btn-sm"
-                          (click)="addDocument()"
-                        >
-                          Update/Add Document
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Document Validation -->
-                  <div class="form-group row" *ngIf="newDocumentMessage">
-                    <div class="col-12">
-                      <div
-                        class="alert alert-warning alert-dismissible fade show"
-                        role="alert"
-                      >
-                        <strong>{{ newDocumentMessage }}.</strong>
-                        <button
-                          type="button"
-                          class="btn-close"
-                          data-bs-dismiss="alert"
-                          aria-label="Close"
-                        >
-                          <span aria-hidden="true"> </span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Document List -->
-                  <div class="col-xs-12">
-                    <div class="table-responsive mb-3">
-                      <table class="table mb-0">
-                        <thead>
-                          <tr>
-                            <th>Document Title</th>
-                            <th>Options</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let document of documents; let i = index">
-                            <td>
-                              {{ document.title }}
-                            </td>
-                            <td>
-                              <button
-                                class="btn btn-outline-danger btn-sm"
-                                (click)="deleteDocument(i)"
-                              >
-                                x
-                              </button>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
+          <div class="row align-items-center">
+            <h3 class="card-title">Behavior Analysis Assessment</h3>
+            <div class="col-12 col-md-4 col-xl-4">
+              <div class="form-group local-forms">
+                <label>
+                  Type of Assessment:<span class="login-danger">*</span>
+                </label>
+                <select
+                  class="form-control form-select-solid fw-bolder"
+                  name="type_of_assessment"
+                  [(ngModel)]="bip.type_of_assessment"
+                >
+                  <option>-- Select --</option>
+                  <option [value]="1">Assessment</option>
+                  <option [value]="2">Reassessment</option>
+                  <option [value]="3">Initial</option>
+                </select>
               </div>
             </div>
           </div>
-          <!-- documents -->
 
           <div class="row align-items-center">
             <div class="col-12">
               <div class="form-group local-forms">
-                <label
-                  >Background Information
-                  <span class="login-danger">*</span></label
-                >
+                <label>
+                  Background Information
+                  <span class="login-danger">*</span>
+                </label>
                 <textarea
                   class="form-control"
                   name="background_information"
-                  [(ngModel)]="background_information"
-                  (ngModelChange)="background_informationChange.emit($event)"
+                  [(ngModel)]="bip.background_information"
                   rows="4"
                   cols="30"
                 >
@@ -125,20 +42,18 @@
               </div>
             </div>
           </div>
+
           <div class="row align-items-center">
             <div class="col-xs-12 col-sm-6">
               <div class="form-group local-forms">
-                <label
-                  >Previous treatments and results
-                  <span class="login-danger">*</span></label
-                >
+                <label>
+                  Previous treatments and results
+                  <span class="login-danger">*</span>
+                </label>
                 <textarea
                   class="form-control"
                   name="previus_treatment_and_result"
-                  [(ngModel)]="previus_treatment_and_result"
-                  (ngModelChange)="
-                    previus_treatment_and_resultChange.emit($event)
-                  "
+                  [(ngModel)]="bip.previus_treatment_and_result"
                   rows="4"
                   cols="30"
                 >
@@ -147,17 +62,14 @@
             </div>
             <div class="col-xs-12 col-sm-6">
               <div class="form-group local-forms">
-                <label
-                  >Current treatment and progress
-                  <span class="login-danger">*</span></label
-                >
+                <label>
+                  Current treatment and progress
+                  <span class="login-danger">*</span>
+                </label>
                 <textarea
                   class="form-control"
                   name="current_treatment_and_progress"
-                  [(ngModel)]="current_treatment_and_progress"
-                  (ngModelChange)="
-                    current_treatment_and_progressChange.emit($event)
-                  "
+                  [(ngModel)]="bip.current_treatment_and_progress"
                   rows="4"
                   cols="30"
                 >
@@ -165,17 +77,17 @@
               </div>
             </div>
           </div>
+
           <div class="row align-items-center">
             <div class="col-12 col-md-6">
               <div class="form-group local-forms">
-                <label
-                  >Education status <span class="login-danger">*</span></label
-                >
+                <label>
+                  Education status <span class="login-danger">*</span>
+                </label>
                 <textarea
                   class="form-control"
                   name="education_status"
-                  [(ngModel)]="education_status"
-                  (ngModelChange)="education_statusChange.emit($event)"
+                  [(ngModel)]="bip.education_status"
                   rows="4"
                   cols="30"
                 >
@@ -184,17 +96,14 @@
             </div>
             <div class="col-xs-12 col-sm-6">
               <div class="form-group local-forms">
-                <label
-                  >Physical and Medical Status
-                  <span class="login-danger">*</span></label
-                >
+                <label>
+                  Physical and Medical Status
+                  <span class="login-danger">*</span>
+                </label>
                 <textarea
                   class="form-control"
                   name="phisical_and_medical_status"
-                  [(ngModel)]="phisical_and_medical_status"
-                  (ngModelChange)="
-                    phisical_and_medical_statusChange.emit($event)
-                  "
+                  [(ngModel)]="bip.phisical_and_medical_status"
                   rows="4"
                   cols="30"
                 >
@@ -202,15 +111,15 @@
               </div>
             </div>
           </div>
+
           <div class="row align-items-center">
             <div class="col-12 col-md-6">
               <div class="form-group local-forms">
-                <label>Strengths <span class="login-danger">*</span></label>
+                <label>Strengths <span class="login-danger">*</span> </label>
                 <textarea
                   class="form-control"
                   name="strengths"
-                  [(ngModel)]="strengths"
-                  (ngModelChange)="strengthsChange.emit($event)"
+                  [(ngModel)]="bip.strengths"
                   rows="4"
                   cols="30"
                 >
@@ -219,361 +128,63 @@
             </div>
             <div class="col-xs-12 col-sm-6">
               <div class="form-group local-forms">
-                <label>Weakneses <span class="login-danger">*</span></label>
+                <label>Weakneses <span class="login-danger">*</span> </label>
                 <textarea
                   class="form-control"
                   name="weakneses"
-                  [(ngModel)]="weakneses"
-                  (ngModelChange)="weaknesesChange.emit($event)"
+                  [(ngModel)]="bip.weakneses"
                   rows="4"
                   cols="30"
                 >
                 </textarea>
               </div>
             </div>
-
-            <div class="row align-items-center" style="margin-bottom: 30px">
-              <h4 class="card-title">Physical And Medical Status</h4>
-              <div class="row align-items-center">
-                <div class="col-xs-12">
-                  <form action="">
-                    <div class="row">
-                      <div class="col-xs-12">
-                        <div class="form-group local-forms">
-                          <label
-                            >Phiysical And Medical Status<span
-                              class="login-danger"
-                              >*</span
-                            >
-                          </label>
-                          <textarea
-                            class="form-control"
-                            name="phiysical_and_medical"
-                            [(ngModel)]="phiysical_and_medical"
-                            (ngModelChange)="
-                              phiysical_and_medicalChange.emit($event)
-                            "
-                            rows="4"
-                            cols="30"
-                          >
-                          </textarea>
-                        </div>
-                      </div>
-                      <div class="col-xs-12 col-sm-6 col-md-3">
-                        <div class="form-group local-forms">
-                          <label>
-                            Medication
-                            <span class="login-danger">*</span>
-                          </label>
-                          <input
-                            class="form-control"
-                            name="medication"
-                            [(ngModel)]="newMedication.medication"
-                            type="text"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-xs-12 col-sm-6 col-md-3">
-                        <div class="form-group local-forms">
-                          <label>Dose<span class="login-danger">*</span></label>
-                          <input
-                            class="form-control"
-                            name="dose"
-                            [(ngModel)]="newMedication.dose"
-                            type="text"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-xs-12 col-md-3">
-                        <div class="form-group local-forms">
-                          <label
-                            >frecuency<span class="login-danger">*</span></label
-                          >
-                          <input
-                            class="form-control"
-                            name="frecuency"
-                            [(ngModel)]="newMedication.frecuency"
-                            type="text"
-                          />
-                        </div>
-                      </div>
-
-                      <div class="col-xs-12 col-md-3">
-                        <div class="form-group local-forms">
-                          <label
-                            >Preescribing Physician<span class="login-danger"
-                              >*</span
-                            >
-                          </label>
-                          <input
-                            class="form-control"
-                            name="preescribing_physician"
-                            [(ngModel)]="newMedication.preescribing_physician"
-                            type="text"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-xs-12">
-                        <div class="form-group local-forms">
-                          <label
-                            >Reason<span class="login-danger">*</span></label
-                          >
-                          <textarea
-                            class="form-control"
-                            name="reason"
-                            [(ngModel)]="newMedication.reason"
-                            rows="4"
-                            cols="30"
-                          >
-                          </textarea>
-                        </div>
-                      </div>
-
-                      <div class="col-12 mb-3 doctor-submit text-end">
-                        <button
-                          class="btn btn-primary btn-sm"
-                          (click)="addMedication()"
-                        >
-                          Update/Add Medication list
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-
-                  <div class="col-xs-12">
-                    <div class="table-responsive">
-                      <table class="table mb-0">
-                        <thead>
-                          <tr>
-                            <th>Medication</th>
-                            <th>Dose</th>
-                            <th>Frecuency</th>
-                            <th>Reason</th>
-                            <th>Preescribing Physician</th>
-                            <th>Options</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr
-                            *ngFor="
-                              let medication of phisical_and_medical;
-                              let i = index
-                            "
-                          >
-                            <td>
-                              {{ medication.medication }}
-                            </td>
-                            <td>
-                              {{ medication.dose }}
-                            </td>
-                            <td>
-                              {{ medication.frecuency }}
-                            </td>
-                            <td>
-                              {{ medication.reason }}
-                            </td>
-                            <td>
-                              {{ medication.preescribing_physician }}
-                            </td>
-                            <td>
-                              <button
-                                class="btn btn-outline-success btn-sm"
-                                (click)="seleccionarParaEditM(medication)"
-                                data-bs-toggle="modal"
-                                [attr.data-bs-target]="'#edit-medic-' + i"
-                              >
-                                <i class="fa fa-pencil"></i> Edit
-                              </button>
-                              <button
-                                class="btn btn-outline-danger btn-sm"
-                                (click)="deleteMedication(i)"
-                              >
-                                x Delete
-                              </button>
-                            </td>
-
-                            <!-- modal edit medication -->
-
-                            <div
-                              [id]="'edit-medic-' + i"
-                              class="modal fade"
-                              role="dialog"
-                            >
-                              <div
-                                class="modal-dialog modal-dialog-centered modal-lg"
-                              >
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h5 class="modal-title" id="modalFamily">
-                                      {{ newMedication?.medication }}
-                                    </h5>
-                                    <a
-                                      href="javascript:void(0);"
-                                      data-bs-dismiss="modal"
-                                      aria-label="Close"
-                                      class="btn btn-white me-1"
-                                    >
-                                      Close
-                                    </a>
-                                  </div>
-                                  <div class="modal-body text-center">
-                                    <div class="col-xs-12">
-                                      <form action="">
-                                        <div class="row">
-                                          <div
-                                            class="col-xs-12 col-sm-6 col-md-3"
-                                          >
-                                            <div class="form-group local-forms">
-                                              <label
-                                                >Medication<span
-                                                  class="login-danger"
-                                                  >*</span
-                                                >
-                                              </label>
-                                              <input
-                                                class="form-control"
-                                                name="medication"
-                                                [(ngModel)]="
-                                                  newMedication.medication
-                                                "
-                                                type="text"
-                                              />
-                                            </div>
-                                          </div>
-                                          <div
-                                            class="col-xs-12 col-sm-6 col-md-3"
-                                          >
-                                            <div class="form-group local-forms">
-                                              <label
-                                                >Dose<span class="login-danger"
-                                                  >*</span
-                                                >
-                                              </label>
-                                              <input
-                                                class="form-control"
-                                                name="dose"
-                                                [(ngModel)]="newMedication.dose"
-                                                type="text"
-                                              />
-                                            </div>
-                                          </div>
-                                          <div class="col-xs-12 col-md-3">
-                                            <div class="form-group local-forms">
-                                              <label
-                                                >frecuency<span
-                                                  class="login-danger"
-                                                  >*</span
-                                                >
-                                              </label>
-                                              <input
-                                                class="form-control"
-                                                name="frecuency"
-                                                [(ngModel)]="
-                                                  newMedication.frecuency
-                                                "
-                                                type="text"
-                                              />
-                                            </div>
-                                          </div>
-
-                                          <div class="col-xs-12 col-md-3">
-                                            <div class="form-group local-forms">
-                                              <label
-                                                >Preescribing Physician<span
-                                                  class="login-danger"
-                                                  >*</span
-                                                >
-                                              </label>
-                                              <input
-                                                class="form-control"
-                                                name="preescribing_physician"
-                                                [(ngModel)]="
-                                                  newMedication.preescribing_physician
-                                                "
-                                                type="text"
-                                              />
-                                            </div>
-                                          </div>
-                                          <div class="col-xs-12">
-                                            <div class="form-group local-forms">
-                                              <label
-                                                >Reason<span
-                                                  class="login-danger"
-                                                  >*</span
-                                                >
-                                              </label>
-                                              <textarea
-                                                class="form-control"
-                                                name="reason"
-                                                [(ngModel)]="
-                                                  newMedication.reason
-                                                "
-                                                rows="4"
-                                                cols="30"
-                                              >
-                                              </textarea>
-                                            </div>
-                                          </div>
-
-                                          <div
-                                            class="col-12 mb-3 doctor-submit text-end"
-                                          >
-                                            <button
-                                              class="btn btn-primary btn-sm"
-                                              (click)="
-                                                updateItemListMedications(
-                                                  newMedication
-                                                )
-                                              "
-                                            >
-                                              Update/Add Info
-                                            </button>
-                                          </div>
-                                        </div>
-                                      </form>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <!-- modal edit medication -->
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
-          <!-- validaciones -->
 
-          <div class="form-group row" *ngIf="newMedicationMessage">
-            <div class="col-12">
-              <div
-                class="alert alert-warning alert-dismissible fade show"
-                role="alert"
+          <!-- Documents -->
+          <div class="row align-items-center my-2">
+            <app-list-and-form
+              #documentsList
+              title="Documents Reviewed"
+              [(newItem)]="newDocument"
+              [(dataSource)]="bip.documents_reviewed"
+              [displayedColumns]="['title']"
+              (edit)="newDocument = $event"
+            >
+              <app-document-form
+                [(input)]="newDocument"
+                (cancel)="documentsList.onClose()"
+                (save)="documentsList.onAdd($event)"
               >
-                <strong>{{ newMedicationMessage }}.</strong>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="alert"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true"> </span>
-                </button>
-              </div>
-            </div>
+              </app-document-form>
+            </app-list-and-form>
           </div>
-          <!-- validaciones -->
 
-          <div class="col-12">
+          <!-- Medicals -->
+          <div class="row align-items-center mt-4">
+            <app-list-and-form
+              title="Physical And Medical Status"
+              [(newItem)]="newMedication"
+              [(dataSource)]="bip.phisical_and_medical"
+              [displayedColumns]="[
+                'medication',
+                'dose',
+                'frecuency',
+                'reason',
+                'preescribing_physician'
+              ]"
+            >
+              <app-phisical-and-medical
+                [(input)]="newMedication"
+              ></app-phisical-and-medical>
+            </app-list-and-form>
+          </div>
+
+          <div class="row align-items-center my-2">
             <div class="doctor-submit text-end">
               <button
                 type="button"
-                class="btn btn-primary submit-form me-2"
+                class="btn btn-primary submit-form"
                 (click)="onSave()"
               >
                 Save

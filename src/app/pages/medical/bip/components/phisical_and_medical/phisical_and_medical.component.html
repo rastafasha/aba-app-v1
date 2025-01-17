@@ -1,0 +1,91 @@
+<form action="">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="form-group local-forms">
+        <label>
+          Phiysical And Medical Status<span class="login-danger">*</span>
+        </label>
+        <textarea
+          class="form-control"
+          name="phiysical_and_medical"
+          [(ngModel)]="input.medication"
+          rows="4"
+          cols="30"
+        >
+        </textarea>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <div class="form-group local-forms">
+        <label>
+          Medication
+          <span class="login-danger">*</span>
+        </label>
+        <input
+          class="form-control"
+          name="medication"
+          [(ngModel)]="input.medication"
+          type="text"
+        />
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-3">
+      <div class="form-group local-forms">
+        <label>Dose<span class="login-danger">*</span> </label>
+        <input
+          class="form-control"
+          name="dose"
+          [(ngModel)]="input.dose"
+          type="text"
+        />
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-md-3">
+      <div class="form-group local-forms">
+        <label>frecuency<span class="login-danger">*</span> </label>
+        <input
+          class="form-control"
+          name="frecuency"
+          [(ngModel)]="input.frecuency"
+          type="text"
+        />
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-md-3">
+      <div class="form-group local-forms">
+        <label
+          >Preescribing Physician<span class="login-danger">*</span>
+        </label>
+        <input
+          class="form-control"
+          name="preescribing_physician"
+          [(ngModel)]="input.preescribing_physician"
+          type="text"
+        />
+      </div>
+    </div>
+
+    <div class="col-xs-12">
+      <div class="form-group local-forms">
+        <label>Reason<span class="login-danger">*</span> </label>
+        <textarea
+          class="form-control"
+          name="reason"
+          [(ngModel)]="input.reason"
+          rows="4"
+          cols="30"
+        >
+        </textarea>
+      </div>
+    </div>
+
+    <div class="col-12 mb-3 doctor-submit text-end">
+      <button class="btn btn-primary btn-sm" (click)="onSave()">
+        Update/Add Medication
+      </button>
+    </div>
+  </div>
+</form>

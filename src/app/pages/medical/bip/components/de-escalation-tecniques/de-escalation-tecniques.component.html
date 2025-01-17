@@ -82,7 +82,7 @@
                 <div class="row align-items-center">
                   <app-list-and-form
                     #recomendationListForm
-                    [default]="newRecomendation"
+                    [(newItem)]="newRecomendation"
                     [(dataSource)]="de_escalation_technique.recomendation_lists"
                     [displayedColumns]="[
                       'cpt',

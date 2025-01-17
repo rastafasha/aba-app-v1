@@ -52,6 +52,8 @@ export class ListFormStrategy<T extends ListItem> {
     if (!items.find((i) => i.index === item.index)) {
       item.index = items.length + 1;
       items.push({ ...item });
+    } else {
+      items[item.index - 1] = { ...item };
     }
     this.emiter.emit(items);
     return { text: '', items, item: { ...this.defaultItem } };

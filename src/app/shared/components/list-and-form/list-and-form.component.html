@@ -4,16 +4,12 @@
 
 <app-list
   [title]="title"
+  [addButtonOptions]="addButtonOptions"
   [dataSource]="dataSource"
   [displayedColumns]="displayedColumns"
   [options]="options"
   [noDataText]="noDataText"
   [renders]="renders"
+  (add)="onCreate()"
 >
 </app-list>
-
-<div *ngIf="hadButton" class="col-12 my-1 doctor-submit text-end">
-  <button class="btn btn-primary btn-sm" (click)="onOpen()">
-    {{ openButtonText ?? "Add" }}
-  </button>
-</div>

@@ -56,6 +56,8 @@ import { SuicidalitiesComponent } from './suicidalities/suicidalities.component'
 import { SustitutionListComponent } from './sustitution-list/sustitution-list.component';
 import { TransitionFadingPlanFormComponent } from './transition-fading-plan-form/transition-fading-plan-form.component';
 import { RbtTrainingGoalFormComponent } from './rbt-training-goal-form/rbt-training-goal-form.component';
+import { DocumentFormComponent } from './document-form/document-form.component';
+import { PhisicalAndMedicalComponent } from './phisical_and_medical/phisical_and_medical.component';
 
 const components = [
   BipFormComponent,
@@ -108,9 +110,13 @@ const components = [
   RiskFactorsComponent,
   SuicidalitiesComponent,
   HomicidalitiesComponent,
+  DocumentFormComponent,
+  PhisicalAndMedicalComponent,
+  TransitionFadingPlanFormComponent,
+  RbtTrainingGoalFormComponent,
 ];
 @NgModule({
-  declarations: [...components, TransitionFadingPlanFormComponent, RbtTrainingGoalFormComponent],
+  declarations: [...components],
   exports: [...components],
   imports: [
     CommonModule,

@@ -1,4 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+export interface AddButtonOption {
+  show: boolean;
+  text: string;
+  class: string;
+  icon: string;
+}
 
 export interface ListOption<T> {
   text: string;
@@ -19,10 +25,20 @@ export class ListComponent<T> {
   @Input() dataSource: T[] = null;
   @Input() displayedColumns: (keyof T)[] = [];
   @Input() options: ListOption<T>[] = null;
+  @Output() add = new EventEmitter<void>();
   //options
+  @Input() addButtonOptions: AddButtonOption = {
+    show: false,
+    text: 'Add',
+    class: 'btn btn-primary',
+    icon: 'fas fa-plus',
+  };
   @Input() noDataText: string = null;
   @Input() renders: ListRender<T>;
 
+  onAdd() {
+    this.add.emit();
+  }
   onClick(option: ListOption<T>, value: T): void {
     option.action(value);
   }

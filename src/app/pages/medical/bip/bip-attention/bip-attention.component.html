@@ -1,132 +1,127 @@
 <div class="page-wrapper">
   <div class="content">
-    <!-- Page Header -->
     <app-page-header></app-page-header>
-
-    <!-- /Page Header -->
-    <div class="row" *ngIf="bip">
-      <!--  -->
-      <app-patient-form [patient]="patient"></app-patient-form>
-      <!-- Tabs -->
-      <div class="tab-content-set">
-        <ul class="nav justify-content-center">
-          <li
-            *ngFor="let item of bipAttentionOptions; let i = index"
-            class="px-0"
-          >
-            <a
-              class="btn link rounded"
-              [ngClass]="{ active: optionSelected === i + 1 }"
-              (click)="onSelectOption(i + 1)"
-            >
-              <span class="set-about-icon me-2">
-                <img src="assets/img/icons/menu-icon-02.svg" alt="" />
-              </span>
-              {{ item }}
-            </a>
-          </li>
-          <li class="px-0">
-            <a
-              class="btn link rounded"
-              [routerLink]="[routes.bip.show, patient.id]"
-            >
-              <span class="set-about-icon me-2">
-                <img src="assets/img/icons/menu-icon-02.svg" alt="" />
-              </span>
-              View BIP
-            </a>
-          </li>
-        </ul>
+    <div class="row">
+      <div class="col-4">
+        <!-- TODO remove -->
+        <pre>{{ bip | json }}</pre>
       </div>
-      <!-- bip -->
-      <ng-container *ngIf="optionSelected === 1">
-        <app-bip-form [(bip)]="bip" (save)="onSave()"></app-bip-form>
-      </ng-container>
-      <!-- fin bip -->
-      <!--  -->
-      <ng-container *ngIf="optionSelected === 2">
-        <!-- Reduction Goal -->
-        <app-reduction-goal-form [(maladaptives)]="bip.maladaptives">
-        </app-reduction-goal-form>
-        <!-- fin Reduction Goal -->
-      </ng-container>
-      <!--  -->
-      <ng-container *ngIf="optionSelected === 3">
-        <!-- Reduction Goal -->
-        <!-- <app-sustitution-goal-form></app-sustitution-goal-form> -->
-        <app-sustitution-list [(goals)]="bip.replacements">
-        </app-sustitution-list>
-        <!-- fin Reduction Goal -->
-      </ng-container>
-      <!--  -->
-      <ng-container *ngIf="optionSelected === 4">
-        <!-- Reduction Goal -->
-        <app-family-involvement-goal-form
-          [(input)]="bip.caregiver_trainings[0]"
-        >
-        </app-family-involvement-goal-form>
-        <!-- fin Reduction Goal -->
-      </ng-container>
-      <!--  -->
-      <ng-container *ngIf="optionSelected === 5">
-        <!-- Reduction Goal -->
-        <app-monitoring-evaluating
-          [(monitoring_evalutating)]="bip.monitoring_evalutating[0]"
-        >
-        </app-monitoring-evaluating>
-        <!-- fin Reduction Goal -->
-      </ng-container>
-      <!--  -->
-      <ng-container *ngIf="optionSelected === 6">
-        <!-- Reduction Goal -->
-        <app-behavior-assistant></app-behavior-assistant>
-        <!-- fin Reduction Goal -->
-      </ng-container>
-      <!--  -->
-      <ng-container *ngIf="optionSelected === 7">
-        <!-- Reduction Goal -->
-        <app-generalization-training
-          [(generalization)]="bip.generalization_trainings[0]"
-        >
-        </app-generalization-training>
-        <!-- fin Reduction Goal -->
-      </ng-container>
-      <!--  -->
-      <ng-container *ngIf="optionSelected === 8">
-        <!-- Reduction Goal -->
-        <app-crisis-plan [crisis_plan]="bip.crisis_plans[0]"> </app-crisis-plan>
-        <!-- fin Reduction Goal -->
-      </ng-container>
-      <!--  -->
-      <ng-container *ngIf="optionSelected === 9">
-        <!-- Reduction Goal -->
-        <app-de-escalation-tecniques
-          [(de_escalation_technique)]="bip.de_escalation_techniques[0]"
-        >
-        </app-de-escalation-tecniques>
-        <!-- fin Reduction Goal -->
-      </ng-container>
-      <!--  -->
-      <ng-container *ngIf="optionSelected === 10">
-        <!-- Reduction Goal -->
-        <app-consent-treatment-form
-          [(consent_to_treatment)]="bip.consent_to_treatments[0]"
-          (save)="onSave()"
-        >
-        </app-consent-treatment-form>
-        <!-- fin Reduction Goal -->
-      </ng-container>
+      <div class="col-8">
+        <div class="row" *ngIf="bip">
+          <!--  -->
+          <app-patient-form [patient]="patient"></app-patient-form>
+          <!-- Tabs -->
+          <div class="tab-content-set">
+            <ul class="nav justify-content-center">
+              <li
+                *ngFor="let item of bipAttentionOptions; let i = index"
+                class="px-0"
+              >
+                <a
+                  class="btn link rounded"
+                  [ngClass]="{ active: optionSelected === i + 1 }"
+                  (click)="onSelectOption(i + 1)"
+                >
+                  <span class="set-about-icon me-2">
+                    <img src="assets/img/icons/menu-icon-02.svg" alt="" />
+                  </span>
+                  {{ item }}
+                </a>
+              </li>
+              <li class="px-0">
+                <a
+                  class="btn link rounded"
+                  [routerLink]="[routes.bip.show, patient.id]"
+                >
+                  <span class="set-about-icon me-2">
+                    <img src="assets/img/icons/menu-icon-02.svg" alt="" />
+                  </span>
+                  View BIP
+                </a>
+              </li>
+            </ul>
+          </div>
+          <!-- bip -->
+          <ng-container *ngIf="optionSelected === 1">
+            <app-bip-form [(bip)]="bip" (save)="onSave()"></app-bip-form>
+          </ng-container>
+          <!-- fin bip -->
+          <!--  -->
+          <ng-container *ngIf="optionSelected === 2">
+            <!-- Reduction Goal -->
+            <app-reduction-goal-form [(maladaptives)]="bip.maladaptives">
+            </app-reduction-goal-form>
+            <!-- fin Reduction Goal -->
+          </ng-container>
+          <!--  -->
+          <ng-container *ngIf="optionSelected === 3">
+            <!-- Reduction Goal -->
+            <!-- <app-sustitution-goal-form></app-sustitution-goal-form> -->
+            <app-sustitution-list [(goals)]="bip.replacements">
+            </app-sustitution-list>
+            <!-- fin Reduction Goal -->
+          </ng-container>
+          <!--  -->
+          <ng-container *ngIf="optionSelected === 4">
+            <!-- Reduction Goal -->
+            <app-family-involvement-goal-form
+              [(input)]="bip.caregiver_trainings[0]"
+            >
+            </app-family-involvement-goal-form>
+            <!-- fin Reduction Goal -->
+          </ng-container>
+          <!--  -->
+          <ng-container *ngIf="optionSelected === 5">
+            <!-- Reduction Goal -->
+            <app-monitoring-evaluating
+              [(monitoring_evalutating)]="bip.monitoring_evalutating[0]"
+            >
+            </app-monitoring-evaluating>
+            <!-- fin Reduction Goal -->
+          </ng-container>
+          <!--  -->
+          <ng-container *ngIf="optionSelected === 6">
+            <!-- Reduction Goal -->
+            <app-behavior-assistant></app-behavior-assistant>
+            <!-- fin Reduction Goal -->
+          </ng-container>
+          <!--  -->
+          <ng-container *ngIf="optionSelected === 7">
+            <!-- Reduction Goal -->
+            <app-generalization-training
+              [(generalization)]="bip.generalization_trainings[0]"
+            >
+            </app-generalization-training>
+            <!-- fin Reduction Goal -->
+          </ng-container>
+          <!--  -->
+          <ng-container *ngIf="optionSelected === 8">
+            <!-- Reduction Goal -->
+            <app-crisis-plan [crisis_plan]="bip.crisis_plans[0]">
+            </app-crisis-plan>
+            <!-- fin Reduction Goal -->
+          </ng-container>
+          <!--  -->
+          <ng-container *ngIf="optionSelected === 9">
+            <!-- Reduction Goal -->
+            <app-de-escalation-tecniques
+              [(de_escalation_technique)]="bip.de_escalation_techniques[0]"
+            >
+            </app-de-escalation-tecniques>
+            <!-- fin Reduction Goal -->
+          </ng-container>
+          <!--  -->
+          <ng-container *ngIf="optionSelected === 10">
+            <!-- Reduction Goal -->
+            <app-consent-treatment-form
+              [(consent_to_treatment)]="bip.consent_to_treatments[0]"
+              (save)="onSave()"
+            >
+            </app-consent-treatment-form>
+            <!-- fin Reduction Goal -->
+          </ng-container>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-
-<!--
-  @Input() input: GeneralizationTraining;
-  @Output() inputChange = new EventEmitter<GeneralizationTraining>();
-  @Output() save = new EventEmitter<GeneralizationTraining>();
-
-  onSave() {
-    this.inputChange.emit(this.input);
-    this.save.emit(this.input);
-  }
--->

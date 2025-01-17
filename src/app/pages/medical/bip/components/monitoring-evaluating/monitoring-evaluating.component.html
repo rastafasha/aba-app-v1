@@ -34,7 +34,7 @@
                 </ol>
                 <h4 class="card-title">RBT Training Goals</h4>
                 <app-list-and-form
-                  [default]="newRbtTrainingGoal"
+                  [(newItem)]="newRbtTrainingGoal"
                   [(dataSource)]="monitoring_evalutating.rbt_training_goals"
                   [displayedColumns]="[
                     'name',
