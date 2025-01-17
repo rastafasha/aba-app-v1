@@ -10,7 +10,7 @@ import { NoteBcbaService } from '../../../../core/services/notes-bcba.service';
 import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import {
-  interventionsList, interventionsList2,
+  interventionsList, interventionsListDoble,
   newList,
   outcomeList, show97151List
 } from '../listasSelectData';
@@ -221,7 +221,7 @@ throw new Error('Method not implemented.');
   interventionsSelected = {};
 
   interventionsList = interventionsList;
-  interventionsList2 = interventionsList2;
+  interventionsListDoble = interventionsListDoble;
   behaviorList :any[];
   newList = newList;
   outcomeList = outcomeList;
@@ -612,23 +612,17 @@ convertToHours(totalMinutes: number): string {
         JSON.stringify(this.caregivers_training)
       );
     }
-    if (this.intervention_added) {
+    if (this.interventionsList) {
       formData.append(
         'interventions',
-        JSON.stringify(this.intervention_added)
+        JSON.stringify(this.interventionsList)
       );
     }
 
-    // if (this.intervention2_added) {
-    //   formData.append(
-    //     'interventions2',
-    //     JSON.stringify(this.intervention2_added)
-    //   );
-    // }
-    if (this.interventionsList2) {
+    if (this.interventionsListDoble) {
       formData.append(
         'interventions2',
-        JSON.stringify(this.interventionsList2)
+        JSON.stringify(this.interventionsListDoble)
       );
     }
 
@@ -890,20 +884,21 @@ convertToHours(totalMinutes: number): string {
     }
   }
 
-  onPaServiceSelect2(event: any) {
-    const service = event.value;
-    if (service) {
-      this.selectedValueCode1 = service.cpt;
+  // eslint-disable-next-line no-debugger
+  onPaServiceSelect2(event: any) {debugger
+    const type = event.value;
+    if (type) {
+      this.selectedValueCode1 = type.cpt;
       
       this.show97151 = true;
       this.show971511 = false;
       this.show971512 = false;
 
-      if(service.cpt === 'Observation' ){
+      if(type.cpt === 'Observation' ){
         this.show971511 = true;
         this.show97151 = true;
       }
-      if(service.cpt === 'Report' ){
+      if(type.cpt === 'Report' ){
         this.show971512 = true;
         this.show97151 = true;
       }

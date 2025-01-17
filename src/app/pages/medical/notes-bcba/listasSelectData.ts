@@ -17,23 +17,23 @@ export const interventionsList  = [
     { id: 'pairing', name: 'Pairing', value: false },
 ];
 
-export const interventionsList2 = [
-    { id: 'token_economy', name: 'Token Economy', value: true, value2: false },
-    { id: 'generalization', name: 'Generalization', value: true, value2: false },
-    { id: 'NCR', name: 'NCR', value: true, value2: false },
-    { id: 'behavioral_momentum', name: 'Behavioral Momentum', value: true, value2: false },
-    { id: 'DRA', name: 'DRA', value: true, value2: false },
-    { id: 'DRI', name: 'DRI', value: true, value2: false },
-    { id: 'DRO', name: 'DRO', value: true, value2: false },
-    { id: 'DRL', name: 'DRL', value: true, value2: false },
-    { id: 'response_block', name: 'Response Block', value: true, value2: false },
-    { id: 'errorless_teaching', name: 'Errorless Teaching', value: true, value2: false },
-    { id: 'extinction', name: 'Extinction', value: true, value2: false },
-    { id: 'chaining', name: 'Chaining', value: true, value2: false },
-    { id: 'natural_teaching', name: 'Natural Teaching', value: true, value2: false },
-    { id: 'redirection', name: 'Redirection', value: true, value2: false },
-    { id: 'shaping', name: 'Shaping', value: true, value2: false },
-    { id: 'pairing', name: 'Pairing', value: true, value2: false },
+export const interventionsListDoble = [
+    { id: 'token_economy1', name: 'Token Economy', value: true, value2: false },
+    { id: 'generalization1', name: 'Generalization', value: true, value2: false },
+    { id: 'NCR1', name: 'NCR', value: true, value2: false },
+    { id: 'behavioral_momentum1', name: 'Behavioral Momentum', value: true, value2: false },
+    { id: 'DRA1', name: 'DRA', value: true, value2: false },
+    { id: 'DRI1', name: 'DRI', value: true, value2: false },
+    { id: 'DRO1', name: 'DRO', value: true, value2: false },
+    { id: 'DRL1', name: 'DRL', value: true, value2: false },
+    { id: 'response_block1', name: 'Response Block', value: true, value2: false },
+    { id: 'errorless_teaching1', name: 'Errorless Teaching', value: true, value2: false },
+    { id: 'extinction1', name: 'Extinction', value: true, value2: false },
+    { id: 'chaining1', name: 'Chaining', value: true, value2: false },
+    { id: 'natural_teaching1', name: 'Natural Teaching', value: true, value2: false },
+    { id: 'redirection1', name: 'Redirection', value: true, value2: false },
+    { id: 'shaping1', name: 'Shaping', value: true, value2: false },
+    { id: 'pairing1', name: 'Pairing', value: true, value2: false },
 ];
 
 export const newList = [

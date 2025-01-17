@@ -73,7 +73,7 @@ export interface Intervention {
   name: string;
   value: boolean;
 }
-export interface Interventions2 {
+export interface InterventionsDoble {
   id: string;
   name: string;
   value: boolean;

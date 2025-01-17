@@ -313,6 +313,7 @@ export class NoteBcbaViewComponent implements OnInit {
         this.getProfilePatient();
         this.getDoctor();
         this.getDoctorRbt();
+        this.getBipv2();
   
       if(this.cpt_code === '97155' ){
         this.show97155 = true;
@@ -329,191 +330,184 @@ export class NoteBcbaViewComponent implements OnInit {
 
      
       this.interventions = this.note_selected.interventions;
-
       this.interventions2 = this.note_selected.interventions2;
-      
-      
       this.newlist_added = this.note_selected.newlist_added;
-
       this.intake_outcome = this.note_selected.intake_outcome;
-
-
-      this.bipV2Service.get(this.bip_id).subscribe((resp)=>{
-        // console.log('BIP',resp);
-        this.bip_id = resp.data.id;
-        this.caregivers_training_goals = resp.data.caregiver_trainings;
-        this.behaviors = resp.data.maladaptives;
-        this.replacements = resp.data.replacements;
-        this.replacements2 = resp.data.replacements;
-        
-        // // behaviors
-        this.note_selected.behaviors = this.note_selected.behaviors || {};
-         // Convierte behaviors en un array de valores
-         const behaviorsArray = Object.values(this.note_selected.behaviors) as Behavior[];
-         //muestro el resultado de la nota 
-        // console.log('behaviors:', this.note_selected.behaviors);
-        //filtro los behaviors 
-        const newBehaviors = this.behaviors.map((element) => {
-          if (!element || !element.id || !element.name) {
-            // console.warn('Invalid behavior element:', element);
-            return null;
-        }
-          const behavior = behaviorsArray.find(
-            (behavior) => behavior.name === element.name
-          );
-        
-          if (behavior) {
-            return {
-              id: element.id,
-              name: element.name,
-              discused: behavior ? behavior.discused : false,
-            };
-          } else {
-            // console.warn(`Behavior with id ${element.id} not found.`);
-            return {
-              id: element.id,
-              name: '', 
-              discused: undefined,
-            };
-          }
-        });
-        //los uno con el resultado que trae la nota
-        const mergedBehaviors = newBehaviors.map((behavior, id) => {
-          const noteBehavior = this.note_selected.behaviors[behavior.id];
-          return {
-            ...behavior,
-            name: behavior.name || '', 
-            discused: noteBehavior ? noteBehavior.discused : behavior.discused,
-          };
-        });
-        
-        // console.log('Merged Behaviors:', mergedBehaviors);
-        this.behaviorsview = mergedBehaviors;
-        // console.log(this.behaviorsview);
-
-         //replacements dos valores
-
-
-         // Verificar la lista replacements
-      // console.log('replacementList', this.replacements);
-  
-      // Filtrar la lista replacements por estado
-      this.replacements = this.replacements.filter(goal => goal.status === 'active');
-
-      // Recorrer la lista replacements y extraemos los objectives
-      this.objectives = this.replacements.flatMap(objective => objective.objectives);
-      // console.log('Objetives', this.objectives );
-      
-      // filtrado los que estan en status in progress
-      const objetivosEnProgreso = this.objectives.filter(objetivo => objetivo.status === "in progress");
-
-      // console.log(objetivosEnProgreso);
-      this.obj_inprogress = objetivosEnProgreso;
-
-      // Convierte replacements en un array de valores
-      // const replacementsArray = Object.values(this.note_selected?.replacements2) as Replacement[];
-
-      // // Muestra el resultado de la nota
-      // console.log('replacements2:', this.note_selected.replacements2);
-
-      
-      //filtro los replacements 
-      // const newReplacements = this.replacements.map((element) => {
-      //   if (!element || !element.id || !element.name) {
-      //     console.warn('Invalid replacements element:', element);
-      //     return null;
-      // }
-      //   const replacement = replacementsArray.find(
-      //     (replacement) => replacement.name === element.name
-      //   );
-      
-      //   if (replacement) {
-      //     return {
-      //       id: element.id,
-      //       name: element.name,
-      //       assessed: replacement ? replacement.assessed : false,
-      //       modified: replacement ? replacement.modified : false,
-      //     };
-      //   } else {
-      //     console.warn(`replacements with id ${element.id} not found.`);
-      //     return {
-      //       id: element.id,
-      //       name: '', // Provide a default value
-      //       assessed: undefined,
-      //       modified: undefined,
-      //     };
-      //   }
-      // });
-      //   //los uno con el resultado que trae la nota
-      //   const mergedReplacements = newReplacements.map((replacement, id) => {
-      //     const noteReplacement = this.note_selected?.replacements[replacement.id];
-      //     return {
-      //       ...replacement,
-      //       name: replacement.name || '', // Provide a default value
-      //       assessed: noteReplacement ? noteReplacement.assessed : replacement.assessed,
-      //       modified: noteReplacement ? noteReplacement.modified : replacement.modified,
-      //     };
-      //   });
-      
-      //   console.log('Merged Replacements:', mergedReplacements);
-      //   this.replacementsview = mergedReplacements;
-      //   console.log(this.replacementsview);
-
-      //   //replacements 1 valor
-
-      // // Convierte replacements en un array de valores
-      // const replacements1Array = Object.values(this.note_selected?.replacements) as Replacement1[];
-
-      // // Muestra el resultado de la nota
-      // console.log('replacements:', this.note_selected?.replacements);
-
-      
-      //filtro los replacements 
-      // const newReplacements1 = this.replacements.map((element) => {
-      //   if (!element || !element.id || !element.name) {
-      //     console.warn('Invalid replacements element:', element);
-      //     return null;
-      // }
-      //   const replacement1 = replacements1Array.find(
-      //     (replacement1) => replacement1.name === element.name
-      //   );
-      
-      //   if (replacement1) {
-      //     return {
-      //       id: element.id,
-      //       name: element.name,
-      //       demostrated: replacement1 ? replacement1.demostrated : false,
-      //     };
-      //   } else {
-      //     console.warn(`replacements with id ${element.id} not found.`);
-      //     return {
-      //       id: element.id,
-      //       name: '', // Provide a default value
-      //       demostrated: undefined,
-      //     };
-      //   }
-      // });
-      //   //los uno con el resultado que trae la nota
-      //   const mergedReplacements1 = newReplacements1.map((replacement1, id) => {
-      //     const noteReplacement = this.note_selected?.replacements[replacement1.id];
-      //     return {
-      //       ...replacement1,
-      //       name: replacement1.name || '', // Provide a default value
-      //       demostrated: noteReplacement ? noteReplacement.demostrated : replacement1.demostrated,
-      //     };
-      //   });
-      
-      //   console.log('Merged Replacements1:', mergedReplacements1);
-      //   this.replacementsview1 = mergedReplacements1;
-      //   console.log(this.replacementsview1);
-        
-      });
       
     });
+    
+  }
+
+  getBipv2(){
+    this.bipV2Service.get(this.bip_id).subscribe((resp)=>{
+      // console.log('BIP',resp);
+      this.bip_id = resp.data.id;
+      this.caregivers_training_goals = resp.data.caregiver_trainings;
+      this.behaviors = resp.data.maladaptives;
+      this.replacements = resp.data.replacements;
+      this.replacements2 = resp.data.replacements;
+
+      // Filtrar la lista replacements por estado
+    this.replacements = this.replacements.filter(goal => goal.status === 'active');
+
+    // Recorrer la lista replacements y extraemos los objectives
+    this.objectives = this.replacements.flatMap(objective => objective.objectives);
+    // filtrado los que estan en status in progress
+    const objetivosEnProgreso = this.objectives.filter(objetivo => objetivo.status === "in progress");
+    this.obj_inprogress = objetivosEnProgreso;
 
     
+      
+      // // behaviors
+      // this.note_selected.behaviors = this.note_selected.behaviors || {};
+       // Convierte behaviors en un array de valores
+      //  const behaviorsArray = Object.values(this.note_selected.behaviors) as Behavior[];
+       //muestro el resultado de la nota 
+      // console.log('behaviors:', this.note_selected.behaviors);
+      //filtro los behaviors 
+      // const newBehaviors = this.behaviors.map((element) => {
+      //   if (!element || !element.id || !element.name) {
+      //     // console.warn('Invalid behavior element:', element);
+      //     return null;
+      // }
+      //   const behavior = behaviorsArray.find(
+      //     (behavior) => behavior.name === element.name
+      //   );
+      
+      //   if (behavior) {
+      //     return {
+      //       id: element.id,
+      //       name: element.name,
+      //       discused: behavior ? behavior.discused : false,
+      //     };
+      //   } else {
+      //     // console.warn(`Behavior with id ${element.id} not found.`);
+      //     return {
+      //       id: element.id,
+      //       name: '', 
+      //       discused: undefined,
+      //     };
+      //   }
+      // });
+      // //los uno con el resultado que trae la nota
+      // const mergedBehaviors = newBehaviors.map((behavior, id) => {
+      //   const noteBehavior = this.note_selected.behaviors[behavior.id];
+      //   return {
+      //     ...behavior,
+      //     name: behavior.name || '', 
+      //     discused: noteBehavior ? noteBehavior.discused : behavior.discused,
+      //   };
+      // });
+      
+      // console.log('Merged Behaviors:', mergedBehaviors);
+      // this.behaviorsview = mergedBehaviors;
+      // console.log(this.behaviorsview);
+
+       //replacements dos valores
+
+
+       // Verificar la lista replacements
+    // console.log('replacementList', this.replacements);
 
     
+    // Convierte replacements en un array de valores
+    // const replacementsArray = Object.values(this.note_selected?.replacements2) as Replacement[];
+
+    // // Muestra el resultado de la nota
+    // console.log('replacements2:', this.note_selected.replacements2);
+
+    
+    //filtro los replacements 
+    // const newReplacements = this.replacements.map((element) => {
+    //   if (!element || !element.id || !element.name) {
+    //     console.warn('Invalid replacements element:', element);
+    //     return null;
+    // }
+    //   const replacement = replacementsArray.find(
+    //     (replacement) => replacement.name === element.name
+    //   );
+    
+    //   if (replacement) {
+    //     return {
+    //       id: element.id,
+    //       name: element.name,
+    //       assessed: replacement ? replacement.assessed : false,
+    //       modified: replacement ? replacement.modified : false,
+    //     };
+    //   } else {
+    //     console.warn(`replacements with id ${element.id} not found.`);
+    //     return {
+    //       id: element.id,
+    //       name: '', // Provide a default value
+    //       assessed: undefined,
+    //       modified: undefined,
+    //     };
+    //   }
+    // });
+    //   //los uno con el resultado que trae la nota
+    //   const mergedReplacements = newReplacements.map((replacement, id) => {
+    //     const noteReplacement = this.note_selected?.replacements[replacement.id];
+    //     return {
+    //       ...replacement,
+    //       name: replacement.name || '', // Provide a default value
+    //       assessed: noteReplacement ? noteReplacement.assessed : replacement.assessed,
+    //       modified: noteReplacement ? noteReplacement.modified : replacement.modified,
+    //     };
+    //   });
+    
+    //   console.log('Merged Replacements:', mergedReplacements);
+    //   this.replacementsview = mergedReplacements;
+    //   console.log(this.replacementsview);
+
+    //   //replacements 1 valor
+
+    // // Convierte replacements en un array de valores
+    // const replacements1Array = Object.values(this.note_selected?.replacements) as Replacement1[];
+
+    // // Muestra el resultado de la nota
+    // console.log('replacements:', this.note_selected?.replacements);
+
+    
+    //filtro los replacements 
+    // const newReplacements1 = this.replacements.map((element) => {
+    //   if (!element || !element.id || !element.name) {
+    //     console.warn('Invalid replacements element:', element);
+    //     return null;
+    // }
+    //   const replacement1 = replacements1Array.find(
+    //     (replacement1) => replacement1.name === element.name
+    //   );
+    
+    //   if (replacement1) {
+    //     return {
+    //       id: element.id,
+    //       name: element.name,
+    //       demostrated: replacement1 ? replacement1.demostrated : false,
+    //     };
+    //   } else {
+    //     console.warn(`replacements with id ${element.id} not found.`);
+    //     return {
+    //       id: element.id,
+    //       name: '', // Provide a default value
+    //       demostrated: undefined,
+    //     };
+    //   }
+    // });
+    //   //los uno con el resultado que trae la nota
+    //   const mergedReplacements1 = newReplacements1.map((replacement1, id) => {
+    //     const noteReplacement = this.note_selected?.replacements[replacement1.id];
+    //     return {
+    //       ...replacement1,
+    //       name: replacement1.name || '', // Provide a default value
+    //       demostrated: noteReplacement ? noteReplacement.demostrated : replacement1.demostrated,
+    //     };
+    //   });
+    
+    //   console.log('Merged Replacements1:', mergedReplacements1);
+    //   this.replacementsview1 = mergedReplacements1;
+    //   console.log(this.replacementsview1);
+      
+    });
   }
 
 

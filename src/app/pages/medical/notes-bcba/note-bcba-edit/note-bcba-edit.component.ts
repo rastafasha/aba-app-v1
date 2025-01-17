@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 import { NoteBcbaService } from '../../../../core/services/notes-bcba.service';
 import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import { interventionsList, interventionsList2, newList, outcomeList, show97151List } from '../listasSelectData';
+import { interventionsList, interventionsListDoble, newList, outcomeList, show97151List } from '../listasSelectData';
 
 interface Behavior {
   index: number;
@@ -238,7 +238,7 @@ export class NoteBcbaEditComponent implements OnInit {
   was_the_client_present= false;
 
   interventionsList = interventionsList;
-  interventionsList2 = interventionsList2;
+  interventionsListDoble = interventionsListDoble;
     newList = newList;
     outcomeList = outcomeList;
     show97151List = show97151List;
@@ -336,9 +336,6 @@ export class NoteBcbaEditComponent implements OnInit {
       
       this.summary_note=this.note_selected.summary_note;
 
-      
-     
-      
       this.session_date = this.note_selected.session_date
         ? new Date(this.note_selected.session_date).toISOString()
         : '';
@@ -384,11 +381,13 @@ export class NoteBcbaEditComponent implements OnInit {
         this.show97151 = true;
       }
 
-
       this.newlist_added=this.note_selected.newlist_added;
       this.intakeoutcome_added=this.note_selected.intake_outcome;
       this.interventionsList = this.note_selected.interventions;
-      this.interventionsList2 = this.note_selected.interventions2;
+      this.interventionsListDoble = this.note_selected.interventions2;
+
+      this.newList = this.note_selected?.newlist_added;
+      this.outcomeList = this.note_selected?.intake_outcome;
 
       // this.replacementList = this.note_selected.replacements;
       // this.replacementList2 = this.note_selected.replacements2;
@@ -399,132 +398,154 @@ export class NoteBcbaEditComponent implements OnInit {
       // );
       
       // this.interventions2 = this.note_selected.interventions2;
-      // this.interventionsList2 = this.convertToInterventions2(
+      // this.interventionsListDoble = this.convertToInterventions2(
       //   this.interventions2
       // );
-      
-      
-      this.newList = this.note_selected?.newlist_added;
-      this.outcomeList = this.note_selected?.intake_outcome;
-      
-      this.bipV2Service.get(this.bip_id).subscribe((resp)=>{
-        console.log('BIP',resp);
-        this.bip_id = resp.data.id;
-        this.caregivers_training_goals = resp.data.caregiver_trainings;
-        this.behaviorList = resp.data.maladaptives;
-        this.replacementList = resp.data.replacements;
-        this.replacementList2 = resp.data.replacements;
 
-
-      // objectives
-      
-      // Filtrar la lista replacementList por estado
-      this.replacementList = this.replacementList.filter(goal => goal.status === 'active');
-
-      // Recorrer la lista replacementList y extraemos los objectives
-      this.objectives = this.replacementList.flatMap(objective => objective.objectives);
-      // filtrado los que estan en status in progress
-      const objetivosEnProgreso = this.objectives.filter(objetivo => objetivo.status === "in progress");
-      this.obj_inprogress = objetivosEnProgreso;
-      this.obj_inprogress1 = objetivosEnProgreso;
-        
-        //fin objectives
-
-
-        this.note_selected.behaviors = this.note_selected.behaviors || {};
-         // Convierte behaviors en un array de valores
-         const behaviorsArray = Object.values(this.note_selected.behaviors) as Behavior[];
-         //muestro el resultado de la nota 
-        console.log('behaviors:', this.note_selected.behaviors);
-        //filtro los behaviors 
-        const newBehaviors = this.behaviors.map((element) => {
-          // Add null check for element.mal
-          const behavior = behaviorsArray.find(
-            (behavior) => behavior.name === element.name
-          );
-        
-          if (behavior) {
-            return {
-              index: element.index,
-              name: element.name,
-              discused: behavior ? behavior.discused : false,
-            };
-          } else {
-            console.warn(`Behavior with index ${element.index} not found.`);
-            return {
-              index: element.index,
-              name: '', // Provide a default value
-              discused: undefined,
-            };
-          }
-        });
-        //los uno con el resultado que trae la nota
-        const mergedBehaviors = newBehaviors.map((behavior, index) => {
-          const noteBehavior = this.note_selected.behaviors[behavior.index];
-          return {
-            ...behavior,
-            name: behavior.name || '', // Provide a default value
-            discused: noteBehavior ? noteBehavior.discused : behavior.discused,
-          };
-        });
-        
-        console.log('Merged Behaviors:', mergedBehaviors);
-        this.behaviorsview = mergedBehaviors;
-        console.log(this.behaviorsview);
-
-
-        //   //replacements 1 valor
-
-      // // Convierte replacements en un array de valores
-      // const replacements1Array = Object.values(this.note_selected?.replacements) as Replacement1[];
-
-      // // Muestra el resultado de la nota
-      // console.log('replacements:', this.note_selected?.replacements);
-
-      
-      //filtro los replacements 
-      // const newReplacements1 = this.replacements.map((element) => {
-      //   if (!element || !element.id || !element.name) {
-      //     console.warn('Invalid replacements element:', element);
-      //     return null;
-      // }
-      //   const replacement1 = replacements1Array.find(
-      //     (replacement1) => replacement1.name === element.name
-      //   );
-      
-      //   if (replacement1) {
-      //     return {
-      //       id: element.id,
-      //       name: element.name,
-      //       demostrated: replacement1 ? replacement1.demostrated : false,
-      //     };
-      //   } else {
-      //     console.warn(`replacements with id ${element.id} not found.`);
-      //     return {
-      //       id: element.id,
-      //       name: '', // Provide a default value
-      //       demostrated: undefined,
-      //     };
-      //   }
-      // });
-      //   //los uno con el resultado que trae la nota
-      //   const mergedReplacements1 = newReplacements1.map((replacement1, id) => {
-      //     const noteReplacement = this.note_selected?.replacements[replacement1.id];
-      //     return {
-      //       ...replacement1,
-      //       name: replacement1.name || '', // Provide a default value
-      //       demostrated: noteReplacement ? noteReplacement.demostrated : replacement1.demostrated,
-      //     };
-      //   });
-      
-      //   console.log('Merged Replacements1:', mergedReplacements1);
-      //   this.replacementsview1 = mergedReplacements1;
-      //   console.log(this.replacementsview1);
-        
-      })
+      this.getBipv2();
 
     });
   }
+
+  getPatient(){
+    this.patientService.get(this.patient_id).subscribe((resp)=>{
+      this.client_selected = resp.data;
+      this.first_name = resp.data.first_name;
+      this.last_name = resp.data.last_name;
+      this.patient_identifier = resp.data.patient_identifier;
+      this.diagnosis_code = resp.data.diagnosis_code;
+      this.birth_date = resp.data.birth_date;
+      this.insurance_id = this.client_selected.insurer_id;
+      this.insurance_identifier = this.client_selected.insurance_identifier;
+      this.patientLocation_id = this.client_selected.location_id;
+      
+      this.paServicesService.get( this.noteServiceId, this.patient_id).subscribe((resp)=>{
+       this.selectedPaService = resp.data;
+        this.selectedValueCode = this.selectedPaService.cpt;
+        this.pa_services = [this.selectedPaService];
+        
+      });
+    })
+  }
+
+  getBipv2(){
+    this.bipV2Service.get(this.bip_id).subscribe((resp)=>{
+      console.log('BIP',resp);
+      this.bip_id = resp.data.id;
+      this.caregivers_training_goals = resp.data.caregiver_trainings;
+      this.behaviorList = resp.data.maladaptives;
+      this.replacementList = resp.data.replacements;
+      this.replacementList2 = resp.data.replacements;
+
+
+    // objectives
+    
+    // Filtrar la lista replacementList por estado
+    this.replacementList = this.replacementList.filter(goal => goal.status === 'active');
+
+    // Recorrer la lista replacementList y extraemos los objectives
+    this.objectives = this.replacementList.flatMap(objective => objective.objectives);
+    // filtrado los que estan en status in progress
+    const objetivosEnProgreso = this.objectives.filter(objetivo => objetivo.status === "in progress");
+    this.obj_inprogress = objetivosEnProgreso;
+    this.obj_inprogress1 = objetivosEnProgreso;
+      
+      //fin objectives
+
+
+      this.note_selected.behaviors = this.note_selected.behaviors || {};
+       // Convierte behaviors en un array de valores
+       const behaviorsArray = Object.values(this.note_selected.behaviors) as Behavior[];
+       //muestro el resultado de la nota 
+      console.log('behaviors:', this.note_selected.behaviors);
+      //filtro los behaviors 
+      const newBehaviors = this.behaviors.map((element) => {
+        // Add null check for element.mal
+        const behavior = behaviorsArray.find(
+          (behavior) => behavior.name === element.name
+        );
+      
+        if (behavior) {
+          return {
+            index: element.index,
+            name: element.name,
+            discused: behavior ? behavior.discused : false,
+          };
+        } else {
+          console.warn(`Behavior with index ${element.index} not found.`);
+          return {
+            index: element.index,
+            name: '', // Provide a default value
+            discused: undefined,
+          };
+        }
+      });
+      //los uno con el resultado que trae la nota
+      const mergedBehaviors = newBehaviors.map((behavior, index) => {
+        const noteBehavior = this.note_selected.behaviors[behavior.index];
+        return {
+          ...behavior,
+          name: behavior.name || '', // Provide a default value
+          discused: noteBehavior ? noteBehavior.discused : behavior.discused,
+        };
+      });
+      
+      console.log('Merged Behaviors:', mergedBehaviors);
+      this.behaviorsview = mergedBehaviors;
+      console.log(this.behaviorsview);
+
+
+      //   //replacements 1 valor
+
+    // // Convierte replacements en un array de valores
+    // const replacements1Array = Object.values(this.note_selected?.replacements) as Replacement1[];
+
+    // // Muestra el resultado de la nota
+    // console.log('replacements:', this.note_selected?.replacements);
+
+    
+    //filtro los replacements 
+    // const newReplacements1 = this.replacements.map((element) => {
+    //   if (!element || !element.id || !element.name) {
+    //     console.warn('Invalid replacements element:', element);
+    //     return null;
+    // }
+    //   const replacement1 = replacements1Array.find(
+    //     (replacement1) => replacement1.name === element.name
+    //   );
+    
+    //   if (replacement1) {
+    //     return {
+    //       id: element.id,
+    //       name: element.name,
+    //       demostrated: replacement1 ? replacement1.demostrated : false,
+    //     };
+    //   } else {
+    //     console.warn(`replacements with id ${element.id} not found.`);
+    //     return {
+    //       id: element.id,
+    //       name: '', // Provide a default value
+    //       demostrated: undefined,
+    //     };
+    //   }
+    // });
+    //   //los uno con el resultado que trae la nota
+    //   const mergedReplacements1 = newReplacements1.map((replacement1, id) => {
+    //     const noteReplacement = this.note_selected?.replacements[replacement1.id];
+    //     return {
+    //       ...replacement1,
+    //       name: replacement1.name || '', // Provide a default value
+    //       demostrated: noteReplacement ? noteReplacement.demostrated : replacement1.demostrated,
+    //     };
+    //   });
+    
+    //   console.log('Merged Replacements1:', mergedReplacements1);
+    //   this.replacementsview1 = mergedReplacements1;
+    //   console.log(this.replacementsview1);
+      
+    })
+  }
+
 
   private convertToInterventions(input: { [x: string]: boolean }) {
     if (!input) {
@@ -579,6 +600,18 @@ export class NoteBcbaEditComponent implements OnInit {
       { id: 'shaping', name: 'Shaping', value: input['shaping'] || false },
       { id: 'pairing', name: 'Pairing', value: input['pairing'] || false },
     ];
+  }
+
+  private convertToInterventionsGroup(
+    interventions: { id: string; name: string; value: boolean }[]
+  ) {
+    const group = {};
+    for (const intervention of interventions) {
+      if (intervention.value) {
+        group[intervention.id] = true;
+      }
+    }
+    return group;
   }
 
   private convertToInterventions2(input: { [x: string]: boolean }) {
@@ -668,27 +701,23 @@ export class NoteBcbaEditComponent implements OnInit {
     ];
   }
 
-  getPatient(){
-    this.patientService.get(this.patient_id).subscribe((resp)=>{
-      this.client_selected = resp.data;
-      this.first_name = resp.data.first_name;
-      this.last_name = resp.data.last_name;
-      this.patient_identifier = resp.data.patient_identifier;
-      this.diagnosis_code = resp.data.diagnosis_code;
-      this.birth_date = resp.data.birth_date;
-      this.insurance_id = this.client_selected.insurer_id;
-      this.insurance_identifier = this.client_selected.insurance_identifier;
-      this.patientLocation_id = this.client_selected.location_id;
-      
-      this.paServicesService.get( this.noteServiceId, this.patient_id).subscribe((resp)=>{
-       this.selectedPaService = resp.data;
-        this.selectedValueCode = this.selectedPaService.cpt;
-        this.pa_services = [this.selectedPaService];
-        
-      });
-    })
+  
+  private convertToInterventionsGroup2(
+    interventions2: { id: string; name: string; value: boolean; value2: boolean }[]
+  ) {
+    const group = {};
+    for (const intervention of interventions2) {
+      if (intervention.value) {
+        group[intervention.id] = true;
+      }
+      if (intervention.value2) {
+        group[intervention.id] = true;
+      }
+    }
+    return group;
   }
 
+  
 
   // getProfileBip(noteServiceId?: number) {
   //   console.log('Getting profile BIP:', {
@@ -922,7 +951,7 @@ convertToHours(totalMinutes: number): string {
   
   onInterventions2Change(updatedInterventions2) {
     // this.interventionsgroup2 = [
-    //   this.convertToInterventionsGroup2(this.interventionsList2),
+    //   this.convertToInterventionsGroup2(this.interventionsListDoble),
     // ];
     this.intervention2_added = updatedInterventions2;
   }
@@ -944,31 +973,7 @@ convertToHours(totalMinutes: number): string {
     this.behaviorsList_added = updatedbehaviorsList;
   }
 
-  private convertToInterventionsGroup(
-    interventions: { id: string; name: string; value: boolean }[]
-  ) {
-    const group = {};
-    for (const intervention of interventions) {
-      if (intervention.value) {
-        group[intervention.id] = true;
-      }
-    }
-    return group;
-  }
-  private convertToInterventionsGroup2(
-    interventions2: { id: string; name: string; value: boolean; value2: boolean }[]
-  ) {
-    const group = {};
-    for (const intervention of interventions2) {
-      if (intervention.value) {
-        group[intervention.id] = true;
-      }
-      if (intervention.value2) {
-        group[intervention.id] = true;
-      }
-    }
-    return group;
-  }
+  
 
   // eslint-disable-next-line no-debugger
   save() {debugger
@@ -1072,7 +1077,7 @@ convertToHours(totalMinutes: number): string {
       );
     }
 
-    if (this.interventionsList2) {
+    if (this.interventionsListDoble) {
       formData.append(
         'interventions2',
         JSON.stringify(this.intervention2_added)
@@ -1312,19 +1317,19 @@ convertToHours(totalMinutes: number): string {
   }
 
   onPaServiceSelect2(event: any) {
-    const service = event.value;
-    if (service) {
-      this.selectedValueCode1 = service.cpt;
+    const type = event.value;
+    if (type) {
+      this.selectedValueCode1 = type.cpt;
       
       this.show97151 = true;
       this.show971511 = false;
       this.show971512 = false;
 
-      if(service.cpt === 'Observation' ){
+      if(type.cpt === 'Observation' ){
         this.show971511 = true;
         this.show97151 = true;
       }
-      if(service.cpt === 'Report' ){
+      if(type.cpt === 'Report' ){
         this.show971512 = true;
         this.show97151 = true;
       }

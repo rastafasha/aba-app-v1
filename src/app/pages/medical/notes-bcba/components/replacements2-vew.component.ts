@@ -23,12 +23,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
             <tr *ngFor="let replace of obj_inprogress; let i = index">
               <td>{{ replace.description }}</td>
               <td>
-              <i *ngIf="replace.assessed === true"   class="fa fa-check"  ></i>
-                <i *ngIf="replace.assessed === false "  class="fa fa-times" ></i>
+              <i *ngIf="replace?.assessed === true"   class="fa fa-check"  ></i>
+                <i *ngIf="replace?.assessed === false "  class="fa fa-times" ></i>
               </td>
               <td>
-              <i *ngIf="replace.modified === true"   class="fa fa-check"  ></i>
-                <i *ngIf="replace.modified === false "  class="fa fa-times" ></i>
+              <i *ngIf="replace?.modified === true"   class="fa fa-check"  ></i>
+                <i *ngIf="replace?.modified === false "  class="fa fa-times" ></i>
               </td>
             </tr>
           </tbody>

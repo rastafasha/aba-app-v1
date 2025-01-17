@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Interventions2 } from '../interfaces';
+import { InterventionsDoble } from '../interfaces';
 
 @Component({
   selector: 'app-interventions3',
@@ -17,7 +17,7 @@ import { Interventions2 } from '../interfaces';
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let intervent of interventionsList2; let i = index">
+            <tr *ngFor="let intervent of interventionsListDoble; let i = index">
               <td>{{ intervent.name }}</td>
               <td>
                 <div
@@ -62,11 +62,11 @@ import { Interventions2 } from '../interfaces';
   `,
 })
 export class Interventions2Component {
-  @Input() interventionsList2: Interventions2[];
+  @Input() interventionsListDoble: InterventionsDoble[];
   @Output() update = new EventEmitter<object>();
 
   updatedInterventions2() {
-    const result = this.interventionsList2
+    const result = this.interventionsListDoble
       .filter((intervent) => intervent.value || intervent.value2)
       .reduce((acc, intervent) => {
         acc[intervent.id] = {

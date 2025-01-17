@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class Show91755Component {
   @Input() show97155;
-  @Input() interventionsList2;
+  @Input() interventionsListDoble;
   @Input() onInterventions2Change;
   @Input() $event;
   @Input() obj_inprogress1;
