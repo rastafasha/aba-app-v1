@@ -35,15 +35,17 @@ import { ChartReplacementComponent } from './charts/chart-replacement/chart-repl
 import { ConsentTreatmentFormComponent } from './consent-treatment-form/consent-treatment-form.component';
 import { CrisisPlanComponent } from './crisis-plan/crisis-plan.component';
 import { DeEscalationTecniquesComponent } from './de-escalation-tecniques/de-escalation-tecniques.component';
+import { DocumentFormComponent } from './document-form/document-form.component';
 import { FamilyInvolvementGoalFormComponent } from './family-involvement-goal-form/family-involvement-goal-form.component';
 import { GeneralizationTrainingComponent } from './generalization-training/generalization-training.component';
 import { GoalFormSimpleComponent } from './goal-form-simple/goal-form-simple.component';
 import { GoalFormComponent } from './goal-form/goal-form.component';
 import { HomicidalitiesComponent } from './homicidalities/homicidalities.component';
 import { LtoFormComponent } from './lto-form/lto-form.component';
-import { LtoListAndFormComponent } from './lto-list-and-form/lto-list-and-form.component';
 import { MonitoringEvaluatingComponent } from './monitoring-evaluating/monitoring-evaluating.component';
 import { PatientFormComponent } from './patient-form/patient-form.component';
+import { PhisicalAndMedicalComponent } from './phisical_and_medical/phisical_and_medical.component';
+import { RbtTrainingGoalFormComponent } from './rbt-training-goal-form/rbt-training-goal-form.component';
 import { RecomendationFormComponent } from './recomendation-form/recomendation-form.component';
 import { ReductionGoalEditComponent } from './reduction-goal-edit/reduction-goal-edit.component';
 import { MaladaptiveGoalsTableComponent } from './reduction-goal-form/maladaptive-goals-table/maladaptive-goals-table.component';
@@ -51,69 +53,69 @@ import { ReductionGoalFormComponent } from './reduction-goal-form/reduction-goal
 import { ReplacementGoalFormComponent } from './replacement-goal-form/replacement-goal-form.component';
 import { RiskFactorsComponent } from './risk-factors/risk-factors.component';
 import { StoFormComponent } from './sto-form/sto-form.component';
-import { StoListAndFormComponent } from './sto-list-and-form/sto-list-and-form.component';
 import { SuicidalitiesComponent } from './suicidalities/suicidalities.component';
 import { SustitutionListComponent } from './sustitution-list/sustitution-list.component';
 import { TransitionFadingPlanFormComponent } from './transition-fading-plan-form/transition-fading-plan-form.component';
-import { RbtTrainingGoalFormComponent } from './rbt-training-goal-form/rbt-training-goal-form.component';
-import { DocumentFormComponent } from './document-form/document-form.component';
-import { PhisicalAndMedicalComponent } from './phisical_and_medical/phisical_and_medical.component';
+import { MaladaptiveFormComponent } from './maladaptive-form/maladaptive-form.component';
+import { AssestmentEvaluationSettingFormComponent } from './AssestmentEvaluationSettingForm/AssestmentEvaluationSettingForm.component';
+import { DocumentReviewedFormComponent } from './document-reviewed-form/document-reviewed-form.component';
 
 const components = [
-  BipFormComponent,
-  ReductionGoalFormComponent,
-  FamilyInvolvementGoalFormComponent,
-  MonitoringEvaluatingComponent,
-  BehaviorAssistantComponent,
-  GeneralizationTrainingComponent,
-  CrisisPlanComponent,
-  DeEscalationTecniquesComponent,
-  ConsentTreatmentFormComponent,
-  SustitutionListComponent,
-  ChartReductionComponent,
-  ChartReplacementComponent,
-  ReductionGoalEditComponent,
-  ReplacementGoalFormComponent,
-  PatientFormComponent,
-  BehaviorAnalysisAssessmentComponent,
-  MaladaptivesComponent,
   AssestmentComponent,
-  PrevalentSettingComponent,
-  HypothesisBasedInterventionsComponent,
-  InterventionsComponent,
-  MaladaptiveGoalsTableComponent,
-  StoFormComponent,
-  LtoFormComponent,
-  GoalFormComponent,
-  StoListAndFormComponent,
-  LtoListAndFormComponent,
-  GoalFormSimpleComponent,
-  BipProfileHeadComponent,
-  BipProfilePatientDataComponent,
+  BehaviorAnalysisAssessmentComponent,
+  BehaviorAssistantComponent,
   BipDocumentsShowComponent,
-  BipProfileBackgroundComponent,
-  BipProfileMaladaptivesComponent,
+  BipFormComponent,
   BipProfileAssestmentComponent,
-  BipProfilePrevalentComponent,
+  BipProfileBackgroundComponent,
+  BipProfileBehaviorComponent,
+  BipProfileConsentComponent,
+  BipProfileCrisisPlanComponent,
+  BipProfileDeEscalationComponent,
+  BipProfileFamilyComponent,
+  BipProfileGeneralizationComponent,
+  BipProfileHeadComponent,
   BipProfileHypothesisComponent,
   BipProfileInterventionsComponent,
+  BipProfileMaladaptivesComponent,
+  BipProfileMonotoringComponent,
+  BipProfilePatientDataComponent,
+  BipProfilePrevalentComponent,
   BipProfileReductionsComponent,
   BipProfileReplacementsComponent,
-  BipProfileFamilyComponent,
-  BipProfileMonotoringComponent,
-  BipProfileBehaviorComponent,
-  BipProfileGeneralizationComponent,
-  BipProfileCrisisPlanComponent,
-  BipProfileConsentComponent,
-  BipProfileDeEscalationComponent,
-  RecomendationFormComponent,
-  RiskFactorsComponent,
-  SuicidalitiesComponent,
-  HomicidalitiesComponent,
+  ChartReductionComponent,
+  ChartReplacementComponent,
+  ConsentTreatmentFormComponent,
+  CrisisPlanComponent,
+  DeEscalationTecniquesComponent,
   DocumentFormComponent,
+  FamilyInvolvementGoalFormComponent,
+  GeneralizationTrainingComponent,
+  GoalFormComponent,
+  GoalFormSimpleComponent,
+  HomicidalitiesComponent,
+  HypothesisBasedInterventionsComponent,
+  InterventionsComponent,
+  LtoFormComponent,
+  MaladaptivesComponent,
+  MaladaptiveGoalsTableComponent,
+  MonitoringEvaluatingComponent,
+  PatientFormComponent,
   PhisicalAndMedicalComponent,
-  TransitionFadingPlanFormComponent,
+  PrevalentSettingComponent,
   RbtTrainingGoalFormComponent,
+  RecomendationFormComponent,
+  ReductionGoalEditComponent,
+  ReductionGoalFormComponent,
+  ReplacementGoalFormComponent,
+  RiskFactorsComponent,
+  StoFormComponent,
+  SuicidalitiesComponent,
+  SustitutionListComponent,
+  TransitionFadingPlanFormComponent,
+  MaladaptiveFormComponent,
+  AssestmentEvaluationSettingFormComponent,
+  DocumentReviewedFormComponent,
 ];
 @NgModule({
   declarations: [...components],

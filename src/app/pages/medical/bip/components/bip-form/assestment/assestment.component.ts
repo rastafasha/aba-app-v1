@@ -1,8 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {
-  AssestmentConductedOption,
-  AssestmentEvaluationSetting,
-} from 'src/app/core/models';
+import { AssestmentEvaluationSetting, DocumentV2 } from 'src/app/core/models';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -18,21 +15,10 @@ export class AssestmentComponent {
   @Output() assestmentEvaluationSettingsChange = new EventEmitter<
     AssestmentEvaluationSetting[]
   >();
-  newAssestmentEvaluationSetting: AssestmentEvaluationSetting = {
-    index: 0,
-    tangible: '',
-    activities: '',
-    other: '',
-  };
-  @Input() assesstmentsDocuments: AssestmentConductedOption[] = [];
-  @Output() assesstmentsDocumentsChange = new EventEmitter<
-    AssestmentConductedOption[]
-  >();
-  newAssestmentDocument: AssestmentConductedOption = {
-    index: 0,
-    assestment_title: '',
-    assestment_status: '',
-  };
+  newAssestmentEvaluationSetting = AssestmentEvaluationSetting.getDefault();
+  @Input() assesstmentsDocuments: DocumentV2[] = [];
+  @Output() assesstmentsDocumentsChange = new EventEmitter<DocumentV2[]>();
+  newAssestmentDocument = DocumentV2.getDefault();
   //
   @Output() save = new EventEmitter<void>();
   text_validation = '';
@@ -94,8 +80,8 @@ export class AssestmentComponent {
   ////////////////////////////////
   addAssesstmentDocument() {
     if (
-      !this.newAssestmentDocument.assestment_status ||
-      !this.newAssestmentDocument.assestment_title
+      !this.newAssestmentDocument.status ||
+      !this.newAssestmentDocument.title
     ) {
       this.text_validation = 'Please fill all the fields';
       return;
@@ -106,11 +92,7 @@ export class AssestmentComponent {
       ...this.newAssestmentDocument,
     });
     this.text_validation = '';
-    this.newAssestmentDocument = {
-      index: 0,
-      assestment_title: '',
-      assestment_status: '',
-    };
+    this.newAssestmentDocument = DocumentV2.getDefault();
     this.assesstmentsDocumentsChange.emit(this.assesstmentsDocuments);
   }
 

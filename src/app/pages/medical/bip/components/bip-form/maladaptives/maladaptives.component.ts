@@ -3,7 +3,7 @@ import { PlanV2 } from 'src/app/core/models';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-maladaptives[maladaptives]',
+  selector: 'app-maladaptives',
   templateUrl: './maladaptives.component.html',
   styleUrls: ['./maladaptives.component.scss'],
 })

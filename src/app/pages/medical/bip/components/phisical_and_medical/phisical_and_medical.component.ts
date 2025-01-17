@@ -10,9 +10,13 @@ export class PhisicalAndMedicalComponent {
   @Input() input: Medication;
   @Output() inputChange = new EventEmitter<Medication>();
   @Output() save = new EventEmitter<Medication>();
+  @Output() cancel = new EventEmitter<void>();
 
   onSave() {
     this.inputChange.emit(this.input);
     this.save.emit(this.input);
+  }
+  onCancel() {
+    this.cancel.emit();
   }
 }

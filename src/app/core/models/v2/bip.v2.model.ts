@@ -50,6 +50,7 @@ export class Objective {
 export class DocumentV2 {
   index: number;
   title: string;
+  status?: 'pending' | 'reviewing' | 'yes' | 'no';
   constructor(data: Partial<DocumentV2>) {
     Object.assign(this, data);
   }
@@ -57,6 +58,7 @@ export class DocumentV2 {
     return {
       index: 0,
       title: '',
+      status: 'no',
     };
   }
 }
@@ -128,14 +130,13 @@ export class AssestmentEvaluationSetting {
   constructor(data: Partial<AssestmentEvaluationSetting>) {
     Object.assign(this, data);
   }
-}
-
-export class AssestmentConductedOption {
-  index: number;
-  assestment_title: string;
-  assestment_status: string;
-  constructor(data: Partial<AssestmentConductedOption>) {
-    Object.assign(this, data);
+  static getDefault() {
+    return new AssestmentEvaluationSetting({
+      index: 0,
+      tangible: '',
+      activities: '',
+      other: '',
+    });
   }
 }
 
@@ -432,7 +433,7 @@ export class BipV2 {
   documents_reviewed: DocumentV2[];
   maladaptives: PlanV2[];
   replacements: PlanV2[];
-  assestment_conducted_options: AssestmentConductedOption[];
+  assestment_conducted_options: DocumentV2[];
   assestmentEvaluationSettings: AssestmentEvaluationSetting[];
   prevalent_setting_event_and_atecedents: PrevalentSettingEventAndAntecedent[];
   interventions: Intervention[];
@@ -477,7 +478,7 @@ export class BipV2 {
       ),
       assestment_conducted_options: ForceMap(
         data.assestment_conducted_options,
-        AssestmentConductedOption
+        DocumentV2
       ),
       assestment_conducted: StringOrNullOrUndefined(data.assestment_conducted),
       background_information: StringOrNullOrUndefined(

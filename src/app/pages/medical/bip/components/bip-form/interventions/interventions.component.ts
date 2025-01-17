@@ -3,7 +3,7 @@ import { ListFormStrategy } from '../list-form.strategy';
 import { Intervention } from 'src/app/core/models';
 
 @Component({
-  selector: 'app-interventions[interventions]',
+  selector: 'app-interventions',
   templateUrl: './interventions.component.html',
   styleUrls: ['./interventions.component.scss'],
 })

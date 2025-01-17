@@ -1,15 +1,19 @@
 <h3 mat-dialog-title class="h3">Document</h3>
-<div mat-dialog-content class="py-4" [style.min-width.px]="400">
-  <div class="form-group local-forms">
-    <label>Document Title<span class="login-danger">*</span> </label>
-    <input
-      class="form-control"
-      name="document_title"
-      [(ngModel)]="input.title"
-      type="text"
-    />
+<!-- Content -->
+<div mat-dialog-content>
+  <div class="row mt-4">
+    <div class="form-group local-forms">
+      <label>Document Title<span class="login-danger">*</span> </label>
+      <input
+        class="form-control"
+        name="document_title"
+        [(ngModel)]="input.title"
+        type="text"
+      />
+    </div>
   </div>
 </div>
+<!-- Actions -->
 <div mat-dialog-actions align="end">
   <button (click)="onCancel()" mat-button class="btn btn-outline-danger btn-md">
     Cancel

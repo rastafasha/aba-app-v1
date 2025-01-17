@@ -13,7 +13,9 @@ export class ListFormStrategy<T extends ListItem> {
   }
 
   select(items: T[], search: T): T {
-    const selected = items.find((item) => item.index === search.index);
+    const selected =
+      items.find((item) => item === search) ??
+      items.find((item) => item.index === search.index);
     return selected;
   }
 

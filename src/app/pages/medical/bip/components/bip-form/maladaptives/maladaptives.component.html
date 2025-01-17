@@ -8,7 +8,49 @@
             <div class="card-box">
               <div class="card-block">
                 <h3 class="card-title">Maladaptives Behaviors</h3>
+                <div class="row align-items-center my-4">
+                  <app-list-and-form
+                    #list
+                    title="Maladaptives Behaviors"
+                    [(newItem)]="newMaladaptive"
+                    [(dataSource)]="maladaptives"
+                    [displayedColumns]="[
+                      'name',
+                      'baseline_level',
+                      'baseline_date',
+                      'initial_intensity',
+                      'current_intensity',
+                      'description'
+                    ]"
+                  >
+                    <app-maladaptive-form
+                      [(input)]="newMaladaptive"
+                      (cancel)="list.onClose()"
+                      (save)="list.onAdd($event)"
+                    ></app-maladaptive-form>
+                  </app-list-and-form>
+                </div>
 
+                <div class="col-xs-12">
+                  <div class="doctor-submit text-end">
+                    <button
+                      type="button"
+                      class="btn btn-primary submit-form me-2"
+                      (click)="onSave()"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!--
                 <div class="row align-items-center">
                   <div class="col-xs-12">
                     <form action="">
@@ -172,7 +214,7 @@
                               >
                                 <i class="fa fa-pencil"></i>
                               </button>
-                              <!-- <button class="btn btn-outline-success btn-sm" (click)="updateMaladaptive(maladap, i)"><i class="fa fa-pencil"></i> Edit</button> -->
+                              <!-- <button class="btn btn-outline-success btn-sm" (click)="updateMaladaptive(maladap, i)"><i class="fa fa-pencil"></i> Edit</button> ->
                               <button
                                 class="btn btn-outline-danger btn-sm"
                                 (click)="deleteMaladaptive(i)"
@@ -181,7 +223,7 @@
                               </button>
                             </td>
 
-                            <!-- modal edit maladap-->
+                            <!-- modal edit maladap ->
 
                             <div
                               [id]="'edit-maladap-' + i"
@@ -350,7 +392,7 @@
                               </div>
                             </div>
 
-                            <!-- modal edit maladap end-->
+                            <!-- modal edit maladap end ->
                           </tr>
                         </tbody>
                       </table>
@@ -360,8 +402,8 @@
               </div>
             </div>
           </div>
-          <!-- maladaptives -->
-          <!-- validaciones -->
+          <!-- maladaptives ->
+          <!-- validaciones ->
 
           <div class="form-group row" *ngIf="text_validation">
             <div class="col-md-12">
@@ -381,7 +423,7 @@
               </div>
             </div>
           </div>
-          <!-- validaciones -->
+          <!-- validaciones ->
 
           <div class="col-12">
             <div class="doctor-submit text-end">
@@ -398,4 +440,4 @@
       </form>
     </div>
   </div>
-</div>
+</div> -->

@@ -75,7 +75,11 @@ export class ListAndFormComponent<T> {
   }
 
   public open() {
-    this.ref = this.dialog.open(this.htmlTemplate);
+    this.ref = this.dialog.open(this.htmlTemplate, {
+      ariaModal: true,
+      minWidth: 400,
+      // width: '100%',
+    });
   }
 
   public close() {
@@ -92,11 +96,13 @@ export class ListAndFormComponent<T> {
 
   onEdit(item: T) {
     const selected = this.strategy.select(this.dataSource, item);
+    this.newItemChange.emit(selected);
     this.edit.emit(selected);
     this.open();
   }
   onView(item: T) {
     const selected = this.strategy.select(this.dataSource, item);
+    this.newItemChange.emit(selected);
     this.view.emit(selected);
     this.open();
   }
