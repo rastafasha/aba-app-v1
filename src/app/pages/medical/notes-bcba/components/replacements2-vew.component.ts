@@ -42,6 +42,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class Replacement2ViewComponent {
   @Input() obj_inprogress;
 
+  ngOnInit(): void {
+    console.log('obj_inprogress', this.obj_inprogress); // Verifica que la data esté siendo recibida
+  }
+
   updatereplacements() {
     const replacementsObj = this.obj_inprogress
       .filter((replace) => replace.value || replace.value2)

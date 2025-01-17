@@ -209,6 +209,10 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class interventions2ViewComponent {
   @Input() interventions2;
 
+  ngOnInit(): void {
+    console.log('interventions2', this.interventions2); // Verifica que la data esté siendo recibida
+  }
+
   updateInterventions() {
     const interventions2sObj = this.interventions2
     .filter((interventions2) => interventions2.value || interventions2.value2)

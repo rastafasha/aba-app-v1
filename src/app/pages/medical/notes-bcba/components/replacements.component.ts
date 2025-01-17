@@ -53,10 +53,11 @@ export class ReplacementsComponent {
     const replacementsObj = this.obj_inprogress
       .filter((replac) => replac.value)
       .reduce((acc, replac) => {
-        acc[replac.id] = {
-          id: replac.id, 
-          demostrated: !!replac.value, 
-          name: replac.description };
+        acc[replac.id] = true;
+        // acc[replac.id] = {
+        //   id: replac.id, 
+        //   demostrated: !!replac.value, 
+        //   name: replac.description };
         return acc;
       }, {});
 

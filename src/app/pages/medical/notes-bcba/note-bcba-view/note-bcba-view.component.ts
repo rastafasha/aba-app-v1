@@ -50,6 +50,7 @@ export class NoteBcbaViewComponent implements OnInit {
   patient_identifier: string;
   // option_selected:number = 0;
 
+
   showFamily = false;
   showMonitoring = false;
 
@@ -328,6 +329,7 @@ export class NoteBcbaViewComponent implements OnInit {
      
       this.interventions = this.note_selected.interventions;
       this.interventions2 = this.note_selected.interventions2;
+      console.log(this.interventions2);
 
 
       this.newlist_added = this.note_selected.newlist_added;
@@ -335,7 +337,7 @@ export class NoteBcbaViewComponent implements OnInit {
 
 
       this.bipV2Service.get(this.bip_id).subscribe((resp)=>{
-        console.log('BIP',resp);
+        // console.log('BIP',resp);
         this.bip_id = resp.data.id;
         this.caregivers_training_goals = resp.data.caregiver_trainings;
         this.behaviors = resp.data.maladaptives;
@@ -343,67 +345,67 @@ export class NoteBcbaViewComponent implements OnInit {
         this.replacements2 = resp.data.replacements;
         
         // // behaviors
-        // this.note_selected.behaviors = this.note_selected.behaviors || {};
-        //  // Convierte behaviors en un array de valores
-        //  const behaviorsArray = Object.values(this.note_selected.behaviors) as Behavior[];
-        //  //muestro el resultado de la nota 
+        this.note_selected.behaviors = this.note_selected.behaviors || {};
+         // Convierte behaviors en un array de valores
+         const behaviorsArray = Object.values(this.note_selected.behaviors) as Behavior[];
+         //muestro el resultado de la nota 
         // console.log('behaviors:', this.note_selected.behaviors);
-        // //filtro los behaviors 
-        // const newBehaviors = this.behaviors.map((element) => {
-        //   if (!element || !element.id || !element.name) {
-        //     console.warn('Invalid behavior element:', element);
-        //     return null;
-        // }
-        //   const behavior = behaviorsArray.find(
-        //     (behavior) => behavior.name === element.name
-        //   );
+        //filtro los behaviors 
+        const newBehaviors = this.behaviors.map((element) => {
+          if (!element || !element.id || !element.name) {
+            // console.warn('Invalid behavior element:', element);
+            return null;
+        }
+          const behavior = behaviorsArray.find(
+            (behavior) => behavior.name === element.name
+          );
         
-        //   if (behavior) {
-        //     return {
-        //       id: element.id,
-        //       name: element.name,
-        //       discused: behavior ? behavior.discused : false,
-        //     };
-        //   } else {
-        //     console.warn(`Behavior with id ${element.id} not found.`);
-        //     return {
-        //       id: element.id,
-        //       name: '', 
-        //       discused: undefined,
-        //     };
-        //   }
-        // });
-        // //los uno con el resultado que trae la nota
-        // const mergedBehaviors = newBehaviors.map((behavior, id) => {
-        //   const noteBehavior = this.note_selected.behaviors[behavior.id];
-        //   return {
-        //     ...behavior,
-        //     name: behavior.name || '', 
-        //     discused: noteBehavior ? noteBehavior.discused : behavior.discused,
-        //   };
-        // });
+          if (behavior) {
+            return {
+              id: element.id,
+              name: element.name,
+              discused: behavior ? behavior.discused : false,
+            };
+          } else {
+            // console.warn(`Behavior with id ${element.id} not found.`);
+            return {
+              id: element.id,
+              name: '', 
+              discused: undefined,
+            };
+          }
+        });
+        //los uno con el resultado que trae la nota
+        const mergedBehaviors = newBehaviors.map((behavior, id) => {
+          const noteBehavior = this.note_selected.behaviors[behavior.id];
+          return {
+            ...behavior,
+            name: behavior.name || '', 
+            discused: noteBehavior ? noteBehavior.discused : behavior.discused,
+          };
+        });
         
         // console.log('Merged Behaviors:', mergedBehaviors);
-        // this.behaviorsview = mergedBehaviors;
+        this.behaviorsview = mergedBehaviors;
         // console.log(this.behaviorsview);
 
          //replacements dos valores
 
 
          // Verificar la lista replacements
-      console.log('replacementList', this.replacements);
+      // console.log('replacementList', this.replacements);
   
       // Filtrar la lista replacements por estado
       this.replacements = this.replacements.filter(goal => goal.status === 'active');
 
       // Recorrer la lista replacements y extraemos los objectives
       this.objectives = this.replacements.flatMap(objective => objective.objectives);
-      console.log('Objetives', this.objectives );
+      // console.log('Objetives', this.objectives );
       
       // filtrado los que estan en status in progress
       const objetivosEnProgreso = this.objectives.filter(objetivo => objetivo.status === "in progress");
 
-      console.log(objetivosEnProgreso);
+      // console.log(objetivosEnProgreso);
       this.obj_inprogress = objetivosEnProgreso;
 
       // Convierte replacements en un array de valores

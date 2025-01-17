@@ -31,8 +31,6 @@ export class EditNoteRbtComponent implements OnInit {
   text_success = '';
   text_validation = '';
 
-
-
   selectedValueCode!: string;
   selectedValueTimeIn = '';
   selectedValueTimeOut = '';
@@ -42,8 +40,6 @@ export class EditNoteRbtComponent implements OnInit {
   selectedValueMaladaptive!: string;
   option_selected = 0;
   isGeneratingSummary = false;
-
-
 
   selectedValueRBT!: string;
   selectedValueRenderingProvider!: string;
@@ -286,15 +282,11 @@ export class EditNoteRbtComponent implements OnInit {
       this.bip_id = this.note_selected.bip_id;
       this.insurance_identifier = this.note_selected.insurance_identifier;
       this.patient_identifier = this.note_selected.patient_identifier;
-
       this.participants = this.note_selected.participants;
       this.provider_credential = this.note_selected.provider_credential;
       this.as_evidenced_by = this.note_selected.as_evidenced_by;
       this.client_appeared = this.note_selected.client_appeared;
-      // this.client_response_to_treatment_this_session =
-      //   this.note_selected.client_response_to_treatment_this_session;
       this.sumary_note = this.note_selected.sumary_note;
-
       this.selectedValueCode = this.note_selected.cpt_code;
 
       this.selectedValueRBT = resp.noteRbt.provider.name;
@@ -304,15 +296,11 @@ export class EditNoteRbtComponent implements OnInit {
       this.selectedValueBcba_id =resp.noteRbt.supervisor_id;
 
       this.interventions = resp.interventions;
-      
-
       this.interventionsList = this.convertToInterventions(
         this.interventions[0]
       );
 
       this.maladaptives = resp.maladaptives;
-      
-
       this.replacements = resp.replacements; 
 
       // this.pos = this.note_selected.pos;
@@ -402,9 +390,6 @@ export class EditNoteRbtComponent implements OnInit {
       this.insurance_identifier = this.client_selected.insurance_identifier;
         this.patientLocation_id = this.client_selected.location_id;
 
-
-
-        // this.pos = JSON.parse(resp.patient.pos_covered) ;
         this.pos = this.client_selected.pos_covered;
         this.diagnosis_code = this.client_selected.diagnosis_code;
 
@@ -581,18 +566,10 @@ convertToHours(totalMinutes: number): string {
 
   selectMaladaptive(behavior: any) {
     this.maladaptiveSelected = behavior;
-    // console.log(behavior);
-    // this.maladp_added.push({
-    //   maladaptive : behavior
-    // })
   }
 
   selectReplacement(replacemen: any) {
     this.replacementSelected = replacemen;
-    // console.log(this.replacementSelected);
-    // this.replacement_added.push({
-    //   replacement : replacemen
-    // })
   }
 
   onMaladaptivesChange(updatedMaladaptives: any[]) {
@@ -608,15 +585,12 @@ convertToHours(totalMinutes: number): string {
     this.maladaptiveSelected = null;
     this.total_trials = 0;
     this.number_of_correct_response = 0;
-    // this.ngOnInit();
   }
 
   speciaFirmaDataRbt(selectedValueRBT) {
     this.doctorService.showDoctorProfile(selectedValueRBT).subscribe((resp) => {
       this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED =
         resp.doctor.electronic_signature;
-      // this.notes = resp.notes;
-      // this.services = resp.services;
     });
   }
   selectFirmaSpecialistRbt(event) {
@@ -631,15 +605,12 @@ convertToHours(totalMinutes: number): string {
       .subscribe((resp) => {
         this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED =
           resp.doctor.electronic_signature;
-        // this.notes = resp.notes;
-        // this.services = resp.services;
       });
   }
 
   selectFirmaSpecialistBcba(event) {
     event = this.selectedValueBcba_id;
     this.speciaFirmaDataBcba(this.selectedValueBcba_id);
-    // console.log(this.selectedValueBcba_id);
   }
 
   addMaladaptive(behavior: any, i) {

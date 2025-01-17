@@ -60,12 +60,16 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class IntakeOutcomeViewComponent {
   @Input() intake_outcome: any;
 
-  updateIntakeOutcomes() {
-    const outcomeListObj = this.intake_outcome
-      .filter((intake_outcome) => intake_outcome.value)
-      .reduce((acc, intake_outcome) => {
-        acc[intake_outcome.id] = true;
-        return acc;
-      }, {});
+  ngOnInit(): void {
+    console.log('intake_outcome', this.intake_outcome); // Verifica que la data esté siendo recibida
   }
+
+  // updateIntakeOutcomes() {
+  //   const outcomeListObj = this.intake_outcome
+  //     .filter((intake_outcome) => intake_outcome.value)
+  //     .reduce((acc, intake_outcome) => {
+  //       acc[intake_outcome.id] = true;
+  //       return acc;
+  //     }, {});
+  // }
 }

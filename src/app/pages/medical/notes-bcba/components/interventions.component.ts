@@ -17,7 +17,7 @@ import { Intervention } from '../interfaces';
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let interv of interventionsList; let i = index">
+        <tr *ngFor="let interv of interventionsList">
           <td>{{ interv.name }}</td>
           <td>
            
@@ -51,7 +51,8 @@ export class InterventionsComponent {
     const interventionsObj = this.interventionsList
       .filter((interv) => interv.value)
       .reduce((acc, interv) => {
-        acc[interv.id] = {demostrated:!!interv.value};
+        // acc[interv.id] = {demostrated:!!interv.value};
+        acc[interv.id] = true;
         return acc;
       }, {});
       console.log(interventionsObj);

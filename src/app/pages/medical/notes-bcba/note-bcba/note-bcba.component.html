@@ -38,7 +38,7 @@
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label>First Name <span class="login-danger">*</span></label>
-                    <input class="form-control" name="first_name" disabled [(ngModel)]="client_selected.first_name"
+                    <input class="form-control" name="first_name" disabled [(ngModel)]="first_name"
                       type="text" />
                   </div>
                 </div>
@@ -46,7 +46,7 @@
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label>Last Name <span class="login-danger">*</span></label>
-                    <input class="form-control" name="last_name" disabled [(ngModel)]="client_selected.last_name"
+                    <input class="form-control" name="last_name" disabled [(ngModel)]="last_name"
                       type="text" />
                   </div>
                 </div>
@@ -55,7 +55,7 @@
                   <div class="form-group local-forms">
                     <label>Patient ID <span class="login-danger">*</span></label>
                     <input class="form-control" name="patient_identifier" disabled
-                      [(ngModel)]="client_selected.patient_identifier" type="text" />
+                      [(ngModel)]="patient_identifier" type="text" />
                   </div>
                 </div>
                 <!-- Diagnosis Code -->
@@ -63,7 +63,7 @@
                   <div class="form-group local-forms">
                     <label>Diagnosis Code <span class="login-danger">*</span></label>
                     <input class="form-control" name="diagnosis_code" disabled
-                      [(ngModel)]="client_selected.diagnosis_code" type="text" />
+                      [(ngModel)]="diagnosis_code" type="text" />
                   </div>
                 </div>
                 <!-- Birth day -->
@@ -71,7 +71,7 @@
                   <div class="form-group local-forms">
                     <label>Birth day <span class="login-danger">*</span></label>
                     <input class="form-control datetimepicker" disabled name="birth_date"
-                      [(ngModel)]="client_selected.birth_date" type="text" matInput [matDatepicker]="picker" />
+                      [(ngModel)]="birth_date" type="text" matInput [matDatepicker]="picker" />
                     <mat-datepicker #picker></mat-datepicker>
                     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                   </div>
@@ -340,6 +340,8 @@
       <!--   only 51 -1-->
       <!-- [$event]="$event" -->
       <app-show917511 [show971511]="show971511"
+      (bcbaclientChange)="BCBA_conducted_client_observations = $event" 
+      (bcbaconductedChange)="BCBA_conducted_assessments = $event"
         [BCBA_conducted_client_observations]="BCBA_conducted_client_observations"
         [BCBA_conducted_assessments]="BCBA_conducted_assessments" [newList]="newList"
         [onNewListChange]="onNewListChange" [outcomeList]="outcomeList"
@@ -347,17 +349,29 @@
       <!--   only 51 -2-->
       <!-- [$event]="$event" -->
       <app-show917512 [show971512]="show971512"
+      (bcbaclient2Change)="BCBA_conducted_client_observations = $event" 
+      (bcbaconducted2Change)="BCBA_conducted_assessments = $event"
         [BCBA_conducted_client_observations]="BCBA_conducted_client_observations"
         [BCBA_conducted_assessments]="BCBA_conducted_assessments"></app-show917512>
       <!--   only 55-->
-      <app-show91755 [show97155]="show97155" [interventionsList2]="interventionsList2"
-        [onInterventions2Change]="onInterventions2Change" [obj_inprogress]="obj_inprogress"
+      <app-show91755 [show97155]="show97155"
+      (modificationsChange)="modifications_needed_at_this_time = $event" 
+      (additionalChange)="additional_goals_or_interventions = $event"
+       [interventionsList2]="interventionsList2"
+        [onInterventions2Change]="onInterventions2Change" [obj_inprogress1]="obj_inprogress1"
         [onReplacement2Change]="onReplacement2Change"
         [modifications_needed_at_this_time]="modifications_needed_at_this_time"
         [additional_goals_or_interventions]="additional_goals_or_interventions"></app-show91755>
 
       <!--  only 56 -->
-      <app-show91756 [show97156]="show97156" [interventionsList]="interventionsList"
+      <app-show91756 [show97156]="show97156"
+      (cargiverChange)="cargiver_participation = $event" 
+      (wastheclientChange)="was_the_client_present = $event"
+      (askedChange)="asked_and_clarified_questions_about_the_implementation_of = $event"
+      (reinforcedChange)="reinforced_caregiver_strengths_in = $event"
+      (gaveChange)="gave_constructive_feedback_on = $event"
+      (recomendedChange)="recomended_more_practice_on = $event"
+       [interventionsList]="interventionsList"
         [onInterventionsChange]="onInterventionsChange" [obj_inprogress]="obj_inprogress"
         [onReplacementChange]="onReplacementChange" [behaviorList]="behaviorList" [onBehaviorChange]="onBehaviorChange"
         [cargiver_participation]="cargiver_participation" [was_the_client_present]="was_the_client_present"

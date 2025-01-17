@@ -59,6 +59,7 @@ throw new Error('Method not implemented.');
   selectedValueRendering!: string;
   selectedValueAba!: string;
   selectedValueCode!: string;
+  selectedValueCode1!: string;
   option_selected = 0;
   totalMinutos = 0;
   total_hour_session = '';
@@ -146,7 +147,7 @@ throw new Error('Method not implemented.');
   goal: any;
   note_id: number;
   location: any;
-  birth_date = '';
+  birth_date :any;
   rendering_provider: number;
 
   roles_rbt = [];
@@ -179,6 +180,7 @@ throw new Error('Method not implemented.');
   familiEnvolments = [];
   monitoringEvaluating = [];
   caregivers_training_goals = [];
+  caregivers_training = [];
   rbt_training_goals = [];
 
   posGruoup = [];
@@ -226,6 +228,7 @@ throw new Error('Method not implemented.');
   show97151List = show97151List;
   objectives = [];
   obj_inprogress = [];
+  obj_inprogress1 = [];
 
   constructor(
     private bipV2Service: BipsV2Service,
@@ -279,14 +282,19 @@ throw new Error('Method not implemented.');
   }
   getPatient(){
     this.patientService.getPatientByPatientId(this.patient_identifier).subscribe((resp)=>{
-      console.log('patient',resp);
+      // console.log('patient',resp);
       this.client_selected = resp.patient;
       this.patient_id = resp.patient.id;
       this.patientLocation_id = this.client_selected.location_id;
       this.patient_identifier = this.client_selected.patient_identifier;
-      this.patientLocation_id = this.client_selected.location_id;
       this.insurance_id = this.client_selected.insurer_id;
       this.insurance_identifier = this.client_selected.insurance_identifier;
+
+      this.first_name = this.client_selected.first_name;
+      this.last_name = this.client_selected.last_name;
+      this.patient_identifier = this.client_selected.patient_identifier;
+      this.diagnosis_code = this.client_selected.diagnosis_code;
+      this.birth_date = this.client_selected.birth_date;
 
         this.diagnosis_code = this.client_selected.diagnosis_code;
         this.insurer_id = this.client_selected.insurer_id;
@@ -317,26 +325,25 @@ throw new Error('Method not implemented.');
     this.bipV2Service.list({client_id: this.patient_id}).subscribe((resp)=>{
       console.log('BIP',resp);
       this.bip_id = resp.data[0].id;
-      this.caregivers_training_goals = resp.data[0].caregiver_trainings;
+      // this.caregivers_training_goals = resp.data[0].caregiver_trainings;
       
       this.behaviorList = resp.data[0].maladaptives;
       this.replacementList = resp.data[0].replacements;
 
-      // Verificar la lista replacementList
-      console.log('replacementList', this.replacementList);
   
       // Filtrar la lista replacementList por estado
       this.replacementList = this.replacementList.filter(goal => goal.status === 'active');
 
       // Recorrer la lista replacementList y extraemos los objectives
       this.objectives = this.replacementList.flatMap(objective => objective.objectives);
-      console.log('Objetives', this.objectives );
+      // console.log('Objetives', this.objectives );
       
       // filtrado los que estan en status in progress
       const objetivosEnProgreso = this.objectives.filter(objetivo => objetivo.status === "in progress");
 
-      console.log(objetivosEnProgreso);
+      // console.log(objetivosEnProgreso);
       this.obj_inprogress = objetivosEnProgreso;
+      this.obj_inprogress1 = objetivosEnProgreso;
       
     });
   }
@@ -448,7 +455,7 @@ convertToHours(totalMinutes: number): string {
   updateCaregiverGoal(id: number) {
     console.log(
       'Caregiver goal updated:',
-      this.caregivers_training_goals[id]
+      this.caregivers_training[id]
     );
   }
 
@@ -509,7 +516,7 @@ convertToHours(totalMinutes: number): string {
   onBehaviorChange(updatedbehaviorsList:object) {
     this.behaviorsList_added = updatedbehaviorsList;
   }
-
+  
   save() {
     this.text_validation = '';
     if (
@@ -593,15 +600,15 @@ convertToHours(totalMinutes: number): string {
     formData.append('participants', this.participants);
     formData.append('environmental_changes', this.environmental_changes);
 
-    formData.append(
-      'rbt_training_goals',
-      JSON.stringify(this.rbt_training_goals)
-    );
+    // formData.append(
+    //   'rbt_training_goals',
+    //   JSON.stringify(this.rbt_training_goals)
+    // );
    
-    if (this.caregivers_training_goals) {
+    if (this.caregivers_training) {
       formData.append(
         'caregiver_goals',
-        JSON.stringify(this.caregivers_training_goals)
+        JSON.stringify(this.caregivers_training)
       );
     }
     if (this.intervention_added) {
@@ -618,38 +625,38 @@ convertToHours(totalMinutes: number): string {
       );
     }
 
-    if (this.replacements_added) {
+    if (this.obj_inprogress) {
       formData.append(
         'replacements',
-        JSON.stringify(this.replacements_added)
+        JSON.stringify(this.obj_inprogress)
       );
     }
 
-    if (this.replacements2_added) {
+    if (this.obj_inprogress1) {
       formData.append(
         'replacements2',
-        JSON.stringify(this.replacements2_added)
+        JSON.stringify(this.obj_inprogress1)
       );
     }
 
-    if (this.newlist_added) {
+    if (this.newList) {
       formData.append(
         'newlist_added',
-        JSON.stringify(this.newlist_added)
+        JSON.stringify(this.newList)
       );
     }
 
-    if (this.intakeoutcome_added) {
+    if (this.outcomeList) {
       formData.append(
         'intake_outcome',
-        JSON.stringify(this.intakeoutcome_added)
+        JSON.stringify(this.outcomeList)
       );
     }
 
-    if (this.behaviorsList_added) {
+    if (this.behaviorList) {
       formData.append(
         'behaviors',
-        JSON.stringify(this.behaviorsList_added)
+        JSON.stringify(this.behaviorList)
       );
     }
    
@@ -879,7 +886,7 @@ convertToHours(totalMinutes: number): string {
   onPaServiceSelect2(event: any) {
     const service = event.value;
     if (service) {
-      this.selectedValueCode = service.cpt;
+      this.selectedValueCode1 = service.cpt;
       
       this.show97151 = true;
       this.show971511 = false;

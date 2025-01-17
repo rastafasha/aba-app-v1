@@ -18,17 +18,17 @@ import { interventionsList, interventionsList2, newList, outcomeList, show97151L
 interface Behavior {
   index: number;
   discused: boolean;
-  maladaptive_behavior: string;
+  name: string;
 }
 interface Replacement {
   index: number;
-  goal:string;
+  name:string;
   assessed:boolean;
   modified:boolean;
 }
 interface Replacement1 {
   index: number;
-  goal:string;
+  name:string;
   demostrated:boolean;
 }
 
@@ -75,6 +75,7 @@ export class NoteBcbaEditComponent implements OnInit {
 
   selectedValueMaladaptive!: string;
   selectedValueCode!: string;
+  selectedValueCode1!: string;
   option_selected = 0;
 
   client_id: number;
@@ -244,11 +245,13 @@ export class NoteBcbaEditComponent implements OnInit {
     behaviorList = this.behaviors;
     replacementList = this.replacements;
     replacementList2 = this.replacements;
+    replacement2 : any[];
 
     noteServiceId:number;
 
     objectives = [];
   obj_inprogress = [];
+  obj_inprogress1 = [];
 
   constructor(
     private bipService: BipService,
@@ -300,21 +303,41 @@ export class NoteBcbaEditComponent implements OnInit {
     this.noteBcbaService.getNote(this.note_id).subscribe((resp) => {
       console.log('respuesta de getNote', resp);
       this.note_selected = resp.noteBcba;
-      this.note_selectedId = resp.noteBcba.id;
+      this.note_selectedId = this.note_selected.id;
       this.bip_id = this.note_selected.bip_id;
       this.location = this.note_selected.location;
       this.patient_id = this.note_selected.patient_id;
 
+      this.getPatient();
+
       this.selectedPaService1 = this.note_selected.type;
       this.selectedValueCode = this.note_selected.cpt_code;
-      this.pos = this.note_selected.pos;
+      this.meet_with_client_at = this.note_selected.meet_with_client_at;
+      this.participants = this.note_selected.participants;
+      this.environmental_changes = this.note_selected.environmental_changes;
 
-      this.selectedValueRBT = resp.noteBcba.provider.name;
-      this.selectedValueProviderRBT_id =resp.noteBcba.provider_id;
+      this.selectedValueRBT = this.note_selected.provider.name;
+      this.selectedValueProviderRBT_id =this.note_selected.provider_id;
 
-      this.selectedValueBCBA = resp.noteBcba.supervisor.name;
-      this.selectedValueBcba_id =resp.noteBcba.supervisor_id;
+      this.selectedValueBCBA = this.note_selected.supervisor.name;
+      this.selectedValueBcba_id =this.note_selected.supervisor_id;
+      this.BCBA_conducted_assessments= this.note_selected.BCBA_conducted_assessments;
+      this.BCBA_conducted_client_observations= this.note_selected.BCBA_conducted_client_observations;
+      
+      this.cargiver_participation= this.note_selected.cargiver_participation;
+      this.was_the_client_present= this.note_selected.was_the_client_present;
+      this.asked_and_clarified_questions_about_the_implementation_of= this.note_selected.asked_and_clarified_questions_about_the_implementation_of;
+      this.reinforced_caregiver_strengths_in= this.note_selected.reinforced_caregiver_strengths_in;
+      this.gave_constructive_feedback_on= this.note_selected.gave_constructive_feedback_on;
+      this.recomended_more_practice_on= this.note_selected.recomended_more_practice_on;
 
+      this.modifications_needed_at_this_time= this.note_selected.modifications_needed_at_this_time;
+      this.additional_goals_or_interventions= this.note_selected.additional_goals_or_interventions;
+      
+      this.summary_note=this.note_selected.summary_note;
+      this.newlist_added=this.note_selected.newlist_added;
+      this.intakeoutcome_added=this.note_selected.intake_outcome;
+      
       this.session_date = this.note_selected.session_date
         ? new Date(this.note_selected.session_date).toISOString()
         : '';
@@ -329,7 +352,7 @@ export class NoteBcbaEditComponent implements OnInit {
         this.note_selected.time_out2
       );
 
-      this.noteServiceId = resp.noteBcba.pa_service_id;
+      this.noteServiceId = this.note_selected.pa_service_id;
       // if (this.pa_services?.length && this.noteServiceId) {
       //   this.selectedPaService =
       //     this.pa_services.find((service) => service.id === this.noteServiceId) ||
@@ -360,43 +383,24 @@ export class NoteBcbaEditComponent implements OnInit {
         this.show97151 = true;
       }
 
-      // this.caregivers_training_goals = this.note_selected.caregiver_goals;
-
-      // this.caregivers_training_goalsgroup = resp.caregiver_goals;
-      // const jsonObj = JSON.parse(this.caregivers_training_goalsgroup) || '';
-      // this.caregivers_training_goals = jsonObj;
-      // console.log(this.caregivers_training_goalsgroup);
-
-      // this.replacementList = this.note_selected.replacements;
-      // this.replacementList2 = this.note_selected.replacements2;
 
       this.interventions = this.note_selected.interventions;
-      this.interventionsList = this.convertToInterventions(
-        this.interventions
-      );
-      
       this.interventions2 = this.note_selected.interventions2;
-      this.interventionsList2 = this.convertToInterventions2(
-        this.interventions2
-      );
+      // this.replacementList = this.note_selected.replacements;
+      // this.replacementList2 = this.note_selected.replacements2;
+      
+      // this.interventions = this.note_selected.interventions;
+      // this.interventionsList = this.convertToInterventions(
+      //   this.interventions
+      // );
+      
+      // this.interventions2 = this.note_selected.interventions2;
+      // this.interventionsList2 = this.convertToInterventions2(
+      //   this.interventions2
+      // );
       
       this.outcomeList = this.note_selected?.intake_outcome;
-      // const lista = Object.entries(this.outcomeList).map(
-      //     ([key, value])=>{
-      //       return{
-      //         id: key,
-      //         name: key,
-      //         value: value['option']
-      //       }
-      //     }
-      // );
-      //   console.log(lista);
-      //   console.log(this.outcomeList );
-
-      // this.newList = this.note_selected.newlist_added[0];
-      this.getPatient();
-
-
+      
       this.bipV2Service.get(this.bip_id).subscribe((resp)=>{
         console.log('BIP',resp);
         this.bip_id = resp.data.id;
@@ -404,7 +408,23 @@ export class NoteBcbaEditComponent implements OnInit {
         this.behaviorList = resp.data.maladaptives;
         this.replacementList = resp.data.replacements;
         this.replacementList2 = resp.data.replacements;
+
+
+      // objectives
+      
+      // Filtrar la lista replacementList por estado
+      this.replacementList = this.replacementList.filter(goal => goal.status === 'active');
+
+      // Recorrer la lista replacementList y extraemos los objectives
+      this.objectives = this.replacementList.flatMap(objective => objective.objectives);
+      // filtrado los que estan en status in progress
+      const objetivosEnProgreso = this.objectives.filter(objetivo => objetivo.status === "in progress");
+      this.obj_inprogress = objetivosEnProgreso;
+      this.obj_inprogress1 = objetivosEnProgreso;
         
+        //fin objectives
+
+
         this.note_selected.behaviors = this.note_selected.behaviors || {};
          // Convierte behaviors en un array de valores
          const behaviorsArray = Object.values(this.note_selected.behaviors) as Behavior[];
@@ -414,20 +434,20 @@ export class NoteBcbaEditComponent implements OnInit {
         const newBehaviors = this.behaviors.map((element) => {
           // Add null check for element.mal
           const behavior = behaviorsArray.find(
-            (behavior) => behavior.maladaptive_behavior === element.maladaptive_behavior
+            (behavior) => behavior.name === element.name
           );
         
           if (behavior) {
             return {
               index: element.index,
-              maladaptive_behavior: element.maladaptive_behavior,
+              name: element.name,
               discused: behavior ? behavior.discused : false,
             };
           } else {
             console.warn(`Behavior with index ${element.index} not found.`);
             return {
               index: element.index,
-              maladaptive_behavior: '', // Provide a default value
+              name: '', // Provide a default value
               discused: undefined,
             };
           }
@@ -437,7 +457,7 @@ export class NoteBcbaEditComponent implements OnInit {
           const noteBehavior = this.note_selected.behaviors[behavior.index];
           return {
             ...behavior,
-            maladaptive_behavior: behavior.maladaptive_behavior || '', // Provide a default value
+            name: behavior.name || '', // Provide a default value
             discused: noteBehavior ? noteBehavior.discused : behavior.discused,
           };
         });
@@ -445,6 +465,55 @@ export class NoteBcbaEditComponent implements OnInit {
         console.log('Merged Behaviors:', mergedBehaviors);
         this.behaviorsview = mergedBehaviors;
         console.log(this.behaviorsview);
+
+
+        //   //replacements 1 valor
+
+      // // Convierte replacements en un array de valores
+      // const replacements1Array = Object.values(this.note_selected?.replacements) as Replacement1[];
+
+      // // Muestra el resultado de la nota
+      // console.log('replacements:', this.note_selected?.replacements);
+
+      
+      //filtro los replacements 
+      // const newReplacements1 = this.replacements.map((element) => {
+      //   if (!element || !element.id || !element.name) {
+      //     console.warn('Invalid replacements element:', element);
+      //     return null;
+      // }
+      //   const replacement1 = replacements1Array.find(
+      //     (replacement1) => replacement1.name === element.name
+      //   );
+      
+      //   if (replacement1) {
+      //     return {
+      //       id: element.id,
+      //       name: element.name,
+      //       demostrated: replacement1 ? replacement1.demostrated : false,
+      //     };
+      //   } else {
+      //     console.warn(`replacements with id ${element.id} not found.`);
+      //     return {
+      //       id: element.id,
+      //       name: '', // Provide a default value
+      //       demostrated: undefined,
+      //     };
+      //   }
+      // });
+      //   //los uno con el resultado que trae la nota
+      //   const mergedReplacements1 = newReplacements1.map((replacement1, id) => {
+      //     const noteReplacement = this.note_selected?.replacements[replacement1.id];
+      //     return {
+      //       ...replacement1,
+      //       name: replacement1.name || '', // Provide a default value
+      //       demostrated: noteReplacement ? noteReplacement.demostrated : replacement1.demostrated,
+      //     };
+      //   });
+      
+      //   console.log('Merged Replacements1:', mergedReplacements1);
+      //   this.replacementsview1 = mergedReplacements1;
+      //   console.log(this.replacementsview1);
         
       })
 
@@ -601,6 +670,9 @@ export class NoteBcbaEditComponent implements OnInit {
       this.patient_identifier = resp.data.patient_identifier;
       this.diagnosis_code = resp.data.diagnosis_code;
       this.birth_date = resp.data.birth_date;
+      this.insurance_id = this.client_selected.insurer_id;
+      this.insurance_identifier = this.client_selected.insurance_identifier;
+      this.patientLocation_id = this.client_selected.location_id;
       
       this.paServicesService.get( this.noteServiceId, this.patient_id).subscribe((resp)=>{
        this.selectedPaService = resp.data;
@@ -608,37 +680,9 @@ export class NoteBcbaEditComponent implements OnInit {
         this.pa_services = [this.selectedPaService];
         
       });
-      this.getBipV2();
     })
   }
 
-  getBipV2(){
-    this.bipV2Service.list({client_id: this.patient_id}).subscribe((resp)=>{
-      console.log('BIP',resp);
-      this.bip_id = resp.data[0].id;
-      this.caregivers_training_goals = resp.data[0].caregiver_trainings;
-      
-      this.behaviorList = resp.data[0].maladaptives;
-      this.replacementList = resp.data[0].replacements;
-
-      // Verificar la lista replacementList
-      console.log('replacementList', this.replacementList);
-  
-      // Filtrar la lista replacementList por estado
-      this.replacementList = this.replacementList.filter(goal => goal.status === 'active');
-
-      // Recorrer la lista replacementList y extraemos los objectives
-      this.objectives = this.replacementList.flatMap(objective => objective.objectives);
-      console.log('Objetives', this.objectives );
-      
-      // filtrado los que estan en status in progress
-      const objetivosEnProgreso = this.objectives.filter(objetivo => objetivo.status === "in progress");
-
-      console.log(objetivosEnProgreso);
-      this.obj_inprogress = objetivosEnProgreso;
-      
-    });
-  }
 
   // getProfileBip(noteServiceId?: number) {
   //   console.log('Getting profile BIP:', {
@@ -864,14 +908,16 @@ convertToHours(totalMinutes: number): string {
 
 
   onInterventionsChange(updatedInterventions: object) {
-    this.interventionsgroup = [
-      this.convertToInterventionsGroup(this.interventionsList),
-    ];
+    // this.interventionsgroup = [
+    //   this.convertToInterventionsGroup(this.interventionsList),
+    // ];
+    this.intervention_added = updatedInterventions;
   }
   onInterventions2Change(updatedInterventions2:object) {
-    this.interventionsgroup2 = [
-      this.convertToInterventionsGroup2(this.interventionsList2),
-    ];
+    // this.interventionsgroup2 = [
+    //   this.convertToInterventionsGroup2(this.interventionsList2),
+    // ];
+    this.intervention2_added = updatedInterventions2;
   }
 
   onReplacementChange(updatedReplacements) {
@@ -980,12 +1026,22 @@ convertToHours(totalMinutes: number): string {
     if (this.selectedValueCode) {
       formData.append('cpt_code', this.selectedValueCode);
     }
+    if (this.selectedValueCode1) {
+      formData.append('type', this.selectedValueCode1);
+    }
     if (this.selectedPaService) {
       formData.append('pa_service_id', this.selectedPaService.id.toString());
 
     }
     if (this.meet_with_client_at) {
       formData.append('meet_with_client_at', this.meet_with_client_at);
+    }
+
+    if (this.participants) {
+      formData.append('participants', this.participants);
+    }
+    if (this.environmental_changes) {
+      formData.append('environmental_changes', this.environmental_changes);
     }
 
     if (this.rbt_training_goals) {
@@ -1015,30 +1071,45 @@ convertToHours(totalMinutes: number): string {
       );
     }
 
-    if (this.replacements_added) {
+    // if (this.replacements_added) {
+    //   formData.append(
+    //     'replacements',
+    //     JSON.stringify(this.replacements_added)
+    //   );
+    // }
+
+    // if (this.replacements2_added) {
+    //   formData.append(
+    //     'replacements2',
+    //     JSON.stringify(this.replacements2_added)
+    //   );
+    // }
+
+    if (this.obj_inprogress) {
       formData.append(
         'replacements',
-        JSON.stringify(this.replacements_added)
+        JSON.stringify(this.obj_inprogress)
       );
     }
 
-    if (this.replacements2_added) {
+    if (this.obj_inprogress1) {
       formData.append(
         'replacements2',
-        JSON.stringify(this.replacements2_added)
+        JSON.stringify(this.obj_inprogress1)
       );
     }
 
-    if (this.intakeoutcome_added) {
-      formData.append(
-        'intake_outcome',
-        JSON.stringify(this.intakeoutcome_added)
-      );
-    }
-    if (this.newlist_added) {
+    if (this.newList) {
       formData.append(
         'newlist_added',
         JSON.stringify(this.newlist_added)
+      );
+    }
+
+    if (this.outcomeList) {
+      formData.append(
+        'intake_outcome',
+        JSON.stringify(this.intakeoutcome_added)
       );
     }
 
@@ -1079,12 +1150,7 @@ convertToHours(totalMinutes: number): string {
     if (this.recomended_more_practice_on) {
       formData.append('recomended_more_practice_on', this.recomended_more_practice_on);
     }
-    if (this.participants) {
-      formData.append('participants', this.participants);
-    }
-    if (this.environmental_changes) {
-      formData.append('environmental_changes', this.environmental_changes);
-    }
+    
     //variaciones nota bcba
 
     if (this.FILE_SIGNATURE_RBT) {
@@ -1240,7 +1306,7 @@ convertToHours(totalMinutes: number): string {
   onPaServiceSelect2(event: any) {
     const service = event.value;
     if (service) {
-      this.selectedValueCode = service.cpt;
+      this.selectedValueCode1 = service.cpt;
       
       this.show97151 = true;
       this.show971511 = false;

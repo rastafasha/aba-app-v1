@@ -16,7 +16,7 @@ import {  Objetives, ReplacementL2 } from '../interfaces';
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let replac of obj_inprogress; let i = index">
+            <tr *ngFor="let replac of obj_inprogress1; let i = index">
               <td>{{ replac.description }}</td>
               <td>
                 <div
@@ -63,13 +63,13 @@ import {  Objetives, ReplacementL2 } from '../interfaces';
   `,
 })
 export class Replacements2Component {
-  @Input() obj_inprogress: Objetives[];
+  @Input() obj_inprogress1: Objetives[];
   @Output() replacementsChange2 = new EventEmitter<object>();
 
   
 
   updateReplacements() {
-    const replacementsObj = this.obj_inprogress
+    const replacementsObj = this.obj_inprogress1
       .filter((replac) => replac.value || replac.value2)
       .reduce((acc, replac) => {
         acc[replac.id] = {

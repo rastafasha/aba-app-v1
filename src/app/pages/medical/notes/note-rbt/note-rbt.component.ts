@@ -800,7 +800,7 @@ convertToHours(totalMinutes: number): string {
 
     // Set next session date
     const nextDate = new Date(date);
-    nextDate.setDate(nextDate.getDate() + 1);
+    nextDate.setDate(nextDate.getDate() + 2);
     this.next_session_is_scheduled_for = nextDate.toISOString().split('T')[0];
   }
 

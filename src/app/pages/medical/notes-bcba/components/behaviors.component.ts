@@ -49,11 +49,12 @@ export class BehaviorsComponent {
     const result = this.behaviorList
       .filter((behav) => behav.value)
       .reduce((acc, behav) => {
-        acc = {
-          id:behav.id, 
-          discused: !!behav.value, 
-          name: behav.name 
-        };
+        acc[behav.id] = true;
+        // acc[behav.id] = {
+        //   id:behav.id, 
+        //   discused: !!behav.value, 
+        //   name: behav.name 
+        // };
         return acc;
       }, {}); 
     console.log(result);

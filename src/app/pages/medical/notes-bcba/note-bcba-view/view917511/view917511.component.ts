@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
     selector: 'app-view917511',
@@ -10,4 +10,5 @@ export class View917511Component {
     @Input() note_selected
     @Input() newlist_added
     @Input() intake_outcome
+
 }

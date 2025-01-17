@@ -115,14 +115,18 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   `,
 })
 export class NewlistViewComponent {
-  @Input() newlist_added;
+  @Input() newlist_added: any;
+  // @Output() newlistChange = new EventEmitter<any>();
 
-  updateInterventions() {
-    const newlistsObj = this.newlist_added
-      .filter((newlist_added) => newlist_added.value)
-      .reduce((acc, newlist_added) => {
-        acc[newlist_added.id] = true;
-        return acc;
-      }, {});
+  ngOnInit(): void {
+    console.log('newlist_added', this.newlist_added); // Verifica que la data esté siendo recibida
   }
+  // updateInterventions() {
+  //   const newlistsObj = this.newlist_added
+  //     .filter((newlist_added) => newlist_added.value)
+  //     .reduce((acc, newlist_added) => {
+  //       acc[newlist_added.id] = true;
+  //       return acc;
+  //     }, {});
+  // }
 }
