@@ -410,7 +410,7 @@
       <div class="card">
         <div class="card-body">
           <app-maladaptives
-            [(maladaptives)]="maladaptivegroup"
+            [(maladaptives)]="maladaptives"
             (maladaptivesChange)="onMaladaptivesChange($event)"
           >
           </app-maladaptives>
@@ -424,7 +424,7 @@
       <div class="card">
         <div class="card-body">
           <app-replacements
-            [(replacements)]="replacementgroup"
+            [(replacements)]="replacements"
             [target]="target"
             (replacementsChange)="onReplacementsChange($event)"
           >
@@ -541,34 +541,6 @@
               ></textarea>
             </div>
           </div>
-          <!-- <div class="col-12 col-md-6">
-            <div class="form-group local-forms">
-              <label
-                >Client response to treatment this session
-                <span class="login-danger">*</span></label
-              >
-              <textarea
-                class="form-control"
-                name="client_response_to_treatment_this_session"
-                [(ngModel)]="
-                  client_response_to_treatment_this_session
-                "
-                rows="4"
-                cols="30"
-              ></textarea>
-              <button
-                class="btn btn-primary ml-2 btn-sm"
-                (click)="generateAISummary()"
-                [disabled]="isGeneratingSummary"
-              >
-                {{
-                  isGeneratingSummary
-                    ? "Generating..."
-                    : "Generate AI Summary"
-                }}
-              </button>
-            </div>
-          </div> -->
           <div class="col-xs-12 col-sm-6">
             <p>
               Responding this session could have been affected by

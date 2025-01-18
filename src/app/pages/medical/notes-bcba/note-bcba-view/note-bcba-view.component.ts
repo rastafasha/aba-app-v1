@@ -4,12 +4,37 @@ import { ActivatedRoute } from '@angular/router';
 import html2canvas from 'html2canvas';
 import * as jspdf from 'jspdf';
 import { AppUser } from 'src/app/core/models/users.model';
+import { PatientsV2Service } from 'src/app/core/services';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
-import { BipService } from '../../bip/service/bip.service';
-import { DoctorService } from '../../doctors/service/doctor.service';
 import { NoteBcbaService } from '../../../../core/services/notes-bcba.service';
-import { Supervisor } from 'src/app/core/models/notes.model';
+import { DoctorService } from '../../doctors/service/doctor.service';
+import {
+  NoteBehaviorsList,
+  NoteIntervention,
+  NoteIntervention2,
+  NoteNewList,
+  NoteOutcomeList
+} from '../interfaces';
+import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
+
+interface Behavior {
+  id: number;
+  discused: boolean;
+  name: string;
+}
+interface Replacement {
+  id: number;
+  name:string;
+  assessed:boolean;
+  modified:boolean;
+}
+interface Replacement1 {
+  id: number;
+  name:string;
+  demostrated:boolean;
+}
+
 
 @Component({
   selector: 'app-note-bcba-view',
@@ -25,8 +50,15 @@ export class NoteBcbaViewComponent implements OnInit {
   patient_identifier: string;
   // option_selected:number = 0;
 
+
   showFamily = false;
   showMonitoring = false;
+
+  show97156 = false;
+  show97155 = false;
+  show97151 = false;
+  show971511 = false;
+  show971512 = false;
 
   selectedValueProvider!: string;
   selectedValueRBT!: string;
@@ -118,11 +150,22 @@ export class NoteBcbaViewComponent implements OnInit {
   roles_bcba = [];
 
   hours_days = [];
-  maladaptives = [];
+  behaviors = [];
+  behaviorsview = [];
+  replacementsview = [];
+  replacementsview1 = [];
+  behavior_selected: string;
   replacementGoals = [];
   intervention_added = [];
   replacements = [];
+  replacements2 = [];
+  newlist_added = [];
+  intake_outcome = [];
   interventionsgroup = [];
+  newlistgroup = [];
+
+  objectives = [];
+  obj_inprogress = [];
 
   maladaptivegroup = [];
   replacementgroup = [];
@@ -144,6 +187,7 @@ export class NoteBcbaViewComponent implements OnInit {
   lto: any = null;
   caregiver_goal: any = null;
   cpt_code: any = null;
+  type: string = null;
   doctor_selected: any = null;
   doctor_selected_full_name: any = null;
   doctor_selected_rbt: any = null;
@@ -155,13 +199,74 @@ export class NoteBcbaViewComponent implements OnInit {
 
   fromParam: string | null = null;
 
+  intervention: NoteIntervention = {
+    token_economy: false,
+    generalization: false,
+    NCR: false,
+    behavioral_momentum: false,
+    DRA: false,
+    DRI: false,
+    DRO: false,
+    DRL: false,
+    response_block: false,
+    errorless_teaching: false,
+    extinction: false,
+    chaining: false,
+    natural_teaching: false,
+    redirection: false,
+    shaping: false,
+    pairing: false,
+  };
+  interventions2: NoteIntervention2 = {
+    token_economy: false,
+    generalization: false,
+    NCR: false,
+    behavioral_momentum: false,
+    DRA: false,
+    DRI: false,
+    DRO: false,
+    DRL: false,
+    response_block: false,
+    errorless_teaching: false,
+    extinction: false,
+    chaining: false,
+    natural_teaching: false,
+    redirection: false,
+    shaping: false,
+    pairing: false,
+  };
+  newlist: NoteNewList = {
+    FAST: false,
+    MAST: false,
+    QABF: false,
+    ABC_data_collection: false,
+    VBmapp: false,
+    Ablls: false,
+    EFL: false,
+    Peak: false,
+    parent_interview: false,
+    reinforcement_questionnaire: false,
+    preference_assessment: false,
+    other: false,
+  };
+  outcomeList: NoteOutcomeList = {
+    SRS_2: false,
+    vineland_3: false,
+    PDDBI: false,
+    PSI_4_short_form: false,
+  };
+  behaviorsList: NoteBehaviorsList = {
+    maladaptive_behavior: '',
+  };
+
   constructor(
     private noteBcbaService: NoteBcbaService,
     private activatedRoute: ActivatedRoute,
     private pageService: PageService,
     private doctorService: DoctorService,
-    private bipService: BipService,
-    private locations: Location
+    private patientService: PatientsV2Service,
+    private locations: Location,
+    private bipV2Service: BipsV2Service,
   ) {}
 
   ngOnInit(): void {
@@ -173,8 +278,6 @@ export class NoteBcbaViewComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       this.fromParam = params['from'];
     });
-
-    this.getConfig();
     this.getNote();
   }
 
@@ -186,11 +289,6 @@ export class NoteBcbaViewComponent implements OnInit {
     }
 
 
-  getConfig() {
-    this.noteBcbaService.listConfigNote().subscribe((resp) => {
-      console.log(resp);
-    });
-  }
 
   getNote() {
     this.noteBcbaService.getNote(this.note_id).subscribe((resp) => {
@@ -198,72 +296,247 @@ export class NoteBcbaViewComponent implements OnInit {
       this.note_selected = resp.noteBcba;
       this.note_selectedId = resp.noteBcba.id;
       this.patient_identifier = this.note_selected.patient_identifier;
+      this.patient_id = this.note_selected.patient_id;
       this.bip_id = this.note_selected.bip_id;
-      this.location = this.note_selected.location;
-      // this.birth_date = this.note_selected.birth_date;
-      this.birth_date = this.note_selected.birth_date
-        ? new Date(this.note_selected.birth_date).toISOString()
-        : '';
-
-      this.provider_credential = this.note_selected.provider_credential;
-      this.as_evidenced_by = this.note_selected.as_evidenced_by;
-      this.client_appeared = this.note_selected.client_appeared;
-      this.diagnosis_code = this.note_selected.diagnosis_code;
       this.cpt_code = this.note_selected.cpt_code;
-      this.note_description = this.note_selected.note_description;
-      this.client_response_to_treatment_this_session =
-        this.note_selected.client_response_to_treatment_this_session;
-      this.pos = this.note_selected.pos;
-
-      this.session_length_total = this.note_selected.session_length_total;
-      this.session_length_total2 = this.note_selected.session_length_total2;
-
-      this.selectedValueTimeIn = this.note_selected.time_in;
-      this.selectedValueTimeOut = this.note_selected.time_in2;
-      this.selectedValueTimeIn2 = this.note_selected.time_out;
-      this.selectedValueTimeOut2 = this.note_selected.time_out2;
-
-      this.caregivers_training_goalsgroup = this.note_selected.caregiver_goals;
-      const jsonObj = typeof this.caregivers_training_goalsgroup === 'string' ? JSON.parse(this.caregivers_training_goalsgroup) : this.caregivers_training_goalsgroup;
-      this.caregivers_training_goals = jsonObj;
-      console.log(this.caregivers_training_goals);
-
-      this.rbt_training_goalsgroup = this.note_selected.rbt_training_goals;
-      const jsonObj1 = typeof this.rbt_training_goalsgroup === 'string' ? JSON.parse(this.rbt_training_goalsgroup) : this.rbt_training_goalsgroup;
-      this.rbt_training_goals = jsonObj1;
-      console.log(this.rbt_training_goals);
-
+      this.type = this.note_selected.type;
       this.aba_supervisor = resp.noteBcba.supervisor_id;
       this.selectedValueRendering = resp.noteBcba.provider_id;
-
       this.selectedValueProviderName = this.note_selected.provider_name_g;
       this.selectedValueRBT = this.note_selected.provider_name;
       this.selectedValueBCBA = this.note_selected.supervisor_name;
-
       this.IMAGE_PREVISUALIZA_SIGNATURE__BCBA_CREATED =
-        this.note_selected.provider_signature;
+      this.note_selected.provider_signature;
       this.IMAGE_PREVISUALIZA_SIGNATURE_SUPERVISOR_CREATED =
-        this.note_selected.supervisor_signature;
+      this.note_selected.supervisor_signature;
 
-      this.getProfileBip();
-      this.getDoctor();
-      this.getDoctorRbt();
-      this.getDoctorBcba();
-
+        this.getProfilePatient();
+        this.getDoctor();
+        this.getDoctorRbt();
+        this.getBipv2();
+  
       if(this.cpt_code === '97155' ){
-        this.showFamily = true;
+        this.show97155 = true;
       }
       if(this.cpt_code === '97156' ){
-        this.showMonitoring = true;
+        this.show97156 = true;
       }
+      if(this.type === 'Observation' ){
+        this.show971511 = true;
+      }
+      if(this.type === 'Report' ){
+        this.show971512 = true;
+      }
+
+     
+      this.interventions = this.note_selected.interventions;
+      this.interventions2 = this.note_selected.interventions2;
+      this.newlist_added = this.note_selected.newlist_added;
+      this.intake_outcome = this.note_selected.intake_outcome;
+
+      this.behaviors = this.note_selected?.behaviors;
+
+      this.obj_inprogress = this.note_selected.replacements;
+      // this.obj_inprogress1 = this.note_selected.replacements2;
+
+      // this.caregivers_training_goals = resp.caregiver_goals;
+      // console.log(this.caregivers_training_goals);
+
+      // if (this.caregivers_training_goals && typeof this.caregivers_training_goals === 'string') {
+      //   try {
+      //     const jsonObj90 = JSON.parse(this.caregivers_training_goals);
+      //     this.caregivers_training_goalsgroup = jsonObj90;
+      //   } catch (error) {
+      //     console.error('Error parsing caregivers_training_goalsgroup:', error);
+      //     this.caregivers_training_goalsgroup = {};
+      //   }
+      // } else {
+      //   this.caregivers_training_goalsgroup = {};
+      //   console.log(this.caregivers_training_goalsgroup);
+      // }
+      
+    });
+    
+  }
+
+  getBipv2(){
+    this.bipV2Service.get(this.bip_id).subscribe((resp)=>{
+      // console.log('BIP',resp);
+      this.bip_id = resp.data.id;
+      this.caregivers_training_goals = resp.data.caregiver_trainings;
+      // this.behaviors = resp.data.maladaptives;
+      this.replacements = resp.data.replacements;
+      this.replacements2 = resp.data.replacements;
+
+      // Filtrar la lista replacements por estado
+    this.replacements = this.replacements.filter(goal => goal.status === 'active');
+
+    // Recorrer la lista replacements y extraemos los objectives
+    this.objectives = this.replacements.flatMap(objective => objective.objectives);
+    // filtrado los que estan en status in progress
+    const objetivosEnProgreso = this.objectives.filter(objetivo => objetivo.status === "in progress");
+    // this.obj_inprogress = objetivosEnProgreso;
+
+    
+      
+      // // behaviors
+      // this.note_selected.behaviors = this.note_selected.behaviors || {};
+       // Convierte behaviors en un array de valores
+      //  const behaviorsArray = Object.values(this.note_selected.behaviors) as Behavior[];
+       //muestro el resultado de la nota 
+      // console.log('behaviors:', this.note_selected.behaviors);
+      //filtro los behaviors 
+      // const newBehaviors = this.behaviors.map((element) => {
+      //   if (!element || !element.id || !element.name) {
+      //     // console.warn('Invalid behavior element:', element);
+      //     return null;
+      // }
+      //   const behavior = behaviorsArray.find(
+      //     (behavior) => behavior.name === element.name
+      //   );
+      
+      //   if (behavior) {
+      //     return {
+      //       id: element.id,
+      //       name: element.name,
+      //       discused: behavior ? behavior.discused : false,
+      //     };
+      //   } else {
+      //     // console.warn(`Behavior with id ${element.id} not found.`);
+      //     return {
+      //       id: element.id,
+      //       name: '', 
+      //       discused: undefined,
+      //     };
+      //   }
+      // });
+      // //los uno con el resultado que trae la nota
+      // const mergedBehaviors = newBehaviors.map((behavior, id) => {
+      //   const noteBehavior = this.note_selected.behaviors[behavior.id];
+      //   return {
+      //     ...behavior,
+      //     name: behavior.name || '', 
+      //     discused: noteBehavior ? noteBehavior.discused : behavior.discused,
+      //   };
+      // });
+      
+      // console.log('Merged Behaviors:', mergedBehaviors);
+      // this.behaviorsview = mergedBehaviors;
+      // console.log(this.behaviorsview);
+
+       //replacements dos valores
+
+
+       // Verificar la lista replacements
+    // console.log('replacementList', this.replacements);
+
+    
+    // Convierte replacements en un array de valores
+    // const replacementsArray = Object.values(this.note_selected?.replacements2) as Replacement[];
+
+    // // Muestra el resultado de la nota
+    // console.log('replacements2:', this.note_selected.replacements2);
+
+    
+    //filtro los replacements 
+    // const newReplacements = this.replacements.map((element) => {
+    //   if (!element || !element.id || !element.name) {
+    //     console.warn('Invalid replacements element:', element);
+    //     return null;
+    // }
+    //   const replacement = replacementsArray.find(
+    //     (replacement) => replacement.name === element.name
+    //   );
+    
+    //   if (replacement) {
+    //     return {
+    //       id: element.id,
+    //       name: element.name,
+    //       assessed: replacement ? replacement.assessed : false,
+    //       modified: replacement ? replacement.modified : false,
+    //     };
+    //   } else {
+    //     console.warn(`replacements with id ${element.id} not found.`);
+    //     return {
+    //       id: element.id,
+    //       name: '', // Provide a default value
+    //       assessed: undefined,
+    //       modified: undefined,
+    //     };
+    //   }
+    // });
+    //   //los uno con el resultado que trae la nota
+    //   const mergedReplacements = newReplacements.map((replacement, id) => {
+    //     const noteReplacement = this.note_selected?.replacements[replacement.id];
+    //     return {
+    //       ...replacement,
+    //       name: replacement.name || '', // Provide a default value
+    //       assessed: noteReplacement ? noteReplacement.assessed : replacement.assessed,
+    //       modified: noteReplacement ? noteReplacement.modified : replacement.modified,
+    //     };
+    //   });
+    
+    //   console.log('Merged Replacements:', mergedReplacements);
+    //   this.replacementsview = mergedReplacements;
+    //   console.log(this.replacementsview);
+
+    //   //replacements 1 valor
+
+    // // Convierte replacements en un array de valores
+    // const replacements1Array = Object.values(this.note_selected?.replacements) as Replacement1[];
+
+    // // Muestra el resultado de la nota
+    // console.log('replacements:', this.note_selected?.replacements);
+
+    
+    //filtro los replacements 
+    // const newReplacements1 = this.replacements.map((element) => {
+    //   if (!element || !element.id || !element.name) {
+    //     console.warn('Invalid replacements element:', element);
+    //     return null;
+    // }
+    //   const replacement1 = replacements1Array.find(
+    //     (replacement1) => replacement1.name === element.name
+    //   );
+    
+    //   if (replacement1) {
+    //     return {
+    //       id: element.id,
+    //       name: element.name,
+    //       demostrated: replacement1 ? replacement1.demostrated : false,
+    //     };
+    //   } else {
+    //     console.warn(`replacements with id ${element.id} not found.`);
+    //     return {
+    //       id: element.id,
+    //       name: '', // Provide a default value
+    //       demostrated: undefined,
+    //     };
+    //   }
+    // });
+    //   //los uno con el resultado que trae la nota
+    //   const mergedReplacements1 = newReplacements1.map((replacement1, id) => {
+    //     const noteReplacement = this.note_selected?.replacements[replacement1.id];
+    //     return {
+    //       ...replacement1,
+    //       name: replacement1.name || '', // Provide a default value
+    //       demostrated: noteReplacement ? noteReplacement.demostrated : replacement1.demostrated,
+    //     };
+    //   });
+    
+    //   console.log('Merged Replacements1:', mergedReplacements1);
+    //   this.replacementsview1 = mergedReplacements1;
+    //   console.log(this.replacementsview1);
+      
     });
   }
+
 
   getDoctor() {
     this.doctorService
       .showDoctor(this.selectedValueRendering)
       .subscribe((resp) => {
-        console.log(resp);
+        // console.log(resp);
         this.doctor_selected = resp.user;
         this.doctor_selected_full_name = resp.user.full_name;
       });
@@ -271,35 +544,22 @@ export class NoteBcbaViewComponent implements OnInit {
 
   getDoctorRbt() {
     this.doctorService.showDoctor(this.aba_supervisor).subscribe((resp) => {
-      console.log(resp);
+      // console.log(resp);
       this.doctor_selected_rbt = resp.user;
       this.doctor_selected_full_name_supervisor = resp.user.full_name;
     });
   }
   getDoctorBcba() {
     this.doctorService.showDoctor(this.selectedValueBCBA).subscribe((resp) => {
-      console.log(resp);
+      // console.log(resp);
       this.doctor_selected_bcba = resp.user;
       this.doctor_selected_full_name_bcba = resp.user.full_name;
     });
   }
 
-  getProfileBip() {
-    this.bipService
-      .getBipProfilePatient_id(this.patient_identifier)
-      .subscribe((resp) => {
-        console.log(resp);
-        this.patient_selected = resp.patient;
-
-        this.first_name = this.patient_selected.first_name;
-        this.last_name = this.patient_selected.last_name;
-        this.patient_identifier = resp.patient.patient_identifier;
-        // console.log(this.patient_id);
-        this.diagnosis_code = this.patient_selected.diagnosis_code;
-
-        // this.pa_assessments = resp.patient.pa_assessments;
-        //   const jsonObj = JSON.parse(this.pa_assessments) || '';
-        //   this.pa_assessmentsgroup = jsonObj;
+  getProfilePatient() {
+    this.patientService.get(this.patient_id).subscribe((resp) => {
+        this.patient_selected = resp.data;
       });
   }
 

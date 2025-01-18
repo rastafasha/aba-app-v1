@@ -14,9 +14,11 @@ import { NoteBcbaComponent } from './note-bcba/note-bcba.component';
 import { NotesBcbaComponent } from './notes-bcba.component';
 import { NotesBcbaRoutingModule } from './notes-bcba.routing';
 import { LayoutModule } from '../../../layout/layout.module';
+import { ComponentsBCBAModule } from './components/components-bcba.module';
 
 @NgModule({
   declarations: [
+    
     NotesBcbaComponent,
     NoteBcbaViewComponent,
     NoteBcbaByClientComponent,
@@ -40,6 +42,7 @@ import { LayoutModule } from '../../../layout/layout.module';
     ComponentsModule,
     PipesModule,
     LayoutModule,
+    ComponentsBCBAModule
   ],
 })
 export class NotesBcbaModule {}

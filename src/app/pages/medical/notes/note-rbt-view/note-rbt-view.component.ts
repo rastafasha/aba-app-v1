@@ -11,18 +11,22 @@ import { DoctorService } from '../../doctors/service/doctor.service';
 import { NoteRbtV2, Replacements } from 'src/app/core/models';
 
 interface NoteIntervention {
-  pairing: boolean;
-  response_block: boolean;
-  DRA: boolean;
-  DRO: boolean;
-  redirection: boolean;
-  errorless_teaching: boolean;
-  NCR: boolean;
-  shaping: boolean;
-  chaining: boolean;
   token_economy: boolean;
-  extinction: boolean;
-  natural_teaching: boolean;
+    generalization: boolean;
+    NCR: boolean;
+    behavioral_momentum: boolean;
+    DRA: boolean;
+    DRI: boolean;
+    DRO: boolean;
+    DRL: boolean;
+    response_block: boolean;
+    errorless_teaching: boolean;
+    extinction: boolean;
+    chaining: boolean;
+    natural_teaching: boolean;
+    redirection: boolean;
+    shaping: boolean;
+    pairing: boolean;
 }
 
 @Component({
@@ -98,18 +102,22 @@ export class NoteRbtViewComponent implements OnInit {
   supervisor_signature: any;
 
   intervention: NoteIntervention = {
-    chaining: false,
+    token_economy: false,
+    generalization: false,
+    NCR: false,
+    behavioral_momentum: false,
     DRA: false,
+    DRI: false,
     DRO: false,
+    DRL: false,
+    response_block: false,
     errorless_teaching: false,
     extinction: false,
+    chaining: false,
     natural_teaching: false,
-    NCR: false,
-    pairing: false,
     redirection: false,
     shaping: false,
-    token_economy: false,
-    response_block: false,
+    pairing: false,
   };
 
   FILE_SIGNATURE_RBT: any;
@@ -213,21 +221,21 @@ export class NoteRbtViewComponent implements OnInit {
       //TODO Remove
       this.intervention = this.interventionsgroup[0];
 
-      this.maladaptive = resp.maladaptives;
-      const jsonObj1 =
-        typeof this.maladaptive === 'string'
-          ? JSON.parse(this.maladaptive)
-          : this.maladaptive;
-      this.maladaptivegroup = jsonObj1;
+      this.maladaptives = resp.maladaptives;
+      // const jsonObj1 =
+      //   typeof this.maladaptive === 'string'
+      //     ? JSON.parse(this.maladaptive)
+      //     : this.maladaptive;
+      // this.maladaptivegroup = jsonObj1;
       // console.log(this.maladaptivegroup);
 
 
-      this.replacement = this.note_selected.replacements;
-      const jsonObj2 =
-        typeof this.replacement === 'string'
-          ? JSON.parse(this.replacement)
-          : this.replacement;
-      this.replacementgroup = jsonObj2;
+      this.replacements = this.note_selected.replacements;
+      // const jsonObj2 =
+      //   typeof this.replacement === 'string'
+      //     ? JSON.parse(this.replacement)
+      //     : this.replacement;
+      // this.replacementgroup = jsonObj2;
       // console.log(this.replacementgroup);
 
 

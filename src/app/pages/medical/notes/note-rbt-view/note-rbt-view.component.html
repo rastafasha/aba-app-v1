@@ -26,7 +26,7 @@
       </div>
     </div>
     <!-- /Page Header -->
-    <!-- *ngIf="patient_selected" -->
+    <!-- *ngIf="?" -->
     <div class="row" id="contentToConvert" #contentToConvert>
       <div class="col-sm-12" >
         <div class="card">
@@ -61,8 +61,8 @@
                           [routerLink]="[routes.noteRbt.edit, note_id]"
                           [queryParams]="{ from: fromParam }"
                           *ngIf="
-                            note_selected.status === 'pending' ||
-                            note_selected.status === 'no'
+                            note_selected?.status === 'pending' ||
+                            note_selected?.status === 'no'
                           "
                           class="btn btn-info follow-btns"
                           >Edit</a
@@ -95,29 +95,29 @@
                           <div class="detail-personal">
                             <h2>Full Name</h2>
                             <p>
-                              {{ patient_selected.first_name }}
-                              {{ patient_selected.last_name }}
+                              {{ patient_selected?.first_name }}
+                              {{ patient_selected?.last_name }}
                             </p>
                           </div>
                         </div>
                         <div class="col-xl-3 col-sm-6 col-lg-3">
                           <div class="detail-personal">
                             <h2>Patient Id</h2>
-                            <p>{{ patient_selected.patient_identifier }}</p>
+                            <p>{{ patient_selected?.patient_identifier }}</p>
                           </div>
                         </div>
 
                         <div class="col-xl-3 col-sm-6 col-lg-3">
                           <div class="detail-personal">
                             <h2>Diagnosis Code</h2>
-                            <p>{{ patient_selected.diagnosis_code }}</p>
+                            <p>{{ patient_selected?.diagnosis_code }}</p>
                           </div>
                         </div>
 
                         <div class="col-xl-3 col-sm-6 col-lg-3">
                           <div class="detail-personal">
                             <h2>Insurance Id</h2>
-                            <p>{{ patient_selected.insurance_identifier }}</p>
+                            <p>{{ patient_selected?.insurance_identifier }}</p>
                           </div>
                         </div>
 
@@ -130,7 +130,7 @@
                         <div class="col-xl-3 col-sm-6 col-lg-3 col-xl-3">
                           <div class="detail-personal">
                             <h2>Provider Credential</h2>
-                            <p>{{ note_selected.provider_credential }}</p>
+                            <p>{{ note_selected?.provider_credential }}</p>
                           </div>
                         </div>
                         <div class="col-xl-3 col-sm-6 col-lg-3 col-xl-3">
@@ -144,33 +144,33 @@
                         <div class="col-xl-3 col-sm-6 col-lg-3">
                           <div class="detail-personal">
                             <h2>Modifier</h2>
-                            <p>{{ note_selected.md }}</p>
+                            <p>{{ note_selected?.md }}</p>
                           </div>
                         </div>
                         <div class="col-xl-3 col-sm-6 col-lg-3">
                           <div class="detail-personal">
                             <h2>Modifier 2 (optional)</h2>
-                            <p>{{ note_selected.md2 ?? "&nbsp;" }}</p>
+                            <p>{{ note_selected?.md2 ?? "&nbsp;" }}</p>
                           </div>
                         </div>
                         <div class="col-xl-3 col-sm-6 col-lg-3">
                           <div class="detail-personal">
                             <h2>Modifier 3 (optional)</h2>
-                            <p>{{ note_selected.md3 ?? "&nbsp;" }}</p>
+                            <p>{{ note_selected?.md3 ?? "&nbsp;" }}</p>
                           </div>
                         </div>
                         <div class="clear"></div>
                         <div class="col-xl-3 col-sm-6 col-lg-3">
                           <div class="detail-personal">
                             <h2>DOS</h2>
-                            <p>{{ note_selected.session_date |  date : "shortDate" }}</p>
+                            <p>{{ note_selected?.session_date |  date : "shortDate" }}</p>
                           </div>
                         </div>
                         <!-- POS -->
                         <div class="col-xl-3 col-md-6 col-lg-3">
                           <div class="detail-personal">
                             <h2>POS</h2>
-                            <p>{{ note_selected.meet_with_client_at }}</p>
+                            <p>{{ note_selected?.meet_with_client_at }}</p>
                           </div>
                         </div>
                         <div class="col-xl-3 col-sm-6 col-lg-3">
@@ -178,7 +178,7 @@
                             <h2>Session Length Total</h2>
                             <p>
                               {{
-                                note_selected.session_length_total || "&nbsp;"
+                                note_selected?.session_length_total || "&nbsp;"
                               }}
                             </p>
                           </div>
@@ -190,14 +190,14 @@
                         <div class="col-xl-3 col-sm-6 col-lg-3">
                           <div class="detail-personal">
                             <h2>Time In</h2>
-                            <p>{{ note_selected.time_in | transformToDate }}</p>
+                            <p>{{ note_selected?.time_in | transformToDate }}</p>
                           </div>
                         </div>
                         <div class="col-xl-3 col-sm-6 col-lg-3">
                           <div class="detail-personal">
                             <h2>Time Out</h2>
                             <p>
-                              {{ note_selected.time_out | transformToDate }}
+                              {{ note_selected?.time_out | transformToDate }}
                             </p>
                           </div>
                         </div>
@@ -206,7 +206,7 @@
                             <h2>Total First Session</h2>
                             <p>
                               {{
-                                note_selected.session_length_morning_total ||
+                                note_selected?.session_length_morning_total ||
                                   "&nbsp;"
                               }}
                             </p>
@@ -218,7 +218,7 @@
                           <div class="detail-personal">
                             <h2>Time In</h2>
                             <p>
-                              {{ note_selected.time_in2 | transformToDate }}
+                              {{ note_selected?.time_in2 | transformToDate }}
                             </p>
                           </div>
                         </div>
@@ -226,7 +226,7 @@
                           <div class="detail-personal">
                             <h2>Time Out</h2>
                             <p>
-                              {{ note_selected.time_out2 | transformToDate }}
+                              {{ note_selected?.time_out2 | transformToDate }}
                             </p>
                           </div>
                         </div>
@@ -235,7 +235,7 @@
                             <h2>Total Second Session</h2>
                             <p>
                               {{
-                                note_selected.session_length_afternon_total ||
+                                note_selected?.session_length_afternon_total ||
                                   "&nbsp;"
                               }}
                             </p>
@@ -246,13 +246,13 @@
                          <div class="col-xl-3 col-sm-6 col-lg-3">
                           <div class="detail-personal">
                             <h2>CPT</h2>
-                            <p>{{ note_selected.cpt_code  }}</p>
+                            <p>{{ note_selected?.cpt_code  }}</p>
                           </div>
                         </div>
                         <div class="col-xl-3 col-sm-6 col-lg-3">
                           <div class="detail-personal">
                             <h2>Environmental Changes</h2>
-                            <p>{{ note_selected.environmental_changes }}</p>
+                            <p>{{ note_selected?.environmental_changes }}</p>
                           </div>
                         </div>
                         <div class="col-xl-3 col-sm-6 col-lg-3">
@@ -302,12 +302,12 @@
                               <tbody>
                                 <tr
                                   *ngFor="
-                                    let behavior of maladaptivegroup;
+                                    let behavior of maladaptives;
                                     let i = index
                                   "
                                 >
                                   <td>
-                                    {{ behavior.maladaptive_behavior }}
+                                    {{ behavior.name }}
                                   </td>
                                   <td>
                                     {{ behavior.number_of_occurrences }}
@@ -365,7 +365,7 @@
                                   "
                                 >
                                   <td>
-                                    {{ replacemen.goal }}
+                                    {{ replacemen.name }}
                                   </td>
                                   <td>
                                     {{ replacemen.total_trials }}
@@ -642,13 +642,13 @@
                         <div class="col-xl-3 col-md-6">
                           <div class="detail-personal">
                             <h2>Client appeared</h2>
-                            <p>{{ note_selected.client_appeared }}</p>
+                            <p>{{ note_selected?.client_appeared }}</p>
                           </div>
                         </div>
                         <div class="col-xl-3 col-md-6">
                           <div class="detail-personal">
                             <h2>As evidenced by</h2>
-                            <p>{{ note_selected.as_evidenced_by }}</p>
+                            <p>{{ note_selected?.as_evidenced_by }}</p>
                           </div>
                         </div>
                         <div class="col-xl-12">
@@ -656,17 +656,7 @@
                             <h2>RBT modeled and demonstrated to caregiver</h2>
                             <p>
                               {{
-                                note_selected.rbt_modeled_and_demonstrated_to_caregiver
-                              }}
-                            </p>
-                          </div>
-                        </div>
-                        <div class="col-xl-12">
-                          <div class="detail-personal">
-                            <h2>Client response to treatment this session</h2>
-                            <p>
-                              {{
-                                note_selected.client_response_to_treatment_this_session
+                                note_selected?.rbt_modeled_and_demonstrated_to_caregiver
                               }}
                             </p>
                           </div>
@@ -679,7 +669,17 @@
                             </h2>
                             <p>
                               {{
-                                note_selected.progress_noted_this_session_compared_to_previous_session
+                                note_selected?.progress_noted_this_session_compared_to_previous_session
+                              }}
+                            </p>
+                          </div>
+                        </div>
+                        <div class="col-xl-12">
+                          <div class="detail-personal">
+                            <h2>Note's Summary</h2>
+                            <p>
+                              {{
+                                note_selected?.summary_note
                               }}
                             </p>
                           </div>
@@ -689,7 +689,7 @@
                             <h2>Next session is scheduled for</h2>
                             <p>
                               {{
-                                note_selected.next_session_is_scheduled_for
+                                note_selected?.next_session_is_scheduled_for
                                 | date : "shortDate"
                               }}
                             </p>
@@ -719,7 +719,7 @@
                                   {{ doctor_selected_full_name }}
                                 </p>
                                 <h2 style="margin: 0">Signature Date</h2>
-                                <p>{{ note_selected.session_date | date : "shortDate"  }}</p>
+                                <p>{{ note_selected?.session_date | date : "shortDate"  }}</p>
                               </div>
                             </div>
                             <div class="col-xl-4 col-md-6">
@@ -742,7 +742,7 @@
                                   {{ doctor_selected_full_name_bcba }}
                                 </p>
                                 <h2 style="margin: 0">Signature Date</h2>
-                                <p>{{ note_selected.session_date  | date : "shortDate" }}</p>
+                                <p>{{ note_selected?.session_date  | date : "shortDate" }}</p>
                               </div>
                             </div>
                           </div>

@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { PaServiceV2 } from 'src/app/core/models';
 import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 
 @Component({
@@ -7,7 +8,7 @@ import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
     styleUrls: ['./units-display.component.scss']
 })
 export class UnitsDisplayComponent {
-    @Input() service: PaService;
+    @Input() service: PaServiceV2;
     @Input() newUnits?: number;
 
     get usedUnitsPercentage(): number {
