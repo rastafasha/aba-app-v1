@@ -15,13 +15,13 @@ export class Show917511Component {
   @Input() outcomeList;
   @Input() onIntakeoutcomeChange;
 
-  @Output() bcbaconductedChange = new EventEmitter<boolean>();
   @Output() bcbaclientChange = new EventEmitter<boolean>();
+  @Output() bcbaconductedChange = new EventEmitter<boolean>();
 
   onCheckboxChange() {
-    this.bcbaconductedChange.emit(this.BCBA_conducted_client_observations);
+    this.bcbaclientChange.emit(this.BCBA_conducted_client_observations);
   }
   onCheckboxChange1() {
-    this.bcbaclientChange.emit(this.BCBA_conducted_assessments);
+    this.bcbaconductedChange.emit(this.BCBA_conducted_assessments);
   }
 }
