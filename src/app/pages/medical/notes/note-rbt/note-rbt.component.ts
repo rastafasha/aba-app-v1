@@ -340,6 +340,8 @@ export class NoteRbtComponent implements OnInit {
 
       this.selectedPaService = resp.patient.pa_services.find(service => service.cpt === '97153') || null;
       // console.log('Selected Service:', this.selectedPaService);
+      console.log('Selected Service:', this.selectedPaService);
+      this.selectedValueCode = this.selectedPaService?.cpt || '';
 
       this.getBipV2();
     })
@@ -737,7 +739,7 @@ convertToHours(totalMinutes: number): string {
       rbt_modeled_and_demonstrated_to_caregiver: this.rbt_modeled_and_demonstrated_to_caregiver,
       // client_response_to_treatment_this_session: this.client_response_to_treatment_this_session,
       progress_noted_this_session_compared_to_previous_session: this.progress_noted_this_session_compared_to_previous_session,
-      next_session_is_scheduled_for: this.next_session_is_scheduled_for.split('T')[0],
+      next_session_is_scheduled_for: this.next_session_is_scheduled_for,
       status: 'pending',
       cpt_code: this.selectedValueCode,
       location_id: this.patientLocation_id,
@@ -773,15 +775,16 @@ convertToHours(totalMinutes: number): string {
 
         if (error.error?.message) {
           errorMessage = error.error.message;
-        } else if (error.error?.errors) {
+        }
+        if (error.error?.errors) {
           const errors = Object.values(error.error.errors).flat();
-          errorMessage = errors.join('\n');
+          errorMessage += '<br>' + errors.join('<br>');
         }
 
         Swal.fire({
           icon: 'error',
           title: 'Error',
-          text: errorMessage,
+          html: errorMessage,
         });
       }
     });
@@ -790,7 +793,6 @@ convertToHours(totalMinutes: number): string {
   onDateChange(event: MatDatepickerInputEvent<Date>) {
     if (!event.value) {
       this.session_date = '';
-      this.next_session_is_scheduled_for = '';
       return;
     }
 
@@ -798,10 +800,12 @@ convertToHours(totalMinutes: number): string {
     // Set the session date in ISO format YYYY-MM-DD
     this.session_date = date.toISOString().split('T')[0];
 
-    // Set next session date
-    const nextDate = new Date(date);
-    nextDate.setDate(nextDate.getDate() + 2);
-    this.next_session_is_scheduled_for = nextDate.toISOString().split('T')[0];
+    if (!this.next_session_is_scheduled_for) {
+      // Set next session date
+      const nextDate = new Date(date);
+      nextDate.setDate(nextDate.getDate() + 1);
+      this.next_session_is_scheduled_for = nextDate.toISOString().split('T')[0];
+    }
   }
 
   
@@ -811,7 +815,7 @@ convertToHours(totalMinutes: number): string {
 
     if (!validationResult.isValid) {
       const missingFieldsList = validationResult.missingFields.join('\n• ');
-      Swal.fire('Warning', `Please fill all the required fields:\n\n• ${missingFieldsList}`, 'warning');
+      Swal.fire('Warning', `Oops! It looks like you’re missing the following information. Please review and complete the required fields before proceeding:\n\n• ${missingFieldsList}`, 'warning');
       return;
     }
 

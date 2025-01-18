@@ -5,15 +5,10 @@ import { AppUser } from 'src/app/core/models/users.model';
 import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
-import { InsuranceService } from '../../../../core/services/insurances.service';
 import { NoteBcbaService } from '../../../../core/services/notes-bcba.service';
-import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import {
-  interventionsList, interventionsListDoble,
-  newList,
-  outcomeList, show97151List
-} from '../listasSelectData';
+import {interventionsList, interventionsListDoble, newList,
+  outcomeList, show97151List} from '../listasSelectData';
 
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { PaServiceV2, PatientV2 } from 'src/app/core/models';
@@ -106,7 +101,7 @@ throw new Error('Method not implemented.');
   next_session_is_scheduled_for = '';
   provider_name = '';
   supervisor_name = '';
-  
+
   porcent_of_occurrences = 0;
   porcent_of_correct_response = 0;
   maladaptive = '';
@@ -152,7 +147,7 @@ throw new Error('Method not implemented.');
 
   roles_rbt = [];
   roles_bcba = [];
-  
+
   hours_days = [];
   specialists = [];
   maladaptives = [];
@@ -308,6 +303,7 @@ throw new Error('Method not implemented.');
       this.start_date = resp.patient.start_date;
       this.end_date = resp.patient.end_date;
 
+      // console.log(this.pa_services);
 
       //filtramos lo pa_services usando star_date y end_date comparado con el dia de hoy
       this.pa_services = this.pa_services.filter((pa) => {
@@ -754,7 +750,7 @@ convertToHours(totalMinutes: number): string {
 
     if (!validationResult.isValid) {
         const missingFieldsList = validationResult.missingFields.join('\n• ');
-        Swal.fire('Warning', `Please fill all the required fields:\n\n• ${missingFieldsList}`, 'warning');
+      Swal.fire('Warning', `Oops! It looks like you’re missing the following information. Please review and complete the required fields before proceeding:\n\n• ${missingFieldsList}`, 'warning');
         return;
     }
 
@@ -905,7 +901,7 @@ convertToHours(totalMinutes: number): string {
       this.checkPosWarning();
     }
   }
-  
+
 
   calculateUnitsFromTime(startTime: string, endTime: string): number {
     if (!startTime || !endTime) return 0;
