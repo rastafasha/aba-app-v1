@@ -5,15 +5,10 @@ import { AppUser } from 'src/app/core/models/users.model';
 import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
-import { InsuranceService } from '../../../../core/services/insurances.service';
 import { NoteBcbaService } from '../../../../core/services/notes-bcba.service';
-import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import {
-  interventionsList, interventionsListDoble,
-  newList,
-  outcomeList, show97151List
-} from '../listasSelectData';
+import {interventionsList, interventionsListDoble, newList,
+  outcomeList, show97151List} from '../listasSelectData';
 
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { PaServiceV2, PatientV2 } from 'src/app/core/models';
