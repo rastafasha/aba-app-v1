@@ -325,7 +325,7 @@ throw new Error('Method not implemented.');
     this.bipV2Service.list({client_id: this.patient_id}).subscribe((resp)=>{
       console.log('BIP',resp);
       this.bip_id = resp.data[0].id;
-      // this.caregivers_training_goals = resp.data[0].caregiver_trainings;
+      this.caregivers_training_goals = resp.data[0].caregiver_trainings;
       
       this.behaviorList = resp.data[0].maladaptives;
       this.replacementList = resp.data[0].replacements;
@@ -606,10 +606,10 @@ convertToHours(totalMinutes: number): string {
     //   JSON.stringify(this.rbt_training_goals)
     // );
    
-    if (this.caregivers_training) {
+    if (this.caregivers_training_goals) {
       formData.append(
         'caregiver_goals',
-        JSON.stringify(this.caregivers_training)
+        JSON.stringify(this.caregivers_training_goals)
       );
     }
     if (this.interventionsList) {

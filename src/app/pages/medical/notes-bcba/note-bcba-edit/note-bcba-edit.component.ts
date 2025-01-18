@@ -195,7 +195,7 @@ export class NoteBcbaEditComponent implements OnInit {
   caregivers_training_goals = [];
   rbt_training_goals = [];
   rbt_training_goalsgroup: any;
-  caregivers_training_goalsgroup: any[];
+  caregivers_training_goalsgroup :any = [];
   pa_assessmentsgroup = [];
   pa_assessments: string;
   n_un = [];
@@ -389,20 +389,28 @@ export class NoteBcbaEditComponent implements OnInit {
       this.newList = this.note_selected?.newlist_added;
       this.outcomeList = this.note_selected?.intake_outcome;
 
-      // this.replacementList = this.note_selected.replacements;
-      // this.replacementList2 = this.note_selected.replacements2;
-      
-      // this.interventions = this.note_selected.interventions;
-      // this.interventionsList = this.convertToInterventions(
-      //   this.interventions
-      // );
-      
-      // this.interventions2 = this.note_selected.interventions2;
-      // this.interventionsListDoble = this.convertToInterventions2(
-      //   this.interventions2
-      // );
+      this.behaviorList = this.note_selected?.behaviors;
 
-      this.getBipv2();
+      this.obj_inprogress = this.note_selected.replacements;
+      this.obj_inprogress1 = this.note_selected.replacements2;
+
+      this.caregivers_training_goals = resp.caregiver_goals;
+
+      
+        if (this.caregivers_training_goals && typeof this.caregivers_training_goals === 'string') {
+          try {
+            const jsonObj90 = JSON.parse(this.caregivers_training_goals);
+            this.caregivers_training_goalsgroup = jsonObj90;
+          } catch (error) {
+            console.error('Error parsing caregivers_training_goalsgroup:', error);
+            this.caregivers_training_goalsgroup = {};
+          }
+        } else {
+          this.caregivers_training_goalsgroup = {};
+        }
+
+
+      // this.getBipv2();
 
     });
   }
@@ -433,7 +441,7 @@ export class NoteBcbaEditComponent implements OnInit {
       console.log('BIP',resp);
       this.bip_id = resp.data.id;
       this.caregivers_training_goals = resp.data.caregiver_trainings;
-      this.behaviorList = resp.data.maladaptives;
+      // this.behaviorList = resp.data.maladaptives;
       this.replacementList = resp.data.replacements;
       this.replacementList2 = resp.data.replacements;
 
@@ -447,8 +455,8 @@ export class NoteBcbaEditComponent implements OnInit {
     this.objectives = this.replacementList.flatMap(objective => objective.objectives);
     // filtrado los que estan en status in progress
     const objetivosEnProgreso = this.objectives.filter(objetivo => objetivo.status === "in progress");
-    this.obj_inprogress = objetivosEnProgreso;
-    this.obj_inprogress1 = objetivosEnProgreso;
+    // this.obj_inprogress = objetivosEnProgreso;
+    // this.obj_inprogress1 = objetivosEnProgreso;
       
       //fin objectives
 
@@ -1057,12 +1065,12 @@ convertToHours(totalMinutes: number): string {
       formData.append('environmental_changes', this.environmental_changes);
     }
 
-    if (this.rbt_training_goals) {
-      formData.append(
-        'rbt_training_goals',
-        JSON.stringify(this.rbt_training_goals)
-      );
-    }
+    // if (this.rbt_training_goals) {
+    //   formData.append(
+    //     'rbt_training_goals',
+    //     JSON.stringify(this.rbt_training_goals)
+    //   );
+    // }
     if (this.caregivers_training_goals) {
       formData.append(
         'caregiver_goals',
@@ -1080,7 +1088,7 @@ convertToHours(totalMinutes: number): string {
     if (this.interventionsListDoble) {
       formData.append(
         'interventions2',
-        JSON.stringify(this.intervention2_added)
+        JSON.stringify(this.interventionsListDoble)
       );
     }
 

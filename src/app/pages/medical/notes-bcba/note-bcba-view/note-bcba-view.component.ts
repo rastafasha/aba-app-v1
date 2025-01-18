@@ -333,6 +333,27 @@ export class NoteBcbaViewComponent implements OnInit {
       this.interventions2 = this.note_selected.interventions2;
       this.newlist_added = this.note_selected.newlist_added;
       this.intake_outcome = this.note_selected.intake_outcome;
+
+      this.behaviors = this.note_selected?.behaviors;
+
+      this.obj_inprogress = this.note_selected.replacements;
+      // this.obj_inprogress1 = this.note_selected.replacements2;
+
+      // this.caregivers_training_goals = resp.caregiver_goals;
+      // console.log(this.caregivers_training_goals);
+
+      // if (this.caregivers_training_goals && typeof this.caregivers_training_goals === 'string') {
+      //   try {
+      //     const jsonObj90 = JSON.parse(this.caregivers_training_goals);
+      //     this.caregivers_training_goalsgroup = jsonObj90;
+      //   } catch (error) {
+      //     console.error('Error parsing caregivers_training_goalsgroup:', error);
+      //     this.caregivers_training_goalsgroup = {};
+      //   }
+      // } else {
+      //   this.caregivers_training_goalsgroup = {};
+      //   console.log(this.caregivers_training_goalsgroup);
+      // }
       
     });
     
@@ -343,7 +364,7 @@ export class NoteBcbaViewComponent implements OnInit {
       // console.log('BIP',resp);
       this.bip_id = resp.data.id;
       this.caregivers_training_goals = resp.data.caregiver_trainings;
-      this.behaviors = resp.data.maladaptives;
+      // this.behaviors = resp.data.maladaptives;
       this.replacements = resp.data.replacements;
       this.replacements2 = resp.data.replacements;
 
@@ -354,7 +375,7 @@ export class NoteBcbaViewComponent implements OnInit {
     this.objectives = this.replacements.flatMap(objective => objective.objectives);
     // filtrado los que estan en status in progress
     const objetivosEnProgreso = this.objectives.filter(objetivo => objetivo.status === "in progress");
-    this.obj_inprogress = objetivosEnProgreso;
+    // this.obj_inprogress = objetivosEnProgreso;
 
     
       
