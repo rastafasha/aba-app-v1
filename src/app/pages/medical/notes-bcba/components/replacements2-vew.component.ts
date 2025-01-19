@@ -23,12 +23,12 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
             <tr *ngFor="let replace of obj_inprogress; let i = index">
               <td>{{ replace.description }}</td>
               <td>
-              <i *ngIf="replace?.assessed === true"   class="fa fa-check"  ></i>
-                <i *ngIf="replace?.assessed === false "  class="fa fa-times" ></i>
+              <i  *ngIf="replace.value === true"><i class="fa fa-check"  ></i></i>
+              <i  *ngIf="replace.value === false"><i class="fa fa-times"  ></i></i>
               </td>
               <td>
-              <i *ngIf="replace?.modified === true"   class="fa fa-check"  ></i>
-                <i *ngIf="replace?.modified === false "  class="fa fa-times" ></i>
+              <i  *ngIf="replace.value2 === true"><i class="fa fa-check"  ></i></i>
+              <i  *ngIf="replace.value2 === false"><i class="fa fa-times"  ></i></i>
               </td>
             </tr>
           </tbody>
@@ -42,16 +42,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class Replacement2ViewComponent {
   @Input() obj_inprogress;
 
-  ngOnInit(): void {
-    console.log('obj_inprogress', this.obj_inprogress); // Verifica que la data esté siendo recibida
-  }
+  
 
-  updatereplacements() {
-    const replacementsObj = this.obj_inprogress
-      .filter((replace) => replace.value || replace.value2)
-      .reduce((acc, replace) => {
-        acc[replace.id] = true;
-        return acc;
-      }, {});
-  }
 }

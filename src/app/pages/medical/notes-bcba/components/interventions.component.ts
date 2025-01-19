@@ -50,6 +50,7 @@ export class InterventionsComponent {
       .reduce((acc, interv) => {
         acc[interv.id] = {
           id: interv.id,
+          name: interv.name,
           demostrated: !!interv.value,
         };
         // acc[interv.id] = true;

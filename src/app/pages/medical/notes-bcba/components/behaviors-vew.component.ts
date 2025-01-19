@@ -20,8 +20,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
             <tr *ngFor="let behav of behaviors; let i = index">
               <td>{{ behav.name }}</td>
               <td>
-              <i *ngIf="behav.discused === true"   class="fa fa-check"  ></i>
-                <i *ngIf="behav.discused === false "  class="fa fa-times" ></i>
+              <i  *ngIf="behav.value === true"><i class="fa fa-check"  ></i></i>
+              <i  *ngIf="behav.value === false"><i class="fa fa-times"  ></i></i>
               </td>
             </tr>
           </tbody>
@@ -33,16 +33,4 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class BehaviorViewComponent {
   @Input() behaviors;
 
-  updateBehaviors() {
-    const result = this.behaviors
-      .filter((behaviors) => behaviors.value)
-      .reduce((acc, behaviors) => {
-        acc[behaviors.id] = true;
-        return acc;
-      }, {});
-      console.log(result);
-      console.log(this.behaviors);
-  }
-
-  
 }
