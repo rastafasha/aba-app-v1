@@ -71,6 +71,7 @@ export class Interventions2Component {
       .reduce((acc, intervent) => {
         acc[intervent.id] = {
           id: intervent.id,
+          name: intervent.name,
           assessed: !!intervent.value,
           modified: !!intervent.value2,
         };
