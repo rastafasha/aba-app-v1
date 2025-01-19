@@ -228,11 +228,11 @@
                 <div *ngIf="show97151 || show971511 || show971512" class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label>Type <span class="login-danger">*</span></label>
-                    <mat-select [(ngModel)]="selectedPaService1" name="pa_service"
-                      (selectionChange)="onPaServiceSelect2($event)" class="form-control select"
+                    <mat-select [(ngModel)]="selectedPaService1" name="selectedPaService1"
+                       class="form-control select"
                       placeholder="Select Service">
-                      <mat-option *ngFor="let service of show97151List" [value]="service">
-                        ({{ service.cpt }})
+                      <mat-option *ngFor="let type of show97151List" [value]="type">
+                        {{ type.cpt }}
                       </mat-option>
                     </mat-select>
                   </div>

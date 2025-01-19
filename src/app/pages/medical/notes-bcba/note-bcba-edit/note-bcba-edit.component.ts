@@ -14,6 +14,7 @@ import { NoteBcbaService } from '../../../../core/services/notes-bcba.service';
 import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import { interventionsList, interventionsListDoble, newList, outcomeList, show97151List } from '../listasSelectData';
+import { show97151L } from '../interfaces';
 
 interface Behavior {
   index: number;
@@ -213,7 +214,7 @@ export class NoteBcbaEditComponent implements OnInit {
 
   pa_services: PaServiceV2[] = [];
   selectedPaService: PaServiceV2 | null = null;
-  selectedPaService1: PaService | null = null;
+  selectedPaService1: show97151L;
   projectedUnits = 0;
 
   provider: any = [];
@@ -310,7 +311,6 @@ export class NoteBcbaEditComponent implements OnInit {
 
       this.getPatient();
 
-      this.selectedPaService1 = this.note_selected.type;
       this.selectedValueCode = this.note_selected.cpt_code;
       this.meet_with_client_at = this.note_selected.meet_with_client_at;
       this.participants = this.note_selected.participants;
@@ -361,6 +361,10 @@ export class NoteBcbaEditComponent implements OnInit {
         this.note_selected.provider_signature;
       this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED =
         this.note_selected.supervisor_signature;
+
+      // this.selectedPaService1 = this.note_selected.type;
+      this.selectedPaService1 = this.show97151List.find(type => type.cpt === this.note_selected.type);
+      console.log(this.selectedPaService1);
 
       if(this.note_selected.cpt_code === '97155' ){
         this.show97155 = true;
@@ -554,176 +558,6 @@ export class NoteBcbaEditComponent implements OnInit {
     })
   }
 
-
-  private convertToInterventions(input: { [x: string]: boolean }) {
-    if (!input) {
-      return [];
-    }
-    return [
-      {
-        id: 'token_economy',
-        name: 'Token Economy',
-        value: input['token_economy'] || false,
-      },
-      {
-        id: 'generalization',
-        name: 'Generalization',
-        value: input['generalization'] || false,
-      },
-      { id: 'NCR', name: 'NCR', value: input['NCR'] || false },
-      { id: 'behavioral_momentum', name: 'Behavioral Momentum', 
-        value: input['Behavioral Momentum'] || false 
-      },
-      { id: 'DRA', name: 'DRA', value: input['DRA'] || false },
-      { id: 'DRI', name: 'DRI', value: input['DRI'] || false },
-      { id: 'DRO', name: 'DRO', value: input['DRO'] || false },
-      { id: 'DRL', name: 'DRL', value: input['DRL'] || false },
-      
-      {
-        id: 'response_block',
-        name: 'Response Block',
-        value: input['response_block'] || false,
-      },
-      {
-        id: 'errorless_teaching',
-        name: 'Errorless Teaching',
-        value: input['errorless_teaching'] || false,
-      },
-      {
-        id: 'extinction',
-        name: 'Extinction',
-        value: input['extinction'] || false,
-      },
-      { id: 'chaining', name: 'Chaining', value: input['chaining'] || false },
-      {
-        id: 'natural_teaching',
-        name: 'Natural Teaching',
-        value: input['natural_teaching'] || false,
-      },
-      {
-        id: 'redirection',
-        name: 'Redirection',
-        value: input['redirection'] || false,
-      },
-      { id: 'shaping', name: 'Shaping', value: input['shaping'] || false },
-      { id: 'pairing', name: 'Pairing', value: input['pairing'] || false },
-    ];
-  }
-
-  private convertToInterventionsGroup(
-    interventions: { id: string; name: string; value: boolean }[]
-  ) {
-    const group = {};
-    for (const intervention of interventions) {
-      if (intervention.value) {
-        group[intervention.id] = true;
-      }
-    }
-    return group;
-  }
-
-  private convertToInterventions2(input: { [x: string]: boolean }) {
-    if (!input) {
-      return [];
-    }
-    return [
-      {
-        id: 'token_economy',
-        name: 'Token Economy',
-        value: input['token_economy'] || false,
-        value2: input['token_economy'] || false,
-      },
-      {
-        id: 'generalization',
-        name: 'Generalization',
-        value: input['generalization'] || false,
-        value2: input['generalization'] || false,
-      },
-      { id: 'NCR', name: 'NCR', 
-        value: input['NCR'] || false ,
-        value2: input['NCR'] || false ,
-      },
-      { id: 'behavioral_momentum', name: 'Behavioral Momentum', 
-        value: input['behavioral_momentum'] || false ,
-        value2: input['behavioral_momentum'] || false 
-      },
-      { id: 'DRA', name: 'DRA',
-         value: input['DRA'] || false,
-         value2: input['DRA'] || false
-         },
-      { id: 'DRI', name: 'DRI',
-         value: input['DRI'] || false,
-         value2: input['DRI'] || false
-         },
-      { id: 'DRO', name: 'DRO',
-         value: input['DRO'] || false,
-         value2: input['DRO'] || false
-         },
-      { id: 'DRL', name: 'DRL',
-         value: input['DRL'] || false,
-         value2: input['DRL'] || false
-         },
-      
-      {
-        id: 'response_block',
-        name: 'Response Block',
-        value: input['response_block'] || false,
-        value2: input['response_block'] || false,
-      },
-      {
-        id: 'errorless_teaching',
-        name: 'Errorless Teaching',
-        value: input['errorless_teaching'] || false,
-        value2: input['errorless_teaching'] || false,
-      },
-      {
-        id: 'extinction',
-        name: 'Extinction',
-        value: input['extinction'] || false,
-        value2: input['extinction'] || false,
-      },
-      { id: 'chaining', name: 'Chaining', 
-        value: input['chaining'] || false, 
-        value2: input['chaining'] || false, 
-      },
-      {
-        id: 'natural_teaching',
-        name: 'Natural Teaching',
-        value: input['natural_teaching'] || false,
-        value2: input['natural_teaching'] || false,
-      },
-      {
-        id: 'redirection',
-        name: 'Redirection',
-        value: input['redirection'] || false,
-        value2: input['redirection'] || false,
-      },
-      { id: 'shaping', name: 'Shaping', 
-        value: input['shaping'] || false,
-        value2: input['shaping'] || false,
-       },
-      { id: 'pairing', name: 'Pairing', 
-        value: input['pairing'] || false,
-        value2: input['pairing'] || false,
-       },
-    ];
-  }
-
-  
-  private convertToInterventionsGroup2(
-    interventions2: { id: string; name: string; value: boolean; value2: boolean }[]
-  ) {
-    const group = {};
-    for (const intervention of interventions2) {
-      if (intervention.value) {
-        group[intervention.id] = true;
-      }
-      if (intervention.value2) {
-        group[intervention.id] = true;
-      }
-    }
-    return group;
-  }
 
   
 
@@ -982,9 +816,7 @@ convertToHours(totalMinutes: number): string {
   }
 
   
-
-  // eslint-disable-next-line no-debugger
-  save() {debugger
+  save() {
     this.text_validation = '';
 
     const formData = new FormData();

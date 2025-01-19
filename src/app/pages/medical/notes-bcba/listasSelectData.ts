@@ -60,7 +60,7 @@ export const outcomeList = [
 ];
 
 export const show97151List = [
-    { cpt: 'Observation' },
-    { cpt: 'Report' },
+    { cpt: 'Observation' , value: 'Observation'},
+    { cpt: 'Report', value: 'Report' },
 ];
 

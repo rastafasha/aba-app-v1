@@ -15,6 +15,7 @@ import { PaServiceV2, PatientV2 } from 'src/app/core/models';
 import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
 import { PatientMService } from '../../patient-m/service/patient-m.service';
 import {
+  show97151L,
   ValidationResult
 } from '../interfaces';
 
@@ -192,7 +193,7 @@ throw new Error('Method not implemented.');
   
   pa_services: PaService[] = [];
   selectedPaService: PaServiceV2 | null = null;
-  selectedPaService1: PaServiceV2 | null = null;
+  selectedPaService1: show97151L;
   projectedUnits = 0;
   start_date: Date; // Fecha de inicio
   end_date: Date; // Fecha de fin
@@ -513,8 +514,8 @@ convertToHours(totalMinutes: number): string {
     this.behaviorsList_added = updatedbehaviorsList;
   }
   
-  // eslint-disable-next-line no-debugger
-  save() {debugger
+  
+  save() {
     this.text_validation = '';
     if (
       // !this.rbt_training_goals ||
@@ -880,8 +881,7 @@ convertToHours(totalMinutes: number): string {
     }
   }
 
-  // eslint-disable-next-line no-debugger
-  onPaServiceSelect2(event: any) {debugger
+  onPaServiceSelect2(event: any) {
     const type = event.value;
     if (type) {
       this.selectedValueCode1 = type.cpt;
