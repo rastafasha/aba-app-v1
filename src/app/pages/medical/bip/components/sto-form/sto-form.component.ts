@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Objective } from 'src/app/core/models';
+import { Objective, OBJECTIVE_STATUS_MAP } from 'src/app/core/models';
 
 @Component({
   selector: 'app-sto-form',
@@ -7,12 +7,13 @@ import { Objective } from 'src/app/core/models';
   styleUrls: ['./sto-form.component.scss'],
 })
 export class StoFormComponent {
-  @Input() sto: Objective;
-  @Output() stoChange = new EventEmitter<Objective>();
+  @Input() input: Objective;
+  @Output() inputChange = new EventEmitter<Objective>();
   @Output() save = new EventEmitter<Objective>();
+  states = OBJECTIVE_STATUS_MAP;
 
   onSave() {
-    this.stoChange.emit(this.sto);
-    this.save.emit(this.sto);
+    this.inputChange.emit(this.input);
+    this.save.emit(this.input);
   }
 }

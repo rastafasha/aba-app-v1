@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="col-xs-12 col-sm-6">
+    <div class="form-group local-forms">
+      <label>
+        Preventtive Strategies (atecedent-based)
+        <span class="login-danger">* </span>
+      </label>
+      <textarea
+        class="form-control"
+        name="preventive_strategies_s"
+        [(ngModel)]="input.preventive_strategies_s"
+        rows="4"
+        cols="30"
+      >
+      </textarea>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-6">
+    <div class="form-group local-forms">
+      <label>
+        Replacement Skills (relate to function)
+        <span class="login-danger">* </span>
+      </label>
+      <textarea
+        class="form-control"
+        name="replacement_skills_s"
+        [(ngModel)]="input.replacement_skills_s"
+        rows="4"
+        cols="30"
+      >
+      </textarea>
+    </div>
+  </div>
+  <div class="col-xs-12">
+    <div class="form-group local-forms">
+      <label>
+        Manager Strategies (consecuences Based)
+        <span class="login-danger">* </span>
+      </label>
+      <textarea
+        class="form-control"
+        name="manager_strategies_s"
+        [(ngModel)]="input.manager_strategies_s"
+        rows="4"
+        cols="30"
+      >
+      </textarea>
+    </div>
+  </div>
+  <div class="col-12 mb-3 doctor-submit text-end">
+    <button class="btn btn-primary btn-sm" (click)="onSave()">
+      Update List Sensory
+    </button>
+  </div>
+</div>

@@ -1,39 +1,51 @@
 <div class="col-sm-12">
   <div class="card">
-    <!-- Replacements List -->
-    <div *ngIf="state === 'list'" class="card-body">
-      <app-list-and-form
-        title="Goals"
-        [hadButton]="true"
-        [canOpen]="false"
-        [default]="newGoal"
-        [(dataSource)]="goals"
-        [displayedColumns]="['index', 'name', 'status', 'created_at']"
-        [renders]="renders"
-        (add)="onCreateGoal()"
-        (edit)="onEditGoal($event)"
-        (view)="onViewGoal($event)"
-        (delete)="onDeleteGoal($event)"
-      >
-      </app-list-and-form>
-    </div>
-    <!-- No list -->
-    <div class="card-body" *ngIf="state !== 'list'">
-      <!-- Back -->
-      <div class="doctor-submit text-end">
-        <button class="btn btn-primary btn-sm" (click)="onBack()">Back</button>
+    <div class="card-body">
+      <div class="col-xs-12">
+        <app-list-and-form
+          *ngIf="state === 'list'"
+          #list
+          title="Replacements Goals"
+          [(dataSource)]="input"
+          [displayedColumns]="[
+            'name',
+            'baseline_level',
+            'baseline_date',
+            'initial_intensity',
+            'current_intensity',
+            'description'
+          ]"
+          [renders]="renders"
+          [options]="options"
+        >
+          <app-replacement-goal-form
+            [(input)]="newGoal"
+            (cancel)="list.onClose()"
+            (save)="list.onAdd($event)"
+          ></app-replacement-goal-form>
+        </app-list-and-form>
+        <!-- Back -->
+        <div *ngIf="state !== 'list'" class="doctor-submit text-end">
+          <button class="btn btn-primary btn-sm" (click)="onBack()">
+            Back
+          </button>
+        </div>
+        <!-- Edit -->
+        <div *ngIf="state === 'edit'">
+          <app-replacement-goal-form [(input)]="newGoal">
+          </app-replacement-goal-form>
+        </div>
+        <!-- Grafico-->
+        <div
+          *ngIf="state === 'viewGraph'"
+          class="rbt-dashboard-table table-responsive mobile-table-750"
+        >
+          <app-chart-replacement
+            [goal]="newGoal.name"
+            [baseline_d]="newGoal.baseline_date"
+          ></app-chart-replacement>
+        </div>
       </div>
-      <!-- Edit/Create -->
-      <app-replacement-goal-form
-        *ngIf="state === 'edit' || state === 'create'"
-        [goal]="newGoal"
-      ></app-replacement-goal-form>
-      <!-- View -->
-      <app-chart-replacement
-        *ngIf="state === 'view'"
-        [goal]="newGoal.name"
-        [baseline_d]="newGoal.baseline_date"
-      ></app-chart-replacement>
     </div>
   </div>
 </div>

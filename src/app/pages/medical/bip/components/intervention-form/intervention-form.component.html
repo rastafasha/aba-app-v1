@@ -1,0 +1,54 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="col-xs-12">
+      <form action="">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form-group local-forms">
+              <label>Title<span class="login-danger">*</span> </label>
+              <input
+                class="form-control"
+                name="title"
+                [(ngModel)]="input.title"
+                type="text"
+              />
+            </div>
+          </div>
+          <div class="col-xs-12">
+            <div class="form-group local-forms">
+              <label>Description<span class="login-danger">*</span> </label>
+              <textarea
+                class="form-control"
+                name="description"
+                [(ngModel)]="input.description"
+                rows="4"
+                cols="30"
+              >
+              </textarea>
+            </div>
+          </div>
+
+          <div class="col-12 mb-3 doctor-submit text-end">
+            <button
+              class="btn btn-primary btn-sm"
+              (click)="onSave()"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            >
+              Add Intervention
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

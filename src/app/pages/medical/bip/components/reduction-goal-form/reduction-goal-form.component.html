@@ -1,21 +1,30 @@
 <div class="col-sm-12">
   <div class="card">
     <div class="card-body">
-      <!-- No data -->
-      <div class="col-sm-12" *ngIf="!maladaptives?.length">
-        Please fill maladaptives to view this section.
-      </div>
-      <!-- With data -->
-      <div class="col-xs-12" *ngIf="maladaptives.length">
-        <!-- lista inicial -->
-        <app-maladaptive-goals-table
+      <div class="col-xs-12">
+        <app-list-and-form
           *ngIf="state === 'list'"
-          [maladaptives]="maladaptives"
-          (edit)="onEdit($event)"
-          (delete)="onDelete($event)"
-          (viewGraph)="onViewGraph($event)"
+          #list
+          title="Maladaptives Behaviors"
+          [(newItem)]="newMaladaptive"
+          [(dataSource)]="input"
+          [displayedColumns]="[
+            'name',
+            'baseline_level',
+            'baseline_date',
+            'initial_intensity',
+            'current_intensity',
+            'description'
+          ]"
+          [renders]="renders"
+          [options]="options"
         >
-        </app-maladaptive-goals-table>
+          <app-maladaptive-form
+            [(input)]="newMaladaptive"
+            (cancel)="list.onClose()"
+            (save)="list.onAdd($event)"
+          ></app-maladaptive-form>
+        </app-list-and-form>
         <!-- Back -->
         <div *ngIf="state !== 'list'" class="doctor-submit text-end">
           <button class="btn btn-primary btn-sm" (click)="onBack()">
@@ -24,19 +33,17 @@
         </div>
         <!-- Edit -->
         <div *ngIf="state === 'edit'">
-          <app-reduction-goal-edit [maladaptive]="newMaladaptive">
+          <app-reduction-goal-edit [(goal)]="newMaladaptive">
           </app-reduction-goal-edit>
         </div>
         <!-- Grafico-->
         <div
-          class="rbt-dashboard-table table-responsive mobile-table-750"
           *ngIf="state === 'viewGraph'"
+          class="rbt-dashboard-table table-responsive mobile-table-750"
         >
           <app-chart-reduction
-            [maladaptive_behavior]="newMaladaptiveSon.name"
-            [baseline_date]="newMaladaptiveSon.baseline_date"
-            [baseline_level]="newMaladaptiveSon.baseline_level"
-            [initial_interesting]="newMaladaptiveSon.initial_intensity"
+            [maladaptive]="newMaladaptive"
+            [patient_identifier]="patient_identifier"
           ></app-chart-reduction>
         </div>
       </div>

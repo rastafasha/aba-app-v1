@@ -41,6 +41,9 @@ export function compareObjects(obj1: object, obj2: object): object {
   compare(obj1, obj2);
   return differences;
 }
+export function logTable(a: object, b: object) {
+  console.table(compareObjects(a, b));
+}
 
 export function ArrayOrNullOrUndefined<T>(value: T[]): T[] | null {
   return value === undefined

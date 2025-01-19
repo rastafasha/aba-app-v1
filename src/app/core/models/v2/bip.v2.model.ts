@@ -1,5 +1,4 @@
 import {
-  compareObjects,
   DateOrNullOrUndefined,
   ForceMap,
   NumberOrNullOrUndefined,
@@ -15,15 +14,25 @@ type ObjectiveStatus =
   | 'on hold'
   | 'discontinued'
   | 'maintenance';
+export const OBJECTIVE_STATUS_MAP: Record<ObjectiveStatus, string> = {
+  'no started': 'Not started',
+  'in progress': 'In progress',
+  mastered: 'Mastered',
+  initiated: 'Initiated',
+  'on hold': 'On hold',
+  discontinued: 'Discontinued',
+  maintenance: 'Maintenance',
+};
+export type ObjectiveType = 'STO' | 'LTO';
 export class Objective {
   id: number;
-  name: string;
   maladaptive_id: number;
+  type: ObjectiveType;
   status: ObjectiveStatus;
-  initial_date: Date;
-  end_date: Date;
   description: string;
   target: number;
+  initial_date: Date;
+  end_date: Date;
   created_at?: Date;
   updated_at?: Date;
   deleted_at?: Date;
@@ -35,7 +44,7 @@ export class Objective {
   static getDefault(): Objective {
     return new Objective({
       id: 0,
-      name: '',
+      type: 'STO',
       maladaptive_id: 0,
       status: 'no started',
       initial_date: new Date(),
@@ -533,7 +542,6 @@ export class BipV2 {
       ),
       caregiver_trainings: ForceMap(data.caregiver_trainings, PlanV2),
     };
-    console.table(compareObjects(data, self));
     return self;
   }
 }

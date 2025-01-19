@@ -4,43 +4,29 @@
 <div mat-dialog-content>
   <div class="container mt-4">
     <div class="row align-items-center">
-      <div class="col-xs-12 col-md-3 col-xl-3">
-        <div class="form-group local-forms">
-          <label>STO <span class="login-danger">*</span></label>
-          <input
-            class="form-control"
-            name="sto"
-            [(ngModel)]="sto.name"
-            type="text"
-          />
-        </div>
-      </div>
       <div class="col-12 col-md-3 col-xl-3">
         <div class="form-group local-forms">
           <label>Status<span class="login-danger">*</span></label>
           <select
             class="form-control form-select-solid fw-bolder"
             name="status_sto"
-            [(ngModel)]="sto.status"
+            [(ngModel)]="input.status"
             [ngModelOptions]="{ standalone: true }"
           >
             <option>-- Select --</option>
-            <option value="inprogress">in progress</option>
-            <option value="initiated">Initiated</option>
-            <option value="mastered">mastered</option>
-            <option value="on hold">On Hold</option>
-            <option value="discontinued">Discontinued</option>
-            <option value="maintenance">Maintenance</option>
+            <option *ngFor="let state of states | keyvalue" [value]="state.key">
+              {{ state.value }}
+            </option>
           </select>
         </div>
       </div>
       <div class="col-12 col-md-3 col-xl-3">
         <div class="form-group local-forms">
-          <label>Initial Date<span class="login-danger">*</span></label>
+          <label> Initial Date<span class="login-danger">*</span> </label>
           <input
             class="form-control datetimepicker"
             name="initial_date_sto"
-            [(ngModel)]="sto.initial_date"
+            [(ngModel)]="input.initial_date"
             type="text"
             matInput
             [matDatepicker]="pickerDateSTO"
@@ -56,7 +42,7 @@
           <input
             class="form-control datetimepicker"
             name="end_date_sto"
-            [(ngModel)]="sto.end_date"
+            [(ngModel)]="input.end_date"
             type="text"
             matInput
             [matDatepicker]="pickerDateSTO2"
@@ -76,7 +62,7 @@
           <textarea
             class="form-control"
             name="decription_sto"
-            [(ngModel)]="sto.description"
+            [(ngModel)]="input.description"
             rows="4"
             cols="30"
           ></textarea>

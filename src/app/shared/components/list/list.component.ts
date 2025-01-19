@@ -10,7 +10,7 @@ export interface ListOption<T> {
   text: string;
   class: string;
   icon: string;
-  action: (item: T) => void;
+  action: (item: T, context?: unknown) => void;
 }
 
 export type ListRender<T> = Partial<Record<keyof T, (x: T) => string>>;
@@ -21,6 +21,7 @@ export type ListRender<T> = Partial<Record<keyof T, (x: T) => string>>;
   styleUrls: ['./list.component.scss'],
 })
 export class ListComponent<T> {
+  @Input() context?: unknown;
   @Input() title = '';
   @Input() dataSource: T[] = null;
   @Input() displayedColumns: (keyof T)[] = [];
@@ -40,6 +41,6 @@ export class ListComponent<T> {
     this.add.emit();
   }
   onClick(option: ListOption<T>, value: T): void {
-    option.action(value);
+    option.action(value, this.context);
   }
 }

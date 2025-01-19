@@ -2,17 +2,6 @@
 <div mat-dialog-content>
   <div class="container mt-4">
     <div class="row align-items-center">
-      <div class="col-xs-12 col-md-3">
-        <div class="form-group local-forms">
-          <label>LTO <span class="login-danger">*</span></label>
-          <input
-            class="form-control"
-            name="lto"
-            [(ngModel)]="lto.name"
-            type="text"
-          />
-        </div>
-      </div>
       <div class="col-12 col-md-3">
         <div class="form-group local-forms">
           <label>Status<span class="login-danger">*</span></label>
@@ -20,7 +9,7 @@
             class="form-control form-select-solid fw-bolder"
             name="lto.status"
             [ngModelOptions]="{ standalone: true }"
-            [(ngModel)]="lto.status"
+            [(ngModel)]="input.status"
           >
             <option>-- Select --</option>
             <option value="inprogress">in progress</option>
@@ -38,7 +27,7 @@
           <input
             class="form-control datetimepicker"
             name="lto.initial_date"
-            [(ngModel)]="lto.initial_date"
+            [(ngModel)]="input.initial_date"
             type="text"
             matInput
             [matDatepicker]="pickerDateLTO"
@@ -56,7 +45,7 @@
           <input
             class="form-control datetimepicker"
             name="lto.end_date"
-            [(ngModel)]="lto.end_date"
+            [(ngModel)]="input.end_date"
             type="text"
             matInput
             [matDatepicker]="pickerDateLTO1"
@@ -76,7 +65,7 @@
           <textarea
             class="form-control"
             name="lto.decription"
-            [(ngModel)]="lto.description"
+            [(ngModel)]="input.description"
             rows="4"
             cols="30"
           ></textarea>

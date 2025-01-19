@@ -43,9 +43,9 @@ export class ListAndFormComponent<T> {
   };
   @Input() noDataText: string = null;
   @Input() renders: ListRender<T>;
-  @Input() showView = false;
+  @Input() options: ListOption<T>[];
+  //
   strategy = new ListFormStrategy<T>(this.dataSourceChange, this.newItem);
-  options: ListOption<T>[];
   ref: MatDialogRef<unknown, unknown>;
 
   constructor(private dialog: MatDialog, private cdr: ChangeDetectorRef) {
@@ -57,28 +57,18 @@ export class ListAndFormComponent<T> {
         action: (item: T) => this.onEdit(item),
       },
       {
-        text: 'View',
-        icon: 'fa fa-bar-chart',
-        class: 'btn btn-outline-success btn-sm',
-        action: (item: T) => this.onView(item),
-      },
-      {
         text: 'Delete',
         icon: 'fa fa-trash-alt',
         class: 'btn btn-outline-danger btn-sm',
         action: (item: T) => this.onDelete(item),
       },
     ];
-    if (!this.showView) {
-      this.options = this.options.filter((option) => option.text !== 'View');
-    }
   }
 
   public open() {
     this.ref = this.dialog.open(this.htmlTemplate, {
       ariaModal: true,
       minWidth: 400,
-      // width: '100%',
     });
   }
 

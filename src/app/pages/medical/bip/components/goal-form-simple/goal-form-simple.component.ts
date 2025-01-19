@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { PlanV2 } from 'src/app/core/models';
+import { PLAN_STATUS_MAP, PlanV2 } from 'src/app/core/models';
 
 @Component({
   selector: 'app-goal-form-simple',
@@ -9,4 +9,5 @@ import { PlanV2 } from 'src/app/core/models';
 export class GoalFormSimpleComponent {
   @Input() goal: PlanV2;
   @Output() goalChange = new EventEmitter<PlanV2>();
+  status = PLAN_STATUS_MAP;
 }

@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="col-xs-12 col-sm-6">
+    <div class="form-group local-forms">
+      <label>
+        Preventtive Strategies (atecedent-based)
+        <span class="login-danger">* </span>
+      </label>
+      <textarea
+        class="form-control"
+        name="preventive_strategies_e"
+        [(ngModel)]="input.preventive_strategies_e"
+        rows="4"
+        cols="30"
+      >
+      </textarea>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-6">
+    <div class="form-group local-forms">
+      <label>
+        Replacement Skills (relate to function)
+        <span class="login-danger">* </span>
+      </label>
+      <textarea
+        class="form-control"
+        name="replacement_skills_e"
+        [(ngModel)]="input.replacement_skills_e"
+        rows="4"
+        cols="30"
+      >
+      </textarea>
+    </div>
+  </div>
+  <div class="col-xs-12">
+    <div class="form-group local-forms">
+      <label>
+        Manager Strategies (consecuences Based)
+        <span class="login-danger">* </span>
+      </label>
+      <textarea
+        class="form-control"
+        name="manager_strategies_e"
+        [(ngModel)]="input.manager_strategies_e"
+        rows="4"
+        cols="30"
+      >
+      </textarea>
+    </div>
+  </div>
+
+  <div class="col-12 mb-3 doctor-submit text-end">
+    <button class="btn btn-primary btn-sm" (click)="onSave()">
+      Update List Escape
+    </button>
+  </div>
+</div>

@@ -7,12 +7,12 @@ import { Objective } from 'src/app/core/models';
   styleUrls: ['./lto-form.component.scss'],
 })
 export class LtoFormComponent {
-  @Input() lto: Objective;
-  @Output() ltoChange = new EventEmitter<Objective>();
+  @Input() input: Objective;
+  @Output() inputChange = new EventEmitter<Objective>();
   @Output() save = new EventEmitter<Objective>();
 
   onSave() {
-    this.ltoChange.emit(this.lto);
-    this.save.emit(this.lto);
+    this.inputChange.emit(this.input);
+    this.save.emit(this.input);
   }
 }

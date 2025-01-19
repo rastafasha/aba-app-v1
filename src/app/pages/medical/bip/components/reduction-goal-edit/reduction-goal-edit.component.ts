@@ -25,9 +25,11 @@ import { ListFormStrategy } from '../bip-form/list-form.strategy';
 export class ReductionGoalEditComponent {
   routes = AppRoutes;
   @Output() save = new EventEmitter<void>();
-  @Input() maladaptive: PlanV2;
   @Input() goal: PlanV2;
   @Output() goalChange = new EventEmitter<PlanV2>();
+  //
+  displayedColumns: (keyof Objective)[] = ['description', 'target', 'status'];
+
   //
   @ViewChild('stoListForm') stoListForm: ListAndFormComponent<Objective>;
   @ViewChild('ltoListForm') ltoListForm: ListAndFormComponent<Objective>;
@@ -35,25 +37,13 @@ export class ReductionGoalEditComponent {
   //
   ltos: Objective[] = [];
   ltosChange = new EventEmitter<Objective[]>();
-  newLto: Objective = Objective.getDefault();
+  newLto: Objective = { ...Objective.getDefault(), type: 'LTO' };
   ltoStrategy = new ListFormStrategy<Objective>(this.ltosChange, this.newLto);
 
   //
   stos: Objective[] = [];
   stosChange = new EventEmitter<Objective[]>();
-  newSto: Objective = {
-    id: 0,
-    name: 'sto',
-    maladaptive_id: 0,
-    status: 'initiated',
-    initial_date: new Date(),
-    end_date: new Date(),
-    description: '',
-    target: 0,
-    created_at: new Date(),
-    updated_at: new Date(),
-    deleted_at: new Date(),
-  };
+  newSto: Objective = { ...Objective.getDefault(), type: 'STO' };
   stoStrategy = new ListFormStrategy<Objective>(this.stosChange, this.newSto);
   stoOptions: ListOption<Objective>[] = [
     {
@@ -90,7 +80,6 @@ export class ReductionGoalEditComponent {
   //
   locale = inject(LOCALE_ID);
   renders: ListRender<Objective> = {
-    name: (x) => `<b>${x.name}</b>`,
     initial_date: (x) =>
       new DatePipe(this.locale).transform(x.initial_date, 'shortDate'),
     end_date: (x) =>

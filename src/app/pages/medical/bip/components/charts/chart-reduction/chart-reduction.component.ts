@@ -1,11 +1,8 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { ChartComponent } from 'ng-apexcharts';
-import { ChartOptions, PlanV2, PatientV2 } from 'src/app/core/models';
+import { ChartOptions, PlanV2 } from 'src/app/core/models';
 
 import { GraphicReductionService } from '../../../service/graphic-reduction.service';
-interface data {
-  value: string;
-}
 
 @Component({
   selector: 'app-chart-reduction',
@@ -16,8 +13,8 @@ export class ChartReductionComponent {
   selectedValue = '03';
   @ViewChild('chart') chart!: ChartComponent;
   @Input() maladaptive: PlanV2;
-  @Input() patient: PatientV2;
-  existgrfic: any[];
+  @Input() patient_identifier: string;
+  existgrfic;
   loading = false;
   chartOptionsOne: Partial<ChartOptions>;
 
@@ -27,7 +24,7 @@ export class ChartReductionComponent {
   private number_of_occurrence = [];
   private query_income_year = [];
   private graphData = [];
-  private notesRbts = [];
+  notesRbts;
 
   constructor(private graphicReductionService: GraphicReductionService) {}
 
@@ -46,10 +43,7 @@ export class ChartReductionComponent {
 
   getGraphicMaladaptive() {
     this.graphicReductionService
-      .listMaladaptivesGraphics(
-        this.maladaptive.name,
-        this.patient.patient_identifier
-      )
+      .listMaladaptivesGraphics(this.maladaptive.name, this.patient_identifier)
       .subscribe((resp) => {
         this.existgrfic = resp.maladaptivesCol;
 
