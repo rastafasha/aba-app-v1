@@ -174,7 +174,7 @@ export class NoteBcbaViewComponent implements OnInit {
   replacementSelected: any = null;
 
   note_description: any;
-  caregivers_training_goals = [];
+  caregivers_training_goals :any;
   rbt_training_goals = [];
   rbt_training_goalsgroup: any;
   caregivers_training_goalsgroup: any;
@@ -313,7 +313,6 @@ export class NoteBcbaViewComponent implements OnInit {
         this.getProfilePatient();
         this.getDoctor();
         this.getDoctorRbt();
-        this.getBipv2();
   
       if(this.cpt_code === '97155' ){
         this.show97155 = true;
@@ -343,46 +342,22 @@ export class NoteBcbaViewComponent implements OnInit {
       this.obj_inprogress = this.note_selected.replacements;
       // this.obj_inprogress1 = this.note_selected.replacements2;
 
-      // this.caregivers_training_goals = resp.caregiver_goals;
-      // console.log(this.caregivers_training_goals);
+      this.caregivers_training_goals = this.note_selected.caregiver_goals;
 
-      // if (this.caregivers_training_goals && typeof this.caregivers_training_goals === 'string') {
-      //   try {
-      //     const jsonObj90 = JSON.parse(this.caregivers_training_goals);
-      //     this.caregivers_training_goalsgroup = jsonObj90;
-      //   } catch (error) {
-      //     console.error('Error parsing caregivers_training_goalsgroup:', error);
-      //     this.caregivers_training_goalsgroup = {};
-      //   }
-      // } else {
-      //   this.caregivers_training_goalsgroup = {};
-      //   console.log(this.caregivers_training_goalsgroup);
-      // }
-      
+      try {
+        const jsonObj90 = JSON.parse(this.caregivers_training_goals as string);
+        if (Array.isArray(jsonObj90)) {
+          this.caregivers_training_goals = jsonObj90;
+        } else {
+          console.error("Parsed object is not an array:", jsonObj90);
+          this.caregivers_training_goals = [];
+        }
+      } catch (e) {
+        console.error("Failed to parse caregivers_training_goals:", e);
+        this.caregivers_training_goals = [];
+      }
     });
     
-  }
-
-  getBipv2(){
-    this.bipV2Service.get(this.bip_id).subscribe((resp)=>{
-      // console.log('BIP',resp);
-      this.bip_id = resp.data.id;
-      this.caregivers_training_goals = resp.data.caregiver_trainings;
-      // this.behaviors = resp.data.maladaptives;
-      // this.replacements = resp.data.replacements;
-      // this.replacements2 = resp.data.replacements;
-
-      // Filtrar la lista replacements por estado
-    this.replacements = this.replacements.filter(goal => goal.status === 'active');
-
-    // Recorrer la lista replacements y extraemos los objectives
-    this.objectives = this.replacements.flatMap(objective => objective.objectives);
-    // filtrado los que estan en status in progress
-    const objetivosEnProgreso = this.objectives.filter(objetivo => objetivo.status === "in progress");
-    // this.obj_inprogress = objetivosEnProgreso;
-
-      
-    });
   }
 
 

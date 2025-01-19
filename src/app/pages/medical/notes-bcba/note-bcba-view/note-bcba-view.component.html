@@ -259,15 +259,15 @@
                               </thead>
                               <tbody>
                                 <tr *ngFor="
-                                    let behavior of caregivers_training_goals;
+                                    let caregiver of caregivers_training_goals;
                                     let i = index
                                   ">
                                   <td>
-                                    <p>{{ behavior.name }}</p>
+                                    <p>{{ caregiver.name }}</p>
                                   </td>
                                   <td>
                                     <p>
-                                      {{ behavior.porcent_of_correct_response }}
+                                      {{ caregiver.porcent_of_correct_response }}
                                     </p>
                                   </td>
                                 </tr>
