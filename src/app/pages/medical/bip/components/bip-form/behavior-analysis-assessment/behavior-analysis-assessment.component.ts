@@ -1,5 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { BipV2, DocumentV2, Medication } from 'src/app/core/models';
+import {
+  BipV2,
+  DocumentV2,
+  Medication,
+  TYPE_OF_ASSESSMENT_MAP,
+} from 'src/app/core/models';
 
 @Component({
   selector: 'app-behavior-analysis-assessment',
@@ -13,6 +18,8 @@ export class BehaviorAnalysisAssessmentComponent {
   //
   newDocument = DocumentV2.getDefault();
   newMedication = Medication.getDefault();
+  //
+  assessments_types = TYPE_OF_ASSESSMENT_MAP;
 
   onSave() {
     this.save.emit();

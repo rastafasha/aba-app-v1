@@ -15,12 +15,8 @@ export class PrevalentSettingComponent {
   @Output() prevalentSettingEventAndAntecedentsChange = new EventEmitter<
     PrevalentSettingEventAndAntecedent[]
   >();
-  newItem: PrevalentSettingEventAndAntecedent = {
-    index: 0,
-    prevalent_setting_event_and_atecedent: '',
-    behavior: '',
-    hypothesized_functions: '',
-  };
+  newItem: PrevalentSettingEventAndAntecedent =
+    PrevalentSettingEventAndAntecedent.getDeafult();
 
   //
   text_validation = '';

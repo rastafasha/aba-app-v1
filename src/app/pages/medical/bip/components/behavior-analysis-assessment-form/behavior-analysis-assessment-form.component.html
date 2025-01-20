@@ -1,0 +1,121 @@
+<!-- Behavior Analysis Assessment -->
+<div class="row align-items-center">
+  <h3 class="card-title">Behavior Analysis Assessment</h3>
+  <div class="col-12 col-md-4 col-xl-4">
+    <div class="form-group local-forms">
+      <label> Type of Assessment:<span class="login-danger">*</span> </label>
+      <select
+        class="form-control form-select-solid fw-bolder"
+        name="type_of_assessment"
+        [(ngModel)]="input.type_of_assessment"
+      >
+        <option>-- Select --</option>
+        <option
+          *ngFor="let item of assessments_types | keyvalue"
+          [value]="item.key"
+        >
+          {{ item.value }}
+        </option>
+      </select>
+    </div>
+  </div>
+</div>
+<!-- Background Information -->
+<div class="row align-items-center">
+  <div class="col-12">
+    <div class="form-group local-forms">
+      <label>
+        Background Information
+        <span class="login-danger">*</span>
+      </label>
+      <textarea
+        class="form-control"
+        name="background_information"
+        [(ngModel)]="input.background_information"
+        rows="4"
+        cols="30"
+      >
+      </textarea>
+    </div>
+  </div>
+</div>
+<!-- Previous treatments and results -->
+<div class="row align-items-center">
+  <div class="col-xs-12 col-sm-6">
+    <div class="form-group local-forms">
+      <label>
+        Previous treatments and results
+        <span class="login-danger">*</span>
+      </label>
+      <textarea
+        class="form-control"
+        name="previus_treatment_and_result"
+        [(ngModel)]="input.previus_treatment_and_result"
+        rows="4"
+        cols="30"
+      >
+      </textarea>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-6">
+    <div class="form-group local-forms">
+      <label>
+        Current treatment and progress
+        <span class="login-danger">*</span>
+      </label>
+      <textarea
+        class="form-control"
+        name="current_treatment_and_progress"
+        [(ngModel)]="input.current_treatment_and_progress"
+        rows="4"
+        cols="30"
+      >
+      </textarea>
+    </div>
+  </div>
+</div>
+<!-- Education status -->
+<div class="row align-items-center">
+  <div class="col-12 col-md-6">
+    <div class="form-group local-forms">
+      <label> Education status <span class="login-danger">*</span> </label>
+      <textarea
+        class="form-control"
+        name="education_status"
+        [(ngModel)]="input.education_status"
+        rows="4"
+        cols="30"
+      >
+      </textarea>
+    </div>
+  </div>
+</div>
+<!-- Strengths -->
+<div class="row align-items-center">
+  <div class="col-12 col-md-6">
+    <div class="form-group local-forms">
+      <label>Strengths <span class="login-danger">*</span> </label>
+      <textarea
+        class="form-control"
+        name="strengths"
+        [(ngModel)]="input.strengths"
+        rows="4"
+        cols="30"
+      >
+      </textarea>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-6">
+    <div class="form-group local-forms">
+      <label>Weakneses <span class="login-danger">*</span> </label>
+      <textarea
+        class="form-control"
+        name="weakneses"
+        [(ngModel)]="input.weakneses"
+        rows="4"
+        cols="30"
+      >
+      </textarea>
+    </div>
+  </div>
+</div>

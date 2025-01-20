@@ -8,283 +8,41 @@
             <div class="col-12">
               <div class="card-box">
                 <div class="card-block">
-                  <h3 class="card-title">
-                    Prevalent Setting Events & Antecedents
-                  </h3>
-
-                  <div class="row align-items-center">
-                    <div class="col-xs-12">
-                      <div class="row">
-                        <div class="col-xs-12">
-                          <div class="form-group local-forms">
-                            <label
-                              >Prevalent Setting Events & Antecedents<span
-                                class="login-danger"
-                                >*</span
-                              ></label
-                            >
-                            <textarea
-                              class="form-control"
-                              name="prevalent_setting_event_and_atecedent"
-                              [(ngModel)]="
-                                newItem.prevalent_setting_event_and_atecedent
-                              "
-                              rows="3"
-                              cols="30"
-                            ></textarea>
-                          </div>
-                        </div>
-                        <div class="col-xs-12">
-                          <div class="form-group local-forms">
-                            <label
-                              >Behavior<span class="login-danger"
-                                >*</span
-                              ></label
-                            >
-                            <textarea
-                              class="form-control"
-                              name="behavior"
-                              [(ngModel)]="newItem.behavior"
-                              rows="3"
-                              cols="30"
-                            ></textarea>
-                          </div>
-                        </div>
-
-                        <div class="col-xs-12">
-                          <div class="form-group local-forms">
-                            <label
-                              >Hypothesized Function(s)<span
-                                class="login-danger"
-                                >*</span
-                              ></label
-                            >
-                            <textarea
-                              class="form-control"
-                              name="hypothesized_functions"
-                              [(ngModel)]="newItem.hypothesized_functions"
-                              rows="3"
-                              cols="30"
-                            ></textarea>
-                          </div>
-                        </div>
-                        <div class="col-12 mb-3 doctor-submit text-end">
-                          <button
-                            class="btn btn-primary btn-sm"
-                            (click)="addPrevalent()"
-                          >
-                            Add
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-xs-12">
-                      <div class="table-responsive">
-                        <table class="table mb-0">
-                          <thead>
-                            <tr>
-                              <th>Prevalent Setting Events & Antecedents</th>
-                              <th>Behavior</th>
-                              <th>Hypothesized Function(s)</th>
-                              <th>Options</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr
-                              *ngFor="
-                                let prevalent of prevalentSettingEventAndAntecedents;
-                                let i = index
-                              "
-                            >
-                              <td>
-                                {{
-                                  prevalent.prevalent_setting_event_and_atecedent
-                                }}
-                              </td>
-                              <td>
-                                {{ prevalent.behavior }}
-                              </td>
-                              <td>
-                                {{ prevalent.hypothesized_functions }}
-                              </td>
-                              <td>
-                                <button
-                                  class="btn btn-outline-success btn-sm"
-                                  (click)="seleccionarPrevalent(prevalent)"
-                                  data-bs-toggle="modal"
-                                  [attr.data-bs-target]="'#edit-prevalent-' + i"
-                                >
-                                  <i class="fa fa-pencil"></i> Edit
-                                </button>
-                                <!-- <button class="btn btn-outline-success btn-sm" (click)="updateItemListPrevalent(prevalent, i)"><i class="fa fa-pencil"></i> Edit</button> -->
-                                <button
-                                  class="btn btn-outline-danger btn-sm"
-                                  (click)="deletePrevalent(i)"
-                                >
-                                  x Delete
-                                </button>
-                              </td>
-
-                              <!-- modal edit prevalent-->
-
-                              <div
-                                [id]="'edit-prevalent-' + i"
-                                class="modal fade"
-                                role="dialog"
-                              >
-                                <div
-                                  class="modal-dialog modal-dialog-centered modal-lg"
-                                >
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h5 class="modal-title" id="modalEscape">
-                                        {{
-                                          newItem?.prevalent_setting_event_and_atecedent
-                                        }}
-                                      </h5>
-                                      <a
-                                        href="javascript:void(0);"
-                                        data-bs-dismiss="modal"
-                                        aria-label="Close"
-                                        class="btn btn-white me-1"
-                                        >Close</a
-                                      >
-                                    </div>
-                                    <div class="modal-body text-center">
-                                      <div class="col-xs-12">
-                                        <form action="">
-                                          <div class="row">
-                                            <div class="col-xs-12">
-                                              <div
-                                                class="form-group local-forms"
-                                              >
-                                                <label
-                                                  >Prevalent Setting Events &
-                                                  Antecedents<span
-                                                    class="login-danger"
-                                                    >*</span
-                                                  ></label
-                                                >
-                                                <textarea
-                                                  class="form-control"
-                                                  name="prevalent_setting_event_and_atecedent"
-                                                  [(ngModel)]="
-                                                    newItem.prevalent_setting_event_and_atecedent
-                                                  "
-                                                  rows="3"
-                                                  cols="30"
-                                                ></textarea>
-                                              </div>
-                                            </div>
-                                            <div class="col-xs-12">
-                                              <div
-                                                class="form-group local-forms"
-                                              >
-                                                <label
-                                                  >Behavior<span
-                                                    class="login-danger"
-                                                    >*</span
-                                                  ></label
-                                                >
-                                                <textarea
-                                                  class="form-control"
-                                                  name="behavior"
-                                                  [(ngModel)]="newItem.behavior"
-                                                  rows="3"
-                                                  cols="30"
-                                                ></textarea>
-                                              </div>
-                                            </div>
-
-                                            <div class="col-xs-12">
-                                              <div
-                                                class="form-group local-forms"
-                                              >
-                                                <label
-                                                  >Hypothesized Function(s)<span
-                                                    class="login-danger"
-                                                    >*</span
-                                                  ></label
-                                                >
-                                                <textarea
-                                                  class="form-control"
-                                                  name="hypothesized_functions"
-                                                  [(ngModel)]="
-                                                    newItem.hypothesized_functions
-                                                  "
-                                                  rows="3"
-                                                  cols="30"
-                                                ></textarea>
-                                              </div>
-                                            </div>
-
-                                            <div
-                                              class="col-12 mb-3 doctor-submit text-end"
-                                            >
-                                              <button
-                                                class="btn btn-primary btn-sm"
-                                                (click)="
-                                                  updateItemListPrevalent(
-                                                    newItem
-                                                  )
-                                                "
-                                              >
-                                                Update Info
-                                              </button>
-                                            </div>
-                                          </div>
-                                        </form>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <!-- modal edit prevalent end-->
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
+                  <div class="row align-items-center my-4">
+                    <app-list-and-form
+                      #list
+                      title="Prevalent Setting Events & Antecedents"
+                      [(newItem)]="newItem"
+                      [(dataSource)]="prevalentSettingEventAndAntecedents"
+                      [displayedColumns]="[
+                        'prevalent_setting_event_and_atecedent',
+                        'behavior',
+                        'hypothesized_functions'
+                      ]"
+                    >
+                      <app-prevalent-setting-event-and-antecedent
+                        [(input)]="newItem"
+                        (cancel)="list.onClose()"
+                        (save)="list.onAdd($event)"
+                      ></app-prevalent-setting-event-and-antecedent>
+                    </app-list-and-form>
                   </div>
                 </div>
               </div>
             </div>
-            <!-- Assestments -->
           </div>
+          <!-- Assestments -->
+        </div>
 
-          <!-- validaciones -->
-
-          <div class="form-group row" *ngIf="text_validation">
-            <div class="col-md-12">
-              <div
-                class="alert alert-danger alert-dismissible fade show"
-                role="alert"
-              >
-                <strong>!</strong> {{ text_validation }}.
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="alert"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true"> </span>
-                </button>
-              </div>
-            </div>
-          </div>
-          <!-- validaciones -->
-
-          <div class="col-12">
-            <div class="doctor-submit text-end">
-              <button
-                type="button"
-                class="btn btn-primary submit-form me-2"
-                (click)="onSave()"
-              >
-                Save
-              </button>
-            </div>
+        <div class="col-12">
+          <div class="doctor-submit text-end">
+            <button
+              type="button"
+              class="btn btn-primary submit-form me-2"
+              (click)="onSave()"
+            >
+              Save
+            </button>
           </div>
         </div>
       </form>

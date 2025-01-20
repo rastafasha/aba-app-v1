@@ -56,6 +56,13 @@ import { RiskFactorsComponent } from './risk-factors/risk-factors.component';
 import { SuicidalitiesComponent } from './suicidalities/suicidalities.component';
 import { SustitutionListComponent } from './sustitution-list/sustitution-list.component';
 import { TransitionFadingPlanFormComponent } from './transition-fading-plan-form/transition-fading-plan-form.component';
+import { BehaviorAnalysisAssessmentFormComponent } from './behavior-analysis-assessment-form/behavior-analysis-assessment-form.component';
+import { PrevalentSettingEventAndAntecedentComponent } from './prevalent-setting-event-and-antecedent/prevalent-setting-event-and-antecedent.component';
+import { InterventionFormComponent } from './intervention-form/intervention-form.component';
+import { TangibleFormComponent } from './tangible-form/tangible-form.component';
+import { SensoryFormComponent } from './sensory-form/sensory-form.component';
+import { EscapeFormComponent } from './escape-form/escape-form.component';
+import { AttentionFormComponent } from './attention-form/attention-form.component';
 
 const components = [
   AssestmentComponent,
@@ -110,6 +117,13 @@ const components = [
   AssestmentEvaluationSettingFormComponent,
   DocumentReviewedFormComponent,
   MonitoringEvaluatingEditComponent,
+  PrevalentSettingEventAndAntecedentComponent,
+  BehaviorAnalysisAssessmentFormComponent,
+  InterventionFormComponent,
+  TangibleFormComponent,
+  SensoryFormComponent,
+  EscapeFormComponent,
+  AttentionFormComponent,
 ];
 @NgModule({
   declarations: [...components],

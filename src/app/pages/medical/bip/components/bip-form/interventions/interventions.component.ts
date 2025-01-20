@@ -15,8 +15,8 @@ export class InterventionsComponent {
   @Output() interventionsChange = new EventEmitter<Intervention[]>();
   newIntervention: Intervention = {
     index: 0,
-    descriptionIntervention: '',
-    titleIntervention: '',
+    description: '',
+    title: '',
   };
   interventionStrategy = new ListFormStrategy<Intervention>(
     this.interventionsChange,
@@ -61,9 +61,6 @@ export class InterventionsComponent {
   }
 
   private validate = () => {
-    return !!(
-      this.newIntervention.descriptionIntervention &&
-      this.newIntervention.titleIntervention
-    );
+    return !!(this.newIntervention.description && this.newIntervention.title);
   };
 }

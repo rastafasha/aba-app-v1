@@ -6,6 +6,13 @@ import {
   TypeOrNullOrUndefined,
 } from 'src/app/shared/utils';
 import { PlanV2 } from './plan.v2.model';
+type TypeOfAssessment = 1 | 2 | 3;
+export const TYPE_OF_ASSESSMENT_MAP: Record<TypeOfAssessment, string> = {
+  1: 'Assessment',
+  2: 'Reassessment',
+  3: 'Initial',
+};
+
 type ObjectiveStatus =
   | 'no started'
   | 'in progress'
@@ -74,8 +81,8 @@ export class DocumentV2 {
 
 export class Intervention {
   index?: number;
-  titleIntervention: string;
-  descriptionIntervention: string;
+  title: string;
+  description: string;
   constructor(data: Partial<Intervention>) {
     Object.assign(this, data);
   }
@@ -83,31 +90,55 @@ export class Intervention {
 
 export class Attention {
   index?: number;
-  preventive_strategies_a: string;
-  replacement_skills_a: string;
-  manager_strategies_a: string;
+  preventive_strategies: string;
+  replacement_skills: string;
+  manager_strategies: string;
   constructor(data: Partial<Attention>) {
     Object.assign(this, data);
+  }
+  static getDefault(): Attention {
+    return new Attention({
+      index: 0,
+      preventive_strategies: '',
+      replacement_skills: '',
+      manager_strategies: '',
+    });
   }
 }
 
 export class Escape {
   index?: number;
-  preventive_strategies_e: string;
-  replacement_skills_e: string;
-  manager_strategies_e: string;
+  preventive_strategies: string;
+  replacement_skills: string;
+  manager_strategies: string;
   constructor(data: Partial<Escape>) {
     Object.assign(this, data);
+  }
+  static getDefault(): Escape {
+    return new Escape({
+      index: 0,
+      preventive_strategies: '',
+      replacement_skills: '',
+      manager_strategies: '',
+    });
   }
 }
 
 export class Sensory {
   index?: number;
-  preventive_strategies_s: string;
-  replacement_skills_s: string;
-  manager_strategies_s: string;
+  preventive_strategies: string;
+  replacement_skills: string;
+  manager_strategies: string;
   constructor(data: Partial<Sensory>) {
     Object.assign(this, data);
+  }
+  static getDefault(): Sensory {
+    return new Sensory({
+      index: 0,
+      preventive_strategies: '',
+      replacement_skills: '',
+      manager_strategies: '',
+    });
   }
 }
 
@@ -119,6 +150,14 @@ export class Tangible {
   constructor(data: Partial<Tangible>) {
     Object.assign(this, data);
   }
+  static getDefault(): Tangible {
+    return new Tangible({
+      index: 0,
+      preventive_strategies: '',
+      replacement_skills: '',
+      manager_strategies: '',
+    });
+  }
 }
 
 export class PrevalentSettingEventAndAntecedent {
@@ -128,6 +167,14 @@ export class PrevalentSettingEventAndAntecedent {
   hypothesized_functions: string;
   constructor(data: Partial<PrevalentSettingEventAndAntecedent>) {
     Object.assign(this, data);
+  }
+  static getDeafult(): PrevalentSettingEventAndAntecedent {
+    return {
+      index: 0,
+      prevalent_setting_event_and_atecedent: '',
+      behavior: '',
+      hypothesized_functions: '',
+    };
   }
 }
 
@@ -409,7 +456,7 @@ export class DocumentReviewed {
 export class BipV2 {
   id: number;
   client_id: number;
-  type_of_assessment: number;
+  type_of_assessment: TypeOfAssessment;
   doctor_id: number;
   doctor: Doctor;
   patient_identifier: string;
@@ -456,7 +503,9 @@ export class BipV2 {
       ...data,
       id: NumberOrNullOrUndefined(data.id),
       client_id: NumberOrNullOrUndefined(data.client_id),
-      type_of_assessment: NumberOrNullOrUndefined(data.type_of_assessment),
+      type_of_assessment: NumberOrNullOrUndefined(
+        data.type_of_assessment
+      ) as TypeOfAssessment,
       doctor_id: NumberOrNullOrUndefined(data.doctor_id),
       doctor: TypeOrNullOrUndefined(data.doctor, Doctor),
       patient_identifier: StringOrNullOrUndefined(data.patient_identifier),
