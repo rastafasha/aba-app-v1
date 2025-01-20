@@ -1,0 +1,25 @@
+<div class="card">
+  <div class="card-body">
+    <h3 class="card-title">{{ title }}</h3>
+
+    <app-generalization-training-form
+      title=""
+      [(input)]="input"
+      (cancel)="onCancel()"
+      (save)="onSave()"
+    ></app-generalization-training-form>
+
+    <app-list-and-form
+      class="mt-4"
+      title="Transition Fading Plans"
+      [(newItem)]="newPlan"
+      [dataSource]="input.transition_fading_plans"
+      [displayedColumns]="displayedColumns"
+      [renders]="renders"
+    >
+      <app-transition-fading-plan-form
+        [(input)]="newPlan"
+      ></app-transition-fading-plan-form>
+    </app-list-and-form>
+  </div>
+</div>

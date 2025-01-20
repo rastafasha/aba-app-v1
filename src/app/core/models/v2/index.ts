@@ -2,6 +2,7 @@
 export * from './api.v2.model';
 export * from './bip.v2.model';
 export * from './doctor.v2.model';
+export * from './generalization-training.v2.model';
 export * from './insurance.v2.model';
 export * from './location.v2.model';
 export * from './note-bcba.v2.model';

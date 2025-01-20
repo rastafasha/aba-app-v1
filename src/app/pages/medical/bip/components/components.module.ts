@@ -63,6 +63,8 @@ import { TangibleFormComponent } from './tangible-form/tangible-form.component';
 import { SensoryFormComponent } from './sensory-form/sensory-form.component';
 import { EscapeFormComponent } from './escape-form/escape-form.component';
 import { AttentionFormComponent } from './attention-form/attention-form.component';
+import { GeneralizationTrainingFormComponent } from './generalization-training-form/generalization-training-form.component';
+import { GeneralizationTrainingEditComponent } from './generalization-training-edit/generalization-training-edit.component';
 
 const components = [
   AssestmentComponent,
@@ -124,6 +126,8 @@ const components = [
   SensoryFormComponent,
   EscapeFormComponent,
   AttentionFormComponent,
+  GeneralizationTrainingEditComponent,
+  GeneralizationTrainingFormComponent,
 ];
 @NgModule({
   declarations: [...components],

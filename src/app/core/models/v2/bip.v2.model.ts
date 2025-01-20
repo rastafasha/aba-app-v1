@@ -1,5 +1,4 @@
 import {
-  DateOrNullOrUndefined,
   ForceMap,
   NumberOrNullOrUndefined,
   StringOrNullOrUndefined,
@@ -7,6 +6,7 @@ import {
 } from 'src/app/shared/utils';
 import { PlanV2 } from './plan.v2.model';
 import { Objective } from './objective.v2.model';
+import { GeneralizationTraining } from './generalization-training.v2.model';
 type TypeOfAssessment = 1 | 2 | 3;
 export const TYPE_OF_ASSESSMENT_MAP: Record<TypeOfAssessment, string> = {
   1: 'Assessment',
@@ -335,62 +335,6 @@ export class Sustitution extends PlanV2 {
     this.category = 'sustitution';
     this.stos = ForceMap(data.stos, Objective);
     this.ltos = ForceMap(data.ltos, Objective);
-  }
-}
-
-export class GeneralizationTraining {
-  id: number;
-  bip_id: number;
-  patient_id: string;
-  client_id: number;
-  discharge_plan: string;
-  transition_fading_plans: TransitionFadingPlan[];
-  created_at?: Date;
-  updated_at?: Date;
-  deleted_at?: Date;
-  constructor(data: Partial<GeneralizationTraining>) {
-    Object.assign(this, data);
-    this.id = NumberOrNullOrUndefined(data.id);
-    this.bip_id = NumberOrNullOrUndefined(data.bip_id);
-    this.patient_id = StringOrNullOrUndefined(data.patient_id);
-    this.client_id = NumberOrNullOrUndefined(data.client_id);
-    this.discharge_plan = StringOrNullOrUndefined(data.discharge_plan);
-    this.transition_fading_plans = ForceMap(
-      data.transition_fading_plans,
-      TransitionFadingPlan
-    );
-    this.created_at = DateOrNullOrUndefined(data.created_at);
-    this.updated_at = DateOrNullOrUndefined(data.updated_at);
-    this.deleted_at = DateOrNullOrUndefined(data.deleted_at);
-  }
-  static getDefault(): GeneralizationTraining {
-    return {
-      id: null,
-      bip_id: null,
-      patient_id: null,
-      client_id: null,
-      discharge_plan: null,
-      transition_fading_plans: [],
-      created_at: undefined,
-      updated_at: undefined,
-      deleted_at: undefined,
-    };
-  }
-}
-
-export class TransitionFadingPlan {
-  phase: string;
-  description: string;
-  constructor(data: Partial<TransitionFadingPlan>) {
-    Object.assign(this, data);
-    this.phase = StringOrNullOrUndefined(data.phase);
-    this.description = StringOrNullOrUndefined(data.description);
-  }
-  static getDefault(): TransitionFadingPlan {
-    return {
-      phase: '',
-      description: '',
-    };
   }
 }
 
