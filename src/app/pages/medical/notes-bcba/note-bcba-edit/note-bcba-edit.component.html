@@ -58,7 +58,6 @@
                 <div class="col-12 py-4">
                   <h4>Edit Note Bcba</h4>
                 </div>
-
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
@@ -73,6 +72,7 @@
                     />
                   </div>
                 </div>
+                <!-- Last Name -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label>Last Name <span class="login-danger">*</span></label>
@@ -85,6 +85,7 @@
                     />
                   </div>
                 </div>
+                <!-- Patient IDentifier -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
@@ -99,6 +100,7 @@
                     />
                   </div>
                 </div>
+                <!-- Diagnosis Code  -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
@@ -113,6 +115,7 @@
                     />
                   </div>
                 </div>
+                <!-- Birth day -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label>Birth day <span class="login-danger">*</span></label>
@@ -132,6 +135,7 @@
                     ></mat-datepicker-toggle>
                   </div>
                 </div>
+                <!-- Rendering Provider -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
@@ -155,6 +159,7 @@
                     </mat-select>
                   </div>
                 </div>
+                <!-- Supervisor -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label>Supervisor<span class="login-danger">*</span></label>
@@ -214,7 +219,7 @@
                   </div>
                 </div>
                 <div class="clear"></div>
-
+                <!-- time -->
                 <div class="row">
                   <div class="col-xs-12 col-sm-6">
                     <h5 class="mb-3">Morning Session</h5>
@@ -314,6 +319,7 @@
                     </div>
                   </div>
                 </div>
+                <!-- Session Length Total -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
@@ -326,6 +332,7 @@
                     </p>
                   </div>
                 </div>
+                <!-- time -->
 
                 <!--  units -->
                 <div class="col-12 col-md-6 col-xl-4">
@@ -348,32 +355,30 @@
                   </div>
                 </div>
 
-                <!-- <div class="col-12 col-md-6 col-xl-4" *ngIf="selectedPaService">
+                <!-- CPT Code51 -->
+                <div
+                  *ngIf="show97151 || show971511 || show971512"
+                  class="col-12 col-md-6 col-xl-4"
+                >
                   <div class="form-group local-forms">
-                    <label class="mb-2">Available Units</label>
-                    <div class="units-container">
-                      <div class="units-wrapper">
-                        <div class="progress-container">
-                          <div
-                            class="progress-bar"
-                            [style.width.%]="
-                              ((selectedPaService.n_units -
-                                selectedPaService.available_units) /
-                                selectedPaService.n_units) *
-                              100
-                            "
-                          ></div>
-                        </div>
-                        <div class="units-text">
-                          {{ selectedPaService.available_units }}/{{
-                            selectedPaService.n_units
-                          }}
-                          units
-                        </div>
-                      </div>
-                    </div>
+                    <label>Type <span class="login-danger">*</span></label>
+                    <mat-select
+                      [(ngModel)]="selectedPaService1"
+                      name="selectedPaService1"
+                      class="form-control select"
+                      placeholder="Select Service"
+                    >
+                      <mat-option
+                        *ngFor="let type of show97151List"
+                        [value]="type"
+                      >
+                        {{ type.cpt }}
+                      </mat-option>
+                    </mat-select>
                   </div>
-                </div> -->
+                </div>
+                <!-- CPT Code51 -->
+
                 <!-- PA Service Calculator Information -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <app-pa-service-calculator
@@ -391,6 +396,7 @@
                   </app-units-display>
                 </div>
                 <!--  fin units -->
+                <!-- Environmental Changes -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
@@ -405,6 +411,7 @@
                     />
                   </div>
                 </div>
+                <!-- Present this session -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
@@ -433,7 +440,7 @@
           <div class="card">
             <div class="card-body">
               <div class="col-12">
-                <h4>Caregiver Goal</h4>
+                <h5>Caregiver Goal</h5>
                 <p class="text-danger">
                   Note: Please fill out all fields. If you didn't have any
                   reaction, enter "0"
@@ -450,11 +457,11 @@
                   <tbody>
                     <tr
                       *ngFor="
-                        let goal of caregivers_training_goals;
+                        let goal of caregivers_training_goalsgroup;
                         let i = index
                       "
                     >
-                      <td>{{ goal.caregiver_goal }}</td>
+                      <td>{{ goal.name }}</td>
                       <td>
                         <input
                           class="form-control"
@@ -491,13 +498,13 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let goalr of rbt_training_goals; let i = index">
-                      <td>{{ goalr.lto }}</td>
+                    <tr *ngFor="let goal of rbt_training_goals; let i = index">
+                      <td>{{ goal.lto }}</td>
                       <td>
                         <input
                           class="form-control"
                           type="number"
-                          [(ngModel)]="goalr.porcent_of_correct_response"
+                          [(ngModel)]="goal.porcent_of_correct_response"
                           (ngModelChange)="updateRbtGoal(i)"
                         />
                       </td>
@@ -598,8 +605,8 @@
         <div class="card">
           <div class="card-body">
             <form autocomplete="false">
-              <!-- paciente -->
               <div class="row align-items-center py-4">
+                <!-- Summary Note -->
                 <div class="col-12">
                   <div class="form-group local-forms">
                     <label
@@ -625,6 +632,7 @@
                     </button>
                   </div>
                 </div>
+                <!-- Provider name BCBA -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
@@ -648,6 +656,7 @@
                     </mat-select>
                   </div>
                 </div>
+                <!-- Provider Signature -->
                 <div class="col-12 col-md-6 col-xl-6">
                   <div class="form-group local-top-form">
                     <label class="local-top"
@@ -673,7 +682,7 @@
                   </div>
                   <!-- previsualizacion de la foto -->
                 </div>
-
+                <!-- Supervisor name BCBA -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <div class="form-group local-forms">
@@ -699,16 +708,13 @@
                     </div>
                   </div>
                 </div>
+                <!-- Supervisor Signature -->
                 <div class="col-12 col-md-6 col-xl-6">
                   <div class="form-group local-top-form">
                     <label class="local-top"
                       >Supervisor Signature
                       <span class="login-danger">*</span></label
                     >
-                    <!-- <div class="settings-btn upload-files-avator">
-                                            <input type="file" accept="image/*" name="imagenn" id="file1" (change)="loadFileSignature($event)" class="hide-input">
-                                            <label for="file1" class="upload">Choose File</label>
-                                        </div> -->
                   </div>
 
                   <!-- previsualizacion de la foto -->
@@ -729,7 +735,6 @@
                   <!-- previsualizacion de la foto -->
                 </div>
               </div>
-              <!-- paciente -->
 
               <div class="col-12">
                 <div class="doctor-submit text-end">

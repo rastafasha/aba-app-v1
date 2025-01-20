@@ -58,6 +58,7 @@
                     (save)="onSave($event)"
                     [selected]="selectedNotes.has(data)"
                     (selectedChange)="onSelectNote(data, $event)"
+                    (updateChangedNotes)="updateChangedNotes(data)"
                   ></tr>
                 </ng-container>
               </tbody>
@@ -80,9 +81,20 @@
             (pageChange)="onPageChange($event)"
             [total]="totalItems"
             [pageSize]="pageSize"
+            [totalUnits]="totalUnits"
+            [totalHours]="totalHours"
+            [totalCharges]="totalCharges"
           >
           </app-table-footer>
-          <app-log-reports-summary></app-log-reports-summary>
+          <div class="row pr-0 mr-0" *ngIf="changedNotes.length > 0">
+            <div class="col-xs-12 offset-md-10 col-md-2 pr-0">
+              <button
+                type="button"
+                class="btn btn-primary btn-lg btn-block"
+                (click)="saveAll()"
+              > Save All </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

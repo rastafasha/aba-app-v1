@@ -4,9 +4,9 @@ import {
   StringOrNullOrUndefined,
   TypeOrNullOrUndefined,
 } from 'src/app/shared/utils';
-import { PlanV2 } from './plan.v2.model';
-import { Objective } from './objective.v2.model';
 import { GeneralizationTraining } from './generalization-training.v2.model';
+import { Objective } from './objective.v2.model';
+import { PlanV2 } from './plan.v2.model';
 type TypeOfAssessment = 1 | 2 | 3;
 export const TYPE_OF_ASSESSMENT_MAP: Record<TypeOfAssessment, string> = {
   1: 'Assessment',

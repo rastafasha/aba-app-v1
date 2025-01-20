@@ -11,12 +11,9 @@ import { Location } from '@angular/common';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { AppUser } from 'src/app/core/models/users.model';
 import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
-import {
-  NoteRbtV2,
-  Maladaptives,
-  Replacements,
-  Interventions,
-} from 'src/app/core/models/v2/note.rbt.v2.model';
+import { Interventions, PaServiceV2, Replacements } from 'src/app/core/models';
+import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
+import { PatientMService } from '../../patient-m/service/patient-m.service';
 
 interface ValidationResult {
   isValid: boolean;
@@ -36,7 +33,7 @@ interface InterventionItem {
 }
 
 interface MaladaptiveBehavior {
-  maladaptive_behavior: string;
+  name: string;
   number_of_occurrences: number;
   goal?: Goal;
   total_trials?: number;
@@ -50,9 +47,11 @@ interface Goal {
   total_trials?: number;
   number_of_correct_response?: number;
   goal?: string;
+  status:string;
 }
 
 interface ReplacementBehavior extends Replacements {
+  status: any;
   goal?: Goal;
   total_trials?: number;
   number_of_correct_response?: number;
@@ -124,7 +123,7 @@ export class NoteRbtComponent implements OnInit {
   client_appeared = '';
   as_evidenced_by = '';
   rbt_modeled_and_demonstrated_to_caregiver = '';
-  client_response_to_treatment_this_session = '';
+  // client_response_to_treatment_this_session = '';
   progress_noted_this_session_compared_to_previous_session = '';
   next_session_is_scheduled_for = '';
   provider_name = '';
@@ -140,18 +139,22 @@ export class NoteRbtComponent implements OnInit {
   provider_signature: string | null = null;
   supervisor_signature: string | null = null;
 
-  pairing = false;
-  response_block = false;
-  DRA = false;
-  DRO = false;
-  redirection = false;
-  errorless_teaching = false;
-  NCR = false;
-  shaping = false;
-  chaining = false;
-  token_economy = false;
-  extinction = false;
-  natural_teaching = false;
+  token_economy= false;
+    generalization= false;
+    NCR= false;
+    behavioral_momentum= false;
+    DRA= false;
+    DRI= false;
+    DRO= false;
+    DRL= false;
+    response_block= false;
+    errorless_teaching= false;
+    extinction= false;
+    chaining= false;
+    natural_teaching= false;
+    redirection= false;
+    shaping= false;
+    pairing= false;
 
   FILE_SIGNATURE_RBT: File | null = null;
   IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED = 'assets/img/user-06.jpg';
@@ -172,7 +175,8 @@ export class NoteRbtComponent implements OnInit {
   roles_bcba: any[] = [];
 
   hours_days: string[] = [];
-  maladaptives: MaladaptiveBehavior[] = [];
+  maladaptives: any [];
+  // maladaptives: MaladaptiveBehavior[] = [];
   replacementGoals: Goal[] = [];
   replacements: ReplacementBehavior[] = [];
 
@@ -181,6 +185,7 @@ export class NoteRbtComponent implements OnInit {
   maladp_added: MaladaptiveBehavior[] = [];
   replacement_added: ReplacementBehavior[] = [];
   maladaptive_behavior: MaladaptiveBehavior | null = null;
+  name: MaladaptiveBehavior | null = null;
   electronic_signature: string | null = null;
   doctor: any;
   full_name: string | null = null;
@@ -201,22 +206,26 @@ export class NoteRbtComponent implements OnInit {
   intervention_added: Interventions[] = [];
   interventionsSelected: { [key: string]: boolean } = {};
   interventionsList: InterventionItem[] = [
-    { id: 'pairing', name: 'Pairing', value: false },
-    { id: 'response_block', name: 'Response Block', value: false },
-    { id: 'DRA', name: 'DRA', value: false },
-    { id: 'DRO', name: 'DRO', value: false },
-    { id: 'redirection', name: 'Redirection', value: false },
-    { id: 'errorless_teaching', name: 'Errorless Teaching', value: false },
-    { id: 'NCR', name: 'NCR', value: false },
-    { id: 'shaping', name: 'Shaping', value: false },
-    { id: 'chaining', name: 'Chaining', value: false },
     { id: 'token_economy', name: 'Token Economy', value: false },
+    { id: 'generalization', name: 'Generalization', value: false },
+    { id: 'NCR', name: 'NCR', value: false },
+    { id: 'behavioral_momentum', name: 'Behavioral Momentum', value: false },
+    { id: 'DRA', name: 'DRA', value: false },
+    { id: 'DRI', name: 'DRI', value: false },
+    { id: 'DRO', name: 'DRO', value: false },
+    { id: 'DRL', name: 'DRL', value: false },
+    { id: 'response_block', name: 'Response Block', value: false },
+    { id: 'errorless_teaching', name: 'Errorless Teaching', value: false },
     { id: 'extinction', name: 'Extinction', value: false },
+    { id: 'chaining', name: 'Chaining', value: false },
     { id: 'natural_teaching', name: 'Natural Teaching', value: false },
+    { id: 'redirection', name: 'Redirection', value: false },
+    { id: 'shaping', name: 'Shaping', value: false },
+    { id: 'pairing', name: 'Pairing', value: false },
   ];
 
   pa_services: PaService[] = [];
-  selectedPaService: PaService | null = null;
+  selectedPaService: PaServiceV2 | null = null;
 
   selectedValueCode = '';
 
@@ -225,6 +234,8 @@ export class NoteRbtComponent implements OnInit {
   constructor(
     private bipService: BipService,
     private goalService: GoalService,
+    private bipV2Service: BipsV2Service,
+    private patientService: PatientMService,
     private router: Router,
     private ativatedRoute: ActivatedRoute,
     private noteRbtService: NoteRbtService,
@@ -244,7 +255,7 @@ export class NoteRbtComponent implements OnInit {
     });
 
     this.getConfig();
-    this.getProfileBip();
+    this.getPatient();
 
     this.specialistData();
 
@@ -285,14 +296,11 @@ export class NoteRbtComponent implements OnInit {
       this.selectedValueProviderCredential = resp.roles_rbt.certificate_number;
     });
   }
-
-  getProfileBip() {
-    this.bipService
-      .showBipProfile(this.patient_identifier)
-      .subscribe((resp) => {
-        console.log('API Response:', resp);
-        this.client_selected = resp.patient;
-        console.log('Client Selected:', this.client_selected);
+  getPatient(){
+    this.patientService.getPatientByPatientId(this.patient_identifier).subscribe((resp)=>{
+      console.log('API Response:', resp);
+      this.client_selected = resp.patient;
+      console.log('Client Selected:', this.client_selected);
 
         this.first_name = this.client_selected.first_name;
         this.last_name = this.client_selected.last_name;
@@ -337,7 +345,41 @@ export class NoteRbtComponent implements OnInit {
         this.getMaladaptivesBipByPatientId();
         this.getReplacementsByPatientId();
       });
+
+      this.pa_services = resp.patient.pa_services;
+
+      // Filter pa_services by date
+      this.pa_services = this.pa_services.filter((pa) => {
+        const dateStart = new Date(pa.start_date).getTime();
+        const dateEnd = new Date(pa.end_date).getTime();
+        const dateToday = new Date().getTime();
+        return dateStart <= dateToday && dateEnd >= dateToday;
+      });
+
+      this.selectedPaService = resp.patient.pa_services.find(service => service.cpt === '97153') || null;
+      // console.log('Selected Service:', this.selectedPaService);
+      console.log('Selected Service:', this.selectedPaService);
+      this.selectedValueCode = this.selectedPaService?.cpt || '';
+
+      this.getBipV2();
+    })
   }
+
+  getBipV2(){
+    this.bipV2Service.list({client_id: this.patient_id}).subscribe((resp)=>{
+      console.log('BIP',resp);
+      this.bip_id = resp.data[0].id;
+      this.maladaptives = resp.data[0].maladaptives;
+      this.replacementGoals = resp.data[0].replacements;
+
+      //extraemos los replacementGoals con status in progress o active
+      this.replacementGoals = this.replacementGoals.filter(goal => goal.status === 'active');
+
+    });
+  }
+
+
+
 
   onPaServiceSelect(event: any) {
     const service = event.value;
@@ -351,29 +393,22 @@ export class NoteRbtComponent implements OnInit {
     event.value = this.selectedValueCode;
   }
 
-  getMaladaptivesBipByPatientId() {
-    this.bipService
-      .getBipProfilePatient_id(this.patient_identifier)
-      .subscribe((resp) => {
-        this.maladaptives = resp.maladaptives;
-        this.bip_id = resp.id;
-      });
-  }
-  getReplacementsByPatientId() {
-    this.noteRbtService
-      .showReplacementbyPatient(this.patient_identifier)
-      .subscribe((resp) => {
-        this.replacementGoals = [];
-        resp['replacementGoals'].forEach((element) => {
-          const goalSto = JSON.parse(element.goalstos).find(
-            (item) => item.sustitution_status_sto_edit === 'inprogress'
-          );
-          if (goalSto) {
-            this.replacementGoals.push({ ...element, target: goalSto.target });
-          }
-        });
-      });
-  }
+
+  // getReplacementsByPatientId() {
+  //   this.noteRbtService
+  //     .showReplacementbyPatient(this.patient_identifier)
+  //     .subscribe((resp) => {
+  //       this.replacementGoals = [];
+  //       resp['replacementGoals'].forEach((element) => {
+  //         const goalSto = JSON.parse(element.goalstos).find(
+  //           (item) => item.sustitution_status_sto_edit === 'inprogress'
+  //         );
+  //         if (goalSto) {
+  //           this.replacementGoals.push({ ...element, target: goalSto.target });
+  //         }
+  //       });
+  //     });
+  // }
 
   specialistData() {
     this.doctorService.showDoctorProfile(this.doctor_id).subscribe((resp) => {
@@ -490,24 +525,18 @@ export class NoteRbtComponent implements OnInit {
     console.log('para el html', this.total_hour_session);
   }
 
-  convertToMinutes(time: string): number {
-    if (!time || !time.includes(':')) {
-      console.error(`Invalid time format: ${time}`);
-      return 0; // O manejar el error de otra manera
+convertToMinutes(time: string): number {
+  if (!time || !time.includes(':')) {
+    // console.error(`Invalid time format: ${time}`);
+        return 0; // O manejar el error de otra manera
     }
 
     const [hours, minutes] = time.split(':').map(Number);
 
     // Validar que hours y minutes sean números válidos
-    if (
-      isNaN(hours) ||
-      isNaN(minutes) ||
-      hours < 0 ||
-      minutes < 0 ||
-      minutes >= 60
-    ) {
-      console.error(`Invalid time values: hours=${hours}, minutes=${minutes}`);
-      return 0; // O manejar el error de otra manera
+    if (isNaN(hours) || isNaN(minutes) || hours < 0 || minutes < 0 || minutes >= 60) {
+        // console.error(`Invalid time values: hours=${hours}, minutes=${minutes}`);
+        return 0; // O manejar el error de otra manera
     }
 
     return hours * 60 + minutes;
@@ -547,12 +576,12 @@ export class NoteRbtComponent implements OnInit {
 
     Swal.fire(
       'Added',
-      `Maladaptive - ${behavior.maladaptive_behavior} - Added`,
+      `Maladaptive - ${behavior.name} - Added`,
       'success'
     );
 
     this.maladaptiveSelected = null;
-    this.maladaptive_behavior = null;
+    this.name = null;
     this.number_of_occurrences = 0;
   }
 
@@ -570,6 +599,7 @@ export class NoteRbtComponent implements OnInit {
       total_trials: replacement.total_trials,
       number_of_correct_response: replacement.number_of_correct_response,
       goal: replacement.goal?.goal,
+      status: replacement.status?.status,
     };
 
     this.replacementGoals.push(newGoal);
@@ -661,7 +691,15 @@ export class NoteRbtComponent implements OnInit {
     return this.replacement_added.every((r) => this.isValidCorrectResponse(r));
   }
 
-  onSave() {
+  onMaladaptivesChange(updatedMaladaptives: any[]) {
+    this.maladaptives = updatedMaladaptives;
+  }
+
+  onReplacementsChange(updatedReplacements: any[]) {
+    this.replacementGoals = updatedReplacements;
+  }
+
+  save() {
     console.log('Pre-save values:', {
       client_id: this.client_id,
       provider_id: this.selectedValueProviderRBT_id,
@@ -717,14 +755,10 @@ export class NoteRbtComponent implements OnInit {
       meet_with_client_at: this.meet_with_client_at,
       client_appeared: this.client_appeared,
       as_evidenced_by: this.as_evidenced_by,
-      rbt_modeled_and_demonstrated_to_caregiver:
-        this.rbt_modeled_and_demonstrated_to_caregiver,
-      client_response_to_treatment_this_session:
-        this.client_response_to_treatment_this_session,
-      progress_noted_this_session_compared_to_previous_session:
-        this.progress_noted_this_session_compared_to_previous_session,
-      next_session_is_scheduled_for:
-        this.next_session_is_scheduled_for.split('T')[0],
+      rbt_modeled_and_demonstrated_to_caregiver: this.rbt_modeled_and_demonstrated_to_caregiver,
+      // client_response_to_treatment_this_session: this.client_response_to_treatment_this_session,
+      progress_noted_this_session_compared_to_previous_session: this.progress_noted_this_session_compared_to_previous_session,
+      next_session_is_scheduled_for: this.next_session_is_scheduled_for,
       status: 'pending',
       cpt_code: this.selectedValueCode,
       location_id: this.patientLocation_id,
@@ -763,15 +797,16 @@ export class NoteRbtComponent implements OnInit {
 
         if (error.error?.message) {
           errorMessage = error.error.message;
-        } else if (error.error?.errors) {
+        }
+        if (error.error?.errors) {
           const errors = Object.values(error.error.errors).flat();
-          errorMessage = errors.join('\n');
+          errorMessage += '<br>' + errors.join('<br>');
         }
 
         Swal.fire({
           icon: 'error',
           title: 'Error',
-          text: errorMessage,
+          html: errorMessage,
         });
       },
     });
@@ -780,7 +815,6 @@ export class NoteRbtComponent implements OnInit {
   onDateChange(event: MatDatepickerInputEvent<Date>) {
     if (!event.value) {
       this.session_date = '';
-      this.next_session_is_scheduled_for = '';
       return;
     }
 
@@ -788,30 +822,22 @@ export class NoteRbtComponent implements OnInit {
     // Set the session date in ISO format YYYY-MM-DD
     this.session_date = date.toISOString().split('T')[0];
 
-    // Set next session date
-    const nextDate = new Date(date);
-    nextDate.setDate(nextDate.getDate() + 1);
-    this.next_session_is_scheduled_for = nextDate.toISOString().split('T')[0];
+    if (!this.next_session_is_scheduled_for) {
+      // Set next session date
+      const nextDate = new Date(date);
+      nextDate.setDate(nextDate.getDate() + 1);
+      this.next_session_is_scheduled_for = nextDate.toISOString().split('T')[0];
+    }
   }
 
-  onMaladaptivesChange(updatedMaladaptives: any[]) {
-    this.maladaptives = updatedMaladaptives;
-  }
 
-  onReplacementsChange(updatedReplacements: any[]) {
-    this.replacementGoals = updatedReplacements;
-  }
 
   generateAISummary() {
     const validationResult = this.checkDataSufficient();
 
     if (!validationResult.isValid) {
       const missingFieldsList = validationResult.missingFields.join('\n• ');
-      Swal.fire(
-        'Warning',
-        `Please fill all the required fields:\n\n• ${missingFieldsList}`,
-        'warning'
-      );
+      Swal.fire('Warning', `Oops! It looks like you’re missing the following information. Please review and complete the required fields before proceeding:\n\n• ${missingFieldsList}`, 'warning');
       return;
     }
 
@@ -830,13 +856,12 @@ export class NoteRbtComponent implements OnInit {
       mood: this.client_appeared,
       pos: this.getPos(this.meet_with_client_at),
       maladaptives: this.maladaptives.map((m) => ({
-        behavior: m.maladaptive_behavior,
+        behavior: m.name,
         frequency: m.number_of_occurrences,
       })),
-      clientResponseToTreatmentThisSession:
-        this.client_response_to_treatment_this_session,
+      // clientResponseToTreatmentThisSession: this.client_response_to_treatment_this_session,
       replacements: this.replacementGoals.map((r) => ({
-        name: r.goal,
+        name: r.name,
         totalTrials: r.total_trials,
         correctResponses: r.number_of_correct_response,
       })),
@@ -905,7 +930,7 @@ export class NoteRbtComponent implements OnInit {
     } else {
       const allMaladaptivesValid = this.maladaptives.every(
         (m) =>
-          m.maladaptive_behavior &&
+          m.name &&
           m.number_of_occurrences !== undefined &&
           m.number_of_occurrences !== null
       );

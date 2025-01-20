@@ -90,8 +90,8 @@ export class PatientMService {
     const URL = url_servicios + '/patients/profile/' + client_id;
     return this.http.get<any>(URL);
   }
-  getPatientByPatientId(patient_id: number) {
-    const URL = url_servicios + '/patients/shobypatientid/' + patient_id;
+  getPatientByPatientId(patient_identifier: string) {
+    const URL = url_servicios + '/patients/shobypatientid/' + patient_identifier;
     return this.http.get<{ doctor: any; patient: any }>(URL);
   }
 

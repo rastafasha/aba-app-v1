@@ -1,16 +1,43 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/core/auth/auth.service';
+import { PaServiceV2 } from 'src/app/core/models';
+import { AppUser } from 'src/app/core/models/users.model';
+import { PatientsV2Service } from 'src/app/core/services';
+import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
+import { PaServicesV2Service } from 'src/app/core/services/pa-services.v2.service';
+import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 import { AppRoutes } from 'src/app/shared/routes/routes';
-import { BipService } from '../../bip/service/bip.service';
-import { GoalService } from '../../bip/service/goal.service';
-import { PatientMService } from '../../patient-m/service/patient-m.service';
-import { DoctorService } from '../../doctors/service/doctor.service';
 import Swal from 'sweetalert2';
 import { NoteBcbaService } from '../../../../core/services/notes-bcba.service';
-import { InsuranceService } from '../../../../core/services/insurances.service';
-import { Location } from '@angular/common';
-import { AppUser } from 'src/app/core/models/users.model';
-import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
+import { BipService } from '../../bip/service/bip.service';
+import { DoctorService } from '../../doctors/service/doctor.service';
+import {
+  interventionsList,
+  interventionsListDoble,
+  newList,
+  outcomeList,
+  show97151List,
+} from '../listasSelectData';
+import { show97151L } from '../interfaces';
+
+interface Behavior {
+  index: number;
+  discused: boolean;
+  name: string;
+}
+interface Replacement {
+  index: number;
+  name: string;
+  assessed: boolean;
+  modified: boolean;
+}
+interface Replacement1 {
+  index: number;
+  name: string;
+  demostrated: boolean;
+}
 
 @Component({
   selector: 'app-note-bcba-edit',
@@ -24,8 +51,13 @@ export class NoteBcbaEditComponent implements OnInit {
 
   valid_form = false;
   valid_form_success = false;
-  showFamily = false;
-  showMonitoring = false;
+
+  show97156 = false;
+  show97155 = false;
+  show97151 = false;
+  show971511 = false;
+  show971512 = false;
+  showPosWarning = false;
   text_success = '';
   text_validation = '';
 
@@ -50,6 +82,7 @@ export class NoteBcbaEditComponent implements OnInit {
 
   selectedValueMaladaptive!: string;
   selectedValueCode!: string;
+  selectedValueCode1!: string;
   option_selected = 0;
 
   client_id: number;
@@ -97,21 +130,26 @@ export class NoteBcbaEditComponent implements OnInit {
   replacement = '';
   maladaptive_behavior = '';
   interventions: any;
+  interventions2: any;
   provider_signature: any;
   supervisor_signature: any;
 
-  pairing: any;
-  response_block: any;
-  DRA: any;
-  DRO: any;
-  redirection: any;
-  errorless_teaching: any;
-  NCR: any;
-  shaping: any;
-  chaining: any;
-  token_economy: any;
-  extinction: any;
-  natural_teaching: any;
+  token_economy = false;
+  generalization = false;
+  NCR = false;
+  behavioral_momentum = false;
+  DRA = false;
+  DRI = false;
+  DRO = false;
+  DRL = false;
+  response_block = false;
+  errorless_teaching = false;
+  extinction = false;
+  chaining = false;
+  natural_teaching = false;
+  redirection = false;
+  shaping = false;
+  pairing = false;
 
   FILE_SIGNATURE_RBT: any;
   IMAGE_PREVISUALIZA_SIGNATURE__RBT: any;
@@ -136,9 +174,19 @@ export class NoteBcbaEditComponent implements OnInit {
   specialists = [];
   maladaptives = [];
   replacementGoals = [];
-  intervention_added = [];
   replacements = [];
+  behaviors = [];
+  behaviorsview = [];
   interventionsgroup = [];
+  interventionsgroup2 = [];
+
+  intervention_added: object;
+  intervention2_added: object;
+  newlist_added: object;
+  behaviorsList_added: object;
+  intakeoutcome_added = [];
+  replacements_added = [];
+  replacements2_added = [];
 
   maladaptivegroup = [];
   replacementgroup = [];
@@ -154,7 +202,7 @@ export class NoteBcbaEditComponent implements OnInit {
   caregivers_training_goals = [];
   rbt_training_goals = [];
   rbt_training_goalsgroup: any;
-  caregivers_training_goalsgroup: any;
+  caregivers_training_goalsgroup: any = [];
   pa_assessmentsgroup = [];
   pa_assessments: string;
   n_un = [];
@@ -170,8 +218,9 @@ export class NoteBcbaEditComponent implements OnInit {
   services: any = [];
   insurer_id: number;
 
-  pa_services: PaService[] = [];
-  selectedPaService: PaService | null = null;
+  pa_services: PaServiceV2[] = [];
+  selectedPaService: PaServiceV2 | null = null;
+  selectedPaService1: show97151L;
   projectedUnits = 0;
 
   provider: any = [];
@@ -181,14 +230,47 @@ export class NoteBcbaEditComponent implements OnInit {
 
   fromParam: string | null = null;
 
+  additional_goals_or_interventions = '';
+  asked_and_clarified_questions_about_the_implementation_of = '';
+  reinforced_caregiver_strengths_in = '';
+  gave_constructive_feedback_on = '';
+  recomended_more_practice_on = '';
+  type = '';
+  BCBA_conducted_client_observations = false;
+  BCBA_conducted_assessments = false;
+
+  demostrated = false;
+  modifications_needed_at_this_time = false;
+  cargiver_participation = false;
+  was_the_client_present = false;
+
+  interventionsList = interventionsList;
+  interventionsListDoble = interventionsListDoble;
+  newList = newList;
+  outcomeList = outcomeList;
+  show97151List = show97151List;
+  behaviorList = this.behaviors;
+  replacementList = this.replacements;
+  replacementList2 = this.replacements;
+  replacement2: any[];
+
+  noteServiceId: number;
+
+  objectives = [];
+  obj_inprogress = [];
+  obj_inprogress1 = [];
+
   constructor(
     private bipService: BipService,
     private router: Router,
     private ativatedRoute: ActivatedRoute,
     private noteBcbaService: NoteBcbaService,
     private doctorService: DoctorService,
-    private insuranceService: InsuranceService,
-    private locations: Location
+    private locations: Location,
+    private authService: AuthService,
+    private bipV2Service: BipsV2Service,
+    private patientService: PatientsV2Service,
+    private paServicesService: PaServicesV2Service
   ) {}
 
   ngOnInit(): void {
@@ -202,9 +284,7 @@ export class NoteBcbaEditComponent implements OnInit {
 
     this.getConfig();
     this.getNote();
-
-    const USER = localStorage.getItem('user');
-    this.user = JSON.parse(USER ? USER : '');
+    this.user = this.authService.user as AppUser;
     this.doctor_id = this.user.id;
   }
 
@@ -214,8 +294,6 @@ export class NoteBcbaEditComponent implements OnInit {
 
   getConfig() {
     this.noteBcbaService.listConfigNote().subscribe((resp) => {
-      console.log(resp);
-
       this.roles_rbt = resp.roles_rbt;
       this.roles_bcba = resp.roles_bcba;
       this.hours_days = resp.hours;
@@ -227,40 +305,45 @@ export class NoteBcbaEditComponent implements OnInit {
     this.noteBcbaService.getNote(this.note_id).subscribe((resp) => {
       console.log('respuesta de getNote', resp);
       this.note_selected = resp.noteBcba;
-      this.note_selectedId = resp.noteBcba.id;
-      this.patient_identifier = this.note_selected.patient_identifier;
+      this.note_selectedId = this.note_selected.id;
       this.bip_id = this.note_selected.bip_id;
       this.location = this.note_selected.location;
+      this.patient_id = this.note_selected.patient_id;
 
-      this.summary_note = resp.noteBcba.summary_note || '';
+      this.getPatient();
 
-      this.provider_credential = this.note_selected.provider_credential;
-      this.as_evidenced_by = this.note_selected.as_evidenced_by;
-      this.client_appeared = this.note_selected.client_appeared;
-      this.diagnosis_code = this.note_selected.diagnosis_code;
       this.selectedValueCode = this.note_selected.cpt_code;
       this.meet_with_client_at = this.note_selected.meet_with_client_at;
-      this.note_description = this.note_selected.note_description;
-      this.client_response_to_treatment_this_session =
-        this.note_selected.client_response_to_treatment_this_session;
-      this.pos = this.note_selected.pos;
+      this.participants = this.note_selected.participants;
+      this.environmental_changes = this.note_selected.environmental_changes;
 
-      this.caregivers_training_goalsgroup = resp.caregiver_goals;
-      const jsonObj = JSON.parse(this.caregivers_training_goalsgroup) || '';
-      this.caregivers_training_goals = jsonObj;
-      // console.log(this.caregivers_training_goals);
+      this.selectedValueRBT = this.note_selected.provider.name;
+      this.selectedValueProviderRBT_id = this.note_selected.provider_id;
 
-      this.rbt_training_goalsgroup = resp.rbt_training_goals;
-      const jsonObj1 = JSON.parse(this.rbt_training_goalsgroup) || '';
-      this.rbt_training_goals = jsonObj1;
-      console.log(this.rbt_training_goals);
+      this.selectedValueBCBA = this.note_selected.supervisor.name;
+      this.selectedValueBcba_id = this.note_selected.supervisor_id;
+      this.BCBA_conducted_assessments =
+        this.note_selected.BCBA_conducted_assessments;
+      this.BCBA_conducted_client_observations =
+        this.note_selected.BCBA_conducted_client_observations;
 
-      this.selectedValueRBT = resp.noteBcba.provider.name;
-      this.selectedValueProviderRBT_id = resp.noteBcba.provider_id;
+      this.cargiver_participation = this.note_selected.cargiver_participation;
+      this.was_the_client_present = this.note_selected.was_the_client_present;
+      this.asked_and_clarified_questions_about_the_implementation_of =
+        this.note_selected.asked_and_clarified_questions_about_the_implementation_of;
+      this.reinforced_caregiver_strengths_in =
+        this.note_selected.reinforced_caregiver_strengths_in;
+      this.gave_constructive_feedback_on =
+        this.note_selected.gave_constructive_feedback_on;
+      this.recomended_more_practice_on =
+        this.note_selected.recomended_more_practice_on;
 
-      this.selectedValueBCBA = resp.noteBcba.supervisor.name;
-      this.selectedValueBcba_id = resp.noteBcba.supervisor_id;
-      // console.log(this.selectedValueRendering );
+      this.modifications_needed_at_this_time =
+        this.note_selected.modifications_needed_at_this_time;
+      this.additional_goals_or_interventions =
+        this.note_selected.additional_goals_or_interventions;
+
+      this.summary_note = this.note_selected.summary_note;
 
       this.session_date = this.note_selected.session_date
         ? new Date(this.note_selected.session_date).toISOString()
@@ -270,12 +353,6 @@ export class NoteBcbaEditComponent implements OnInit {
         this.note_selected.session_length_morning_total;
       this.session_length_afternon_total =
         this.note_selected.session_length_afternon_total;
-      this.session_length_total = this.note_selected.session_length_total;
-
-      // this.selectedValueTimeIn = this.note_selected.time_in;
-      // this.selectedValueTimeOut = this.note_selected.time_out;
-      // this.selectedValueTimeIn2 = this.note_selected.time_in2;
-      // this.selectedValueTimeOut2 = this.note_selected.time_out2;
 
       this.selectedValueTimeIn = this.formatTime(this.note_selected.time_in);
       this.selectedValueTimeOut = this.formatTime(this.note_selected.time_out);
@@ -284,124 +361,274 @@ export class NoteBcbaEditComponent implements OnInit {
         this.note_selected.time_out2
       );
 
-      const noteServiceId = resp.noteBcba.pa_service_id;
-      if (this.pa_services?.length && noteServiceId) {
-        this.selectedPaService =
-          this.pa_services.find((service) => service.id === noteServiceId) ||
-          null;
-      }
+      this.noteServiceId = this.note_selected.pa_service_id;
+      // if (this.pa_services?.length && this.noteServiceId) {
+      //   this.selectedPaService =
+      //     this.pa_services.find((service) => service.id === this.noteServiceId) ||
+      //     null;
+      // }
 
       this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED =
         this.note_selected.provider_signature;
       this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED =
         this.note_selected.supervisor_signature;
 
-      this.getProfileBip(noteServiceId);
-    });
-  }
+      // this.selectedPaService1 = this.note_selected.type;
+      this.selectedPaService1 = this.show97151List.find(
+        (type) => type.cpt === this.note_selected.type
+      );
+      console.log(this.selectedPaService1);
 
-  private formatTime(timeString: string | null): string {
-    console.log('formatting time: ', timeString);
-    if (!timeString) return '';
-    const [hours, minutes] = timeString.replace(/ /g, '').split(':');
-    return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
-  }
-
-  getProfileBip(noteServiceId?: number) {
-    console.log('Getting profile BIP:', {
-      noteServiceId,
-      availableServices: this.pa_services,
-    });
-    this.bipService
-      .getBipProfilePatient_id(this.patient_identifier)
-      .subscribe((resp) => {
-        console.log(resp);
-        this.client_selected = resp.patient;
-
-        this.first_name = this.client_selected.first_name;
-        this.last_name = this.client_selected.last_name;
-        this.patient_id = this.client_selected.id;
-        this.patient_identifier = this.client_selected.patient_identifier;
-        this.patientLocation_id = this.client_selected.location_id;
-        this.insurance_id = resp.patient.insurer_id;
-        this.insurance_identifier = resp.patient.insurance_identifier;
-
-        this.pos = this.client_selected.pos_covered;
-        this.insuranceData();
-        this.getReplacementsByPatientId();
-        this.pa_services = this.client_selected.pa_services;
-
-        //filtramos lo pa_services usando star_date y end_date comparado con el dia de hoy
-        this.pa_services = this.pa_services.filter((pa) => {
-          const dateStart = new Date(pa.start_date).getTime();
-          const dateEnd = new Date(pa.end_date).getTime();
-          const dateToday = new Date().getTime();
-          return dateStart <= dateToday && dateEnd >= dateToday;
-        });
-        //devolvemos la respuesta da los pa_services disponibles
-        console.log(this.pa_services);
-        if (noteServiceId) {
-          this.setPaService(noteServiceId);
-        }
-
-        this.birth_date = this.client_selected.birth_date
-          ? new Date(this.client_selected.birth_date).toISOString()
-          : '';
-      });
-  }
-
-  private setPaService(noteServiceId: number) {
-    console.log('Setting PA Service:', {
-      noteServiceId,
-      availableServices: this.pa_services,
-    });
-
-    if (this.pa_services?.length && noteServiceId) {
-      this.selectedPaService =
-        this.pa_services.find((service) => service.id === noteServiceId) ||
-        null;
-
-      console.log('Selected PA Service:', this.selectedPaService);
-
-      if (this.selectedPaService) {
-        this.selectedValueCode = this.selectedPaService.cpt;
+      if (this.note_selected.cpt_code === '97155') {
+        this.show97155 = true;
       }
-    }
-  }
+      if (this.note_selected.cpt_code === '97156') {
+        this.show97156 = true;
+      }
+      if (this.note_selected.cpt_code === '97151') {
+        this.show97151 = true;
+      }
 
-  getReplacementsByPatientId() {
-    this.noteBcbaService
-      .showReplacementbyPatient(this.patient_identifier)
-      .subscribe((resp) => {
-        console.log(resp);
-        this.familiEnvolments = resp.familiEnvolments;
-        this.caregivers_training_goals =
-          resp.familiEnvolments.data?.[0]?.caregivers_training_goals ?? [];
-        this.monitoringEvaluatingPatientIds =
-          resp.monitoringEvaluatingPatientIds;
-        this.rbt_training_goals =
-          resp.monitoringEvaluatingPatientIds.data?.[0]?.rbt_training_goals ??
-          [];
-      });
-  }
+      if (
+        this.note_selected.cpt_code === '97151' &&
+        this.note_selected.type === 'Observation'
+      ) {
+        this.show971511 = true;
+        this.show97151 = true;
+      }
+      if (
+        this.note_selected.cpt_code === '97151' &&
+        this.note_selected.type === 'Report'
+      ) {
+        this.show971512 = true;
+        this.show97151 = true;
+      }
 
-  insuranceData() {
-    this.insuranceService.get(this.insurer_id).subscribe((resp) => {
-      console.log(resp);
-      this.insurer_name = resp.insurer_name;
-      // this.notes = resp.notes;
-      this.services = resp.services;
+      this.newlist_added = this.note_selected.newlist_added;
+      this.intakeoutcome_added = this.note_selected.intake_outcome;
+      this.interventionsList = this.note_selected.interventions;
+      this.interventionsListDoble = this.note_selected.interventions2;
+
+      this.newList = this.note_selected?.newlist_added;
+      this.outcomeList = this.note_selected?.intake_outcome;
+
+      this.behaviorList = this.note_selected?.behaviors;
+
+      this.obj_inprogress = this.note_selected.replacements;
+      this.obj_inprogress1 = this.note_selected.replacements2;
+
+      this.caregivers_training_goals = resp.caregiver_goals;
+
+      if (
+        this.caregivers_training_goals &&
+        typeof this.caregivers_training_goals === 'string'
+      ) {
+        try {
+          const jsonObj90 = JSON.parse(this.caregivers_training_goals);
+          this.caregivers_training_goalsgroup = jsonObj90;
+        } catch (error) {
+          console.error('Error parsing caregivers_training_goalsgroup:', error);
+          this.caregivers_training_goalsgroup = {};
+        }
+      } else {
+        this.caregivers_training_goalsgroup = {};
+      }
+
+      // this.getBipv2();
     });
   }
+
+  getPatient() {
+    this.patientService.get(this.patient_id).subscribe((resp) => {
+      this.client_selected = resp.data;
+      this.first_name = resp.data.first_name;
+      this.last_name = resp.data.last_name;
+      this.patient_identifier = resp.data.patient_identifier;
+      this.diagnosis_code = resp.data.diagnosis_code;
+      this.birth_date = resp.data.birth_date;
+      this.insurance_id = this.client_selected.insurer_id;
+      this.insurance_identifier = this.client_selected.insurance_identifier;
+      this.patientLocation_id = this.client_selected.location_id;
+
+      this.paServicesService
+        .get(this.noteServiceId, this.patient_id)
+        .subscribe((resp) => {
+          this.selectedPaService = resp.data;
+          this.selectedValueCode = this.selectedPaService.cpt;
+          this.pa_services = [this.selectedPaService];
+        });
+    });
+  }
+
+  getBipv2() {
+    this.bipV2Service.get(this.bip_id).subscribe((resp) => {
+      console.log('BIP', resp);
+      this.bip_id = resp.data.id;
+      this.caregivers_training_goals = resp.data.caregiver_trainings;
+      // this.behaviorList = resp.data.maladaptives;
+      this.replacementList = resp.data.replacements;
+      this.replacementList2 = resp.data.replacements;
+
+      // objectives
+
+      // Filtrar la lista replacementList por estado
+      this.replacementList = this.replacementList.filter(
+        (goal) => goal.status === 'active'
+      );
+
+      // Recorrer la lista replacementList y extraemos los objectives
+      this.objectives = this.replacementList.flatMap(
+        (objective) => objective.objectives
+      );
+      // filtrado los que estan en status in progress
+      const objetivosEnProgreso = this.objectives.filter(
+        (objetivo) => objetivo.status === 'in progress'
+      );
+      // this.obj_inprogress = objetivosEnProgreso;
+      // this.obj_inprogress1 = objetivosEnProgreso;
+
+      //fin objectives
+
+      this.note_selected.behaviors = this.note_selected.behaviors || {};
+      // Convierte behaviors en un array de valores
+      const behaviorsArray = Object.values(
+        this.note_selected.behaviors
+      ) as Behavior[];
+      //muestro el resultado de la nota
+      console.log('behaviors:', this.note_selected.behaviors);
+      //filtro los behaviors
+      const newBehaviors = this.behaviors.map((element) => {
+        // Add null check for element.mal
+        const behavior = behaviorsArray.find(
+          (behavior) => behavior.name === element.name
+        );
+
+        if (behavior) {
+          return {
+            index: element.index,
+            name: element.name,
+            discused: behavior ? behavior.discused : false,
+          };
+        } else {
+          console.warn(`Behavior with index ${element.index} not found.`);
+          return {
+            index: element.index,
+            name: '', // Provide a default value
+            discused: undefined,
+          };
+        }
+      });
+      //los uno con el resultado que trae la nota
+      const mergedBehaviors = newBehaviors.map((behavior, index) => {
+        const noteBehavior = this.note_selected.behaviors[behavior.index];
+        return {
+          ...behavior,
+          name: behavior.name || '', // Provide a default value
+          discused: noteBehavior ? noteBehavior.discused : behavior.discused,
+        };
+      });
+
+      console.log('Merged Behaviors:', mergedBehaviors);
+      this.behaviorsview = mergedBehaviors;
+      console.log(this.behaviorsview);
+
+      //   //replacements 1 valor
+
+      // // Convierte replacements en un array de valores
+      // const replacements1Array = Object.values(this.note_selected?.replacements) as Replacement1[];
+
+      // // Muestra el resultado de la nota
+      // console.log('replacements:', this.note_selected?.replacements);
+
+      //filtro los replacements
+      // const newReplacements1 = this.replacements.map((element) => {
+      //   if (!element || !element.id || !element.name) {
+      //     console.warn('Invalid replacements element:', element);
+      //     return null;
+      // }
+      //   const replacement1 = replacements1Array.find(
+      //     (replacement1) => replacement1.name === element.name
+      //   );
+
+      //   if (replacement1) {
+      //     return {
+      //       id: element.id,
+      //       name: element.name,
+      //       demostrated: replacement1 ? replacement1.demostrated : false,
+      //     };
+      //   } else {
+      //     console.warn(`replacements with id ${element.id} not found.`);
+      //     return {
+      //       id: element.id,
+      //       name: '', // Provide a default value
+      //       demostrated: undefined,
+      //     };
+      //   }
+      // });
+      //   //los uno con el resultado que trae la nota
+      //   const mergedReplacements1 = newReplacements1.map((replacement1, id) => {
+      //     const noteReplacement = this.note_selected?.replacements[replacement1.id];
+      //     return {
+      //       ...replacement1,
+      //       name: replacement1.name || '', // Provide a default value
+      //       demostrated: noteReplacement ? noteReplacement.demostrated : replacement1.demostrated,
+      //     };
+      //   });
+
+      //   console.log('Merged Replacements1:', mergedReplacements1);
+      //   this.replacementsview1 = mergedReplacements1;
+      //   console.log(this.replacementsview1);
+    });
+  }
+
+  // getProfileBip(noteServiceId?: number) {
+  //   console.log('Getting profile BIP:', {
+  //     noteServiceId,
+  //     availableServices: this.pa_services,
+  //   });
+  //   this.bipV2Service
+  //     .get(this.bip_id)
+  //     .subscribe((resp) => {
+  //       console.log(resp);
+  //       // this.bip = resp.data[0];
+
+  //       // this.first_name = this.client_selected.first_name;
+  //       // this.last_name = this.client_selected.last_name;
+  //       // this.patient_id = this.client_selected.id;
+  //       // this.patient_identifier = this.client_selected.patient_identifier;
+  //       // this.patientLocation_id = this.client_selected.location_id;
+  //       // this.insurance_identifier = resp.patient.insurance_identifier;
+  //       // this.insurance_id = resp.patient.insurer_id;
+  //       // this.pos = this.client_selected.pos_covered;
+
+  //       this.getReplacementsByPatientId();
+  //       this.pa_services = this.client_selected.pa_services;
+
+  //     //devolvemos la respuesta da los pa_services disponibles
+  //       // if (noteServiceId) {
+  //       //   this.setPaService(noteServiceId);
+  //       // }
+  //       this.birth_date = this.client_selected.birth_date
+  //       ? new Date(this.client_selected.birth_date).toISOString()
+  //       : '';
+  //     });
+  // }
+
+  // private setPaService(noteServiceId: number) {
+  //   if (this.pa_services?.length && noteServiceId) {
+  //     this.selectedPaService =
+  //       this.pa_services.find((service) => service.id === noteServiceId) || null;
+  //     if (this.selectedPaService) {
+  //       this.selectedValueCode = this.selectedPaService.cpt;
+  //     }
+  //   }
+  // }
 
   specialistData(selectedValueInsurer) {
     this.doctorService
       .showDoctorProfile(selectedValueInsurer)
       .subscribe((resp) => {
-        // console.log(resp);
         this.provider_credential = resp.doctor.certificate_number;
-        // this.notes = resp.notes;
-        // this.services = resp.services;
       });
   }
 
@@ -437,6 +664,13 @@ export class NoteBcbaEditComponent implements OnInit {
     this.calculateTotalHours();
   }
 
+  private formatTime(timeString: string | null): string {
+    // console.log('formatting time: ', timeString);
+    if (!timeString) return '';
+    const [hours, minutes] = timeString.replace(/ /g, '').split(':');
+    return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
+  }
+
   calculateTotalHours() {
     const timeIn1 = this.convertToMinutes(this.selectedValueTimeIn);
     const timeOut1 = this.convertToMinutes(this.selectedValueTimeOut);
@@ -446,8 +680,6 @@ export class NoteBcbaEditComponent implements OnInit {
     const totalMinutes = timeOut1 - timeIn1 + (timeOut2 - timeIn2);
     const totalHours = this.convertToHours(totalMinutes);
     this.total_hour_session = totalHours;
-    console.log(`Total hours: ${totalHours}`);
-    console.log('para el html', this.total_hour_session);
   }
 
   convertToMinutes(time: string): number {
@@ -511,10 +743,6 @@ export class NoteBcbaEditComponent implements OnInit {
     );
   }
 
-  updateRbtGoal(index: number) {
-    console.log('RBT goal updated:', this.rbt_training_goals[index]);
-  }
-
   //funcion para la primera imagen.. funciona
   loadFile($event) {
     if ($event.target.files[0].type.indexOf('image')) {
@@ -568,17 +796,39 @@ export class NoteBcbaEditComponent implements OnInit {
     this.speciaFirmaDataBcba(this.selectedValueBcba_id);
   }
 
-  onSave() {
-    this.text_validation = '';
-    // if(!this.name||!this.email ||!this.surname ){
-    //   this.text_validation = 'Los campos con * son obligatorios';
-    //   return;
-    // }
+  onInterventionsChange(updatedInterventions) {
+    // this.interventionsgroup = [
+    //   this.convertToInterventionsGroup(this.interventionsList),
+    // ];
+    this.intervention_added = updatedInterventions;
+  }
 
-    // if(this.password !== this.password_confirmation  ){
-    //   this.text_validation = 'Las contraseña debe ser igual';
-    //   return;
-    // }
+  onInterventions2Change(updatedInterventions2) {
+    // this.interventionsgroup2 = [
+    //   this.convertToInterventionsGroup2(this.interventionsListDoble),
+    // ];
+    this.intervention2_added = updatedInterventions2;
+  }
+
+  onReplacementChange(updatedReplacements) {
+    this.replacements_added = updatedReplacements;
+  }
+  onReplacement2Change(updatedReplacements2) {
+    this.replacements2_added = updatedReplacements2;
+  }
+
+  onIntakeoutcomeChange(updatedIntakeoutcome) {
+    this.intakeoutcome_added = updatedIntakeoutcome;
+  }
+  onNewListChange(updatedNewList) {
+    this.newlist_added = updatedNewList;
+  }
+  onBehaviorChange(updatedbehaviorsList: object) {
+    this.behaviorsList_added = updatedbehaviorsList;
+  }
+
+  save() {
+    this.text_validation = '';
 
     const formData = new FormData();
     formData.append('patient_id', this.patient_id + '');
@@ -645,6 +895,9 @@ export class NoteBcbaEditComponent implements OnInit {
     if (this.selectedValueCode) {
       formData.append('cpt_code', this.selectedValueCode);
     }
+    if (this.selectedValueCode1) {
+      formData.append('type', this.selectedValueCode1);
+    }
     if (this.selectedPaService) {
       formData.append('pa_service_id', this.selectedPaService.id.toString());
     }
@@ -652,21 +905,136 @@ export class NoteBcbaEditComponent implements OnInit {
       formData.append('meet_with_client_at', this.meet_with_client_at);
     }
 
-    // if (this.note_description) {
-    //   formData.append('note_description', this.note_description);
-    // }
-    if (this.rbt_training_goals) {
-      formData.append(
-        'rbt_training_goals',
-        JSON.stringify(this.rbt_training_goals)
-      );
+    if (this.participants) {
+      formData.append('participants', this.participants);
     }
+    if (this.environmental_changes) {
+      formData.append('environmental_changes', this.environmental_changes);
+    }
+
+    // if (this.rbt_training_goals) {
+    //   formData.append(
+    //     'rbt_training_goals',
+    //     JSON.stringify(this.rbt_training_goals)
+    //   );
+    // }
     if (this.caregivers_training_goals) {
       formData.append(
         'caregiver_goals',
         JSON.stringify(this.caregivers_training_goals)
       );
     }
+    //variaciones nota bcba
+    if (this.interventionsList) {
+      formData.append('interventions', JSON.stringify(this.interventionsList));
+    }
+
+    if (this.interventionsListDoble) {
+      formData.append(
+        'interventions2',
+        JSON.stringify(this.interventionsListDoble)
+      );
+    }
+
+    // if (this.replacements_added) {
+    //   formData.append(
+    //     'replacements',
+    //     JSON.stringify(this.replacements_added)
+    //   );
+    // }
+
+    // if (this.replacements2_added) {
+    //   formData.append(
+    //     'replacements2',
+    //     JSON.stringify(this.replacements2_added)
+    //   );
+    // }
+
+    if (this.obj_inprogress) {
+      formData.append('replacements', JSON.stringify(this.obj_inprogress));
+    }
+
+    if (this.obj_inprogress1) {
+      formData.append('replacements2', JSON.stringify(this.obj_inprogress1));
+    }
+
+    if (this.newList) {
+      formData.append('newlist_added', JSON.stringify(this.newlist_added));
+    }
+
+    if (this.outcomeList) {
+      formData.append(
+        'intake_outcome',
+        JSON.stringify(this.intakeoutcome_added)
+      );
+    }
+
+    if (this.behaviorsList_added) {
+      formData.append('behaviors', JSON.stringify(this.behaviorsList_added));
+    }
+
+    if (this.modifications_needed_at_this_time) {
+      formData.append(
+        'modifications_needed_at_this_time',
+        this.modifications_needed_at_this_time ? '1' : '0'
+      );
+    }
+    if (this.cargiver_participation) {
+      formData.append(
+        'cargiver_participation',
+        this.cargiver_participation ? '1' : '0'
+      );
+    }
+    if (this.was_the_client_present) {
+      formData.append(
+        'was_the_client_present',
+        this.was_the_client_present ? '1' : '0'
+      );
+    }
+    if (this.BCBA_conducted_assessments) {
+      formData.append(
+        'BCBA_conducted_assessments',
+        this.BCBA_conducted_assessments ? '1' : '0'
+      );
+    }
+    if (this.BCBA_conducted_client_observations) {
+      formData.append(
+        'BCBA_conducted_client_observations',
+        this.BCBA_conducted_client_observations ? '1' : '0'
+      );
+    }
+    if (this.additional_goals_or_interventions) {
+      formData.append(
+        'additional_goals_or_interventions',
+        this.additional_goals_or_interventions
+      );
+    }
+    if (this.asked_and_clarified_questions_about_the_implementation_of) {
+      formData.append(
+        'asked_and_clarified_questions_about_the_implementation_of',
+        this.asked_and_clarified_questions_about_the_implementation_of
+      );
+    }
+    if (this.reinforced_caregiver_strengths_in) {
+      formData.append(
+        'reinforced_caregiver_strengths_in',
+        this.reinforced_caregiver_strengths_in
+      );
+    }
+    if (this.gave_constructive_feedback_on) {
+      formData.append(
+        'gave_constructive_feedback_on',
+        this.gave_constructive_feedback_on
+      );
+    }
+    if (this.recomended_more_practice_on) {
+      formData.append(
+        'recomended_more_practice_on',
+        this.recomended_more_practice_on
+      );
+    }
+
+    //variaciones nota bcba
 
     if (this.FILE_SIGNATURE_RBT) {
       formData.append('imagen', this.FILE_SIGNATURE_RBT);
@@ -690,13 +1058,9 @@ export class NoteBcbaEditComponent implements OnInit {
     this.noteBcbaService
       .update(formData as any, this.note_selectedId)
       .subscribe((resp) => {
-        // console.log(resp);
-
         if (resp.message === 403) {
           this.text_validation = resp.message_text;
         } else {
-          // this.text_success = 'Employer created';
-          // this.ngOnInit();
           Swal.fire('Updated', ` Note Rbt Updated`, 'success');
           this.router.navigate([
             AppRoutes.noteBcba.list,
@@ -803,15 +1167,43 @@ export class NoteBcbaEditComponent implements OnInit {
     const service = event.value;
     if (service) {
       this.selectedValueCode = service.cpt;
-      this.showFamily = false;
-      this.showMonitoring = false;
+      this.show97155 = false;
+      this.show97156 = false;
+      this.show97151 = false;
+      this.show971511 = false;
+      this.show971512 = false;
 
       if (service.cpt === '97155') {
-        this.showFamily = true;
+        this.show97155 = true;
       }
       if (service.cpt === '97156') {
-        this.showMonitoring = true;
+        this.show97156 = true;
       }
+      if (service.cpt === '97151') {
+        this.show97151 = true;
+      }
+      this.checkPosWarning();
+    }
+  }
+
+  onPaServiceSelect2(event: any) {
+    const type = event.value;
+    if (type) {
+      this.selectedValueCode1 = type.cpt;
+
+      this.show97151 = true;
+      this.show971511 = false;
+      this.show971512 = false;
+
+      if (type.cpt === 'Observation') {
+        this.show971511 = true;
+        this.show97151 = true;
+      }
+      if (type.cpt === 'Report') {
+        this.show971512 = true;
+        this.show97151 = true;
+      }
+      this.checkPosWarning();
     }
   }
 
@@ -856,5 +1248,11 @@ export class NoteBcbaEditComponent implements OnInit {
     }
 
     this.projectedUnits = totalUnits;
+  }
+
+  checkPosWarning() {
+    const isCpt97151 = this.selectedPaService?.cpt === '97151';
+    const isTelehealth = this.meet_with_client_at === '02';
+    this.showPosWarning = isCpt97151 && isTelehealth;
   }
 }

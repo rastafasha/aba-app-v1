@@ -69,6 +69,7 @@ export class LogsReportsComponent implements OnInit {
   locations: LocationV2[] = [];
   notesRbt: NoteRbtV2[] = [];
   notesBcba: NoteBcbaV2[] = [];
+  changedNotes: Note[] = [];
 
   currentPage = 1;
   pageSize = 30;
@@ -78,6 +79,10 @@ export class LogsReportsComponent implements OnInit {
   isAllSelected = false;
   isSomeSelected = false;
   selectedNotes: Set<Note> = new Set<Note>();
+
+  totalUnits: number;
+  totalHours: number;
+  totalCharges: number;
 
   downloadOptions: LogReportsDownloadOptions = {
     buttons: [
@@ -103,7 +108,6 @@ export class LogsReportsComponent implements OnInit {
 
   ngOnInit() {
     this.onRefresh();
-    
   }
 
   onRefresh() {
@@ -119,7 +123,6 @@ export class LogsReportsComponent implements OnInit {
       this.insurances = insurances.data;
       this.patients = patients.data;
       this.providers = providers.data;
-      this.loadData();
     });
   }
 
@@ -128,6 +131,12 @@ export class LogsReportsComponent implements OnInit {
     this.notes = [...this.notesRbt, ...this.notesBcba].sort((a, b) =>
       a.session_date < b.session_date ? 1 : -1
     );
+    const interval = setInterval(() => {
+      if (this.insurances.length > 0) {
+        clearInterval(interval);
+        this.setTotals();
+      }
+    }, 1000); // set interval por problemas de sincronizacion con el metodo que obtiene los insurances
   }
 
   fixData() {
@@ -209,7 +218,6 @@ export class LogsReportsComponent implements OnInit {
       this.notesRbt = combineNotes.filter(isNoteRbtV2);
       this.notesBcba = combineNotes.filter(isNoteBcbaV2);
       this.updateData(false);
-      this.extractTotalCharges();
     });
   }
 
@@ -250,6 +258,9 @@ export class LogsReportsComponent implements OnInit {
           this.notes[index] = {...this.notes[index], ...datos};
         }
         Swal.fire('Updated', `Saved successfully!`, 'success');
+        const i = this.changedNotes.findIndex(n => n.id == data.id && n.type == data.type)
+        if(i != -1)
+          this.changedNotes.splice(i, 1);
       },
       error: () => {
         Swal.fire('Error', `Can't update!`, 'error');
@@ -282,23 +293,33 @@ export class LogsReportsComponent implements OnInit {
     return note.id + note.type;
   }
 
+  private setTotals(): void {
+    let totalHours = 0, totalUnits = 0, totalCharges = 0;
+    this.notes.forEach(note => {
+      totalHours += Number(note.total_minutes/60);
+      totalUnits += Number(note.total_units);
+      const insurance = this.insurances?.find((i) => i.id === note.insurance_id);
+      let  service;
+      if (!!insurance) service = insurance.services.find((s) => s.code === note.cpt_code);
+      if (!!service) totalCharges += Number(service.unit_price) * Number(note.total_units);
+    })
+    this.totalHours = totalHours;
+    this.totalCharges = totalCharges;
+    this.totalUnits = totalUnits;
+  }
 
+  public updateChangedNotes(note: Note): void {
+    const index = this.changedNotes.findIndex(n => n.id == note.id && n.type == note.type);
+    if(index !== -1)
+      this.changedNotes[index] = note;
+    else
+      this.changedNotes.push(note)
+  }
 
-  extractTotalCharges() {
-    // const subtotal = session_units_total * unitPrice
-    
-    const total = this.notes.reduce((acc, note) => {
-      if (isNoteRbtV2(note)) {
-        return acc + note.total_units;
-      }
-      if (isNoteBcbaV2(note)) {
-        return acc + note.total_units;
-      }
-      return acc;
-    }, 0);
-    console.log('total Charges',total);
-
-    return total;
+  public saveAll(): void {
+    this.changedNotes.forEach(note => {
+      this.onSave(note);
+    })
   }
 
 }

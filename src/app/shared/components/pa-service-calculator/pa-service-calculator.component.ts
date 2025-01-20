@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { PaService } from '../../interfaces/pa-service.interface';
 import { PaServiceCalculatorResponse } from '../../interfaces/pa-service-calculator.interface';
 import { PaServiceCalculatorService } from 'src/app/core/services/pa-service-calculator.service';
+import { PaServiceV2 } from 'src/app/core/models';
 
 @Component({
   selector: 'app-pa-service-calculator',
@@ -9,7 +10,7 @@ import { PaServiceCalculatorService } from 'src/app/core/services/pa-service-cal
   styleUrls: ['./pa-service-calculator.component.scss']
 })
 export class PaServiceCalculatorComponent implements OnChanges {
-  @Input() selectedPaService: PaService | null = null;
+  @Input() selectedPaService: PaServiceV2 | null = null;
   @Input() projectedUnits = 0;
 
   calculatorResponse: PaServiceCalculatorResponse | null = null;

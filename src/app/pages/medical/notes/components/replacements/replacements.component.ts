@@ -14,7 +14,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
             <div class="col-xs-12 col-sm-3 graphic-value">
               <div class="tope_replacement" style="height: 160px">
                 <div class="title" style="height: 120px">
-                  <h4 class="label" style="height: 55px; overflow: hidden" [tooltip]="replacement.goal">{{replacement.goal}}</h4>
+                  <h4 class="label" style="height: 55px; overflow: hidden" [tooltip]="replacement.name">{{replacement.name}}</h4>
                   <div class="text-center" style="font-size: 18px;">
                     {{(replacement.number_of_correct_response * 100 / replacement.total_trials) | number:'1.0-0'}}%
                   </div>

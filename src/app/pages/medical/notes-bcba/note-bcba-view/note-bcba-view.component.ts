@@ -4,12 +4,37 @@ import { ActivatedRoute } from '@angular/router';
 import html2canvas from 'html2canvas';
 import * as jspdf from 'jspdf';
 import { AppUser } from 'src/app/core/models/users.model';
+import { PatientsV2Service } from 'src/app/core/services';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
-import { BipService } from '../../bip/service/bip.service';
-import { DoctorService } from '../../doctors/service/doctor.service';
 import { NoteBcbaService } from '../../../../core/services/notes-bcba.service';
-import { Supervisor } from 'src/app/core/models/notes.model';
+import { DoctorService } from '../../doctors/service/doctor.service';
+import {
+  NoteBehaviorsList,
+  NoteIntervention,
+  NoteIntervention2,
+  NoteNewList,
+  NoteOutcomeList
+} from '../interfaces';
+import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
+
+interface Behavior {
+  id: number;
+  discused: boolean;
+  name: string;
+}
+interface Replacement {
+  id: number;
+  name:string;
+  assessed:boolean;
+  modified:boolean;
+}
+interface Replacement1 {
+  id: number;
+  name:string;
+  demostrated:boolean;
+}
+
 
 @Component({
   selector: 'app-note-bcba-view',
@@ -25,8 +50,15 @@ export class NoteBcbaViewComponent implements OnInit {
   patient_identifier: string;
   // option_selected:number = 0;
 
+
   showFamily = false;
   showMonitoring = false;
+
+  show97156 = false;
+  show97155 = false;
+  show97151 = false;
+  show971511 = false;
+  show971512 = false;
 
   selectedValueProvider!: string;
   selectedValueRBT!: string;
@@ -118,11 +150,22 @@ export class NoteBcbaViewComponent implements OnInit {
   roles_bcba = [];
 
   hours_days = [];
-  maladaptives = [];
+  behaviors = [];
+  behaviorsview = [];
+  replacementsview = [];
+  replacementsview1 = [];
+  behavior_selected: string;
   replacementGoals = [];
   intervention_added = [];
   replacements = [];
+  replacements2 = [];
+  newlist_added = [];
+  intake_outcome = [];
   interventionsgroup = [];
+  newlistgroup = [];
+
+  objectives = [];
+  obj_inprogress = [];
 
   maladaptivegroup = [];
   replacementgroup = [];
@@ -131,7 +174,7 @@ export class NoteBcbaViewComponent implements OnInit {
   replacementSelected: any = null;
 
   note_description: any;
-  caregivers_training_goals = [];
+  caregivers_training_goals :any;
   rbt_training_goals = [];
   rbt_training_goalsgroup: any;
   caregivers_training_goalsgroup: any;
@@ -144,6 +187,7 @@ export class NoteBcbaViewComponent implements OnInit {
   lto: any = null;
   caregiver_goal: any = null;
   cpt_code: any = null;
+  type: string = null;
   doctor_selected: any = null;
   doctor_selected_full_name: any = null;
   doctor_selected_rbt: any = null;
@@ -155,13 +199,74 @@ export class NoteBcbaViewComponent implements OnInit {
 
   fromParam: string | null = null;
 
+  intervention: NoteIntervention = {
+    token_economy: false,
+    generalization: false,
+    NCR: false,
+    behavioral_momentum: false,
+    DRA: false,
+    DRI: false,
+    DRO: false,
+    DRL: false,
+    response_block: false,
+    errorless_teaching: false,
+    extinction: false,
+    chaining: false,
+    natural_teaching: false,
+    redirection: false,
+    shaping: false,
+    pairing: false,
+  };
+  interventions2: NoteIntervention2 = {
+    token_economy: false,
+    generalization: false,
+    NCR: false,
+    behavioral_momentum: false,
+    DRA: false,
+    DRI: false,
+    DRO: false,
+    DRL: false,
+    response_block: false,
+    errorless_teaching: false,
+    extinction: false,
+    chaining: false,
+    natural_teaching: false,
+    redirection: false,
+    shaping: false,
+    pairing: false,
+  };
+  newlist: NoteNewList = {
+    FAST: false,
+    MAST: false,
+    QABF: false,
+    ABC_data_collection: false,
+    VBmapp: false,
+    Ablls: false,
+    EFL: false,
+    Peak: false,
+    parent_interview: false,
+    reinforcement_questionnaire: false,
+    preference_assessment: false,
+    other: false,
+  };
+  outcomeList: NoteOutcomeList = {
+    SRS_2: false,
+    vineland_3: false,
+    PDDBI: false,
+    PSI_4_short_form: false,
+  };
+  behaviorsList: NoteBehaviorsList = {
+    maladaptive_behavior: '',
+  };
+
   constructor(
     private noteBcbaService: NoteBcbaService,
     private activatedRoute: ActivatedRoute,
     private pageService: PageService,
     private doctorService: DoctorService,
-    private bipService: BipService,
-    private locations: Location
+    private patientService: PatientsV2Service,
+    private locations: Location,
+    private bipV2Service: BipsV2Service,
   ) {}
 
   ngOnInit(): void {
@@ -173,8 +278,6 @@ export class NoteBcbaViewComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(params => {
       this.fromParam = params['from'];
     });
-
-    this.getConfig();
     this.getNote();
   }
 
@@ -186,11 +289,6 @@ export class NoteBcbaViewComponent implements OnInit {
     }
 
 
-  getConfig() {
-    this.noteBcbaService.listConfigNote().subscribe((resp) => {
-      console.log(resp);
-    });
-  }
 
   getNote() {
     this.noteBcbaService.getNote(this.note_id).subscribe((resp) => {
@@ -198,72 +296,76 @@ export class NoteBcbaViewComponent implements OnInit {
       this.note_selected = resp.noteBcba;
       this.note_selectedId = resp.noteBcba.id;
       this.patient_identifier = this.note_selected.patient_identifier;
+      this.patient_id = this.note_selected.patient_id;
       this.bip_id = this.note_selected.bip_id;
-      this.location = this.note_selected.location;
-      // this.birth_date = this.note_selected.birth_date;
-      this.birth_date = this.note_selected.birth_date
-        ? new Date(this.note_selected.birth_date).toISOString()
-        : '';
-
-      this.provider_credential = this.note_selected.provider_credential;
-      this.as_evidenced_by = this.note_selected.as_evidenced_by;
-      this.client_appeared = this.note_selected.client_appeared;
-      this.diagnosis_code = this.note_selected.diagnosis_code;
       this.cpt_code = this.note_selected.cpt_code;
-      this.note_description = this.note_selected.note_description;
-      this.client_response_to_treatment_this_session =
-        this.note_selected.client_response_to_treatment_this_session;
-      this.pos = this.note_selected.pos;
-
-      this.session_length_total = this.note_selected.session_length_total;
-      this.session_length_total2 = this.note_selected.session_length_total2;
-
-      this.selectedValueTimeIn = this.note_selected.time_in;
-      this.selectedValueTimeOut = this.note_selected.time_in2;
-      this.selectedValueTimeIn2 = this.note_selected.time_out;
-      this.selectedValueTimeOut2 = this.note_selected.time_out2;
-
-      this.caregivers_training_goalsgroup = this.note_selected.caregiver_goals;
-      const jsonObj = typeof this.caregivers_training_goalsgroup === 'string' ? JSON.parse(this.caregivers_training_goalsgroup) : this.caregivers_training_goalsgroup;
-      this.caregivers_training_goals = jsonObj;
-      console.log(this.caregivers_training_goals);
-
-      this.rbt_training_goalsgroup = this.note_selected.rbt_training_goals;
-      const jsonObj1 = typeof this.rbt_training_goalsgroup === 'string' ? JSON.parse(this.rbt_training_goalsgroup) : this.rbt_training_goalsgroup;
-      this.rbt_training_goals = jsonObj1;
-      console.log(this.rbt_training_goals);
-
+      this.type = this.note_selected.type;
       this.aba_supervisor = resp.noteBcba.supervisor_id;
       this.selectedValueRendering = resp.noteBcba.provider_id;
-
       this.selectedValueProviderName = this.note_selected.provider_name_g;
       this.selectedValueRBT = this.note_selected.provider_name;
       this.selectedValueBCBA = this.note_selected.supervisor_name;
-
       this.IMAGE_PREVISUALIZA_SIGNATURE__BCBA_CREATED =
-        this.note_selected.provider_signature;
+      this.note_selected.provider_signature;
       this.IMAGE_PREVISUALIZA_SIGNATURE_SUPERVISOR_CREATED =
-        this.note_selected.supervisor_signature;
+      this.note_selected.supervisor_signature;
 
-      this.getProfileBip();
-      this.getDoctor();
-      this.getDoctorRbt();
-      this.getDoctorBcba();
-
+        this.getProfilePatient();
+        this.getDoctor();
+        this.getDoctorRbt();
+  
       if(this.cpt_code === '97155' ){
-        this.showFamily = true;
+        this.show97155 = true;
       }
       if(this.cpt_code === '97156' ){
-        this.showMonitoring = true;
+        this.show97156 = true;
+      }
+      if(this.type === 'Observation' ){
+        this.show971511 = true;
+      }
+      if(this.type === 'Report' ){
+        this.show971512 = true;
+      }
+
+      //nota 511 = observation
+      this.newlist_added = this.note_selected.newlist_added;
+      this.intake_outcome = this.note_selected.intake_outcome;
+     
+      //nota 55 
+      this.interventions2 = this.note_selected?.interventions2;
+      this.replacements2 = this.note_selected?.replacements2;
+
+      //nota 56
+      this.interventions = this.note_selected?.interventions;
+      this.behaviors = this.note_selected?.behaviors;
+      //nota 56 y 55
+      this.obj_inprogress = this.note_selected.replacements;
+      // this.obj_inprogress1 = this.note_selected.replacements2;
+
+      this.caregivers_training_goals = this.note_selected.caregiver_goals;
+
+      try {
+        const jsonObj90 = JSON.parse(this.caregivers_training_goals as string);
+        if (Array.isArray(jsonObj90)) {
+          this.caregivers_training_goals = jsonObj90;
+        } else {
+          console.error("Parsed object is not an array:", jsonObj90);
+          this.caregivers_training_goals = [];
+        }
+      } catch (e) {
+        console.error("Failed to parse caregivers_training_goals:", e);
+        this.caregivers_training_goals = [];
       }
     });
+    
   }
+
 
   getDoctor() {
     this.doctorService
       .showDoctor(this.selectedValueRendering)
       .subscribe((resp) => {
-        console.log(resp);
+        // console.log(resp);
         this.doctor_selected = resp.user;
         this.doctor_selected_full_name = resp.user.full_name;
       });
@@ -271,35 +373,22 @@ export class NoteBcbaViewComponent implements OnInit {
 
   getDoctorRbt() {
     this.doctorService.showDoctor(this.aba_supervisor).subscribe((resp) => {
-      console.log(resp);
+      // console.log(resp);
       this.doctor_selected_rbt = resp.user;
       this.doctor_selected_full_name_supervisor = resp.user.full_name;
     });
   }
   getDoctorBcba() {
     this.doctorService.showDoctor(this.selectedValueBCBA).subscribe((resp) => {
-      console.log(resp);
+      // console.log(resp);
       this.doctor_selected_bcba = resp.user;
       this.doctor_selected_full_name_bcba = resp.user.full_name;
     });
   }
 
-  getProfileBip() {
-    this.bipService
-      .getBipProfilePatient_id(this.patient_identifier)
-      .subscribe((resp) => {
-        console.log(resp);
-        this.patient_selected = resp.patient;
-
-        this.first_name = this.patient_selected.first_name;
-        this.last_name = this.patient_selected.last_name;
-        this.patient_identifier = resp.patient.patient_identifier;
-        // console.log(this.patient_id);
-        this.diagnosis_code = this.patient_selected.diagnosis_code;
-
-        // this.pa_assessments = resp.patient.pa_assessments;
-        //   const jsonObj = JSON.parse(this.pa_assessments) || '';
-        //   this.pa_assessmentsgroup = jsonObj;
+  getProfilePatient() {
+    this.patientService.get(this.patient_id).subscribe((resp) => {
+        this.patient_selected = resp.data;
       });
   }
 
