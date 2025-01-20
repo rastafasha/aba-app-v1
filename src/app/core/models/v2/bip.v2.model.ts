@@ -37,6 +37,13 @@ export class Intervention {
   constructor(data: Partial<Intervention>) {
     Object.assign(this, data);
   }
+  static getDefault(): Intervention {
+    return {
+      index: 0,
+      title: '',
+      description: '',
+    };
+  }
 }
 
 export class Attention {
@@ -197,7 +204,6 @@ export class ConsentToTreatment {
 export class Recomendation {
   index?: number;
   cpt: string;
-  nombre: string;
   num_units: number;
   breakdown_per_week: string;
   location: string;
@@ -208,7 +214,6 @@ export class Recomendation {
   static getDefault(): Recomendation {
     return {
       cpt: '',
-      nombre: '',
       num_units: 0,
       breakdown_per_week: '',
       location: '',
@@ -222,8 +227,8 @@ export class DeEscalationTechnique {
   bip_id: number;
   patient_id: string;
   client_id: number;
-  description: string | null;
-  service_recomendation: string | null;
+  description: string;
+  service_recomendation: string;
   recomendation_lists: Recomendation[];
   created_at?: Date;
   updated_at?: Date;
@@ -234,6 +239,17 @@ export class DeEscalationTechnique {
       data.recomendation_lists,
       Recomendation
     );
+  }
+  static getDefault(): DeEscalationTechnique {
+    return {
+      id: 0,
+      bip_id: 0,
+      patient_id: '',
+      client_id: 0,
+      description: '',
+      service_recomendation: '',
+      recomendation_lists: [],
+    };
   }
 }
 

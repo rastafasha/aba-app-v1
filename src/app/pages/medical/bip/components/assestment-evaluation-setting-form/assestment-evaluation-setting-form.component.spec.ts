@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AssestmentEvaluationSettingFormComponent } from './AssestmentEvaluationSettingForm.component';
+import { AssestmentEvaluationSettingFormComponent } from './assestment-evaluation-setting-form.component';
 
 describe('AssestmentEvaluationSettingFormComponent', () => {
   let component: AssestmentEvaluationSettingFormComponent;

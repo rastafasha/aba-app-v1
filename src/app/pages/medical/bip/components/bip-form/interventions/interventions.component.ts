@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ListFormStrategy } from '../list-form.strategy';
 import { Intervention } from 'src/app/core/models';
 
 @Component({
@@ -8,59 +7,18 @@ import { Intervention } from 'src/app/core/models';
   styleUrls: ['./interventions.component.scss'],
 })
 export class InterventionsComponent {
-  @Output() save = new EventEmitter<void>();
-  text_validation = '';
-  //
-  @Input() interventions: Intervention[] = [];
-  @Output() interventionsChange = new EventEmitter<Intervention[]>();
-  newIntervention: Intervention = {
-    index: 0,
-    description: '',
-    title: '',
-  };
-  interventionStrategy = new ListFormStrategy<Intervention>(
-    this.interventionsChange,
-    this.newIntervention
-  );
-  //
+  @Input() input: Intervention[] = [];
+  @Output() inputChange = new EventEmitter<Intervention[]>();
+  @Output() save = new EventEmitter<Intervention[]>();
+  @Output() cancel = new EventEmitter<void>();
 
-  addIntervention() {
-    const result = this.interventionStrategy.add(
-      this.validate,
-      this.interventions,
-      this.newIntervention
-    );
-    this.text_validation = result.text;
-    this.interventions = result.items;
-    this.newIntervention = result.item;
-  }
-
-  deleteIntervention(i: number) {
-    this.interventions = this.interventionStrategy.delete(
-      i,
-      this.interventions
-    );
-  }
-
-  updateIntervention(intervention: Intervention) {
-    this.newIntervention = this.interventionStrategy.updateList(
-      this.interventions,
-      intervention
-    );
-  }
-
-  seleccionarParaEdit(intervention: Intervention) {
-    this.newIntervention = this.interventionStrategy.select(
-      this.interventions,
-      intervention
-    );
-  }
+  newItem: Intervention = Intervention.getDefault();
 
   onSave(): void {
-    this.save.emit();
+    this.save.emit(this.input);
   }
 
-  private validate = () => {
-    return !!(this.newIntervention.description && this.newIntervention.title);
-  };
+  onCancel(): void {
+    this.cancel.emit();
+  }
 }

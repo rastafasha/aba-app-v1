@@ -6,9 +6,9 @@ import { ConsentToTreatment } from 'src/app/core/models';
   styleUrls: ['./consent-treatment-form.component.scss'],
 })
 export class ConsentTreatmentFormComponent {
-  @Input() consent_to_treatment: ConsentToTreatment;
-  @Output() consent_to_treatmentChange = new EventEmitter<ConsentToTreatment>();
-  @Output() save = new EventEmitter<void>();
+  @Input() input: ConsentToTreatment;
+  @Output() inputChange = new EventEmitter<ConsentToTreatment>();
+  @Output() save = new EventEmitter<ConsentToTreatment>();
 
   public text_validation = '';
   public FILE_SIGNATURE_ANALYST: File;
@@ -50,7 +50,7 @@ export class ConsentTreatmentFormComponent {
   }
 
   onSave() {
-    this.consent_to_treatmentChange.emit(this.consent_to_treatment);
-    this.save.emit();
+    this.inputChange.emit(this.input);
+    this.save.emit(this.input);
   }
 }

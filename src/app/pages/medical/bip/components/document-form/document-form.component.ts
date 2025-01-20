@@ -7,6 +7,7 @@ import { DocumentV2 } from 'src/app/core/models';
   styleUrls: ['./document-form.component.scss'],
 })
 export class DocumentFormComponent {
+  @Input() title = 'Document';
   @Input() input: DocumentV2;
   @Output() inputChange = new EventEmitter<DocumentV2>();
   @Output() save = new EventEmitter<DocumentV2>();

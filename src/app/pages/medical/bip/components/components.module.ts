@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { AssestmentEvaluationSettingFormComponent } from './AssestmentEvaluationSettingForm/AssestmentEvaluationSettingForm.component';
+import { AssestmentEvaluationSettingFormComponent } from './assestment-evaluation-setting-form/assestment-evaluation-setting-form.component';
 import { BehaviorAssistantComponent } from './behavior-assistant/behavior-assistant.component';
 import { BipDocumentsShowComponent } from './bip-documents-show/bip-documents-show.component';
 import { AssestmentComponent } from './bip-form/assestment/assestment.component';
@@ -67,6 +67,9 @@ import { GeneralizationTrainingFormComponent } from './generalization-training-f
 import { GeneralizationTrainingEditComponent } from './generalization-training-edit/generalization-training-edit.component';
 import { CrisisPlanComponent } from './crisis-plan/crisis-plan.component';
 import { CrisisPlanFormComponent } from './crisis-plan-form/crisis-plan-form.component';
+import { DeEscalationFormComponent } from './de-escalation-form/de-escalation-form.component';
+import { DeEscalationEditComponent } from './de-escalation-edit/de-escalation-edit.component';
+import { ConsentTreatmentEditComponent } from './consent-treatment-edit/consent-treatment-edit.component';
 
 const components = [
   AssestmentComponent,
@@ -132,6 +135,9 @@ const components = [
   GeneralizationTrainingFormComponent,
   CrisisPlanComponent,
   CrisisPlanFormComponent,
+  DeEscalationFormComponent,
+  DeEscalationEditComponent,
+  ConsentTreatmentEditComponent,
 ];
 @NgModule({
   declarations: [...components],

@@ -87,15 +87,15 @@
           <!-- 9 -->
           <app-de-escalation-tecniques
             *ngIf="optionSelected === 9"
-            [(de_escalation_technique)]="bip.de_escalation_techniques[0]"
+            [(input)]="bip.de_escalation_techniques"
           >
           </app-de-escalation-tecniques>
           <!-- 10 -->
-          <app-consent-treatment-form
+          <app-consent-treatment-edit
             *ngIf="optionSelected === 10"
-            [(consent_to_treatment)]="bip.consent_to_treatments[0]"
+            [(input)]="bip.consent_to_treatments"
           >
-          </app-consent-treatment-form>
+          </app-consent-treatment-edit>
         </div>
       </div>
     </div>

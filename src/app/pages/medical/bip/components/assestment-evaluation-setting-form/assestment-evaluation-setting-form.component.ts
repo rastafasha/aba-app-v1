@@ -3,8 +3,8 @@ import { AssestmentEvaluationSetting } from 'src/app/core/models';
 
 @Component({
   selector: 'app-assestment-evaluation-setting-form',
-  templateUrl: './AssestmentEvaluationSettingForm.component.html',
-  styleUrls: ['./AssestmentEvaluationSettingForm.component.scss'],
+  templateUrl: './assestment-evaluation-setting-form.component.html',
+  styleUrls: ['./assestment-evaluation-setting-form.component.scss'],
 })
 export class AssestmentEvaluationSettingFormComponent {
   @Input() input: AssestmentEvaluationSetting;
