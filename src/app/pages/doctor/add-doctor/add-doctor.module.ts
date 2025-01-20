@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { AddDoctorRoutingModule } from './add-doctor.routing';
 import { AddDoctorComponent } from './add-doctor.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { MaterialModule } from 'src/app/shared/material.module';
+import { MaterialModule } from 'src/app/shared/extras/material.module';
 
 @NgModule({
   declarations: [AddDoctorComponent],

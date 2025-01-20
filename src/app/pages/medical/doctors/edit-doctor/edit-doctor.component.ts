@@ -243,7 +243,7 @@ export class EditDoctorComponent implements OnInit {
       (this.IMAGE_PREVISUALIZA_SIGNATURE = reader2.result);
   }
 
-  save() {
+  onSave() {
     this.text_validation = '';
     this.text_success = '';
     if (!this.name || !this.email || !this.surname) {

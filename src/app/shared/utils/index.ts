@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { Type } from '@angular/core';
+
 //@index('./*.ts', f => `export * from '${f.path}';`)
 export * from './BooleanOrNullOrUndefined';
 export * from './DateOrNullOrUndefined';
@@ -36,4 +40,38 @@ export function compareObjects(obj1: object, obj2: object): object {
   }
   compare(obj1, obj2);
   return differences;
+}
+export function logTable(a: object, b: object) {
+  console.table(compareObjects(a, b));
+}
+
+export function ArrayOrNullOrUndefined<T>(value: T[]): T[] | null {
+  return value === undefined
+    ? undefined
+    : value === null
+    ? null
+    : (value as any) === 'null'
+    ? null
+    : (value as any) === 'undefined'
+    ? undefined
+    : (value as any) === '[]'
+    ? []
+    : typeof (value as any) === 'string'
+    ? JSON.parse(value as any)
+    : (value as T[]);
+}
+export function ForceArray<T>(value: T[]): T[] {
+  return ArrayOrNullOrUndefined(value) ?? [];
+}
+
+export function ForceMap<T>(value: T[], constructor: Type<T>): T[] {
+  return ForceArray<T>(value).map((item) => new constructor(item));
+}
+
+export function TypeOrNullOrUndefined<T>(value: T, constructor: Type<T>): T {
+  return value === undefined || value === 'undefined'
+    ? undefined
+    : value === null || value === 'null'
+    ? null
+    : new constructor(value);
 }

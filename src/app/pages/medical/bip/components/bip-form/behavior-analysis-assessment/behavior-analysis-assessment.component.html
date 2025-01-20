@@ -1,0 +1,81 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row align-items-center mb-4">
+      <app-behavior-analysis-assessment-form
+        [(input)]="bip"
+      ></app-behavior-analysis-assessment-form>
+      <!-- Documents -->
+      <div class="row align-items-center mb-4">
+        <app-list-and-form
+          #documentsList
+          title="Documents Reviewed"
+          [(newItem)]="newDocument"
+          [(dataSource)]="bip.documents_reviewed"
+          [displayedColumns]="['title']"
+        >
+          <app-document-form
+            [(input)]="newDocument"
+            (cancel)="documentsList.onClose()"
+            (save)="documentsList.onAdd($event)"
+          >
+          </app-document-form>
+        </app-list-and-form>
+      </div>
+
+      <!-- Medicals -->
+
+      <div class="row align-items-center">
+        <div class="col-xs-12">
+          <div class="form-group local-forms">
+            <label>
+              Phiysical And Medical Status
+              <span class="login-danger">*</span>
+            </label>
+            <textarea
+              class="form-control"
+              name="phiysical_and_medical"
+              [(ngModel)]="bip.phisical_and_medical_status"
+              rows="4"
+              cols="30"
+            >
+            </textarea>
+          </div>
+        </div>
+      </div>
+      <!-- Medicals List -->
+      <div class="row align-items-center mt-4">
+        <app-list-and-form
+          #phisicalAndMedicalList
+          title="Physical And Medical"
+          [(newItem)]="newMedication"
+          [(dataSource)]="bip.phisical_and_medical"
+          [displayedColumns]="[
+            'medication',
+            'dose',
+            'frecuency',
+            'reason',
+            'preescribing_physician'
+          ]"
+        >
+          <app-phisical-and-medical
+            [(input)]="newMedication"
+            (cancel)="phisicalAndMedicalList.onClose()"
+            (save)="phisicalAndMedicalList.onAdd($event)"
+          ></app-phisical-and-medical>
+        </app-list-and-form>
+      </div>
+      <!-- Save -->
+      <div class="row align-items-center my-2">
+        <div class="doctor-submit text-end">
+          <button
+            type="button"
+            class="btn btn-primary submit-form"
+            (click)="onSave()"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

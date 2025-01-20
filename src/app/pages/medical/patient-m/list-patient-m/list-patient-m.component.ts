@@ -394,7 +394,7 @@ export class ListPatientMComponent implements OnInit {
     });
   }
 
-  getActionsForPatient(patient: any): any[] {
+  getActionsForPatient(patient: PatientV2): any[] {
     const allActions = [
       {
         title: 'Edit Client',
@@ -408,28 +408,36 @@ export class ListPatientMComponent implements OnInit {
         icon: 'fa fa-address-book',
         buttonClass: 'btn-outline-success',
         onClick: () =>
-          this.router.navigate([AppRoutes.bip.attention, patient.patient_identifier]),
+          this.router.navigate([
+            AppRoutes.bip.edit,
+            patient.id,
+          ]),
       },
       {
         title: 'BIP View',
         icon: 'fa fa-eye',
         buttonClass: 'btn-outline-dark',
-        onClick: () =>
-          this.router.navigate([AppRoutes.bip.profile, patient.patient_identifier]),
+        onClick: () => this.router.navigate([AppRoutes.bip.show, patient.id]),
       },
       {
         title: 'Create RBT Note',
         icon: 'fa fa-id-card',
         buttonClass: 'btn-outline-success',
         onClick: () =>
-          this.router.navigate([AppRoutes.noteRbt.noteRbt, patient.patient_identifier]),
+          this.router.navigate([
+            AppRoutes.noteRbt.noteRbt,
+            patient.patient_identifier,
+          ]),
       },
       {
         title: 'RBT Note list',
         icon: 'fa fa-bars',
         buttonClass: 'btn-outline-primary',
         onClick: () =>
-          this.router.navigate([AppRoutes.noteRbt.list, patient.patient_identifier]),
+          this.router.navigate([
+            AppRoutes.noteRbt.list,
+            patient.patient_identifier,
+          ]),
       },
       {
         title: 'Create BCBA Note',
@@ -446,9 +454,12 @@ export class ListPatientMComponent implements OnInit {
         icon: 'fa fa-bars',
         buttonClass: 'btn-outline-primary',
         onClick: () =>
-          this.router.navigate([AppRoutes.noteBcba.list, patient.patient_identifier]),
+          this.router.navigate([
+            AppRoutes.noteBcba.list,
+            patient.patient_identifier,
+          ]),
       },
-      
+
       // {
       //   title: 'Delete ',
       //   icon: 'fa fa-bars',
@@ -480,7 +491,7 @@ export class ListPatientMComponent implements OnInit {
 
     switch (action.title) {
       case 'Edit Client':
-        return ['SUPERADMIN', 'MANAGER', ].includes(this.roles);
+        return ['SUPERADMIN', 'MANAGER'].includes(this.roles);
       case 'BIP Create':
         return ['SUPERADMIN', 'MANAGER', 'LM', 'BCBA'].includes(this.roles);
       case 'BIP View':
@@ -497,6 +508,4 @@ export class ListPatientMComponent implements OnInit {
         return false;
     }
   }
-
-  
 }

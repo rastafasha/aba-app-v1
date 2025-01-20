@@ -1,25 +1,25 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { url_servicios } from 'src/app/config/config';
-import { AuthService } from 'src/app/core/auth/auth.service';
-import { Observable, map } from 'rxjs';
+
 @Injectable({
   providedIn: 'root',
 })
 export class GraphicReductionService {
-  constructor(public http: HttpClient, authService: AuthService) {}
+  constructor(public http: HttpClient) {}
 
   listGraphics() {
     const URL = url_servicios + '/graphic_reduction';
     return this.http.get<any>(URL);
   }
 
-  getGraphic(user_id: any) {
+  getGraphic(user_id: string) {
     const URL = url_servicios + '/graphic_reduction/show/' + user_id;
     return this.http.get<any>(URL);
   }
 
-  listMaladaptivesGraphics(maladaptive: any, patient_id: any) {
+  listMaladaptivesGraphics(maladaptive: string, patient_id: string) {
     const URL =
       url_servicios +
       '/graphic_reduction/showbyMaladaptive/' +
@@ -28,7 +28,11 @@ export class GraphicReductionService {
       patient_id;
     return this.http.get<any>(URL);
   }
-  listReductionGraphics(replacement: any, patient_id: any): Observable<any> {
+
+  listReductionGraphics(
+    replacement: string,
+    patient_id: string
+  ): Observable<any> {
     const URL =
       url_servicios +
       '/graphic_reduction/showbyReplacement/' +
@@ -43,12 +47,12 @@ export class GraphicReductionService {
     return this.http.get<any>(URL);
   }
 
-  getPatient(patient_id: any) {
+  getPatient(patient_id: string) {
     const URL = url_servicios + '/graphic_reduction/showpatient/' + patient_id;
     return this.http.get<any>(URL);
   }
 
-  graphicPatientMonth(data) {
+  graphicPatientMonth(data: any) {
     const URL = url_servicios + '/graphic_reduction/patient-month';
     return this.http.post<any>(URL, data);
   }

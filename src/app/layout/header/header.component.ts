@@ -34,7 +34,7 @@ export class HeaderComponent implements OnInit {
     private appearanceService: AppearanceService
   ) {
     this.sideBar.toggleSideBar.subscribe((res: string) => {
-      if (res == 'true') {
+      if (res === 'true') {
         this.miniSidebar = true;
       } else {
         this.miniSidebar = false;

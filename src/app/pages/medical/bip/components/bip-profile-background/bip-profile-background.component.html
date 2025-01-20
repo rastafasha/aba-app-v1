@@ -1,0 +1,113 @@
+<div class="row">
+  <div class="col-12">
+    <div class="personal-list-out">
+      <div class="card">
+        <div class="card-body">
+          <div class="about-info mb-10">
+            <h4>Information</h4>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="detail-personal">
+                <h2>Background Information</h2>
+                <p>{{ bip.background_information }}</p>
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <div class="detail-personal">
+                <h2>Previous treatments and results</h2>
+                <p>{{ bip.previus_treatment_and_result }}</p>
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <div class="detail-personal">
+                <h2>Current treatment and progress</h2>
+                <p>{{ bip.current_treatment_and_progress }}</p>
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <div class="detail-personal">
+                <h2>Education status</h2>
+                <p>{{ bip.education_status }}</p>
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <div class="detail-personal">
+                <h2>Physical and Medical Status</h2>
+                <p>{{ bip.phisical_and_medical_status }}</p>
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <div class="detail-personal">
+                <h2>Strengths</h2>
+                <p>{{ bip.strengths }}</p>
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+              <div class="detail-personal">
+                <h2>Weakneses</h2>
+                <p>{{ bip.weakneses }}</p>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="about-info mb-10">
+                <h4>Physical And Medical Status</h4>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="detail-personal">
+                    <h2>Physical And Medical Status</h2>
+                    <p>{{ bip.phiysical_and_medical }}</p>
+                  </div>
+                </div>
+                <div
+                  *ngIf="
+                    !bip.phisical_and_medical ||
+                    bip.phisical_and_medical === null
+                  "
+                >
+                  <app-no-info></app-no-info>
+                </div>
+                <ng-container
+                  *ngFor="let medication of bip.phisical_and_medical"
+                >
+                  <div class="col-xs-12 col-sm-3">
+                    <div class="detail-personal">
+                      <h2>Medication</h2>
+                      <p>{{ medication.medication }}</p>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-3">
+                    <div class="detail-personal">
+                      <h2>Dose</h2>
+                      <p>{{ medication.dose }}</p>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-3">
+                    <div class="detail-personal">
+                      <h2>Frecuency</h2>
+                      <p>{{ medication.frecuency }}</p>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-sm-3">
+                    <div class="detail-personal">
+                      <h2>Preescribing Physician</h2>
+                      <p>{{ medication.preescribing_physician }}</p>
+                    </div>
+                  </div>
+                  <div class="col-xs-12">
+                    <div class="detail-personal">
+                      <h2>Reason</h2>
+                      <p>{{ medication.reason }}</p>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

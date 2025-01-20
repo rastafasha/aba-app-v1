@@ -48,17 +48,14 @@ export class PaServicesV2Service extends RepositoryV2Service<PaServiceV2> {
   }
 
   ////////////////////
-  override get(id: number): Observable<ApiV2Response<PaServiceV2>>;
-  override get(
-    id: number,
-    patient_id = 0
-  ): Observable<ApiV2Response<PaServiceV2>> {
+  // get(id: number): Observable<ApiV2Response<PaServiceV2>>;
+  get(id: number, patient_id = 0): Observable<ApiV2Response<PaServiceV2>> {
     this.changeEndpoint(patient_id);
     return super.get(id).pipe(this.restoreEndpoint());
   }
 
-  override list(options: ListParameters): Observable<ListResponse<PaServiceV2>>;
-  override list(
+  // list(options: ListParameters): Observable<ListResponse<PaServiceV2>>;
+  list(
     options: ListParameters,
     patient_id = 0
   ): Observable<ListResponse<PaServiceV2>> {

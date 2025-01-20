@@ -1,0 +1,26 @@
+<div class="row">
+  <h3 class="card-title">{{ title }}</h3>
+  <app-plan-form [(input)]="input"></app-plan-form>
+
+  <app-list-and-form
+    class="mt-4"
+    title="Short Term Objectives"
+    [(newItem)]="newSto"
+    [dataSource]="input.objectives | arrayFilter : 'type' : 'STO'"
+    [displayedColumns]="displayedColumns"
+    [renders]="renders"
+  >
+    <app-rbt-training-goal-form [(input)]="newSto"></app-rbt-training-goal-form>
+  </app-list-and-form>
+
+  <app-list-and-form
+    class="mt-4"
+    title="Long Term Objectives"
+    [(newItem)]="newLto"
+    [dataSource]="input.objectives | arrayFilter : 'type' : 'LTO'"
+    [displayedColumns]="displayedColumns"
+    [renders]="renders"
+  >
+    <app-rbt-training-goal-form [(input)]="newLto"></app-rbt-training-goal-form>
+  </app-list-and-form>
+</div>

@@ -16,7 +16,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
           <ng-container *ngFor="let behavior of maladaptives; let i = index">
             <div class="col-xs-12 col-sm-3 graphic-value mb-4">
               <div class="title mb-2">
-                <h4 class="label">{{ behavior.maladaptive_behavior }}</h4>
+                <h4 class="label">{{ behavior.name }}</h4>
               </div>
               <input
                 class="form-control mb-2"
@@ -43,6 +43,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   `,
 })
 export class MaladaptivesComponent {
-  @Input() maladaptives = [];
+  @Input() maladaptives: any[] = [];
   @Output() maladaptivesChange = new EventEmitter<any[]>();
 }

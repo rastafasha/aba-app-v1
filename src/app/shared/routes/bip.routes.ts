@@ -13,10 +13,6 @@ export class BipRoutes {
     return `${baseUrl}/bip/register`;
   }
 
-  static get edit(): string {
-    return `${baseUrl}/bip/edit`;
-  }
-
   static get goalAdd(): string {
     return `${baseUrl}/bip/goal/add`;
   }
@@ -27,5 +23,13 @@ export class BipRoutes {
 
   static get profile(): string {
     return `${baseUrl}/bip/profile`;
+  }
+
+  static get show(): string {
+    return `${baseUrl}/bip/show/patient`;
+  }
+
+  static get edit(): string {
+    return `${baseUrl}/bip/edit/patient`;
   }
 }

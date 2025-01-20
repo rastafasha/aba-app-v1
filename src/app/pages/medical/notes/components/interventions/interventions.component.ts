@@ -41,6 +41,7 @@ export class InterventionsComponent {
         acc[intervention.id] = true;
         return acc;
       }, {});
+      console.log(interventionsObj);
     this.interventionsChange.emit([interventionsObj]);
   }
 }
