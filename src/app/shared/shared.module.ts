@@ -13,18 +13,21 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { ActionButtonComponent } from './components/action-button/action-button.component';
 import { ActionModalComponent } from './components/action-modal/action-modal.component';
+import { AlertComponent } from './components/alert/alert.component';
+import { ListAndFormComponent } from './components/list-and-form/list-and-form.component';
+import { ListComponent } from './components/list/list.component';
+import { PaServiceCalculatorComponent } from './components/pa-service-calculator/pa-service-calculator.component';
 import { SkeletonLoaderComponent } from './components/skeleton-loader/skeleton-loader.component';
 import { TableModule } from './components/table/table.module';
+import { UnitsDisplayComponent } from './components/units-display/units-display.component';
 import { DataService } from './data/data.service';
-import { MaterialModule } from './material.module';
+import { MaterialModule } from './extras/material.module';
 import { NgxBootstrapModule } from './ngx-bootstrap/ngx-bootstrap.module';
 import { NoInfoComponent } from './no-info/no-info.component';
 import { PipesModule } from './pipes/pipes.module';
 import { PageService } from './services/pages.service';
-import { UnitsDisplayComponent } from './components/units-display/units-display.component';
+import { ListColumnsPipe } from './components/pipes/list-columns.pipe';
 import { PdfButtonComponent } from './components/pdf-button/pdf-button.component';
-import { PaServiceCalculatorComponent } from './components/pa-service-calculator/pa-service-calculator.component';
-import { AlertComponent } from './components/alert/alert.component';
 
 const components = [
   NoInfoComponent,
@@ -32,9 +35,12 @@ const components = [
   ActionButtonComponent,
   ActionModalComponent,
   UnitsDisplayComponent,
-  PdfButtonComponent,
   PaServiceCalculatorComponent,
-  AlertComponent
+  AlertComponent,
+  ListComponent,
+  ListAndFormComponent,
+  ListColumnsPipe,
+  PdfButtonComponent,
 ];
 
 @NgModule({
@@ -68,6 +74,7 @@ const components = [
     ReactiveFormsModule,
     NgxMaterialTimepickerModule,
     RouterModule,
+    PipesModule,
   ],
   exports: [
     ...components,
@@ -87,14 +94,8 @@ const components = [
     ReactiveFormsModule,
     NgxMaterialTimepickerModule,
     RouterModule,
-    SkeletonLoaderComponent,
-    ActionButtonComponent,
-    ActionModalComponent,
     PipesModule,
     TableModule,
-    PdfButtonComponent,
-    PaServiceCalculatorComponent,
-    AlertComponent
   ],
   providers: [DataService, PageService],
 })

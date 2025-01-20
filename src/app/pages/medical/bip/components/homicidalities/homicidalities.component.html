@@ -1,0 +1,172 @@
+<div class="col-xs-12">
+  <div class="row">
+    <div class="col-xs-6 col-sm-4">
+      <div class="form-group">
+        <div
+          _ngcontent-rhp-c92=""
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 _ngcontent-rhp-c92="" class="card-title">Not Present</h5>
+          <div
+            _ngcontent-rhp-c92=""
+            class="status-toggle d-flex justify-content-between align-items-center"
+          >
+            <input
+              _ngcontent-rhp-c92=""
+              type="checkbox"
+              id="not_present_homicidality"
+              class="check"
+              name="not_present_homicidality"
+              [checked]="homicidalities.not_present === true"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="homicidalities.not_present"
+            />
+            <label
+              _ngcontent-rhp-c92=""
+              for="not_present_homicidality"
+              class="checktoggle"
+              value="true"
+              >checkbox</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-4">
+      <div class="form-group">
+        <div
+          _ngcontent-rhp-c92=""
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 _ngcontent-rhp-c92="" class="card-title">Ideation</h5>
+          <div
+            _ngcontent-rhp-c92=""
+            class="status-toggle d-flex justify-content-between align-items-center"
+          >
+            <input
+              _ngcontent-rhp-c92=""
+              type="checkbox"
+              id="ideation_homicidality"
+              class="check"
+              name="ideation_homicidality"
+              [checked]="homicidalities.ideation === true"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="homicidalities.ideation"
+            />
+            <label
+              _ngcontent-rhp-c92=""
+              for="ideation_homicidality"
+              class="checktoggle"
+              value="true"
+              >checkbox</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-4">
+      <div class="form-group">
+        <div
+          _ngcontent-rhp-c92=""
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 _ngcontent-rhp-c92="" class="card-title">Plan</h5>
+          <div
+            _ngcontent-rhp-c92=""
+            class="status-toggle d-flex justify-content-between align-items-center"
+          >
+            <input
+              _ngcontent-rhp-c92=""
+              type="checkbox"
+              id="plan_homicidality"
+              class="check"
+              name="plan_homicidality"
+              [checked]="homicidalities.plan === true"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="homicidalities.plan"
+            />
+            <label
+              _ngcontent-rhp-c92=""
+              for="plan_homicidality"
+              class="checktoggle"
+              value="true"
+              >checkbox</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-4">
+      <div class="form-group">
+        <div
+          _ngcontent-rhp-c92=""
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 _ngcontent-rhp-c92="" class="card-title">Means</h5>
+          <div
+            _ngcontent-rhp-c92=""
+            class="status-toggle d-flex justify-content-between align-items-center"
+          >
+            <input
+              _ngcontent-rhp-c92=""
+              type="checkbox"
+              id="means_homicidality"
+              class="check"
+              name="means_homicidality"
+              [checked]="homicidalities.means === true"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="homicidalities.means"
+            />
+            <label
+              _ngcontent-rhp-c92=""
+              for="means_homicidality"
+              class="checktoggle"
+              value="true"
+              >checkbox</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-4">
+      <div class="form-group">
+        <div
+          _ngcontent-rhp-c92=""
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 _ngcontent-rhp-c92="" class="card-title">
+            Prior attempt (last 12 months)
+          </h5>
+          <div
+            _ngcontent-rhp-c92=""
+            class="status-toggle d-flex justify-content-between align-items-center"
+          >
+            <input
+              _ngcontent-rhp-c92=""
+              type="checkbox"
+              id="prior_attempt_homicidality"
+              class="check"
+              name="prior_attempt_homicidality"
+              [checked]="homicidalities.prior_attempt === true"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="homicidalities.prior_attempt"
+            />
+            <label
+              _ngcontent-rhp-c92=""
+              for="prior_attempt_homicidality"
+              class="checktoggle"
+              value="true"
+              >checkbox</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 mb-3 doctor-submit text-end">
+      <button class="btn btn-primary btn-sm" (click)="onSave()">
+        Update Homicidality
+      </button>
+    </div>
+  </div>
+</div>

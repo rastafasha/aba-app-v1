@@ -1,0 +1,41 @@
+<h3 mat-dialog-title class="h3">Document Review</h3>
+<div mat-dialog-content>
+  <div class="row mt-4">
+    <div class="col-xs-12 col-sm-6">
+      <div class="form-group local-forms">
+        <label> Document Title<span class="login-danger">*</span> </label>
+        <input
+          class="form-control"
+          name="assestment_title"
+          [(ngModel)]="input.title"
+          type="text"
+        />
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <div class="form-group local-forms">
+        <label>Status<span class="login-danger">*</span> </label>
+        <select
+          class="form-control form-select-solid fw-bolder"
+          name="assestment_status"
+          [(ngModel)]="input.status"
+          placeholder="state"
+        >
+          <option>-- Select --</option>
+          <option value="pending">Pending</option>
+          <option value="reviewing">Reviewing</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions align="end">
+  <button (click)="onCancel()" mat-button class="btn btn-outline-danger btn-md">
+    Cancel
+  </button>
+  <button (click)="onSave()" mat-button class="btn btn-primary btn-md">
+    Save
+  </button>
+</div>

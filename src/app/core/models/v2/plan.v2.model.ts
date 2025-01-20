@@ -4,25 +4,60 @@ import {
   NumberOrNullOrUndefined,
   StringOrNullOrUndefined,
 } from 'src/app/shared/utils';
-import { Objective } from './bip.v2.model';
+import { Objective } from './objective.v2.model';
+export type PlanStatus =
+  | 'active'
+  | 'completed'
+  | 'hold'
+  | 'discontinued'
+  | 'maintenance'
+  | 'met'
+  | 'monitoring';
+export const PLAN_STATUS_MAP: Record<PlanStatus, string> = {
+  active: 'Active',
+  completed: 'Completed',
+  hold: 'On Hold',
+  discontinued: 'Discontinued',
+  maintenance: 'Maintenance',
+  met: 'Met',
+  monitoring: 'Monitoring',
+};
+
+export type PlanCategory =
+  | 'maladaptive'
+  | 'sustitution'
+  | 'caregiver'
+  | 'rbt_training';
+
+export const PLAN_CATEGORY_MAP: Record<PlanCategory, string> = {
+  maladaptive: 'Maladaptive',
+  sustitution: 'Substitution',
+  caregiver: 'Caregiver',
+  rbt_training: 'RBT Training',
+};
 
 export class PlanV2 {
+  //internal
   index?: number;
   id: number;
   bip_id: number;
+  category: PlanCategory;
+  //external
   name: string;
+  status: PlanStatus;
   description: string;
   baseline_level: number;
   baseline_date: Date;
   end_date: Date;
   initial_intensity: number;
   current_intensity: number;
-  category: 'maladaptive' | 'sustitution';
-  status: 'active' | 'inactive';
+  //
+  objectives: Objective[];
+  //other
   created_at?: Date;
   updated_at?: Date;
   deleted_at?: Date;
-  objectives: Objective[];
+
   constructor(data: Partial<PlanV2>) {
     const self: PlanV2 = {
       ...data,
@@ -38,6 +73,9 @@ export class PlanV2 {
       category: StringOrNullOrUndefined(data.category) as 'maladaptive',
       status: StringOrNullOrUndefined(data.status) as 'active',
       objectives: ForceMap(data.objectives, Objective),
+      created_at: DateOrNullOrUndefined(data.created_at),
+      updated_at: DateOrNullOrUndefined(data.updated_at),
+      deleted_at: DateOrNullOrUndefined(data.deleted_at),
     };
     return self;
   }
@@ -53,7 +91,7 @@ export class PlanV2 {
       initial_intensity: 0,
       current_intensity: 0,
       category: 'maladaptive',
-      status: 'inactive',
+      status: 'active',
       objectives: [],
     });
   }

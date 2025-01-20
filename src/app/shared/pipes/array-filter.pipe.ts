@@ -4,7 +4,11 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'arrayFilter',
 })
 export class ArrayFilterPipe implements PipeTransform {
-  transform<T>(items: T[], field: keyof T, value: unknown): T[] {
+  transform<T, K extends keyof T>(
+    items: T[],
+    field: keyof T,
+    value: T[K]
+  ): T[] {
     if (!items || !field || value === undefined || value === null) {
       return items;
     }

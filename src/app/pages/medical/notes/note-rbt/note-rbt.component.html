@@ -5,10 +5,16 @@
       <div class="row">
         <div class="col-sm-12">
           <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a [routerLink]="[routes.noteRbt.list, patient_identifier]">RBT Notes </a></li>
-            <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
-            <li class="breadcrumb-item active">Add Note </li>
-        </ul>
+            <li class="breadcrumb-item">
+              <a [routerLink]="[routes.noteRbt.list, patient_identifier]"
+                >RBT Notes
+              </a>
+            </li>
+            <li class="breadcrumb-item">
+              <i class="feather icon-chevron-right"></i>
+            </li>
+            <li class="breadcrumb-item active">Add Note</li>
+          </ul>
 
           <div class="doctor-submit text-start">
             <button class="btn btn-primary btn-sm" (click)="goBack()">
@@ -27,332 +33,342 @@
           <div class="col-xs-12">
             <div class="card">
               <div class="card-body">
-                  <div class="row align-items-center ">
-                    <div class="col-12 py-4">
-                      <h4>Create Note rbt</h4>
-                    </div>
-                    
-                    <!-- First Name -->
-                    <div class="col-12 col-md-6 col-xl-4">
-                      <div class="form-group local-forms">
-                        <label
-                          >First Name <span class="login-danger">*</span></label
-                        >
-                        <input
-                          class="form-control"
-                          name="first_name"
-                          disabled
-                          [(ngModel)]="first_name"
-                          type="text"
-                        />
-                      </div>
-                    </div>
-                    <!-- Last Name -->
-                    <div class="col-12 col-md-6 col-xl-4">
-                      <div class="form-group local-forms">
-                        <label>Last Name <span class="login-danger">*</span></label>
-                        <input
-                          class="form-control"
-                          name="last_name"
-                          disabled
-                          [(ngModel)]="last_name"
-                          type="text"
-                        />
-                      </div>
-                    </div>
-                    <!-- Patient ID  -->
-                    <div class="col-12 col-md-6 col-xl-4">
-                      <div class="form-group local-forms">
-                        <label
-                          >Patient ID <span class="login-danger">*</span></label
-                        >
-                        <input
-                          class="form-control"
-                          name="patient_identifier"
-                          disabled
-                          [(ngModel)]="patient_identifier"
-                          type="text"
-                        />
-                      </div>
-                    </div>
-                    <!-- Diagnosis Code -->
-                    <div class="col-12 col-md-6 col-xl-4">
-                      <div class="form-group local-forms">
-                        <label
-                          >Diagnosis Code <span class="login-danger">*</span></label
-                        >
-                        <input
-                          class="form-control"
-                          name="diagnosis_code"
-                          disabled
-                          [(ngModel)]="diagnosis_code"
-                          type="text"
-                        />
-                      </div>
-                    </div>
-                    <!-- Insurance ID -->
-                    <div class="col-12 col-md-6 col-xl-4">
-                      <div class="form-group local-forms">
-                        <label>Insurance ID <span class="login-danger">*</span></label>
-                        <input
-                          class="form-control"
-                          name="insurance_identifier"
-                          disabled
-                          [(ngModel)]="insurance_identifier"
-                          type="text"
-                        />
-                      </div>
-                    </div>
+                <div class="row align-items-center">
+                  <div class="col-12 py-4">
+                    <h4>Create Note rbt</h4>
+                  </div>
 
-                    <!-- Provider Name  -->
-                    <div class="col-12 col-md-6 col-xl-4">
-                      <div class="form-group local-forms">
-                        <label
-                          >Provider Name <span class="login-danger">*</span></label
-                        >
-                        <p style="padding: 10px">{{ doctor?.full_name }}</p>
-                      </div>
+                  <!-- First Name -->
+                  <div class="col-12 col-md-6 col-xl-4">
+                    <div class="form-group local-forms">
+                      <label
+                        >First Name <span class="login-danger">*</span></label
+                      >
+                      <input
+                        class="form-control"
+                        name="first_name"
+                        disabled
+                        [(ngModel)]="first_name"
+                        type="text"
+                      />
                     </div>
-                    <!-- Provider Credential -->
-                    <div class="col-12 col-md-6 col-xl-4">
-                      <div class="form-group local-forms">
-                        <label
-                          >Provider Credential
-                          <span class="login-danger">*</span></label
-                        >
-                        <input
-                          class="form-control"
-                          disabled
-                          name="provider_credential"
-                          [(ngModel)]="provider_credential"
-                          type="text"
-                        />
-                      </div>
+                  </div>
+                  <!-- Last Name -->
+                  <div class="col-12 col-md-6 col-xl-4">
+                    <div class="form-group local-forms">
+                      <label
+                        >Last Name <span class="login-danger">*</span></label
+                      >
+                      <input
+                        class="form-control"
+                        name="last_name"
+                        disabled
+                        [(ngModel)]="last_name"
+                        type="text"
+                      />
                     </div>
+                  </div>
+                  <!-- Patient ID  -->
+                  <div class="col-12 col-md-6 col-xl-4">
+                    <div class="form-group local-forms">
+                      <label
+                        >Patient ID <span class="login-danger">*</span></label
+                      >
+                      <input
+                        class="form-control"
+                        name="patient_identifier"
+                        disabled
+                        [(ngModel)]="patient_identifier"
+                        type="text"
+                      />
+                    </div>
+                  </div>
+                  <!-- Diagnosis Code -->
+                  <div class="col-12 col-md-6 col-xl-4">
+                    <div class="form-group local-forms">
+                      <label
+                        >Diagnosis Code
+                        <span class="login-danger">*</span></label
+                      >
+                      <input
+                        class="form-control"
+                        name="diagnosis_code"
+                        disabled
+                        [(ngModel)]="diagnosis_code"
+                        type="text"
+                      />
+                    </div>
+                  </div>
+                  <!-- Insurance ID -->
+                  <div class="col-12 col-md-6 col-xl-4">
+                    <div class="form-group local-forms">
+                      <label
+                        >Insurance ID <span class="login-danger">*</span></label
+                      >
+                      <input
+                        class="form-control"
+                        name="insurance_identifier"
+                        disabled
+                        [(ngModel)]="insurance_identifier"
+                        type="text"
+                      />
+                    </div>
+                  </div>
 
-
-                    
-                    
-                <!-- DOS -->
-                    <div class="col-12 col-md-6 col-xl-4">
-                      <div class="form-group local-forms">
-                        <label>DOS <span class="login-danger">*</span></label>
-                        <input
-                          class="form-control datetimepicker"
-                          autocomplete="false"
-                          name="session_date"
-                          [(ngModel)]="session_date"
-                          (dateChange)="onDateChange($event)"
-                          type="text"
-                          matInput
-                          [matDatepicker]="pickerSesDate"
-                        />
-                        <mat-datepicker #pickerSesDate></mat-datepicker>
-                        <mat-datepicker-toggle
-                          matIconSuffix
-                          [for]="pickerSesDate"
-                        ></mat-datepicker-toggle>
-                      </div>
+                  <!-- Provider Name  -->
+                  <div class="col-12 col-md-6 col-xl-4">
+                    <div class="form-group local-forms">
+                      <label
+                        >Provider Name
+                        <span class="login-danger">*</span></label
+                      >
+                      <p style="padding: 10px">{{ doctor?.full_name }}</p>
                     </div>
-                    <!-- POS -->
-                    <div class="col-12 col-md-6 col-xl-4">
-                      <div class="form-group local-forms">
-                        <label
-                          >POS
-                          <span class="login-danger">*</span></label
-                        >
-
-                        <select
-                          class="form-control form-select-solid fw-bolder"
-                          name="meet_with_client_at"
-                          [(ngModel)]="meet_with_client_at"
-                        >
-                          <option>-- Select --</option>
-                          <option value="03">03 School</option>
-                          <option value="12">12 Home</option>
-                          <option value="02">02 Telehealth</option>
-                          <option value="99">99 Other</option>
-                        </select>
-                      </div>
+                  </div>
+                  <!-- Provider Credential -->
+                  <div class="col-12 col-md-6 col-xl-4">
+                    <div class="form-group local-forms">
+                      <label
+                        >Provider Credential
+                        <span class="login-danger">*</span></label
+                      >
+                      <input
+                        class="form-control"
+                        disabled
+                        name="provider_credential"
+                        [(ngModel)]="provider_credential"
+                        type="text"
+                      />
                     </div>
-                    <div class="clear"></div>
+                  </div>
+
+                  <!-- DOS -->
+                  <div class="col-12 col-md-6 col-xl-4">
+                    <div class="form-group local-forms">
+                      <label>DOS <span class="login-danger">*</span></label>
+                      <input
+                        class="form-control datetimepicker"
+                        autocomplete="false"
+                        name="session_date"
+                        [(ngModel)]="session_date"
+                        (dateChange)="onDateChange($event)"
+                        type="text"
+                        matInput
+                        [matDatepicker]="pickerSesDate"
+                      />
+                      <mat-datepicker #pickerSesDate></mat-datepicker>
+                      <mat-datepicker-toggle
+                        matIconSuffix
+                        [for]="pickerSesDate"
+                      ></mat-datepicker-toggle>
+                    </div>
+                  </div>
+                  <!-- POS -->
+                  <div class="col-12 col-md-6 col-xl-4">
+                    <div class="form-group local-forms">
+                      <label>POS <span class="login-danger">*</span></label>
+
+                      <select
+                        class="form-control form-select-solid fw-bolder"
+                        name="meet_with_client_at"
+                        [(ngModel)]="meet_with_client_at"
+                      >
+                        <option>-- Select --</option>
+                        <option value="03">03 School</option>
+                        <option value="12">12 Home</option>
+                        <option value="02">02 Telehealth</option>
+                        <option value="99">99 Other</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="clear"></div>
+                  <!-- time -->
+                  <div class="row">
                     <!-- time -->
-                    <div class="row">
-                      <!-- time -->
-                      <div class="col-xs-12 col-sm-6">
-                        <h5 class="mb-3">Morning Session</h5>
-                        <div class="row">
-                          <div class="col-xs-12 col-sm-6">
-                            <div class="form-group local-forms">
-                              <label
-                                >Time In <span class="login-danger">*</span></label
-                              >
-                              <!-- max="12:00" -->
-                              <input
+                    <div class="col-xs-12 col-sm-6">
+                      <h5 class="mb-3">Morning Session</h5>
+                      <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                          <div class="form-group local-forms">
+                            <label
+                              >Time In
+                              <span class="login-danger">*</span></label
+                            >
+                            <!-- max="12:00" -->
+                            <input
                               [ngxTimepicker]="toggleTimepicker"
                               readonly
                               [format]="24"
                               class="form-control"
                               [value]="selectedValueTimeIn"
                               [(ngModel)]="selectedValueTimeIn"
-                                name="time_in"
-                              />
-                              <ngx-material-timepicker
-                                (timeChanged)="hourTimeInSelected($event)"
-                                #toggleTimepicker
-                              ></ngx-material-timepicker>
-                            </div>
+                              name="time_in"
+                            />
+                            <ngx-material-timepicker
+                              (timeChanged)="hourTimeInSelected($event)"
+                              #toggleTimepicker
+                            ></ngx-material-timepicker>
                           </div>
-                          <div class="col-xs-12 col-sm-6">
-                            <div class="form-group local-forms">
-                              <label
-                                >Time Out <span class="login-danger">*</span></label
-                              >
-                              <input
-                                [ngxTimepicker]="toggleTimepicker2"
-                                readonly
-                                [value]="selectedValueTimeOut"
-                                [(ngModel)]="selectedValueTimeOut"
-                                [format]="24"
-                                class="form-control"
-                                name="time_out"
-                              />
-                              <ngx-material-timepicker
-                                (timeChanged)="hourTimeOutSelected($event)"
-                                #toggleTimepicker2
-                              ></ngx-material-timepicker>
-                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                          <div class="form-group local-forms">
+                            <label
+                              >Time Out
+                              <span class="login-danger">*</span></label
+                            >
+                            <input
+                              [ngxTimepicker]="toggleTimepicker2"
+                              readonly
+                              [value]="selectedValueTimeOut"
+                              [(ngModel)]="selectedValueTimeOut"
+                              [format]="24"
+                              class="form-control"
+                              name="time_out"
+                            />
+                            <ngx-material-timepicker
+                              (timeChanged)="hourTimeOutSelected($event)"
+                              #toggleTimepicker2
+                            ></ngx-material-timepicker>
                           </div>
                         </div>
                       </div>
-                      <div class="col-xs-12 col-sm-6">
-                        <h5 class="mb-3">Afternoon Session</h5>
-                        <div class="row">
-                          <div class="col-xs-12 col-sm-6">
-                            <div class="form-group local-forms">
-                              <label
-                                >Time In <span class="login-danger">*</span></label
-                              >
-                              <input
-                                [ngxTimepicker]="toggleTimepicker3"
-                                readonly
-                                [format]="24"
-                                class="form-control"
-                                name="time_in2"
-                                [value]="selectedValueTimeIn2"
-                                [(ngModel)]="selectedValueTimeIn2"
-                              />
-                              <ngx-material-timepicker
-                                (timeChanged)="hourTimeIn2Selected($event)"
-                                #toggleTimepicker3
-                              ></ngx-material-timepicker>
-                            </div>
-                          </div>
-                          <div class="col-xs-12 col-sm-6">
-                            <div class="form-group local-forms">
-                              <label
-                                >Time Out <span class="login-danger">*</span></label
-                              >
-                              <input
-                                [ngxTimepicker]="toggleTimepicker4"
-                                readonly
-                                [(ngModel)]="selectedValueTimeOut2"
-                                [value]="selectedValueTimeOut2"
-                                [format]="24"
-                                class="form-control"
-                                name="time_out2"
-                              />
-                              <ngx-material-timepicker
-                                (timeChanged)="hourTimeOut2Selected($event)"
-                                #toggleTimepicker4
-                              ></ngx-material-timepicker>
-                            </div>
-
-                          </div>
-
-                        </div>
-                      </div>
-                      <div class="col-12">
-                        <div class="form-group local-forms">
-                          <label
-                            >Session Length Total<span class="login-danger"
-                              >*</span
-                            ></label
-                          >
-                          <p class="text-center p-3">
-                            {{total_hour_session}}
-                          </p>
-                        </div>
-                      </div>
-                      <!-- time -->
-
                     </div>
-                    <!--  units -->
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>CPT Code <span class="login-danger">*</span></label>
-                    <mat-select
-                      [(ngModel)]="selectedPaService"
-                      name="pa_service"
-                      disabled
-                      (selectionChange)="onPaServiceSelect($event)"
-                      class="form-control select"
-                      placeholder="Select Service"
-                    >
-                      <mat-option
-                        *ngFor="let service of pa_services | rbtFilter"
-                        [value]="service"
+                    <div class="col-xs-12 col-sm-6">
+                      <h5 class="mb-3">Afternoon Session</h5>
+                      <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                          <div class="form-group local-forms">
+                            <label
+                              >Time In
+                              <span class="login-danger">*</span></label
+                            >
+                            <input
+                              [ngxTimepicker]="toggleTimepicker3"
+                              readonly
+                              [format]="24"
+                              class="form-control"
+                              name="time_in2"
+                              [value]="selectedValueTimeIn2"
+                              [(ngModel)]="selectedValueTimeIn2"
+                            />
+                            <ngx-material-timepicker
+                              (timeChanged)="hourTimeIn2Selected($event)"
+                              #toggleTimepicker3
+                            ></ngx-material-timepicker>
+                          </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                          <div class="form-group local-forms">
+                            <label
+                              >Time Out
+                              <span class="login-danger">*</span></label
+                            >
+                            <input
+                              [ngxTimepicker]="toggleTimepicker4"
+                              readonly
+                              [(ngModel)]="selectedValueTimeOut2"
+                              [value]="selectedValueTimeOut2"
+                              [format]="24"
+                              class="form-control"
+                              name="time_out2"
+                            />
+                            <ngx-material-timepicker
+                              (timeChanged)="hourTimeOut2Selected($event)"
+                              #toggleTimepicker4
+                            ></ngx-material-timepicker>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-group local-forms">
+                        <label
+                          >Session Length Total<span class="login-danger"
+                            >*</span
+                          ></label
+                        >
+                        <p class="text-center p-3">
+                          {{ total_hour_session }}
+                        </p>
+                      </div>
+                    </div>
+                    <!-- time -->
+                  </div>
+                  <!--  units -->
+                  <div class="col-12 col-md-6 col-xl-4">
+                    <div class="form-group local-forms">
+                      <label
+                        >CPT Code <span class="login-danger">*</span></label
                       >
-                        ({{ service.cpt }})
-                      </mat-option>
-                    </mat-select>
+                      <mat-select
+                        [(ngModel)]="selectedPaService"
+                        name="pa_service"
+                        disabled
+                        (selectionChange)="onPaServiceSelect($event)"
+                        class="form-control select"
+                        placeholder="Select Service"
+                      >
+                        <mat-option
+                          *ngFor="let service of pa_services | rbtFilter"
+                          [value]="service"
+                        >
+                          ({{ service.cpt }})
+                        </mat-option>
+                      </mat-select>
+                    </div>
                   </div>
-                </div>
 
-                <!-- PA Service Calculator Information -->
-                <div class="col-12 col-md-6 col-xl-4">
-                  <app-pa-service-calculator
-                    [selectedPaService]="selectedPaService"
-                    [projectedUnits]="projectedUnits">
-                  </app-pa-service-calculator>
-                </div>
+                  <!-- PA Service Calculator Information -->
+                  <div class="col-12 col-md-6 col-xl-4">
+                    <app-pa-service-calculator
+                      [selectedPaService]="selectedPaService"
+                      [projectedUnits]="projectedUnits"
+                    >
+                    </app-pa-service-calculator>
+                  </div>
 
-                <div class="col-12 col-md-6 col-xl-4">
-                  <app-units-display
-                    [service]="selectedPaService"
-                    [newUnits]="projectedUnits">
-                  </app-units-display>
-                </div>
-                <!--  fin units -->
+                  <div class="col-12 col-md-6 col-xl-4">
+                    <app-units-display
+                      [service]="selectedPaService"
+                      [newUnits]="projectedUnits"
+                    >
+                    </app-units-display>
+                  </div>
+                  <!--  fin units -->
 
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>Environmental Changes <span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      name="environmental_changes"
-                      [(ngModel)]="environmental_changes"
-                      type="text"
-                    />
+                  <div class="col-12 col-md-6 col-xl-4">
+                    <div class="form-group local-forms">
+                      <label
+                        >Environmental Changes
+                        <span class="login-danger">*</span></label
+                      >
+                      <input
+                        class="form-control"
+                        name="environmental_changes"
+                        [(ngModel)]="environmental_changes"
+                        type="text"
+                      />
+                    </div>
                   </div>
+                  <div class="col-12 col-md-6 col-xl-4">
+                    <div class="form-group local-forms">
+                      <label
+                        >Present this session
+                        <span class="login-danger">*</span></label
+                      >
+                      <input
+                        class="form-control"
+                        name="participants"
+                        [(ngModel)]="participants"
+                        type="text"
+                      />
+                    </div>
+                  </div>
+                  <!-- paciente -->
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>Present this session <span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      name="participants"
-                      [(ngModel)]="participants"
-                      type="text"
-                    />
-                  </div>
-                </div>
-                    <!-- paciente -->
-                  </div>
               </div>
             </div>
           </div>
-
 
           <!-- fin infopaciente -->
           <!-- Cards Maladaptives -->
@@ -408,7 +424,6 @@
                         <h4>Summary</h4>
                       </div>
                     </div>
-
 
                     <div class="col-12 col-md-4">
                       <div class="form-group local-forms">
@@ -466,9 +481,9 @@
                     </div>
                     <div class="col-12">
                       <p>
-                        The replacements and interventions described above
-                        are outlined in the behavior plan and were
-                        implemented throughout the session
+                        The replacements and interventions described above are
+                        outlined in the behavior plan and were implemented
+                        throughout the session
                       </p>
                     </div>
                     <div class="col-12 col-md-6">
@@ -536,8 +551,7 @@
                     </div>
                     <div class="col-xs-12 col-sm-5">
                       <p>
-                        Data was collected within the session (see table
-                        above).
+                        Data was collected within the session (see table above).
                       </p>
                       <div class="col-12">
                         <div class="form-group local-forms">
@@ -567,7 +581,10 @@
                       <div class="row">
                         <div class="col-12 col-md-10">
                           <div class="form-group local-forms">
-                            <label>Note's Summary <span class="login-danger">*</span></label>
+                            <label
+                              >Note's Summary
+                              <span class="login-danger">*</span></label
+                            >
                             <textarea
                               class="form-control"
                               name="summary_note"
@@ -596,8 +613,8 @@
                     <!-- firma -->
                     <div class="col-12">
                       <p>
-                        the RBT will continue working with the goals as
-                        stated in behavior plan.
+                        the RBT will continue working with the goals as stated
+                        in behavior plan.
                       </p>
                     </div>
                     <div class="col-12 col-md-6 col-xl-6">
@@ -625,9 +642,7 @@
                           alt=""
                         />
                       </div>
-                      <div
-                        *ngIf="IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED"
-                      >
+                      <div *ngIf="IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED">
                         <img
                           [src]="electronic_signature"
                           style="width: 250px"
@@ -655,9 +670,7 @@
                             "
                             value="select"
                           >
-                            <mat-option [value]="null"
-                              >--Select-</mat-option
-                            >
+                            <mat-option [value]="null">--Select-</mat-option>
                             <mat-option
                               *ngFor="let data of roles_bcba"
                               [value]="data.id"
@@ -684,9 +697,7 @@
                           alt=""
                         />
                       </div>
-                      <div
-                        *ngIf="IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED"
-                      >
+                      <div *ngIf="IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED">
                         <img
                           [src]="IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED"
                           style="width: 250px"
@@ -697,8 +708,6 @@
                     </div>
 
                     <!-- firma -->
-
-
                   </div>
 
                   <div class="form-group row" *ngIf="text_validation">
@@ -725,7 +734,7 @@
                       <button
                         type="button"
                         class="btn btn-primary submit-form me-2"
-                        (click)="save()"
+                        (click)="onSave()"
                       >
                         Save
                       </button>

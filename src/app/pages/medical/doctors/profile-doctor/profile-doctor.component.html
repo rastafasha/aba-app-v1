@@ -5,10 +5,14 @@
       <div class="row">
         <div class="col-sm-12">
           <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a [routerLink]="routes.doctors.list">Employees </a></li>
-            <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
-            <li class="breadcrumb-item active">Employee Profile  </li>
-        </ul>
+            <li class="breadcrumb-item">
+              <a [routerLink]="routes.doctors.list">Employees </a>
+            </li>
+            <li class="breadcrumb-item">
+              <i class="feather icon-chevron-right"></i>
+            </li>
+            <li class="breadcrumb-item active">Employee Profile</li>
+          </ul>
           <div class="doctor-submit text-start">
             <button class="btn btn-primary btn-sm" (click)="goBack()">
               Back
@@ -28,7 +32,6 @@
                   <h4>Employeer Profile</h4>
                 </div>
                 <div class="doctor-profile-head">
-                 
                   <div class="row">
                     <div class="col-lg-4 col-md-4">
                       <div class="profile-user-box">
@@ -153,9 +156,7 @@
                           <th mat-sort-header="date">Name</th>
                           <th mat-sort-header="doctor">Patient Id</th>
                           <th mat-sort-header="status">Status</th>
-                          <th mat-sort-header="viewall">
-                            Options
-                          </th>
+                          <th mat-sort-header="viewall">Options</th>
                           <th></th>
                         </tr>
                       </thead>
@@ -308,7 +309,7 @@
                           >About me</a
                         >
                       </li>
-                      
+
                       <!-- <li
                         *ngIf="
                           role === 'SUPERADMIN' ||

@@ -1,5 +1,11 @@
 <!-- Id -->
-<td class="check-cell">
+<td
+  class="check-cell"
+  [ngClass]="{
+    'bg-success': note.type === 'rbt',
+    'bg-primary': note.type === 'bcba'
+  }"
+>
   <input
     type="checkbox"
     [(ngModel)]="selected"
@@ -18,7 +24,6 @@
     {{ note.type | uppercase }}
   </span>
 </td> -->
-
 
 <!-- Provider -->
 <td>
@@ -44,7 +49,7 @@
         note.type === 'rbt' ? routes.noteRbt.view : routes.noteBcba.view,
         note.id
       ]"
-      [queryParams]="{from: 'log'}"
+      [queryParams]="{ from: 'log' }"
     >
       {{ note.session_date | date : "shortDate" }}
     </a>
@@ -80,7 +85,7 @@
 <!-- Total Hours -->
 <td>
   <!-- <span>{{ (note.total_minutes | transformToHour) ?? "-" }}</span> -->
-  <span>{{ (note.total_minutes)/60  }}</span>
+  <span>{{ note.total_minutes / 60 }}</span>
 </td>
 <!-- Pos -->
 <td>
@@ -120,11 +125,12 @@
 </td>
 <!-- Insurance Identifier -->
 <td>
-    <span>
-      {{ (patients | arrayFind : "id" : note.insurance_id)?.insurance_identifier }}
-    </span>
+  <span>
+    {{
+      (patients | arrayFind : "id" : note.insurance_id)?.insurance_identifier
+    }}
+  </span>
 </td>
-
 
 <!-- modificadores  -->
 
@@ -135,9 +141,9 @@
     name="md"
     style="width: 9ch; text-overflow: ellipsis"
     [(ngModel)]="note.md"
-    (ngModelChange)="hasChanges = true"
+    (ngModelChange)="loadChanges(note)"
   >
-    <option [value]="null">-- Select --</option>
+    <option [value]="null">Select</option>
     <ng-container *ngFor="let item of modifiers">
       <option
         *ngIf="item.type === 'all' || item.type === note.type"
@@ -156,9 +162,9 @@
     style="width: 9ch; text-overflow: ellipsis"
     name="md2"
     [(ngModel)]="note.md2"
-    (ngModelChange)="hasChanges = true"
+    (ngModelChange)="loadChanges(note)"
   >
-    <option [value]="null">-- Select --</option>
+    <option [value]="null">Select</option>
     <ng-container *ngFor="let item of modifiers">
       <option
         *ngIf="item.type === 'all' || item.type === note.type"
@@ -177,9 +183,9 @@
     style="width: 9ch; text-overflow: ellipsis"
     name="md3"
     [(ngModel)]="note.md3"
-    (ngModelChange)="hasChanges = true"
+    (ngModelChange)="loadChanges(note)"
   >
-    <option [value]="null">-- Select --</option>
+    <option [value]="null">Select</option>
     <ng-container *ngFor="let item of modifiers">
       <option
         *ngIf="item.type === 'all' || item.type === note.type"
@@ -190,8 +196,6 @@
     </ng-container>
   </select>
 </td>
-
-
 
 <!-- session_units_total Charges -->
 <td>
@@ -206,14 +210,13 @@
   }}
 </td>
 
-
 <!-- Status -->
 <td>
   <select
     class="form-control form-select-solid form-select-long fw-bolder"
     name="status"
     [(ngModel)]="note.status"
-    (ngModelChange)="hasChanges = true"
+    (ngModelChange)="loadChanges(note)"
     placeholder="status"
   >
     <option>-- Select --</option>
@@ -231,7 +234,7 @@
         type="checkbox"
         name="billed"
         [(ngModel)]="note.billed"
-        (ngModelChange)="hasChanges = true"
+        (ngModelChange)="loadChanges(note)"
       />
       <span class="checkmark" value="false"></span>
     </label>
@@ -245,7 +248,7 @@
         type="checkbox"
         name="paid"
         [(ngModel)]="note.paid"
-        (ngModelChange)="hasChanges = true"
+        (ngModelChange)="loadChanges(note)"
       />
       <span class="checkmark" value="false"></span>
     </label>

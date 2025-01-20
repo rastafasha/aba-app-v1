@@ -9,6 +9,9 @@ export class TableFooterComponent {
   @Input() total = 0;
   @Input() pageSize = 10;
   @Input() page = 1;
+  @Input() totalUnits: number;
+  @Input() totalHours: number;
+  @Input() totalCharges: number;
   @Output() pageChange = new EventEmitter<number>();
 
   onChangePage(page: number): void {

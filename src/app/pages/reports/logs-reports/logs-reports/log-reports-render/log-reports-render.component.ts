@@ -23,9 +23,11 @@ export class LogReportsRenderComponent {
   @Input() selected = false;
   @Output() selectedChange = new EventEmitter<boolean>();
   @Output() save = new EventEmitter<Note>();
+  @Output() updateChangedNotes = new EventEmitter<Note>();
 
   routes = AppRoutes;
   hasChanges = false;
+  notesChanged: Note[] = [];
 
   readonly statusOptions = ['pending', 'ok', 'no'];
   readonly modifiers = [
@@ -61,5 +63,10 @@ export class LogReportsRenderComponent {
   onSelect($event: boolean) {
     this.selected = $event;
     this.selectedChange.emit(this.selected);
+  }
+
+  public loadChanges(note: Note): void {
+    this.hasChanges = true;
+    this.updateChangedNotes.emit(note);
   }
 }

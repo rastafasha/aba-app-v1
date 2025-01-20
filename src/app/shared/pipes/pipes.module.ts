@@ -15,6 +15,8 @@ import { RemoveStringPipe } from './remove-string.pipe';
 import { RbtFilterPipe } from './rbt-filter.pipe';
 import { TransformToHourPipe } from './transform-to-hours.pipe';
 import { FilterDisponibilidadCptPipe } from './filter-disponibilidad-cpt.pipe';
+import { ClearTextPipe } from './clear-text.pipe';
+import { CellRenderPipe } from './cell-render.pipe';
 
 const components = [
   ArrayFilterPipe,
@@ -31,10 +33,12 @@ const components = [
   RemoveStringPipe,
   RbtFilterPipe,
   TransformToHourPipe,
-  FilterDisponibilidadCptPipe
+  FilterDisponibilidadCptPipe,
+  ClearTextPipe,
+  CellRenderPipe,
 ];
 @NgModule({
-  declarations: [...components, RemoveStringPipe, RbtFilterPipe, FilterDisponibilidadCptPipe],
+  declarations: [...components],
   exports: [...components],
   imports: [CommonModule],
 })

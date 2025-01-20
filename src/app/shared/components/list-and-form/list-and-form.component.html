@@ -1,0 +1,16 @@
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>
+
+<app-list
+  [context]="this"
+  [title]="title"
+  [addButtonOptions]="addButtonOptions"
+  [dataSource]="dataSource"
+  [displayedColumns]="displayedColumns"
+  [options]="options"
+  [noDataText]="noDataText"
+  [renders]="renders"
+  (add)="onCreate()"
+>
+</app-list>

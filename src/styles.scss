@@ -310,3 +310,14 @@ p {
   object-fit: cover;
   object-position: center;
 }
+
+.mat-mdc-dialog-container .mdc-dialog__title {
+  &h3 {
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+  &.h3 {
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+}

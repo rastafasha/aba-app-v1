@@ -13,7 +13,7 @@ import { PatientsUseCasesService } from '../service/patients-use-cases.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Validators } from 'ngx-editor';
 import { AuthService } from 'src/app/core/auth/auth.service';
-import { PaServiceV2 } from 'src/app/core/models/pa-service.v2.model';
+import { PaServiceV2 } from 'src/app/core/models/v2/pa-service.v2.model';
 import { EditPaServiceModalComponent } from '../edit-pa-service-modal/edit-pa-service-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { PaServicesV2Service } from 'src/app/core/services/pa-services.v2.service';
@@ -75,25 +75,23 @@ export class AddPatientMComponent implements OnInit {
 
   pa_assessments = [];
   showLocationSelected = false;
-  
 
   intakeOptions = [
-    {value: "waiting", label: "Waiting"},
-    {value: "requested", label: "Requested"},
-    {value: "reviewing", label: "Reviewing"},
-    {value: "psycho eval", label: "Psycho Eval"},
-    {value: "need new", label: "Need New"},
-    {value: "2 insurance", label: "2 insurance"},
-    {value: "yes", label: "Yes"},
-    {value: "no", label: "No"}
-  ]
+    { value: 'waiting', label: 'Waiting' },
+    { value: 'requested', label: 'Requested' },
+    { value: 'reviewing', label: 'Reviewing' },
+    { value: 'psycho eval', label: 'Psycho Eval' },
+    { value: 'need new', label: 'Need New' },
+    { value: '2 insurance', label: '2 insurance' },
+    { value: 'yes', label: 'Yes' },
+    { value: 'no', label: 'No' },
+  ];
 
   specialists = [];
   locations = [];
   roles_rbt = [];
   roles_bcba = [];
   insurances = [];
-
 
   insurance_id: any;
   id: number;
@@ -115,7 +113,7 @@ export class AddPatientMComponent implements OnInit {
   IMAGE_PREVISUALIZA_REFERAL = 'assets/img/user-06.jpg';
 
   pa_services = [];
-  pa_service :string;
+  pa_service: string;
   insurer_name: any;
   notes = [];
   services = [];
@@ -125,7 +123,7 @@ export class AddPatientMComponent implements OnInit {
   user: AppUser;
   roles = [];
   doctor_id: number;
-  location: any=[];
+  location: any = [];
   location_id: number;
   emailExists: boolean;
 
@@ -151,7 +149,7 @@ export class AddPatientMComponent implements OnInit {
     this.setForm();
     this.getPoscoveredList();
     this.user = this.authService.user as AppUser;
-    
+
     this.doctor_id = this.user.id;
     this.location_id = this.user.location_id;
     this.roles = this.user.roles;
@@ -163,8 +161,6 @@ export class AddPatientMComponent implements OnInit {
     }
     this.getConfig();
   }
-
-
 
   private setForm(): void {
     this.form = this.fb.group({
@@ -181,39 +177,39 @@ export class AddPatientMComponent implements OnInit {
       bcba_home_id: ['', Validators.required],
       bcba2_school_id: ['', Validators.required],
       clin_director_id: ['', Validators.required],
-      first_name: ['',Validators.required],
-      last_name: ['',Validators.required],
-      parent_guardian_name: ['',Validators.required],
-      relationship: ['',Validators.required],
-      language: ['',Validators.required],
-      phone: ['',Validators.required],
-      home_phone: ['',Validators.required],
-      work_phone: ['',Validators.required],
-      zip: ['',Validators.required],
-      state: ['',Validators.required],
-      email: ['',Validators.required],
-      education: ['',Validators.required],
-      profession: ['',Validators.required],
-      school_name: ['',Validators.required],
-      school_number: ['',Validators.required],
-      birth_date: [null,Validators.required],
-      parent_birth_date: [null,Validators.required],
+      first_name: ['', Validators.required],
+      last_name: ['', Validators.required],
+      parent_guardian_name: ['', Validators.required],
+      relationship: ['', Validators.required],
+      language: ['', Validators.required],
+      phone: ['', Validators.required],
+      home_phone: ['', Validators.required],
+      work_phone: ['', Validators.required],
+      zip: ['', Validators.required],
+      state: ['', Validators.required],
+      email: ['', Validators.required],
+      education: ['', Validators.required],
+      profession: ['', Validators.required],
+      school_name: ['', Validators.required],
+      school_number: ['', Validators.required],
+      birth_date: [null, Validators.required],
+      parent_birth_date: [null, Validators.required],
       gender: [null, Validators.required],
       parent_gender: [null, Validators.required],
-      address: ['',Validators.required],
-      parent_address: ['',Validators.required],
-      parent_city: ['',Validators.required],
-      parent_state: ['',Validators.required],
-      parent_zip: ['',Validators.required],
-      special_note: ['',Validators.required],
-      city: ['',Validators.required],
+      address: ['', Validators.required],
+      parent_address: ['', Validators.required],
+      parent_city: ['', Validators.required],
+      parent_state: ['', Validators.required],
+      parent_zip: ['', Validators.required],
+      special_note: ['', Validators.required],
+      city: ['', Validators.required],
       patient_control: [null, Validators.required],
-      schedule: ['',Validators.required],
-      summer_schedule: ['',Validators.required],
-      diagnosis_code: ['',Validators.required],
-      referring_provider_first_name: ['',Validators.required],
-      referring_provider_last_name: ['',Validators.required],
-      referring_provider_npi: ['',Validators.required],
+      schedule: ['', Validators.required],
+      summer_schedule: ['', Validators.required],
+      diagnosis_code: ['', Validators.required],
+      referring_provider_first_name: ['', Validators.required],
+      referring_provider_last_name: ['', Validators.required],
+      referring_provider_npi: ['', Validators.required],
       eqhlid: ['', Validators.required],
       elegibility_date: ['', Validators.required],
       pos_covered: this.fb.control<string[]>([]),
@@ -240,9 +236,9 @@ export class AddPatientMComponent implements OnInit {
       auto_accident: this.fb.control(false),
       other_accident: this.fb.control(false),
       is_self_subscriber: this.fb.control(false),
-      
-      pa_services: ['', this.fb.control<string[]>([]),],
-      pa_service: ['', this.fb.control<string[]>([]),],
+
+      pa_services: ['', this.fb.control<string[]>([])],
+      pa_service: ['', this.fb.control<string[]>([])],
       pa_services_start_date: ['', Validators.required],
       pa_services_end_date: ['', Validators.required],
       selectedValueCode: ['', Validators.required],
@@ -251,26 +247,23 @@ export class AddPatientMComponent implements OnInit {
 
     this.form.valueChanges.subscribe(() => {
       this.isValidPa();
-    })
-
-    
+    });
   }
-
 
   createReferringCode(event: Event) {
     const input = event.target as HTMLInputElement; // Hacemos el casting
-  const currentValue = input.value;
+    const currentValue = input.value;
 
-  // Verificamos si el valor ya comienza con "DN"
-  if (!currentValue.startsWith('DN')) {
-    this.form.patchValue({
-      referring_code: 'DN' + currentValue // Agregamos "DN" solo si no está presente
-    });
-  } else {
-    this.form.patchValue({
-      referring_code: currentValue // Mantenemos el valor actual si ya tiene "DN"
-    });
-  }
+    // Verificamos si el valor ya comienza con "DN"
+    if (!currentValue.startsWith('DN')) {
+      this.form.patchValue({
+        referring_code: 'DN' + currentValue, // Agregamos "DN" solo si no está presente
+      });
+    } else {
+      this.form.patchValue({
+        referring_code: currentValue, // Mantenemos el valor actual si ya tiene "DN"
+      });
+    }
   }
   goBack() {
     this.locationBack.back(); // <-- go back to previous location on cancel
@@ -341,12 +334,16 @@ export class AddPatientMComponent implements OnInit {
     this.pa_assessments.push({
       patient_id: this.id,
       pa_service: this.form.value.pa_service,
-      start_date: this.form.value.pa_services_start_date.toISOString().split('T')[0],
-      end_date: this.form.value.pa_services_end_date.toISOString().split('T')[0],
+      start_date: this.form.value.pa_services_start_date
+        .toISOString()
+        .split('T')[0],
+      end_date: this.form.value.pa_services_end_date
+        .toISOString()
+        .split('T')[0],
       cpt: this.form.value.selectedValueCode,
       n_units: this.form.value.n_units || 0,
     });
-    this.form.get('pa_service').setValue(null)
+    this.form.get('pa_service').setValue(null);
     this.form.get('pa_services_start_date').setValue(null);
     this.form.get('pa_services_end_date').setValue(null);
     this.form.get('selectedValueCode').setValue(null);
@@ -394,77 +391,81 @@ export class AddPatientMComponent implements OnInit {
       (this.IMAGE_PREVISUALIZA = reader.result as string);
   }
 
-  public save(): void {
-    if(!this.form.valid) {
+  public onSave(): void {
+    if (!this.form.valid) {
       this.text_validation = 'All the fields are required';
       return;
     }
 
     const data = this.mapData();
-    if(!data) return;
-    this.patientService.createPatient({...data, pa_services: this.pa_assessments}).subscribe((resp) => {
-      if (resp.message === 403) {
-        this.text_validation = resp.message_text;
-      } else {
-        Swal.fire('Created', `Client Created successfully!`, 'success');
-        if(this.user.roles[0] === 'MANAGER') {
-          this.router.navigate([
-            AppRoutes.location.view,
-            this.user.location_id,
-          ]);
+    if (!data) return;
+    this.patientService
+      .createPatient({ ...data, pa_services: this.pa_assessments })
+      .subscribe((resp) => {
+        if (resp.message === 403) {
+          this.text_validation = resp.message_text;
+        } else {
+          Swal.fire('Created', `Client Created successfully!`, 'success');
+          if (this.user.roles[0] === 'MANAGER') {
+            this.router.navigate([
+              AppRoutes.location.view,
+              this.user.location_id,
+            ]);
+          }
+          if (this.user.roles[0] === 'SUPERADMIN') {
+            this.router.navigate([AppRoutes.patients.list]);
+          }
         }
-        if (this.user.roles[0] === 'SUPERADMIN') {
-          this.router.navigate([AppRoutes.patients.list]);
-        }
-      }
-    });
+      });
   }
 
   public isValidPa(): void {
-    this.enabledPaButton = (
-      !!this.form.value.pa_services && this.form.value.pa_services?.trim() !== '' &&
+    this.enabledPaButton =
+      !!this.form.value.pa_services &&
+      this.form.value.pa_services?.trim() !== '' &&
       !!this.form.value.pa_services_start_date &&
       !!this.form.value.pa_services_end_date &&
-      !!this.form.value.selectedValueCode && this.form.value.selectedValueCode.trim() !== ''
-    );
+      !!this.form.value.selectedValueCode &&
+      this.form.value.selectedValueCode.trim() !== '';
   }
 
   private mapData(): FormGroup {
-    const data = {...this.form.value}
+    const data = { ...this.form.value };
     let year, month, day;
     if (data.birth_date?.getFullYear()) {
       year = data.birth_date.getFullYear();
       month = (data.birth_date.getMonth() + 1).toString().padStart(2, '0');
-      day = data.birth_date.getDate().toString().padStart(2, '0'); 
+      day = data.birth_date.getDate().toString().padStart(2, '0');
       data.birth_date = `${year}-${month}-${day}`;
     }
     if (data.parent_birth_date?.getFullYear()) {
       year = data.parent_birth_date.getFullYear();
-      month = (data.parent_birth_date.getMonth() + 1).toString().padStart(2, '0');
-      day = data.parent_birth_date.getDate().toString().padStart(2, '0'); 
+      month = (data.parent_birth_date.getMonth() + 1)
+        .toString()
+        .padStart(2, '0');
+      day = data.parent_birth_date.getDate().toString().padStart(2, '0');
       data.parent_birth_date = `${year}-${month}-${day}`;
-    }
-    else {
+    } else {
       this.text_validation = 'Add birth date';
       return null;
     }
     if (data.elegibility_date?.getFullYear()) {
       year = data.elegibility_date.getFullYear();
-      month = (data.elegibility_date.getMonth() + 1).toString().padStart(2, '0');
-      day = data.elegibility_date.getDate().toString().padStart(2, '0'); 
+      month = (data.elegibility_date.getMonth() + 1)
+        .toString()
+        .padStart(2, '0');
+      day = data.elegibility_date.getDate().toString().padStart(2, '0');
       data.elegibility_date = `${year}-${month}-${day}`;
-    }
-    else {
+    } else {
       this.text_validation = 'Add elegibility date';
       return null;
     }
-    if(!this.showLocationSelected){
+    if (!this.showLocationSelected) {
       data.location_id = this.location_id;
     }
-    
+
     return data;
   }
-
 
   onEditPaService(paService: PaServiceV2) {
     const ref = this.dialog.open(EditPaServiceModalComponent, {
@@ -476,18 +477,13 @@ export class AddPatientMComponent implements OnInit {
       const data = {
         ...this.form.value,
         patient_id: this.id,
-      }
+      };
       if (resp) {
         this.paServicesService.create(data).subscribe(() => {
           // this.onRefresh();
           console.log(resp);
-          });
-        }
-      }); 
-      
+        });
+      }
+    });
   }
-
-  
-
-  
 }

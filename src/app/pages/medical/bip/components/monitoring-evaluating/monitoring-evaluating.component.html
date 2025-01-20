@@ -1,327 +1,64 @@
 <!-- other -->
 <div class="col-sm-12">
-    <div class="card">
-        <div class="card-body">
-
-            <form autocomplete="false">
-                <div class="row">
-
-                    <!-- documents -->
-                    <div class="col-12">
-                        <div class="card-box">
-                            <div class="card-block">
-                                <h3 class="card-title">Monitoring and Evaluating the Effectiveness of the plan/
-                                    Treatment Fidelity </h3>
-                                <p>Ongoing training and monitoring of the RBT will occur on a weekly basis to ensure
-                                    proper implementation of the behavior program. The BCBA/lead analyst will conduct
-                                    weekly competency checks to ensure proper program implementation. The BCBA/lead
-                                    analyst will graph the data, depicting the results of the competency checks on
-                                    monthly progress reports. Also, the BCBA/lead analyst will collect IOA data at least
-                                    once a month to ensure proper data collection.
-                                </p>
-                                <p> Objectives included in assistant competency checks:</p>
-                                <ol>
-                                    <li>Data collection</li>
-                                    <li>Interventions/Environmental manipulations.</li>
-                                    <li>Replacement goals used to teach the proper alternative to the maladaptive
-                                        behavior targeted.</li>
-                                    <li>Use of reinforcement</li>
-                                </ol>
-                                <h4 class="card-title">RBT Training Goals </h4>
-                                <div class="row align-items-center">
-                                    <div class="col-xs-12">
-                                        <div class="row">
-                                            <div class="col-xs-12 col-md-3">
-                                                <div class="form-group local-forms">
-                                                    <label>LTO<span class="login-danger">*</span></label>
-                                                    <select class="form-control form-select-solid fw-bolder" name="lto"
-                                                        [(ngModel)]="lto" [ngModelOptions]="{standalone: true}">
-                                                        <option>-- Select --</option>
-                                                        <option
-                                                            value="RBT will independently demonstrate appropriate data collection, near 100% of opportunities, across two consecutive observations.">
-                                                            RBT will independently demonstrate appropriate data
-                                                            collection, near 100% of opportunities, across two
-                                                            consecutive
-                                                            observations.
-                                                        </option>
-                                                        <option
-                                                            value="RBT will independently demonstrate DRA procedure, near 100% of opportunities, across two consecutive observations.">
-                                                            RBT will independently demonstrate DRA procedure, near 100%
-                                                            of opportunities, across two consecutive observations.
-                                                        </option>
-                                                        <option
-                                                            value="RBT will independently demonstrate Premack Principle procedure, near 100% of opportunities, across two consecutive observations.">
-                                                            RBT will independently demonstrate Premack Principle
-                                                            procedure, near 100% of opportunities, across two
-                                                            consecutive
-                                                            observations.
-                                                        </option>
-                                                        <option
-                                                            value="RBT will independently demonstrate Redirection procedure, near 100% of opportunities, across two consecutive observations.">
-                                                            RBT will independently demonstrate Redirection procedure,
-                                                            near 100% of opportunities, across two consecutive
-                                                            observations.
-                                                        </option>
-                                                        <option
-                                                            value="RBT will independently demonstrate Errorless teaching, near 100% of opportunities, across two consecutive observations.">
-                                                            RBT will independently demonstrate Errorless teaching, near
-                                                            100% of opportunities, across two consecutive
-                                                            observations.
-                                                        </option>
-                                                        <option
-                                                            value="RBT will independently demonstrate Shaping procedure, near 100% of opportunities, across two consecutive observations">
-                                                            RBT will independently demonstrate Shaping procedure, near
-                                                            100%
-                                                            of opportunities, across two consecutive observations
-                                                        </option>
-
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-xs-12 col-md-3">
-                                                <div class="form-group local-forms">
-                                                    <label>Status<span class="login-danger">*</span></label>
-                                                    <select class="form-control form-select-solid fw-bolder"
-                                                        name="status" [(ngModel)]="status"
-                                                        [ngModelOptions]="{standalone: true}">
-                                                        <option>-- Select --</option>
-                                                        <option value="inprogress">in progress</option>
-                                                        <option value="initiated">Initiated</option>
-                                                        <option value="mastered">mastered</option>
-                                                        <option value="on hold">On Hold</option>
-                                                        <option value="discontinued">Discontinued</option>
-                                                        <option value="maintenance">Maintenance</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-12 col-md-3">
-                                                <div class="form-group local-forms">
-                                                    <label>Initial Date<span class="login-danger">*</span></label>
-                                                    <input class="form-control datetimepicker" name="date"
-                                                        [(ngModel)]="date" type="text" matInput
-                                                        [matDatepicker]="pickerDateLTO">
-                                                    <mat-datepicker #pickerDateLTO></mat-datepicker>
-                                                    <mat-datepicker-toggle matIconSuffix
-                                                        [for]="pickerDateLTO"></mat-datepicker-toggle>
-                                                </div>
-                                            </div>
-                                            <div class="col-xs-12 col-md-3">
-                                                <div class="form-group local-forms">
-                                                    <label>End Date<span class="login-danger">*</span></label>
-                                                    <input class="form-control datetimepicker" name="end_date"
-                                                        [(ngModel)]="end_date" type="text" matInput
-                                                        [matDatepicker]="pickerDateLTO1">
-                                                    <mat-datepicker #pickerDateLTO1></mat-datepicker>
-                                                    <mat-datepicker-toggle matIconSuffix
-                                                        [for]="pickerDateLTO1"></mat-datepicker-toggle>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="col-12 mb-3 doctor-submit text-end">
-                                            <button class="btn btn-primary btn-sm" (click)="addMonitor()">Add to List</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 ">
-                                    <div class="table-responsive">
-                                        <table class="table mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th>LTO</th>
-                                                    <th>Status</th>
-                                                    <th>Initial Date</th>
-                                                    <th>End Date</th>
-                                                    <th>Options</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr *ngFor="let monito of training_goals; let i = index">
-
-                                                    <td>
-                                                        {{monito?.lto}}
-                                                    </td>
-
-
-                                                    <td>
-                                                        <!-- {{goalsto.status_sto}} -->
-                                                        <span class="badge bg-success"
-                                                            *ngIf="monito?.status === 'inprogress'">In progress</span>
-                                                        <span class="badge bg-success"
-                                                            *ngIf="monito?.status === 'initiated'">Initiated</span>
-                                                        <span class="badge bg-primary"
-                                                            *ngIf="monito?.status === 'mastered'">Mastered</span>
-                                                        <span class="badge bg-warning"
-                                                            *ngIf="monito?.status === 'on hold'">On Hold</span>
-                                                        <span class="badge bg-danger"
-                                                            *ngIf="monito?.status === 'discontinued'">Discontinued</span>
-                                                        <span class="badge bg-warning"
-                                                            *ngIf="monito?.status === 'maintenance'">Maintenance</span>
-                                                    </td>
-                                                    <td>
-                                                        {{monito?.date | date : "shortDate"}}
-                                                    </td>
-                                                    <td>
-                                                        {{monito?.end_date | date : "shortDate"}}
-                                                    </td>
-                                                    <td>
-                                                        <button class="btn btn-outline-success btn-sm" (click)="seleccionarParaEdit(monito)" 
-                                                                    data-bs-toggle="modal" [attr.data-bs-target]="'#edit-monito-'+monito.i"><i class="fa fa-pencil"></i> Edit</button>
-                                                        <button class="btn btn-outline-danger btn-sm"(click)="deleteDocument(monito)"><i class="fa fa-trash"></i> Delete</button>
-                                                    </td>
-
-                                                     <!-- modal edit monito-->
-           
-                                                     <div [id]="'edit-monito-'+monito.i" class="modal  fade" role="dialog">
-                                                        <div class="modal-dialog modal-dialog-centered modal-lg">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="modalEscape">{{gollto_edit.lto}}</h5>
-                                                                    <a href="javascript:void(0);"  data-bs-dismiss="modal" aria-label="Close" class="btn btn-white me-1"
-                                                                        >Close</a>
-                                                                </div>
-                                                                <div class="modal-body text-center">
-                                                                    <div class="col-xs-12 ">
-                                                                        <form action="">
-                                                                            <div class="row">
-                                                                                <div class="col-xs-12 col-md-3">
-                                                                                    <div class="form-group local-forms">
-                                                                                        <select class="form-control form-select-solid fw-bolder" name="lto"
-                                                                                            [(ngModel)]="gollto_edit.lto" [ngModelOptions]="{standalone: true}">
-                                                                                            <option>-- Select --</option>
-                                                                                            <option
-                                                                                                value="RBT will independently demonstrate appropriate data collection, near 100% of opportunities, across two consecutive observations.">
-                                                                                                RBT will independently demonstrate appropriate data
-                                                                                                collection, near 100% of opportunities, across two
-                                                                                                consecutive
-                                                                                                observations.
-                                                                                            </option>
-                                                                                            <option
-                                                                                                value="RBT will independently demonstrate DRA procedure, near 100% of opportunities, across two consecutive observations.">
-                                                                                                RBT will independently demonstrate DRA procedure, near 100%
-                                                                                                of opportunities, across two consecutive observations.
-                                                                                            </option>
-                                                                                            <option
-                                                                                                value="RBT will independently demonstrate Premack Principle procedure, near 100% of opportunities, across two consecutive observations.">
-                                                                                                RBT will independently demonstrate Premack Principle
-                                                                                                procedure, near 100% of opportunities, across two
-                                                                                                consecutive
-                                                                                                observations.
-                                                                                            </option>
-                                                                                            <option
-                                                                                                value="RBT will independently demonstrate Redirection procedure, near 100% of opportunities, across two consecutive observations.">
-                                                                                                RBT will independently demonstrate Redirection procedure,
-                                                                                                near 100% of opportunities, across two consecutive
-                                                                                                observations.
-                                                                                            </option>
-                                                                                            <option
-                                                                                                value="RBT will independently demonstrate Errorless teaching, near 100% of opportunities, across two consecutive observations.">
-                                                                                                RBT will independently demonstrate Errorless teaching, near
-                                                                                                100% of opportunities, across two consecutive
-                                                                                                observations.
-                                                                                            </option>
-                                                                                            <option
-                                                                                                value="RBT will independently demonstrate Shaping procedure, near 100% of opportunities, across two consecutive observations">
-                                                                                                RBT will independently demonstrate Shaping procedure, near
-                                                                                                100%
-                                                                                                of opportunities, across two consecutive observations
-                                                                                            </option>
-                                    
-                                                                                        </select>
-                                                                                    </div>
-                                                                                </div>
-                                    
-                                                                                <div class="col-xs-12 col-md-3">
-                                                                                    <div class="form-group local-forms">
-                                                                                        <label>Status<span class="login-danger">*</span></label>
-                                                                                        <select class="form-control form-select-solid fw-bolder"
-                                                                                            name="status" [(ngModel)]="gollto_edit.status"
-                                                                                            [ngModelOptions]="{standalone: true}">
-                                                                                            <option>-- Select --</option>
-                                                                                            <option value="inprogress">in progress</option>
-                                                                                            <option value="initiated">Initiated</option>
-                                                                                            <option value="mastered">mastered</option>
-                                                                                            <option value="on hold">On Hold</option>
-                                                                                            <option value="discontinued">Discontinued</option>
-                                                                                            <option value="maintenance">Maintenance</option>
-                                                                                        </select>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-xs-12 col-md-3">
-                                                                                    <div class="form-group local-forms">
-                                                                                        <label>Initial Date<span class="login-danger">*</span></label>
-                                                                                        <input class="form-control datetimepicker" name="date"
-                                                                                            [(ngModel)]="gollto_edit.date" type="text" matInput
-                                                                                            [matDatepicker]="pickerDateLTO">
-                                                                                        <mat-datepicker #pickerDateLTO></mat-datepicker>
-                                                                                        <mat-datepicker-toggle matIconSuffix
-                                                                                            [for]="pickerDateLTO"></mat-datepicker-toggle>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-xs-12 col-md-3">
-                                                                                    <div class="form-group local-forms">
-                                                                                        <label>End Date<span class="login-danger">*</span></label>
-                                                                                        <input class="form-control datetimepicker" name="end_date"
-                                                                                            [(ngModel)]="gollto_edit.end_date" type="text" matInput
-                                                                                            [matDatepicker]="pickerDateLTO1">
-                                                                                        <mat-datepicker #pickerDateLTO1></mat-datepicker>
-                                                                                        <mat-datepicker-toggle matIconSuffix
-                                                                                            [for]="pickerDateLTO1"></mat-datepicker-toggle>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="col-12 mb-3 doctor-submit text-end">
-                                                                                    <button class="btn btn-primary btn-sm" (click)="updateMonitor(gollto_edit)">Update Item</button>
-                                                                                </div>
-                                    
-                                                                            </div>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <!-- modal edit STO end-->
-
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <!-- documents -->
-
-                <!-- validaciones -->
-                                
-                <div class="form-group row" *ngIf="text_validation">
-                    <div class="col-md-12">
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <strong>!</strong> {{text_validation}}.
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true"> </span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <!-- validaciones -->
-
-                <div class="col-12">
-                    <div class="doctor-submit text-end">
-                        <button type="button" class="btn btn-primary submit-form me-2" (click)="save()">Save</button>
-                    </div>
-                </div>
-
-            </form>
-
+  <div class="card">
+    <div class="card-body">
+      <div class="col-xs-12">
+        <h3 class="card-title">
+          Monitoring and Evaluating the Effectiveness of the plan/ Treatment
+          Fidelity
+        </h3>
+        <p>
+          Ongoing training and monitoring of the RBT will occur on a weekly
+          basis to ensure proper implementation of the behavior program. The
+          BCBA/lead analyst will conduct weekly competency checks to ensure
+          proper program implementation. The BCBA/lead analyst will graph the
+          data, depicting the results of the competency checks on monthly
+          progress reports. Also, the BCBA/lead analyst will collect IOA data at
+          least once a month to ensure proper data collection.
+        </p>
+        <p>Objectives included in assistant competency checks:</p>
+        <ol>
+          <li>Data collection</li>
+          <li>Interventions/Environmental manipulations.</li>
+          <li>
+            Replacement goals used to teach the proper alternative to the
+            maladaptive behavior targeted.
+          </li>
+          <li>Use of reinforcement</li>
+        </ol>
+        <app-list-and-form
+          *ngIf="state === 'list'"
+          #list
+          title="RBT Training Goals"
+          [(newItem)]="newGoal"
+          [(dataSource)]="input"
+          [displayedColumns]="displayedColumns"
+          [renders]="renders"
+          [options]="options"
+        >
+          <app-plan-form
+            [(input)]="newGoal"
+            title="Rbt Training"
+            (save)="list.onAdd($event)"
+            (cancel)="onBack()"
+          >
+          </app-plan-form>
+        </app-list-and-form>
+        <!-- Back -->
+        <div *ngIf="state !== 'list'" class="doctor-submit text-end">
+          <button class="btn btn-primary btn-sm" (click)="onBack()">
+            Back
+          </button>
         </div>
+        <!-- Edit -->
+        <div *ngIf="state === 'edit'">
+          <app-monitoring-evaluating-edit
+            [(input)]="newGoal"
+            title="Rbt Training"
+          >
+          </app-monitoring-evaluating-edit>
+        </div>
+      </div>
     </div>
-
+  </div>
 </div>
-<!-- fin other -->

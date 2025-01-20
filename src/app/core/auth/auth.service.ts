@@ -27,9 +27,10 @@ export class AuthService {
     }
   }
 
-  getUserFromStorage() {
+  getUserFromStorage<T extends AuthUser>() {
     this.token = this.storage.get<string>(AUTH_CONSTS.token);
     this.user = this.storage.get<AuthUser>(AUTH_CONSTS.user);
+    return this.user as T;
   }
 
   setUserToStorage(auth: Auth): boolean {

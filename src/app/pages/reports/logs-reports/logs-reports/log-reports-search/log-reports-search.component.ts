@@ -16,6 +16,26 @@ export class LogReportsSearchComponent {
 
   filter = {} as LogFilter;
 
+  ngOnInit(): void {
+    this.getLastWeek()
+  }
+
+  getLastWeek(): void {
+    const lastSaturday = new Date().getDay() != 6 ? new Date(new Date().setDate(new Date().getDate() - Number(new Date().getDay()) - 1)) : new Date();
+    let year = lastSaturday.getFullYear();
+    let month = String(lastSaturday.getMonth() + 1).padStart(2, '0');
+    let day = String(lastSaturday.getDate()).padStart(2, '0');
+    this.filter.date_end = `${year}-${month}-${day}`;
+
+    const previousSunday = new Date().getDay() != 6 ? new Date(new Date().setDate(new Date().getDate() - Number(new Date().getDay()) - 7)) : new Date(new Date().setDate(new Date().getDate() - 7));
+    year = previousSunday.getFullYear();
+    month = String(previousSunday.getMonth() + 1).padStart(2, '0');
+    day = String(previousSunday.getDate()).padStart(2, '0');
+    this.filter.date_start = `${year}-${month}-${day}`;
+
+    this.onSearch();
+  }
+
   onRefresh() {
     this.refresh.emit();
     this.filter = {} as LogFilter;
