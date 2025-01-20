@@ -135,7 +135,7 @@
     name="md"
     style="width: 9ch; text-overflow: ellipsis"
     [(ngModel)]="note.md"
-    (ngModelChange)="hasChanges = true"
+    (ngModelChange)="loadChanges(note)"
   >
     <option [value]="null">-- Select --</option>
     <ng-container *ngFor="let item of modifiers">
@@ -156,7 +156,7 @@
     style="width: 9ch; text-overflow: ellipsis"
     name="md2"
     [(ngModel)]="note.md2"
-    (ngModelChange)="hasChanges = true"
+    (ngModelChange)="loadChanges(note)"
   >
     <option [value]="null">-- Select --</option>
     <ng-container *ngFor="let item of modifiers">
@@ -177,7 +177,7 @@
     style="width: 9ch; text-overflow: ellipsis"
     name="md3"
     [(ngModel)]="note.md3"
-    (ngModelChange)="hasChanges = true"
+    (ngModelChange)="loadChanges(note)"
   >
     <option [value]="null">-- Select --</option>
     <ng-container *ngFor="let item of modifiers">
@@ -213,7 +213,7 @@
     class="form-control form-select-solid form-select-long fw-bolder"
     name="status"
     [(ngModel)]="note.status"
-    (ngModelChange)="hasChanges = true"
+    (ngModelChange)="loadChanges(note)"
     placeholder="status"
   >
     <option>-- Select --</option>
@@ -231,7 +231,7 @@
         type="checkbox"
         name="billed"
         [(ngModel)]="note.billed"
-        (ngModelChange)="hasChanges = true"
+        (ngModelChange)="loadChanges(note)"
       />
       <span class="checkmark" value="false"></span>
     </label>
@@ -245,7 +245,7 @@
         type="checkbox"
         name="paid"
         [(ngModel)]="note.paid"
-        (ngModelChange)="hasChanges = true"
+        (ngModelChange)="loadChanges(note)"
       />
       <span class="checkmark" value="false"></span>
     </label>
