@@ -302,9 +302,9 @@ export class NoteRbtComponent implements OnInit {
   }
   getPatient(){
     this.patientService.getPatientByPatientId(this.patient_identifier).subscribe((resp)=>{
-      console.log('API Response:', resp);
+      // console.log('API Response:', resp);
       this.client_selected = resp.patient;
-      console.log('Client Selected:', this.client_selected);
+      // console.log('Client Selected:', this.client_selected);
 
       this.first_name = this.client_selected.first_name;
       this.last_name = this.client_selected.last_name;
