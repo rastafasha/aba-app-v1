@@ -410,7 +410,7 @@ export class ListPatientMComponent implements OnInit {
         onClick: () =>
           this.router.navigate([
             AppRoutes.bip.edit,
-            patient.patient_identifier,
+            patient.id,
           ]),
       },
       {
