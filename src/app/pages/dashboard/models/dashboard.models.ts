@@ -1,3 +1,5 @@
+import { BipV2 } from 'src/app/core/models';
+
 export interface PaAssessment {
   id: number;
   patient_id: string;
@@ -5,73 +7,6 @@ export interface PaAssessment {
   status: string;
   created_at: string;
   updated_at: string;
-}
-
-export interface MonitoringEvaluating {
-  id: number;
-  bip_id: number;
-  patient_id: string;
-  client_id: number;
-  treatment_fidelity: string | null;
-  rbt_training_goals: string;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
-}
-
-export interface GeneralizationTraining {
-  id: number;
-  bip_id: number;
-  patient_id: string;
-  client_id: number;
-  discharge_plan: string;
-  transition_fading_plans: string;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
-}
-
-export interface CrisisPlan {
-  id: number;
-  bip_id: number;
-  patient_id: string;
-  client_id: number;
-  crisis_description: string;
-  crisis_note: string;
-  caregiver_requirements_for_prevention_of_crisis: string;
-  risk_factors: string;
-  suicidalities: string;
-  homicidalities: string;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
-}
-
-export interface DeEscalationTechnique {
-  id: number;
-  bip_id: number;
-  patient_id: string;
-  client_id: number;
-  description: string | null;
-  service_recomendation: string | null;
-  recomendation_lists: string;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
-}
-
-export interface ConsentToTreatment {
-  id: number;
-  bip_id: number;
-  patient_id: string;
-  client_id: number;
-  analyst_signature: string;
-  analyst_signature_date: string;
-  parent_guardian_signature: string;
-  parent_guardian_signature_date: string;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
 }
 
 export interface Tangible {
@@ -100,11 +35,6 @@ export interface Sensory {
   manager_strategies_s: string;
   replacement_skills_s: string;
   preventive_strategies_s: string;
-}
-
-export interface DocumentReviewed {
-  document_title: string;
-  document_status: string;
 }
 
 export interface RecentPatient {
@@ -175,15 +105,6 @@ export interface RecentPatient {
   deleted_at: string | null;
 }
 
-export interface Maladaptive {
-  baseline_date: string;
-  baseline_level: number;
-  current_intensity?: number;
-  initial_interesting: number;
-  maladaptive_behavior: string;
-  topografical_definition: string;
-}
-
 export interface AssessmentConductedOption {
   assessment_title: string;
   assessment_status: string;
@@ -201,38 +122,6 @@ export interface Intervention {
   nombre: string;
   titleIntervention: string;
   descriptionIntervention: string;
-}
-
-export interface Goal {
-  id: number;
-  maladaptive: string;
-  current_status: string;
-  patient_id: string;
-  client_id: number | null;
-  bip_id: number;
-  goalstos: string;
-  goalltos: string;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
-}
-
-export interface FamilyInvolvement {
-  id: number;
-  bip_id: number;
-  patient_id: string;
-  client_id: number;
-  caregivers_training_goals: string;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
-}
-
-export interface Tangible {
-  index: number;
-  manager_strategies: string;
-  replacement_skills: string;
-  preventive_strategies: string;
 }
 
 export interface Attention {
@@ -265,49 +154,6 @@ export interface PhysicalAndMedicalStatus {
   prescribing_physician: string;
 }
 
-export interface Bip {
-  id: number;
-  type_of_assessment: number;
-  doctor_id: number;
-  doctor: {
-    id: number;
-    full_name: string;
-    avatar: string;
-  };
-  patient_id: string;
-  background_information: string;
-  previus_treatment_and_result: string;
-  current_treatment_and_progress: string;
-  education_status: string;
-  phisical_and_medical_status: string;
-  assessment_conducted: string;
-  strengths: string;
-  weaknesses: string;
-  documents_reviewed: DocumentReviewed[];
-  maladaptives: Maladaptive[];
-  assessment_conducted_options: AssessmentConductedOption[];
-  assessmentEvaluationSettings: AssessmentEvaluationSetting[];
-  interventions: Intervention[];
-  goal_stos: string | null;
-  goal_ltos: string | null;
-  hypothesis_based_intervention: string;
-  tangibles: Tangible[];
-  attention: Attention[];
-  escape: Escape[];
-  sensory: Sensory | null;
-  phiysical_and_medical: string;
-  phiysical_and_medical_status: PhysicalAndMedicalStatus[]; // Define if needed
-  reduction_goal: Goal[];
-  sustitution_goal: Goal[];
-  family_envolment: FamilyInvolvement[];
-  monitoring_evalutating: MonitoringEvaluating[]; // Define if needed
-  generalization_training: GeneralizationTraining[]; // Define if needed
-  crisis_plan: CrisisPlan[]; // Define if needed
-  de_escalation_technique: DeEscalationTechnique[]; // Define if needed
-  consent_to_treatment: ConsentToTreatment[]; // Define if needed
-  created_at: string;
-}
-
 export interface Location {
   id: number;
   title: string;
@@ -331,7 +177,7 @@ export interface DashboardAdminResponse {
   num_bips_total_current: number;
   porcentaje_dp: number;
   bips: {
-    data: Bip[];
+    data: BipV2[];
   };
   locations: {
     data: Location[];

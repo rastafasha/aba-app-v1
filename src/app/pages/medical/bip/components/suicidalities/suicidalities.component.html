@@ -1,0 +1,172 @@
+<div class="col-xs-12">
+  <div class="row">
+    <div class="col-xs-6 col-sm-4">
+      <div class="form-group">
+        <div
+          _ngcontent-rhp-c92=""
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 _ngcontent-rhp-c92="" class="card-title">Not Present</h5>
+          <div
+            _ngcontent-rhp-c92=""
+            class="status-toggle d-flex justify-content-between align-items-center"
+          >
+            <input
+              _ngcontent-rhp-c92=""
+              type="checkbox"
+              id="not_present"
+              class="check"
+              name="not_present"
+              [checked]="suicidalities.not_present === true"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="suicidalities.not_present"
+            />
+            <label
+              _ngcontent-rhp-c92=""
+              for="not_present"
+              class="checktoggle"
+              value="true"
+              >checkbox</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-4">
+      <div class="form-group">
+        <div
+          _ngcontent-rhp-c92=""
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 _ngcontent-rhp-c92="" class="card-title">Ideation</h5>
+          <div
+            _ngcontent-rhp-c92=""
+            class="status-toggle d-flex justify-content-between align-items-center"
+          >
+            <input
+              _ngcontent-rhp-c92=""
+              type="checkbox"
+              id="ideation"
+              class="check"
+              name="ideation"
+              [checked]="suicidalities.ideation === true"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="suicidalities.ideation"
+            />
+            <label
+              _ngcontent-rhp-c92=""
+              for="ideation"
+              class="checktoggle"
+              value="true"
+              >checkbox</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-4">
+      <div class="form-group">
+        <div
+          _ngcontent-rhp-c92=""
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 _ngcontent-rhp-c92="" class="card-title">Plan</h5>
+          <div
+            _ngcontent-rhp-c92=""
+            class="status-toggle d-flex justify-content-between align-items-center"
+          >
+            <input
+              _ngcontent-rhp-c92=""
+              type="checkbox"
+              id="plan"
+              class="check"
+              name="plan"
+              [checked]="suicidalities.plan === true"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="suicidalities.plan"
+            />
+            <label
+              _ngcontent-rhp-c92=""
+              for="plan"
+              class="checktoggle"
+              value="true"
+              >checkbox</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-4">
+      <div class="form-group">
+        <div
+          _ngcontent-rhp-c92=""
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 _ngcontent-rhp-c92="" class="card-title">Means</h5>
+          <div
+            _ngcontent-rhp-c92=""
+            class="status-toggle d-flex justify-content-between align-items-center"
+          >
+            <input
+              _ngcontent-rhp-c92=""
+              type="checkbox"
+              id="means"
+              class="check"
+              name="means"
+              [checked]="suicidalities.means === true"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="suicidalities.means"
+            />
+            <label
+              _ngcontent-rhp-c92=""
+              for="means"
+              class="checktoggle"
+              value="true"
+              >checkbox</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-4">
+      <div class="form-group">
+        <div
+          _ngcontent-rhp-c92=""
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 _ngcontent-rhp-c92="" class="card-title">
+            Prior attempt (last 12 months)
+          </h5>
+          <div
+            _ngcontent-rhp-c92=""
+            class="status-toggle d-flex justify-content-between align-items-center"
+          >
+            <input
+              _ngcontent-rhp-c92=""
+              type="checkbox"
+              id="prior_attempt"
+              class="check"
+              name="prior_attempt"
+              [checked]="suicidalities.prior_attempt === true"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="suicidalities.prior_attempt"
+            />
+            <label
+              _ngcontent-rhp-c92=""
+              for="prior_attempt"
+              class="checktoggle"
+              value="true"
+              >checkbox</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 mb-3 doctor-submit text-end">
+      <button class="btn btn-primary btn-sm" (click)="onSave()">
+        Update Suicidality
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<ng-container *ngIf="bip">
+  <app-behavior-analysis-assessment (save)="onSave()" [(bip)]="bip">
+  </app-behavior-analysis-assessment>
+
+  <app-maladaptives
+    (save)="onSave()"
+    [(maladaptives)]="bip.maladaptives"
+  ></app-maladaptives>
+
+  <app-assestment
+    (save)="onSave()"
+    [(assestmentEvaluationSettings)]="bip.assestmentEvaluationSettings"
+    [(assesstmentsDocuments)]="bip.assestment_conducted_options"
+    [(assestmentConducted)]="bip.assestment_conducted"
+  ></app-assestment>
+
+  <app-prevalent-setting
+    (save)="onSave()"
+    [(prevalentSettingEventAndAntecedents)]="
+      bip.prevalent_setting_event_and_atecedents
+    "
+  ></app-prevalent-setting>
+
+  <app-hypothesis-based-interventions
+    (save)="onSave()"
+    [(input)]="bip"
+  ></app-hypothesis-based-interventions>
+
+  <app-interventions
+    (save)="onSave()"
+    [(input)]="bip.interventions"
+  ></app-interventions>
+</ng-container>

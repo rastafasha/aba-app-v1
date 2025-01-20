@@ -1,0 +1,67 @@
+<div class="row">
+  <div class="col-12">
+    <div class="personal-list-out">
+      <div class="card">
+        <div class="card-body">
+          <div class="about-info mb-10">
+            <h4>Consent to Treatment</h4>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-sm-3">
+              <div class="detail-personal">
+                <h2>Analyst Signature</h2>
+                <!-- <p>{{analyst_signature}}</p> -->
+                <!-- <img  [src]="analyst_signature" style="width:100%"  > -->
+                <img
+                  src="{{ imagenSerUrl }}{{
+                    consent_to_treatment?.analyst_signature
+                  }}"
+                  style="width: 100%"
+                  alt=""
+                />
+                <!-- <img  [src]="imageData2" style="width:100%"  > -->
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-3">
+              <div class="detail-personal">
+                <h2>Analyst Signature date</h2>
+                <p>
+                  {{
+                    consent_to_treatment?.analyst_signature_date
+                      | date : "shortDate" : "shortDate"
+                  }}
+                </p>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-3">
+              <div class="detail-personal">
+                <h2>Parent/Guardian/Caregiver Signature</h2>
+                <!-- <p>{{parent_guardian_signature}}</p> -->
+                <!-- <img  [src]="parent_guardian_signature" style="width:100%"  > -->
+                <img
+                  src="{{ imagenSerUrl }}{{
+                    consent_to_treatment?.parent_guardian_signature
+                  }}"
+                  style="width: 100%"
+                  alt=""
+                />
+                <!-- <img  [src]="imageData" style="width:100%"  > -->
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-3">
+              <div class="detail-personal">
+                <h2>Guardian Signature day</h2>
+                <p>
+                  {{
+                    consent_to_treatment?.parent_guardian_signature_date
+                      | date : "shortDate"
+                  }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

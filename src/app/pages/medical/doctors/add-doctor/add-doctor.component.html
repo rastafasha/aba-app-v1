@@ -5,10 +5,14 @@
       <div class="row">
         <div class="col-sm-12">
           <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a [routerLink]="routes.doctors.list">Employees </a></li>
-                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
-                        <li class="breadcrumb-item active">Add Employe </li>
-                    </ul>
+            <li class="breadcrumb-item">
+              <a [routerLink]="routes.doctors.list">Employees </a>
+            </li>
+            <li class="breadcrumb-item">
+              <i class="feather icon-chevron-right"></i>
+            </li>
+            <li class="breadcrumb-item active">Add Employe</li>
+          </ul>
           <div class="doctor-submit text-start">
             <button class="btn btn-primary btn-sm" (click)="goBack()">
               Back
@@ -158,7 +162,8 @@
                 <div
                   class="col-12 col-md-4 col-xl-4"
                   *ngIf="user.roles[0] === 'SUPERADMIN'"
-                ><!-- si viene el rol MANAGER -->
+                >
+                  <!-- si viene el rol MANAGER -->
                   <div class="form-group local-forms">
                     <label>Roles <span class="login-danger">*</span></label>
                     <mat-select
@@ -177,7 +182,8 @@
                 <div
                   class="col-12 col-md-4 col-xl-4"
                   *ngIf="role === 'MANAGER'"
-                ><!-- si viene el rol MANAGER -->
+                >
+                  <!-- si viene el rol MANAGER -->
                   <div class="form-group local-forms">
                     <label>Roles <span class="login-danger">*</span></label>
                     <mat-select
@@ -204,8 +210,8 @@
                 <!-- && !isManager -->
                 <div
                   class="col-12 col-md-4 col-xl-4"
-                  *ngIf="role === 'SUPERADMIN' "
-                > 
+                  *ngIf="role === 'SUPERADMIN'"
+                >
                   <div class="form-group local-forms">
                     <label
                       >Location <span class="login-danger">*</span>
@@ -235,7 +241,7 @@
                 <!-- <div
                   class="col-12 col-md-4 col-xl-4"
                   *ngIf="isManager"
-                > 
+                >
                   <div class="form-group local-forms">
                     <label
                       >Location <span class="login-danger">*</span>
@@ -260,7 +266,7 @@
                   </div>
                 </div> -->
                 <!-- si se selecciona el rol MANAGER -->
-                 <!-- si viene el rol MANAGER -->
+                <!-- si viene el rol MANAGER -->
                 <div
                   class="col-12 col-md-6 col-xl-4"
                   *ngIf="role === 'MANAGER'"
@@ -355,7 +361,7 @@
                     <button
                       type="button"
                       class="btn btn-primary submit-form me-2"
-                      (click)="save()"
+                      (click)="onSave()"
                     >
                       Save
                     </button>
@@ -978,7 +984,7 @@
                     <button
                       type="button"
                       class="btn btn-primary submit-form me-2"
-                      (click)="save()"
+                      (click)="onSave()"
                     >
                       Save
                     </button>

@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-12">
+    <div class="personal-list-out">
+      <div class="card">
+        <div class="card-body">
+          <div class="about-info mb-10">
+            <h4>Documents Reviewed</h4>
+          </div>
+          <div class="row">
+            <div *ngIf="!documents || documents.length === 0">
+              <app-no-info></app-no-info>
+            </div>
+            <ng-container *ngFor="let document of documents; let i = index">
+              <div class="col-xs-12 col-sm-6">
+                <div class="detail-personal">
+                  <h2>Document Title</h2>
+                  <p>{{ document.title }}</p>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

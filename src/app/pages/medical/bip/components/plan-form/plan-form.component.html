@@ -1,0 +1,146 @@
+<div mat-dialog-title class="h3" style="font-size: 1.5rem !important">
+  {{ title }}
+</div>
+
+<div mat-dialog-content>
+  <div class="container mt-4">
+    <!-- If Another Component need add Content -->
+    <div class="col-12"><ng-content></ng-content></div>
+    <div class="row align-items-center">
+      <!-- Name -->
+      <div class="col-xs-12">
+        <div class="form-group local-forms">
+          <label>Goal: <span class="login-danger">*</span></label>
+          <input
+            class="form-control"
+            name="maladaptive_title"
+            [(ngModel)]="input.name"
+            type="text"
+            placeholder="Plan title"
+          />
+        </div>
+      </div>
+      <!-- Status -->
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group local-forms">
+          <label> Status<span class="login-danger">*</span> </label>
+          <select
+            class="form-control form-select-solid fw-bolder"
+            name="sustitution_status_sto"
+            [(ngModel)]="input.status"
+            [ngModelOptions]="{ standalone: true }"
+          >
+            <option>-- Select --</option>
+            <option *ngFor="let state of status | keyvalue" [value]="state.key">
+              {{ state.value }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Baseline Level -->
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group local-forms">
+          <label>Baseline Level <span class="login-danger">*</span></label>
+          <input
+            class="form-control"
+            type="number"
+            name="baseline_level"
+            [(ngModel)]="input.baseline_level"
+            placeholder="Enter baseline level"
+          />
+        </div>
+      </div>
+
+      <!-- Initial Intensity -->
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group local-forms">
+          <label>Initial Intensity <span class="login-danger">*</span></label>
+          <input
+            class="form-control"
+            type="number"
+            name="initial_intensity"
+            [(ngModel)]="input.initial_intensity"
+            placeholder="Enter initial intensity"
+          />
+        </div>
+      </div>
+
+      <!-- Current Intensity -->
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group local-forms">
+          <label>Current Intensity <span class="login-danger">*</span></label>
+          <input
+            class="form-control"
+            type="number"
+            name="current_intensity"
+            [(ngModel)]="input.current_intensity"
+            placeholder="Enter current intensity"
+          />
+        </div>
+      </div>
+
+      <!-- Baseline Date -->
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group local-forms">
+          <label>Baseline Date <span class="login-danger">*</span></label>
+          <input
+            class="form-control datetimepicker"
+            name="baseline_date"
+            [(ngModel)]="input.baseline_date"
+            type="text"
+            matInput
+            [matDatepicker]="pickerBaselineDate"
+          />
+          <mat-datepicker #pickerBaselineDate></mat-datepicker>
+          <mat-datepicker-toggle matIconSuffix [for]="pickerBaselineDate">
+          </mat-datepicker-toggle>
+        </div>
+      </div>
+
+      <!-- End Date -->
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group local-forms">
+          <label>End Date <span class="login-danger">*</span></label>
+          <input
+            class="form-control datetimepicker"
+            name="end_date"
+            [(ngModel)]="input.end_date"
+            type="text"
+            matInput
+            [matDatepicker]="pickerEndDate"
+          />
+          <mat-datepicker #pickerEndDate></mat-datepicker>
+          <mat-datepicker-toggle matIconSuffix [for]="pickerEndDate">
+          </mat-datepicker-toggle>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="col-xs-12 col-md-12">
+        <div class="form-group local-forms">
+          <label>
+            Description
+            <span class="login-danger">*</span>
+          </label>
+          <textarea
+            class="form-control"
+            name="description"
+            [(ngModel)]="input.description"
+            rows="4"
+            cols="30"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <div class="col-12 mb-3 text-end">
+    <button (click)="onCancel()" class="btn btn-outline-danger btn-sm">
+      Cancel
+    </button>
+    <button (click)="onSave()" class="btn btn-primary btn-sm">Save</button>
+  </div>
+</div>

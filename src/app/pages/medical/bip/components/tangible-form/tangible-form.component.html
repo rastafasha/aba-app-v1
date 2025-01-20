@@ -1,0 +1,61 @@
+<h3 mat-dialog-title class="h3">Tangible</h3>
+<div mat-dialog-content>
+  <div class="row mt-4">
+    <div class="col-xs-12 col-sm-6">
+      <div class="form-group local-forms">
+        <label>
+          Preventtive Strategies (atecedent-based)
+          <span class="login-danger">* </span>
+        </label>
+        <textarea
+          class="form-control"
+          name="preventive_strategies"
+          [(ngModel)]="input.preventive_strategies"
+          rows="4"
+          cols="30"
+        >
+        </textarea>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <div class="form-group local-forms">
+        <label>
+          Replacement Skills (relate to function)
+          <span class="login-danger">* </span>
+        </label>
+        <textarea
+          class="form-control"
+          name="replacement_skills"
+          [(ngModel)]="input.replacement_skills"
+          rows="4"
+          cols="30"
+        >
+        </textarea>
+      </div>
+    </div>
+    <div class="col-xs-12">
+      <div class="form-group local-forms">
+        <label>
+          Manager Strategies (consecuences Based)
+          <span class="login-danger">* </span>
+        </label>
+        <textarea
+          class="form-control"
+          name="manager_strategies"
+          [(ngModel)]="input.manager_strategies"
+          rows="4"
+          cols="30"
+        >
+        </textarea>
+      </div>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions align="end">
+  <button (click)="onCancel()" mat-button class="btn btn-outline-danger btn-md">
+    Cancel
+  </button>
+  <button (click)="onSave()" mat-button class="btn btn-primary btn-md">
+    Save
+  </button>
+</div>

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { LogNotasSearchComponent } from './log-notas-search.component';
-import { MaterialModule } from 'src/app/shared/material.module';
+import { MaterialModule } from 'src/app/shared/extras/material.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { RouterTestingModule } from '@angular/router/testing';
 

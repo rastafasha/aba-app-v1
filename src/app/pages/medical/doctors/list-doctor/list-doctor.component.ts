@@ -11,7 +11,7 @@ import { DoctorService } from '../service/doctor.service';
 import { AppUser } from 'src/app/core/models/users.model';
 import { PageService } from 'src/app/shared/services/pages.service';
 import { LocationsV2Service } from 'src/app/core/services/locations.v2.service';
-import { LocationV2 } from 'src/app/core/models/location.v2.model';
+import { LocationV2 } from 'src/app/core/models/v2/location.v2.model';
 declare var $: any;
 @Component({
   selector: 'app-list-doctor',
@@ -61,11 +61,9 @@ export class ListDoctorComponent implements OnInit {
     this.getTableData();
     this.getLocations();
 
-   
     this.user = this.authService.user as AppUser;
     this.role = this.user.roles[0];
     this.location_id = this.user.location_id;
-
   }
 
   goBack() {
@@ -86,8 +84,6 @@ export class ListDoctorComponent implements OnInit {
       console.log(this.locations);
     });
   }
-
-  
 
   private getTableData(): void {
     this.doctorList = [];

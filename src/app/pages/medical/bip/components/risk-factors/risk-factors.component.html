@@ -1,0 +1,421 @@
+<div class="col-xs-12">
+  <div class="row">
+    <div class="col-xs-6 col-sm-3">
+      <div class="form-group">
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 class="card-title">Does Not Apply</h5>
+          <div
+            class="status-toggle d-flex justify-content-between align-items-center"
+          >
+            <input
+              type="checkbox"
+              id="do_not_apply"
+              class="check"
+              name="do_not_apply"
+              [checked]="input.do_not_apply === true"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="input.do_not_apply"
+            />
+            <label for="do_not_apply" class="checktoggle" value="true">
+              checkbox
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <div class="form-group">
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 class="card-title">Elopement</h5>
+          <div
+            class="status-toggle d-flex justify-content-between align-items-center"
+          >
+            <input
+              type="checkbox"
+              id="elopement"
+              class="check"
+              name="elopement"
+              [checked]="input.elopement === true"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="input.elopement"
+            />
+            <label for="elopement" class="checktoggle" value="true">
+              checkbox
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <div class="form-group">
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 class="card-title">Assaultive behavior</h5>
+          <div
+            class="status-toggle d-flex justify-content-between align-items-center"
+          >
+            <input
+              type="checkbox"
+              id="assaultive_behavior"
+              class="check"
+              name="assaultive_behavior"
+              [checked]="input.assaultive_behavior === true"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="input.assaultive_behavior"
+            />
+            <label for="assaultive_behavior" class="checktoggle" value="true">
+              checkbox
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <div class="form-group">
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 class="card-title">Aggression</h5>
+          <div
+            class="status-toggle d-flex justify-content-between align-items-center"
+          >
+            <input
+              type="checkbox"
+              id="aggression"
+              class="check"
+              name="aggression"
+              [checked]="input.aggression === true"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="input.aggression"
+            />
+            <label for="aggression" class="checktoggle" value="true"
+              >checkbox</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <div class="form-group">
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 class="card-title">Self-Injurious Behavior</h5>
+          <div
+            class="status-toggle d-flex justify-content-between align-items-center"
+          >
+            <input
+              type="checkbox"
+              id="self_injurious_behavior"
+              class="check"
+              name="self_injurious_behavior"
+              [checked]="input.self_injurious_behavior === true"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="input.self_injurious_behavior"
+            />
+            <label
+              for="self_injurious_behavior"
+              class="checktoggle"
+              value="true"
+              >checkbox</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <div class="form-group">
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 class="card-title">Sexually offending behavior</h5>
+          <div
+            class="status-toggle d-flex justify-content-between align-items-center"
+          >
+            <input
+              type="checkbox"
+              id="sexually_offending_behavior"
+              class="check"
+              name="sexually_offending_behavior"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="input.sexually_offending_behavior"
+            />
+            <label
+              for="sexually_offending_behavior"
+              class="checktoggle"
+              value="true"
+              >checkbox</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <div class="form-group">
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 class="card-title">Fire setting</h5>
+          <div
+            class="status-toggle d-flex justify-content-between align-items-center"
+          >
+            <input
+              type="checkbox"
+              id="fire_setting"
+              class="check"
+              name="fire_setting"
+              [checked]="input.fire_setting === true"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="input.fire_setting"
+            />
+            <label for="fire_setting" class="checktoggle" value="true"
+              >checkbox</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <div class="form-group">
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 class="card-title">Current substance abuse</h5>
+          <div
+            class="status-toggle d-flex justify-content-between align-items-center"
+          >
+            <input
+              type="checkbox"
+              id="current_substance_abuse"
+              class="check"
+              name="current_substance_abuse"
+              [checked]="input.current_substance_abuse === true"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="input.current_substance_abuse"
+            />
+            <label
+              for="current_substance_abuse"
+              class="checktoggle"
+              value="true"
+              >checkbox</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <div class="form-group">
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 class="card-title">Impulsive Behavior</h5>
+          <div
+            class="status-toggle d-flex justify-content-between align-items-center"
+          >
+            <input
+              type="checkbox"
+              id="impulsive_behavior"
+              class="check"
+              name="impulsive_behavior"
+              [checked]="input.impulsive_behavior === true"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="input.impulsive_behavior"
+            />
+            <label for="impulsive_behavior" class="checktoggle" value="true"
+              >checkbox</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <div class="form-group">
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 class="card-title">Psychotic Symptoms</h5>
+          <div
+            class="status-toggle d-flex justify-content-between align-items-center"
+          >
+            <input
+              type="checkbox"
+              id="psychotic_symptoms"
+              class="check"
+              name="psychotic_symptoms"
+              [checked]="input.psychotic_symptoms === true"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="input.psychotic_symptoms"
+            />
+            <label for="psychotic_symptoms" class="checktoggle" value="true"
+              >checkbox</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <div class="form-group">
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 class="card-title">Self-mutilation/cutting</h5>
+          <div
+            class="status-toggle d-flex justify-content-between align-items-center"
+          >
+            <input
+              type="checkbox"
+              id="self_mutilation_cutting"
+              class="check"
+              name="self_mutilation_cutting"
+              [checked]="input.self_mutilation_cutting === true"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="input.self_mutilation_cutting"
+            />
+            <label
+              for="self_mutilation_cutting"
+              class="checktoggle"
+              value="true"
+              >checkbox</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <div class="form-group">
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 class="card-title">Caring for ill family recipient</h5>
+          <div
+            class="status-toggle d-flex justify-content-between align-items-center"
+          >
+            <input
+              type="checkbox"
+              id="caring_for_ill_family_recipient"
+              class="check"
+              name="caring_for_ill_family_recipient"
+              [checked]="input.caring_for_ill_family_recipient === true"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="input.caring_for_ill_family_recipient"
+            />
+            <label
+              for="caring_for_ill_family_recipient"
+              class="checktoggle"
+              value="true"
+              >checkbox</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <div class="form-group">
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 class="card-title">Current family violence</h5>
+          <div
+            class="status-toggle d-flex justify-content-between align-items-center"
+          >
+            <input
+              type="checkbox"
+              id="current_family_violence"
+              class="check"
+              name="current_family_violence"
+              [checked]="input.current_family_violence === true"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="input.current_family_violence"
+            />
+            <label
+              for="current_family_violence"
+              class="checktoggle"
+              value="true"
+              >checkbox</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <div class="form-group">
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 class="card-title">
+            Dealing with significant (abuse, violence) loss (job, relationship,
+            financial)
+          </h5>
+          <div
+            class="status-toggle d-flex justify-content-between align-items-center"
+          >
+            <input
+              type="checkbox"
+              id="dealing_with_significant"
+              class="check"
+              name="dealing_with_significant"
+              [checked]="input.dealing_with_significant === true"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="input.dealing_with_significant"
+            />
+            <label
+              for="dealing_with_significant"
+              class="checktoggle"
+              value="true"
+              >checkbox</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <div class="form-group">
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 class="card-title">Prior psychiatric inpatient admission</h5>
+          <div
+            class="status-toggle d-flex justify-content-between align-items-center"
+          >
+            <input
+              type="checkbox"
+              id="prior_psychiatric_inpatient_admission"
+              class="check"
+              name="prior_psychiatric_inpatient_admission"
+              [checked]="input.prior_psychiatric_inpatient_admission === true"
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="input.prior_psychiatric_inpatient_admission"
+            />
+            <label
+              for="prior_psychiatric_inpatient_admission"
+              class="checktoggle"
+              value="true"
+              >checkbox</label
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-3">
+      <div class="form-group local-forms">
+        <label>Other<span class="login-danger">*</span> </label>
+        <input
+          class="form-control"
+          name="other"
+          [(ngModel)]="input.other"
+          type="text"
+        />
+      </div>
+    </div>
+    <div class="col-12 mb-3 doctor-submit text-end">
+      <button class="btn btn-primary btn-sm" (click)="onUpdate()">
+        Update risk
+      </button>
+    </div>
+  </div>
+</div>

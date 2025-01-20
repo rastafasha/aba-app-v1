@@ -1,20 +1,18 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
+import { PaServiceV2 } from 'src/app/core/models';
 import { AppUser } from 'src/app/core/models/users.model';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
 import { NoteRbtService } from '../../../../core/services/notes-rbt.service';
 import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import { MaladaptivesComponent } from "../components/maladaptives/maladaptives.component";
-import { PaServiceV2 } from 'src/app/core/models';
 
 @Component({
   selector: 'app-edit-note-rbt',
   templateUrl: './edit-note-rbt.component.html',
-  styleUrls: ['./edit-note-rbt.component.scss']
+  styleUrls: ['./edit-note-rbt.component.scss'],
 })
 export class EditNoteRbtComponent implements OnInit {
   routes = AppRoutes;
@@ -48,7 +46,6 @@ export class EditNoteRbtComponent implements OnInit {
   selectedValueBCBA!: string;
   selectedValueAbaSupervisor!: string;
   selectedValueBcba_id!: number;
-
 
   client_id: any;
   patient_identifier: string;
@@ -105,21 +102,21 @@ export class EditNoteRbtComponent implements OnInit {
   supervisor_signature: any;
 
   token_economy: boolean;
-    generalization: boolean;
-    NCR: boolean;
-    behavioral_momentum: boolean;
-    DRA: boolean;
-    DRI: boolean;
-    DRO: boolean;
-    DRL: boolean;
-    response_block: boolean;
-    errorless_teaching: boolean;
-    extinction: boolean;
-    chaining: boolean;
-    natural_teaching: boolean;
-    redirection: boolean;
-    shaping: boolean;
-    pairing: boolean;
+  generalization: boolean;
+  NCR: boolean;
+  behavioral_momentum: boolean;
+  DRA: boolean;
+  DRI: boolean;
+  DRO: boolean;
+  DRL: boolean;
+  response_block: boolean;
+  errorless_teaching: boolean;
+  extinction: boolean;
+  chaining: boolean;
+  natural_teaching: boolean;
+  redirection: boolean;
+  shaping: boolean;
+  pairing: boolean;
 
   FILE_SIGNATURE_RBT: any;
   IMAGE_PREVISUALIZA_SIGNATURE__RBT: any;
@@ -152,7 +149,7 @@ export class EditNoteRbtComponent implements OnInit {
   interventionsgroup = [];
 
   maladaptivegroup = [];
-  maladaptives: any [];
+  maladaptives: any[];
   replacementgroup = [];
 
   maladaptiveSelected: any = null;
@@ -181,7 +178,7 @@ export class EditNoteRbtComponent implements OnInit {
       this.note_id = resp['id'];
     });
 
-    this.ativatedRoute.queryParams.subscribe(params => {
+    this.ativatedRoute.queryParams.subscribe((params) => {
       this.fromParam = params['from'];
     });
 
@@ -221,14 +218,16 @@ export class EditNoteRbtComponent implements OnInit {
         value: input['generalization'] || false,
       },
       { id: 'NCR', name: 'NCR', value: input['NCR'] || false },
-      { id: 'behavioral_momentum', name: 'Behavioral Momentum', 
-        value: input['Behavioral Momentum'] || false 
+      {
+        id: 'behavioral_momentum',
+        name: 'Behavioral Momentum',
+        value: input['Behavioral Momentum'] || false,
       },
       { id: 'DRA', name: 'DRA', value: input['DRA'] || false },
       { id: 'DRI', name: 'DRI', value: input['DRI'] || false },
       { id: 'DRO', name: 'DRO', value: input['DRO'] || false },
       { id: 'DRL', name: 'DRL', value: input['DRL'] || false },
-      
+
       {
         id: 'response_block',
         name: 'Response Block',
@@ -290,10 +289,10 @@ export class EditNoteRbtComponent implements OnInit {
       this.selectedValueCode = this.note_selected.cpt_code;
 
       this.selectedValueRBT = resp.noteRbt.provider.name;
-      this.selectedValueProviderRBT_id =resp.noteRbt.provider_id;
+      this.selectedValueProviderRBT_id = resp.noteRbt.provider_id;
 
       this.selectedValueBCBA = resp.noteRbt.supervisor.name;
-      this.selectedValueBcba_id =resp.noteRbt.supervisor_id;
+      this.selectedValueBcba_id = resp.noteRbt.supervisor_id;
 
       this.interventions = resp.interventions;
       this.interventionsList = this.convertToInterventions(
@@ -301,7 +300,7 @@ export class EditNoteRbtComponent implements OnInit {
       );
 
       this.maladaptives = resp.maladaptives;
-      this.replacements = resp.replacements; 
+      this.replacements = resp.replacements;
 
       // this.pos = this.note_selected.pos;
       this.environmental_changes = this.note_selected.environmental_changes;
@@ -330,7 +329,7 @@ export class EditNoteRbtComponent implements OnInit {
       this.session_length_afternon_total =
         this.note_selected.session_length_afternon_total;
 
-        this.session_length_total = this.note_selected.session_length_total;
+      this.session_length_total = this.note_selected.session_length_total;
 
       // console.log('Setting:', this.formatTime(this.note_selected.time_in));
       this.selectedValueTimeIn = this.formatTime(this.note_selected.time_in);
@@ -370,7 +369,6 @@ export class EditNoteRbtComponent implements OnInit {
     return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
   }
 
-
   getProfileBip(noteServiceId?: number) {
     console.log('Getting profile BIP:', {
       noteServiceId,
@@ -379,15 +377,15 @@ export class EditNoteRbtComponent implements OnInit {
     this.bipService
       .getBipProfilePatient_id(this.patient_identifier)
       .subscribe((resp) => {
-        console.log('client',resp);
+        console.log('client', resp);
         this.client_selected = resp.patient;
 
         this.first_name = this.client_selected.first_name;
         this.last_name = this.client_selected.last_name;
         this.patient_identifier = this.client_selected.patient_identifier;
-      this.patient_id = this.client_selected.id;
-      this.insurance_id = this.client_selected.insurer_id;
-      this.insurance_identifier = this.client_selected.insurance_identifier;
+        this.patient_id = this.client_selected.id;
+        this.insurance_id = this.client_selected.insurer_id;
+        this.insurance_identifier = this.client_selected.insurance_identifier;
         this.patientLocation_id = this.client_selected.location_id;
 
         this.pos = this.client_selected.pos_covered;
@@ -397,7 +395,9 @@ export class EditNoteRbtComponent implements OnInit {
         if (noteServiceId) {
           this.setPaService(noteServiceId);
         }
-        this.selectedPaService = resp.patient.pa_services.find(service => service.cpt === '97153') || null;
+        this.selectedPaService =
+          resp.patient.pa_services.find((service) => service.cpt === '97153') ||
+          null;
       });
 
     this.getReplacementsByPatientId();
@@ -501,43 +501,47 @@ export class EditNoteRbtComponent implements OnInit {
     this.calculateTotalHours();
   }
 
-
   calculateTotalHours() {
     const timeIn1 = this.convertToMinutes(this.selectedValueTimeIn);
     const timeOut1 = this.convertToMinutes(this.selectedValueTimeOut);
     const timeIn2 = this.convertToMinutes(this.selectedValueTimeIn2);
     const timeOut2 = this.convertToMinutes(this.selectedValueTimeOut2);
 
-    const totalMinutes = (timeOut1 - timeIn1) + (timeOut2 - timeIn2);
+    const totalMinutes = timeOut1 - timeIn1 + (timeOut2 - timeIn2);
     const totalHours = this.convertToHours(totalMinutes);
     this.total_hour_session = totalHours;
     // console.log(`Total hours: ${totalHours}`);
     // console.log('para el html', this.total_hour_session);
-}
+  }
 
-convertToMinutes(time: string): number {
-  if (!time || !time.includes(':')) {
-    // console.error(`Invalid time format: ${time}`);
-        return 0; // O manejar el error de otra manera
+  convertToMinutes(time: string): number {
+    if (!time || !time.includes(':')) {
+      // console.error(`Invalid time format: ${time}`);
+      return 0; // O manejar el error de otra manera
     }
 
     const [hours, minutes] = time.split(':').map(Number);
 
     // Validar que hours y minutes sean números válidos
-    if (isNaN(hours) || isNaN(minutes) || hours < 0 || minutes < 0 || minutes >= 60) {
-        // console.error(`Invalid time values: hours=${hours}, minutes=${minutes}`);
-        return 0; // O manejar el error de otra manera
+    if (
+      isNaN(hours) ||
+      isNaN(minutes) ||
+      hours < 0 ||
+      minutes < 0 ||
+      minutes >= 60
+    ) {
+      // console.error(`Invalid time values: hours=${hours}, minutes=${minutes}`);
+      return 0; // O manejar el error de otra manera
     }
 
     return hours * 60 + minutes;
-}
+  }
 
-convertToHours(totalMinutes: number): string {
+  convertToHours(totalMinutes: number): string {
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes % 60;
     return `${hours}h ${minutes}m`;
-}
-
+  }
 
   private recalculateSessionLength() {
     this.session_length_morning_total =
@@ -625,8 +629,6 @@ convertToHours(totalMinutes: number): string {
     this.number_of_occurrences = null;
   }
 
-
-
   addReplacement(replacemen) {
     this.replacementSelected = replacemen;
     this.replacementGoals.push({
@@ -648,7 +650,6 @@ convertToHours(totalMinutes: number): string {
   deleteLTOGoal(i: any) {
     this.replacementGoals.splice(i, 1);
   }
-
 
   countValue1() {
     const min = 0; // Minimum of 0
@@ -686,8 +687,6 @@ convertToHours(totalMinutes: number): string {
     });
   }
 
- 
-
   //funcion para la primera imagen.. funciona
   loadFile($event) {
     if ($event.target.files[0].type.indexOf('image')) {
@@ -716,7 +715,7 @@ convertToHours(totalMinutes: number): string {
         reader2.result as string);
   }
 
-  save() {
+  onSave() {
     this.text_validation = '';
     // if(!this.name||!this.email ||!this.surname ){
     //   this.text_validation = 'Los campos con * son obligatorios';
@@ -734,8 +733,8 @@ convertToHours(totalMinutes: number): string {
     }
 
     const formData = new FormData();
-    formData.append('patient_id', this.patient_id+'');
-    formData.append('doctor_id', this.doctor_id+'');
+    formData.append('patient_id', this.patient_id + '');
+    formData.append('doctor_id', this.doctor_id + '');
     formData.append('bip_id', this.bip_id);
     formData.append('first_name', this.first_name);
     formData.append('last_name', this.last_name);
@@ -743,17 +742,14 @@ convertToHours(totalMinutes: number): string {
     formData.append('provider_credential', this.provider_credential);
     formData.append('pos', this.pos);
 
-
     // formData.append('provider', this.provider); // para el calculo de las unidades
 
     formData.append('session_date', this.session_date);
 
     formData.append('location_id', this.patientLocation_id);
 
-
-    formData.append('insurance_id', this.insurance_id+''); // id del seguro preferiblemente que solo agarre la data al crear
+    formData.append('insurance_id', this.insurance_id + ''); // id del seguro preferiblemente que solo agarre la data al crear
     formData.append('insurance_identifier', this.insurance_identifier); // id del seguro preferiblemente que solo agarre la data al crear
-
 
     if (this.meet_with_client_at) {
       formData.append('meet_with_client_at', this.meet_with_client_at);
@@ -797,10 +793,10 @@ convertToHours(totalMinutes: number): string {
     }
 
     if (this.selectedValueProviderRBT_id) {
-      formData.append('provider_id', this.selectedValueProviderRBT_id+'');
+      formData.append('provider_id', this.selectedValueProviderRBT_id + '');
     }
     if (this.selectedValueBcba_id) {
-      formData.append('supervisor_id', this.selectedValueBcba_id+'');
+      formData.append('supervisor_id', this.selectedValueBcba_id + '');
     }
 
     if (this.replacementgroup) {
@@ -826,10 +822,7 @@ convertToHours(totalMinutes: number): string {
     //   );
     // }
     if (this.sumary_note) {
-      formData.append(
-        'sumary_note',
-        this.sumary_note
-      );
+      formData.append('sumary_note', this.sumary_note);
     }
     if (this.next_session_is_scheduled_for) {
       formData.append(
@@ -839,8 +832,6 @@ convertToHours(totalMinutes: number): string {
     }
     formData.append('pa_service_id', this.selectedPaService.id.toString());
     formData.append('cpt_code', this.selectedPaService.cpt);
-
-    
 
     if (this.FILE_SIGNATURE_RBT) {
       formData.append('imagen', this.FILE_SIGNATURE_RBT);
@@ -870,7 +861,10 @@ convertToHours(totalMinutes: number): string {
           Swal.fire('Warning', this.text_validation, 'warning');
         } else {
           Swal.fire('Updated', 'Note RBT Updated', 'success');
-          this.router.navigate([AppRoutes.noteRbt.list, this.patient_identifier]);
+          this.router.navigate([
+            AppRoutes.noteRbt.list,
+            this.patient_identifier,
+          ]);
         }
       },
       (error) => {
@@ -890,7 +884,6 @@ convertToHours(totalMinutes: number): string {
       }
     );
   }
-
 
   generateAISummary() {
     if (!this.checkDataSufficient()) {
