@@ -296,73 +296,51 @@ export class NoteRbtComponent implements OnInit {
       this.selectedValueProviderCredential = resp.roles_rbt.certificate_number;
     });
   }
-  getPatient() {
-    this.patientService
-      .getPatientByPatientId(this.patient_identifier)
-      .subscribe((resp) => {
-        console.log('API Response:', resp);
-        this.client_selected = resp.patient;
-        console.log('Client Selected:', this.client_selected);
+getPatient(){
+    this.patientService.getPatientByPatientId(this.patient_identifier).subscribe((resp)=>{
+      // console.log('API Response:', resp);
+      this.client_selected = resp.patient;
+      // console.log('Client Selected:', this.client_selected);
 
-        this.first_name = this.client_selected.first_name;
-        this.last_name = this.client_selected.last_name;
-        this.patient_identifier = this.client_selected.patient_identifier;
-        this.patient_id = this.client_selected.id;
-        this.client_id = this.client_selected.id;
-        this.insurance_id = this.client_selected.insurer_id;
-        this.insurance_identifier = this.client_selected.insurance_identifier;
-        this.patientLocation_id = this.client_selected.location_id;
-        this.selectedValueProviderRBT_id = this.doctor_id;
-        this.selectedValueBcba_id = this.client_selected.bcba_id;
-        this.pos = this.client_selected.pos_covered;
-        this.diagnosis_code = this.client_selected.diagnosis_code;
-        this.provider_name_g = this.client_selected.provider_name || '';
-        this.provider_credential =
-          this.client_selected.provider_credential || '';
+      this.first_name = this.client_selected.first_name;
+      this.last_name = this.client_selected.last_name;
+      this.patient_identifier = this.client_selected.patient_identifier;
+      this.patient_id = this.client_selected.id;
+      this.client_id = this.client_selected.id;
+      this.insurance_id = this.client_selected.insurer_id;
+      this.insurance_identifier = this.client_selected.insurance_identifier;
+      this.patientLocation_id = this.client_selected.location_id;
+      this.selectedValueProviderRBT_id = this.doctor_id;
+      this.selectedValueBcba_id = this.client_selected.bcba_id;
+      this.pos = this.client_selected.pos_covered;
+      this.diagnosis_code = this.client_selected.diagnosis_code;
+      this.provider_name_g = this.client_selected.provider_name || '';
+      this.provider_credential = this.client_selected.provider_credential || '';
 
-        console.log('After setting values:', {
-          client_id: this.client_id,
-          provider_id: this.selectedValueProviderRBT_id,
-          supervisor_id: this.selectedValueBcba_id,
-          patient_id: this.patient_id,
-        });
-
-        console.log('pa_services:', resp.patient.pa_services);
-        this.pa_services = resp.patient.pa_services;
-
-        // Filter pa_services by date
-        this.pa_services = this.pa_services.filter((pa) => {
-          const dateStart = new Date(pa.start_date).getTime();
-          const dateEnd = new Date(pa.end_date).getTime();
-          const dateToday = new Date().getTime();
-          return dateStart <= dateToday && dateEnd >= dateToday;
-        });
-
-        this.selectedPaService =
-          resp.patient.pa_services.find((service) => service.cpt === '97153') ||
-          null;
-        console.log('Selected Service:', this.selectedPaService);
-        this.selectedValueCode = this.selectedPaService?.cpt || '';
-
-        this.pa_services = resp.patient.pa_services;
-
-        // Filter pa_services by date
-        this.pa_services = this.pa_services.filter((pa) => {
-          const dateStart = new Date(pa.start_date).getTime();
-          const dateEnd = new Date(pa.end_date).getTime();
-          const dateToday = new Date().getTime();
-          return dateStart <= dateToday && dateEnd >= dateToday;
-        });
-
-        this.selectedPaService =
-          resp.patient.pa_services.find((service) => service.cpt === '97153') ||
-          null;
-        // console.log('Selected Service:', this.selectedPaService);
-        console.log('Selected Service:', this.selectedPaService);
-        this.selectedValueCode = this.selectedPaService?.cpt || '';
-
-        this.getBipV2();
+      console.log('After setting values:', {
+        client_id: this.client_id,
+        provider_id: this.selectedValueProviderRBT_id,
+        supervisor_id: this.selectedValueBcba_id,
+        patient_id: this.patient_id
       });
+
+      this.pa_services = resp.patient.pa_services;
+
+      // Filter pa_services by date
+      this.pa_services = this.pa_services.filter((pa) => {
+        const dateStart = new Date(pa.start_date).getTime();
+        const dateEnd = new Date(pa.end_date).getTime();
+        const dateToday = new Date().getTime();
+        return dateStart <= dateToday && dateEnd >= dateToday;
+      });
+
+      this.selectedPaService = resp.patient.pa_services.find(service => service.cpt === '97153') || null;
+      // console.log('Selected Service:', this.selectedPaService);
+      console.log('Selected Service:', this.selectedPaService);
+      this.selectedValueCode = this.selectedPaService?.cpt || '';
+
+      this.getBipV2();
+    })
   }
 
   getBipV2() {
