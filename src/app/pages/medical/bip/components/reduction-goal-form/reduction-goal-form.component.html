@@ -2,28 +2,18 @@
   <div class="card">
     <div class="card-body">
       <div class="col-xs-12">
+        <!-- list -->
         <app-list-and-form
           *ngIf="state === 'list'"
           #list
           title="Maladaptives Behaviors"
-          [(newItem)]="newMaladaptive"
+          [(newItem)]="newGoal"
           [(dataSource)]="input"
-          [displayedColumns]="[
-            'name',
-            'baseline_level',
-            'baseline_date',
-            'initial_intensity',
-            'current_intensity',
-            'description'
-          ]"
+          [displayedColumns]="displayedColumns"
           [renders]="renders"
           [options]="options"
         >
-          <app-maladaptive-form
-            [(input)]="newMaladaptive"
-            (cancel)="list.onClose()"
-            (save)="list.onAdd($event)"
-          ></app-maladaptive-form>
+          <app-plan-form [(input)]="newGoal"></app-plan-form>
         </app-list-and-form>
         <!-- Back -->
         <div *ngIf="state !== 'list'" class="doctor-submit text-end">
@@ -33,16 +23,16 @@
         </div>
         <!-- Edit -->
         <div *ngIf="state === 'edit'">
-          <app-reduction-goal-edit [(goal)]="newMaladaptive">
-          </app-reduction-goal-edit>
-        </div>
-        <!-- Grafico-->
-        <div
-          *ngIf="state === 'viewGraph'"
-          class="rbt-dashboard-table table-responsive mobile-table-750"
-        >
+          <app-plan-edit
+            title="Reduction Goal"
+            [(input)]="newGoal"
+            (cancel)="onBack()"
+            (save)="onSave()"
+          >
+          </app-plan-edit>
+
           <app-chart-reduction
-            [maladaptive]="newMaladaptive"
+            [maladaptive]="newGoal"
             [patient_identifier]="patient_identifier"
           ></app-chart-reduction>
         </div>

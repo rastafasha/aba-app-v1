@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StoFormComponent } from './sto-form.component';
+import { ObjectiveFormComponent } from './objective-form.component';
 
 describe('StoFormComponent', () => {
-  let component: StoFormComponent;
-  let fixture: ComponentFixture<StoFormComponent>;
+  let component: ObjectiveFormComponent;
+  let fixture: ComponentFixture<ObjectiveFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StoFormComponent ]
-    })
-    .compileComponents();
+      declarations: [ObjectiveFormComponent],
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(StoFormComponent);
+    fixture = TestBed.createComponent(ObjectiveFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

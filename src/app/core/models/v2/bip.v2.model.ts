@@ -15,11 +15,11 @@ type ObjectiveStatus =
   | 'discontinued'
   | 'maintenance';
 export const OBJECTIVE_STATUS_MAP: Record<ObjectiveStatus, string> = {
-  'no started': 'Not started',
-  'in progress': 'In progress',
+  'no started': 'Not Started',
+  'in progress': 'In Progress',
   mastered: 'Mastered',
   initiated: 'Initiated',
-  'on hold': 'On hold',
+  'on hold': 'On Hold',
   discontinued: 'Discontinued',
   maintenance: 'Maintenance',
 };
@@ -146,22 +146,6 @@ export class AssestmentEvaluationSetting {
       activities: '',
       other: '',
     });
-  }
-}
-
-export class MonitoringEvaluating {
-  id: number;
-  bip_id: number;
-  patient_id: string;
-  client_id: number;
-  treatment_fidelity: string;
-  rbt_training_goals: Objective[];
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
-  constructor(data: Partial<MonitoringEvaluating>) {
-    Object.assign(this, data);
-    this.rbt_training_goals = ForceMap(data.rbt_training_goals, Objective);
   }
 }
 
@@ -457,7 +441,7 @@ export class BipV2 {
   sustitution_goal: Sustitution[];
   family_envolment: PlanV2[];
   rbt_trainings: PlanV2[];
-  monitoring_evalutating: MonitoringEvaluating[];
+  monitoring_evalutating: PlanV2[];
   generalization_trainings: GeneralizationTraining[];
   crisis_plans: CrisisPlan[];
   de_escalation_techniques: DeEscalationTechnique[];
@@ -504,10 +488,7 @@ export class BipV2 {
         data.hypothesis_based_intervention
       ),
       interventions: ForceMap(data.interventions, Intervention),
-      monitoring_evalutating: ForceMap(
-        data.monitoring_evalutating,
-        MonitoringEvaluating
-      ),
+      monitoring_evalutating: ForceMap(data.monitoring_evalutating, PlanV2),
       phisical_and_medical: ForceMap(data.phisical_and_medical, Medication),
       phisical_and_medical_status: StringOrNullOrUndefined(
         data.phisical_and_medical_status

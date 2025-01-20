@@ -48,7 +48,9 @@
                           to avoid disrupting progress or failing to acquire
                           functional skills. In addition, maladaptive behaviors
                           that put consumer at risk might escalate if treatment
-                          is withheld. <br /><br />
+                          is withheld.
+                        </p>
+                        <p>
                           Client’s maladaptive behaviors can have negative
                           social consequences as others may avoid interaction
                           with the client. Client needs close monitoring and
@@ -62,7 +64,9 @@
                           their needs, understand instructions and demands and
                           regulate impulsive behavior is imperative to
                           successful functioning in home, school and community
-                          settings.<br /><br />
+                          settings.
+                        </p>
+                        <p>
                           Caregivers are to be trained on possible effects of
                           treatment modalities such as Extinction Burst. Common
                           effects of this intervention are an increase in the
@@ -71,7 +75,9 @@
                           aggression). If parents/caregivers are not adequately
                           trained to understand the process, they usually think
                           that treatment is not working and make efforts to stop
-                          these interventions. <br /><br />
+                          these interventions.
+                        </p>
+                        <p>
                           Punishment procedures are not used in this program and
                           least restrictive strategies are always encouraged
                           first. In the case that Response Cost or Simple
@@ -90,7 +96,7 @@
                           <textarea
                             class="form-control"
                             name="discharge_plan"
-                            [(ngModel)]="generalization.discharge_plan"
+                            [(ngModel)]="input.discharge_plan"
                             rows="4"
                             cols="30"
                           >
@@ -107,7 +113,7 @@
                   <app-list-and-form
                     #transitionFadingPlanListAndForm
                     [(newItem)]="newTransitionFadingPlan"
-                    [(dataSource)]="generalization.transition_fading_plans"
+                    [(dataSource)]="input.transition_fading_plans"
                     [displayedColumns]="['phase', 'description']"
                   >
                     <app-transition-fading-plan-form

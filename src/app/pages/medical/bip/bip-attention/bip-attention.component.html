@@ -60,13 +60,13 @@
           <!-- 4 -->
           <app-family-involvement-goal-form
             *ngIf="optionSelected === 4"
-            [(input)]="bip.caregiver_trainings[0]"
+            [(input)]="bip.caregiver_trainings"
           >
           </app-family-involvement-goal-form>
           <!-- 5 -->
           <app-monitoring-evaluating
             *ngIf="optionSelected === 5"
-            [(monitoring_evalutating)]="bip.monitoring_evalutating[0]"
+            [(input)]="bip.monitoring_evalutating"
           >
           </app-monitoring-evaluating>
           <!-- 6 -->
@@ -75,7 +75,7 @@
           <!-- 7 -->
           <app-generalization-training
             *ngIf="optionSelected === 7"
-            [(generalization)]="bip.generalization_trainings[0]"
+            [(input)]="bip.generalization_trainings[0]"
           >
           </app-generalization-training>
           <!-- 8 -->

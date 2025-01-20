@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { AssestmentEvaluationSettingFormComponent } from './AssestmentEvaluationSettingForm/AssestmentEvaluationSettingForm.component';
 import { BehaviorAssistantComponent } from './behavior-assistant/behavior-assistant.component';
 import { BipDocumentsShowComponent } from './bip-documents-show/bip-documents-show.component';
 import { AssestmentComponent } from './bip-form/assestment/assestment.component';
@@ -36,29 +37,25 @@ import { ConsentTreatmentFormComponent } from './consent-treatment-form/consent-
 import { CrisisPlanComponent } from './crisis-plan/crisis-plan.component';
 import { DeEscalationTecniquesComponent } from './de-escalation-tecniques/de-escalation-tecniques.component';
 import { DocumentFormComponent } from './document-form/document-form.component';
+import { DocumentReviewedFormComponent } from './document-reviewed-form/document-reviewed-form.component';
 import { FamilyInvolvementGoalFormComponent } from './family-involvement-goal-form/family-involvement-goal-form.component';
 import { GeneralizationTrainingComponent } from './generalization-training/generalization-training.component';
-import { GoalFormSimpleComponent } from './goal-form-simple/goal-form-simple.component';
-import { GoalFormComponent } from './goal-form/goal-form.component';
 import { HomicidalitiesComponent } from './homicidalities/homicidalities.component';
-import { LtoFormComponent } from './lto-form/lto-form.component';
+import { MonitoringEvaluatingEditComponent } from './monitoring-evaluating-edit/monitoring-evaluating-edit.component';
 import { MonitoringEvaluatingComponent } from './monitoring-evaluating/monitoring-evaluating.component';
+import { ObjectiveFormComponent } from './objective-form/objective-form.component';
 import { PatientFormComponent } from './patient-form/patient-form.component';
 import { PhisicalAndMedicalComponent } from './phisical_and_medical/phisical_and_medical.component';
+import { PlanEditComponent } from './plan-edit/plan-edit.component';
+import { GoalFormSimpleComponent } from './plan-form/plan-form.component';
 import { RbtTrainingGoalFormComponent } from './rbt-training-goal-form/rbt-training-goal-form.component';
 import { RecomendationFormComponent } from './recomendation-form/recomendation-form.component';
-import { ReductionGoalEditComponent } from './reduction-goal-edit/reduction-goal-edit.component';
 import { MaladaptiveGoalsTableComponent } from './reduction-goal-form/maladaptive-goals-table/maladaptive-goals-table.component';
 import { ReductionGoalFormComponent } from './reduction-goal-form/reduction-goal-form.component';
-import { ReplacementGoalFormComponent } from './replacement-goal-form/replacement-goal-form.component';
 import { RiskFactorsComponent } from './risk-factors/risk-factors.component';
-import { StoFormComponent } from './sto-form/sto-form.component';
 import { SuicidalitiesComponent } from './suicidalities/suicidalities.component';
 import { SustitutionListComponent } from './sustitution-list/sustitution-list.component';
 import { TransitionFadingPlanFormComponent } from './transition-fading-plan-form/transition-fading-plan-form.component';
-import { MaladaptiveFormComponent } from './maladaptive-form/maladaptive-form.component';
-import { AssestmentEvaluationSettingFormComponent } from './AssestmentEvaluationSettingForm/AssestmentEvaluationSettingForm.component';
-import { DocumentReviewedFormComponent } from './document-reviewed-form/document-reviewed-form.component';
 
 const components = [
   AssestmentComponent,
@@ -91,12 +88,10 @@ const components = [
   DocumentFormComponent,
   FamilyInvolvementGoalFormComponent,
   GeneralizationTrainingComponent,
-  GoalFormComponent,
   GoalFormSimpleComponent,
   HomicidalitiesComponent,
   HypothesisBasedInterventionsComponent,
   InterventionsComponent,
-  LtoFormComponent,
   MaladaptivesComponent,
   MaladaptiveGoalsTableComponent,
   MonitoringEvaluatingComponent,
@@ -105,17 +100,16 @@ const components = [
   PrevalentSettingComponent,
   RbtTrainingGoalFormComponent,
   RecomendationFormComponent,
-  ReductionGoalEditComponent,
+  PlanEditComponent,
   ReductionGoalFormComponent,
-  ReplacementGoalFormComponent,
   RiskFactorsComponent,
-  StoFormComponent,
+  ObjectiveFormComponent,
   SuicidalitiesComponent,
   SustitutionListComponent,
   TransitionFadingPlanFormComponent,
-  MaladaptiveFormComponent,
   AssestmentEvaluationSettingFormComponent,
   DocumentReviewedFormComponent,
+  MonitoringEvaluatingEditComponent,
 ];
 @NgModule({
   declarations: [...components],

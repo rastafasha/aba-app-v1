@@ -2,27 +2,35 @@
   <div class="card">
     <div class="card-body">
       <div class="col-xs-12">
+        <!-- list -->
         <app-list-and-form
           *ngIf="state === 'list'"
           #list
           title="Replacements Goals"
+          [(newItem)]="newGoal"
           [(dataSource)]="input"
-          [displayedColumns]="[
-            'name',
-            'baseline_level',
-            'baseline_date',
-            'initial_intensity',
-            'current_intensity',
-            'description'
-          ]"
+          [displayedColumns]="displayedColumns"
           [renders]="renders"
           [options]="options"
         >
-          <app-replacement-goal-form
+          <app-plan-form
+            title="Skill Acquisition/Replacement Goals"
             [(input)]="newGoal"
             (cancel)="list.onClose()"
             (save)="list.onAdd($event)"
-          ></app-replacement-goal-form>
+          >
+            <p>
+              These goals will be accomplished using shaping and chaining
+              procedures accompanied by most-to least promptings and level of
+              assistance. Level of assistance will depend on the client’s needs
+              and the nature of the behavioral goal. Level of assistance will be
+              indicated in the instruction section of each program data
+              collection form. Programs for Alternative Behaviors should also be
+              implemented using Incidental Teaching, meaning at every
+              opportunity of teaching these behaviors is presented while
+              services are provided.
+            </p>
+          </app-plan-form>
         </app-list-and-form>
         <!-- Back -->
         <div *ngIf="state !== 'list'" class="doctor-submit text-end">
@@ -32,14 +40,23 @@
         </div>
         <!-- Edit -->
         <div *ngIf="state === 'edit'">
-          <app-replacement-goal-form [(input)]="newGoal">
-          </app-replacement-goal-form>
-        </div>
-        <!-- Grafico-->
-        <div
-          *ngIf="state === 'viewGraph'"
-          class="rbt-dashboard-table table-responsive mobile-table-750"
-        >
+          <app-plan-edit
+            title="Skill Acquisition/Replacement Goals"
+            [(input)]="newGoal"
+          >
+            <p>
+              These goals will be accomplished using shaping and chaining
+              procedures accompanied by most-to least promptings and level of
+              assistance. Level of assistance will depend on the client’s needs
+              and the nature of the behavioral goal. Level of assistance will be
+              indicated in the instruction section of each program data
+              collection form. Programs for Alternative Behaviors should also be
+              implemented using Incidental Teaching, meaning at every
+              opportunity of teaching these behaviors is presented while
+              services are provided.
+            </p>
+          </app-plan-edit>
+
           <app-chart-replacement
             [goal]="newGoal.name"
             [baseline_d]="newGoal.baseline_date"

@@ -2,92 +2,63 @@
 <div class="col-sm-12">
   <div class="card">
     <div class="card-body">
-      <form autocomplete="false">
-        <div class="row">
-          <!-- documents -->
-          <div class="col-12">
-            <div class="card-box">
-              <div class="card-block">
-                <h3 class="card-title">
-                  Monitoring and Evaluating the Effectiveness of the plan/
-                  Treatment Fidelity
-                </h3>
-                <p>
-                  Ongoing training and monitoring of the RBT will occur on a
-                  weekly basis to ensure proper implementation of the behavior
-                  program. The BCBA/lead analyst will conduct weekly competency
-                  checks to ensure proper program implementation. The BCBA/lead
-                  analyst will graph the data, depicting the results of the
-                  competency checks on monthly progress reports. Also, the
-                  BCBA/lead analyst will collect IOA data at least once a month
-                  to ensure proper data collection.
-                </p>
-                <p>Objectives included in assistant competency checks:</p>
-                <ol>
-                  <li>Data collection</li>
-                  <li>Interventions/Environmental manipulations.</li>
-                  <li>
-                    Replacement goals used to teach the proper alternative to
-                    the maladaptive behavior targeted.
-                  </li>
-                  <li>Use of reinforcement</li>
-                </ol>
-                <h4 class="card-title">RBT Training Goals</h4>
-                <app-list-and-form
-                  [(newItem)]="newRbtTrainingGoal"
-                  [(dataSource)]="monitoring_evalutating.rbt_training_goals"
-                  [displayedColumns]="[
-                    'name',
-                    'status',
-                    'initial_date',
-                    'end_date'
-                  ]"
-                >
-                  <app-rbt-training-goal-form
-                    [(input)]="newRbtTrainingGoal"
-                  ></app-rbt-training-goal-form>
-                </app-list-and-form>
-              </div>
-            </div>
-          </div>
+      <div class="col-xs-12">
+        <h3 class="card-title">
+          Monitoring and Evaluating the Effectiveness of the plan/ Treatment
+          Fidelity
+        </h3>
+        <p>
+          Ongoing training and monitoring of the RBT will occur on a weekly
+          basis to ensure proper implementation of the behavior program. The
+          BCBA/lead analyst will conduct weekly competency checks to ensure
+          proper program implementation. The BCBA/lead analyst will graph the
+          data, depicting the results of the competency checks on monthly
+          progress reports. Also, the BCBA/lead analyst will collect IOA data at
+          least once a month to ensure proper data collection.
+        </p>
+        <p>Objectives included in assistant competency checks:</p>
+        <ol>
+          <li>Data collection</li>
+          <li>Interventions/Environmental manipulations.</li>
+          <li>
+            Replacement goals used to teach the proper alternative to the
+            maladaptive behavior targeted.
+          </li>
+          <li>Use of reinforcement</li>
+        </ol>
+        <app-list-and-form
+          *ngIf="state === 'list'"
+          #list
+          title="RBT Training Goals"
+          [(newItem)]="newGoal"
+          [(dataSource)]="input"
+          [displayedColumns]="displayedColumns"
+          [renders]="renders"
+          [options]="options"
+        >
+          <app-plan-form
+            [(input)]="newGoal"
+            title="Rbt Training"
+            (save)="list.onAdd($event)"
+            (cancel)="onBack()"
+          >
+          </app-plan-form>
+        </app-list-and-form>
+        <!-- Back -->
+        <div *ngIf="state !== 'list'" class="doctor-submit text-end">
+          <button class="btn btn-primary btn-sm" (click)="onBack()">
+            Back
+          </button>
         </div>
-        <!-- documents -->
-
-        <!-- validaciones -->
-
-        <div class="form-group row" *ngIf="text_validation">
-          <div class="col-md-12">
-            <div
-              class="alert alert-danger alert-dismissible fade show"
-              role="alert"
-            >
-              <strong>!</strong> {{ text_validation }}.
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="alert"
-                aria-label="Close"
-              >
-                <span aria-hidden="true"> </span>
-              </button>
-            </div>
-          </div>
+        <!-- Edit -->
+        <div *ngIf="state === 'edit'">
+          <app-monitoring-evaluating-edit
+            [(input)]="newGoal"
+            title="Rbt Training"
+          >
+          </app-monitoring-evaluating-edit>
         </div>
-        <!-- validaciones -->
-
-        <div class="col-12">
-          <div class="doctor-submit text-end">
-            <button
-              type="button"
-              class="btn btn-primary submit-form me-2"
-              (click)="onSave()"
-            >
-              Save
-            </button>
-          </div>
-        </div>
-      </form>
+      </div>
     </div>
   </div>
 </div>
-<!-- fin other -->

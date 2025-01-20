@@ -23,30 +23,41 @@ export const PLAN_STATUS_MAP: Record<PlanStatus, string> = {
   monitoring: 'Monitoring',
 };
 
-export type PlanCategory = 'maladaptive' | 'sustitution';
+export type PlanCategory =
+  | 'maladaptive'
+  | 'sustitution'
+  | 'caregiver'
+  | 'rbt_training';
 
 export const PLAN_CATEGORY_MAP: Record<PlanCategory, string> = {
   maladaptive: 'Maladaptive',
   sustitution: 'Substitution',
+  caregiver: 'Caregiver',
+  rbt_training: 'RBT Training',
 };
 
 export class PlanV2 {
+  //internal
   index?: number;
   id: number;
   bip_id: number;
+  category: PlanCategory;
+  //external
   name: string;
+  status: PlanStatus;
   description: string;
   baseline_level: number;
   baseline_date: Date;
   end_date: Date;
   initial_intensity: number;
   current_intensity: number;
-  category: PlanCategory;
-  status: PlanStatus;
+  //
+  objectives: Objective[];
+  //other
   created_at?: Date;
   updated_at?: Date;
   deleted_at?: Date;
-  objectives: Objective[];
+
   constructor(data: Partial<PlanV2>) {
     const self: PlanV2 = {
       ...data,

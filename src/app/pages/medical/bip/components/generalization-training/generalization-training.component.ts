@@ -10,8 +10,8 @@ import {
   styleUrls: ['./generalization-training.component.scss'],
 })
 export class GeneralizationTrainingComponent {
-  @Input() generalization: GeneralizationTraining;
-  @Output() generalizationChange = new EventEmitter<GeneralizationTraining>();
+  @Input() input: GeneralizationTraining;
+  @Output() inputChange = new EventEmitter<GeneralizationTraining>();
   @Output() save = new EventEmitter<GeneralizationTraining>();
   //
   newTransitionFadingPlan = TransitionFadingPlan.getDefault();
@@ -19,7 +19,7 @@ export class GeneralizationTrainingComponent {
   text_validation = '';
   //
   onSave() {
-    this.generalizationChange.emit(this.generalization);
-    this.save.emit(this.generalization);
+    this.inputChange.emit(this.input);
+    this.save.emit(this.input);
   }
 }
