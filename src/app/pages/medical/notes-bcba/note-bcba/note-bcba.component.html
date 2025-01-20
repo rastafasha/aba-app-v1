@@ -11,7 +11,7 @@
               </a>
             </li>
             <li class="breadcrumb-item">
-              <i class="feather icon-chevron-right"></i>
+              <i class="feather icon-chevron-right"> </i>
             </li>
             <li class="breadcrumb-item active">Add Note</li>
           </ul>
@@ -41,14 +41,15 @@
                   title="Potential erroneous POS selection"
                   type="warning"
                   content="Please make sure you have selected the correct POS code for this client."
-                ></app-alert>
+                >
+                </app-alert>
                 <!-- patient -->
                 <!-- First Name  -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
-                      >First Name <span class="login-danger">*</span></label
-                    >
+                      >First Name <span class="login-danger">*</span>
+                    </label>
                     <input
                       class="form-control"
                       name="first_name"
@@ -61,7 +62,9 @@
                 <!-- Last Name  -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
-                    <label>Last Name <span class="login-danger">*</span></label>
+                    <label
+                      >Last Name <span class="login-danger">*</span>
+                    </label>
                     <input
                       class="form-control"
                       name="last_name"
@@ -75,8 +78,8 @@
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
-                      >Patient ID <span class="login-danger">*</span></label
-                    >
+                      >Patient ID <span class="login-danger">*</span>
+                    </label>
                     <input
                       class="form-control"
                       name="patient_identifier"
@@ -90,8 +93,8 @@
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
-                      >Diagnosis Code <span class="login-danger">*</span></label
-                    >
+                      >Diagnosis Code <span class="login-danger">*</span>
+                    </label>
                     <input
                       class="form-control"
                       name="diagnosis_code"
@@ -104,7 +107,9 @@
                 <!-- Birth day -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
-                    <label>Birth day <span class="login-danger">*</span></label>
+                    <label
+                      >Birth day <span class="login-danger">*</span>
+                    </label>
                     <input
                       class="form-control datetimepicker"
                       disabled
@@ -114,11 +119,9 @@
                       matInput
                       [matDatepicker]="picker"
                     />
-                    <mat-datepicker #picker></mat-datepicker>
-                    <mat-datepicker-toggle
-                      matIconSuffix
-                      [for]="picker"
-                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker> </mat-datepicker>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker">
+                    </mat-datepicker-toggle>
                   </div>
                 </div>
                 <!-- patient -->
@@ -127,8 +130,8 @@
                   <div class="form-group local-forms">
                     <label
                       >Rendering Provider
-                      <span class="login-danger">*</span></label
-                    >
+                      <span class="login-danger">*</span>
+                    </label>
 
                     <p style="padding: 10px">
                       {{ doctor?.full_name ?? "" }}
@@ -161,7 +164,7 @@
                 <!-- DOS -->
                 <div class="col-12 col-md-3">
                   <div class="form-group local-forms">
-                    <label>DOS <span class="login-danger">*</span></label>
+                    <label>DOS <span class="login-danger">*</span> </label>
                     <input
                       class="form-control datetimepicker"
                       autocomplete="false"
@@ -171,11 +174,9 @@
                       matInput
                       [matDatepicker]="pickerSesDate"
                     />
-                    <mat-datepicker #pickerSesDate></mat-datepicker>
-                    <mat-datepicker-toggle
-                      matIconSuffix
-                      [for]="pickerSesDate"
-                    ></mat-datepicker-toggle>
+                    <mat-datepicker #pickerSesDate> </mat-datepicker>
+                    <mat-datepicker-toggle matIconSuffix [for]="pickerSesDate">
+                    </mat-datepicker-toggle>
                   </div>
                 </div>
                 <!-- DOS -->
@@ -183,7 +184,7 @@
                 <!-- POS -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
-                    <label>POS <span class="login-danger">*</span></label>
+                    <label>POS <span class="login-danger">*</span> </label>
                     <select
                       class="form-control form-select-solid fw-bolder"
                       name="meet_with_client_at"
@@ -206,8 +207,8 @@
                       <div class="col-xs-12 col-sm-6">
                         <div class="form-group local-forms">
                           <label
-                            >Time In <span class="login-danger">*</span></label
-                          >
+                            >Time In <span class="login-danger">*</span>
+                          </label>
 
                           <!-- [max]="'12:00'" -->
                           <input
@@ -222,14 +223,15 @@
                           <ngx-material-timepicker
                             (timeChanged)="hourTimeInSelected($event)"
                             #toggleTimepicker
-                          ></ngx-material-timepicker>
+                          >
+                          </ngx-material-timepicker>
                         </div>
                       </div>
                       <div class="col-xs-12 col-sm-6">
                         <div class="form-group local-forms">
                           <label
-                            >Time Out <span class="login-danger">*</span></label
-                          >
+                            >Time Out <span class="login-danger">*</span>
+                          </label>
 
                           <input
                             [ngxTimepicker]="toggleTimepicker2"
@@ -243,7 +245,8 @@
                           <ngx-material-timepicker
                             (timeChanged)="hourTimeOutSelected($event)"
                             #toggleTimepicker2
-                          ></ngx-material-timepicker>
+                          >
+                          </ngx-material-timepicker>
                         </div>
                       </div>
                     </div>
@@ -254,8 +257,8 @@
                       <div class="col-xs-12 col-sm-6">
                         <div class="form-group local-forms">
                           <label
-                            >Time In <span class="login-danger">*</span></label
-                          >
+                            >Time In <span class="login-danger">*</span>
+                          </label>
 
                           <input
                             [ngxTimepicker]="toggleTimepicker3"
@@ -269,14 +272,15 @@
                           <ngx-material-timepicker
                             (timeChanged)="hourTimeIn2Selected($event)"
                             #toggleTimepicker3
-                          ></ngx-material-timepicker>
+                          >
+                          </ngx-material-timepicker>
                         </div>
                       </div>
                       <div class="col-xs-12 col-sm-6">
                         <div class="form-group local-forms">
                           <label
-                            >Time Out <span class="login-danger">*</span></label
-                          >
+                            >Time Out <span class="login-danger">*</span>
+                          </label>
                           <input
                             [ngxTimepicker]="toggleTimepicker4"
                             [(ngModel)]="selectedValueTimeOut2"
@@ -289,7 +293,8 @@
                           <ngx-material-timepicker
                             (timeChanged)="hourTimeOut2Selected($event)"
                             #toggleTimepicker4
-                          ></ngx-material-timepicker>
+                          >
+                          </ngx-material-timepicker>
                         </div>
                       </div>
                     </div>
@@ -298,10 +303,8 @@
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
-                      >Session Length Total<span class="login-danger"
-                        >*</span
-                      ></label
-                    >
+                      >Session Length Total<span class="login-danger">*</span>
+                    </label>
                     <p class="text-center p-3">
                       {{ total_hour_session }}
                     </p>
@@ -312,7 +315,7 @@
                 <!-- CPT Code -->
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
-                    <label>CPT Code <span class="login-danger">*</span></label>
+                    <label>CPT Code <span class="login-danger">*</span> </label>
                     <mat-select
                       [(ngModel)]="selectedPaService"
                       name="pa_service"
@@ -336,7 +339,7 @@
                   class="col-12 col-md-6 col-xl-4"
                 >
                   <div class="form-group local-forms">
-                    <label>Type <span class="login-danger">*</span></label>
+                    <label>Type <span class="login-danger">*</span> </label>
                     <mat-select
                       [(ngModel)]="selectedPaService1"
                       name="selectedPaService1"
@@ -375,8 +378,8 @@
                   <div class="form-group local-forms">
                     <label
                       >Environmental Changes
-                      <span class="login-danger">*</span></label
-                    >
+                      <span class="login-danger">*</span>
+                    </label>
                     <input
                       class="form-control"
                       name="environmental_changes"
@@ -389,8 +392,8 @@
                   <div class="form-group local-forms">
                     <label
                       >Present this session
-                      <span class="login-danger">*</span></label
-                    >
+                      <span class="login-danger">*</span>
+                    </label>
                     <input
                       class="form-control"
                       name="participants"
@@ -508,7 +511,8 @@
         [onNewListChange]="onNewListChange"
         [outcomeList]="outcomeList"
         [onIntakeoutcomeChange]="onIntakeoutcomeChange"
-      ></app-show917511>
+      >
+      </app-show917511>
       <!--   only 51 -2-->
       <!-- [$event]="$event" -->
       <app-show917512
@@ -519,7 +523,8 @@
           BCBA_conducted_client_observations
         "
         [BCBA_conducted_assessments]="BCBA_conducted_assessments"
-      ></app-show917512>
+      >
+      </app-show917512>
       <!--   only 55-->
       <app-show91755
         [show97155]="show97155"
@@ -531,7 +536,8 @@
         [onReplacement2Change]="onReplacement2Change"
         [modifications_needed_at_this_time]="modifications_needed_at_this_time"
         [additional_goals_or_interventions]="additional_goals_or_interventions"
-      ></app-show91755>
+      >
+      </app-show91755>
 
       <!--  only 56 -->
       <app-show91756
@@ -558,7 +564,8 @@
         [reinforced_caregiver_strengths_in]="reinforced_caregiver_strengths_in"
         [gave_constructive_feedback_on]="gave_constructive_feedback_on"
         [recomended_more_practice_on]="recomended_more_practice_on"
-      ></app-show91756>
+      >
+      </app-show91756>
       <!-- fin  -->
 
       <!-- Summary Note -->
@@ -568,14 +575,17 @@
             <form autocomplete="false">
               <div class="col-12">
                 <div class="form-group local-forms">
-                  <label>Summary Note<span class="login-danger">*</span></label>
+                  <label
+                    >Summary Note<span class="login-danger">*</span>
+                  </label>
                   <textarea
                     class="form-control"
                     name="summary_note"
                     [(ngModel)]="summary_note"
                     rows="4"
                     cols="30"
-                  ></textarea>
+                  >
+                  </textarea>
                   <button
                     class="btn btn-primary ml-2 btn-sm"
                     (click)="generateAISummary()"
@@ -604,8 +614,8 @@
                   <div class="form-group local-top-form">
                     <label class="local-top"
                       >Provider Signature
-                      <span class="login-danger">*</span></label
-                    >
+                      <span class="login-danger">*</span>
+                    </label>
                   </div>
 
                   <!-- previsualizacion de la foto -->
@@ -628,35 +638,33 @@
 
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
-                    <div class="form-group local-forms">
-                      <label
-                        >Supervisor name BCBA
-                        <span class="login-danger">*</span></label
+                    <label
+                      >Supervisor name BCBA
+                      <span class="login-danger">*</span>
+                    </label>
+                    <mat-select
+                      [(ngModel)]="selectedValueBcba_id"
+                      name="bcba"
+                      [ngModelOptions]="{ standalone: true }"
+                      class="form-control select"
+                      placeholder="Select Specialist"
+                      (selectionChange)="selectSpecialistab($event)"
+                    >
+                      <mat-option
+                        *ngFor="let data of specialists"
+                        [value]="data.id"
                       >
-                      <mat-select
-                        [(ngModel)]="selectedValueBcba_id"
-                        name="bcba"
-                        [ngModelOptions]="{ standalone: true }"
-                        class="form-control select"
-                        placeholder="Select Specialist"
-                        (selectionChange)="selectSpecialistab($event)"
-                      >
-                        <mat-option
-                          *ngFor="let data of specialists"
-                          [value]="data.id"
-                        >
-                          {{ data.name }} {{ data.surname }}
-                        </mat-option>
-                      </mat-select>
-                    </div>
+                        {{ data.name }} {{ data.surname }}
+                      </mat-option>
+                    </mat-select>
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-6">
                   <div class="form-group local-top-form">
-                    <label class="local-top"
-                      >Supervisor Signature
-                      <span class="login-danger">*</span></label
-                    >
+                    <label class="local-top">
+                      Supervisor Signature
+                      <span class="login-danger">*</span>
+                    </label>
                   </div>
 
                   <!-- previsualizacion de la foto -->

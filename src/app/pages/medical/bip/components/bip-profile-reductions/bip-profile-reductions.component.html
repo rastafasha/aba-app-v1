@@ -33,35 +33,7 @@
               <div *ngIf="!item.objectives?.length">
                 <app-no-info></app-no-info>
               </div>
-              <ng-container *ngFor="let obj of item.objectives">
-                <div class="row">
-                  <div class="col-xs-12 col-sm-3">
-                    <div class="detail-personal">
-                      <h2>Sto</h2>
-                      <p>{{ obj.name }}</p>
-                    </div>
-                  </div>
 
-                  <div class="col-xs-12 col-sm-3">
-                    <div class="detail-personal">
-                      <h2>status</h2>
-                      <p>{{ obj.status }}</p>
-                    </div>
-                  </div>
-                  <div class="col-xs-12 col-sm-3">
-                    <div class="detail-personal">
-                      <h2>decription</h2>
-                      <p>{{ obj.description }}</p>
-                    </div>
-                  </div>
-                  <div class="col-xs-12 col-sm-3">
-                    <div class="detail-personal">
-                      <h2>date</h2>
-                      <p>{{ obj.initial_date | date : "shortDate" }}</p>
-                    </div>
-                  </div>
-                </div>
-              </ng-container>
               <!-- <h2 class="text-center">Grafico</h2> -->
               <app-chart-reduction [maladaptive]="item"></app-chart-reduction>
               <!-- [maladaptive_behavior]="item.name"

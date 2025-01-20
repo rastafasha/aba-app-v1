@@ -71,13 +71,13 @@
           </div>
           <div
             *ngIf="
-              !de_escalation_technique?.[0]?.recomendation_lists
+              !de_escalation_techniques?.[0]?.recomendation_lists
             "
           >
             <app-no-info></app-no-info>
           </div>
           <ng-container
-            *ngFor="let itemrl of de_escalation_technique?.[0]?.recomendation_lists"
+            *ngFor="let itemrl of de_escalation_techniques?.[0]?.recomendation_lists"
           >
             <div class="row">
               <div class="col-xs-12 col-sm-3">
@@ -86,12 +86,7 @@
                   <p>{{ itemrl.cpt }}</p>
                 </div>
               </div>
-              <div class="col-xs-12 col-sm-3">
-                <div class="detail-personal">
-                  <h2>nombre</h2>
-                  <p>{{ itemrl.nombre }}</p>
-                </div>
-              </div>
+
               <div class="col-xs-12 col-sm-3">
                 <div class="detail-personal">
                   <h2>num units</h2>

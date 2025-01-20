@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ConsentToTreatment } from 'src/app/core/models';
+
 @Component({
   selector: 'app-consent-treatment-form',
   templateUrl: './consent-treatment-form.component.html',
@@ -9,6 +10,7 @@ export class ConsentTreatmentFormComponent {
   @Input() input: ConsentToTreatment;
   @Output() inputChange = new EventEmitter<ConsentToTreatment>();
   @Output() save = new EventEmitter<ConsentToTreatment>();
+  @Output() cancel = new EventEmitter<void>();
 
   public text_validation = '';
   public FILE_SIGNATURE_ANALYST: File;
@@ -45,12 +47,22 @@ export class ConsentTreatmentFormComponent {
     }
     const reader = new FileReader();
     reader.readAsDataURL(this.FILE_SIGNATURE_ANALYST);
-    reader.onloadend = () =>
-      (this.IMAGE_PREVISUALIZA_SIGNATURE_ANALYST = reader.result as string);
+    reader.onloadend = () => {
+      if (to === 'analyst')
+        this.IMAGE_PREVISUALIZA_SIGNATURE_ANALYST = reader.result as string;
+      if (to === 'parent')
+        this.IMAGE_PREVISUALIZA_SIGNATURE_PARENT = reader.result as string;
+    };
   }
 
   onSave() {
+    this.input.analyst_signature = this.IMAGE_PREVISUALIZA_SIGNATURE_ANALYST;
+    this.input.parent_guardian_signature =
+      this.IMAGE_PREVISUALIZA_SIGNATURE_PARENT;
     this.inputChange.emit(this.input);
     this.save.emit(this.input);
+  }
+  onCancel() {
+    this.cancel.emit();
   }
 }

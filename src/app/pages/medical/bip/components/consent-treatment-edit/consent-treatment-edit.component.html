@@ -4,6 +4,7 @@
   <app-list-and-form
     class="mt-4"
     title="Consent Records"
+    #list
     [(newItem)]="newConsent"
     [dataSource]="input"
     [displayedColumns]="displayedColumns"
@@ -11,7 +12,8 @@
   >
     <app-consent-treatment-form
       [(input)]="newConsent"
-      (save)="onSave()"
+      (save)="list.onAdd($event)"
+      (cancel)="list.onClose()"
     ></app-consent-treatment-form>
   </app-list-and-form>
 

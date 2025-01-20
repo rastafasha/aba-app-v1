@@ -27,6 +27,7 @@ import { NoInfoComponent } from './no-info/no-info.component';
 import { PipesModule } from './pipes/pipes.module';
 import { PageService } from './services/pages.service';
 import { ListColumnsPipe } from './components/pipes/list-columns.pipe';
+import { PdfButtonComponent } from './components/pdf-button/pdf-button.component';
 
 const components = [
   NoInfoComponent,
@@ -39,6 +40,7 @@ const components = [
   ListComponent,
   ListAndFormComponent,
   ListColumnsPipe,
+  PdfButtonComponent,
 ];
 
 @NgModule({

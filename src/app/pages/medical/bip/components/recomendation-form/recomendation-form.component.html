@@ -1,81 +1,98 @@
-<div class="col-xs-12">
-  <div class="row">
-    <div class="col-12 col-sm-4">
-      <div class="form-group local-forms">
-        <label> CPT <span class="login-danger">*</span> </label>
-        <input
-          class="form-control"
-          name="cpt"
-          [(ngModel)]="recomendation.cpt"
-          type="text"
-        />
-      </div>
-    </div>
-    <div class="col-12">
-      <div class="form-group local-forms">
-        <label> Description Service <span class="login-danger">*</span> </label>
-        <textarea
-          class="form-control"
-          name="description_service"
-          [(ngModel)]="recomendation.description_service"
-          rows="4"
-          cols="30"
-        ></textarea>
-      </div>
-    </div>
-    <div class="col-xs-12 col-sm-4">
-      <div class="form-group local-forms">
-        <label>
-          # of Units /180 day period <span class="login-danger">*</span>
-        </label>
-        <input
-          class="form-control"
-          name="num_units"
-          [(ngModel)]="recomendation.num_units"
-          type="number"
-        />
-      </div>
-    </div>
-    <div class="col-xs-12 col-sm-4">
-      <div class="form-group local-forms">
-        <label> Breakdown per Week <span class="login-danger">*</span> </label>
-        <input
-          class="form-control"
-          name="breakdown_per_week"
-          [(ngModel)]="recomendation.breakdown_per_week"
-          type="text"
-        />
-      </div>
-    </div>
+<div mat-dialog-title class="h3" style="font-size: 1.5rem !important">
+  Recommendation
+</div>
 
-    <div class="col-xs-12 col-sm-4">
-      <div class="form-group local-forms">
-        <label>
-          Location (Where Services are to be Delivered)
-          <span class="login-danger">*</span>
-        </label>
-        <select
-          class="form-control form-select-solid fw-bolder"
-          name="location"
-          [(ngModel)]="recomendation.location"
-          [ngModelOptions]="{ standalone: true }"
-          placeholder="state"
-        >
-          <option>-- Select --</option>
-          <option value="In Home/School/Community">
-            In Home/School/Community
-          </option>
-          <option value="In Home/Community">In Home/Community</option>
-          <option value="In Home/School">In Home/School</option>
-          <option value="In Home">In Home</option>
-        </select>
+<div mat-dialog-content>
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="row">
+          <div class="col-12 col-sm-4">
+            <div class="form-group local-forms">
+              <label> CPT <span class="login-danger">*</span> </label>
+              <input
+                class="form-control"
+                name="cpt"
+                [(ngModel)]="recomendation.cpt"
+                type="text"
+              />
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-group local-forms">
+              <label>
+                Description Service <span class="login-danger">*</span>
+              </label>
+              <textarea
+                class="form-control"
+                name="description_service"
+                [(ngModel)]="recomendation.description_service"
+                rows="4"
+                cols="30"
+              ></textarea>
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-4">
+            <div class="form-group local-forms">
+              <label>
+                # of Units /180 day period <span class="login-danger">*</span>
+              </label>
+              <input
+                class="form-control"
+                name="num_units"
+                [(ngModel)]="recomendation.num_units"
+                type="number"
+              />
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-4">
+            <div class="form-group local-forms">
+              <label>
+                Breakdown per Week <span class="login-danger">*</span>
+              </label>
+              <input
+                class="form-control"
+                name="breakdown_per_week"
+                [(ngModel)]="recomendation.breakdown_per_week"
+                type="text"
+              />
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-4">
+            <div class="form-group local-forms">
+              <label>
+                Location (Where Services are to be Delivered)
+                <span class="login-danger">*</span>
+              </label>
+              <select
+                class="form-control form-select-solid fw-bolder"
+                name="location"
+                [(ngModel)]="recomendation.location"
+                [ngModelOptions]="{ standalone: true }"
+                placeholder="state"
+              >
+                <option>-- Select --</option>
+                <option value="In Home/School/Community">
+                  In Home/School/Community
+                </option>
+                <option value="In Home/Community">In Home/Community</option>
+                <option value="In Home/School">In Home/School</option>
+                <option value="In Home">In Home</option>
+              </select>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
+</div>
 
-    <div class="col-12 mb-3 doctor-submit text-end">
-      <button class="btn btn-primary btn-sm" (click)="onSave()">
-        Add to List
-      </button>
-    </div>
+<div mat-dialog-actions>
+  <div class="col-12 mb-3 text-end">
+    <button (click)="onCancel()" class="btn btn-outline-danger btn-sm">
+      Cancel
+    </button>
+    <button (click)="onSave()" class="btn btn-primary btn-sm">Save</button>
   </div>
 </div>

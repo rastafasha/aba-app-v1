@@ -682,7 +682,7 @@ export class NoteRbtComponent implements OnInit {
     this.replacementGoals = updatedReplacements;
   }
 
-  save() {
+  onSave() {
     console.log('Pre-save values:', {
       client_id: this.client_id,
       provider_id: this.selectedValueProviderRBT_id,

@@ -1,5 +1,11 @@
 <!-- Id -->
-<td class="check-cell">
+<td
+  class="check-cell"
+  [ngClass]="{
+    'bg-success': note.type === 'rbt',
+    'bg-primary': note.type === 'bcba'
+  }"
+>
   <input
     type="checkbox"
     [(ngModel)]="selected"
@@ -18,7 +24,6 @@
     {{ note.type | uppercase }}
   </span>
 </td> -->
-
 
 <!-- Provider -->
 <td>
@@ -44,7 +49,7 @@
         note.type === 'rbt' ? routes.noteRbt.view : routes.noteBcba.view,
         note.id
       ]"
-      [queryParams]="{from: 'log'}"
+      [queryParams]="{ from: 'log' }"
     >
       {{ note.session_date | date : "shortDate" }}
     </a>
@@ -80,7 +85,7 @@
 <!-- Total Hours -->
 <td>
   <!-- <span>{{ (note.total_minutes | transformToHour) ?? "-" }}</span> -->
-  <span>{{ (note.total_minutes)/60  }}</span>
+  <span>{{ note.total_minutes / 60 }}</span>
 </td>
 <!-- Pos -->
 <td>
@@ -120,11 +125,12 @@
 </td>
 <!-- Insurance Identifier -->
 <td>
-    <span>
-      {{ (patients | arrayFind : "id" : note.insurance_id)?.insurance_identifier }}
-    </span>
+  <span>
+    {{
+      (patients | arrayFind : "id" : note.insurance_id)?.insurance_identifier
+    }}
+  </span>
 </td>
-
 
 <!-- modificadores  -->
 
@@ -137,7 +143,7 @@
     [(ngModel)]="note.md"
     (ngModelChange)="loadChanges(note)"
   >
-    <option [value]="null">-- Select --</option>
+    <option [value]="null">Select</option>
     <ng-container *ngFor="let item of modifiers">
       <option
         *ngIf="item.type === 'all' || item.type === note.type"
@@ -158,7 +164,7 @@
     [(ngModel)]="note.md2"
     (ngModelChange)="loadChanges(note)"
   >
-    <option [value]="null">-- Select --</option>
+    <option [value]="null">Select</option>
     <ng-container *ngFor="let item of modifiers">
       <option
         *ngIf="item.type === 'all' || item.type === note.type"
@@ -179,7 +185,7 @@
     [(ngModel)]="note.md3"
     (ngModelChange)="loadChanges(note)"
   >
-    <option [value]="null">-- Select --</option>
+    <option [value]="null">Select</option>
     <ng-container *ngFor="let item of modifiers">
       <option
         *ngIf="item.type === 'all' || item.type === note.type"
@@ -190,8 +196,6 @@
     </ng-container>
   </select>
 </td>
-
-
 
 <!-- session_units_total Charges -->
 <td>
@@ -205,7 +209,6 @@
       | currency
   }}
 </td>
-
 
 <!-- Status -->
 <td>
