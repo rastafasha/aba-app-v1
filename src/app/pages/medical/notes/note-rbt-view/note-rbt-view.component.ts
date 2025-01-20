@@ -159,6 +159,8 @@ export class NoteRbtViewComponent implements OnInit {
 
   fromParam: string | null = null;
 
+  JSON = JSON;
+
   constructor(
     private noteRbtService: NoteRbtService,
     private activatedRoute: ActivatedRoute,
@@ -219,7 +221,8 @@ export class NoteRbtViewComponent implements OnInit {
           : this.interventions;
       this.interventionsgroup = jsonObj;
       //TODO Remove
-      this.intervention = this.interventionsgroup[0];
+      // this.intervention = this.interventionsgroup[0];
+      this.intervention = this.note_selected.interventions as unknown as NoteIntervention;
 
       this.maladaptives = resp.maladaptives;
       // const jsonObj1 =
@@ -235,7 +238,7 @@ export class NoteRbtViewComponent implements OnInit {
       //   typeof this.replacement === 'string'
       //     ? JSON.parse(this.replacement)
       //     : this.replacement;
-      // this.replacementgroup = jsonObj2;
+      this.replacementgroup = Object.values(this.replacements);
       // console.log(this.replacementgroup);
 
 
