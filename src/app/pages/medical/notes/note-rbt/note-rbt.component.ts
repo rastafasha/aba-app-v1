@@ -47,7 +47,7 @@ interface Goal {
   total_trials?: number;
   number_of_correct_response?: number;
   goal?: string;
-  status:string;
+  status: string;
 }
 
 interface ReplacementBehavior extends Replacements {
@@ -139,22 +139,22 @@ export class NoteRbtComponent implements OnInit {
   provider_signature: string | null = null;
   supervisor_signature: string | null = null;
 
-  token_economy= false;
-    generalization= false;
-    NCR= false;
-    behavioral_momentum= false;
-    DRA= false;
-    DRI= false;
-    DRO= false;
-    DRL= false;
-    response_block= false;
-    errorless_teaching= false;
-    extinction= false;
-    chaining= false;
-    natural_teaching= false;
-    redirection= false;
-    shaping= false;
-    pairing= false;
+  token_economy = false;
+  generalization = false;
+  NCR = false;
+  behavioral_momentum = false;
+  DRA = false;
+  DRI = false;
+  DRO = false;
+  DRL = false;
+  response_block = false;
+  errorless_teaching = false;
+  extinction = false;
+  chaining = false;
+  natural_teaching = false;
+  redirection = false;
+  shaping = false;
+  pairing = false;
 
   FILE_SIGNATURE_RBT: File | null = null;
   IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED = 'assets/img/user-06.jpg';
@@ -175,7 +175,7 @@ export class NoteRbtComponent implements OnInit {
   roles_bcba: any[] = [];
 
   hours_days: string[] = [];
-  maladaptives: any [];
+  maladaptives: any[];
   // maladaptives: MaladaptiveBehavior[] = [];
   replacementGoals: Goal[] = [];
   replacements: ReplacementBehavior[] = [];
@@ -296,11 +296,13 @@ export class NoteRbtComponent implements OnInit {
       this.selectedValueProviderCredential = resp.roles_rbt.certificate_number;
     });
   }
-  getPatient(){
-    this.patientService.getPatientByPatientId(this.patient_identifier).subscribe((resp)=>{
-      console.log('API Response:', resp);
-      this.client_selected = resp.patient;
-      console.log('Client Selected:', this.client_selected);
+  getPatient() {
+    this.patientService
+      .getPatientByPatientId(this.patient_identifier)
+      .subscribe((resp) => {
+        console.log('API Response:', resp);
+        this.client_selected = resp.patient;
+        console.log('Client Selected:', this.client_selected);
 
         this.first_name = this.client_selected.first_name;
         this.last_name = this.client_selected.last_name;
@@ -342,44 +344,40 @@ export class NoteRbtComponent implements OnInit {
         console.log('Selected Service:', this.selectedPaService);
         this.selectedValueCode = this.selectedPaService?.cpt || '';
 
-        this.getMaladaptivesBipByPatientId();
-        this.getReplacementsByPatientId();
+        this.pa_services = resp.patient.pa_services;
+
+        // Filter pa_services by date
+        this.pa_services = this.pa_services.filter((pa) => {
+          const dateStart = new Date(pa.start_date).getTime();
+          const dateEnd = new Date(pa.end_date).getTime();
+          const dateToday = new Date().getTime();
+          return dateStart <= dateToday && dateEnd >= dateToday;
+        });
+
+        this.selectedPaService =
+          resp.patient.pa_services.find((service) => service.cpt === '97153') ||
+          null;
+        // console.log('Selected Service:', this.selectedPaService);
+        console.log('Selected Service:', this.selectedPaService);
+        this.selectedValueCode = this.selectedPaService?.cpt || '';
+
+        this.getBipV2();
       });
-
-      this.pa_services = resp.patient.pa_services;
-
-      // Filter pa_services by date
-      this.pa_services = this.pa_services.filter((pa) => {
-        const dateStart = new Date(pa.start_date).getTime();
-        const dateEnd = new Date(pa.end_date).getTime();
-        const dateToday = new Date().getTime();
-        return dateStart <= dateToday && dateEnd >= dateToday;
-      });
-
-      this.selectedPaService = resp.patient.pa_services.find(service => service.cpt === '97153') || null;
-      // console.log('Selected Service:', this.selectedPaService);
-      console.log('Selected Service:', this.selectedPaService);
-      this.selectedValueCode = this.selectedPaService?.cpt || '';
-
-      this.getBipV2();
-    })
   }
 
-  getBipV2(){
-    this.bipV2Service.list({client_id: this.patient_id}).subscribe((resp)=>{
-      console.log('BIP',resp);
+  getBipV2() {
+    this.bipV2Service.list({ client_id: this.patient_id }).subscribe((resp) => {
+      console.log('BIP', resp);
       this.bip_id = resp.data[0].id;
       this.maladaptives = resp.data[0].maladaptives;
       this.replacementGoals = resp.data[0].replacements;
 
       //extraemos los replacementGoals con status in progress o active
-      this.replacementGoals = this.replacementGoals.filter(goal => goal.status === 'active');
-
+      this.replacementGoals = this.replacementGoals.filter(
+        (goal) => goal.status === 'active'
+      );
     });
   }
-
-
-
 
   onPaServiceSelect(event: any) {
     const service = event.value;
@@ -392,23 +390,6 @@ export class NoteRbtComponent implements OnInit {
   selectCpt(event: { value: string }) {
     event.value = this.selectedValueCode;
   }
-
-
-  // getReplacementsByPatientId() {
-  //   this.noteRbtService
-  //     .showReplacementbyPatient(this.patient_identifier)
-  //     .subscribe((resp) => {
-  //       this.replacementGoals = [];
-  //       resp['replacementGoals'].forEach((element) => {
-  //         const goalSto = JSON.parse(element.goalstos).find(
-  //           (item) => item.sustitution_status_sto_edit === 'inprogress'
-  //         );
-  //         if (goalSto) {
-  //           this.replacementGoals.push({ ...element, target: goalSto.target });
-  //         }
-  //       });
-  //     });
-  // }
 
   specialistData() {
     this.doctorService.showDoctorProfile(this.doctor_id).subscribe((resp) => {
@@ -525,18 +506,24 @@ export class NoteRbtComponent implements OnInit {
     console.log('para el html', this.total_hour_session);
   }
 
-convertToMinutes(time: string): number {
-  if (!time || !time.includes(':')) {
-    // console.error(`Invalid time format: ${time}`);
-        return 0; // O manejar el error de otra manera
+  convertToMinutes(time: string): number {
+    if (!time || !time.includes(':')) {
+      // console.error(`Invalid time format: ${time}`);
+      return 0; // O manejar el error de otra manera
     }
 
     const [hours, minutes] = time.split(':').map(Number);
 
     // Validar que hours y minutes sean números válidos
-    if (isNaN(hours) || isNaN(minutes) || hours < 0 || minutes < 0 || minutes >= 60) {
-        // console.error(`Invalid time values: hours=${hours}, minutes=${minutes}`);
-        return 0; // O manejar el error de otra manera
+    if (
+      isNaN(hours) ||
+      isNaN(minutes) ||
+      hours < 0 ||
+      minutes < 0 ||
+      minutes >= 60
+    ) {
+      // console.error(`Invalid time values: hours=${hours}, minutes=${minutes}`);
+      return 0; // O manejar el error de otra manera
     }
 
     return hours * 60 + minutes;
@@ -574,11 +561,7 @@ convertToMinutes(time: string): number {
     this.maladp_added.push({ ...behavior });
     this.maladaptives.splice(index, 1);
 
-    Swal.fire(
-      'Added',
-      `Maladaptive - ${behavior.name} - Added`,
-      'success'
-    );
+    Swal.fire('Added', `Maladaptive - ${behavior.name} - Added`, 'success');
 
     this.maladaptiveSelected = null;
     this.name = null;
@@ -755,9 +738,11 @@ convertToMinutes(time: string): number {
       meet_with_client_at: this.meet_with_client_at,
       client_appeared: this.client_appeared,
       as_evidenced_by: this.as_evidenced_by,
-      rbt_modeled_and_demonstrated_to_caregiver: this.rbt_modeled_and_demonstrated_to_caregiver,
+      rbt_modeled_and_demonstrated_to_caregiver:
+        this.rbt_modeled_and_demonstrated_to_caregiver,
       // client_response_to_treatment_this_session: this.client_response_to_treatment_this_session,
-      progress_noted_this_session_compared_to_previous_session: this.progress_noted_this_session_compared_to_previous_session,
+      progress_noted_this_session_compared_to_previous_session:
+        this.progress_noted_this_session_compared_to_previous_session,
       next_session_is_scheduled_for: this.next_session_is_scheduled_for,
       status: 'pending',
       cpt_code: this.selectedValueCode,
@@ -830,14 +815,16 @@ convertToMinutes(time: string): number {
     }
   }
 
-
-
   generateAISummary() {
     const validationResult = this.checkDataSufficient();
 
     if (!validationResult.isValid) {
       const missingFieldsList = validationResult.missingFields.join('\n• ');
-      Swal.fire('Warning', `Oops! It looks like you’re missing the following information. Please review and complete the required fields before proceeding:\n\n• ${missingFieldsList}`, 'warning');
+      Swal.fire(
+        'Warning',
+        `Oops! It looks like you’re missing the following information. Please review and complete the required fields before proceeding:\n\n• ${missingFieldsList}`,
+        'warning'
+      );
       return;
     }
 
