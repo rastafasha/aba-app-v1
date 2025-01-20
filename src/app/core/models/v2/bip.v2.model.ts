@@ -257,6 +257,20 @@ export class CrisisPlan {
     this.suicidalities = new Suicidality(data.suicidalities);
     this.homicidalities = new Homicidality(data.homicidalities);
   }
+  static getDefault(): CrisisPlan {
+    return {
+      id: 0,
+      bip_id: 0,
+      patient_id: '',
+      client_id: 0,
+      crisis_description: '',
+      crisis_note: '',
+      caregiver_requirements_for_prevention_of_crisis: '',
+      risk_factors: RiskFactor.getDefault(),
+      suicidalities: Suicidality.getDefault(),
+      homicidalities: Homicidality.getDefault(),
+    };
+  }
 }
 export class RiskFactor {
   do_not_apply: boolean;
@@ -295,6 +309,26 @@ export class RiskFactor {
     this.prior_psychiatric_inpatient_admission =
       !!data.prior_psychiatric_inpatient_admission;
   }
+  static getDefault(): RiskFactor {
+    return {
+      do_not_apply: false,
+      elopement: false,
+      assaultive_behavior: false,
+      aggression: false,
+      self_injurious_behavior: false,
+      sexually_offending_behavior: false,
+      fire_setting: false,
+      current_substance_abuse: false,
+      impulsive_behavior: false,
+      psychotic_symptoms: false,
+      self_mutilation_cutting: false,
+      caring_for_ill_family_recipient: false,
+      current_family_violence: false,
+      dealing_with_significant: false,
+      prior_psychiatric_inpatient_admission: false,
+      other: '',
+    };
+  }
 }
 export class Suicidality {
   not_present: boolean;
@@ -310,6 +344,15 @@ export class Suicidality {
     this.means = !!data.means;
     this.prior_attempt = !!data.prior_attempt;
   }
+  static getDefault(): Suicidality {
+    return {
+      not_present: false,
+      ideation: false,
+      plan: false,
+      means: false,
+      prior_attempt: false,
+    };
+  }
 }
 export class Homicidality {
   not_present: boolean;
@@ -324,6 +367,15 @@ export class Homicidality {
     this.plan = !!data.plan;
     this.means = !!data.means;
     this.prior_attempt = !!data.prior_attempt;
+  }
+  static getDefault(): Homicidality {
+    return {
+      not_present: false,
+      ideation: false,
+      plan: false,
+      means: false,
+      prior_attempt: false,
+    };
   }
 }
 

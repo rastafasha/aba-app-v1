@@ -34,7 +34,7 @@ import { BipProfileReplacementsComponent } from './bip-profile-replacements/bip-
 import { ChartReductionComponent } from './charts/chart-reduction/chart-reduction.component';
 import { ChartReplacementComponent } from './charts/chart-replacement/chart-replacement.component';
 import { ConsentTreatmentFormComponent } from './consent-treatment-form/consent-treatment-form.component';
-import { CrisisPlanComponent } from './crisis-plan/crisis-plan.component';
+import { CrisisPlanEditComponent } from './crisis-plan-edit/crisis-plan-edit.component';
 import { DeEscalationTecniquesComponent } from './de-escalation-tecniques/de-escalation-tecniques.component';
 import { DocumentFormComponent } from './document-form/document-form.component';
 import { DocumentReviewedFormComponent } from './document-reviewed-form/document-reviewed-form.component';
@@ -65,6 +65,8 @@ import { EscapeFormComponent } from './escape-form/escape-form.component';
 import { AttentionFormComponent } from './attention-form/attention-form.component';
 import { GeneralizationTrainingFormComponent } from './generalization-training-form/generalization-training-form.component';
 import { GeneralizationTrainingEditComponent } from './generalization-training-edit/generalization-training-edit.component';
+import { CrisisPlanComponent } from './crisis-plan/crisis-plan.component';
+import { CrisisPlanFormComponent } from './crisis-plan-form/crisis-plan-form.component';
 
 const components = [
   AssestmentComponent,
@@ -92,7 +94,7 @@ const components = [
   ChartReductionComponent,
   ChartReplacementComponent,
   ConsentTreatmentFormComponent,
-  CrisisPlanComponent,
+  CrisisPlanEditComponent,
   DeEscalationTecniquesComponent,
   DocumentFormComponent,
   FamilyInvolvementGoalFormComponent,
@@ -128,6 +130,8 @@ const components = [
   AttentionFormComponent,
   GeneralizationTrainingEditComponent,
   GeneralizationTrainingFormComponent,
+  CrisisPlanComponent,
+  CrisisPlanFormComponent,
 ];
 @NgModule({
   declarations: [...components],

@@ -7,12 +7,12 @@ import { RiskFactor } from 'src/app/core/models';
   styleUrls: ['./risk-factors.component.scss'],
 })
 export class RiskFactorsComponent {
-  @Input() risk_factors: RiskFactor;
-  @Output() risk_factorsChange = new EventEmitter<RiskFactor>();
+  @Input() input: RiskFactor;
+  @Output() inputChange = new EventEmitter<RiskFactor>();
   @Output() save = new EventEmitter<RiskFactor>();
 
   onUpdate() {
-    this.risk_factorsChange.emit(this.risk_factors);
-    this.save.emit(this.risk_factors);
+    this.inputChange.emit(this.input);
+    this.save.emit(this.input);
   }
 }

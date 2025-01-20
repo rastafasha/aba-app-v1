@@ -4,6 +4,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   TemplateRef,
   ViewChild,
@@ -22,7 +23,7 @@ import {
   styleUrls: ['./list-and-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ListAndFormComponent<T> {
+export class ListAndFormComponent<T> implements OnInit {
   @ViewChild('content', { static: true }) htmlTemplate: TemplateRef<unknown>;
   @Input() title = '';
   @Input() dataSource: T[] = null;
@@ -45,7 +46,7 @@ export class ListAndFormComponent<T> {
   @Input() renders: ListRender<T>;
   @Input() options: ListOption<T>[];
   //
-  strategy = new ListFormStrategy<T>(this.dataSourceChange, this.newItem);
+  strategy: ListFormStrategy<T>;
   ref: MatDialogRef<unknown, unknown>;
 
   constructor(private dialog: MatDialog, private cdr: ChangeDetectorRef) {
@@ -63,6 +64,16 @@ export class ListAndFormComponent<T> {
         action: (item: T) => this.onDelete(item),
       },
     ];
+    this.strategy = new ListFormStrategy<T>(
+      this.dataSourceChange,
+      this.newItem
+    );
+  }
+  ngOnInit(): void {
+    this.strategy = new ListFormStrategy<T>(
+      this.dataSourceChange,
+      this.newItem
+    );
   }
 
   public open() {

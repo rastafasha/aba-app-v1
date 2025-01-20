@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CrisisPlan } from 'src/app/core/models';
+import { ListAndFormComponent } from 'src/app/shared/components/list-and-form/list-and-form.component';
 
 @Component({
   selector: 'app-crisis-plan',
@@ -7,13 +8,47 @@ import { CrisisPlan } from 'src/app/core/models';
   styleUrls: ['./crisis-plan.component.scss'],
 })
 export class CrisisPlanComponent {
-  @Input() crisis_plan: CrisisPlan;
-  @Output() crisis_planChange = new EventEmitter<CrisisPlan>();
-  @Output() save = new EventEmitter<CrisisPlan>();
-  //
-  text_validation = '';
+  @Input() input: CrisisPlan[];
+  @Output() inputChange = new EventEmitter<CrisisPlan[]>();
+  @Output() save = new EventEmitter<CrisisPlan[]>();
+
+  state: 'list' | 'edit' = 'list';
+  newItem: CrisisPlan = CrisisPlan.getDefault();
+
+  displayedColumns: (keyof CrisisPlan)[] = ['crisis_description'];
+  renders = {
+    crisis_description: (item: CrisisPlan) => item.crisis_description || 'N/A',
+  };
+
+  options = [
+    {
+      text: 'Select',
+      icon: 'fa fa-eye',
+      class: 'btn btn-outline-primary btn-sm',
+      action: (item: CrisisPlan) => this.onSelect(item),
+    },
+    {
+      text: 'Delete',
+      icon: 'fa fa-trash-alt',
+      class: 'btn btn-outline-danger btn-sm',
+      action: (item: CrisisPlan, context: never) =>
+        this.onDelete(item, context),
+    },
+  ];
+  onSelect(item: CrisisPlan) {
+    this.newItem = { ...item };
+    this.state = 'edit';
+  }
+
+  onDelete(item: CrisisPlan, context: ListAndFormComponent<CrisisPlan>) {
+    context.onDelete(item);
+  }
+
   onSave() {
-    this.crisis_planChange.emit(this.crisis_plan);
-    this.save.emit(this.crisis_plan);
+    this.inputChange.emit(this.input);
+    this.save.emit(this.input);
+  }
+  onBack() {
+    this.state = 'list';
   }
 }

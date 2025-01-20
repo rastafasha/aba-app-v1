@@ -6,7 +6,7 @@ interface ListItem {
 }
 export class ListFormStrategy<T extends ListItem> {
   constructor(private emiter: EventEmitter<T[]>, private defaultItem: T) {
-    this.defaultItem = { ...this.defaultItem };
+    this.defaultItem = JSON.parse(JSON.stringify(this.defaultItem));
   }
   getDefault(): T {
     return { ...this.defaultItem };
