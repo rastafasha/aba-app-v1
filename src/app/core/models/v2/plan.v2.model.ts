@@ -4,7 +4,7 @@ import {
   NumberOrNullOrUndefined,
   StringOrNullOrUndefined,
 } from 'src/app/shared/utils';
-import { Objective } from './bip.v2.model';
+import { Objective } from './objective.v2.model';
 export type PlanStatus =
   | 'active'
   | 'completed'
