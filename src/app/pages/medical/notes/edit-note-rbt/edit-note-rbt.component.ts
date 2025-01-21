@@ -163,6 +163,7 @@ export class EditNoteRbtComponent implements OnInit {
   noteServiceId:number;
   pa_services: PaServiceV2[] = [];
   interventionsList=interventionsList;
+  // interventionsList: any[] = [];
 
   constructor(
     private bipService: BipService,
@@ -208,69 +209,69 @@ export class EditNoteRbtComponent implements OnInit {
     });
   }
 
-  private convertToInterventions(input: { [x: string]: boolean }) {
-    return [
-      {
-        id: 'token_economy',
-        name: 'Token Economy',
-        value: input['token_economy'] || false,
-      },
-      {
-        id: 'generalization',
-        name: 'Generalization',
-        value: input['generalization'] || false,
-      },
-      { id: 'NCR', name: 'NCR', value: input['NCR'] || false },
-      { id: 'behavioral_momentum', name: 'Behavioral Momentum', 
-        value: input['Behavioral Momentum'] || false 
-      },
-      { id: 'DRA', name: 'DRA', value: input['DRA'] || false },
-      { id: 'DRI', name: 'DRI', value: input['DRI'] || false },
-      { id: 'DRO', name: 'DRO', value: input['DRO'] || false },
-      { id: 'DRL', name: 'DRL', value: input['DRL'] || false },
+  // private convertToInterventions(input: { [x: string]: boolean }) {
+  //   return [
+  //     {
+  //       id: 'token_economy',
+  //       name: 'Token Economy',
+  //       value: input['token_economy'] || false,
+  //     },
+  //     {
+  //       id: 'generalization',
+  //       name: 'Generalization',
+  //       value: input['generalization'] || false,
+  //     },
+  //     { id: 'NCR', name: 'NCR', value: input['NCR'] || false },
+  //     { id: 'behavioral_momentum', name: 'Behavioral Momentum', 
+  //       value: input['Behavioral Momentum'] || false 
+  //     },
+  //     { id: 'DRA', name: 'DRA', value: input['DRA'] || false },
+  //     { id: 'DRI', name: 'DRI', value: input['DRI'] || false },
+  //     { id: 'DRO', name: 'DRO', value: input['DRO'] || false },
+  //     { id: 'DRL', name: 'DRL', value: input['DRL'] || false },
       
-      {
-        id: 'response_block',
-        name: 'Response Block',
-        value: input['response_block'] || false,
-      },
-      {
-        id: 'errorless_teaching',
-        name: 'Errorless Teaching',
-        value: input['errorless_teaching'] || false,
-      },
-      {
-        id: 'extinction',
-        name: 'Extinction',
-        value: input['extinction'] || false,
-      },
-      { id: 'chaining', name: 'Chaining', value: input['chaining'] || false },
-      {
-        id: 'natural_teaching',
-        name: 'Natural Teaching',
-        value: input['natural_teaching'] || false,
-      },
-      {
-        id: 'redirection',
-        name: 'Redirection',
-        value: input['redirection'] || false,
-      },
-      { id: 'shaping', name: 'Shaping', value: input['shaping'] || false },
-      { id: 'pairing', name: 'Pairing', value: input['pairing'] || false },
-    ];
-  }
+  //     {
+  //       id: 'response_block',
+  //       name: 'Response Block',
+  //       value: input['response_block'] || false,
+  //     },
+  //     {
+  //       id: 'errorless_teaching',
+  //       name: 'Errorless Teaching',
+  //       value: input['errorless_teaching'] || false,
+  //     },
+  //     {
+  //       id: 'extinction',
+  //       name: 'Extinction',
+  //       value: input['extinction'] || false,
+  //     },
+  //     { id: 'chaining', name: 'Chaining', value: input['chaining'] || false },
+  //     {
+  //       id: 'natural_teaching',
+  //       name: 'Natural Teaching',
+  //       value: input['natural_teaching'] || false,
+  //     },
+  //     {
+  //       id: 'redirection',
+  //       name: 'Redirection',
+  //       value: input['redirection'] || false,
+  //     },
+  //     { id: 'shaping', name: 'Shaping', value: input['shaping'] || false },
+  //     { id: 'pairing', name: 'Pairing', value: input['pairing'] || false },
+  //   ];
+  // }
 
-  private convertToInterventionsGroup(
-    interventions: { id: string; name: string; value: boolean }[]
-  ) {
-    const group = {};
-    for (const intervention of interventions) {
-      if (intervention.value) {
-        group[intervention.id] = true;
-      }
-    }
-    return group;
-  }
+  // private convertToInterventionsGroup(
+  //   interventions: { id: string; name: string; value: boolean }[]
+  // ) {
+  //   const group = {};
+  //   for (const intervention of interventions) {
+  //     if (intervention.value) {
+  //       group[intervention.id] = true;
+  //     }
+  //   }
+  //   return group;
+  // }
 
   getNote() {
     this.noteRbtService.getNote(this.note_id).subscribe((resp) => {
@@ -293,25 +294,8 @@ export class EditNoteRbtComponent implements OnInit {
       
       this.selectedValueCode = this.note_selected.cpt_code;
 
-      this.selectedValueRBT = this.note_selected.provider.name;
-      this.selectedValueProviderRBT_id =this.note_selected.provider.id;
+      
 
-      this.selectedValueBCBA = this.note_selected.name;
-      this.selectedValueBcba_id = this.note_selected.id;
-
-      // this.interventionsList = this.note_selected.interventions[0];
-      // console.log(this.interventionsList);
-      // this.interventions = resp.interventions;
-      // const jsonObj =
-      //   typeof this.interventions === 'string'
-      //     ? JSON.parse(this.interventions)
-      //     : this.interventions;
-      // this.interventionsgroup = jsonObj;
-      // //TODO Remove
-      // this.interventionsList = this.interventionsgroup[0];
-      // this.interventionsList = this.convertToInterventions(
-      //   this.interventions[0]
-      // );
 
       if (Array.isArray(this.note_selected.interventions)) {
         this.interventionsList[0] = this.note_selected.interventions;
@@ -320,7 +304,6 @@ export class EditNoteRbtComponent implements OnInit {
       } else {
         this.interventionsList = [];
       }
-      
       console.log(this.interventionsList);
 
       this.maladaptives = this.note_selected.maladaptives;
@@ -364,6 +347,13 @@ export class EditNoteRbtComponent implements OnInit {
           this.paServices.find((service) => service.id === noteServiceId) ||
           null;
       }
+
+      this.selectedValueRBT = this.note_selected.provider.name;
+      this.selectedValueProviderRBT_id =this.note_selected.provider.id;
+      this.provider_name =this.note_selected.provider.name;
+
+      this.selectedValueBCBA = this.note_selected.supervisor.name;
+      this.selectedValueBcba_id = this.note_selected.supervisor.id;
 
       this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED =
         this.note_selected.provider_signature;
@@ -449,10 +439,13 @@ export class EditNoteRbtComponent implements OnInit {
   }
 
   onInterventionsChange(updatedInterventions: any[]) {
-    this.interventionsgroup = [
-      this.convertToInterventionsGroup(this.interventionsList),
-    ];
+    // this.interventionsgroup = [
+    //   this.convertToInterventionsGroup(this.interventionsList),
+    // ];
+    this.intervention_added = updatedInterventions;
   }
+
+  
 
   
   hourTimeInSelected(value: string) {
@@ -584,6 +577,7 @@ convertToHours(totalMinutes: number): string {
       });
   }
 
+  
   selectFirmaSpecialistBcba(event) {
     event = this.selectedValueBcba_id;
     this.speciaFirmaDataBcba(this.selectedValueBcba_id);
@@ -702,15 +696,6 @@ convertToHours(totalMinutes: number): string {
     });
 
     this.text_validation = '';
-    // if(!this.name||!this.email ||!this.surname ){
-    //   this.text_validation = 'Los campos con * son obligatorios';
-    //   return;
-    // }
-
-    // if(this.password !== this.password_confirmation  ){
-    //   this.text_validation = 'Las contraseña debe ser igual';
-    //   return;
-    // }
     if (!this.selectedPaService) {
       this.text_validation = 'Please select a service';
       Swal.fire('Warning', this.text_validation, 'warning');
@@ -733,7 +718,7 @@ convertToHours(totalMinutes: number): string {
       provider_signature: this.provider_signature,
       provider_name: this.provider_name,
       supervisor_signature: this.supervisor_signature,
-      supervisor_name: this.supervisor_name,
+      supervisor_name: this.selectedValueBcba_id,
       session_date: this.session_date,
       time_in: this.selectedValueTimeIn,
       time_out: this.selectedValueTimeOut,
@@ -748,7 +733,7 @@ convertToHours(totalMinutes: number): string {
       environmental_changes: this.environmental_changes,
       maladaptives: this.maladaptives,
       replacements: this.replacements,
-      interventions: this.interventionsList,
+      interventions: this.intervention_added,
       summary_note: this.summary_note,
       meet_with_client_at: this.meet_with_client_at,
       client_appeared: this.client_appeared,

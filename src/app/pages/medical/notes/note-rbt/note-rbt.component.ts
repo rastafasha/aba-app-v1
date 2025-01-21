@@ -212,19 +212,19 @@ export class NoteRbtComponent implements OnInit {
 
     this.specialistData();
 
-    this.updateInterventions();
+    // this.updateInterventions();
 
   }
 
-  updateInterventions() {
-    const interventionsObj = this.interventionsList
-      .filter((intervention) => intervention.value)
-      .reduce((acc, intervention) => {
-        acc[intervention.id] = true;
-        return acc;
-      }, {});
-    this.intervention_added = [interventionsObj];
-  }
+  // updateInterventions() {
+  //   const interventionsObj = this.interventionsList
+  //     .filter((intervention) => intervention.value)
+  //     .reduce((acc, intervention) => {
+  //       acc[intervention.id] = true;
+  //       return acc;
+  //     }, {});
+  //   this.intervention_added = [interventionsObj];
+  // }
 
   onInterventionsChange(updatedInterventions: any[]) {
     this.intervention_added = updatedInterventions;
@@ -619,7 +619,8 @@ convertToHours(totalMinutes: number): string {
     this.replacementGoals = updatedReplacements;
   }
 
-  save() {
+  // eslint-disable-next-line no-debugger
+  save() {debugger
     console.log('Pre-save values:', {
       client_id: this.client_id,
       provider_id: this.selectedValueProviderRBT_id,

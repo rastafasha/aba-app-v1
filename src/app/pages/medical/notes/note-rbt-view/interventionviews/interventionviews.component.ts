@@ -7,7 +7,4 @@ import { Component, Input } from '@angular/core';
 })
 export class InterventionviewsComponent {
     @Input() intervention
-    onInit() {
-        console.log(this.intervention)
-    }
 }
