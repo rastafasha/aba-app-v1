@@ -28,7 +28,7 @@
     <div class="row">
       <!-- paciente -->
       <div class="col-sm-12">
-        <form autocomplete="false">
+        <form autocomplete="off">
           <!-- info paciente -->
           <div class="col-xs-12">
             <div class="card">
@@ -375,11 +375,11 @@
           <div class="col-xs-12">
             <div class="card">
               <div class="card-body">
-                <app-maladaptives
+                <app-maladaptives-options
                   [(maladaptives)]="maladaptives"
                   (maladaptivesChange)="onMaladaptivesChange($event)"
                 >
-                </app-maladaptives>
+                </app-maladaptives-options>
               </div>
             </div>
           </div>
@@ -402,11 +402,11 @@
           <div class="col-12">
             <div class="card">
               <div class="card-body">
-                <app-interventions
+                <app-interventions-options
                   [interventionsList]="interventionsList"
                   (interventionsChange)="onInterventionsChange($event)"
                 >
-                </app-interventions>
+                </app-interventions-options>
               </div>
             </div>
           </div>
@@ -588,7 +588,7 @@
                             <textarea
                               class="form-control"
                               name="summary_note"
-                              [(ngModel)]="sumary_note"
+                              [(ngModel)]="summary_note"
                               rows="4"
                               cols="30"
                             ></textarea>

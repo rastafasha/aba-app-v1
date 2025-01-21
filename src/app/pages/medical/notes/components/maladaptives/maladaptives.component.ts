@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-maladaptives',
+  selector: 'app-maladaptives-options',
+  styleUrls: ['../../edit-note-rbt/edit-note-rbt.component.scss'],
   template: `
     <div class="col-12">
       <h4>Maladaptives</h4>
@@ -13,23 +14,24 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     <div class="container">
       <form autocomplete="off">
         <div class="row">
-          <ng-container *ngFor="let behavior of maladaptives; let i = index">
+          <ng-container *ngFor="let behav of maladaptives; let i = index">
             <div class="col-xs-12 col-sm-3 graphic-value mb-4">
               <div class="title mb-2">
-                <h4 class="label">{{ behavior.name }}</h4>
+                <h4 class="label">{{ behav.name }}</h4>
               </div>
               <input
                 class="form-control mb-2"
                 [name]="'number_of_occurrences_' + i"
-                [(ngModel)]="behavior.number_of_occurrences"
+                [(ngModel)]="behav.number_of_occurrences"
                 type="number"
                 min="0"
                 required
                 [ngClass]="{
-                  'is-valid': behavior.number_of_occurrences >= 0,
+                  'is-valid': behav.number_of_occurrences >= 0,
                   'is-invalid':
-                    behavior.number_of_occurrences < 0 ||
-                    behavior.number_of_occurrences === undefined
+                    behav.number_of_occurrences < 0 ||
+                    behav.number_of_occurrences === undefined
+                    
                 }"
               />
               <div class="invalid-feedback">
@@ -42,7 +44,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     </div>
   `,
 })
-export class MaladaptivesComponent {
-  @Input() maladaptives: any[] = [];
-  @Output() maladaptivesChange = new EventEmitter<any[]>();
+export class MaladaptivesOptionsComponent {
+  @Input() maladaptives = [];
+  @Output() maladaptivesChange = new EventEmitter<any>();
+
 }

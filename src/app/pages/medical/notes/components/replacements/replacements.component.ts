@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 
 @Component({
   selector: 'app-replacements',
+  styleUrls: ['../../edit-note-rbt/edit-note-rbt.component.scss'],
   template: `
     <div class="col-12">
       <h4>Replacements</h4>
@@ -44,7 +45,8 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
                      min="0"
                      [max]="replacement.total_trials"
                      required
-                     [ngClass]="{'is-valid': isValidCorrectResponse(replacement), 'is-invalid': !isValidCorrectResponse(replacement)}">
+                     [ngClass]="{'is-valid': isValidCorrectResponse(replacement), 'is-invalid': !isValidCorrectResponse(replacement)}"
+                     >
             </div>
               <hr *ngIf="(i+1)%4 === 0" class="mt-4 mb-4">
           </ng-container>
@@ -57,6 +59,7 @@ export class ReplacementsComponent {
   @Input() replacements: any[];
   @Input() target: number | string;
   @Output() replacementsChange = new EventEmitter<any[]>();
+
 
   isValidCorrectResponse(replacement: any): boolean {
     return replacement.number_of_correct_response !== undefined &&

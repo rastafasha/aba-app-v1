@@ -14,41 +14,10 @@ import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 import { Interventions, PaServiceV2, Replacements } from 'src/app/core/models';
 import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
 import { PatientMService } from '../../patient-m/service/patient-m.service';
+import { Goal, Intervention, MaladaptiveBehavior, POSModel, ValidationResult } from '../interfaces';
+import {interventionsList} from '../listaInterventionData';
 
-interface ValidationResult {
-  isValid: boolean;
-  missingFields: string[];
-}
 
-export interface POSModel {
-  id: number;
-  name: string;
-  code: string;
-}
-
-interface InterventionItem {
-  id: string;
-  name: string;
-  value: boolean;
-}
-
-interface MaladaptiveBehavior {
-  name: string;
-  number_of_occurrences: number;
-  goal?: Goal;
-  total_trials?: number;
-  number_of_correct_response?: number;
-}
-
-interface Goal {
-  id: number;
-  name: string;
-  description?: string;
-  total_trials?: number;
-  number_of_correct_response?: number;
-  goal?: string;
-  status: string;
-}
 
 interface ReplacementBehavior extends Replacements {
   status: any;
@@ -118,7 +87,7 @@ export class NoteRbtComponent implements OnInit {
   environmental_changes = '';
   participants: '';
 
-  sumary_note = '';
+  summary_note = '';
   meet_with_client_at = '';
   client_appeared = '';
   as_evidenced_by = '';
@@ -205,24 +174,7 @@ export class NoteRbtComponent implements OnInit {
 
   intervention_added: Interventions[] = [];
   interventionsSelected: { [key: string]: boolean } = {};
-  interventionsList: InterventionItem[] = [
-    { id: 'token_economy', name: 'Token Economy', value: false },
-    { id: 'generalization', name: 'Generalization', value: false },
-    { id: 'NCR', name: 'NCR', value: false },
-    { id: 'behavioral_momentum', name: 'Behavioral Momentum', value: false },
-    { id: 'DRA', name: 'DRA', value: false },
-    { id: 'DRI', name: 'DRI', value: false },
-    { id: 'DRO', name: 'DRO', value: false },
-    { id: 'DRL', name: 'DRL', value: false },
-    { id: 'response_block', name: 'Response Block', value: false },
-    { id: 'errorless_teaching', name: 'Errorless Teaching', value: false },
-    { id: 'extinction', name: 'Extinction', value: false },
-    { id: 'chaining', name: 'Chaining', value: false },
-    { id: 'natural_teaching', name: 'Natural Teaching', value: false },
-    { id: 'redirection', name: 'Redirection', value: false },
-    { id: 'shaping', name: 'Shaping', value: false },
-    { id: 'pairing', name: 'Pairing', value: false },
-  ];
+  interventionsList= interventionsList ;
 
   pa_services: PaService[] = [];
   selectedPaService: PaServiceV2 | null = null;
@@ -259,18 +211,19 @@ export class NoteRbtComponent implements OnInit {
 
     this.specialistData();
 
-    this.updateInterventions();
+    // this.updateInterventions();
+
   }
 
-  updateInterventions() {
-    const interventionsObj = this.interventionsList
-      .filter((intervention) => intervention.value)
-      .reduce((acc, intervention) => {
-        acc[intervention.id] = true;
-        return acc;
-      }, {});
-    this.intervention_added = [interventionsObj];
-  }
+  // updateInterventions() {
+  //   const interventionsObj = this.interventionsList
+  //     .filter((intervention) => intervention.value)
+  //     .reduce((acc, intervention) => {
+  //       acc[intervention.id] = true;
+  //       return acc;
+  //     }, {});
+  //   this.intervention_added = [interventionsObj];
+  // }
 
   onInterventionsChange(updatedInterventions: any[]) {
     this.intervention_added = updatedInterventions;
@@ -296,73 +249,51 @@ export class NoteRbtComponent implements OnInit {
       this.selectedValueProviderCredential = resp.roles_rbt.certificate_number;
     });
   }
-  getPatient() {
-    this.patientService
-      .getPatientByPatientId(this.patient_identifier)
-      .subscribe((resp) => {
-        console.log('API Response:', resp);
-        this.client_selected = resp.patient;
-        console.log('Client Selected:', this.client_selected);
+getPatient(){
+    this.patientService.getPatientByPatientId(this.patient_identifier).subscribe((resp)=>{
+      // console.log('API Response:', resp);
+      this.client_selected = resp.patient;
+      // console.log('Client Selected:', this.client_selected);
 
-        this.first_name = this.client_selected.first_name;
-        this.last_name = this.client_selected.last_name;
-        this.patient_identifier = this.client_selected.patient_identifier;
-        this.patient_id = this.client_selected.id;
-        this.client_id = this.client_selected.id;
-        this.insurance_id = this.client_selected.insurer_id;
-        this.insurance_identifier = this.client_selected.insurance_identifier;
-        this.patientLocation_id = this.client_selected.location_id;
-        this.selectedValueProviderRBT_id = this.doctor_id;
-        this.selectedValueBcba_id = this.client_selected.bcba_id;
-        this.pos = this.client_selected.pos_covered;
-        this.diagnosis_code = this.client_selected.diagnosis_code;
-        this.provider_name_g = this.client_selected.provider_name || '';
-        this.provider_credential =
-          this.client_selected.provider_credential || '';
+      this.first_name = this.client_selected.first_name;
+      this.last_name = this.client_selected.last_name;
+      this.patient_identifier = this.client_selected.patient_identifier;
+      this.patient_id = this.client_selected.id;
+      this.client_id = this.client_selected.id;
+      this.insurance_id = this.client_selected.insurer_id;
+      this.insurance_identifier = this.client_selected.insurance_identifier;
+      this.patientLocation_id = this.client_selected.location_id;
+      this.selectedValueProviderRBT_id = this.doctor_id;
+      this.selectedValueBcba_id = this.client_selected.bcba_id;
+      this.pos = this.client_selected.pos_covered;
+      this.diagnosis_code = this.client_selected.diagnosis_code;
+      this.provider_name_g = this.client_selected.provider_name || '';
+      this.provider_credential = this.client_selected.provider_credential || '';
 
-        console.log('After setting values:', {
-          client_id: this.client_id,
-          provider_id: this.selectedValueProviderRBT_id,
-          supervisor_id: this.selectedValueBcba_id,
-          patient_id: this.patient_id,
-        });
-
-        console.log('pa_services:', resp.patient.pa_services);
-        this.pa_services = resp.patient.pa_services;
-
-        // Filter pa_services by date
-        this.pa_services = this.pa_services.filter((pa) => {
-          const dateStart = new Date(pa.start_date).getTime();
-          const dateEnd = new Date(pa.end_date).getTime();
-          const dateToday = new Date().getTime();
-          return dateStart <= dateToday && dateEnd >= dateToday;
-        });
-
-        this.selectedPaService =
-          resp.patient.pa_services.find((service) => service.cpt === '97153') ||
-          null;
-        console.log('Selected Service:', this.selectedPaService);
-        this.selectedValueCode = this.selectedPaService?.cpt || '';
-
-        this.pa_services = resp.patient.pa_services;
-
-        // Filter pa_services by date
-        this.pa_services = this.pa_services.filter((pa) => {
-          const dateStart = new Date(pa.start_date).getTime();
-          const dateEnd = new Date(pa.end_date).getTime();
-          const dateToday = new Date().getTime();
-          return dateStart <= dateToday && dateEnd >= dateToday;
-        });
-
-        this.selectedPaService =
-          resp.patient.pa_services.find((service) => service.cpt === '97153') ||
-          null;
-        // console.log('Selected Service:', this.selectedPaService);
-        console.log('Selected Service:', this.selectedPaService);
-        this.selectedValueCode = this.selectedPaService?.cpt || '';
-
-        this.getBipV2();
+      console.log('After setting values:', {
+        client_id: this.client_id,
+        provider_id: this.selectedValueProviderRBT_id,
+        supervisor_id: this.selectedValueBcba_id,
+        patient_id: this.patient_id
       });
+
+      this.pa_services = resp.patient.pa_services;
+
+      // Filter pa_services by date
+      this.pa_services = this.pa_services.filter((pa) => {
+        const dateStart = new Date(pa.start_date).getTime();
+        const dateEnd = new Date(pa.end_date).getTime();
+        const dateToday = new Date().getTime();
+        return dateStart <= dateToday && dateEnd >= dateToday;
+      });
+
+      this.selectedPaService = resp.patient.pa_services.find(service => service.cpt === '97153') || null;
+      // console.log('Selected Service:', this.selectedPaService);
+      console.log('Selected Service:', this.selectedPaService);
+      this.selectedValueCode = this.selectedPaService?.cpt || '';
+
+      this.getBipV2();
+    })
   }
 
   getBipV2() {
@@ -390,6 +321,8 @@ export class NoteRbtComponent implements OnInit {
   selectCpt(event: { value: string }) {
     event.value = this.selectedValueCode;
   }
+
+  
 
   specialistData() {
     this.doctorService.showDoctorProfile(this.doctor_id).subscribe((resp) => {
@@ -674,11 +607,11 @@ export class NoteRbtComponent implements OnInit {
     return this.replacement_added.every((r) => this.isValidCorrectResponse(r));
   }
 
-  onMaladaptivesChange(updatedMaladaptives: any[]) {
+  onMaladaptivesChange(updatedMaladaptives: any) {
     this.maladaptives = updatedMaladaptives;
   }
 
-  onReplacementsChange(updatedReplacements: any[]) {
+  onReplacementsChange(updatedReplacements: any) {
     this.replacementGoals = updatedReplacements;
   }
 
@@ -734,7 +667,7 @@ export class NoteRbtComponent implements OnInit {
       maladaptives: this.maladaptives,
       replacements: this.replacementGoals,
       interventions: this.intervention_added,
-      sumary_note: this.sumary_note,
+      summary_note: this.summary_note,
       meet_with_client_at: this.meet_with_client_at,
       client_appeared: this.client_appeared,
       as_evidenced_by: this.as_evidenced_by,
@@ -846,7 +779,6 @@ export class NoteRbtComponent implements OnInit {
         behavior: m.name,
         frequency: m.number_of_occurrences,
       })),
-      // clientResponseToTreatmentThisSession: this.client_response_to_treatment_this_session,
       replacements: this.replacementGoals.map((r) => ({
         name: r.name,
         totalTrials: r.total_trials,
@@ -862,7 +794,7 @@ export class NoteRbtComponent implements OnInit {
 
     this.noteRbtService.generateAISummary(data).subscribe(
       (response: any) => {
-        this.sumary_note = response.summary;
+        this.summary_note = response.summary;
         this.isGeneratingSummary = false;
       },
       (error) => {
