@@ -8,8 +8,8 @@ import { LayoutModule } from 'src/app/layout/layout.module';
 import { PipesModule } from 'src/app/shared/pipes/pipes.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ComponentsModule } from '../bip/components/components.module';
-import { InterventionsComponent } from './components/interventions/interventions.component';
-import { MaladaptivesComponent } from './components/maladaptives/maladaptives.component';
+import { InterventionsOptionComponent } from './components/interventions/interventions.component';
+import { MaladaptivesOptionsComponent } from './components/maladaptives/maladaptives.component';
 import { ReplacementsComponent } from './components/replacements/replacements.component';
 import { EditNoteRbtComponent } from './edit-note-rbt/edit-note-rbt.component';
 import { NoteRbtViewComponent } from './note-rbt-view/note-rbt-view.component';
@@ -28,9 +28,9 @@ import { InterventionviewsComponent } from './note-rbt-view/interventionviews/in
     NotesByClientComponent,
     EditNoteRbtComponent,
     NoteRbtViewComponent,
-    MaladaptivesComponent,
+    MaladaptivesOptionsComponent,
     ReplacementsComponent,
-    InterventionsComponent,
+    InterventionsOptionComponent,
   ],
   exports: [
     NotesComponent,

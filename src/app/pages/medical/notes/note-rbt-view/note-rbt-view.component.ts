@@ -94,13 +94,8 @@ export class NoteRbtViewComponent implements OnInit {
   total_trials = 0;
   number_of_correct_response = 0;
   maladaptive = '';
-<<<<<<< HEAD
   replacement :any;
   replacements: any;
-=======
-  replacement: any;
-  replacements: Replacements;
->>>>>>> b0a5038055a61bd24eb39adb8f42014f0fb13ee8
   maladaptive_behavior = '';
   interventions: any;
   provider_signature: any;
@@ -231,24 +226,7 @@ export class NoteRbtViewComponent implements OnInit {
         .interventions as unknown as NoteIntervention;
 
       this.maladaptives = resp.maladaptives;
-<<<<<<< HEAD
       this.replacements = this.note_selected.replacements;
-=======
-      // const jsonObj1 =
-      //   typeof this.maladaptive === 'string'
-      //     ? JSON.parse(this.maladaptive)
-      //     : this.maladaptive;
-      // this.maladaptivegroup = jsonObj1;
-      // console.log(this.maladaptivegroup);
-
-      this.replacements = this.note_selected.replacements;
-      // const jsonObj2 =
-      //   typeof this.replacement === 'string'
-      //     ? JSON.parse(this.replacement)
-      //     : this.replacement;
-      this.replacementgroup = Object.values(this.replacements);
-      // console.log(this.replacementgroup);
->>>>>>> b0a5038055a61bd24eb39adb8f42014f0fb13ee8
 
       this.pos = this.note_selected.pos;
 

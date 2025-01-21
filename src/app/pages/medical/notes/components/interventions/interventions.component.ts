@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Intervention } from '../../interfaces';
 
 @Component({
-  selector: 'app-interventions',
+  selector: 'app-interventions-options',
   template: `
     <div class="col-12">
       <h4>Interventions</h4>
@@ -45,14 +45,10 @@ import { Intervention } from '../../interfaces';
     </div>
   `,
 })
-export class InterventionsComponent {
+export class InterventionsOptionComponent {
   @Input() interventionsList: Intervention[];
   @Output() interventionsChange = new EventEmitter<any>();
   
-  ngOnInit() {
-    console.log('Interventions List:', this.interventionsList);
-  }
-
   updateInterventions() {
     const interventionsObj = this.interventionsList
       .filter((interv) => interv.value)
