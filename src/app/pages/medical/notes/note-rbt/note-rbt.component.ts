@@ -14,12 +14,12 @@ import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 import { Interventions, PaServiceV2, Replacements } from 'src/app/core/models';
 import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
 import { PatientMService } from '../../patient-m/service/patient-m.service';
+import { Goal, Intervention, MaladaptiveBehavior, POSModel, ValidationResult } from '../interfaces';
+import {interventionsList} from '../listaInterventionData';
 
-interface ValidationResult {
-  isValid: boolean;
-  missingFields: string[];
-}
 
+<<<<<<< HEAD
+=======
 export interface POSModel {
   id: number;
   name: string;
@@ -49,6 +49,7 @@ interface Goal {
   goal?: string;
   status: string;
 }
+>>>>>>> b0a5038055a61bd24eb39adb8f42014f0fb13ee8
 
 interface ReplacementBehavior extends Replacements {
   status: any;
@@ -118,7 +119,7 @@ export class NoteRbtComponent implements OnInit {
   environmental_changes = '';
   participants: '';
 
-  sumary_note = '';
+  summary_note = '';
   meet_with_client_at = '';
   client_appeared = '';
   as_evidenced_by = '';
@@ -205,24 +206,7 @@ export class NoteRbtComponent implements OnInit {
 
   intervention_added: Interventions[] = [];
   interventionsSelected: { [key: string]: boolean } = {};
-  interventionsList: InterventionItem[] = [
-    { id: 'token_economy', name: 'Token Economy', value: false },
-    { id: 'generalization', name: 'Generalization', value: false },
-    { id: 'NCR', name: 'NCR', value: false },
-    { id: 'behavioral_momentum', name: 'Behavioral Momentum', value: false },
-    { id: 'DRA', name: 'DRA', value: false },
-    { id: 'DRI', name: 'DRI', value: false },
-    { id: 'DRO', name: 'DRO', value: false },
-    { id: 'DRL', name: 'DRL', value: false },
-    { id: 'response_block', name: 'Response Block', value: false },
-    { id: 'errorless_teaching', name: 'Errorless Teaching', value: false },
-    { id: 'extinction', name: 'Extinction', value: false },
-    { id: 'chaining', name: 'Chaining', value: false },
-    { id: 'natural_teaching', name: 'Natural Teaching', value: false },
-    { id: 'redirection', name: 'Redirection', value: false },
-    { id: 'shaping', name: 'Shaping', value: false },
-    { id: 'pairing', name: 'Pairing', value: false },
-  ];
+  interventionsList= interventionsList ;
 
   pa_services: PaService[] = [];
   selectedPaService: PaServiceV2 | null = null;
@@ -259,18 +243,23 @@ export class NoteRbtComponent implements OnInit {
 
     this.specialistData();
 
+<<<<<<< HEAD
+    // this.updateInterventions();
+
+=======
     this.updateInterventions();
+>>>>>>> b0a5038055a61bd24eb39adb8f42014f0fb13ee8
   }
 
-  updateInterventions() {
-    const interventionsObj = this.interventionsList
-      .filter((intervention) => intervention.value)
-      .reduce((acc, intervention) => {
-        acc[intervention.id] = true;
-        return acc;
-      }, {});
-    this.intervention_added = [interventionsObj];
-  }
+  // updateInterventions() {
+  //   const interventionsObj = this.interventionsList
+  //     .filter((intervention) => intervention.value)
+  //     .reduce((acc, intervention) => {
+  //       acc[intervention.id] = true;
+  //       return acc;
+  //     }, {});
+  //   this.intervention_added = [interventionsObj];
+  // }
 
   onInterventionsChange(updatedInterventions: any[]) {
     this.intervention_added = updatedInterventions;
@@ -369,6 +358,11 @@ getPatient(){
     event.value = this.selectedValueCode;
   }
 
+<<<<<<< HEAD
+  
+
+=======
+>>>>>>> b0a5038055a61bd24eb39adb8f42014f0fb13ee8
   specialistData() {
     this.doctorService.showDoctorProfile(this.doctor_id).subscribe((resp) => {
       this.provider_credential = resp.doctor.certificate_number;
@@ -652,15 +646,20 @@ getPatient(){
     return this.replacement_added.every((r) => this.isValidCorrectResponse(r));
   }
 
-  onMaladaptivesChange(updatedMaladaptives: any[]) {
+  onMaladaptivesChange(updatedMaladaptives: any) {
     this.maladaptives = updatedMaladaptives;
   }
 
-  onReplacementsChange(updatedReplacements: any[]) {
+  onReplacementsChange(updatedReplacements: any) {
     this.replacementGoals = updatedReplacements;
   }
 
+<<<<<<< HEAD
+  // eslint-disable-next-line no-debugger
+  save() {debugger
+=======
   onSave() {
+>>>>>>> b0a5038055a61bd24eb39adb8f42014f0fb13ee8
     console.log('Pre-save values:', {
       client_id: this.client_id,
       provider_id: this.selectedValueProviderRBT_id,
@@ -712,7 +711,7 @@ getPatient(){
       maladaptives: this.maladaptives,
       replacements: this.replacementGoals,
       interventions: this.intervention_added,
-      sumary_note: this.sumary_note,
+      summary_note: this.summary_note,
       meet_with_client_at: this.meet_with_client_at,
       client_appeared: this.client_appeared,
       as_evidenced_by: this.as_evidenced_by,
@@ -824,7 +823,6 @@ getPatient(){
         behavior: m.name,
         frequency: m.number_of_occurrences,
       })),
-      // clientResponseToTreatmentThisSession: this.client_response_to_treatment_this_session,
       replacements: this.replacementGoals.map((r) => ({
         name: r.name,
         totalTrials: r.total_trials,
@@ -840,7 +838,7 @@ getPatient(){
 
     this.noteRbtService.generateAISummary(data).subscribe(
       (response: any) => {
-        this.sumary_note = response.summary;
+        this.summary_note = response.summary;
         this.isGeneratingSummary = false;
       },
       (error) => {

@@ -17,10 +17,12 @@ import { NoteRbtComponent } from './note-rbt/note-rbt.component';
 import { NotesByClientComponent } from './notes-by-client/notes-by-client.component';
 import { NotesComponent } from './notes.component';
 import { NotesRoutingModule } from './notes.routing';
+import { InterventionviewsComponent } from './note-rbt-view/interventionviews/interventionviews.component';
 
 
 @NgModule({
   declarations: [
+    InterventionviewsComponent,
     NotesComponent,
     NoteRbtComponent,
     NotesByClientComponent,

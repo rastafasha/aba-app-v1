@@ -362,21 +362,21 @@ export class NoteBcbaEditComponent implements OnInit {
       );
 
       this.noteServiceId = this.note_selected.pa_service_id;
-      // if (this.pa_services?.length && this.noteServiceId) {
-      //   this.selectedPaService =
-      //     this.pa_services.find((service) => service.id === this.noteServiceId) ||
-      //     null;
-      // }
 
       this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED =
         this.note_selected.provider_signature;
       this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED =
         this.note_selected.supervisor_signature;
+<<<<<<< HEAD
+      
+        this.selectedPaService1 = this.show97151List.find(type => type.cpt === this.note_selected.type);
+=======
 
       // this.selectedPaService1 = this.note_selected.type;
       this.selectedPaService1 = this.show97151List.find(
         (type) => type.cpt === this.note_selected.type
       );
+>>>>>>> b0a5038055a61bd24eb39adb8f42014f0fb13ee8
       console.log(this.selectedPaService1);
 
       if (this.note_selected.cpt_code === '97155') {
@@ -434,7 +434,11 @@ export class NoteBcbaEditComponent implements OnInit {
         this.caregivers_training_goalsgroup = {};
       }
 
+<<<<<<< HEAD
+
+=======
       // this.getBipv2();
+>>>>>>> b0a5038055a61bd24eb39adb8f42014f0fb13ee8
     });
   }
 
@@ -460,6 +464,11 @@ export class NoteBcbaEditComponent implements OnInit {
     });
   }
 
+<<<<<<< HEAD
+
+  
+  
+=======
   getBipv2() {
     this.bipV2Service.get(this.bip_id).subscribe((resp) => {
       console.log('BIP', resp);
@@ -623,6 +632,7 @@ export class NoteBcbaEditComponent implements OnInit {
   //     }
   //   }
   // }
+>>>>>>> b0a5038055a61bd24eb39adb8f42014f0fb13ee8
 
   specialistData(selectedValueInsurer) {
     this.doctorService

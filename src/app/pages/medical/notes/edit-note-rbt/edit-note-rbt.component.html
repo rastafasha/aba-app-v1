@@ -432,6 +432,7 @@
             (maladaptivesChange)="onMaladaptivesChange($event)"
           >
           </app-maladaptives>
+          
         </div>
       </div>
     </div>
@@ -447,6 +448,7 @@
             (replacementsChange)="onReplacementsChange($event)"
           >
           </app-replacements>
+          
         </div>
       </div>
     </div>
@@ -458,8 +460,7 @@
         <div class="card-body">
           <app-interventions
             [interventionsList]="interventionsList"
-            (interventionsChange)="onInterventionsChange($event)"
-          >
+            (interventionsChange)="onInterventionsChange($event)" >
           </app-interventions>
         </div>
       </div>
@@ -547,8 +548,13 @@
                   >
                   <textarea
                     class="form-control"
+<<<<<<< HEAD
+                    name="summary_note"
+                    [(ngModel)]="summary_note"
+=======
                     name="rbt_modeled_and_demonstrated_to_caregiver"
                     [(ngModel)]="rbt_modeled_and_demonstrated_to_caregiver"
+>>>>>>> b0a5038055a61bd24eb39adb8f42014f0fb13ee8
                     rows="4"
                     cols="30"
                   ></textarea>
