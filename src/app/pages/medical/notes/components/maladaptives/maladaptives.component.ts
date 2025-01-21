@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-maladaptives',
+  selector: 'app-maladaptives-options',
   styleUrls: ['../../edit-note-rbt/edit-note-rbt.component.scss'],
   template: `
     <div class="col-12">
@@ -44,7 +44,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
     </div>
   `,
 })
-export class MaladaptivesComponent {
+export class MaladaptivesOptionsComponent {
   @Input() maladaptives = [];
   @Output() maladaptivesChange = new EventEmitter<any>();
 

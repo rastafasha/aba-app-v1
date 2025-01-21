@@ -208,57 +208,59 @@ export class EditNoteRbtComponent implements OnInit {
     });
   }
 
-  // private convertToInterventions(input: { [x: string]: boolean }) {
-  //   return [
-  //     {
-  //       id: 'token_economy',
-  //       name: 'Token Economy',
-  //       value: input['token_economy'] || false,
-  //     },
-  //     {
-  //       id: 'generalization',
-  //       name: 'Generalization',
-  //       value: input['generalization'] || false,
-  //     },
-  //     { id: 'NCR', name: 'NCR', value: input['NCR'] || false },
-  //     { id: 'behavioral_momentum', name: 'Behavioral Momentum', 
-  //       value: input['Behavioral Momentum'] || false 
-  //     },
-  //     { id: 'DRA', name: 'DRA', value: input['DRA'] || false },
-  //     { id: 'DRI', name: 'DRI', value: input['DRI'] || false },
-  //     { id: 'DRO', name: 'DRO', value: input['DRO'] || false },
-  //     { id: 'DRL', name: 'DRL', value: input['DRL'] || false },
-      
-  //     {
-  //       id: 'response_block',
-  //       name: 'Response Block',
-  //       value: input['response_block'] || false,
-  //     },
-  //     {
-  //       id: 'errorless_teaching',
-  //       name: 'Errorless Teaching',
-  //       value: input['errorless_teaching'] || false,
-  //     },
-  //     {
-  //       id: 'extinction',
-  //       name: 'Extinction',
-  //       value: input['extinction'] || false,
-  //     },
-  //     { id: 'chaining', name: 'Chaining', value: input['chaining'] || false },
-  //     {
-  //       id: 'natural_teaching',
-  //       name: 'Natural Teaching',
-  //       value: input['natural_teaching'] || false,
-  //     },
-  //     {
-  //       id: 'redirection',
-  //       name: 'Redirection',
-  //       value: input['redirection'] || false,
-  //     },
-  //     { id: 'shaping', name: 'Shaping', value: input['shaping'] || false },
-  //     { id: 'pairing', name: 'Pairing', value: input['pairing'] || false },
-  //   ];
-  // }
+  private convertToInterventions(input: { [x: string]: boolean }) {
+    return [
+      {
+        id: 'token_economy',
+        name: 'Token Economy',
+        value: input['token_economy'] || false,
+      },
+      {
+        id: 'generalization',
+        name: 'Generalization',
+        value: input['generalization'] || false,
+      },
+      { id: 'NCR', name: 'NCR', value: input['NCR'] || false },
+      {
+        id: 'behavioral_momentum',
+        name: 'Behavioral Momentum',
+        value: input['Behavioral Momentum'] || false,
+      },
+      { id: 'DRA', name: 'DRA', value: input['DRA'] || false },
+      { id: 'DRI', name: 'DRI', value: input['DRI'] || false },
+      { id: 'DRO', name: 'DRO', value: input['DRO'] || false },
+      { id: 'DRL', name: 'DRL', value: input['DRL'] || false },
+
+      {
+        id: 'response_block',
+        name: 'Response Block',
+        value: input['response_block'] || false,
+      },
+      {
+        id: 'errorless_teaching',
+        name: 'Errorless Teaching',
+        value: input['errorless_teaching'] || false,
+      },
+      {
+        id: 'extinction',
+        name: 'Extinction',
+        value: input['extinction'] || false,
+      },
+      { id: 'chaining', name: 'Chaining', value: input['chaining'] || false },
+      {
+        id: 'natural_teaching',
+        name: 'Natural Teaching',
+        value: input['natural_teaching'] || false,
+      },
+      {
+        id: 'redirection',
+        name: 'Redirection',
+        value: input['redirection'] || false,
+      },
+      { id: 'shaping', name: 'Shaping', value: input['shaping'] || false },
+      { id: 'pairing', name: 'Pairing', value: input['pairing'] || false },
+    ];
+  }
 
   // private convertToInterventionsGroup(
   //   interventions: { id: string; name: string; value: boolean }[]
@@ -377,22 +379,15 @@ export class EditNoteRbtComponent implements OnInit {
     this.bipService
       .getBipProfilePatient_id(this.patient_identifier)
       .subscribe((resp) => {
-        // console.log('client',resp);
+        console.log('client', resp);
+        this.client_selected = resp.patient;
+        this.first_name = this.client_selected.first_name;
       this.last_name = this.client_selected.last_name;
       this.patient_identifier = this.client_selected.patient_identifier;
       this.diagnosis_code = this.client_selected.diagnosis_code;
       this.insurance_id = this.client_selected.insurer_id;
       this.insurance_identifier = this.client_selected.insurance_identifier;
       this.patientLocation_id = this.client_selected.location_id;
-        this.last_name = this.client_selected.last_name;
-        this.patient_identifier = this.client_selected.patient_identifier;
-        this.patient_id = this.client_selected.id;
-        this.insurance_id = this.client_selected.insurer_id;
-        this.insurance_identifier = this.client_selected.insurance_identifier;
-        this.patientLocation_id = this.client_selected.location_id;
-
-        this.pos = this.client_selected.pos_covered;
-        this.diagnosis_code = this.client_selected.diagnosis_code;
 
         this.paServices = this.client_selected.pa_services;
         if (noteServiceId) {
@@ -692,12 +687,8 @@ export class EditNoteRbtComponent implements OnInit {
         reader2.result as string);
   }
 
-  onSave() {
-    this.text_validation = '';
-    // if(!this.name||!this.email ||!this.surname ){
-    //   this.text_validation = 'Los campos con * son obligatorios';
-    //   return;
-    // }
+  // eslint-disable-next-line no-debugger
+  save() {debugger
 
     console.log('Pre-save values:', {
       client_id: this.patient_id,

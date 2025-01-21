@@ -427,11 +427,11 @@
     <div class="col-xs-12">
       <div class="card">
         <div class="card-body">
-          <app-maladaptives
+          <app-maladaptives-options
             [(maladaptives)]="maladaptives"
             (maladaptivesChange)="onMaladaptivesChange($event)"
           >
-          </app-maladaptives>
+          </app-maladaptives-options>
           
         </div>
       </div>
@@ -458,10 +458,10 @@
     <div class="col-12">
       <div class="card">
         <div class="card-body">
-          <app-interventions
+          <app-interventions-options
             [interventionsList]="interventionsList"
             (interventionsChange)="onInterventionsChange($event)" >
-          </app-interventions>
+          </app-interventions-options>
         </div>
       </div>
     </div>
@@ -762,7 +762,7 @@
                       <button
                         type="button"
                         class="btn btn-primary submit-form me-2"
-                        (click)="onSave()"
+                        (click)="save()"
                       >
                         Save
                       </button>
