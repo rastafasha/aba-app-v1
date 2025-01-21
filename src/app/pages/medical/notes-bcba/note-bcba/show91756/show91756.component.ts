@@ -20,6 +20,8 @@ export class Show91756Component {
   @Input() reinforced_caregiver_strengths_in;
   @Input() gave_constructive_feedback_on;
   @Input() recomended_more_practice_on;
+  @Input() caregivers_training_goals;
+  @Input() caregivers_training_goalsgroup;
 
   @Output() cargiverChange = new EventEmitter<boolean>();
   @Output() wastheclientChange = new EventEmitter<boolean>();
@@ -27,6 +29,7 @@ export class Show91756Component {
   @Output() reinforcedChange = new EventEmitter<string>();
   @Output() gaveChange = new EventEmitter<string>();
   @Output() recomendedChange = new EventEmitter<string>();
+  @Output() caregivers_training = new EventEmitter<string>();
 
   onCheckboxChange() {
     this.cargiverChange.emit(this.cargiver_participation);
@@ -47,5 +50,11 @@ export class Show91756Component {
   }
   onCheckboxChange5() {
     this.recomendedChange.emit(this.recomended_more_practice_on);
+  }
+
+  
+  updateCaregiverGoal(id: number) {
+    this.caregivers_training.emit(this.caregivers_training_goalsgroup[id]);
+    // console.log('Caregiver goal updated:', this.caregivers_training[id]);
   }
 }
