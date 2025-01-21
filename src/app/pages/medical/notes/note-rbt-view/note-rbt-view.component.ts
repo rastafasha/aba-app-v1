@@ -221,9 +221,7 @@ export class NoteRbtViewComponent implements OnInit {
           : this.interventions;
       this.interventionsgroup = jsonObj;
       //TODO Remove
-      // this.intervention = this.interventionsgroup[0];
-      this.intervention = this.note_selected
-        .interventions as unknown as NoteIntervention;
+      this.intervention = this.interventionsgroup[0];
 
       this.maladaptives = resp.maladaptives;
       this.replacements = this.note_selected.replacements;
