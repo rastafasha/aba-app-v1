@@ -13,26 +13,26 @@ import { Intervention } from '../../interfaces';
           <div class="row">
             <div
               class="col-xs-12 col-sm-3"
-              *ngFor="let interv of interventionsList; let i = index"
+              *ngFor="let intervention of interventionsList; let i = index"
             >
               <div class="form-group">
                 <div
                   class="card-header d-flex justify-content-between align-items-center"
                 >
-                  <h5 class="card-title">{{ interv.name }}</h5>
+                  <h5 class="card-title">{{ intervention.name }}</h5>
                   <div
                     class="status-toggle d-flex justify-content-between align-items-center"
                   >
                     <input
                       type="checkbox"
-                      [id]="interv.id"
+                      [id]="intervention.id"
                       class="check"
-                      [(ngModel)]="interv.value"
-                      [name]="interv.id"
+                      [(ngModel)]="intervention.value"
+                      [name]="intervention.id"
                       [ngModelOptions]="{standalone: true}"
                       (ngModelChange)="updateInterventions()"
                     />
-                    <label [for]="interv.id" class="checktoggle"
+                    <label [for]="intervention.id" class="checktoggle"
                       >checkbox</label
                     >
                   </div>
@@ -51,14 +51,14 @@ export class InterventionsOptionComponent {
   
   updateInterventions() {
     const interventionsObj = this.interventionsList
-      .filter((interv) => interv.value)
-      .reduce((acc, interv) => {
+      .filter((intervention) => intervention.value)
+      .reduce((acc, intervention) => {
         // acc[interv.id] = {
         //   id: interv.id,
         //   name: interv.name,
         //   value: !!interv.value,
         // };
-        acc[interv.id] = true;
+        acc[intervention.id] = true;
         return acc;
       }, {});
     console.log(interventionsObj);
