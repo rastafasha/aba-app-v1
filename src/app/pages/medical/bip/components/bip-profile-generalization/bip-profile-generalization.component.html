@@ -1,0 +1,106 @@
+<div class="row">
+  <div class="col-12">
+    <div class="personal-list-out">
+      <div class="card">
+        <div class="card-body">
+          <div class="about-info mb-10">
+            <h4>Generalization Training</h4>
+          </div>
+          <div class="col-xs-12">
+            <p>
+              As Client makes progress on the goals identified in this plan,
+              specific strategies will be used to promote generalization across
+              people and settings to improve the durability of the behavioral
+              outcomes. To enhance generalization, lead analyst/Behavior
+              assistant will collaborate with caregivers as well as the primary
+              care physician, if requested.<br /><br />
+              Specific strategies to facilitate generalization will include
+              (training loosely or diversely, engaging support providers, using
+              multiple exemplars, fading cues and prompts, variable
+              reinforcement schedules, accessing natural and indiscriminate
+              contingencies, and thinning schedules of reinforcement).<br /><br />
+              Once caregivers demonstrate proficiency in the implementation of
+              procedures, they should start to consistently implement the
+              Behavior plan with Analyst’s supervision. Program will be
+              conducted during daily living activities.<br /><br />
+            </p>
+          </div>
+          <div class="col-xs-12">
+            <p class="card-title">Risk Assestment</p>
+            <p>
+              Implementation of this intervention plan could be affected by the
+              following: not consistent implementation of behavior plan by
+              program implementers (caregivers, therapists). In an effort to
+              overcome these barriers, we will monitor caregivers/ staff to
+              ensure that the implementation of the programs is occurring on
+              consistent and appropriate basis. It is also important to avoid
+              gaps in services to avoid disrupting progress or failing to
+              acquire functional skills. In addition, maladaptive behaviors that
+              put consumer at risk might escalate if treatment is withheld.
+              <br /><br />
+              Client’s maladaptive behaviors can have negative social
+              consequences as others may avoid interaction with the client.
+              Client needs close monitoring and external regulation.
+              Non-compliance, prevents client from engaging in the acquisition
+              of new behaviors that would foster learning, instruction
+              following, independence and habituation to rule-bound settings,
+              which pose subsequent risks. Maladaptive behaviors reduce
+              opportunities for learning new things and interacting with peers.
+              Helping Client communicate their needs, understand instructions
+              and demands and regulate impulsive behavior is imperative to
+              successful functioning in home, school and community settings.<br /><br />
+              Caregivers are to be trained on possible effects of treatment
+              modalities such as Extinction Burst. Common effects of this
+              intervention are an increase in the frequency of the target
+              response (extinction burst) and increase in aggression
+              (extinction-induced aggression). If parents/caregivers are not
+              adequately trained to understand the process, they usually think
+              that treatment is not working and make efforts to stop these
+              interventions. <br /><br />
+              Punishment procedures are not used in this program and least
+              restrictive strategies are always encouraged first. In the case
+              that Response Cost or Simple Corrections are used, procedures will
+              be described and all people involved in treatment will learn and
+              demonstrate how to use them and what the contingencies will be.
+            </p>
+          </div>
+          <div *ngIf="!generalization_training?.transition_fading_plans">
+            <app-no-info></app-no-info>
+          </div>
+          <div
+            class="row"
+            *ngIf="generalization_training?.transition_fading_plans"
+          >
+            <div class="col-xs-12">
+              <div class="detail-personal">
+                <h2>discharge plan</h2>
+                <p>{{ generalization_training?.discharge_plan }}</p>
+              </div>
+            </div>
+          </div>
+
+          <ng-container
+            *ngFor="
+              let itemtr of generalization_training?.transition_fading_plans
+            "
+          >
+            <div class="row">
+              <div class="col-xs-12 col-sm-6">
+                <div class="detail-personal">
+                  <h2>phase</h2>
+                  <p>{{ itemtr.phase }}</p>
+                </div>
+              </div>
+              <div class="col-xs-12 col-sm-6">
+                <div class="detail-personal">
+                  <h2>description</h2>
+                  <p>{{ itemtr.description }}</p>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

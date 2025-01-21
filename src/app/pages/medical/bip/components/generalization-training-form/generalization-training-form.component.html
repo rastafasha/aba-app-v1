@@ -1,0 +1,76 @@
+<div mat-dialog-title class="h3" style="font-size: 1.5rem !important">
+  {{ title }}
+</div>
+
+<div mat-dialog-content>
+  <div class="container mt-4">
+    <div class="col-12"><ng-content></ng-content></div>
+    <div class="row">
+      <div class="col-xs-12">
+        <h3 class="card-title">Risk Assestment</h3>
+        <p>
+          Implementation of this intervention plan could be affected by the
+          following: not consistent implementation of behavior plan by program
+          implementers (caregivers, therapists). In an effort to overcome these
+          barriers, we will monitor caregivers/ staff to ensure that the
+          implementation of the programs is occurring on consistent and
+          appropriate basis. It is also important to avoid gaps in services to
+          avoid disrupting progress or failing to acquire functional skills. In
+          addition, maladaptive behaviors that put consumer at risk might
+          escalate if treatment is withheld.
+        </p>
+        <p>
+          Client’s maladaptive behaviors can have negative social consequences
+          as others may avoid interaction with the client. Client needs close
+          monitoring and external regulation. Non-compliance, prevents client
+          from engaging in the acquisition of new behaviors that would foster
+          learning, instruction following, independence and habituation to
+          rule-bound settings, which pose subsequent risks. Maladaptive
+          behaviors reduce opportunities for learning new things and interacting
+          with peers. Helping Client communicate their needs, understand
+          instructions and demands and regulate impulsive behavior is imperative
+          to successful functioning in home, school and community settings.
+        </p>
+        <p>
+          Caregivers are to be trained on possible effects of treatment
+          modalities such as Extinction Burst. Common effects of this
+          intervention are an increase in the frequency of the target response
+          (extinction burst) and increase in aggression (extinction-induced
+          aggression). If parents/caregivers are not adequately trained to
+          understand the process, they usually think that treatment is not
+          working and make efforts to stop these interventions.
+        </p>
+        <p>
+          Punishment procedures are not used in this program and least
+          restrictive strategies are always encouraged first. In the case that
+          Response Cost or Simple Corrections are used, procedures will be
+          described and all people involved in treatment will learn and
+          demonstrate how to use them and what the contingencies will be.
+        </p>
+      </div>
+
+      <div class="col-12">
+        <div class="form-group local-forms">
+          <label>Discharge Plan<span class="login-danger">*</span> </label>
+          <textarea
+            class="form-control"
+            name="discharge_plan"
+            [(ngModel)]="input.discharge_plan"
+            rows="4"
+            cols="30"
+          >
+          </textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <div class="col-12 mb-3 text-end">
+    <button (click)="onCancel()" class="btn btn-outline-danger btn-sm me-2">
+      Close
+    </button>
+    <button (click)="onSave()" class="btn btn-primary btn-sm">Save</button>
+  </div>
+</div>

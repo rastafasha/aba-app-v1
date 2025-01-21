@@ -54,7 +54,7 @@ export class AddRoleUserComponent {
     }
   }
 
-  save() {
+  onSave() {
     this.valid_form = false;
 
     if (!this.name || this.permissions.length === 0) {

@@ -1,21 +1,28 @@
 import { Location } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+<<<<<<< HEAD
+=======
+import { PaServiceV2 } from 'src/app/core/models';
+>>>>>>> b0a5038055a61bd24eb39adb8f42014f0fb13ee8
 import { AppUser } from 'src/app/core/models/users.model';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
 import { NoteRbtService } from '../../../../core/services/notes-rbt.service';
 import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
+<<<<<<< HEAD
 import { PaServiceV2 } from 'src/app/core/models';
 import { PatientsV2Service } from 'src/app/core/services';
 import { PaServicesV2Service } from 'src/app/core/services/pa-services.v2.service';
 import { interventionsList } from '../listaInterventionData';
+=======
+>>>>>>> b0a5038055a61bd24eb39adb8f42014f0fb13ee8
 
 @Component({
   selector: 'app-edit-note-rbt',
   templateUrl: './edit-note-rbt.component.html',
-  styleUrls: ['./edit-note-rbt.component.scss']
+  styleUrls: ['./edit-note-rbt.component.scss'],
 })
 export class EditNoteRbtComponent implements OnInit {
   routes = AppRoutes;
@@ -50,7 +57,6 @@ export class EditNoteRbtComponent implements OnInit {
   selectedValueBCBA!: string;
   selectedValueAbaSupervisor!: string;
   selectedValueBcba_id!: number;
-
 
   client_id: any;
   patient_identifier: string;
@@ -107,21 +113,21 @@ export class EditNoteRbtComponent implements OnInit {
   supervisor_signature: any;
 
   token_economy: boolean;
-    generalization: boolean;
-    NCR: boolean;
-    behavioral_momentum: boolean;
-    DRA: boolean;
-    DRI: boolean;
-    DRO: boolean;
-    DRL: boolean;
-    response_block: boolean;
-    errorless_teaching: boolean;
-    extinction: boolean;
-    chaining: boolean;
-    natural_teaching: boolean;
-    redirection: boolean;
-    shaping: boolean;
-    pairing: boolean;
+  generalization: boolean;
+  NCR: boolean;
+  behavioral_momentum: boolean;
+  DRA: boolean;
+  DRI: boolean;
+  DRO: boolean;
+  DRL: boolean;
+  response_block: boolean;
+  errorless_teaching: boolean;
+  extinction: boolean;
+  chaining: boolean;
+  natural_teaching: boolean;
+  redirection: boolean;
+  shaping: boolean;
+  pairing: boolean;
 
   FILE_SIGNATURE_RBT: any;
   IMAGE_PREVISUALIZA_SIGNATURE__RBT: any;
@@ -146,8 +152,14 @@ export class EditNoteRbtComponent implements OnInit {
   replacements = [];
   replacementgroup :any = [];
 
+<<<<<<< HEAD
   maladaptivegroup :any = [];
   maladaptives: any [];
+=======
+  maladaptivegroup = [];
+  maladaptives: any[];
+  replacementgroup = [];
+>>>>>>> b0a5038055a61bd24eb39adb8f42014f0fb13ee8
 
   maladaptiveSelected: any = null;
   replacementSelected: any = null;
@@ -181,7 +193,7 @@ export class EditNoteRbtComponent implements OnInit {
       this.note_id = resp['id'];
     });
 
-    this.ativatedRoute.queryParams.subscribe(params => {
+    this.ativatedRoute.queryParams.subscribe((params) => {
       this.fromParam = params['from'];
     });
 
@@ -209,6 +221,7 @@ export class EditNoteRbtComponent implements OnInit {
     });
   }
 
+<<<<<<< HEAD
   // private convertToInterventions(input: { [x: string]: boolean }) {
   //   return [
   //     {
@@ -260,6 +273,61 @@ export class EditNoteRbtComponent implements OnInit {
   //     { id: 'pairing', name: 'Pairing', value: input['pairing'] || false },
   //   ];
   // }
+=======
+  private convertToInterventions(input: { [x: string]: boolean }) {
+    return [
+      {
+        id: 'token_economy',
+        name: 'Token Economy',
+        value: input['token_economy'] || false,
+      },
+      {
+        id: 'generalization',
+        name: 'Generalization',
+        value: input['generalization'] || false,
+      },
+      { id: 'NCR', name: 'NCR', value: input['NCR'] || false },
+      {
+        id: 'behavioral_momentum',
+        name: 'Behavioral Momentum',
+        value: input['Behavioral Momentum'] || false,
+      },
+      { id: 'DRA', name: 'DRA', value: input['DRA'] || false },
+      { id: 'DRI', name: 'DRI', value: input['DRI'] || false },
+      { id: 'DRO', name: 'DRO', value: input['DRO'] || false },
+      { id: 'DRL', name: 'DRL', value: input['DRL'] || false },
+
+      {
+        id: 'response_block',
+        name: 'Response Block',
+        value: input['response_block'] || false,
+      },
+      {
+        id: 'errorless_teaching',
+        name: 'Errorless Teaching',
+        value: input['errorless_teaching'] || false,
+      },
+      {
+        id: 'extinction',
+        name: 'Extinction',
+        value: input['extinction'] || false,
+      },
+      { id: 'chaining', name: 'Chaining', value: input['chaining'] || false },
+      {
+        id: 'natural_teaching',
+        name: 'Natural Teaching',
+        value: input['natural_teaching'] || false,
+      },
+      {
+        id: 'redirection',
+        name: 'Redirection',
+        value: input['redirection'] || false,
+      },
+      { id: 'shaping', name: 'Shaping', value: input['shaping'] || false },
+      { id: 'pairing', name: 'Pairing', value: input['pairing'] || false },
+    ];
+  }
+>>>>>>> b0a5038055a61bd24eb39adb8f42014f0fb13ee8
 
   // private convertToInterventionsGroup(
   //   interventions: { id: string; name: string; value: boolean }[]
@@ -294,8 +362,16 @@ export class EditNoteRbtComponent implements OnInit {
       
       this.selectedValueCode = this.note_selected.cpt_code;
 
+<<<<<<< HEAD
       
 
+=======
+      this.selectedValueRBT = resp.noteRbt.provider.name;
+      this.selectedValueProviderRBT_id = resp.noteRbt.provider_id;
+
+      this.selectedValueBCBA = resp.noteRbt.supervisor.name;
+      this.selectedValueBcba_id = resp.noteRbt.supervisor_id;
+>>>>>>> b0a5038055a61bd24eb39adb8f42014f0fb13ee8
 
       if (Array.isArray(this.note_selected.interventions)) {
         this.interventionsList[0] = this.note_selected.interventions;
@@ -306,8 +382,13 @@ export class EditNoteRbtComponent implements OnInit {
       }
       console.log(this.interventionsList);
 
+<<<<<<< HEAD
       this.maladaptives = this.note_selected.maladaptives;
       this.replacements = this.note_selected.replacements; 
+=======
+      this.maladaptives = resp.maladaptives;
+      this.replacements = resp.replacements;
+>>>>>>> b0a5038055a61bd24eb39adb8f42014f0fb13ee8
 
       this.meet_with_client_at = this.note_selected.meet_with_client_at;
       this.progress_noted_this_session_compared_to_previous_session =
@@ -332,7 +413,7 @@ export class EditNoteRbtComponent implements OnInit {
       this.session_length_afternon_total =
         this.note_selected.session_length_afternon_total;
 
-        this.session_length_total = this.note_selected.session_length_total;
+      this.session_length_total = this.note_selected.session_length_total;
 
       this.selectedValueTimeIn = this.formatTime(this.note_selected.time_in);
       this.selectedValueTimeOut = this.formatTime(this.note_selected.time_out);
@@ -371,28 +452,49 @@ export class EditNoteRbtComponent implements OnInit {
     return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
   }
 
+<<<<<<< HEAD
  
 
+=======
+>>>>>>> b0a5038055a61bd24eb39adb8f42014f0fb13ee8
   getProfileBip(noteServiceId?: number) {
     
     this.bipService
       .getBipProfilePatient_id(this.patient_identifier)
       .subscribe((resp) => {
+<<<<<<< HEAD
         // console.log('client',resp);
+=======
+        console.log('client', resp);
+>>>>>>> b0a5038055a61bd24eb39adb8f42014f0fb13ee8
         this.client_selected = resp.patient;
         this.first_name = this.client_selected.first_name;
+<<<<<<< HEAD
       this.last_name = this.client_selected.last_name;
       this.patient_identifier = this.client_selected.patient_identifier;
       this.diagnosis_code = this.client_selected.diagnosis_code;
       this.insurance_id = this.client_selected.insurer_id;
       this.insurance_identifier = this.client_selected.insurance_identifier;
       this.patientLocation_id = this.client_selected.location_id;
+=======
+        this.last_name = this.client_selected.last_name;
+        this.patient_identifier = this.client_selected.patient_identifier;
+        this.patient_id = this.client_selected.id;
+        this.insurance_id = this.client_selected.insurer_id;
+        this.insurance_identifier = this.client_selected.insurance_identifier;
+        this.patientLocation_id = this.client_selected.location_id;
+
+        this.pos = this.client_selected.pos_covered;
+        this.diagnosis_code = this.client_selected.diagnosis_code;
+>>>>>>> b0a5038055a61bd24eb39adb8f42014f0fb13ee8
 
         this.paServices = this.client_selected.pa_services;
         if (noteServiceId) {
           this.setPaService(noteServiceId);
         }
-        this.selectedPaService = resp.patient.pa_services.find(service => service.cpt === '97153') || null;
+        this.selectedPaService =
+          resp.patient.pa_services.find((service) => service.cpt === '97153') ||
+          null;
       });
   }
 
@@ -470,43 +572,47 @@ export class EditNoteRbtComponent implements OnInit {
     this.calculateTotalHours();
   }
 
-
   calculateTotalHours() {
     const timeIn1 = this.convertToMinutes(this.selectedValueTimeIn);
     const timeOut1 = this.convertToMinutes(this.selectedValueTimeOut);
     const timeIn2 = this.convertToMinutes(this.selectedValueTimeIn2);
     const timeOut2 = this.convertToMinutes(this.selectedValueTimeOut2);
 
-    const totalMinutes = (timeOut1 - timeIn1) + (timeOut2 - timeIn2);
+    const totalMinutes = timeOut1 - timeIn1 + (timeOut2 - timeIn2);
     const totalHours = this.convertToHours(totalMinutes);
     this.total_hour_session = totalHours;
     // console.log(`Total hours: ${totalHours}`);
     // console.log('para el html', this.total_hour_session);
-}
+  }
 
-convertToMinutes(time: string): number {
-  if (!time || !time.includes(':')) {
-    // console.error(`Invalid time format: ${time}`);
-        return 0; // O manejar el error de otra manera
+  convertToMinutes(time: string): number {
+    if (!time || !time.includes(':')) {
+      // console.error(`Invalid time format: ${time}`);
+      return 0; // O manejar el error de otra manera
     }
 
     const [hours, minutes] = time.split(':').map(Number);
 
     // Validar que hours y minutes sean números válidos
-    if (isNaN(hours) || isNaN(minutes) || hours < 0 || minutes < 0 || minutes >= 60) {
-        // console.error(`Invalid time values: hours=${hours}, minutes=${minutes}`);
-        return 0; // O manejar el error de otra manera
+    if (
+      isNaN(hours) ||
+      isNaN(minutes) ||
+      hours < 0 ||
+      minutes < 0 ||
+      minutes >= 60
+    ) {
+      // console.error(`Invalid time values: hours=${hours}, minutes=${minutes}`);
+      return 0; // O manejar el error de otra manera
     }
 
     return hours * 60 + minutes;
-}
+  }
 
-convertToHours(totalMinutes: number): string {
+  convertToHours(totalMinutes: number): string {
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes % 60;
     return `${hours}h ${minutes}m`;
-}
-
+  }
 
   private recalculateSessionLength() {
     this.session_length_morning_total =
@@ -595,8 +701,6 @@ convertToHours(totalMinutes: number): string {
     this.number_of_occurrences = null;
   }
 
-
-
   addReplacement(replacemen) {
     this.replacementSelected = replacemen;
     this.replacementGoals.push({
@@ -617,7 +721,6 @@ convertToHours(totalMinutes: number): string {
   deleteLTOGoal(i: any) {
     this.replacementGoals.splice(i, 1);
   }
-
 
   countValue1() {
     const min = 0; // Minimum of 0
@@ -655,8 +758,6 @@ convertToHours(totalMinutes: number): string {
     });
   }
 
- 
-
   //funcion para la primera imagen.. funciona
   loadFile($event) {
     if ($event.target.files[0].type.indexOf('image')) {
@@ -685,8 +786,17 @@ convertToHours(totalMinutes: number): string {
         reader2.result as string);
   }
 
+<<<<<<< HEAD
   // eslint-disable-next-line no-debugger
   save() {debugger
+=======
+  onSave() {
+    this.text_validation = '';
+    // if(!this.name||!this.email ||!this.surname ){
+    //   this.text_validation = 'Los campos con * son obligatorios';
+    //   return;
+    // }
+>>>>>>> b0a5038055a61bd24eb39adb8f42014f0fb13ee8
 
     console.log('Pre-save values:', {
       client_id: this.patient_id,
@@ -702,6 +812,7 @@ convertToHours(totalMinutes: number): string {
       return;
     }
 
+<<<<<<< HEAD
     const noteData = {
       type: 'rbt',
       bip_id: this.bip_id,
@@ -753,6 +864,129 @@ convertToHours(totalMinutes: number): string {
 
    
     this.noteRbtService.update(noteData as any, this.note_selectedId).subscribe(
+=======
+    const formData = new FormData();
+    formData.append('patient_id', this.patient_id + '');
+    formData.append('doctor_id', this.doctor_id + '');
+    formData.append('bip_id', this.bip_id);
+    formData.append('first_name', this.first_name);
+    formData.append('last_name', this.last_name);
+    formData.append('diagnosis_code', this.diagnosis_code);
+    formData.append('provider_credential', this.provider_credential);
+    formData.append('pos', this.pos);
+
+    // formData.append('provider', this.provider); // para el calculo de las unidades
+
+    formData.append('session_date', this.session_date);
+
+    formData.append('location_id', this.patientLocation_id);
+
+    formData.append('insurance_id', this.insurance_id + ''); // id del seguro preferiblemente que solo agarre la data al crear
+    formData.append('insurance_identifier', this.insurance_identifier); // id del seguro preferiblemente que solo agarre la data al crear
+
+    if (this.meet_with_client_at) {
+      formData.append('meet_with_client_at', this.meet_with_client_at);
+    }
+
+    if (this.participants) {
+      formData.append('participants', this.participants);
+    }
+
+    if (this.selectedValueTimeIn) {
+      formData.append(
+        'time_in',
+        this.selectedValueTimeIn + '' ? this.selectedValueTimeIn + '' : '0'
+      );
+    }
+    if (this.selectedValueTimeOut) {
+      formData.append(
+        'time_out',
+        this.selectedValueTimeOut + '' ? this.selectedValueTimeOut + '' : '0'
+      );
+    }
+    if (this.selectedValueTimeIn2) {
+      formData.append(
+        'time_in2',
+        this.selectedValueTimeIn2 + '' ? this.selectedValueTimeIn2 + '' : '0'
+      );
+    }
+    if (this.selectedValueTimeOut2) {
+      formData.append(
+        'time_out2',
+        this.selectedValueTimeOut2 + '' ? this.selectedValueTimeOut2 + '' : '0'
+      );
+    }
+
+    if (this.environmental_changes) {
+      formData.append('environmental_changes', this.environmental_changes);
+    }
+
+    if (this.selectedValueRenderingProvider) {
+      formData.append('provider_id', this.selectedValueRenderingProvider);
+    }
+
+    if (this.selectedValueProviderRBT_id) {
+      formData.append('provider_id', this.selectedValueProviderRBT_id + '');
+    }
+    if (this.selectedValueBcba_id) {
+      formData.append('supervisor_id', this.selectedValueBcba_id + '');
+    }
+
+    if (this.replacementgroup) {
+      formData.append('replacements', JSON.stringify(this.replacementgroup));
+    }
+    if (this.maladaptivegroup) {
+      formData.append('maladaptives', JSON.stringify(this.maladaptivegroup));
+    }
+    if (this.interventionsgroup) {
+      formData.append('interventions', JSON.stringify(this.interventionsgroup));
+    }
+    if (this.as_evidenced_by) {
+      formData.append('as_evidenced_by', this.as_evidenced_by);
+    }
+
+    if (this.client_appeared) {
+      formData.append('client_appeared', this.client_appeared);
+    }
+    // if (this.client_response_to_treatment_this_session) {
+    //   formData.append(
+    //     'client_response_to_treatment_this_session',
+    //     this.client_response_to_treatment_this_session
+    //   );
+    // }
+    if (this.sumary_note) {
+      formData.append('sumary_note', this.sumary_note);
+    }
+    if (this.next_session_is_scheduled_for) {
+      formData.append(
+        'next_session_is_scheduled_for',
+        this.next_session_is_scheduled_for
+      );
+    }
+    formData.append('pa_service_id', this.selectedPaService.id.toString());
+    formData.append('cpt_code', this.selectedPaService.cpt);
+
+    if (this.FILE_SIGNATURE_RBT) {
+      formData.append('imagen', this.FILE_SIGNATURE_RBT);
+    }
+    if (this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED) {
+      formData.append(
+        'provider_signature',
+        this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED
+      );
+    }
+    if (this.FILE_SIGNATURE_RBT) {
+      formData.append('imagenn', this.FILE_SIGNATURE_RBT);
+    }
+    if (this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED) {
+      formData.append(
+        'supervisor_signature',
+        this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED
+      );
+    }
+
+    this.noteRbtService.update(formData as any, this.note_selectedId).subscribe(
+>>>>>>> b0a5038055a61bd24eb39adb8f42014f0fb13ee8
       (resp) => {
         // console.log(resp);
 
@@ -761,7 +995,10 @@ convertToHours(totalMinutes: number): string {
           Swal.fire('Warning', this.text_validation, 'warning');
         } else {
           Swal.fire('Updated', 'Note RBT Updated', 'success');
-          this.router.navigate([AppRoutes.noteRbt.list, this.patient_identifier]);
+          this.router.navigate([
+            AppRoutes.noteRbt.list,
+            this.patient_identifier,
+          ]);
         }
       },
       (error) => {
@@ -781,7 +1018,6 @@ convertToHours(totalMinutes: number): string {
       }
     );
   }
-
 
   generateAISummary() {
     if (!this.checkDataSufficient()) {

@@ -1,13 +1,13 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { url_servicios } from 'src/app/config/config';
-import { AuthService } from 'src/app/core/auth/auth.service';
+import { BipV2, PlanV2 } from 'src/app/core/models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BipService {
-  constructor(public http: HttpClient, authService: AuthService) {}
+  constructor(public http: HttpClient) {}
 
   listBips() {
     const URL = url_servicios + '/bip';
@@ -20,7 +20,12 @@ export class BipService {
   }
   getBipByUser(client_id: any) {
     const URL = url_servicios + '/bip/show/byuser/' + client_id;
-    return this.http.get<any>(URL);
+    return this.http.get<{
+      bip: BipV2;
+      type_of_assessment: number;
+      documents_reviewed: { index: number; title: string }[];
+      maladaptives: PlanV2[];
+    }>(URL);
   }
   getBipByPatient_id(patient_id: any) {
     const URL = url_servicios + '/bip/show/byuserpatientid/' + patient_id;

@@ -1,0 +1,174 @@
+<div class="col-sm-12">
+  <div class="card">
+    <div class="card-body">
+      <form autocomplete="false">
+        <!-- paciente -->
+        <div class="row align-items-center py-4">
+          <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                <button
+                  class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseOne"
+                  aria-expanded="true"
+                  aria-controls="collapseOne"
+                >
+                  <h4>Data Client : {{ patient.patient_identifier }}</h4>
+                </button>
+              </h2>
+              <div
+                id="collapseOne"
+                class="accordion-collapse collapse show"
+                aria-labelledby="headingOne"
+                data-bs-parent="#accordionExample"
+              >
+                <div class="accordion-body">
+                  <div class="row">
+                    <div class="col-12 col-md-6 col-xl-4">
+                      <div class="form-group local-forms">
+                        <label
+                          >Patient ID <span class="login-danger">*</span></label
+                        >
+                        <input
+                          class="form-control"
+                          name="patient_identifier"
+                          disabled
+                          [(ngModel)]="patient.patient_identifier"
+                          type="text"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-4">
+                      <div class="form-group local-forms">
+                        <label
+                          >First Name <span class="login-danger">*</span></label
+                        >
+                        <input
+                          class="form-control"
+                          name="first_name"
+                          disabled
+                          [(ngModel)]="patient.first_name"
+                          type="text"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-4">
+                      <div class="form-group local-forms">
+                        <label
+                          >Last Name <span class="login-danger">*</span></label
+                        >
+                        <input
+                          class="form-control"
+                          name="last_name"
+                          disabled
+                          [(ngModel)]="patient.last_name"
+                          type="text"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-xl-4">
+                      <div class="form-group local-forms">
+                        <label
+                          >Mobile <span class="login-danger">*</span></label
+                        >
+                        <input
+                          class="form-control"
+                          name="phone"
+                          disabled
+                          [(ngModel)]="patient.phone"
+                          type="text"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-4">
+                      <div class="form-group local-forms">
+                        <label
+                          >Parent/Guardian Name
+                          <span class="login-danger">*</span></label
+                        >
+                        <input
+                          class="form-control"
+                          name="parent_guardian_name"
+                          disabled
+                          [(ngModel)]="patient.parent_guardian_name"
+                          type="text"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-4">
+                      <div class="form-group local-forms">
+                        <label
+                          >Relationship
+                          <span class="login-danger">*</span></label
+                        >
+                        <input
+                          class="form-control"
+                          name="relationship"
+                          disabled
+                          [(ngModel)]="patient.relationship"
+                          type="text"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-8">
+                      <div class="form-group local-forms">
+                        <label
+                          >address <span class="login-danger">*</span></label
+                        >
+                        <input
+                          class="form-control"
+                          name="address"
+                          disabled
+                          [(ngModel)]="patient.address"
+                          type="text"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-6 col-xl-2">
+                      <div class="form-group local-forms">
+                        <label>age <span class="login-danger">*</span></label>
+                        <input
+                          class="form-control"
+                          name="age"
+                          disabled
+                          [(ngModel)]="patient.age"
+                          type="text"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-12 col-md-6 col-xl-2">
+                      <div class="form-group local-forms">
+                        <label
+                          >Birth day <span class="login-danger">*</span></label
+                        >
+                        <input
+                          class="form-control datetimepicker"
+                          disabled
+                          name="birth_date"
+                          [(ngModel)]="patient.birth_date"
+                          type="text"
+                          matInput
+                          [matDatepicker]="picker"
+                        />
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-datepicker-toggle
+                          matIconSuffix
+                          [for]="picker"
+                        ></mat-datepicker-toggle>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- paciente -->
+      </form>
+    </div>
+  </div>
+</div>

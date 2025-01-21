@@ -5,10 +5,14 @@
       <div class="row">
         <div class="col-sm-12">
           <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a [routerLink]="routes.location.list">Locations </a></li>
-            <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
-            <li class="breadcrumb-item active">Add Location </li>
-        </ul>
+            <li class="breadcrumb-item">
+              <a [routerLink]="routes.location.list">Locations </a>
+            </li>
+            <li class="breadcrumb-item">
+              <i class="feather icon-chevron-right"></i>
+            </li>
+            <li class="breadcrumb-item active">Add Location</li>
+          </ul>
           <div class="doctor-submit text-start">
             <button class="btn btn-primary btn-sm" (click)="goBack()">
               Back
@@ -99,7 +103,7 @@
                     />
                   </div>
                 </div>
-                
+
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label>Phone <span class="login-danger">*</span></label>
@@ -180,7 +184,9 @@
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
-                    <label>Provider ID <span class="login-danger">*</span></label>
+                    <label
+                      >Provider ID <span class="login-danger">*</span></label
+                    >
                     <input
                       class="form-control"
                       name="providerId"
@@ -190,9 +196,12 @@
                   </div>
                 </div>
                 <div class="clear"></div>
-                <div class="col-12 ">
+                <div class="col-12">
                   <div class="form-group local-forms">
-                    <label>Additional Notes <span class="login-danger">*</span></label>
+                    <label
+                      >Additional Notes
+                      <span class="login-danger">*</span></label
+                    >
                     <textarea
                       class="form-control"
                       name="additional_notes"
@@ -202,12 +211,6 @@
                     ></textarea>
                   </div>
                 </div>
-                
-                
-                
-
-                
-                
 
                 <div class="col-12 col-md-6 col-xl-6">
                   <div class="form-group local-top-form">
@@ -279,7 +282,7 @@
                     <button
                       type="button"
                       class="btn btn-primary submit-form me-2"
-                      (click)="save()"
+                      (click)="onSave()"
                     >
                       Save
                     </button>

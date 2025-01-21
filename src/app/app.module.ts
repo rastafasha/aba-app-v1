@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app.routing';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SharedModule } from './shared/shared.module';
-import { CoreModule } from './core/core.module';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { PermisionInterceptor } from './core/interceptors/permision.interceptor';
-import { PipesModule } from './shared/pipes/pipes.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
-import { AuthInterceptor } from './core/auth/auth.interceptor';
-import { MockInterceptor } from './mocks/mock.interceptor';
+import { environment } from '../environments/environment';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app.routing';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
+import { AuthInterceptor } from './core/auth/auth.interceptor';
+import { CoreModule } from './core/core.module';
+import { PermisionInterceptor } from './core/interceptors/permision.interceptor';
+import { MockInterceptor } from './mocks/mock.interceptor';
+import { PipesModule } from './shared/pipes/pipes.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent, BreadcrumbsComponent],

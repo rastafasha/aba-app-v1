@@ -2,31 +2,31 @@ import { Location } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as jspdf from 'jspdf';
+import { NoteRbtV2, Replacements } from 'src/app/core/models';
 import { AppUser } from 'src/app/core/models/users.model';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
 import { NoteRbtService } from '../../../../core/services/notes-rbt.service';
 import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import { NoteRbtV2, Replacements } from 'src/app/core/models';
 
 interface NoteIntervention {
   token_economy: boolean;
-    generalization: boolean;
-    NCR: boolean;
-    behavioral_momentum: boolean;
-    DRA: boolean;
-    DRI: boolean;
-    DRO: boolean;
-    DRL: boolean;
-    response_block: boolean;
-    errorless_teaching: boolean;
-    extinction: boolean;
-    chaining: boolean;
-    natural_teaching: boolean;
-    redirection: boolean;
-    shaping: boolean;
-    pairing: boolean;
+  generalization: boolean;
+  NCR: boolean;
+  behavioral_momentum: boolean;
+  DRA: boolean;
+  DRI: boolean;
+  DRO: boolean;
+  DRL: boolean;
+  response_block: boolean;
+  errorless_teaching: boolean;
+  extinction: boolean;
+  chaining: boolean;
+  natural_teaching: boolean;
+  redirection: boolean;
+  shaping: boolean;
+  pairing: boolean;
 }
 
 @Component({
@@ -94,8 +94,13 @@ export class NoteRbtViewComponent implements OnInit {
   total_trials = 0;
   number_of_correct_response = 0;
   maladaptive = '';
+<<<<<<< HEAD
   replacement :any;
   replacements: any;
+=======
+  replacement: any;
+  replacements: Replacements;
+>>>>>>> b0a5038055a61bd24eb39adb8f42014f0fb13ee8
   maladaptive_behavior = '';
   interventions: any;
   provider_signature: any;
@@ -159,6 +164,8 @@ export class NoteRbtViewComponent implements OnInit {
 
   fromParam: string | null = null;
 
+  JSON = JSON;
+
   constructor(
     private noteRbtService: NoteRbtService,
     private activatedRoute: ActivatedRoute,
@@ -174,7 +181,7 @@ export class NoteRbtViewComponent implements OnInit {
       this.note_id = resp['id'];
     });
 
-    this.activatedRoute.queryParams.subscribe(params => {
+    this.activatedRoute.queryParams.subscribe((params) => {
       this.fromParam = params['from'];
     });
 
@@ -188,7 +195,7 @@ export class NoteRbtViewComponent implements OnInit {
 
   print() {
     window.print();
-    }
+  }
 
   getConfig() {
     this.noteRbtService.listConfigNote().subscribe((resp) => {
@@ -219,11 +226,29 @@ export class NoteRbtViewComponent implements OnInit {
           : this.interventions;
       this.interventionsgroup = jsonObj;
       //TODO Remove
-      this.intervention = this.interventionsgroup[0];
+      // this.intervention = this.interventionsgroup[0];
+      this.intervention = this.note_selected
+        .interventions as unknown as NoteIntervention;
 
       this.maladaptives = resp.maladaptives;
+<<<<<<< HEAD
       this.replacements = this.note_selected.replacements;
+=======
+      // const jsonObj1 =
+      //   typeof this.maladaptive === 'string'
+      //     ? JSON.parse(this.maladaptive)
+      //     : this.maladaptive;
+      // this.maladaptivegroup = jsonObj1;
+      // console.log(this.maladaptivegroup);
 
+      this.replacements = this.note_selected.replacements;
+      // const jsonObj2 =
+      //   typeof this.replacement === 'string'
+      //     ? JSON.parse(this.replacement)
+      //     : this.replacement;
+      this.replacementgroup = Object.values(this.replacements);
+      // console.log(this.replacementgroup);
+>>>>>>> b0a5038055a61bd24eb39adb8f42014f0fb13ee8
 
       this.pos = this.note_selected.pos;
 

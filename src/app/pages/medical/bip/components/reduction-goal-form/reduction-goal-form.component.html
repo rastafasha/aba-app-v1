@@ -1,82 +1,42 @@
-<div class="col-sm-12" *ngIf="!maladaptives">
-    please fill maladaptives to view this section.
-</div>
-
-<div class="col-sm-12" *ngIf="maladaptives" >
-    <div class="card" >
-        <div class="card-body">
-            <div class="col-xs-12">
-                <!-- lista inicial -->
-                <div class="table-responsive" *ngIf="!maladaptiveSelected && !maladaptiveSelectedSon">
-                    <h3 class="card-title">Maladaptives Behaviors</h3>
-                    <table class="table mb-0">
-                        <thead>
-                            <tr>
-                                <th>Behavior</th>
-                                <th>Topographical Definition</th>
-                                <th>Baseline Level</th>
-                                <th>Intensity Initial</th>
-                                <th>Options</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let maladap of maladaptives; let i = index">
-                                <td>
-                                    {{maladap.maladaptive_behavior}}
-                                </td>
-                                <td>
-                                     {{maladap.topografical_definition}}
-                                </td>
-                                <td>
-                                     {{maladap.baseline_level}}
-                                </td>
-                                <td>
-                                    {{maladap.initial_interesting}}
-                                </td>
-                                <td>
-                                    
-                                    <button class="btn btn-outline-primary btn-sm" (click)="selectedMaladaptive(maladap)"><i class="fa fa-edit"></i> Edit</button>
-                                    <button class="btn btn-outline-success btn-sm" (click)="selectedMaladaptiveGraphic(maladap)"><i class="fa fa-bar-chart" ></i> View</button>
-                                    <!-- <button class="btn btn-danger btn-sm" (click)="deleteMaladaptive(i)">x</button> -->
-                                </td>
-                            </tr>
-                            
-                            
-                        </tbody>
-                    </table>
-                    
-                </div>
-                <!-- fin lista inicial    -->
-                <div *ngIf="maladaptiveSelected" class=" doctor-submit text-end">
-                    <button class="btn btn-primary btn-sm " (click)="back() ">Back</button>
-                </div>
-                <!-- maladaptiveSelected -->
-                <div class="rbt-dashboard-table table-responsive mobile-table-750" *ngIf="maladaptiveSelected">
-            
-                 <app-reduction-goal-edit  [maladap]="maladaptiveSelected"></app-reduction-goal-edit>
-                    
-                </div>
-                <!-- fin maladaptiveSelected -->
-                <hr>
-                <!-- maladaptiveSelectedSon  grafico-->
-                <div *ngIf="maladaptiveSelectedSon" class=" doctor-submit text-end">
-                    <button class="btn btn-primary btn-sm" (click)="back() ">Back</button>
-                </div>
-                <div class="col-xs-12" *ngIf="maladaptiveSelectedSon">
-                    <div class="rbt-dashboard-table table-responsive mobile-table-750" >
-                        
-                        <app-chart-reduction [maladaptive_behavior]="maladaptiveSelectedSon.maladaptive_behavior"  [baseline_date]="maladaptiveSelectedSon.baseline_date" [baseline_level]="maladaptiveSelectedSon.baseline_level" [initial_interesting]="maladaptiveSelectedSon.initial_interesting"></app-chart-reduction>
-                    </div>
-                </div>
-                <!-- fin maladaptiveSelectedSon grafico -->
-            </div>
-            
-            
-            
+<div class="col-sm-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="col-xs-12">
+        <!-- list -->
+        <app-list-and-form
+          *ngIf="state === 'list'"
+          #list
+          title="Maladaptives Behaviors"
+          [(newItem)]="newGoal"
+          [(dataSource)]="input"
+          [displayedColumns]="displayedColumns"
+          [renders]="renders"
+          [options]="options"
+        >
+          <app-plan-form [(input)]="newGoal"></app-plan-form>
+        </app-list-and-form>
+        <!-- Back -->
+        <div *ngIf="state !== 'list'" class="doctor-submit text-end">
+          <button class="btn btn-primary btn-sm" (click)="onBack()">
+            Back
+          </button>
         </div>
-        
-    </div>
-    
+        <!-- Edit -->
+        <div *ngIf="state === 'edit'">
+          <app-plan-edit
+            title="Reduction Goal"
+            [(input)]="newGoal"
+            (cancel)="onBack()"
+            (save)="onSave()"
+          >
+          </app-plan-edit>
 
-        
+          <app-chart-reduction
+            [maladaptive]="newGoal"
+            [patient_identifier]="patient_identifier"
+          ></app-chart-reduction>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -27,13 +27,13 @@ export class InsuranceAddComponent {
   hourly_fee: any;
   max_allowed: any;
 
-  city:string;
-  state:string;
-  street:string;
-  street2:string;
-  zip:string;
-  payer_id:number;
-  is_self_subscriber:boolean;
+  city: string;
+  state: string;
+  street: string;
+  street2: string;
+  zip: string;
+  payer_id: number;
+  is_self_subscriber: boolean;
 
   valid_form = false;
   valid_form_success = false;
@@ -87,7 +87,7 @@ export class InsuranceAddComponent {
     this.notes.splice(i, 1);
   }
 
-  save() {
+  onSave() {
     this.text_validation = '';
     if (!this.name || !this.services) {
       this.text_validation = 'Los campos con * son obligatorios';

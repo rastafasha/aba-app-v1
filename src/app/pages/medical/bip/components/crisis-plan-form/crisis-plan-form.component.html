@@ -1,0 +1,69 @@
+<div mat-dialog-title class="h3" style="font-size: 1.5rem !important">
+  {{ title }}
+</div>
+<div mat-dialog-content>
+  <div class="container mt-4">
+    <!-- If Another Component need add Content -->
+    <div class="col-12"><ng-content></ng-content></div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="form-group local-forms">
+          <label>
+            Crisis Description
+            <span class="login-danger">*</span>
+          </label>
+          <textarea
+            class="form-control"
+            name="crisis_description"
+            [(ngModel)]="input.crisis_description"
+            (ngModelChange)="inputChange.emit(input)"
+            rows="4"
+            cols="30"
+          >
+          </textarea>
+        </div>
+      </div>
+
+      <div class="col-xs-12">
+        <div class="form-group local-forms">
+          <label>Crisis Note<span class="login-danger">*</span></label>
+          <textarea
+            class="form-control"
+            name="crisis_note"
+            [(ngModel)]="input.crisis_note"
+            (ngModelChange)="inputChange.emit(input)"
+            rows="4"
+            cols="30"
+          >
+          </textarea>
+        </div>
+      </div>
+
+      <div class="col-xs-12">
+        <div class="form-group local-forms">
+          <label>
+            Caregiver Requirements for Prevention of Crisis
+            <span class="login-danger">*</span>
+          </label>
+          <textarea
+            class="form-control"
+            name="caregiver_requirements_for_prevention_of_crisis"
+            [(ngModel)]="input.caregiver_requirements_for_prevention_of_crisis"
+            (ngModelChange)="inputChange.emit(input)"
+            rows="4"
+            cols="30"
+          >
+          </textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <div class="col-12 mb-3 text-end">
+    <button (click)="onCancel()" class="btn btn-outline-danger btn-sm">
+      Cancel
+    </button>
+    <button (click)="onSave()" class="btn btn-primary btn-sm">Save</button>
+  </div>
+</div>

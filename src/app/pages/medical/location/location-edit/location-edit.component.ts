@@ -113,7 +113,7 @@ export class LocationEditComponent {
 
   //files
   //update function
-  save() {
+  onSave() {
     this.text_validation = '';
     if (!this.title || !this.address) {
       this.text_validation = 'Los campos con * son obligatorios';

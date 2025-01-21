@@ -5,10 +5,14 @@
       <div class="row">
         <div class="col-sm-12">
           <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a [routerLink]="routes.patients.list">Clients </a></li>
-                        <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
-                        <li class="breadcrumb-item active">Add Client </li>
-                    </ul>
+            <li class="breadcrumb-item">
+              <a [routerLink]="routes.patients.list">Clients </a>
+            </li>
+            <li class="breadcrumb-item">
+              <i class="feather icon-chevron-right"></i>
+            </li>
+            <li class="breadcrumb-item active">Add Client</li>
+          </ul>
           <div class="doctor-submit text-start">
             <button class="btn btn-primary btn-sm" (click)="goBack()">
               Back
@@ -23,239 +27,243 @@
       <div class="col-sm-12">
         <div class="card">
           <div class="card-body">
-              <div class="row">
-                <div class="col-12">
-                  <div class="form-heading">
-                    <h4>
-                      Client Details(demographics)
-                      <span style="font-size: 12px"
-                        >(fields with an <span class="login-danger">*</span> are
-                        required)</span
-                      >
-                    </h4>
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label
-                      >Patient's First Name <span class="login-danger">*</span></label
+            <div class="row">
+              <div class="col-12">
+                <div class="form-heading">
+                  <h4>
+                    Client Details(demographics)
+                    <span style="font-size: 12px"
+                      >(fields with an <span class="login-danger">*</span> are
+                      required)</span
                     >
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="first_name"
-                      formControlName="first_name"
-                      type="text"
-                    />
-                  </div>
+                  </h4>
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>Patient's Last Name <span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="last_name"
-                      formControlName="last_name"
-                      type="text"
-                    />
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label
+                    >Patient's First Name
+                    <span class="login-danger">*</span></label
+                  >
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="first_name"
+                    formControlName="first_name"
+                    type="text"
+                  />
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>Patient's Birth day <span class="login-danger">*</span></label>
-                    <input
-                      class="form-control datetimepicker"
-                      autocomplete="off"
-                      name="birth_date"
-                      formControlName="birth_date"
-                      type="text"
-                      matInput
-                      [matDatepicker]="picker"
-                    />
-                    <mat-datepicker #picker></mat-datepicker>
-                    <mat-datepicker-toggle
-                      matIconSuffix
-                      [for]="picker"
-                    ></mat-datepicker-toggle>
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label
+                    >Patient's Last Name
+                    <span class="login-danger">*</span></label
+                  >
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="last_name"
+                    formControlName="last_name"
+                    type="text"
+                  />
                 </div>
-                <!-- Age -->
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms" [formGroup]="form">
-                    <label>Age <span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="age"
-                      formControlName="age"
-                      type="number"
-                    />
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label
+                    >Patient's Birth day
+                    <span class="login-danger">*</span></label
+                  >
+                  <input
+                    class="form-control datetimepicker"
+                    autocomplete="off"
+                    name="birth_date"
+                    formControlName="birth_date"
+                    type="text"
+                    matInput
+                    [matDatepicker]="picker"
+                  />
+                  <mat-datepicker #picker></mat-datepicker>
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="picker"
+                  ></mat-datepicker-toggle>
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>Sex<span class="login-danger">*</span></label>
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="Gender"
-                      formControlName="gender"
-                    >
-                      <option disabled [value]="null">-- Select --</option>
-                      <option [value]="1">Male</option>
-                      <option [value]="2">Female</option>
-                    </select>
-                  </div>
+              </div>
+              <!-- Age -->
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms" [formGroup]="form">
+                  <label>Age <span class="login-danger">*</span></label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="age"
+                    formControlName="age"
+                    type="number"
+                  />
                 </div>
-               
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label
-                      >Patient ID <span class="login-danger">*</span></label
-                    >
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="patient_identifier"
-                      formControlName="patient_identifier"
-                      type="text"
-                    />
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label>Sex<span class="login-danger">*</span></label>
+                  <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="Gender"
+                    formControlName="gender"
+                  >
+                    <option disabled [value]="null">-- Select --</option>
+                    <option [value]="1">Male</option>
+                    <option [value]="2">Female</option>
+                  </select>
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>Education <span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="education"
-                      formControlName="education"
-                      type="text"
-                    />
-                  </div>
+              </div>
+
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label>Patient ID <span class="login-danger">*</span></label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="patient_identifier"
+                    formControlName="patient_identifier"
+                    type="text"
+                  />
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label
-                      >Profession <span class="login-danger">*</span></label
-                    >
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="profession"
-                      formControlName="profession"
-                      type="text"
-                    />
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label>Education <span class="login-danger">*</span></label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="education"
+                    formControlName="education"
+                    type="text"
+                  />
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label
-                      >School Name <span class="login-danger">*</span></label
-                    >
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="school_name"
-                      formControlName="school_name"
-                      type="text"
-                    />
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label>Profession <span class="login-danger">*</span></label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="profession"
+                    formControlName="profession"
+                    type="text"
+                  />
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label
-                      >School Number <span class="login-danger">*</span></label
-                    >
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="school_number"
-                      formControlName="school_number"
-                      type="text"
-                    />
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label>School Name <span class="login-danger">*</span></label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="school_name"
+                    formControlName="school_name"
+                    type="text"
+                  />
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label
-                      >Parent/Guardian Name<span class="login-danger"
-                        >*</span
-                      ></label
-                    >
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="parent_guardian_name"
-                      formControlName="parent_guardian_name"
-                      type="text"
-                    />
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label
+                    >School Number <span class="login-danger">*</span></label
+                  >
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="school_number"
+                    formControlName="school_number"
+                    type="text"
+                  />
                 </div>
-                <!-- Gender -->
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group select-gender">
-                    <label class="gen-label">
-                      Parent's Sex<span class="login-danger">*</span>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label
+                    >Parent/Guardian Name<span class="login-danger"
+                      >*</span
+                    ></label
+                  >
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="parent_guardian_name"
+                    formControlName="parent_guardian_name"
+                    type="text"
+                  />
+                </div>
+              </div>
+              <!-- Gender -->
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group select-gender">
+                  <label class="gen-label">
+                    Parent's Sex<span class="login-danger">*</span>
+                  </label>
+                  <div class="form-check-inline" [formGroup]="form">
+                    <label class="form-check-label">
+                      <input
+                        type="radio"
+                        name="parent_gender"
+                        [value]="1"
+                        formControlName="parent_gender"
+                        class="form-check-input"
+                      />Male
                     </label>
-                    <div class="form-check-inline" [formGroup]="form">
-                      <label class="form-check-label">
-                        <input
-                          type="radio"
-                          name="parent_gender"
-                          [value]="1"
-                          formControlName="parent_gender"
-                          class="form-check-input"
-                        />Male
-                      </label>
-                    </div>
-                    <div class="form-check-inline" [formGroup]="form">
-                      <label class="form-check-label">
-                        <input
-                          type="radio"
-                          name="parent_gender"
-                          [value]="2"
-                          formControlName="parent_gender"
-                          class="form-check-input"
-                        />Female
-                      </label>
-                    </div>
+                  </div>
+                  <div class="form-check-inline" [formGroup]="form">
+                    <label class="form-check-label">
+                      <input
+                        type="radio"
+                        name="parent_gender"
+                        [value]="2"
+                        formControlName="parent_gender"
+                        class="form-check-input"
+                      />Female
+                    </label>
                   </div>
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>Parent/Guardian's Birth day <span class="login-danger">*</span></label>
-                    <input
-                      class="form-control datetimepicker"
-                      autocomplete="off"
-                      name="parent_birth_date"
-                      formControlName="parent_birth_date"
-                      type="text"
-                      matInput
-                      [matDatepicker]="picker_parent"
-                    />
-                    <mat-datepicker #picker_parent></mat-datepicker>
-                    <mat-datepicker-toggle
-                      matIconSuffix
-                      [for]="picker_parent"
-                    ></mat-datepicker-toggle>
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label
+                    >Parent/Guardian's Birth day
+                    <span class="login-danger">*</span></label
+                  >
+                  <input
+                    class="form-control datetimepicker"
+                    autocomplete="off"
+                    name="parent_birth_date"
+                    formControlName="parent_birth_date"
+                    type="text"
+                    matInput
+                    [matDatepicker]="picker_parent"
+                  />
+                  <mat-datepicker #picker_parent></mat-datepicker>
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="picker_parent"
+                  ></mat-datepicker-toggle>
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label
-                      >Relationship <span class="login-danger">*</span></label
-                    >
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="relationship"
-                      formControlName="relationship"
-                      type="text"
-                    />
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label
+                    >Relationship <span class="login-danger">*</span></label
+                  >
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="relationship"
+                    formControlName="relationship"
+                    type="text"
+                  />
                 </div>
-                <!-- <div class="row">
+              </div>
+              <!-- <div class="row">
                   <label>Is Patient's Condition Related to: <span class="login-danger">*</span></label>
                   <div class="col-12 col-md-4">
                     <div class="form-group">
@@ -321,7 +329,7 @@
                             id="other_accident"
                             class="check"
                             name="other_accident"
-                            
+
                             formControlName="other_accident"
                           />
                           <label for="other_accident" class="checktoggle" value="true">
@@ -333,280 +341,304 @@
                   </div>
                 </div> -->
 
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>Languange <span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="language"
-                      formControlName="language"
-                      type="text"
-                      placeholder="English, Spanish, Italian..."
-                    />
-                  </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label>Languange <span class="login-danger">*</span></label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="language"
+                    formControlName="language"
+                    type="text"
+                    placeholder="English, Spanish, Italian..."
+                  />
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>Phone <span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="phone"
-                      formControlName="phone"
-                      type="text"
-                    />
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label>Phone <span class="login-danger">*</span></label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="phone"
+                    formControlName="phone"
+                    type="text"
+                  />
                 </div>
+              </div>
 
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label
-                      >Home Phone <span class="login-danger">*</span></label
-                    >
-                    <input
-                      class="form-control"
-                      name="home_phone"
-                      formControlName="home_phone"
-                      type="text"
-                    />
-                  </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label>Home Phone <span class="login-danger">*</span></label>
+                  <input
+                    class="form-control"
+                    name="home_phone"
+                    formControlName="home_phone"
+                    type="text"
+                  />
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label
-                      >Work Phone <span class="login-danger">*</span></label
-                    >
-                    <input
-                      class="form-control"
-                      name="work_phone"
-                      formControlName="work_phone"
-                      type="text"
-                    />
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label>Work Phone <span class="login-danger">*</span></label>
+                  <input
+                    class="form-control"
+                    name="work_phone"
+                    formControlName="work_phone"
+                    type="text"
+                  />
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>Patient's Email <span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      name="email"
-                      formControlName="email"
-                      type="email"
-                    />
-                    <div *ngIf="emailExists">
-                      <small class="text-danger">Email already exists</small>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>Patient's City <span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      name="city"
-                      formControlName="city"
-                      type="text"
-                    />
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>Patient's ZIP <span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      name="zip"
-                      formControlName="zip"
-                      type="text"
-                    />
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>Patient's State <span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      name="state"
-                      formControlName="state"
-                      type="text"
-                    />
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>Parent's City <span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      name="parent_city"
-                      formControlName="parent_city"
-                      type="text"
-                    />
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>Parent's ZIP <span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      name="parent_zip"
-                      formControlName="parent_zip"
-                      type="text"
-                    />
-                  </div>
-                </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>Parent's State <span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      name="parent_state"
-                      formControlName="parent_state"
-                      type="text"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="col-12 col-md-6 col-xl-4"
-                  *ngIf="showLocationSelected"
-                >
-                  <div class="form-group local-forms">
-                    <label>Location <span class="login-danger">*</span></label>
-                    <mat-select
-                      formControlName="location_id"
-                      name="location_id"
-                      class="form-control select"
-                      (ngModelChange)="selectLocation($event)"
-                      placeholder="Select Location"
-                    >
-                      <mat-option
-                        *ngFor="let data of locations"
-                        [value]="data.id"
-                      >
-                        {{ data.title }}
-                      </mat-option>
-                    </mat-select>
-                  </div>
-                </div>
-                  <div
-                    class="col-12 col-md-6 col-xl-4"
-                    *ngIf="!showLocationSelected"
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label
+                    >Patient's Email <span class="login-danger">*</span></label
                   >
-                  <div class="form-group local-forms">
-                    <label>Location </label>
-                    <h4 style="padding: 15px">{{ location.title }}</h4>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-12 col-md-6">
-                    <div class="form-group local-forms">
-                      <label>Parent's Address <span class="login-danger">*</span></label>
-                      <textarea
-                        class="form-control"
-                        name="parent_address"
-                        formControlName="parent_address"
-                        rows="3"
-                        cols="30"
-                      ></textarea>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-6">
-                    <div class="form-group local-forms">
-                      <label>Patient's Address <span class="login-danger">*</span></label>
-                      <textarea
-                        class="form-control"
-                        name="address"
-                        formControlName="address"
-                        rows="3"
-                        cols="30"
-                      ></textarea>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-6 col-xl-4">
-                    <div class="form-group local-forms">
-                      <label>Referring Provider First Name <span class="login-danger">*</span></label>
-                      <input
-                        class="form-control"
-                        name="referring_provider_first_name"
-                        formControlName="referring_provider_first_name"
-                        type="text"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-6 col-xl-4">
-                    <div class="form-group local-forms">
-                      <label>Referring Provider Last Name <span class="login-danger">*</span></label>
-                      <input
-                        class="form-control"
-                        name="referring_provider_last_name"
-                        formControlName="referring_provider_last_name"
-                        type="text"
-                        
-                      />
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-6 col-xl-4">
-                    <div class="form-group local-forms">
-                      <label>Referring Provider NPI <span class="login-danger">*</span></label>
-                      <input
-                        class="form-control"
-                        name="referring_provider_npi"
-                        formControlName="referring_provider_npi"
-                        type="text"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-6">
-                    <div class="form-group local-forms">
-                      <label
-                        >Special Notes<span class="login-danger">*</span></label
-                      >
-                      <textarea
-                        class="form-control"
-                        name="special_note"
-                        formControlName="special_note"
-                        rows="3"
-                        cols="30"
-                      ></textarea>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-6 col-xl-4">
-                    <div class="form-group local-forms">
-                      <label>Diagnosis <span class="login-danger">*</span></label>
-                      <input
-                        class="form-control"
-                        name="diagnosis_code"
-                        formControlName="diagnosis_code"
-                        type="text"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-6 col-xl-4">
-                    <div class="form-group local-forms">
-                      <label>Schedule <span class="login-danger">*</span></label>
-                      <input
-                        class="form-control"
-                        name="schedule"
-                        formControlName="schedule"
-                        type="text"
-                      />
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-6 col-xl-4">
-                    <div class="form-group local-forms">
-                      <label
-                        >Summer Schedule
-                        <span class="login-danger">*</span></label
-                      >
-                      <input
-                        class="form-control"
-                        name="summer_schedule"
-                        formControlName="summer_schedule"
-                        type="text"
-                      />
-                    </div>
+                  <input
+                    class="form-control"
+                    name="email"
+                    formControlName="email"
+                    type="email"
+                  />
+                  <div *ngIf="emailExists">
+                    <small class="text-danger">Email already exists</small>
                   </div>
                 </div>
               </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label
+                    >Patient's City <span class="login-danger">*</span></label
+                  >
+                  <input
+                    class="form-control"
+                    name="city"
+                    formControlName="city"
+                    type="text"
+                  />
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label
+                    >Patient's ZIP <span class="login-danger">*</span></label
+                  >
+                  <input
+                    class="form-control"
+                    name="zip"
+                    formControlName="zip"
+                    type="text"
+                  />
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label
+                    >Patient's State <span class="login-danger">*</span></label
+                  >
+                  <input
+                    class="form-control"
+                    name="state"
+                    formControlName="state"
+                    type="text"
+                  />
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label
+                    >Parent's City <span class="login-danger">*</span></label
+                  >
+                  <input
+                    class="form-control"
+                    name="parent_city"
+                    formControlName="parent_city"
+                    type="text"
+                  />
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label
+                    >Parent's ZIP <span class="login-danger">*</span></label
+                  >
+                  <input
+                    class="form-control"
+                    name="parent_zip"
+                    formControlName="parent_zip"
+                    type="text"
+                  />
+                </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label
+                    >Parent's State <span class="login-danger">*</span></label
+                  >
+                  <input
+                    class="form-control"
+                    name="parent_state"
+                    formControlName="parent_state"
+                    type="text"
+                  />
+                </div>
+              </div>
+              <div
+                class="col-12 col-md-6 col-xl-4"
+                *ngIf="showLocationSelected"
+              >
+                <div class="form-group local-forms">
+                  <label>Location <span class="login-danger">*</span></label>
+                  <mat-select
+                    formControlName="location_id"
+                    name="location_id"
+                    class="form-control select"
+                    (ngModelChange)="selectLocation($event)"
+                    placeholder="Select Location"
+                  >
+                    <mat-option
+                      *ngFor="let data of locations"
+                      [value]="data.id"
+                    >
+                      {{ data.title }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+              <div
+                class="col-12 col-md-6 col-xl-4"
+                *ngIf="!showLocationSelected"
+              >
+                <div class="form-group local-forms">
+                  <label>Location </label>
+                  <h4 style="padding: 15px">{{ location.title }}</h4>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 col-md-6">
+                  <div class="form-group local-forms">
+                    <label
+                      >Parent's Address
+                      <span class="login-danger">*</span></label
+                    >
+                    <textarea
+                      class="form-control"
+                      name="parent_address"
+                      formControlName="parent_address"
+                      rows="3"
+                      cols="30"
+                    ></textarea>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <div class="form-group local-forms">
+                    <label
+                      >Patient's Address
+                      <span class="login-danger">*</span></label
+                    >
+                    <textarea
+                      class="form-control"
+                      name="address"
+                      formControlName="address"
+                      rows="3"
+                      cols="30"
+                    ></textarea>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label
+                      >Referring Provider First Name
+                      <span class="login-danger">*</span></label
+                    >
+                    <input
+                      class="form-control"
+                      name="referring_provider_first_name"
+                      formControlName="referring_provider_first_name"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label
+                      >Referring Provider Last Name
+                      <span class="login-danger">*</span></label
+                    >
+                    <input
+                      class="form-control"
+                      name="referring_provider_last_name"
+                      formControlName="referring_provider_last_name"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label
+                      >Referring Provider NPI
+                      <span class="login-danger">*</span></label
+                    >
+                    <input
+                      class="form-control"
+                      name="referring_provider_npi"
+                      formControlName="referring_provider_npi"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6">
+                  <div class="form-group local-forms">
+                    <label
+                      >Special Notes<span class="login-danger">*</span></label
+                    >
+                    <textarea
+                      class="form-control"
+                      name="special_note"
+                      formControlName="special_note"
+                      rows="3"
+                      cols="30"
+                    ></textarea>
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label>Diagnosis <span class="login-danger">*</span></label>
+                    <input
+                      class="form-control"
+                      name="diagnosis_code"
+                      formControlName="diagnosis_code"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label>Schedule <span class="login-danger">*</span></label>
+                    <input
+                      class="form-control"
+                      name="schedule"
+                      formControlName="schedule"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label
+                      >Summer Schedule
+                      <span class="login-danger">*</span></label
+                    >
+                    <input
+                      class="form-control"
+                      name="summer_schedule"
+                      formControlName="summer_schedule"
+                      type="text"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -615,106 +647,111 @@
       <div class="col-sm-12" [ngClass]="{ 'disabled-div': !location_id }">
         <div class="card">
           <div class="card-body">
-              <div class="row">
-                <div class="col-12">
-                  <div class="form-heading">
-                    <h4>Add Provider <span *ngIf="!location_id"> - Select location to enable - </span> </h4>
-                  </div>
-                </div>
-
-                <div class="col-12 col-md-3">
-                  <div class="form-group local-forms">
-                    <label>RBT <span class="login-danger">*</span></label>
-                    <mat-select
-                      formControlName="rbt_home_id"
-                      name="rbt_home_id"
-                      class="form-control select"
-                      placeholder="Select Specialist"
-                    >
-                      <mat-option
-                        *ngFor="let data of roles_rbt; let i = index"
-                        [value]="data.id"
-                      >
-                        {{ data.full_name }}
-                      </mat-option>
-                    </mat-select>
-                  </div>
-                </div>
-                <div class="col-12 col-md-3">
-                  <div class="form-group local-forms">
-                    <label>RBT 2 <span class="login-danger">*</span></label>
-                    <mat-select
-                      formControlName="rbt2_school_id"
-                      name="rbt2_school_id"
-                      class="form-control select"
-                      placeholder="Select Specialist"
-                    >
-                      <mat-option
-                        *ngFor="let data of roles_rbt; let i = index"
-                        [value]="data.id"
-                      >
-                        {{ data.full_name }}
-                      </mat-option>
-                    </mat-select>
-                  </div>
-                </div>
-                <div class="col-12 col-md-3">
-                  <div class="form-group local-forms">
-                    <label>BCBA <span class="login-danger">*</span></label>
-                    <mat-select
-                      formControlName="bcba_home_id"
-                      name="bcba_home_id"
-                      class="form-control select"
-                      placeholder="Select Specialist"
-                    >
-                      <mat-option
-                        *ngFor="let data of roles_bcba; let i = index"
-                        [value]="data.id"
-                      >
-                        {{ data.full_name }}
-                      </mat-option>
-                    </mat-select>
-                  </div>
-                </div>
-                <div class="col-12 col-md-3">
-                  <div class="form-group local-forms">
-                    <label>BCBA 2<span class="login-danger">*</span></label>
-                    <mat-select
-                      formControlName="bcba2_school_id"
-                      name="bcba2_school_id"
-                      class="form-control select"
-                      placeholder="Select Specialist"
-                    >
-                      <mat-option
-                        *ngFor="let data of roles_bcba; let i = index"
-                        [value]="data.id"
-                      >
-                        {{ data.full_name }}
-                      </mat-option>
-                    </mat-select>
-                  </div>
-                </div>
-                <div class="col-12 col-md-3">
-                  <div class="form-group local-forms">
-                    <label
-                      >Local Manager<span class="login-danger">*</span></label
-                    >
-                    <mat-select
-                      formControlName="clin_director_id"
-                      name="clin_director_id"
-                      class="form-control select"
-                      placeholder="Select Specialist"
-                    >
-                      <mat-option
-                        *ngFor="let data of specialists; let i = index"
-                        [value]="data.id"
-                      >
-                        {{ data.full_name }}
-                      </mat-option>
-                    </mat-select>
-                  </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-heading">
+                  <h4>
+                    Add Provider
+                    <span *ngIf="!location_id">
+                      - Select location to enable -
+                    </span>
+                  </h4>
                 </div>
               </div>
+
+              <div class="col-12 col-md-3">
+                <div class="form-group local-forms">
+                  <label>RBT <span class="login-danger">*</span></label>
+                  <mat-select
+                    formControlName="rbt_home_id"
+                    name="rbt_home_id"
+                    class="form-control select"
+                    placeholder="Select Specialist"
+                  >
+                    <mat-option
+                      *ngFor="let data of roles_rbt; let i = index"
+                      [value]="data.id"
+                    >
+                      {{ data.full_name }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+              <div class="col-12 col-md-3">
+                <div class="form-group local-forms">
+                  <label>RBT 2 <span class="login-danger">*</span></label>
+                  <mat-select
+                    formControlName="rbt2_school_id"
+                    name="rbt2_school_id"
+                    class="form-control select"
+                    placeholder="Select Specialist"
+                  >
+                    <mat-option
+                      *ngFor="let data of roles_rbt; let i = index"
+                      [value]="data.id"
+                    >
+                      {{ data.full_name }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+              <div class="col-12 col-md-3">
+                <div class="form-group local-forms">
+                  <label>BCBA <span class="login-danger">*</span></label>
+                  <mat-select
+                    formControlName="bcba_home_id"
+                    name="bcba_home_id"
+                    class="form-control select"
+                    placeholder="Select Specialist"
+                  >
+                    <mat-option
+                      *ngFor="let data of roles_bcba; let i = index"
+                      [value]="data.id"
+                    >
+                      {{ data.full_name }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+              <div class="col-12 col-md-3">
+                <div class="form-group local-forms">
+                  <label>BCBA 2<span class="login-danger">*</span></label>
+                  <mat-select
+                    formControlName="bcba2_school_id"
+                    name="bcba2_school_id"
+                    class="form-control select"
+                    placeholder="Select Specialist"
+                  >
+                    <mat-option
+                      *ngFor="let data of roles_bcba; let i = index"
+                      [value]="data.id"
+                    >
+                      {{ data.full_name }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+              <div class="col-12 col-md-3">
+                <div class="form-group local-forms">
+                  <label
+                    >Local Manager<span class="login-danger">*</span></label
+                  >
+                  <mat-select
+                    formControlName="clin_director_id"
+                    name="clin_director_id"
+                    class="form-control select"
+                    placeholder="Select Specialist"
+                  >
+                    <mat-option
+                      *ngFor="let data of specialists; let i = index"
+                      [value]="data.id"
+                    >
+                      {{ data.full_name }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -723,297 +760,298 @@
       <div class="col-sm-12">
         <div class="card">
           <div class="card-body">
-              <div class="row">
-                <div class="col-12">
-                  <div class="form-heading">
-                    <h4>Benefits</h4>
-                  </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-heading">
+                  <h4>Benefits</h4>
                 </div>
-                <!-- Insurer -->
-                <div class="col-12 col-sm-4">
-                  <div class="form-group local-forms">
-                    <label>Insurer <span class="login-danger">*</span></label>
-                    <mat-select
-                      formControlName="insurer_id"
-                      name="insurer_id"
-                      class="form-control select"
-                      (selectionChange)="selectInsurance($event)"
-                      placeholder="Select Insurer"
+              </div>
+              <!-- Insurer -->
+              <div class="col-12 col-sm-4">
+                <div class="form-group local-forms">
+                  <label>Insurer <span class="login-danger">*</span></label>
+                  <mat-select
+                    formControlName="insurer_id"
+                    name="insurer_id"
+                    class="form-control select"
+                    (selectionChange)="selectInsurance($event)"
+                    placeholder="Select Insurer"
+                  >
+                    <mat-option
+                      *ngFor="let data of insurances"
+                      [value]="data.id"
                     >
-                      <mat-option
-                        *ngFor="let data of insurances"
-                        [value]="data.id"
-                      >
-                        {{ data.name }}
-                      </mat-option>
-                    </mat-select>
-                  </div>
+                      {{ data.name }}
+                    </mat-option>
+                  </mat-select>
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label
-                      >Insurance I.D. Number <span class="login-danger">*</span></label
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label
+                    >Insurance I.D. Number
+                    <span class="login-danger">*</span></label
+                  >
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="insurance_identifier"
+                    formControlName="insurance_identifier"
+                    type="text"
+                  />
+                </div>
+              </div>
+              <div class="col-12 col-sm-4">
+                <div class="form-group local-forms">
+                  <label
+                    >Insurer Secondary
+                    <span class="login-danger">*</span></label
+                  >
+                  <mat-select
+                    formControlName="insurer_secondary_id"
+                    name="insurer_secondary_id"
+                    class="form-control select"
+                    (selectionChange)="selectInsurance($event)"
+                    placeholder="Select Insurer"
+                  >
+                    <mat-option
+                      *ngFor="let data of insurances"
+                      [value]="data.id"
                     >
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="insurance_identifier"
-                      formControlName="insurance_identifier"
-                      type="text"
-                    />
-                  </div>
+                      {{ data.name }}
+                    </mat-option>
+                  </mat-select>
                 </div>
-                <div class="col-12 col-sm-4">
-                  <div class="form-group local-forms">
-                    <label>Insurer Secondary <span class="login-danger">*</span></label>
-                    <mat-select
-                      formControlName="insurer_secondary_id"
-                      name="insurer_secondary_id"
-                      class="form-control select"
-                      (selectionChange)="selectInsurance($event)"
-                      placeholder="Select Insurer"
-                    >
-                      <mat-option
-                        *ngFor="let data of insurances"
-                        [value]="data.id"
-                      >
-                        {{ data.name }}
-                      </mat-option>
-                    </mat-select>
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label
+                    >Insurance Secondary ID
+                    <span class="login-danger">*</span></label
+                  >
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="insurance_secondary_identifier"
+                    formControlName="insurance_secondary_identifier"
+                    type="text"
+                  />
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label
-                      >Insurance  Secondary ID <span class="login-danger">*</span></label
-                    >
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="insurance_secondary_identifier"
-                      formControlName="insurance_secondary_identifier"
-                      type="text"
-                    />
-                  </div>
+              </div>
+              <!-- Insurer -->
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label>Equhl Id<span class="login-danger">*</span></label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="eqhlid"
+                    formControlName="eqhlid"
+                    type="text"
+                  />
                 </div>
-                <!-- Insurer -->
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>Equhl Id<span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="eqhlid"
-                      formControlName="eqhlid"
-                      type="text"
-                    />
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label
+                    >Elegibility date<span class="login-danger">*</span></label
+                  >
+                  <input
+                    class="form-control datetimepicker"
+                    name="elegibility_date"
+                    formControlName="elegibility_date"
+                    type="text"
+                    matInput
+                    [matDatepicker]="picker2"
+                  />
+                  <mat-datepicker #picker2></mat-datepicker>
+                  <mat-datepicker-toggle
+                    matIconSuffix
+                    [for]="picker2"
+                  ></mat-datepicker-toggle>
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label
-                      >Elegibility date<span class="login-danger"
-                        >*</span
-                      ></label
-                    >
-                    <input
-                      class="form-control datetimepicker"
-                      name="elegibility_date"
-                      formControlName="elegibility_date"
-                      type="text"
-                      matInput
-                      [matDatepicker]="picker2"
-                    />
-                    <mat-datepicker #picker2></mat-datepicker>
-                    <mat-datepicker-toggle
-                      matIconSuffix
-                      [for]="picker2"
-                    ></mat-datepicker-toggle>
-                  </div>
-                </div>
+              </div>
 
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label
-                      >POS Covered<span class="login-danger">*</span></label
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label>POS Covered<span class="login-danger">*</span></label>
+                  <mat-select
+                    multiple="multiple"
+                    name="pos_covered"
+                    formControlName="pos_covered"
+                    class="form-control select"
+                    placeholder="Select"
+                  >
+                    <mat-option
+                      *ngFor="let data of poscoveredList"
+                      [value]="data.code"
                     >
-                    <mat-select
-                      multiple="multiple"
-                      name="pos_covered"
-                      formControlName="pos_covered"
-                      class="form-control select"
-                      placeholder="Select"
-                    >
-                      <mat-option
-                        *ngFor="let data of poscoveredList"
-                        [value]="data.code"
-                      >
-                        {{ data.name }}
-                      </mat-option>
-                    </mat-select>
-                  </div>
+                      {{ data.name }}
+                    </mat-option>
+                  </mat-select>
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label
-                      >Deductible Individual I/F<span class="login-danger"
-                        >*</span
-                      ></label
-                    >
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="deductible_individual_I_F"
-                      formControlName="deductible_individual_I_F"
-                      type="text"
-                      placeholder="3000 / 5000"
-                    />
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label
+                    >Deductible Individual I/F<span class="login-danger"
+                      >*</span
+                    ></label
+                  >
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="deductible_individual_I_F"
+                    formControlName="deductible_individual_I_F"
+                    type="text"
+                    placeholder="3000 / 5000"
+                  />
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>Balance<span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="balance"
-                      formControlName="balance"
-                      type="text"
-                      placeholder="2500 / 3500"
-                    />
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label>Balance<span class="login-danger">*</span></label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="balance"
+                    formControlName="balance"
+                    type="text"
+                    placeholder="2500 / 3500"
+                  />
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label
-                      >Coinsurance<span class="login-danger">*</span></label
-                    >
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="coinsurance"
-                      formControlName="coinsurance"
-                      type="text"
-                      placeholder="20% / 20%"
-                    />
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label>Coinsurance<span class="login-danger">*</span></label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="coinsurance"
+                    formControlName="coinsurance"
+                    type="text"
+                    placeholder="20% / 20%"
+                  />
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>Copayments<span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="copayments"
-                      formControlName="copayments"
-                      type="text"
-                      placeholder="10 / 10"
-                    />
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label>Copayments<span class="login-danger">*</span></label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="copayments"
+                    formControlName="copayments"
+                    type="text"
+                    placeholder="10 / 10"
+                  />
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label>OOP<span class="login-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="oop"
-                      formControlName="oop"
-                      type="text"
-                      placeholder="5000 / 8000"
-                    />
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label>OOP<span class="login-danger">*</span></label>
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="oop"
+                    formControlName="oop"
+                    type="text"
+                    placeholder="5000 / 8000"
+                  />
                 </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                  <div class="form-group local-forms">
-                    <label
-                      >Patient Control #<span class="login-danger"
-                        >*</span
-                      ></label
-                    >
-                    <input
-                      class="form-control"
-                      autocomplete="off"
-                      name="patient_control"
-                      formControlName="patient_control"
-                      type="text"
-                    />
-                  </div>
+              </div>
+              <div class="col-12 col-md-6 col-xl-4">
+                <div class="form-group local-forms">
+                  <label
+                    >Patient Control #<span class="login-danger">*</span></label
+                  >
+                  <input
+                    class="form-control"
+                    autocomplete="off"
+                    name="patient_control"
+                    formControlName="patient_control"
+                    type="text"
+                  />
                 </div>
-                <div class="col-12 col-md-2">
-                  <div class="form-group">
+              </div>
+              <div class="col-12 col-md-2">
+                <div class="form-group">
+                  <div
+                    class="card-header d-flex justify-content-between align-items-center"
+                  >
+                    <p class="card-title">Telehealth</p>
                     <div
-                      class="card-header d-flex justify-content-between align-items-center"
+                      [formGroup]="form"
+                      class="status-toggle d-flex justify-content-between align-items-center"
                     >
-                      <p class="card-title">Telehealth</p>
-                      <div
-                        [formGroup]="form"
-                        class="status-toggle d-flex justify-content-between align-items-center"
-                      >
-                        <input
-                          type="checkbox"
-                          id="telehealth"
-                          class="check"
-                          name="telehealth"
-                          formControlName="telehealth"
-                        />
-                        <label for="telehealth" class="checktoggle" value="true">
-                          checkbox
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="col-12 col-md-2">
-                  <div class="form-group">
-                    <div
-                      class="card-header d-flex justify-content-between align-items-center"
-                    >
-                      <p class="card-title">Pay</p>
-                      <div
-                        [formGroup]="form"
-                        class="status-toggle d-flex justify-content-between align-items-center"
-                      >
-                        <input
-                          type="checkbox"
-                          id="pay"
-                          class="check"
-                          name="pay"
-                          formControlName="pay"
-                        />
-                        <label for="pay" class="checktoggle" value="true">
-                          checkbox
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-md-2">
-                  <div class="form-group">
-                    <div
-                      class="card-header d-flex justify-content-between align-items-center"
-                    >
-                      <p class="card-title">Is Self Subcriber?</p>
-                      <div
-                        [formGroup]="form"
-                        class="status-toggle d-flex justify-content-between align-items-center"
-                      >
-                        <input
-                          type="checkbox"
-                          id="is_self_subscriber"
-                          class="check"
-                          name="is_self_subscriber"
-                          formControlName="is_self_subscriber"
-                        />
-                        <label for="is_self_subscriber" class="checktoggle" value="true">
-                          checkbox
-                        </label>
-                      </div>
+                      <input
+                        type="checkbox"
+                        id="telehealth"
+                        class="check"
+                        name="telehealth"
+                        formControlName="telehealth"
+                      />
+                      <label for="telehealth" class="checktoggle" value="true">
+                        checkbox
+                      </label>
                     </div>
                   </div>
                 </div>
               </div>
+
+              <div class="col-12 col-md-2">
+                <div class="form-group">
+                  <div
+                    class="card-header d-flex justify-content-between align-items-center"
+                  >
+                    <p class="card-title">Pay</p>
+                    <div
+                      [formGroup]="form"
+                      class="status-toggle d-flex justify-content-between align-items-center"
+                    >
+                      <input
+                        type="checkbox"
+                        id="pay"
+                        class="check"
+                        name="pay"
+                        formControlName="pay"
+                      />
+                      <label for="pay" class="checktoggle" value="true">
+                        checkbox
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-2">
+                <div class="form-group">
+                  <div
+                    class="card-header d-flex justify-content-between align-items-center"
+                  >
+                    <p class="card-title">Is Self Subcriber?</p>
+                    <div
+                      [formGroup]="form"
+                      class="status-toggle d-flex justify-content-between align-items-center"
+                    >
+                      <input
+                        type="checkbox"
+                        id="is_self_subscriber"
+                        class="check"
+                        name="is_self_subscriber"
+                        formControlName="is_self_subscriber"
+                      />
+                      <label
+                        for="is_self_subscriber"
+                        class="checktoggle"
+                        value="true"
+                      >
+                        checkbox
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1022,403 +1060,457 @@
       <div class="col-sm-12">
         <div class="card">
           <div class="card-body">
-              <div class="row">
-                <div class="col-12">
-                  <div class="form-heading">
-                    <h4>Intake</h4>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms">
-                    <label>Welcome<span class="login-danger">*</span></label>
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="welcome"
-                      formControlName="welcome"
-                    >
-                      <option [disabled]="true">-- Select --</option>
-                      <option *ngFor="let option of intakeOptions" value="{{option.value}}">{{option.label}}</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms">
-                    <label>Consent<span class="login-danger">*</span></label>
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="consent"
-                      formControlName="consent"
-                    >
-                      <option [disabled]="true">-- Select --</option>
-                      <option *ngFor="let option of intakeOptions" value="{{option.value}}">{{option.label}}</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms">
-                    <label
-                      >Insurance Card<span class="login-danger">*</span></label
-                    >
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="insurance_card"
-                      formControlName="insurance_card"
-                    >
-                      <option [disabled]="true">-- Select --</option>
-                      <option *ngFor="let option of intakeOptions" value="{{option.value}}">{{option.label}}</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms">
-                    <label
-                      >Eligibility<span class="login-danger">*</span></label
-                    >
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="eligibility"
-                      formControlName="eligibility"
-                    >
-                      <option [disabled]="true">-- Select --</option>
-                      <option *ngFor="let option of intakeOptions" value="{{option.value}}">{{option.label}}</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms">
-                    <label>MNL<span class="login-danger">*</span></label>
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="mnl"
-                      formControlName="mnl"
-                    >
-                      <option [disabled]="true">-- Select --</option>
-                      <option *ngFor="let option of intakeOptions" value="{{option.value}}">{{option.label}}</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms">
-                    <label>Referral<span class="login-danger">*</span></label>
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="referral"
-                      formControlName="referral"
-                    >
-                      <option [disabled]="true">-- Select --</option>
-                      <option *ngFor="let option of intakeOptions" value="{{option.value}}">{{option.label}}</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms">
-                    <label>ADOS<span class="login-danger">*</span></label>
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="ados"
-                      formControlName="ados"
-                    >
-                      <option [disabled]="true">-- Select --</option>
-                      <option *ngFor="let option of intakeOptions" value="{{option.value}}">{{option.label}}</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms">
-                    <label>iep<span class="login-danger">*</span></label>
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="iep"
-                      formControlName="iep"
-                    >
-                      <option [disabled]="true">-- Select --</option>
-                      <option *ngFor="let option of intakeOptions" value="{{option.value}}">{{option.label}}</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms">
-                    <label
-                      >ASD Diagnosis<span class="login-danger">*</span></label
-                    >
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="asd_diagnosis"
-                      formControlName="asd_diagnosis"
-                    >
-                      <option [disabled]="true">-- Select --</option>
-                      <option *ngFor="let option of intakeOptions" value="{{option.value}}">{{option.label}}</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms">
-                    <label>CDE<span class="login-danger">*</span></label>
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="cde"
-                      formControlName="cde"
-                    >
-                      <option [disabled]="true">-- Select --</option>
-                      <option *ngFor="let option of intakeOptions" value="{{option.value}}">{{option.label}}</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms">
-                    <label>Submitted<span class="login-danger">*</span></label>
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="submitted"
-                      formControlName="submitted"
-                    >
-                      <option [disabled]="true">-- Select --</option>
-                      <option *ngFor="let option of intakeOptions" value="{{option.value}}">{{option.label}}</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-12 col-sm-3">
-                  <div class="form-group local-forms">
-                    <label>Interview<span class="login-danger">*</span></label>
-                    <select
-                      class="form-control form-select-solid fw-bolder"
-                      name="interview"
-                      formControlName="interview"
-                    >
-                      <option>-- Select --</option>
-                      <option value="pending">Pending</option>
-                      <option value="send">Send</option>
-                      <option value="receive">Receive</option>
-                      <option value="no apply">No Apply</option>
-                    </select>
-                  </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="form-heading">
+                  <h4>Intake</h4>
                 </div>
               </div>
+              <div class="col-12 col-sm-3">
+                <div class="form-group local-forms">
+                  <label>Welcome<span class="login-danger">*</span></label>
+                  <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="welcome"
+                    formControlName="welcome"
+                  >
+                    <option [disabled]="true">-- Select --</option>
+                    <option
+                      *ngFor="let option of intakeOptions"
+                      value="{{ option.value }}"
+                    >
+                      {{ option.label }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3">
+                <div class="form-group local-forms">
+                  <label>Consent<span class="login-danger">*</span></label>
+                  <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="consent"
+                    formControlName="consent"
+                  >
+                    <option [disabled]="true">-- Select --</option>
+                    <option
+                      *ngFor="let option of intakeOptions"
+                      value="{{ option.value }}"
+                    >
+                      {{ option.label }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3">
+                <div class="form-group local-forms">
+                  <label
+                    >Insurance Card<span class="login-danger">*</span></label
+                  >
+                  <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="insurance_card"
+                    formControlName="insurance_card"
+                  >
+                    <option [disabled]="true">-- Select --</option>
+                    <option
+                      *ngFor="let option of intakeOptions"
+                      value="{{ option.value }}"
+                    >
+                      {{ option.label }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3">
+                <div class="form-group local-forms">
+                  <label>Eligibility<span class="login-danger">*</span></label>
+                  <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="eligibility"
+                    formControlName="eligibility"
+                  >
+                    <option [disabled]="true">-- Select --</option>
+                    <option
+                      *ngFor="let option of intakeOptions"
+                      value="{{ option.value }}"
+                    >
+                      {{ option.label }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3">
+                <div class="form-group local-forms">
+                  <label>MNL<span class="login-danger">*</span></label>
+                  <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="mnl"
+                    formControlName="mnl"
+                  >
+                    <option [disabled]="true">-- Select --</option>
+                    <option
+                      *ngFor="let option of intakeOptions"
+                      value="{{ option.value }}"
+                    >
+                      {{ option.label }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3">
+                <div class="form-group local-forms">
+                  <label>Referral<span class="login-danger">*</span></label>
+                  <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="referral"
+                    formControlName="referral"
+                  >
+                    <option [disabled]="true">-- Select --</option>
+                    <option
+                      *ngFor="let option of intakeOptions"
+                      value="{{ option.value }}"
+                    >
+                      {{ option.label }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3">
+                <div class="form-group local-forms">
+                  <label>ADOS<span class="login-danger">*</span></label>
+                  <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="ados"
+                    formControlName="ados"
+                  >
+                    <option [disabled]="true">-- Select --</option>
+                    <option
+                      *ngFor="let option of intakeOptions"
+                      value="{{ option.value }}"
+                    >
+                      {{ option.label }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3">
+                <div class="form-group local-forms">
+                  <label>iep<span class="login-danger">*</span></label>
+                  <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="iep"
+                    formControlName="iep"
+                  >
+                    <option [disabled]="true">-- Select --</option>
+                    <option
+                      *ngFor="let option of intakeOptions"
+                      value="{{ option.value }}"
+                    >
+                      {{ option.label }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3">
+                <div class="form-group local-forms">
+                  <label
+                    >ASD Diagnosis<span class="login-danger">*</span></label
+                  >
+                  <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="asd_diagnosis"
+                    formControlName="asd_diagnosis"
+                  >
+                    <option [disabled]="true">-- Select --</option>
+                    <option
+                      *ngFor="let option of intakeOptions"
+                      value="{{ option.value }}"
+                    >
+                      {{ option.label }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3">
+                <div class="form-group local-forms">
+                  <label>CDE<span class="login-danger">*</span></label>
+                  <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="cde"
+                    formControlName="cde"
+                  >
+                    <option [disabled]="true">-- Select --</option>
+                    <option
+                      *ngFor="let option of intakeOptions"
+                      value="{{ option.value }}"
+                    >
+                      {{ option.label }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3">
+                <div class="form-group local-forms">
+                  <label>Submitted<span class="login-danger">*</span></label>
+                  <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="submitted"
+                    formControlName="submitted"
+                  >
+                    <option [disabled]="true">-- Select --</option>
+                    <option
+                      *ngFor="let option of intakeOptions"
+                      value="{{ option.value }}"
+                    >
+                      {{ option.label }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-12 col-sm-3">
+                <div class="form-group local-forms">
+                  <label>Interview<span class="login-danger">*</span></label>
+                  <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="interview"
+                    formControlName="interview"
+                  >
+                    <option>-- Select --</option>
+                    <option value="pending">Pending</option>
+                    <option value="send">Send</option>
+                    <option value="receive">Receive</option>
+                    <option value="no apply">No Apply</option>
+                  </select>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <!-- fin Intake -->
 
       <!-- PAs -->
-      <div class="col-sm-12" [ngClass]="{'disabled-div': !form.get('insurer_id').value}">
+      <div
+        class="col-sm-12"
+        [ngClass]="{ 'disabled-div': !form.get('insurer_id').value }"
+      >
         <div class="card">
           <div class="card-body">
-              <div class="row">
-                <!-- pas -->
-                <div class="col-12">
-                  <div class="card-box">
-                    <div class="card-block">
-                      <h3 class="card-title">
-                        PAs
-                        <span *ngIf="!form.get('insurer_id').value"> - Select insurer to enable - </span>
-                      </h3>
+            <div class="row">
+              <!-- pas -->
+              <div class="col-12">
+                <div class="card-box">
+                  <div class="card-block">
+                    <h3 class="card-title">
+                      PAs
+                      <span *ngIf="!form.get('insurer_id').value">
+                        - Select insurer to enable -
+                      </span>
+                    </h3>
 
-                      <div class="row align-items-center">
-                        <div class="col-xs-12">
-                          <div class="row">
-                            <div class="col-12 col-md-6 col-xl-4">
-                              <div class="form-group local-forms">
-                                <label
-                                  >PA #
-                                  <span class="login-danger">*</span></label
-                                >
-                                <input
-                                  class="form-control"
-                                  autocomplete="off"
-                                  name="pa_service"
-                                  formControlName="pa_service"
-                                  type="text"
-                                />
-                              </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-xl-4">
-                              <div class="form-group local-forms">
-                                <label
-                                  >Patient Services Start Date<span
-                                    class="login-danger"
-                                    >*</span
-                                  ></label
-                                >
-                                <input
-                                  class="form-control datetimepicker"
-                                  name="pa_services_start_date"
-                                  formControlName="pa_services_start_date"
-                                  type="text"
-                                  matInput
-                                  [matDatepicker]="picker5"
-                                />
-                                <mat-datepicker #picker5></mat-datepicker>
-                                <mat-datepicker-toggle
-                                  matIconSuffix
-                                  [for]="picker5"
-                                ></mat-datepicker-toggle>
-                              </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-xl-4">
-                              <div class="form-group local-forms">
-                                <label
-                                  >Patient Services End Date<span
-                                    class="login-danger"
-                                    >*</span
-                                  ></label
-                                >
-                                <input
-                                  class="form-control datetimepicker"
-                                  name="pa_services_end_date"
-                                  formControlName="pa_services_end_date"
-                                  type="text"
-                                  matInput
-                                  [matDatepicker]="picker6"
-                                />
-                                <mat-datepicker #picker6></mat-datepicker>
-                                <mat-datepicker-toggle
-                                  matIconSuffix
-                                  [for]="picker6"
-                                ></mat-datepicker-toggle>
-                              </div>
-                            </div>
-                            <div class="col-12 col-md-4">
-                              <div class="form-group local-forms">
-                                <label
-                                  >CPT
-                                  <span class="login-danger">*</span></label
-                                >
-                                <mat-select
-                                  formControlName="selectedValueCode"
-                                  name="code"
-                                  class="form-control select"
-                                  placeholder="Select Code"
-                                >
-                                  <mat-option
-                                    *ngFor="let data of services"
-                                    [value]="data.code"
-                                  >
-                                    {{ data.code }} | {{ data.provider }}
-                                  </mat-option>
-                                </mat-select>
-                              </div>
-                            </div>
-                            <div class="col-12 col-md-4">
-                              <div class="form-group local-forms">
-                                <label
-                                  >No.Units<span class="login-danger"
-                                    >*</span
-                                  ></label
-                                >
-                                <input
-                                  class="form-control"
-                                  autocomplete="off"
-                                  name="n_units"
-                                  formControlName="n_units"
-                                  type="number"
-                                />
-                              </div>
-                            </div>
-                            <!-- [disabled]="!enabledPaButton" -->
-                            <div class="col-12 mb-3 doctor-submit text-end">
-                              <button
-                                class="btn btn-primary btn-sm"
-                                (click)="addPAAssestment()"
+                    <div class="row align-items-center">
+                      <div class="col-xs-12">
+                        <div class="row">
+                          <div class="col-12 col-md-6 col-xl-4">
+                            <div class="form-group local-forms">
+                              <label
+                                >PA # <span class="login-danger">*</span></label
                               >
-                                Add
-                              </button>
+                              <input
+                                class="form-control"
+                                autocomplete="off"
+                                name="pa_service"
+                                formControlName="pa_service"
+                                type="text"
+                              />
                             </div>
                           </div>
-                        </div>
-                        <div class="col-xs-12">
-                          <div class="table-responsive">
-                            <table class="table mb-0">
-                              <thead>
-                                <tr>
-                                  <th>PA Services</th>
-                                  <th>Patient Services Start Date</th>
-                                  <th>Patient Services End Date</th>
-                                  <th>CPT</th>
-                                  <th>N. Units</th>
-                                  <th>Options</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr
-                                  *ngFor="
-                                    let pa_asses of pa_assessments;
-                                    let i = index
-                                  "
+                          <div class="col-12 col-md-6 col-xl-4">
+                            <div class="form-group local-forms">
+                              <label
+                                >Patient Services Start Date<span
+                                  class="login-danger"
+                                  >*</span
+                                ></label
+                              >
+                              <input
+                                class="form-control datetimepicker"
+                                name="pa_services_start_date"
+                                formControlName="pa_services_start_date"
+                                type="text"
+                                matInput
+                                [matDatepicker]="picker5"
+                              />
+                              <mat-datepicker #picker5></mat-datepicker>
+                              <mat-datepicker-toggle
+                                matIconSuffix
+                                [for]="picker5"
+                              ></mat-datepicker-toggle>
+                            </div>
+                          </div>
+                          <div class="col-12 col-md-6 col-xl-4">
+                            <div class="form-group local-forms">
+                              <label
+                                >Patient Services End Date<span
+                                  class="login-danger"
+                                  >*</span
+                                ></label
+                              >
+                              <input
+                                class="form-control datetimepicker"
+                                name="pa_services_end_date"
+                                formControlName="pa_services_end_date"
+                                type="text"
+                                matInput
+                                [matDatepicker]="picker6"
+                              />
+                              <mat-datepicker #picker6></mat-datepicker>
+                              <mat-datepicker-toggle
+                                matIconSuffix
+                                [for]="picker6"
+                              ></mat-datepicker-toggle>
+                            </div>
+                          </div>
+                          <div class="col-12 col-md-4">
+                            <div class="form-group local-forms">
+                              <label
+                                >CPT <span class="login-danger">*</span></label
+                              >
+                              <mat-select
+                                formControlName="selectedValueCode"
+                                name="code"
+                                class="form-control select"
+                                placeholder="Select Code"
+                              >
+                                <mat-option
+                                  *ngFor="let data of services"
+                                  [value]="data.code"
                                 >
-                                  <td>
-                                    {{ pa_asses.pa_service }}
-                                  </td>
-                                  <td>
-                                    {{ pa_asses.start_date | date }}
-                                  </td>
-                                  <td>
-                                    {{ pa_asses.end_date | date }}
-                                  </td>
-                                  <td>
-                                    {{ pa_asses.cpt }}
-                                  </td>
-                                  <td>
-                                    {{ pa_asses.n_units }}
-                                  </td>
-                                  <td>
-                                    <!-- <button
+                                  {{ data.code }} | {{ data.provider }}
+                                </mat-option>
+                              </mat-select>
+                            </div>
+                          </div>
+                          <div class="col-12 col-md-4">
+                            <div class="form-group local-forms">
+                              <label
+                                >No.Units<span class="login-danger"
+                                  >*</span
+                                ></label
+                              >
+                              <input
+                                class="form-control"
+                                autocomplete="off"
+                                name="n_units"
+                                formControlName="n_units"
+                                type="number"
+                              />
+                            </div>
+                          </div>
+                          <!-- [disabled]="!enabledPaButton" -->
+                          <div class="col-12 mb-3 doctor-submit text-end">
+                            <button
+                              class="btn btn-primary btn-sm"
+                              (click)="addPAAssestment()"
+                            >
+                              Add
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-xs-12">
+                        <div class="table-responsive">
+                          <table class="table mb-0">
+                            <thead>
+                              <tr>
+                                <th>PA Services</th>
+                                <th>Patient Services Start Date</th>
+                                <th>Patient Services End Date</th>
+                                <th>CPT</th>
+                                <th>N. Units</th>
+                                <th>Options</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr
+                                *ngFor="
+                                  let pa_asses of pa_assessments;
+                                  let i = index
+                                "
+                              >
+                                <td>
+                                  {{ pa_asses.pa_service }}
+                                </td>
+                                <td>
+                                  {{ pa_asses.start_date | date }}
+                                </td>
+                                <td>
+                                  {{ pa_asses.end_date | date }}
+                                </td>
+                                <td>
+                                  {{ pa_asses.cpt }}
+                                </td>
+                                <td>
+                                  {{ pa_asses.n_units }}
+                                </td>
+                                <td>
+                                  <!-- <button
                                 type="button"
                                 class="btn btn-outline-success btn-sm"
                                 (click)="onEditPaService(pa_asses)"
                               >
                                 <i class="fa fa-pencil"></i>
                               </button> -->
-                                    <button
-                                      class="btn btn-outline-danger btn-sm"
-                                      (click)="deletePAAssestment(i)"
-                                    >
-                                      x
-                                    </button>
-                                  </td>
-
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
+                                  <button
+                                    class="btn btn-outline-danger btn-sm"
+                                    (click)="deletePAAssestment(i)"
+                                  >
+                                    x
+                                  </button>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="form-group row" *ngIf="text_validation">
-                    <div class="col-md-12">
-                      <div
-                        class="alert alert-danger alert-dismissible fade show"
-                        role="alert"
-                      >
-                        <strong>!</strong> {{ text_validation }}.
-                        <button
-                          type="button"
-                          class="btn-close"
-                          data-bs-dismiss="alert"
-                          aria-label="Close"
-                        >
-                          <span aria-hidden="true"> </span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- [disabled]="!form.valid" -->
-                  <div class="col-12">
-                    <div class="doctor-submit text-end">
-                      <input type="hidden" formControlName="id">
+                </div>
+                <div class="form-group row" *ngIf="text_validation">
+                  <div class="col-md-12">
+                    <div
+                      class="alert alert-danger alert-dismissible fade show"
+                      role="alert"
+                    >
+                      <strong>!</strong> {{ text_validation }}.
                       <button
-                        
                         type="button"
-                        class="btn btn-primary submit-form me-2"
-                        (click)="save()"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"
                       >
-                        Save
+                        <span aria-hidden="true"> </span>
                       </button>
                     </div>
                   </div>
                 </div>
-                <!-- pas -->
+                <!-- [disabled]="!form.valid" -->
+                <div class="col-12">
+                  <div class="doctor-submit text-end">
+                    <input type="hidden" formControlName="id" />
+                    <button
+                      type="button"
+                      class="btn btn-primary submit-form me-2"
+                      (click)="onSave()"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
               </div>
+              <!-- pas -->
+            </div>
           </div>
         </div>
       </div>

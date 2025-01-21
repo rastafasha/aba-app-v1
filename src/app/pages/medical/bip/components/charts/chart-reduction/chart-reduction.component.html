@@ -1,54 +1,55 @@
 <div class="container" *ngIf="!existgrfic">
-    <h3 class="text-center">No Graphic data</h3>
- </div>
+  <h3 class="text-center">No Graphic data</h3>
+</div>
 <div class="container" *ngIf="existgrfic && !loading">
-    <div class="row" >
-        <!-- col-xl-7 -->
-        <div class="col-12 col-md-12 col-lg-12 ">
-            <!-- <ng-container *ngFor="let item of respuestas">
+  <div class="row">
+    <!-- col-xl-7 -->
+    <div class="col-12 col-md-12 col-lg-12">
+      <!-- <ng-container *ngFor="let item of respuestas">
                 <ul>
                     <li>{{item.maladaptive_behavior}} | {{item.number_of_occurrences}}</li>
                 </ul>
             </ng-container> -->
-            
 
-            <div class="card">
-                <div class="card-body">
-                    <div class="chart-title patient-visit mb-0">
-                        <h4>Baseline</h4>
-                        <h4>Target Behavior to Decrease</h4>
-                        <div class="income-value">
-                            <!-- <p>Intensity Initial <span class="passive-view">{{initial_interesting}}</span> </p> -->
-                        </div>
-                    </div>	
-                    <div id="health-chart" *ngIf="chartOptionsOne?.series">
-                        <apx-chart
-                        [series]="chartOptionsOne.series"
-                        [chart]="chartOptionsOne.chart"
-                        [xaxis]="chartOptionsOne.xaxis"
-                        [dataLabels]="chartOptionsOne.dataLabels"
-                        [grid]="chartOptionsOne.grid"
-                        [stroke]="chartOptionsOne.stroke"
-                        [title]="chartOptionsOne.title"
-                        [markers]="chartOptionsOne.markers"
-                        [yaxis]="chartOptionsOne.yaxis"
-                        [fill]="chartOptionsOne.fill"
-                      ></apx-chart>
-                      <div class="text-vert">Frecuency</div>
-                      <div class="linea-vert"></div>
-                    </div>
-                    <div class="chart-title patient-visit mb-0">
-                        <p>Weeks</p>
-                        <p><span class="cuadro-color" ></span>{{maladaptive_behavior}}</p>
-                        <p><span class="cuadro-color" style="background-color: red"></span>Baseline</p>
-                        <!-- <p>{{created_at|date}}</p> -->
-                        <div class="income-value">
-                            <!-- <p>Intensity Initial <span class="passive-view">{{initial_interesting}}</span> </p> -->
-                        </div>
-                    </div>	
-                </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="chart-title patient-visit mb-0">
+            <h4>Baseline</h4>
+            <h4>Target Behavior to Decrease</h4>
+            <div class="income-value">
+              <!-- <p>Intensity Initial <span class="passive-view">{{initial_interesting}}</span> </p> -->
             </div>
+          </div>
+          <div id="health-chart" *ngIf="chartOptionsOne?.series">
+            <apx-chart
+              [series]="chartOptionsOne.series"
+              [chart]="chartOptionsOne.chart"
+              [xaxis]="chartOptionsOne.xaxis"
+              [dataLabels]="chartOptionsOne.dataLabels"
+              [grid]="chartOptionsOne.grid"
+              [stroke]="chartOptionsOne.stroke"
+              [title]="chartOptionsOne.title"
+              [markers]="chartOptionsOne.markers"
+              [yaxis]="chartOptionsOne.yaxis"
+              [fill]="chartOptionsOne.fill"
+            ></apx-chart>
+            <div class="text-vert">Frecuency</div>
+            <div class="linea-vert"></div>
+          </div>
+          <div class="chart-title patient-visit mb-0">
+            <p>Weeks</p>
+            <p><span class="cuadro-color"></span> {{ maladaptive.name }}</p>
+            <p>
+              <span class="cuadro-color" style="background-color: red"> </span
+              >Baseline
+            </p>
+            <!-- <p>{{created_at|date}}</p> -->
+            <div class="income-value">
+              <!-- <p>Intensity Initial <span class="passive-view">{{initial_interesting}}</span> </p> -->
+            </div>
+          </div>
         </div>
-       
+      </div>
     </div>
+  </div>
 </div>

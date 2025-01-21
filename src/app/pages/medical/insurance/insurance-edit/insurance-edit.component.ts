@@ -21,14 +21,13 @@ export class InsuranceEditComponent {
   notes = [];
   note: any;
 
-  city:string;
-  state:string;
-  street:string;
-  street2:string;
-  zip:string;
-  payer_id:number;
-  is_self_subscriber:boolean;
-
+  city: string;
+  state: string;
+  street: string;
+  street2: string;
+  zip: string;
+  payer_id: number;
+  is_self_subscriber: boolean;
 
   services = [];
   insurance_edit: any;
@@ -74,7 +73,7 @@ export class InsuranceEditComponent {
   getConfig() {
     this.insuranceService.get(this.insurance_id).subscribe((resp) => {
       this.insurance_selected = resp;
-      
+
       this.name = this.insurance_selected.insurance.name;
       // console.log(this.name);
       this.city = this.insurance_selected.insurance.city;
@@ -83,7 +82,8 @@ export class InsuranceEditComponent {
       this.street2 = this.insurance_selected.insurance.street2;
       this.zip = this.insurance_selected.insurance.zip;
       this.payer_id = this.insurance_selected.insurance.payer_id;
-      this.is_self_subscriber = this.insurance_selected.insurance.is_self_subscriber;
+      this.is_self_subscriber =
+        this.insurance_selected.insurance.is_self_subscriber;
       this.notes = this.insurance_selected.insurance.notes;
       this.services = this.insurance_selected.insurance.services;
     });
@@ -145,7 +145,7 @@ export class InsuranceEditComponent {
     );
   }
 
-  save() {
+  onSave() {
     this.text_validation = '';
     if (!this.name || !this.services) {
       this.text_validation = 'Los campos con * son obligatorios';
@@ -179,7 +179,7 @@ export class InsuranceEditComponent {
         }
       });
   }
-  
+
   closeReload() {
     // // throw new Error('Method not implemented');
     // this.code = '';
