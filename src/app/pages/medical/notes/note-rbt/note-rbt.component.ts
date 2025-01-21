@@ -15,41 +15,10 @@ import { NoteRbtV2, Maladaptives, Replacements, Interventions } from 'src/app/co
 import { PaServiceV2 } from 'src/app/core/models';
 import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
 import { PatientMService } from '../../patient-m/service/patient-m.service';
+import { Goal, Intervention, MaladaptiveBehavior, POSModel, ValidationResult } from '../interfaces';
+import {interventionsList} from '../listaInterventionData';
 
-interface ValidationResult {
-  isValid: boolean;
-  missingFields: string[];
-}
 
-export interface POSModel {
-  id: number;
-  name: string;
-  code: string;
-}
-
-interface InterventionItem {
-  id: string;
-  name: string;
-  value: boolean;
-}
-
-interface MaladaptiveBehavior {
-  name: string;
-  number_of_occurrences: number;
-  goal?: Goal;
-  total_trials?: number;
-  number_of_correct_response?: number;
-}
-
-interface Goal {
-  id: number;
-  name: string;
-  description?: string;
-  total_trials?: number;
-  number_of_correct_response?: number;
-  goal?: string;
-  status:string;
-}
 
 interface ReplacementBehavior extends Replacements {
   status: any;
@@ -119,7 +88,7 @@ export class NoteRbtComponent implements OnInit {
   environmental_changes = '';
   participants: '';
 
-  sumary_note = '';
+  summary_note = '';
   meet_with_client_at = '';
   client_appeared = '';
   as_evidenced_by = '';
@@ -206,24 +175,7 @@ export class NoteRbtComponent implements OnInit {
 
   intervention_added: Interventions[] = [];
   interventionsSelected: { [key: string]: boolean } = {};
-  interventionsList: InterventionItem[] = [
-    { id: 'token_economy', name: 'Token Economy', value: false },
-    { id: 'generalization', name: 'Generalization', value: false },
-    { id: 'NCR', name: 'NCR', value: false },
-    { id: 'behavioral_momentum', name: 'Behavioral Momentum', value: false },
-    { id: 'DRA', name: 'DRA', value: false },
-    { id: 'DRI', name: 'DRI', value: false },
-    { id: 'DRO', name: 'DRO', value: false },
-    { id: 'DRL', name: 'DRL', value: false },
-    { id: 'response_block', name: 'Response Block', value: false },
-    { id: 'errorless_teaching', name: 'Errorless Teaching', value: false },
-    { id: 'extinction', name: 'Extinction', value: false },
-    { id: 'chaining', name: 'Chaining', value: false },
-    { id: 'natural_teaching', name: 'Natural Teaching', value: false },
-    { id: 'redirection', name: 'Redirection', value: false },
-    { id: 'shaping', name: 'Shaping', value: false },
-    { id: 'pairing', name: 'Pairing', value: false },
-  ];
+  interventionsList= interventionsList ;
 
   pa_services: PaService[] = [];
   selectedPaService: PaServiceV2 | null = null;
@@ -376,21 +328,6 @@ export class NoteRbtComponent implements OnInit {
   }
 
   
-  // getReplacementsByPatientId() {
-  //   this.noteRbtService
-  //     .showReplacementbyPatient(this.patient_identifier)
-  //     .subscribe((resp) => {
-  //       this.replacementGoals = [];
-  //       resp['replacementGoals'].forEach((element) => {
-  //         const goalSto = JSON.parse(element.goalstos).find(
-  //           (item) => item.sustitution_status_sto_edit === 'inprogress'
-  //         );
-  //         if (goalSto) {
-  //           this.replacementGoals.push({ ...element, target: goalSto.target });
-  //         }
-  //       });
-  //     });
-  // }
 
   specialistData() {
     this.doctorService.showDoctorProfile(this.doctor_id).subscribe((resp) => {
@@ -674,11 +611,11 @@ convertToHours(totalMinutes: number): string {
     return this.replacement_added.every(r => this.isValidCorrectResponse(r));
   }
 
-  onMaladaptivesChange(updatedMaladaptives: any[]) {
+  onMaladaptivesChange(updatedMaladaptives: any) {
     this.maladaptives = updatedMaladaptives;
   }
 
-  onReplacementsChange(updatedReplacements: any[]) {
+  onReplacementsChange(updatedReplacements: any) {
     this.replacementGoals = updatedReplacements;
   }
 
@@ -732,7 +669,7 @@ convertToHours(totalMinutes: number): string {
       maladaptives: this.maladaptives,
       replacements: this.replacementGoals,
       interventions: this.intervention_added,
-      sumary_note: this.sumary_note,
+      summary_note: this.summary_note,
       meet_with_client_at: this.meet_with_client_at,
       client_appeared: this.client_appeared,
       as_evidenced_by: this.as_evidenced_by,
@@ -836,7 +773,6 @@ convertToHours(totalMinutes: number): string {
         behavior: m.name,
         frequency: m.number_of_occurrences,
       })),
-      // clientResponseToTreatmentThisSession: this.client_response_to_treatment_this_session,
       replacements: this.replacementGoals.map((r) => ({
         name: r.name,
         totalTrials: r.total_trials,
@@ -852,7 +788,7 @@ convertToHours(totalMinutes: number): string {
 
     this.noteRbtService.generateAISummary(data).subscribe(
       (response: any) => {
-        this.sumary_note = response.summary;
+        this.summary_note = response.summary;
         this.isGeneratingSummary = false;
       },
       (error) => {

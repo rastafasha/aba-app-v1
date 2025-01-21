@@ -351,19 +351,13 @@ export class NoteBcbaEditComponent implements OnInit {
       );
 
       this.noteServiceId = this.note_selected.pa_service_id;
-      // if (this.pa_services?.length && this.noteServiceId) {
-      //   this.selectedPaService =
-      //     this.pa_services.find((service) => service.id === this.noteServiceId) ||
-      //     null;
-      // }
 
       this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED =
         this.note_selected.provider_signature;
       this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED =
         this.note_selected.supervisor_signature;
-
-      // this.selectedPaService1 = this.note_selected.type;
-      this.selectedPaService1 = this.show97151List.find(type => type.cpt === this.note_selected.type);
+      
+        this.selectedPaService1 = this.show97151List.find(type => type.cpt === this.note_selected.type);
       console.log(this.selectedPaService1);
 
       if(this.note_selected.cpt_code === '97155' ){
@@ -414,7 +408,6 @@ export class NoteBcbaEditComponent implements OnInit {
         }
 
 
-      // this.getBipv2();
 
     });
   }
@@ -440,173 +433,8 @@ export class NoteBcbaEditComponent implements OnInit {
     })
   }
 
-  getBipv2(){
-    this.bipV2Service.get(this.bip_id).subscribe((resp)=>{
-      console.log('BIP',resp);
-      this.bip_id = resp.data.id;
-      this.caregivers_training_goals = resp.data.caregiver_trainings;
-      // this.behaviorList = resp.data.maladaptives;
-      this.replacementList = resp.data.replacements;
-      this.replacementList2 = resp.data.replacements;
-
-
-    // objectives
-    
-    // Filtrar la lista replacementList por estado
-    this.replacementList = this.replacementList.filter(goal => goal.status === 'active');
-
-    // Recorrer la lista replacementList y extraemos los objectives
-    this.objectives = this.replacementList.flatMap(objective => objective.objectives);
-    // filtrado los que estan en status in progress
-    const objetivosEnProgreso = this.objectives.filter(objetivo => objetivo.status === "in progress");
-    // this.obj_inprogress = objetivosEnProgreso;
-    // this.obj_inprogress1 = objetivosEnProgreso;
-      
-      //fin objectives
-
-
-      this.note_selected.behaviors = this.note_selected.behaviors || {};
-       // Convierte behaviors en un array de valores
-       const behaviorsArray = Object.values(this.note_selected.behaviors) as Behavior[];
-       //muestro el resultado de la nota 
-      console.log('behaviors:', this.note_selected.behaviors);
-      //filtro los behaviors 
-      const newBehaviors = this.behaviors.map((element) => {
-        // Add null check for element.mal
-        const behavior = behaviorsArray.find(
-          (behavior) => behavior.name === element.name
-        );
-      
-        if (behavior) {
-          return {
-            index: element.index,
-            name: element.name,
-            discused: behavior ? behavior.discused : false,
-          };
-        } else {
-          console.warn(`Behavior with index ${element.index} not found.`);
-          return {
-            index: element.index,
-            name: '', // Provide a default value
-            discused: undefined,
-          };
-        }
-      });
-      //los uno con el resultado que trae la nota
-      const mergedBehaviors = newBehaviors.map((behavior, index) => {
-        const noteBehavior = this.note_selected.behaviors[behavior.index];
-        return {
-          ...behavior,
-          name: behavior.name || '', // Provide a default value
-          discused: noteBehavior ? noteBehavior.discused : behavior.discused,
-        };
-      });
-      
-      console.log('Merged Behaviors:', mergedBehaviors);
-      this.behaviorsview = mergedBehaviors;
-      console.log(this.behaviorsview);
-
-
-      //   //replacements 1 valor
-
-    // // Convierte replacements en un array de valores
-    // const replacements1Array = Object.values(this.note_selected?.replacements) as Replacement1[];
-
-    // // Muestra el resultado de la nota
-    // console.log('replacements:', this.note_selected?.replacements);
-
-    
-    //filtro los replacements 
-    // const newReplacements1 = this.replacements.map((element) => {
-    //   if (!element || !element.id || !element.name) {
-    //     console.warn('Invalid replacements element:', element);
-    //     return null;
-    // }
-    //   const replacement1 = replacements1Array.find(
-    //     (replacement1) => replacement1.name === element.name
-    //   );
-    
-    //   if (replacement1) {
-    //     return {
-    //       id: element.id,
-    //       name: element.name,
-    //       demostrated: replacement1 ? replacement1.demostrated : false,
-    //     };
-    //   } else {
-    //     console.warn(`replacements with id ${element.id} not found.`);
-    //     return {
-    //       id: element.id,
-    //       name: '', // Provide a default value
-    //       demostrated: undefined,
-    //     };
-    //   }
-    // });
-    //   //los uno con el resultado que trae la nota
-    //   const mergedReplacements1 = newReplacements1.map((replacement1, id) => {
-    //     const noteReplacement = this.note_selected?.replacements[replacement1.id];
-    //     return {
-    //       ...replacement1,
-    //       name: replacement1.name || '', // Provide a default value
-    //       demostrated: noteReplacement ? noteReplacement.demostrated : replacement1.demostrated,
-    //     };
-    //   });
-    
-    //   console.log('Merged Replacements1:', mergedReplacements1);
-    //   this.replacementsview1 = mergedReplacements1;
-    //   console.log(this.replacementsview1);
-      
-    })
-  }
-
 
   
-
-  // getProfileBip(noteServiceId?: number) {
-  //   console.log('Getting profile BIP:', {
-  //     noteServiceId,
-  //     availableServices: this.pa_services,
-  //   });
-  //   this.bipV2Service
-  //     .get(this.bip_id)
-  //     .subscribe((resp) => {
-  //       console.log(resp);
-  //       // this.bip = resp.data[0];
-
-  //       // this.first_name = this.client_selected.first_name;
-  //       // this.last_name = this.client_selected.last_name;
-  //       // this.patient_id = this.client_selected.id;
-  //       // this.patient_identifier = this.client_selected.patient_identifier;
-  //       // this.patientLocation_id = this.client_selected.location_id;
-  //       // this.insurance_identifier = resp.patient.insurance_identifier;
-  //       // this.insurance_id = resp.patient.insurer_id;
-  //       // this.pos = this.client_selected.pos_covered;
-
-  //       this.getReplacementsByPatientId();
-  //       this.pa_services = this.client_selected.pa_services;
-
-        
-  //     //devolvemos la respuesta da los pa_services disponibles
-  //       // if (noteServiceId) {
-  //       //   this.setPaService(noteServiceId);
-  //       // }
-  //       this.birth_date = this.client_selected.birth_date
-  //       ? new Date(this.client_selected.birth_date).toISOString()
-  //       : '';
-  //     });
-  // }
-
-  
-
-  // private setPaService(noteServiceId: number) {
-  //   if (this.pa_services?.length && noteServiceId) {
-  //     this.selectedPaService =
-  //       this.pa_services.find((service) => service.id === noteServiceId) || null;
-  //     if (this.selectedPaService) {
-  //       this.selectedValueCode = this.selectedPaService.cpt;
-  //     }
-  //   }
-  // }
-
   
 
   specialistData(selectedValueInsurer) {

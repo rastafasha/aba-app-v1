@@ -95,7 +95,7 @@ export class NoteRbtViewComponent implements OnInit {
   number_of_correct_response = 0;
   maladaptive = '';
   replacement :any;
-  replacements: Replacements;
+  replacements: any;
   maladaptive_behavior = '';
   interventions: any;
   provider_signature: any;
@@ -222,21 +222,7 @@ export class NoteRbtViewComponent implements OnInit {
       this.intervention = this.interventionsgroup[0];
 
       this.maladaptives = resp.maladaptives;
-      // const jsonObj1 =
-      //   typeof this.maladaptive === 'string'
-      //     ? JSON.parse(this.maladaptive)
-      //     : this.maladaptive;
-      // this.maladaptivegroup = jsonObj1;
-      // console.log(this.maladaptivegroup);
-
-
       this.replacements = this.note_selected.replacements;
-      // const jsonObj2 =
-      //   typeof this.replacement === 'string'
-      //     ? JSON.parse(this.replacement)
-      //     : this.replacement;
-      // this.replacementgroup = jsonObj2;
-      // console.log(this.replacementgroup);
 
 
       this.pos = this.note_selected.pos;

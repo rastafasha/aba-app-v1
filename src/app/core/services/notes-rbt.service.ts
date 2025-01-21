@@ -16,6 +16,8 @@ export class NoteRbtService extends ApiService<NoteRbt> {
   getNote(id: number) {
     const URL = this.endpoint + '/show/' + id;
     return this.http.get<{
+      provider_name: any;
+      supervisor_name: string;
       target: number;
       replacements: any[];
       maladaptives: any[];
