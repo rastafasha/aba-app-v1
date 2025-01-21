@@ -18,38 +18,6 @@ import { Goal, Intervention, MaladaptiveBehavior, POSModel, ValidationResult } f
 import {interventionsList} from '../listaInterventionData';
 
 
-<<<<<<< HEAD
-=======
-export interface POSModel {
-  id: number;
-  name: string;
-  code: string;
-}
-
-interface InterventionItem {
-  id: string;
-  name: string;
-  value: boolean;
-}
-
-interface MaladaptiveBehavior {
-  name: string;
-  number_of_occurrences: number;
-  goal?: Goal;
-  total_trials?: number;
-  number_of_correct_response?: number;
-}
-
-interface Goal {
-  id: number;
-  name: string;
-  description?: string;
-  total_trials?: number;
-  number_of_correct_response?: number;
-  goal?: string;
-  status: string;
-}
->>>>>>> b0a5038055a61bd24eb39adb8f42014f0fb13ee8
 
 interface ReplacementBehavior extends Replacements {
   status: any;
@@ -243,12 +211,8 @@ export class NoteRbtComponent implements OnInit {
 
     this.specialistData();
 
-<<<<<<< HEAD
     // this.updateInterventions();
 
-=======
-    this.updateInterventions();
->>>>>>> b0a5038055a61bd24eb39adb8f42014f0fb13ee8
   }
 
   // updateInterventions() {
@@ -358,11 +322,8 @@ getPatient(){
     event.value = this.selectedValueCode;
   }
 
-<<<<<<< HEAD
   
 
-=======
->>>>>>> b0a5038055a61bd24eb39adb8f42014f0fb13ee8
   specialistData() {
     this.doctorService.showDoctorProfile(this.doctor_id).subscribe((resp) => {
       this.provider_credential = resp.doctor.certificate_number;
@@ -654,12 +615,7 @@ getPatient(){
     this.replacementGoals = updatedReplacements;
   }
 
-<<<<<<< HEAD
-  // eslint-disable-next-line no-debugger
-  save() {debugger
-=======
   onSave() {
->>>>>>> b0a5038055a61bd24eb39adb8f42014f0fb13ee8
     console.log('Pre-save values:', {
       client_id: this.client_id,
       provider_id: this.selectedValueProviderRBT_id,
