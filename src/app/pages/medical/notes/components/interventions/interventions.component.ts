@@ -49,10 +49,6 @@ export class InterventionsComponent {
   @Input() interventionsList: Intervention[];
   @Output() interventionsChange = new EventEmitter<any>();
   
-  //verifico si viene la informacion
-  onInit(){
-    console.log('this.interventionsList',this.interventionsList);
-  }
   
 
   updateInterventions() {
