@@ -49,10 +49,6 @@ export class InterventionsComponent {
   @Input() interventionsList: Intervention[];
   @Output() interventionsChange = new EventEmitter<any>();
   
-  ngOnInit() {
-    console.log('Interventions List:', this.interventionsList);
-  }
-
   updateInterventions() {
     const interventionsObj = this.interventionsList
       .filter((interv) => interv.value)
