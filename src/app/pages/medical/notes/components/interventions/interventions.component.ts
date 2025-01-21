@@ -19,7 +19,7 @@ import { Intervention } from '../../interfaces';
                 <div
                   class="card-header d-flex justify-content-between align-items-center"
                 >
-                  <h5 class="card-title">{{ interv?.name }}</h5>
+                  <h5 class="card-title">{{ interv.name }}</h5>
                   <div
                     class="status-toggle d-flex justify-content-between align-items-center"
                   >
@@ -53,13 +53,12 @@ export class InterventionsOptionComponent {
     const interventionsObj = this.interventionsList
       .filter((interv) => interv.value)
       .reduce((acc, interv) => {
-        // acc[interv.id] = interv.value;
-        acc[interv.id] = {
-          id: interv.id,
-          name: interv.name,
-          value: !!interv.value,
-        };
-        // acc[interv.id] = true;
+        // acc[interv.id] = {
+        //   id: interv.id,
+        //   name: interv.name,
+        //   value: !!interv.value,
+        // };
+        acc[interv.id] = true;
         return acc;
       }, {});
     console.log(interventionsObj);
