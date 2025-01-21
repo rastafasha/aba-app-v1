@@ -176,6 +176,7 @@ export class NoteBcbaComponent implements OnInit {
   familiEnvolments = [];
   monitoringEvaluating = [];
   caregivers_training_goals = [];
+  caregivers_training_goalsgroup = [];
   caregivers_training = [];
   rbt_training_goals = [];
 
@@ -323,7 +324,8 @@ export class NoteBcbaComponent implements OnInit {
     this.bipV2Service.list({ client_id: this.patient_id }).subscribe((resp) => {
       console.log('BIP', resp);
       this.bip_id = resp.data[0].id;
-      this.caregivers_training_goals = resp.data[0].caregiver_trainings;
+      this.caregivers_training_goalsgroup = resp.data[0].caregiver_trainings;
+      console.log(this.caregivers_training_goalsgroup);
 
       this.behaviorList = resp.data[0].maladaptives;
       this.replacementList = resp.data[0].replacements;
@@ -589,10 +591,10 @@ export class NoteBcbaComponent implements OnInit {
     //   JSON.stringify(this.rbt_training_goals)
     // );
 
-    if (this.caregivers_training_goals) {
+    if (this.caregivers_training_goalsgroup) {
       formData.append(
         'caregiver_goals',
-        JSON.stringify(this.caregivers_training_goals)
+        JSON.stringify(this.caregivers_training_goalsgroup)
       );
     }
     if (this.interventionsList) {

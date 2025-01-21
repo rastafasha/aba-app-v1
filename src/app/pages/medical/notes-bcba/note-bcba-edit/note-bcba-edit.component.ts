@@ -750,10 +750,10 @@ export class NoteBcbaEditComponent implements OnInit {
     //     JSON.stringify(this.rbt_training_goals)
     //   );
     // }
-    if (this.caregivers_training_goals) {
+    if (this.caregivers_training_goalsgroup) {
       formData.append(
         'caregiver_goals',
-        JSON.stringify(this.caregivers_training_goals)
+        JSON.stringify(this.caregivers_training_goalsgroup)
       );
     }
     //variaciones nota bcba

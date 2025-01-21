@@ -11,4 +11,9 @@ export class View91756Component {
     @Input() obj_inprogress
     @Input() behaviors
     @Input() note_selected
+    @Input() caregivers_training_goals
+
+    onInit() {
+        console.log(this.caregivers_training_goals)
+    }
 }
