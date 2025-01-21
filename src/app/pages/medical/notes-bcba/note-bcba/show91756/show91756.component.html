@@ -35,8 +35,51 @@
     </div>
   </div>
   <!-- behaviors -->
+   <!-- caregiver goals -->
+   <div class="col-xs-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="col-12">
+          <h5>Caregiver Goal</h5>
+          <p class="text-danger">
+            Note: Please fill out all fields. If you didn't have any
+            reaction, enter "0"
+          </p>
+        </div>
+        <div class="table-responsive">
+          <table class="table mb-0">
+            <thead>
+              <tr>
+                <th>Caregiver Goal</th>
+                <th>% of Occurrences</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let goal of caregivers_training_goalsgroup;
+                  let i = index
+                "
+              >
+                <td>{{ goal.name }}</td>
+                <td>
+                  <input
+                    class="form-control"
+                    type="number"
+                    [(ngModel)]="goal.porcent_of_correct_response"
+                    (ngModelChange)="updateCaregiverGoal(i)"
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+   <!-- caregiver goals -->
   <!-- formulario varios -->
-  <div class="col-xs-12">
+  <!-- <div class="col-xs-12">
     <div class="card">
       <div class="card-body">
         <div class="col-12">
@@ -178,6 +221,6 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
   <!-- formulario varios -->
 </ng-container>

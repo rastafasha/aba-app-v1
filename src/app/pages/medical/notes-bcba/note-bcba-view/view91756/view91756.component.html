@@ -13,12 +13,58 @@
                     <app-behaviorslist-view [behaviors]="behaviors"></app-behaviorslist-view>
                   </div>
                   <!-- behaviors -->
-
-                  <!-- info -->
+                  <!-- caregiver goals -->
                   <div class="col-xs-12">
                     <div class="card">
                       <div class="card-header">
-                        <!-- <h4 class="card-title">Caregiver Goal</h4> -->
+                        <h4 class="card-title">Caregiver Goal</h4>
+                      </div>
+                      <div class="card-body p-0">
+                        <div class="personal-list-out">
+                          <div class="container">
+                            <div class="row">
+                              <table class="table mb-0">
+                                <thead>
+                                  <tr>
+                                    <th>
+                                      <h2 style="font-size: 12px; font-weight: 500">
+                                        Caregiver Goal
+                                      </h2>
+                                    </th>
+                                    <th>
+                                      <h2 style="font-size: 12px; font-weight: 500">
+                                        % of Occurrences
+                                      </h2>
+                                    </th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="
+                                      let caregiver of caregivers_training_goals;
+                                      let i = index
+                                    ">
+                                    <td>
+                                      <p>{{ caregiver.name }}</p>
+                                    </td>
+                                    <td>
+                                      <p>
+                                        {{ caregiver.porcent_of_correct_response }}
+                                      </p>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- caregiver goals -->
+                  <!-- info -->
+                  <!-- <div class="col-xs-12">
+                    <div class="card">
+                      <div class="card-header">
                       </div>
                       <div class="card-body p-0">
                         <div class="personal-list-out">
@@ -72,7 +118,7 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
 
                   <!-- info -->
                   
