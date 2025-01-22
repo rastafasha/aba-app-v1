@@ -44,7 +44,7 @@ export abstract class RepositoryV2Service<T> {
     );
   }
 
-  update(data: T, id: number) {
+  update(data: T, id: number): Observable<ApiV2Response<T>> {
     const URL = this.endpoint + '/' + id;
     return this.http.put<ApiV2Response<T>>(URL, this.untransform(data)).pipe(
       map((response) => ({

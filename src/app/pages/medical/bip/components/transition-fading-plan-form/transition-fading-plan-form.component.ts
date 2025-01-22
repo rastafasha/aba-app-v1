@@ -8,7 +8,7 @@ import { TransitionFadingPlan } from 'src/app/core/models';
   templateUrl: './transition-fading-plan-form.component.html',
   styleUrls: ['./transition-fading-plan-form.component.scss'],
 })
-export class TransitionFadingPlanFormComponent extends BaseDialogComponent {
+export class TransitionFadingPlanFormComponent extends BaseDialogComponent<TransitionFadingPlan> {
   @Input() input: TransitionFadingPlan;
   @Output() inputChange = new EventEmitter<TransitionFadingPlan>();
   @Output() save = new EventEmitter<TransitionFadingPlan>();

@@ -12,8 +12,8 @@
                   <app-list-and-form
                     #list
                     title="Maladaptives Behaviors"
-                    [(newItem)]="newMaladaptive"
-                    [(dataSource)]="maladaptives"
+                    [(newItem)]="newItem"
+                    [(dataSource)]="input"
                     [displayedColumns]="[
                       'name',
                       'baseline_level',
@@ -25,7 +25,7 @@
                   >
                     <app-plan-form
                       title="Maladaptives"
-                      [(input)]="newMaladaptive"
+                      [(input)]="newItem"
                       (cancel)="list.onClose()"
                       (save)="list.onAdd($event)"
                     ></app-plan-form>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { map, switchMap } from 'rxjs';
 import { BipV2 } from 'src/app/core/models';
 import { BipsV2Service } from 'src/app/core/services';
+import { logTable } from 'src/app/shared/utils';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,8 @@ export class BipUseCasesService {
     );
   }
 
-  updateBip(bip: BipV2) {
+  save(bip: BipV2, old_bip: BipV2) {
+    logTable(bip, old_bip);
     return this.bipService.update(bip, bip.id);
   }
 

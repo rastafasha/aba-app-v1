@@ -4,8 +4,7 @@ import {
   NumberOrNullOrUndefined,
   StringOrNullOrUndefined,
 } from 'src/app/shared/utils';
-import { Objective } from './bip.v2.model';
-
+import { Objective } from './objective.v2.model';
 
 export class Caregiver {
   index: number;
@@ -61,8 +60,6 @@ export class GoalV2 {
     return self;
   }
 
-  
-
   static getDefault(): GoalV2 {
     return new GoalV2({
       id: 0,
@@ -78,6 +75,4 @@ export class GoalV2 {
       objectives: [],
     });
   }
-
-  
 }

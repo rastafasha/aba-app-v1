@@ -25,14 +25,14 @@ export const PLAN_STATUS_MAP: Record<PlanStatus, string> = {
 
 export type PlanCategory =
   | 'maladaptive'
-  | 'sustitution'
-  | 'caregiver'
+  | 'replacement'
+  | 'caregiver_training'
   | 'rbt_training';
 
 export const PLAN_CATEGORY_MAP: Record<PlanCategory, string> = {
   maladaptive: 'Maladaptive',
-  sustitution: 'Substitution',
-  caregiver: 'Caregiver',
+  replacement: 'Replacement',
+  caregiver_training: 'Caregiver Training',
   rbt_training: 'RBT Training',
 };
 
