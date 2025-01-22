@@ -60,7 +60,7 @@
           <tbody>
             <tr *ngFor="let patient of patients">
               <td>
-                <div *ngIf="!patient.avatar">
+                <div *ngIf="!patient.avatar" class="avatarlist">
                   <img src="./assets/img/no-image.jpg" />
                 </div>
                 <div *ngIf="patient.avatar">

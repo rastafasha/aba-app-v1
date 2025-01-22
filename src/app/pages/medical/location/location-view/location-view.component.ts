@@ -8,6 +8,7 @@ import { LocationService } from '../services/location.service';
 import { AppUser } from 'src/app/core/models/users.model';
 import { PageService } from 'src/app/shared/services/pages.service';
 import { AuthService } from 'src/app/core/auth/auth.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-location-view',
@@ -79,7 +80,8 @@ export class LocationViewComponent implements OnInit {
     private doctorService: DoctorService,
     private locationService: LocationService,
     private activatedRoute: ActivatedRoute,
-    private pageService: PageService
+    private pageService: PageService,
+    private back_location: Location
   ) {}
 
   ngOnInit(): void {
@@ -93,6 +95,9 @@ export class LocationViewComponent implements OnInit {
     this.role = this.user.roles[0];
 
     this.pageService.onInitPage();
+  }
+  goBack() {
+    this.back_location.back(); // <-- go back to previous location on cancel
   }
 
   isPermission(permission: string) {
