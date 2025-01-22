@@ -73,6 +73,9 @@ export class ListDoctorComponent implements OnInit {
     if (this.user.roles.includes('SUPERADMIN')) {
       return true;
     }
+    if (this.user.roles.includes('ADMIN')) {
+      return true;
+    }
     if (this.user.permissions.includes(permission)) {
       return true;
     }

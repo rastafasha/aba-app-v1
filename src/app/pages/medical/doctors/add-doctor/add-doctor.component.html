@@ -161,7 +161,7 @@
                 </div>
                 <div
                   class="col-12 col-md-4 col-xl-4"
-                  *ngIf="user.roles[0] === 'SUPERADMIN'"
+                  *ngIf="user.roles[0] === 'SUPERADMIN' || user.roles[0] === 'ADMIN'"
                 >
                   <!-- si viene el rol MANAGER -->
                   <div class="form-group local-forms">
@@ -210,7 +210,7 @@
                 <!-- && !isManager -->
                 <div
                   class="col-12 col-md-4 col-xl-4"
-                  *ngIf="role === 'SUPERADMIN'"
+                  *ngIf="role === 'SUPERADMIN' || role === 'ADMIN'"
                 >
                   <div class="form-group local-forms">
                     <label
@@ -218,7 +218,7 @@
                       <i
                         class="fa fa-info-circle"
                         style="padding: 5px 0px"
-                        tooltip="SUPERADMIN, RBT and BCBA: All Locations, MANAGER: only 1 Location"
+                        tooltip="SUPERADMIN,ADMIN, RBT and BCBA: All Locations, MANAGER: only 1 Location"
                       ></i
                     ></label>
                     <mat-select

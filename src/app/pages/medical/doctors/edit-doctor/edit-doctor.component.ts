@@ -448,6 +448,9 @@ export class EditDoctorComponent implements OnInit {
     if (this.user.roles[0] === 'SUPERADMIN') {
       formData.append('locations_selected', locations);
     }
+    if (this.user.roles[0] === 'ADMIN') {
+      formData.append('locations_selected', locations);
+    }
     if (this.user.roles[0] === 'MANAGER') {
       formData.append('locations_selected', this.user.location_id.toString());
     }

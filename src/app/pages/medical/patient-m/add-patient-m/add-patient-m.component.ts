@@ -159,6 +159,9 @@ export class AddPatientMComponent implements OnInit {
     if (this.user.roles[0] === 'SUPERADMIN') {
       this.showLocationSelected = true;
     }
+    if (this.user.roles[0] === 'ADMIN') {
+      this.showLocationSelected = true;
+    }
     this.getConfig();
   }
 
@@ -412,7 +415,7 @@ export class AddPatientMComponent implements OnInit {
               this.user.location_id,
             ]);
           }
-          if (this.user.roles[0] === 'SUPERADMIN') {
+          if (this.user.roles[0] === 'SUPERADMIN' || this.user.roles[0] === 'ADMIN') {
             this.router.navigate([AppRoutes.patients.list]);
           }
         }

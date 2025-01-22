@@ -18,11 +18,11 @@
       </div>
     </div>
     <!-- /Page Header -->
-    <div class="row" *ngIf="roles !== 'SUPERADMIN' ">
+    <div class="row" *ngIf="roles !== 'SUPERADMIN' && roles !== 'ADMIN' ">
       <h3 class="text-center">Don't have Permissions</h3>
     </div>
     <!-- table patients all -->
-    <div class="row" *ngIf="roles === 'SUPERADMIN' ">
+    <div class="row" *ngIf="roles === 'SUPERADMIN' || roles === 'ADMIN' ">
       <div class="col-sm-12">
         <div class="card card-table show-entire">
           <div class="card-body">
@@ -111,7 +111,7 @@
                     <th mat-sort-header="location">location</th>
                     <th mat-sort-header="patient_id">Patient Id</th>
                     <!-- <th mat-sort-header="elegible">Status</th> -->
-                    <th mat-sort-header="ops" *ngIf="roles === 'SUPERADMIN'">
+                    <th mat-sort-header="ops" *ngIf="roles === 'SUPERADMIN' || roles === 'ADMIN'">
                       Options
                     </th>
                     <th mat-sort-header="created">Created At</th>
@@ -231,7 +231,7 @@
                         >Waiting on School</span
                       >
                     </td> -->
-                    <td *ngIf="roles === 'SUPERADMIN'">
+                    <td *ngIf="roles === 'SUPERADMIN' || roles === 'ADMIN'">
                       <select
                         class="form-control form-select-solid fw-bolder"
                         name="state"
