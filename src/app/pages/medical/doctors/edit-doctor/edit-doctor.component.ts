@@ -52,6 +52,9 @@ export class EditDoctorComponent implements OnInit {
   local_police_rec_every_5_years = '';
   npi = '';
   medicaid_provider = '';
+  note = '';
+  schedule = '';
+  school_badge_expiration = '';
 
   ceu_hippa_annually = '';
   ceu_domestic_violence_no_expiration = '';
@@ -427,6 +430,15 @@ export class EditDoctorComponent implements OnInit {
     }
     if (this.salary) {
       formData.append('salary', this.salary + '');
+    }
+    if (this.note) {
+      formData.append('note', this.note );
+    }
+    if (this.schedule) {
+      formData.append('schedule', this.schedule);
+    }
+    if (this.school_badge_expiration) {
+      formData.append('school_badge_expiration', this.school_badge_expiration );
     }
     let locations = '';
     this.locations_selected.forEach((location, index) => {
