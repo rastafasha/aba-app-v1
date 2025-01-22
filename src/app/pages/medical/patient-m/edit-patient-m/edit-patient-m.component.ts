@@ -210,6 +210,9 @@ export class EditPatientMComponent implements OnInit {
     if (this.user.roles[0] === 'SUPERADMIN') {
       this.showLocationSelected = true;
     }
+    if (this.user.roles[0] === 'ADMIN') {
+      this.showLocationSelected = true;
+    }
     //
     this.route.params.subscribe((params) => {
       this.id = params['id'];

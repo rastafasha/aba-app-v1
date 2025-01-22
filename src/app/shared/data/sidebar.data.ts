@@ -209,6 +209,8 @@ export const sidebar = [
         hasSubRoute: true,
         showSubRoute: false,
         base: 'reports',
+        permision: 'logs',
+        show_nav: true,
         img: 'assets/img/icons/menu-icon-02.svg',
         subMenus: [
           {
@@ -218,6 +220,16 @@ export const sidebar = [
           },
         ],
       },
+      {
+        menuValue: 'Claims',
+        route: AppRoutes.claims.claims,
+        hasSubRoute: false,
+        showSubRoute: false,
+        permision: 'claims',
+        img: 'assets/img/icons/menu-icon-16.svg',
+        base: AppRoutes.claims.claims,
+        subMenus: [],
+      }
       // {
       //   menuValue: 'Bip (Roles)',
       //   hasSubRoute: true,
@@ -707,15 +719,7 @@ export const sidebar = [
       //   base: 'settings',
       //   subMenus: [],
       // },
-      {
-        menuValue: 'Claims',
-        route: AppRoutes.claims.claims,
-        hasSubRoute: false,
-        showSubRoute: false,
-        img: 'assets/img/icons/menu-icon-16.svg',
-        base: AppRoutes.claims.claims,
-        subMenus: [],
-      }
+      
     ],
   },
 ];

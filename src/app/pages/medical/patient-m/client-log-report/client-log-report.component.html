@@ -17,7 +17,7 @@
     <!-- table patients all -->
     <div
       class="row"
-      *ngIf="roles === 'SUPERADMIN' || roles === 'LM' || roles === 'MANAGER'"
+      *ngIf="roles === 'SUPERADMIN' || roles==='ADMIN' || roles === 'LM' || roles === 'MANAGER'"
     >
       <div class="col-sm-12">
         <div class="card card-table show-entire">
@@ -161,7 +161,7 @@
                 <thead>
                   <tr>
                     <th mat-sort-header="agency">Agency</th>
-                    <th mat-sort-header="ops" *ngIf="roles === 'SUPERADMIN'">
+                    <th mat-sort-header="ops" *ngIf="roles === 'SUPERADMIN' || roles === 'ADMIN'">
                       Options
                     </th>
                     <th mat-sort-header="status">Status</th>
@@ -222,7 +222,7 @@
                 <tbody>
                   <tr *ngFor="let data of patientList; let i = index">
                     <td>{{ data.locals.title }}</td>
-                    <td *ngIf="roles === 'SUPERADMIN'">
+                    <td *ngIf="roles === 'SUPERADMIN' || roles === 'ADMIN'">
                       <select
                         class="form-control form-select-solid fw-bolder"
                         name="state"
