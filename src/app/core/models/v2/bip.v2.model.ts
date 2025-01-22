@@ -431,8 +431,8 @@ export class BipV2 {
   interventions: Intervention[];
   maladaptives: PlanV2[];
   patient_identifier: string;
-  phisical_and_medical: Medication[];
-  phisical_and_medical_status: string;
+  physical_and_medical: Medication[];
+  physical_and_medical_status: string;
   prevalent_setting_event_and_atecedents: PrevalentSettingEventAndAntecedent[];
   previus_treatment_and_result: string;
   rbt_trainings: PlanV2[];
@@ -484,9 +484,9 @@ export class BipV2 {
       ),
       interventions: ForceMap(data.interventions, Intervention),
       rbt_trainings: ForceMap(data.rbt_trainings, PlanV2),
-      phisical_and_medical: ForceMap(data.phisical_and_medical, Medication),
-      phisical_and_medical_status: StringOrNullOrUndefined(
-        data.phisical_and_medical_status
+      physical_and_medical: ForceMap(data.physical_and_medical, Medication),
+      physical_and_medical_status: StringOrNullOrUndefined(
+        data.physical_and_medical_status
       ),
       previus_treatment_and_result: StringOrNullOrUndefined(
         data.previus_treatment_and_result
@@ -536,8 +536,8 @@ export class BipV2 {
       hypothesis_based_intervention: undefined,
       interventions: [],
       rbt_trainings: [],
-      phisical_and_medical: [],
-      phisical_and_medical_status: undefined,
+      physical_and_medical: [],
+      physical_and_medical_status: undefined,
       previus_treatment_and_result: undefined,
       sensory: [],
       sustitution_goal: [],

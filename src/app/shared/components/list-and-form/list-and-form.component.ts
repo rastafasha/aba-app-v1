@@ -13,6 +13,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ListFormStrategy } from 'src/app/pages/medical/bip/components/bip-form/list-form.strategy';
 import {
   AddButtonOption,
+  HeadRender,
   ListOption,
   ListRender,
 } from '../list/list.component';
@@ -44,6 +45,7 @@ export class ListAndFormComponent<T> implements OnInit {
   };
   @Input() noDataText: string = null;
   @Input() renders: ListRender<T>;
+  @Input() headRenders: HeadRender<T>;
   @Input() options: ListOption<T>[];
   //
   strategy: ListFormStrategy<T>;

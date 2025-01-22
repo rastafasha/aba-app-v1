@@ -51,7 +51,7 @@ export class ListFormStrategy<T extends ListItem> {
       return { text: 'Please enter all fields', items, item };
     }
     items ??= [];
-    if (!items.find((i) => i.index === item.index)) {
+    if (!items[item.index - 1]) {
       item.index = items.length + 1;
       items.push({ ...item });
     } else {

@@ -51,8 +51,9 @@
           <!-- 2 -->
           <app-reduction-goal-form
             *ngIf="optionSelected === 2"
-            [(input)]="bip.maladaptives"
             [patient_identifier]="bip.patient_identifier"
+            [(input)]="bip.maladaptives"
+            (save)="onSave(bip)"
           >
           </app-reduction-goal-form>
           <!-- 3 -->

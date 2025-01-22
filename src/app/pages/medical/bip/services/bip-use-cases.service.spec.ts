@@ -43,7 +43,7 @@ const createMockListResponse = (data: BipV2[]): ListResponse<BipV2> => {
   };
 };
 
-fdescribe('BipUseCasesService', () => {
+describe('BipUseCasesService', () => {
   let service: BipUseCasesService;
   let bipServiceSpy: jasmine.SpyObj<BipsV2Service>;
 

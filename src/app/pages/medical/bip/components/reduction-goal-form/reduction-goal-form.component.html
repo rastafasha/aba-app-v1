@@ -11,10 +11,16 @@
           [(dataSource)]="input"
           [displayedColumns]="displayedColumns"
           [renders]="renders"
+          [headRenders]="headRenders"
           [options]="options"
         >
-          <app-plan-form [(input)]="newGoal"></app-plan-form>
+          <app-plan-form
+            [(input)]="newGoal"
+            (save)="list.onAdd($event)"
+            (cancel)="list.onClose()"
+          ></app-plan-form>
         </app-list-and-form>
+
         <!-- Back -->
         <div *ngIf="state !== 'list'" class="doctor-submit text-end">
           <button class="btn btn-primary btn-sm" (click)="onBack()">

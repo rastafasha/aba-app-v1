@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { PlanV2 } from 'src/app/core/models';
 import { OnPlansEdit } from '../on-plans-edit/on-plans-edit';
+import { HeadRender } from 'src/app/shared/components/list/list.component';
 
 @Component({
   selector: 'app-reduction-goal-form',
@@ -14,4 +15,5 @@ export class ReductionGoalFormComponent extends OnPlansEdit {
     category: 'maladaptive',
   };
   options = this.defaultOptions;
+  headRenders: HeadRender<PlanV2> = { description: () => 'Topography' };
 }
