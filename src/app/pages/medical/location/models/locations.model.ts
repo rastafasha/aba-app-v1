@@ -38,9 +38,10 @@ export interface LocationSpecialist {
   city: string;
   birth_date: string;
   languages: string;
+  school_badge: string;
   schedule: string;
   note: string;
-  school_badge_expiration: string;
+  medicaid_provider: string;
 }
 
 export interface LocationPatient {

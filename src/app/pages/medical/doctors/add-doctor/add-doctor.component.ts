@@ -72,7 +72,6 @@ export class AddDoctorComponent implements OnInit {
   salary = 0;
   note = '';
   schedule = '';
-  school_badge_expiration = '';
 
   role: string;
   roles: { id: number; name: string }[] = [];
@@ -339,7 +338,6 @@ export class AddDoctorComponent implements OnInit {
     formData.append('salary', this.salary + '');
     formData.append('schedule', this.schedule);
     formData.append('note', this.note );
-    formData.append('school_badge_expiration', this.school_badge_expiration );
     
     let locations = '';
 

@@ -43,14 +43,16 @@
             <tr>
               <th mat-sort-header="avatars">Avatar</th>
               <th mat-sort-header="names">Full Name</th>
-              <th mat-sort-header="type">Contrator Type</th>
               <th mat-sort-header="note">note</th>
               <th mat-sort-header="city">City of Residence</th>
               <th mat-sort-header="DOB">DOB</th>
-              <th mat-sort-header="languages">Languages</th>
               <th mat-sort-header="schedule">Schedule</th>
-              <th mat-sort-header="emails">Email</th>
+              <th mat-sort-header="medicaid_provider">Medicaid Provider</th>
+              <th mat-sort-header="school_badge">School Badge</th>
               <th mat-sort-header="telefonos">Phone</th>
+              <th mat-sort-header="emails">Email</th>
+              <th mat-sort-header="languages">Languages</th>
+              <th mat-sort-header="type">Contrator Type</th>
               <th mat-sort-header="role">Role</th>
               <th mat-sort-header="status">Status</th>
               <th
@@ -87,10 +89,6 @@
                 </a>
               </td>
               <td>
-                {{ specialist.contract_type }}
-              </td>
-              
-              <td>
                 {{ specialist.note  | slice : 0 : 10 }}...
                 <i
                   class="fa fa-info-circle"
@@ -105,6 +103,22 @@
                 {{ specialist.birth_date | date : "shortDate"}}
               </td>
               <td>
+                {{ specialist.schedule  | slice : 0 : 10 }}...
+                <i
+                  class="fa fa-info-circle"
+                  style="padding: 5px 0px"
+                  [tooltip]="specialist.schedule "
+                ></i>
+              </td>
+              <td>
+                {{ specialist.medicaid_provider }}
+              </td>
+              <td>
+                {{ specialist.school_badge }}
+              </td>
+              <td>{{ specialist.email }}</td>
+              <td>{{ specialist.phone }}</td>
+              <td>
                 {{ specialist.languages  | slice : 0 : 10 }}...
                 <i
                   class="fa fa-info-circle"
@@ -113,16 +127,13 @@
                 ></i>
               </td>
               <td>
-                {{ specialist.schedule  | slice : 0 : 10 }}...
-                <i
-                  class="fa fa-info-circle"
-                  style="padding: 5px 0px"
-                  [tooltip]="specialist.schedule "
-                ></i>
+                {{ specialist.contract_type }}
               </td>
               
-              <td>{{ specialist.email }}</td>
-              <td>{{ specialist.phone }}</td>
+              
+              
+              
+              
               <td>{{ specialist.roles[0].name }}</td>
               <td>
                 <span
