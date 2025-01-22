@@ -93,8 +93,6 @@
                     <th mat-sort-header="telefono">Phone</th>
                     <th mat-sort-header="role">Role</th>
                     <th mat-sort-header="status">Status</th>
-                    <th mat-sort-header="op">Options</th>
-                    <th mat-sort-header="created">Created At</th>
                     <th></th>
                     <!--acciones -->
                   </tr>
@@ -128,28 +126,7 @@
                     <td>{{ data.phone }}</td>
                    
                     <td>{{ data.roles.name }}</td>
-                    <td>
-                      <span
-                        class="badge bg-danger"
-                        *ngIf="data.status === 'inactive'"
-                        >Inactive</span
-                      >
-                      <span
-                        class="badge bg-success"
-                        *ngIf="data.status === 'active'"
-                        >Active</span
-                      >
-                      <span
-                        class="badge bg-primary"
-                        *ngIf="data.status === 'incoming'"
-                        >Incoming</span
-                      >
-                      <span
-                        class="badge bg-dark"
-                        *ngIf="data.status === 'black list'"
-                        >Black list</span
-                      >
-                    </td>
+                    
                     <td>
                       <select
                         class="form-control form-select-solid fw-bolder"
@@ -166,7 +143,7 @@
                       </select>
                     </td>
                     <!-- <td>{{data.permision_pluck.length > 0 ? data.permision_pluck: 'TODOS LOS PERMISOS' }}</td> -->
-                    <td>{{ data.created_at | date : "shortDate" }}</td>
+                    
 
                     <td class="text-end">
                       <div
