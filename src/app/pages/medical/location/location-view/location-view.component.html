@@ -13,6 +13,11 @@
             </li>
             <li class="breadcrumb-item active">View Location</li>
           </ul>
+          <div class="doctor-submit text-start">
+            <button class="btn btn-primary btn-sm" *ngIf="role === 'SUPERADMIN'" (click)="goBack()">
+              Back
+            </button>
+          </div>
         </div>
       </div>
     </div>
