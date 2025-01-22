@@ -54,7 +54,6 @@ export class EditDoctorComponent implements OnInit {
   medicaid_provider = '';
   note = '';
   schedule = '';
-  school_badge_expiration = '';
 
   ceu_hippa_annually = '';
   ceu_domestic_violence_no_expiration = '';
@@ -436,9 +435,6 @@ export class EditDoctorComponent implements OnInit {
     }
     if (this.schedule) {
       formData.append('schedule', this.schedule);
-    }
-    if (this.school_badge_expiration) {
-      formData.append('school_badge_expiration', this.school_badge_expiration );
     }
     let locations = '';
     this.locations_selected.forEach((location, index) => {
