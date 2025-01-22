@@ -14,6 +14,7 @@ export interface ListOption<T> {
 }
 
 export type ListRender<T> = Partial<Record<keyof T, (x: T) => string>>;
+export type HeadRender<T> = Partial<Record<keyof T, (x: string) => string>>;
 
 @Component({
   selector: 'app-list',
@@ -36,6 +37,7 @@ export class ListComponent<T> {
   };
   @Input() noDataText: string = null;
   @Input() renders: ListRender<T>;
+  @Input() headRenders: HeadRender<T>;
 
   onAdd() {
     this.add.emit();

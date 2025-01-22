@@ -48,7 +48,6 @@ export class PlanV2 {
   description: string;
   baseline_level: number;
   baseline_date: Date;
-  end_date: Date;
   initial_intensity: number;
   current_intensity: number;
   //
@@ -67,7 +66,6 @@ export class PlanV2 {
       description: StringOrNullOrUndefined(data.description),
       baseline_level: NumberOrNullOrUndefined(data.baseline_level),
       baseline_date: DateOrNullOrUndefined(data.baseline_date),
-      end_date: DateOrNullOrUndefined(data.end_date),
       initial_intensity: NumberOrNullOrUndefined(data.initial_intensity),
       current_intensity: NumberOrNullOrUndefined(data.current_intensity),
       category: StringOrNullOrUndefined(data.category) as 'maladaptive',

@@ -34,7 +34,7 @@
             <textarea
               class="form-control"
               name="phiysical_and_medical"
-              [(ngModel)]="bip.phisical_and_medical_status"
+              [(ngModel)]="bip.physical_and_medical_status"
               rows="4"
               cols="30"
             >
@@ -48,7 +48,7 @@
           #phisicalAndMedicalList
           title="Physical And Medical"
           [(newItem)]="newMedication"
-          [(dataSource)]="bip.phisical_and_medical"
+          [(dataSource)]="bip.physical_and_medical"
           [displayedColumns]="[
             'medication',
             'dose',

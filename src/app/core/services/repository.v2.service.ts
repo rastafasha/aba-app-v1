@@ -21,7 +21,7 @@ export abstract class RepositoryV2Service<T> {
       ),
       map((response) => ({
         ...response.data,
-        data: response.data.data.map((item) => this.transform(item)),
+        data: response.data?.data?.map((item) => this.transform(item)),
       }))
     );
   }
