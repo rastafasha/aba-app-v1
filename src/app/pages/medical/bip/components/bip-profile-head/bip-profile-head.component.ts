@@ -25,6 +25,7 @@ export class BipProfileHeadComponent implements OnInit {
   isPermission(permission: string) {
     return (
       this.user.roles.includes('SUPERADMIN') ||
+      this.user.roles.includes('ADMIN') ||
       this.user.permissions.includes(permission)
     );
   }

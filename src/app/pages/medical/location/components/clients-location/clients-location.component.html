@@ -48,7 +48,7 @@
               <th mat-sort-header="elegible">Status</th>
               <th
                 mat-sort-header="ops"
-                *ngIf="roles === 'SUPERADMIN' || roles === 'MANAGER'"
+                *ngIf="roles === 'SUPERADMIN' || roles === 'ADMIN' || roles === 'MANAGER'"
               >
                 Options
               </th>
@@ -144,6 +144,7 @@
                     class="btn btn-outline-success"
                     *ngIf="
                       roles === 'SUPERADMIN' ||
+                      roles === 'ADMIN' ||
                       roles === 'MANAGER' ||
                       roles === 'LM' ||
                       roles === 'BCBA'
@@ -165,6 +166,7 @@
                     class="btn btn-outline-success"
                     *ngIf="
                       roles === 'SUPERADMIN' ||
+                      roles === 'ADMIN' ||
                       roles === 'MANAGER' ||
                       roles === 'LM' ||
                       roles === 'RBT'
@@ -178,6 +180,7 @@
                     class="btn btn-outline-primary"
                     *ngIf="
                       roles === 'SUPERADMIN' ||
+                      roles === 'ADMIN' ||
                       roles === 'MANAGER' ||
                       roles === 'LM' ||
                       roles === 'RBT'
@@ -191,6 +194,7 @@
                     class="btn btn-outline-secondary"
                     *ngIf="
                       roles === 'SUPERADMIN' ||
+                      roles === 'ADMIN' ||
                       roles === 'MANAGER' ||
                       roles === 'LM' ||
                       roles === 'BCBA'
@@ -207,6 +211,7 @@
                     class="btn btn-outline-primary"
                     *ngIf="
                       roles === 'SUPERADMIN' ||
+                      roles === 'ADMIN' ||
                       roles === 'MANAGER' ||
                       roles === 'LM' ||
                       roles === 'BCBA'
@@ -218,7 +223,7 @@
                   </button>
                 </span>
               </td>
-              <td *ngIf="roles === 'SUPERADMIN'">
+              <td *ngIf="roles === 'SUPERADMIN'|| roles === 'ADMIN'">
                 <select
                   class="form-control form-select-solid fw-bolder"
                   name="state"

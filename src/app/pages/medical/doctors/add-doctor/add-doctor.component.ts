@@ -351,11 +351,35 @@ export class AddDoctorComponent implements OnInit {
     if (this.user.roles[0] === 'SUPERADMIN') {
       formData.append('locations_selected', locations);
     }
+    if (this.user.roles[0] === 'ADMIN') {
+      formData.append('locations_selected', locations);
+    }
     if (this.user.roles[0] === 'MANAGER') {
       formData.append('locations_selected', this.user.location_id.toString());
     }
 
     if (this.user.roles[0] === 'SUPERADMIN') {
+      this.doctorService.storeDoctor(formData).subscribe((resp) => {
+        // console.log(resp);
+
+        if (resp.status === 500) {
+          this.text_validation = resp.message_text;
+          Swal.fire('Warning', resp.message_text, 'warning');
+        }
+        if (resp.message === 403) {
+          this.text_validation = resp.message_text;
+          Swal.fire('Warning', resp.message_text, 'warning');
+        } else {
+          // this.text_success = 'Employer created';
+          // this.ngOnInit();
+          Swal.fire('Created', `Employee Created successfully!`, 'success');
+          this.router.navigate([AppRoutes.doctors.list]);
+          // this.ngOnInit();
+          //
+        }
+      });
+    }
+    if (this.user.roles[0] === 'ADMIN') {
       this.doctorService.storeDoctor(formData).subscribe((resp) => {
         // console.log(resp);
 

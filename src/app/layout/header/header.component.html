@@ -1,6 +1,6 @@
 <div class="header">
   <div class="header-left">
-    <span *ngIf="role === 'SUPERADMIN'">
+    <span *ngIf="role === 'SUPERADMIN' || role === 'ADMIN'">
       <a [routerLink]="routes.dashboard.admin" class="logo">
         <img
           src="assets/svg/logo-solo.svg"
@@ -178,7 +178,7 @@
       </a>
       <div class="dropdown-menu">
         <a
-          *ngIf="role === 'SUPERADMIN'"
+          *ngIf="role === 'SUPERADMIN' || role === 'ADMIN'"
           class="dropdown-item"
           [routerLink]="[routes.doctors.profile, user.id]"
           >Profile</a
@@ -215,7 +215,7 @@
         >
 
         <a
-          *ngIf="role === 'SUPERADMIN'"
+          *ngIf="role === 'SUPERADMIN' || role === 'ADMIN'"
           class="dropdown-item"
           [routerLink]="[routes.doctors.listEdit, user.id]"
           >Edit Profile</a

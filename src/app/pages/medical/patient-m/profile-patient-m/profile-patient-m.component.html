@@ -37,7 +37,7 @@
                     patient_selected.patient_identifier
                   ]"
                   *ngIf=" patient_selected.status === 'active' &&
-                  role === 'SUPERADMIN' || role === 'RBT' 
+                  role === 'SUPERADMIN' || role === 'ADMIN' || role === 'RBT' 
                 "
                   class="btn btn-outline-success follow-btns"
                   >Create Note RBT</a
@@ -49,7 +49,7 @@
                   ]"
                   *ngIf="
                   patient_selected.status === 'active' &&
-                  role === 'SUPERADMIN' || role === 'BCBA' 
+                  role === 'SUPERADMIN' || role === 'ADMIN'  || role === 'BCBA' 
                 "
                   class="btn btn-outline-success follow-btns"
                   >Create Note BCBA</a

@@ -42,7 +42,7 @@ export class SidebarComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.authService.user as AppUser;
     //inicio
-    if (this.user?.roles.includes('SUPERADMIN')) {
+    if (this.user?.roles.includes('SUPERADMIN') || this.user?.roles.includes('ADMIN')) {
       this.sidebarData = this.data.sidebar;
     } else {
       //vamos a filtrar y validar que opciones puede ver el rol

@@ -94,6 +94,9 @@ export class ListPatientMComponent implements OnInit {
     if (this.user.roles.includes('SUPERADMIN')) {
       return true;
     }
+    if (this.user.roles.includes('ADMIN')) {
+      return true;
+    }
     if (this.user.permissions.includes(permission)) {
       return true;
     }
@@ -491,19 +494,19 @@ export class ListPatientMComponent implements OnInit {
 
     switch (action.title) {
       case 'Edit Client':
-        return ['SUPERADMIN', 'MANAGER'].includes(this.roles);
+        return ['SUPERADMIN','ADMIN', 'MANAGER'].includes(this.roles);
       case 'BIP Create':
-        return ['SUPERADMIN', 'MANAGER', 'LM', 'BCBA'].includes(this.roles);
+        return ['SUPERADMIN','ADMIN', 'MANAGER', 'LM', 'BCBA'].includes(this.roles);
       case 'BIP View':
         return this.isPermission('view_bip');
       case 'Create RBT Note':
       case 'RBT Note list':
-        return ['SUPERADMIN', 'MANAGER', 'LM', 'RBT'].includes(this.roles);
+        return ['SUPERADMIN','ADMIN', 'MANAGER', 'LM', 'RBT'].includes(this.roles);
       case 'Create BCBA Note':
       case 'BCBA Note list':
-        return ['SUPERADMIN', 'MANAGER', 'LM', 'BCBA'].includes(this.roles);
+        return ['SUPERADMIN','ADMIN', 'MANAGER', 'LM', 'BCBA'].includes(this.roles);
       case 'Log Report':
-        return ['SUPERADMIN', 'MANAGER'].includes(this.roles);
+        return ['SUPERADMIN','ADMIN', 'MANAGER'].includes(this.roles);
       default:
         return false;
     }

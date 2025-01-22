@@ -5,16 +5,16 @@
       <div class="row">
         <div class="col-sm-12">
           <ul class="breadcrumb">
-            <li class="breadcrumb-item" *ngIf="role === 'SUPERADMIN'">
+            <li class="breadcrumb-item" *ngIf="role === 'SUPERADMIN' || role === 'ADMIN'">
               <a [routerLink]="routes.location.list">Locations </a>
             </li>
-            <li class="breadcrumb-item" *ngIf="role === 'SUPERADMIN'">
+            <li class="breadcrumb-item" *ngIf="role === 'SUPERADMIN' || role === 'ADMIN'">
               <i class="feather icon-chevron-right"></i>
             </li>
             <li class="breadcrumb-item active">View Location</li>
           </ul>
           <div class="doctor-submit text-start">
-            <button class="btn btn-primary btn-sm" *ngIf="role === 'SUPERADMIN'" (click)="goBack()">
+            <button class="btn btn-primary btn-sm" *ngIf="role === 'SUPERADMIN' || role === 'ADMIN'" (click)="goBack()">
               Back
             </button>
           </div>
