@@ -34,6 +34,14 @@ export interface LocationSpecialist {
   roles: any[];
   created_at: string | number | Date;
   avatar: string;
+  contract_type: string;
+  city: string;
+  birth_date: string;
+  languages: string;
+  school_badge: string;
+  schedule: string;
+  note: string;
+  medicaid_provider: string;
 }
 
 export interface LocationPatient {

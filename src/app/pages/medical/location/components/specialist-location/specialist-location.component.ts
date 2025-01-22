@@ -44,6 +44,7 @@ export class SpecialistLocationComponent implements OnInit {
   pageNumberArray: number[] = [];
   pageSelection = [];
   totalPages = 0;
+  
 
   title = '';
 

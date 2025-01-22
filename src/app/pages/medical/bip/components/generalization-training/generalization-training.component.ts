@@ -1,20 +1,19 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import {
   GeneralizationTraining,
   TransitionFadingPlan,
 } from 'src/app/core/models';
 import { ListAndFormComponent } from 'src/app/shared/components/list-and-form/list-and-form.component';
+import { InputDirective } from 'src/app/shared/directives/input.directive';
 
 @Component({
   selector: 'app-generalization-training',
   templateUrl: './generalization-training.component.html',
   styleUrls: ['./generalization-training.component.scss'],
 })
-export class GeneralizationTrainingComponent {
-  @Input() input: GeneralizationTraining[] = [];
-  @Output() inputChange = new EventEmitter<GeneralizationTraining[]>();
-  @Output() save = new EventEmitter<GeneralizationTraining[]>();
-
+export class GeneralizationTrainingComponent extends InputDirective<
+  GeneralizationTraining[]
+> {
   state: 'list' | 'edit' = 'list';
   newItem: GeneralizationTraining = {} as GeneralizationTraining;
 
@@ -51,10 +50,5 @@ export class GeneralizationTrainingComponent {
     context: ListAndFormComponent<GeneralizationTraining>
   ) {
     context.onDelete(item);
-  }
-
-  onSave() {
-    this.save.emit(this.input);
-    this.state = 'list';
   }
 }

@@ -11,12 +11,10 @@ export class BipFormComponent {
   routes = AppRoutes;
   @Input() bip: BipV2;
   @Output() bipChange = new EventEmitter<BipV2>();
-  @Output() save = new EventEmitter<void>();
+  @Output() save = new EventEmitter<BipV2>();
 
   onSave() {
     this.bipChange.emit(this.bip);
-    setTimeout(() => {
-      this.save.emit();
-    }, 0);
+    this.save.emit(this.bip);
   }
 }

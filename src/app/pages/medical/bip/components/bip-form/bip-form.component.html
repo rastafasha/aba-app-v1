@@ -4,12 +4,12 @@
 
   <app-maladaptives
     (save)="onSave()"
-    [(maladaptives)]="bip.maladaptives"
+    [(input)]="bip.maladaptives"
   ></app-maladaptives>
 
   <app-assestment
     (save)="onSave()"
-    [(assestmentEvaluationSettings)]="bip.assestmentEvaluationSettings"
+    [(assestmentEvaluationSettings)]="bip.assestment_evaluation_settings"
     [(assesstmentsDocuments)]="bip.assestment_conducted_options"
     [(assestmentConducted)]="bip.assestment_conducted"
   ></app-assestment>

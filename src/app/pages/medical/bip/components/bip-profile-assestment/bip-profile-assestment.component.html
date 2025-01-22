@@ -46,14 +46,14 @@
           <div class="row">
             <div
               *ngIf="
-                !bip.assestmentEvaluationSettings ||
-                bip.assestmentEvaluationSettings === null
+                !bip.assestment_evaluation_settings ||
+                bip.assestment_evaluation_settings === null
               "
             >
               <app-no-info></app-no-info>
             </div>
             <ng-container
-              *ngFor="let evaluationSt of bip.assestmentEvaluationSettings"
+              *ngFor="let evaluationSt of bip.assestment_evaluation_settings"
             >
               <div class="col-xs-12 col-sm-6">
                 <div class="detail-personal">

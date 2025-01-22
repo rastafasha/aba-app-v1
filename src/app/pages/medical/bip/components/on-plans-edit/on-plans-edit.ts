@@ -1,24 +1,15 @@
 import { DatePipe } from '@angular/common';
-import {
-  Directive,
-  EventEmitter,
-  inject,
-  Input,
-  LOCALE_ID,
-  Output,
-} from '@angular/core';
+import { Directive, inject, LOCALE_ID } from '@angular/core';
 import { PlanV2 } from 'src/app/core/models';
 import { ListAndFormComponent } from 'src/app/shared/components/list-and-form/list-and-form.component';
 import { ListRender } from 'src/app/shared/components/list/list.component';
+import { InputDirective } from 'src/app/shared/directives/input.directive';
 @Directive({
   selector: '[appOnPlansEdit]',
 })
 // eslint-disable-next-line @angular-eslint/directive-class-suffix
-export abstract class OnPlansEdit {
+export abstract class OnPlansEdit extends InputDirective<PlanV2[]> {
   state: 'list' | 'edit' = 'list';
-  @Input() input: PlanV2[];
-  @Output() inputChange = new EventEmitter<PlanV2[]>();
-  @Output() save = new EventEmitter<PlanV2[]>();
 
   protected abstract newGoal: PlanV2;
 
@@ -65,10 +56,5 @@ export abstract class OnPlansEdit {
 
   onBack() {
     this.state = 'list';
-  }
-
-  onSave() {
-    this.inputChange.emit(this.input);
-    this.save.emit(this.input);
   }
 }
