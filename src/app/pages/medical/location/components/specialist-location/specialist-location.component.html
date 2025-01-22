@@ -54,14 +54,12 @@
               <th mat-sort-header="languages">Languages</th>
               <th mat-sort-header="type">Contrator Type</th>
               <th mat-sort-header="role">Role</th>
-              <th mat-sort-header="status">Status</th>
               <th
                 mat-sort-header="op"
                 *ngIf="role === 'SUPERADMIN' || role === 'MANAGER'"
               >
-                Options
+                Status
               </th>
-              <th mat-sort-header="createds">Created At</th>
               <th></th>
               <!--acciones -->
             </tr>
@@ -129,34 +127,7 @@
               <td>
                 {{ specialist.contract_type }}
               </td>
-              
-              
-              
-              
-              
               <td>{{ specialist.roles[0].name }}</td>
-              <td>
-                <span
-                  class="badge bg-danger"
-                  *ngIf="specialist.status === 'inactive'"
-                  >Inactive</span
-                >
-                <span
-                  class="badge bg-success"
-                  *ngIf="specialist.status === 'active'"
-                  >Active</span
-                >
-                <span
-                  class="badge bg-primary"
-                  *ngIf="specialist.status === 'incoming'"
-                  >Incoming</span
-                >
-                <span
-                  class="badge bg-dark"
-                  *ngIf="specialist.status === 'black list'"
-                  >Black list</span
-                >
-              </td>
               <td>
                 <select
                   class="form-control form-select-solid fw-bolder"
@@ -172,7 +143,6 @@
                   <option value="black list">Black list</option>
                 </select>
               </td>
-              <td>{{ specialist.created_at | date : "shortDate" }}</td>
             </tr>
           </tbody>
         </table>
