@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, map, Observable, of, switchMap } from 'rxjs';
-import { ApiV2Response, BipV2, PlanV2 } from 'src/app/core/models';
-import { BipsV2Service, PlansV2Service } from 'src/app/core/services';
+import { forkJoin, of, switchMap } from 'rxjs';
+import { BipV2, Objective, PlanV2 } from 'src/app/core/models';
+import {
+  BipsV2Service,
+  ObjectivesV2Service,
+  PlansV2Service,
+} from 'src/app/core/services';
+import { RepositoryUtils } from 'src/app/core/services/repository.utils';
 import { logTable } from 'src/app/shared/utils';
 
 @Injectable({
@@ -9,15 +14,21 @@ import { logTable } from 'src/app/shared/utils';
 })
 export class BipUseCasesService {
   getBipByClientId(client_id: number) {
-    return this.bipService.list({ client_id }).pipe(
-      switchMap((resp) => this.bipService.get(resp.data[0].id)),
-      map((resp) => {
-        resp.data.replacements = resp.data.replacements.map((item, index) => ({
-          ...item,
-          index: index + 1,
-        }));
-        return resp;
-      })
+    return this.bipService
+      .list({ client_id })
+      .pipe(switchMap((resp) => this.bipService.get(resp.data[0].id)));
+  }
+
+  private handleObjectiveChanges(
+    newObjectives: Objective[],
+    oldObjectives: Objective[],
+    planId: number
+  ) {
+    return this.repositoryUtils.handleEntityChanges(
+      newObjectives,
+      oldObjectives,
+      this.objectiveService,
+      (objective) => (objective.plan_id = planId)
     );
   }
 
@@ -26,37 +37,52 @@ export class BipUseCasesService {
     oldPlans: PlanV2[],
     bipId: number
   ) {
-    const operations: Observable<ApiV2Response<PlanV2>>[] = [];
-    const stripIndex = (plan: PlanV2): PlanV2 => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { index, ...planWithoutIndex } = { ...plan };
-      return planWithoutIndex;
-    };
-
     // Handle updates and creates
-    newPlans.forEach((plan) => {
+    const planOperations = newPlans.map((plan) => {
       plan.bip_id = bipId;
       const oldPlan = oldPlans.find((p) => p.id === plan.id);
 
       if (!oldPlan) {
-        // New plan - remove index before create
-        operations.push(this.planService.create(stripIndex(plan)));
+        return this.planService
+          .create(this.repositoryUtils.stripIndex(plan))
+          .pipe(
+            switchMap((response) =>
+              this.handleObjectiveChanges(plan.objectives, [], response.data.id)
+            )
+          );
       } else if (
-        JSON.stringify(stripIndex(plan)) !== JSON.stringify(stripIndex(oldPlan))
+        JSON.stringify(this.repositoryUtils.stripIndex(plan)) !==
+        JSON.stringify(this.repositoryUtils.stripIndex(oldPlan))
       ) {
-        // Updated plan - remove index before update
-        operations.push(this.planService.update(stripIndex(plan), plan.id));
+        return this.planService
+          .update(this.repositoryUtils.stripIndex(plan), plan.id)
+          .pipe(
+            switchMap(() =>
+              this.handleObjectiveChanges(
+                plan.objectives,
+                oldPlan.objectives,
+                plan.id
+              )
+            )
+          );
+      } else {
+        return this.handleObjectiveChanges(
+          plan.objectives,
+          oldPlan.objectives,
+          plan.id
+        );
       }
     });
 
-    // Handle deletes
-    oldPlans.forEach((oldPlan) => {
-      if (!newPlans.find((p) => p.id === oldPlan.id)) {
-        operations.push(this.planService.delete(oldPlan.id));
-      }
-    });
+    const deleteOperations = this.repositoryUtils.handleDeletes(
+      oldPlans,
+      newPlans,
+      this.planService
+    );
 
-    return operations.length ? forkJoin(operations) : of(null);
+    return planOperations.length || deleteOperations.length
+      ? forkJoin([...planOperations, ...deleteOperations])
+      : of(null);
   }
 
   save(bip: BipV2, old_bip: BipV2) {
@@ -89,6 +115,8 @@ export class BipUseCasesService {
 
   constructor(
     private bipService: BipsV2Service,
-    private planService: PlansV2Service
+    private planService: PlansV2Service,
+    private objectiveService: ObjectivesV2Service,
+    private repositoryUtils: RepositoryUtils
   ) {}
 }

@@ -515,6 +515,23 @@ export class BipV2 {
         PrevalentSettingEventAndAntecedent
       ),
     };
+    //Extra Changes
+    self.maladaptives = self.maladaptives.map((item, index) => ({
+      ...item,
+      index,
+    }));
+    self.replacements = self.replacements.map((item, index) => ({
+      ...item,
+      index,
+    }));
+    self.caregiver_trainings = self.caregiver_trainings.map((item, index) => ({
+      ...item,
+      index,
+    }));
+    self.rbt_trainings = self.rbt_trainings.map((item, index) => ({
+      ...item,
+      index,
+    }));
     return self;
   }
   static getDefault(): BipV2 {

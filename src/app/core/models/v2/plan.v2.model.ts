@@ -75,6 +75,11 @@ export class PlanV2 {
       updated_at: DateOrNullOrUndefined(data.updated_at),
       deleted_at: DateOrNullOrUndefined(data.deleted_at),
     };
+    //Extra Changes
+    self.objectives = self.objectives.map((item, index) => ({
+      ...item,
+      index,
+    }));
     return self;
   }
 
