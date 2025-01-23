@@ -62,7 +62,7 @@ export class Objective {
   }
   static getDefault(): Objective {
     return new Objective({
-      id: 0,
+      id: undefined,
       type: 'STO',
       plan_id: 0,
       status: 'not started',
@@ -72,6 +72,7 @@ export class Objective {
       target: 0,
       start_point: 0,
       order: 0,
+      index: undefined, // Changed from 0 to undefined
     });
   }
 }

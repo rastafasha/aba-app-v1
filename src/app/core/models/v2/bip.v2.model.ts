@@ -23,7 +23,7 @@ export class Intervention {
   }
   static getDefault(): Intervention {
     return {
-      index: 0,
+      index: undefined,
       title: '',
       description: '',
     };
@@ -40,7 +40,7 @@ export class Attention {
   }
   static getDefault(): Attention {
     return new Attention({
-      index: 0,
+      index: undefined, // Changed from 0
       preventive_strategies: '',
       replacement_skills: '',
       manager_strategies: '',
@@ -58,7 +58,7 @@ export class Escape {
   }
   static getDefault(): Escape {
     return new Escape({
-      index: 0,
+      index: undefined, // Changed from 0
       preventive_strategies: '',
       replacement_skills: '',
       manager_strategies: '',
@@ -76,7 +76,7 @@ export class Sensory {
   }
   static getDefault(): Sensory {
     return new Sensory({
-      index: 0,
+      index: undefined, // Changed from 0
       preventive_strategies: '',
       replacement_skills: '',
       manager_strategies: '',
@@ -94,7 +94,7 @@ export class Tangible {
   }
   static getDefault(): Tangible {
     return new Tangible({
-      index: 0,
+      index: undefined, // Changed from 0
       preventive_strategies: '',
       replacement_skills: '',
       manager_strategies: '',
@@ -112,7 +112,7 @@ export class PrevalentSettingEventAndAntecedent {
   }
   static getDeafult(): PrevalentSettingEventAndAntecedent {
     return {
-      index: 0,
+      index: undefined, // Changed from 0
       prevalent_setting_event_and_atecedent: '',
       behavior: '',
       hypothesized_functions: '',
@@ -130,7 +130,7 @@ export class AssestmentEvaluationSetting {
   }
   static getDefault() {
     return new AssestmentEvaluationSetting({
-      index: 0,
+      index: undefined, // Changed from 0
       tangible: '',
       activities: '',
       other: '',
@@ -150,7 +150,7 @@ export class Medication {
   }
   static getDefault(): Medication {
     return {
-      index: 0,
+      index: undefined, // Changed from 0
       medication: '',
       dose: '',
       frecuency: '',
@@ -202,7 +202,7 @@ export class Recomendation {
     return {
       id: 0,
       de_escalation_technique_id: 0,
-      index: 0,
+      index: undefined, // Changed from 0
       cpt: '',
       num_units: 0,
       breakdown_per_week: '',

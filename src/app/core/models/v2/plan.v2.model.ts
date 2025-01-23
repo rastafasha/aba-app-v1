@@ -96,6 +96,10 @@ export class PlanV2 {
       category: 'maladaptive',
       status: 'active',
       objectives: [],
+      index: undefined, // Changed from 0 to undefined
+      created_at: undefined,
+      updated_at: undefined,
+      deleted_at: undefined,
     });
   }
 }
