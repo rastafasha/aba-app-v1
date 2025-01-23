@@ -24,7 +24,6 @@ export class PlansV2Service extends RepositoryV2Service<PlanV2> {
       data.baseline_date = new Date(data.baseline_date)
         .toISOString()
         .split('T')[0] as never;
-    console.log(typeof data.baseline_date, data.baseline_date);
     return data;
   }
 }

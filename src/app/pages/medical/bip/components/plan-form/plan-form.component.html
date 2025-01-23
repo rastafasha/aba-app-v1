@@ -120,9 +120,15 @@
 
 <div mat-dialog-actions>
   <div class="col-12 mb-3 text-end">
-    <button (click)="onCancel()" class="btn btn-outline-danger btn-sm">
+    <button
+      *ngIf="showCancel"
+      (click)="onCancel()"
+      class="btn btn-outline-danger btn-sm"
+    >
       Cancel
     </button>
-    <button (click)="onSave()" class="btn btn-primary btn-sm">Save</button>
+    <button *ngIf="showSave" (click)="onSave()" class="btn btn-primary btn-sm">
+      Save
+    </button>
   </div>
 </div>

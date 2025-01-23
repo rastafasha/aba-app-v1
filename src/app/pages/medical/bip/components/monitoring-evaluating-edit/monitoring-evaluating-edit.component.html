@@ -1,26 +1,50 @@
 <div class="row">
   <h3 class="card-title">{{ title }}</h3>
-  <app-plan-form [(input)]="input"></app-plan-form>
+  <app-plan-form
+    title=""
+    [(input)]="input"
+    (cancel)="onCancel()"
+    (save)="onSave()"
+    [showSave]="false"
+    [showCancel]="false"
+  >
+    <ng-content></ng-content>
+  </app-plan-form>
 
   <app-list-and-form
+    #stoList
     class="mt-4"
     title="Short Term Objectives"
     [(newItem)]="newSto"
     [dataSource]="input.objectives | arrayFilter : 'type' : 'STO'"
+    (dataSourceChange)="onListChange($event, 'STO')"
     [displayedColumns]="displayedColumns"
     [renders]="renders"
   >
-    <app-rbt-training-goal-form [(input)]="newSto"></app-rbt-training-goal-form>
+    <app-rbt-training-goal-form
+      [(input)]="newSto"
+      (save)="stoList.onAdd($event)"
+      (cancel)="stoList.onClose()"
+    ></app-rbt-training-goal-form>
   </app-list-and-form>
 
   <app-list-and-form
     class="mt-4"
     title="Long Term Objectives"
+    #ltoList
     [(newItem)]="newLto"
     [dataSource]="input.objectives | arrayFilter : 'type' : 'LTO'"
+    (dataSourceChange)="onListChange($event, 'LTO')"
     [displayedColumns]="displayedColumns"
     [renders]="renders"
   >
-    <app-rbt-training-goal-form [(input)]="newLto"></app-rbt-training-goal-form>
+    <app-rbt-training-goal-form
+      [(input)]="newLto"
+      (save)="ltoList.onAdd($event)"
+      (cancel)="ltoList.onClose()"
+    ></app-rbt-training-goal-form>
   </app-list-and-form>
+</div>
+<div class="doctor-submit text-end mt-4">
+  <button class="btn btn-primary btn-sm" (click)="onSave()">Save</button>
 </div>
