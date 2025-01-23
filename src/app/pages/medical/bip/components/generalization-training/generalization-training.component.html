@@ -35,7 +35,7 @@
           <app-generalization-training-form
             [(input)]="newItem"
             (cancel)="list.onClose()"
-            (save)="list.onAdd($event)"
+            (save)="list.onAdd($event); onSave()"
           ></app-generalization-training-form>
         </app-list-and-form>
 
@@ -57,7 +57,7 @@
             title="Generalization Training"
             [(input)]="newItem"
             (cancel)="onBack()"
-            (save)="onSave()"
+            (save)="onSave(); onBack()"
           >
           </app-generalization-training-edit>
         </div>

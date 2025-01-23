@@ -13,7 +13,11 @@
           [renders]="renders"
           [options]="options"
         >
-          <app-crisis-plan-form [(input)]="newItem" (save)="list.onAdd($event)">
+          <app-crisis-plan-form
+            [(input)]="newItem"
+            (cancel)="list.onClose()"
+            (save)="list.onAdd($event); onSave()"
+          >
           </app-crisis-plan-form>
         </app-list-and-form>
 
@@ -33,7 +37,11 @@
 
         <!-- Edit -->
         <div *ngIf="state === 'edit'">
-          <app-crisis-plan-edit [(input)]="newItem" (save)="onSave()">
+          <app-crisis-plan-edit
+            [(input)]="newItem"
+            (cancel)="onBack()"
+            (save)="onSave(); onBack()"
+          >
           </app-crisis-plan-edit>
         </div>
       </div>
