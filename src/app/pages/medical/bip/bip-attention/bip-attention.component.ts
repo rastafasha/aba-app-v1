@@ -45,7 +45,9 @@ export class BipAttentionComponent implements OnInit {
 
   onSave(bip: BipV2) {
     this.useCases.save(bip, this.old_bip).subscribe({
-      next: () => {
+      next: (resp) => {
+        this.bip = resp.data;
+        this.saveOld();
         Swal.fire('Updated', `Bip Updated successfully!`, 'success');
       },
       error: (error) => {
@@ -53,5 +55,8 @@ export class BipAttentionComponent implements OnInit {
         console.log(error);
       },
     });
+  }
+  private saveOld() {
+    this.old_bip = new BipV2(JSON.parse(JSON.stringify(this.bip)));
   }
 }

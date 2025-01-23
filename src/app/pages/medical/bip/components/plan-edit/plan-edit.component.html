@@ -10,15 +10,19 @@
   </app-plan-form>
 
   <app-list-and-form
+    #stoList
     class="mt-4"
     title="Short Term Objectives"
     [(newItem)]="newSto"
     [dataSource]="input.objectives | arrayFilter : 'type' : 'STO'"
+    (dataSourceChange)="onListChange($event, 'STO')"
     [displayedColumns]="displayedColumns"
     [renders]="renders"
   >
     <app-objective-form
       [(input)]="newSto"
+      (save)="stoList.onAdd($event)"
+      (cancel)="stoList.onClose()"
       title="Short Term Objective"
     ></app-objective-form>
   </app-list-and-form>
@@ -26,14 +30,21 @@
   <app-list-and-form
     class="mt-4"
     title="Long Term Objectives"
+    #ltoList
     [(newItem)]="newLto"
     [dataSource]="input.objectives | arrayFilter : 'type' : 'LTO'"
+    (dataSourceChange)="onListChange($event, 'LTO')"
     [displayedColumns]="displayedColumns"
     [renders]="renders"
   >
     <app-objective-form
       [(input)]="newLto"
+      (save)="ltoList.onAdd($event)"
+      (cancel)="ltoList.onClose()"
       title="Long Term Objective"
     ></app-objective-form
   ></app-list-and-form>
+</div>
+<div class="doctor-submit text-end mt-4">
+  <button class="btn btn-primary btn-sm" (click)="onSave()">Save</button>
 </div>
