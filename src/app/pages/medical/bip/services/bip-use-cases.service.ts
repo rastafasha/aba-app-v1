@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { forkJoin, of, switchMap } from 'rxjs';
-import { BipV2, Objective, PlanV2 } from 'src/app/core/models';
+import { BipV2, CrisisPlanV2, Objective, PlanV2 } from 'src/app/core/models';
 import {
   BipsV2Service,
+  CrisisPlansV2Service,
   ObjectivesV2Service,
   PlansV2Service,
 } from 'src/app/core/services';
@@ -85,6 +86,30 @@ export class BipUseCasesService {
       : of(null);
   }
 
+  private handleCrisisPlanChanges(
+    newPlans: CrisisPlanV2[],
+    oldPlans: CrisisPlanV2[],
+    bipId: number
+  ) {
+    const createAndUpdateOperations =
+      this.repositoryUtils.handleUpdatesAndCreates(
+        newPlans,
+        oldPlans,
+        this.crisisPlanService,
+        (plan) => (plan.bip_id = bipId)
+      );
+
+    const deleteOperations = this.repositoryUtils.handleDeletes(
+      oldPlans,
+      newPlans,
+      this.crisisPlanService
+    );
+
+    return createAndUpdateOperations.length || deleteOperations.length
+      ? forkJoin([...createAndUpdateOperations, ...deleteOperations])
+      : of(null);
+  }
+
   save(bip: BipV2, old_bip: BipV2) {
     logTable(old_bip, bip);
 
@@ -105,6 +130,14 @@ export class BipUseCasesService {
             bip.id
           )
         );
+        // Add crisis plan handling
+        planOperations.push(
+          this.handleCrisisPlanChanges(
+            bip.crisis_plans,
+            old_bip.crisis_plans,
+            bip.id
+          )
+        );
         return forkJoin(planOperations);
       }),
       // Then update the BIP
@@ -117,6 +150,7 @@ export class BipUseCasesService {
     private bipService: BipsV2Service,
     private planService: PlansV2Service,
     private objectiveService: ObjectivesV2Service,
+    private crisisPlanService: CrisisPlansV2Service,
     private repositoryUtils: RepositoryUtils
   ) {}
 }

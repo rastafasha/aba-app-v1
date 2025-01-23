@@ -1,6 +1,7 @@
 //@index('./*.service.ts', f => `export * from '${f.path}';`)
 export * from './api.service';
 export * from './bips.v2.service';
+export * from './crisis-plans.v2.service';
 export * from './doctors.service';
 export * from './doctors.v2.service';
 export * from './insurances.service';
