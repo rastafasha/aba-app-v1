@@ -9,6 +9,9 @@ export class InputDirective<T> {
   //
   @Output() save = new EventEmitter<T>();
   @Output() cancel = new EventEmitter<void>();
+  //
+  @Input() showSave = true;
+  @Input() showCancel = true;
   onSave() {
     this.inputChange.emit(this.input);
     this.save.emit(this.input);

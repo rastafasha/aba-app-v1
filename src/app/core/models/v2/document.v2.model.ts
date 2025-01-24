@@ -14,7 +14,7 @@ export class DocumentV2 {
   }
   static getDefault(): DocumentV2 {
     return {
-      index: 0,
+      index: undefined,
       title: '',
       status: 'no',
     };

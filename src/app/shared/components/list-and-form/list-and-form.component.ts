@@ -110,7 +110,8 @@ export class ListAndFormComponent<T> implements OnInit {
     this.open();
   }
   onDelete(item: T) {
-    this.dataSource = this.strategy.delete(item['index'] - 1, this.dataSource);
+    const index = this.dataSource.indexOf(item);
+    this.dataSource = this.strategy.delete(index, this.dataSource);
     this.updateList();
     this.dataSourceChange.emit(this.dataSource);
     this.delete.emit(item);

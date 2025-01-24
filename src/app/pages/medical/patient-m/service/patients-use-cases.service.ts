@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { combineLatest, map, Observable, of, switchMap } from 'rxjs';
 import { url_servicios } from 'src/app/config/config';
-import { ApiV2Response, CreateResponse, PatientV2 } from 'src/app/core/models';
+import { ApiV2Response, PatientV2 } from 'src/app/core/models';
 import { PatientsV2Service } from 'src/app/core/services';
 import { PaServicesV2Service } from 'src/app/core/services/pa-services.v2.service';
 import { PatientMService } from './patient-m.service';
@@ -12,12 +12,9 @@ import { PatientMService } from './patient-m.service';
   providedIn: 'root',
 })
 export class PatientsUseCasesService {
-  
   savePatient(value: PatientV2, id) {
     //actualizar o crear?
-    const action$: Observable<
-      CreateResponse<PatientV2> | ApiV2Response<PatientV2>
-    > = id
+    const action$: Observable<ApiV2Response<PatientV2>> = id
       ? this.patientsV2Service.update(value, id)
       : this.patientsV2Service.create(value);
     //
@@ -25,23 +22,31 @@ export class PatientsUseCasesService {
       //crear nuevos pa_services y devolver el patient actualizado
       switchMap((resp) => {
         const pa_services = value.pa_services.filter((item) => item.id < 0);
-        const pa_servicesToDelete = value.pa_services.filter((item) => item.id > 0 && item.deleted);
+        const pa_servicesToDelete = value.pa_services.filter(
+          (item) => item.id > 0 && item.deleted
+        );
         if (pa_services.length === 0 && pa_servicesToDelete.length === 0) {
           return of(resp);
         }
         // Handle creation of new pa_services
-        const createServices$ = pa_services.length > 0 
-          ? combineLatest(
-              pa_services.map((item) => this.paServicesV2Service.create(item))
-            )
-          : of(null);
+        const createServices$ =
+          pa_services.length > 0
+            ? combineLatest(
+                pa_services.map((item) => this.paServicesV2Service.create(item))
+              )
+            : of(null);
         // Handle deletion of existing pa_services
-        const deleteServices$ = pa_servicesToDelete.length > 0 
-          ? combineLatest(
-              pa_servicesToDelete.map((item) => this.paServicesV2Service.delete(item.id, resp.data.id)) // Assuming a delete method exists
-            )
-          : of(null);
-        return combineLatest([createServices$, deleteServices$]).pipe(map(() => resp));
+        const deleteServices$ =
+          pa_servicesToDelete.length > 0
+            ? combineLatest(
+                pa_servicesToDelete.map((item) =>
+                  this.paServicesV2Service.delete(item.id, resp.data.id)
+                ) // Assuming a delete method exists
+              )
+            : of(null);
+        return combineLatest([createServices$, deleteServices$]).pipe(
+          map(() => resp)
+        );
       })
       // actualizamos la lista de pa_services
       // switchMap((resp) => {
@@ -51,9 +56,8 @@ export class PatientsUseCasesService {
   }
   savePatientCreate(value: PatientV2) {
     //crear
-    const action$: Observable<
-      CreateResponse<PatientV2> | ApiV2Response<PatientV2>
-    > = this.patientsV2Service.create(value);
+    const action$: Observable<ApiV2Response<PatientV2>> =
+      this.patientsV2Service.create(value);
     //
     return action$.pipe(
       //crear nuevos pa_services y devolver el patient actualizado

@@ -12,12 +12,13 @@
           [displayedColumns]="displayedColumns"
           [renders]="renders"
           [options]="options"
+          (dataSourceChange)="onDataSourceChange($event)"
         >
           <app-plan-form
             title="Skill Acquisition/Replacement Goals"
             [(input)]="newGoal"
             (cancel)="list.onClose()"
-            (save)="list.onAdd($event)"
+            (save)="list.onAdd($event); onSave()"
           >
             <p>
               These goals will be accomplished using shaping and chaining
@@ -32,6 +33,12 @@
             </p>
           </app-plan-form>
         </app-list-and-form>
+        <!-- Save -->
+        <div *ngIf="state === 'list'" class="doctor-submit text-end mt-4">
+          <button class="btn btn-primary btn-sm" (click)="onSave()">
+            Save
+          </button>
+        </div>
         <!-- Back -->
         <div *ngIf="state !== 'list'" class="doctor-submit text-end">
           <button class="btn btn-primary btn-sm" (click)="onBack()">
@@ -43,6 +50,8 @@
           <app-plan-edit
             title="Skill Acquisition/Replacement Goals"
             [(input)]="newGoal"
+            (cancel)="onBack()"
+            (save)="onUpdate($event)"
           >
             <p>
               These goals will be accomplished using shaping and chaining

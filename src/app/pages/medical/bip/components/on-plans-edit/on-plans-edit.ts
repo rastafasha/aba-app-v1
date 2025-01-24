@@ -54,6 +54,14 @@ export abstract class OnPlansEdit extends InputDirective<PlanV2[]> {
     context.onDelete(item);
   }
 
+  onUpdate(item: PlanV2) {
+    const index = this.input.findIndex((x) => x.id === item.id);
+    this.input[index] = item;
+    this.inputChange.emit(this.input);
+    this.onSave();
+    this.onBack();
+  }
+
   onBack() {
     this.state = 'list';
   }

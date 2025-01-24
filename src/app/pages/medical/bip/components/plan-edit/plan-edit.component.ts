@@ -1,6 +1,6 @@
 import { DatePipe, TitleCasePipe } from '@angular/common';
 import { Component, inject, Input, LOCALE_ID } from '@angular/core';
-import { Objective, PlanV2 } from 'src/app/core/models';
+import { Objective, ObjectiveType, PlanV2 } from 'src/app/core/models';
 import { ListRender } from 'src/app/shared/components/list/list.component';
 import { InputDirective } from 'src/app/shared/directives/input.directive';
 
@@ -30,4 +30,10 @@ export class PlanEditComponent extends InputDirective<PlanV2> {
     initial_date: (x) => this.datePipe.transform(x.initial_date, 'shortDate'),
     end_date: (x) => this.datePipe.transform(x.end_date, 'shortDate'),
   };
+
+  onListChange(objectives: Objective[], type: ObjectiveType) {
+    const others = this.input.objectives.filter((item) => item.type !== type);
+    this.input.objectives = [...others, ...objectives];
+    this.inputChange.emit(this.input);
+  }
 }

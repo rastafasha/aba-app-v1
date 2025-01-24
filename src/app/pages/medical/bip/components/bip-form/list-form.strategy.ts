@@ -37,7 +37,7 @@ export class ListFormStrategy<T extends ListItem> {
   delete(i: number, items: T[]): T[] {
     items.splice(i, 1);
     items.forEach((item, index) => {
-      item.index = index + 1;
+      item.index = index;
     });
     this.emiter.emit(items);
     return items;
@@ -51,12 +51,19 @@ export class ListFormStrategy<T extends ListItem> {
       return { text: 'Please enter all fields', items, item };
     }
     items ??= [];
-    if (!items[item.index - 1]) {
-      item.index = items.length + 1;
+
+    // Check if this is a new item (index is undefined or null)
+    const isNewItem = item.index === undefined || item.index === null;
+
+    if (isNewItem) {
+      // New item - add to the end of the array
+      item.index = items.length;
       items.push({ ...item });
     } else {
-      items[item.index - 1] = { ...item };
+      // Existing item - update at the specified index
+      items[item.index] = { ...item };
     }
+
     this.emiter.emit(items);
     return { text: '', items, item: { ...this.defaultItem } };
   }

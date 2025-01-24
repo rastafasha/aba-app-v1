@@ -13,4 +13,13 @@ export class FamilyInvolvementGoalFormComponent extends OnPlansEdit {
     category: 'caregiver_training',
   };
   options = this.defaultOptions;
+
+  onDataSourceChange(data: PlanV2[]) {
+    this.input = data;
+    this.inputChange.emit(this.input);
+  }
+
+  onSave() {
+    this.save.emit(this.input);
+  }
 }

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CrisisPlan } from 'src/app/core/models';
+import { CrisisPlanV2 } from 'src/app/core/models';
 import { ListAndFormComponent } from 'src/app/shared/components/list-and-form/list-and-form.component';
 
 @Component({
@@ -8,16 +8,17 @@ import { ListAndFormComponent } from 'src/app/shared/components/list-and-form/li
   styleUrls: ['./crisis-plan.component.scss'],
 })
 export class CrisisPlanComponent {
-  @Input() input: CrisisPlan[];
-  @Output() inputChange = new EventEmitter<CrisisPlan[]>();
-  @Output() save = new EventEmitter<CrisisPlan[]>();
+  @Input() input: CrisisPlanV2[];
+  @Output() inputChange = new EventEmitter<CrisisPlanV2[]>();
+  @Output() save = new EventEmitter<CrisisPlanV2[]>();
 
   state: 'list' | 'edit' = 'list';
-  newItem: CrisisPlan = CrisisPlan.getDefault();
+  newItem: CrisisPlanV2 = CrisisPlanV2.getDefault();
 
-  displayedColumns: (keyof CrisisPlan)[] = ['crisis_description'];
+  displayedColumns: (keyof CrisisPlanV2)[] = ['crisis_description'];
   renders = {
-    crisis_description: (item: CrisisPlan) => item.crisis_description || 'N/A',
+    crisis_description: (item: CrisisPlanV2) =>
+      item.crisis_description || 'N/A',
   };
 
   options = [
@@ -25,22 +26,22 @@ export class CrisisPlanComponent {
       text: 'Select',
       icon: 'fa fa-eye',
       class: 'btn btn-outline-primary btn-sm',
-      action: (item: CrisisPlan) => this.onSelect(item),
+      action: (item: CrisisPlanV2) => this.onSelect(item),
     },
     {
       text: 'Delete',
       icon: 'fa fa-trash-alt',
       class: 'btn btn-outline-danger btn-sm',
-      action: (item: CrisisPlan, context: never) =>
+      action: (item: CrisisPlanV2, context: never) =>
         this.onDelete(item, context),
     },
   ];
-  onSelect(item: CrisisPlan) {
+  onSelect(item: CrisisPlanV2) {
     this.newItem = { ...item };
     this.state = 'edit';
   }
 
-  onDelete(item: CrisisPlan, context: ListAndFormComponent<CrisisPlan>) {
+  onDelete(item: CrisisPlanV2, context: ListAndFormComponent<CrisisPlanV2>) {
     context.onDelete(item);
   }
 

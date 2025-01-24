@@ -24,7 +24,7 @@ export const OBJECTIVE_STATUS_MAP: Record<ObjectiveStatus, string> = {
 export type ObjectiveType = 'STO' | 'LTO';
 export class Objective {
   id: number;
-  maladaptive_id: number;
+  plan_id: number;
   type: ObjectiveType;
   status: ObjectiveStatus;
   description: string;
@@ -42,7 +42,7 @@ export class Objective {
     const self: Objective = {
       ...data,
       id: NumberOrNullOrUndefined(data.id),
-      maladaptive_id: NumberOrNullOrUndefined(data.maladaptive_id),
+      plan_id: NumberOrNullOrUndefined(data.plan_id),
       status:
         (StringOrNullOrUndefined(data.status) as ObjectiveStatus) ||
         'not started',
@@ -62,9 +62,9 @@ export class Objective {
   }
   static getDefault(): Objective {
     return new Objective({
-      id: 0,
+      id: undefined,
       type: 'STO',
-      maladaptive_id: 0,
+      plan_id: 0,
       status: 'not started',
       initial_date: new Date(),
       end_date: null,
@@ -72,6 +72,7 @@ export class Objective {
       target: 0,
       start_point: 0,
       order: 0,
+      index: undefined, // Changed from 0 to undefined
     });
   }
 }
