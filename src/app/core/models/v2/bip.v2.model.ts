@@ -216,6 +216,7 @@ export class Recomendation {
 export class DeEscalationTechnique {
   id: number;
   bip_id: number;
+  index?: number;
   patient_id: string;
   client_id: number;
   description: string;

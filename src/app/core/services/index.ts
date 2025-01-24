@@ -19,3 +19,5 @@ export * from './plans.v2.service';
 export * from './providers.v2.service';
 export * from './repository.v2.service';
 export * from './repository.utils';
+export * from './de-escalation-techniques.v2.service';
+export * from './generalization-trainings.v2.service';
