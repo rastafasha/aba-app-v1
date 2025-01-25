@@ -1,7 +1,23 @@
 <div class="header">
   <div class="header-left">
-    <span *ngIf="role === 'SUPERADMIN' || role === 'ADMIN'">
+    <span *ngIf="role === 'SUPERADMIN' ">
       <a [routerLink]="routes.dashboard.admin" class="logo">
+        <img
+          src="assets/svg/logo-solo.svg"
+          width="45"
+          alt=""
+        />
+        <span>
+          <img
+            src="assets/svg/logoPmc-tipo.svg"
+            width="115"
+            alt=""
+          />
+        </span>
+      </a>
+    </span>
+    <span *ngIf="role === 'ADMIN'">
+      <a [routerLink]="[routes.location.list]" class="logo">
         <img
           src="assets/svg/logo-solo.svg"
           width="45"

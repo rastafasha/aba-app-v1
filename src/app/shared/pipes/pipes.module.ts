@@ -17,6 +17,7 @@ import { TransformToHourPipe } from './transform-to-hours.pipe';
 import { FilterDisponibilidadCptPipe } from './filter-disponibilidad-cpt.pipe';
 import { ClearTextPipe } from './clear-text.pipe';
 import { CellRenderPipe } from './cell-render.pipe';
+import { AdminFilterPipe } from './admin-filter.pipe';
 import { HeadRenderPipe } from './head-render.pipe';
 
 const components = [
@@ -38,6 +39,7 @@ const components = [
   ClearTextPipe,
   CellRenderPipe,
   HeadRenderPipe,
+  AdminFilterPipe
 ];
 @NgModule({
   declarations: [...components],
