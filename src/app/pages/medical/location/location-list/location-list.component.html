@@ -103,6 +103,7 @@
                     <td>
                       <a [routerLink]="[routes.location.view, data.id]">
                         {{ data.title }}
+                        
                       </a>
                     </td>
                     <td>{{ data.email }}</td>
@@ -111,7 +112,7 @@
                     <td>{{ data.phone2 }}</td>
                     <td>{{ data.zip }}</td>
                     <td>{{ data.created_at |  date : "shortDate" }}</td>
-
+                    <!-- options -->
                     <td class="text-end">
                       <div class="dropdown dropdown-action">
                         <a
@@ -146,7 +147,7 @@
                         </div>
                       </div>
                     </td>
-
+                    <!-- options -->
                     <!-- modal -->
                     <div
                       [attr.id]="'delete_staff-' + data.id"
