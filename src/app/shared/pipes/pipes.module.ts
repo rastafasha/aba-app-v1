@@ -39,6 +39,7 @@ const components = [
   ClearTextPipe,
   CellRenderPipe,
   HeadRenderPipe,
+  AdminFilterPipe
 ];
 @NgModule({
   declarations: [...components],
