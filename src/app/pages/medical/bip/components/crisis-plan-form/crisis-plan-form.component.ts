@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CrisisPlan } from 'src/app/core/models';
+import { CrisisPlanV2 } from 'src/app/core/models';
 
 @Component({
   selector: 'app-crisis-plan-form',
@@ -7,9 +7,9 @@ import { CrisisPlan } from 'src/app/core/models';
 })
 export class CrisisPlanFormComponent {
   @Input() title = 'Crisis Plan';
-  @Input() input: CrisisPlan = CrisisPlan.getDefault();
-  @Output() inputChange = new EventEmitter<CrisisPlan>();
-  @Output() save = new EventEmitter<CrisisPlan>();
+  @Input() input: CrisisPlanV2 = CrisisPlanV2.getDefault();
+  @Output() inputChange = new EventEmitter<CrisisPlanV2>();
+  @Output() save = new EventEmitter<CrisisPlanV2>();
   @Output() cancel = new EventEmitter<void>();
 
   onSave() {

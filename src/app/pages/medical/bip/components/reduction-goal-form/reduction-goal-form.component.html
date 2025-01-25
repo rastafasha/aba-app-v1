@@ -11,10 +11,22 @@
           [(dataSource)]="input"
           [displayedColumns]="displayedColumns"
           [renders]="renders"
+          [headRenders]="headRenders"
           [options]="options"
         >
-          <app-plan-form [(input)]="newGoal"></app-plan-form>
+          <app-plan-form
+            [(input)]="newGoal"
+            (save)="list.onAdd($event); onSave()"
+            (cancel)="list.onClose()"
+          ></app-plan-form>
         </app-list-and-form>
+        <!-- Save -->
+        <div *ngIf="state === 'list'" class="doctor-submit text-end mt-4">
+          <button class="btn btn-primary btn-sm" (click)="onSave()">
+            Save
+          </button>
+        </div>
+
         <!-- Back -->
         <div *ngIf="state !== 'list'" class="doctor-submit text-end">
           <button class="btn btn-primary btn-sm" (click)="onBack()">
@@ -27,7 +39,7 @@
             title="Reduction Goal"
             [(input)]="newGoal"
             (cancel)="onBack()"
-            (save)="onSave()"
+            (save)="onUpdate($event)"
           >
           </app-plan-edit>
 

@@ -2,33 +2,18 @@ import {
   ForceMap,
   NumberOrNullOrUndefined,
   StringOrNullOrUndefined,
-  TypeOrNullOrUndefined,
 } from 'src/app/shared/utils';
 import { GeneralizationTraining } from './generalization-training.v2.model';
 import { Objective } from './objective.v2.model';
 import { PlanV2 } from './plan.v2.model';
+import { DocumentV2 } from './document.v2.model';
+import { CrisisPlanV2 } from './crisis-plan.v2.model';
 type TypeOfAssessment = 1 | 2 | 3;
 export const TYPE_OF_ASSESSMENT_MAP: Record<TypeOfAssessment, string> = {
   1: 'Assessment',
   2: 'Reassessment',
   3: 'Initial',
 };
-
-export class DocumentV2 {
-  index: number;
-  title: string;
-  status?: 'pending' | 'reviewing' | 'yes' | 'no';
-  constructor(data: Partial<DocumentV2>) {
-    Object.assign(this, data);
-  }
-  static getDefault(): DocumentV2 {
-    return {
-      index: 0,
-      title: '',
-      status: 'no',
-    };
-  }
-}
 
 export class Intervention {
   index?: number;
@@ -39,7 +24,7 @@ export class Intervention {
   }
   static getDefault(): Intervention {
     return {
-      index: 0,
+      index: undefined,
       title: '',
       description: '',
     };
@@ -56,7 +41,7 @@ export class Attention {
   }
   static getDefault(): Attention {
     return new Attention({
-      index: 0,
+      index: undefined, // Changed from 0
       preventive_strategies: '',
       replacement_skills: '',
       manager_strategies: '',
@@ -74,7 +59,7 @@ export class Escape {
   }
   static getDefault(): Escape {
     return new Escape({
-      index: 0,
+      index: undefined, // Changed from 0
       preventive_strategies: '',
       replacement_skills: '',
       manager_strategies: '',
@@ -92,7 +77,7 @@ export class Sensory {
   }
   static getDefault(): Sensory {
     return new Sensory({
-      index: 0,
+      index: undefined, // Changed from 0
       preventive_strategies: '',
       replacement_skills: '',
       manager_strategies: '',
@@ -110,7 +95,7 @@ export class Tangible {
   }
   static getDefault(): Tangible {
     return new Tangible({
-      index: 0,
+      index: undefined, // Changed from 0
       preventive_strategies: '',
       replacement_skills: '',
       manager_strategies: '',
@@ -128,7 +113,7 @@ export class PrevalentSettingEventAndAntecedent {
   }
   static getDeafult(): PrevalentSettingEventAndAntecedent {
     return {
-      index: 0,
+      index: undefined, // Changed from 0
       prevalent_setting_event_and_atecedent: '',
       behavior: '',
       hypothesized_functions: '',
@@ -146,7 +131,7 @@ export class AssestmentEvaluationSetting {
   }
   static getDefault() {
     return new AssestmentEvaluationSetting({
-      index: 0,
+      index: undefined, // Changed from 0
       tangible: '',
       activities: '',
       other: '',
@@ -166,7 +151,7 @@ export class Medication {
   }
   static getDefault(): Medication {
     return {
-      index: 0,
+      index: undefined, // Changed from 0
       medication: '',
       dose: '',
       frecuency: '',
@@ -201,7 +186,10 @@ export class ConsentToTreatment {
     Object.assign(this, data);
   }
 }
+
 export class Recomendation {
+  id: number;
+  de_escalation_technique_id: number;
   index?: number;
   cpt: string;
   num_units: number;
@@ -213,6 +201,9 @@ export class Recomendation {
   }
   static getDefault(): Recomendation {
     return {
+      id: 0,
+      de_escalation_technique_id: 0,
+      index: undefined, // Changed from 0
       cpt: '',
       num_units: 0,
       breakdown_per_week: '',
@@ -225,6 +216,7 @@ export class Recomendation {
 export class DeEscalationTechnique {
   id: number;
   bip_id: number;
+  index?: number;
   patient_id: string;
   client_id: number;
   description: string;
@@ -253,154 +245,12 @@ export class DeEscalationTechnique {
   }
 }
 
-export class CrisisPlan {
-  id: number;
-  bip_id: number;
-  patient_id: string;
-  client_id: number;
-  crisis_description: string;
-  crisis_note: string;
-  caregiver_requirements_for_prevention_of_crisis: string;
-  risk_factors: RiskFactor;
-  suicidalities: Suicidality;
-  homicidalities: Homicidality;
-  created_at?: Date;
-  updated_at?: Date;
-  deleted_at?: Date;
-  constructor(data: Partial<CrisisPlan>) {
-    Object.assign(this, data);
-    this.risk_factors = new RiskFactor(data.risk_factors);
-    this.suicidalities = new Suicidality(data.suicidalities);
-    this.homicidalities = new Homicidality(data.homicidalities);
-  }
-  static getDefault(): CrisisPlan {
-    return {
-      id: 0,
-      bip_id: 0,
-      patient_id: '',
-      client_id: 0,
-      crisis_description: '',
-      crisis_note: '',
-      caregiver_requirements_for_prevention_of_crisis: '',
-      risk_factors: RiskFactor.getDefault(),
-      suicidalities: Suicidality.getDefault(),
-      homicidalities: Homicidality.getDefault(),
-    };
-  }
-}
-export class RiskFactor {
-  do_not_apply: boolean;
-  elopement: boolean;
-  assaultive_behavior: boolean;
-  aggression: boolean;
-  self_injurious_behavior: boolean;
-  sexually_offending_behavior: boolean;
-  fire_setting: boolean;
-  current_substance_abuse: boolean;
-  impulsive_behavior: boolean;
-  psychotic_symptoms: boolean;
-  self_mutilation_cutting: boolean;
-  caring_for_ill_family_recipient: boolean;
-  current_family_violence: boolean;
-  dealing_with_significant: boolean;
-  prior_psychiatric_inpatient_admission: boolean;
-  other: string;
-  constructor(data: Partial<RiskFactor>) {
-    Object.assign(this, data);
-    this.do_not_apply = !!data.do_not_apply;
-    this.elopement = !!data.elopement;
-    this.assaultive_behavior = !!data.assaultive_behavior;
-    this.aggression = !!data.aggression;
-    this.self_injurious_behavior = !!data.self_injurious_behavior;
-    this.sexually_offending_behavior = !!data.sexually_offending_behavior;
-    this.fire_setting = !!data.fire_setting;
-    this.current_substance_abuse = !!data.current_substance_abuse;
-    this.impulsive_behavior = !!data.impulsive_behavior;
-    this.psychotic_symptoms = !!data.psychotic_symptoms;
-    this.self_mutilation_cutting = !!data.self_mutilation_cutting;
-    this.caring_for_ill_family_recipient =
-      !!data.caring_for_ill_family_recipient;
-    this.current_family_violence = !!data.current_family_violence;
-    this.dealing_with_significant = !!data.dealing_with_significant;
-    this.prior_psychiatric_inpatient_admission =
-      !!data.prior_psychiatric_inpatient_admission;
-  }
-  static getDefault(): RiskFactor {
-    return {
-      do_not_apply: false,
-      elopement: false,
-      assaultive_behavior: false,
-      aggression: false,
-      self_injurious_behavior: false,
-      sexually_offending_behavior: false,
-      fire_setting: false,
-      current_substance_abuse: false,
-      impulsive_behavior: false,
-      psychotic_symptoms: false,
-      self_mutilation_cutting: false,
-      caring_for_ill_family_recipient: false,
-      current_family_violence: false,
-      dealing_with_significant: false,
-      prior_psychiatric_inpatient_admission: false,
-      other: '',
-    };
-  }
-}
-export class Suicidality {
-  not_present: boolean;
-  ideation: boolean;
-  plan: boolean;
-  means: boolean;
-  prior_attempt: boolean;
-  constructor(data: Partial<Suicidality>) {
-    Object.assign(this, data);
-    this.not_present = !!data.not_present;
-    this.ideation = !!data.ideation;
-    this.plan = !!data.plan;
-    this.means = !!data.means;
-    this.prior_attempt = !!data.prior_attempt;
-  }
-  static getDefault(): Suicidality {
-    return {
-      not_present: false,
-      ideation: false,
-      plan: false,
-      means: false,
-      prior_attempt: false,
-    };
-  }
-}
-export class Homicidality {
-  not_present: boolean;
-  ideation: boolean;
-  plan: boolean;
-  means: boolean;
-  prior_attempt: boolean;
-  constructor(data: Partial<Homicidality>) {
-    Object.assign(this, data);
-    this.not_present = !!data.not_present;
-    this.ideation = !!data.ideation;
-    this.plan = !!data.plan;
-    this.means = !!data.means;
-    this.prior_attempt = !!data.prior_attempt;
-  }
-  static getDefault(): Homicidality {
-    return {
-      not_present: false,
-      ideation: false,
-      plan: false,
-      means: false,
-      prior_attempt: false,
-    };
-  }
-}
-
 export class Sustitution extends PlanV2 {
   stos: Objective[];
   ltos: Objective[];
   constructor(data: Partial<Sustitution>) {
     super(data);
-    this.category = 'sustitution';
+    this.category = 'replacement';
     this.stos = ForceMap(data.stos, Objective);
     this.ltos = ForceMap(data.ltos, Objective);
   }
@@ -418,47 +268,40 @@ export class DocumentReviewed {
 
 export class BipV2 {
   id: number;
-  client_id: number;
-  type_of_assessment: TypeOfAssessment;
+  client_id: number; //patient_id
   doctor_id: number;
-  doctor: Doctor;
-  patient_identifier: string;
-  background_information: string;
-  previus_treatment_and_result: string;
-  current_treatment_and_progress: string;
-  education_status: string;
-  phisical_and_medical_status: string;
-  phiysical_and_medical: string;
-  phisical_and_medical: Medication[];
-  assestment_conducted: string | null;
-  strengths: string;
-  weakneses: string;
-  documents_reviewed: DocumentV2[];
-  maladaptives: PlanV2[];
-  replacements: PlanV2[];
+  assestment_conducted: string;
   assestment_conducted_options: DocumentV2[];
-  assestmentEvaluationSettings: AssestmentEvaluationSetting[];
-  prevalent_setting_event_and_atecedents: PrevalentSettingEventAndAntecedent[];
-  interventions: Intervention[];
-  goal_stos: string | null;
-  goal_ltos: string | null;
-  hypothesis_based_intervention: string | null;
-  tangibles: Tangible[];
+  assestment_evaluation_settings: AssestmentEvaluationSetting[];
   attention: Attention[];
-  escape: Escape[];
-  sensory: Sensory[];
-  reduction_goal: PlanV2[];
-  sustitution_goal: Sustitution[];
-  family_envolment: PlanV2[];
-  rbt_trainings: PlanV2[];
-  monitoring_evalutating: PlanV2[];
-  generalization_trainings: GeneralizationTraining[];
-  crisis_plans: CrisisPlan[];
-  de_escalation_techniques: DeEscalationTechnique[];
-  consent_to_treatments: ConsentToTreatment[];
+  background_information: string;
   caregiver_trainings: PlanV2[];
-  created_at?: Date;
+  consent_to_treatments: ConsentToTreatment[];
+  crisis_plans: CrisisPlanV2[]; //make endpoint
+  current_treatment_and_progress: string;
+  de_escalation_techniques: DeEscalationTechnique[]; //make endpoint
+  documents_reviewed: DocumentV2[];
+  education_status: string;
+  escape: Escape[];
+  generalization_trainings: GeneralizationTraining[];
+  hypothesis_based_intervention: string;
+  interventions: Intervention[];
+  maladaptives: PlanV2[];
+  patient_identifier: string;
+  physical_and_medical: Medication[];
+  physical_and_medical_status: string;
+  prevalent_setting_event_and_atecedents: PrevalentSettingEventAndAntecedent[];
+  previus_treatment_and_result: string;
+  rbt_trainings: PlanV2[];
+  replacements: PlanV2[];
+  sensory: Sensory[];
+  strengths: string;
+  sustitution_goal: Sustitution[];
+  tangibles: Tangible[];
+  type_of_assessment: TypeOfAssessment;
+  weakneses: string;
   updated_at?: Date;
+  created_at?: Date;
   deleted_at?: Date;
 
   constructor(data: Partial<BipV2>) {
@@ -470,15 +313,14 @@ export class BipV2 {
         data.type_of_assessment
       ) as TypeOfAssessment,
       doctor_id: NumberOrNullOrUndefined(data.doctor_id),
-      doctor: TypeOrNullOrUndefined(data.doctor, Doctor),
       patient_identifier: StringOrNullOrUndefined(data.patient_identifier),
-      phiysical_and_medical: StringOrNullOrUndefined(data.phisical_and_medical),
+
       maladaptives: ForceMap(data.maladaptives, PlanV2),
       replacements: ForceMap(data.replacements, PlanV2),
       strengths: StringOrNullOrUndefined(data.strengths),
       weakneses: StringOrNullOrUndefined(data.weakneses),
-      assestmentEvaluationSettings: ForceMap(
-        data.assestmentEvaluationSettings,
+      assestment_evaluation_settings: ForceMap(
+        data.assestment_evaluation_settings,
         AssestmentEvaluationSetting
       ),
       assestment_conducted_options: ForceMap(
@@ -493,23 +335,19 @@ export class BipV2 {
         data.current_treatment_and_progress
       ),
       education_status: StringOrNullOrUndefined(data.education_status),
-      family_envolment: ForceMap(data.family_envolment, PlanV2),
-      goal_ltos: StringOrNullOrUndefined(data.goal_ltos),
-      goal_stos: StringOrNullOrUndefined(data.goal_stos),
+      caregiver_trainings: ForceMap(data.caregiver_trainings, PlanV2),
       hypothesis_based_intervention: StringOrNullOrUndefined(
         data.hypothesis_based_intervention
       ),
       interventions: ForceMap(data.interventions, Intervention),
-      monitoring_evalutating: ForceMap(data.monitoring_evalutating, PlanV2),
-      phisical_and_medical: ForceMap(data.phisical_and_medical, Medication),
-      phisical_and_medical_status: StringOrNullOrUndefined(
-        data.phisical_and_medical_status
+      rbt_trainings: ForceMap(data.rbt_trainings, PlanV2),
+      physical_and_medical: ForceMap(data.physical_and_medical, Medication),
+      physical_and_medical_status: StringOrNullOrUndefined(
+        data.physical_and_medical_status
       ),
       previus_treatment_and_result: StringOrNullOrUndefined(
         data.previus_treatment_and_result
       ),
-      rbt_trainings: ForceMap(data.rbt_trainings, PlanV2),
-      reduction_goal: ForceMap(data.reduction_goal, PlanV2),
       sensory: ForceMap(data.sensory, Sensory),
       sustitution_goal: ForceMap(data.sustitution_goal, Sustitution),
       tangibles: ForceMap(data.tangibles, Tangible),
@@ -528,13 +366,69 @@ export class BipV2 {
         data.generalization_trainings,
         GeneralizationTraining
       ),
-      crisis_plans: ForceMap(data.crisis_plans, CrisisPlan),
+      crisis_plans: ForceMap(data.crisis_plans, CrisisPlanV2),
       prevalent_setting_event_and_atecedents: ForceMap(
         data.prevalent_setting_event_and_atecedents,
         PrevalentSettingEventAndAntecedent
       ),
-      caregiver_trainings: ForceMap(data.caregiver_trainings, PlanV2),
     };
+    //Extra Changes
+    self.maladaptives = self.maladaptives.map((item, index) => ({
+      ...item,
+      index,
+    }));
+    self.replacements = self.replacements.map((item, index) => ({
+      ...item,
+      index,
+    }));
+    self.caregiver_trainings = self.caregiver_trainings.map((item, index) => ({
+      ...item,
+      index,
+    }));
+    self.rbt_trainings = self.rbt_trainings.map((item, index) => ({
+      ...item,
+      index,
+    }));
     return self;
+  }
+  static getDefault(): BipV2 {
+    return {
+      id: undefined,
+      client_id: undefined,
+      type_of_assessment: undefined,
+      doctor_id: undefined,
+      patient_identifier: undefined,
+      strengths: undefined,
+      weakneses: undefined,
+      assestment_evaluation_settings: [],
+      assestment_conducted_options: [],
+      assestment_conducted: undefined,
+      background_information: undefined,
+      current_treatment_and_progress: undefined,
+      education_status: undefined,
+      caregiver_trainings: [],
+      hypothesis_based_intervention: undefined,
+      interventions: [],
+      rbt_trainings: [],
+      physical_and_medical: [],
+      physical_and_medical_status: undefined,
+      previus_treatment_and_result: undefined,
+      sensory: [],
+      sustitution_goal: [],
+      tangibles: [],
+      attention: [],
+      escape: [],
+      generalization_trainings: [],
+      maladaptives: [],
+      replacements: [],
+      documents_reviewed: [],
+      crisis_plans: [],
+      de_escalation_techniques: [],
+      consent_to_treatments: [],
+      prevalent_setting_event_and_atecedents: [],
+      created_at: undefined,
+      updated_at: undefined,
+      deleted_at: undefined,
+    };
   }
 }

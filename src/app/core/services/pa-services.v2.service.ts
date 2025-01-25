@@ -5,7 +5,6 @@ import { url_servicios } from 'src/app/config/config';
 import { fromIsoToDate } from 'src/app/shared/utils';
 import {
   ApiV2Response,
-  CreateResponse,
   ListParameters,
   ListResponse,
   PaServiceV2,
@@ -42,7 +41,7 @@ export class PaServicesV2Service extends RepositoryV2Service<PaServiceV2> {
 
   override create(
     data: Partial<PaServiceV2>
-  ): Observable<CreateResponse<PaServiceV2>> {
+  ): Observable<ApiV2Response<PaServiceV2>> {
     this.changeEndpoint(data?.patient_id);
     return super.create(data).pipe(this.restoreEndpoint());
   }
@@ -72,7 +71,10 @@ export class PaServicesV2Service extends RepositoryV2Service<PaServiceV2> {
   }
 
   // override delete(id: number): Observable<void>;
-  override delete(id: number, patient_id = 0): Observable<void> {
+  override delete(
+    id: number,
+    patient_id = 0
+  ): Observable<ApiV2Response<PaServiceV2>> {
     this.changeEndpoint(patient_id);
     return super.delete(id).pipe(this.restoreEndpoint());
   }

@@ -17,6 +17,7 @@ export class BipAttentionComponent implements OnInit {
   optionSelected = 1;
   patient: PatientV2;
   bip: BipV2;
+  old_bip: BipV2;
   constructor(
     private useCases: BipUseCasesService,
     private activatedRoute: ActivatedRoute,
@@ -38,12 +39,15 @@ export class BipAttentionComponent implements OnInit {
   getBip() {
     this.useCases.getBipByClientId(this.patient.id).subscribe((resp) => {
       this.bip = resp.data;
+      this.old_bip = new BipV2(JSON.parse(JSON.stringify(this.bip)));
     });
   }
 
-  onSave() {
-    this.useCases.updateBip(this.bip).subscribe({
-      next: () => {
+  onSave(bip: BipV2) {
+    this.useCases.save(bip, this.old_bip).subscribe({
+      next: (resp) => {
+        this.bip = resp.data;
+        this.saveOld();
         Swal.fire('Updated', `Bip Updated successfully!`, 'success');
       },
       error: (error) => {
@@ -51,5 +55,8 @@ export class BipAttentionComponent implements OnInit {
         console.log(error);
       },
     });
+  }
+  private saveOld() {
+    this.old_bip = new BipV2(JSON.parse(JSON.stringify(this.bip)));
   }
 }

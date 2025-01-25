@@ -1,10 +1,5 @@
-export interface CreateResponse<T> {
-  data: T;
-  status: string;
-  message: string;
-}
-
 export interface ApiV2Response<T> {
+  message?: string;
   status: 'success' | 'error';
   data: T;
 }

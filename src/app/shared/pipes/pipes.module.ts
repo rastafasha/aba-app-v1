@@ -18,6 +18,7 @@ import { FilterDisponibilidadCptPipe } from './filter-disponibilidad-cpt.pipe';
 import { ClearTextPipe } from './clear-text.pipe';
 import { CellRenderPipe } from './cell-render.pipe';
 import { AdminFilterPipe } from './admin-filter.pipe';
+import { HeadRenderPipe } from './head-render.pipe';
 
 const components = [
   ArrayFilterPipe,
@@ -37,7 +38,7 @@ const components = [
   FilterDisponibilidadCptPipe,
   ClearTextPipe,
   CellRenderPipe,
-  AdminFilterPipe
+  HeadRenderPipe,
 ];
 @NgModule({
   declarations: [...components],

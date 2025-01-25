@@ -36,7 +36,7 @@
     <ng-container *ngFor="let item of displayedColumns">
       <ng-container [matColumnDef]="$any(item)">
         <th mat-header-cell *matHeaderCellDef>
-          {{ $any(item) | clearText | titlecase }}
+          {{ $any(item)|headRender: headRenders?.[item] | clearText | titlecase }}
         </th>
         <td
           mat-cell

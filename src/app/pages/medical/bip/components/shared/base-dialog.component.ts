@@ -4,10 +4,10 @@ import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   template: '',
 })
-export class BaseDialogComponent {
-  @Input() input: any;
-  @Output() inputChange = new EventEmitter<any>();
-  @Output() save = new EventEmitter<any>();
+export class BaseDialogComponent<T> {
+  @Input() input: T;
+  @Output() inputChange = new EventEmitter<T>();
+  @Output() save = new EventEmitter<T>();
   @Output() cancel = new EventEmitter<void>();
 
   constructor(protected dialogRef?: MatDialogRef<any>) {}

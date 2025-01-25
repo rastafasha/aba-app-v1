@@ -1,4 +1,4 @@
-import { compareObjects, DateOrNullOrUndefined } from 'src/app/shared/utils';
+import { DateOrNullOrUndefined } from 'src/app/shared/utils';
 
 export class DoctorRoleV2 {
   id: number;
@@ -73,7 +73,5 @@ export class DoctorV2 {
     this.bacb_license_expiration = DateOrNullOrUndefined(
       data.bacb_license_expiration
     );
-    //TODO: remove
-    console.table(compareObjects(data, this));
   }
 }

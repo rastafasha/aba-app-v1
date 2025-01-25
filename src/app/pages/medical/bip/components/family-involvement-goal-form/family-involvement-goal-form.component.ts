@@ -8,6 +8,18 @@ import { OnPlansEdit } from '../on-plans-edit/on-plans-edit';
   styleUrls: ['./family-involvement-goal-form.component.scss'],
 })
 export class FamilyInvolvementGoalFormComponent extends OnPlansEdit {
-  protected newGoal: PlanV2 = { ...PlanV2.getDefault(), category: 'caregiver' };
+  protected newGoal: PlanV2 = {
+    ...PlanV2.getDefault(),
+    category: 'caregiver_training',
+  };
   options = this.defaultOptions;
+
+  onDataSourceChange(data: PlanV2[]) {
+    this.input = data;
+    this.inputChange.emit(this.input);
+  }
+
+  onSave() {
+    this.save.emit(this.input);
+  }
 }

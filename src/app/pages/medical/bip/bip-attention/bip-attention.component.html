@@ -42,31 +42,39 @@
             </ul>
           </div>
           <!-- 1 -->
-          <app-bip-form *ngIf="optionSelected === 1" [(bip)]="bip">
+          <app-bip-form
+            *ngIf="optionSelected === 1"
+            [(bip)]="bip"
+            (save)="onSave($event)"
+          >
           </app-bip-form>
           <!-- 2 -->
           <app-reduction-goal-form
             *ngIf="optionSelected === 2"
-            [(input)]="bip.maladaptives"
             [patient_identifier]="bip.patient_identifier"
+            [(input)]="bip.maladaptives"
+            (save)="onSave(bip)"
           >
           </app-reduction-goal-form>
           <!-- 3 -->
           <app-sustitution-list
             *ngIf="optionSelected === 3"
             [(input)]="bip.replacements"
+            (save)="onSave(bip)"
           >
           </app-sustitution-list>
           <!-- 4 -->
           <app-family-involvement-goal-form
             *ngIf="optionSelected === 4"
             [(input)]="bip.caregiver_trainings"
+            (save)="onSave(bip)"
           >
           </app-family-involvement-goal-form>
           <!-- 5 -->
           <app-monitoring-evaluating
             *ngIf="optionSelected === 5"
-            [(input)]="bip.monitoring_evalutating"
+            [(input)]="bip.rbt_trainings"
+            (save)="onSave(bip)"
           >
           </app-monitoring-evaluating>
           <!-- 6 -->
@@ -76,24 +84,28 @@
           <app-generalization-training
             *ngIf="optionSelected === 7"
             [(input)]="bip.generalization_trainings"
+            (save)="onSave(bip)"
           >
           </app-generalization-training>
           <!-- 8 -->
           <app-crisis-plan
             *ngIf="optionSelected === 8"
-            [input]="bip.crisis_plans"
+            [(input)]="bip.crisis_plans"
+            (save)="onSave(bip)"
           >
           </app-crisis-plan>
           <!-- 9 -->
           <app-de-escalation-tecniques
             *ngIf="optionSelected === 9"
             [(input)]="bip.de_escalation_techniques"
+            (save)="onSave(bip)"
           >
           </app-de-escalation-tecniques>
           <!-- 10 -->
           <app-consent-treatment-edit
             *ngIf="optionSelected === 10"
             [(input)]="bip.consent_to_treatments"
+            (save)="onSave(bip)"
           >
           </app-consent-treatment-edit>
         </div>

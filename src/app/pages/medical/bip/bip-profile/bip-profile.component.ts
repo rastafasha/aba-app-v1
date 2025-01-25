@@ -68,31 +68,3 @@ export class BipProfileComponent implements OnInit {
     );
   }
 }
-
-//convertToPdf(): void {
-//   const data = this.contentToConvert.nativeElement;
-//   html2canvas(data).then(canvas => {
-//     // Few necessary setting options
-//     const imgWidth = 208;
-//     const pageHeight = 295;
-//     const imgHeight = canvas.height * imgWidth / canvas.width;
-//     const heightLeft = imgHeight;
-
-//     const margins = {
-//       top: 40,
-//       bottom: 60,
-//       left: 40,
-//       width: 522
-//     };
-
-//     // Create a new PDF document
-//     const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
-//     // const pdf = new jspdf.jsPDF('p', 'pt', 'letter');
-
-//     // Add an image of the canvas to the PDF
-//     pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, imgWidth, imgHeight);
-
-//     // Save the PDF
-//     pdf.save('bip_'+this.patient_selected.patient_id+".pdf");
-//   });
-// }

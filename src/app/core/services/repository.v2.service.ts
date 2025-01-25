@@ -1,11 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, map, Observable, of } from 'rxjs';
-import {
-  ApiV2Response,
-  CreateResponse,
-  ListParameters,
-  ListResponse,
-} from '../models';
+import { ApiV2Response, ListParameters, ListResponse } from '../models';
 
 export abstract class RepositoryV2Service<T> {
   constructor(protected http: HttpClient, protected endpoint: string) {}
@@ -21,7 +16,7 @@ export abstract class RepositoryV2Service<T> {
       ),
       map((response) => ({
         ...response.data,
-        data: response.data.data.map((item) => this.transform(item)),
+        data: response.data?.data?.map((item) => this.transform(item)),
       }))
     );
   }
@@ -36,7 +31,7 @@ export abstract class RepositoryV2Service<T> {
 
   create(data) {
     const URL = this.endpoint;
-    return this.http.post<CreateResponse<T>>(URL, this.untransform(data)).pipe(
+    return this.http.post<ApiV2Response<T>>(URL, this.untransform(data)).pipe(
       map((response) => ({
         ...response,
         data: this.transform(response.data),
@@ -44,7 +39,7 @@ export abstract class RepositoryV2Service<T> {
     );
   }
 
-  update(data: T, id: number) {
+  update(data: T, id: number): Observable<ApiV2Response<T>> {
     const URL = this.endpoint + '/' + id;
     return this.http.put<ApiV2Response<T>>(URL, this.untransform(data)).pipe(
       map((response) => ({
@@ -67,7 +62,7 @@ export abstract class RepositoryV2Service<T> {
 
   delete(id: number) {
     const URL = this.endpoint + '/' + id;
-    return this.http.delete<void>(URL);
+    return this.http.delete<ApiV2Response<T>>(URL);
   }
 
   untransform(data: T): unknown {

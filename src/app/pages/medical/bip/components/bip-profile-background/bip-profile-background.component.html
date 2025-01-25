@@ -34,7 +34,7 @@
             <div class="col-xs-12 col-md-6">
               <div class="detail-personal">
                 <h2>Physical and Medical Status</h2>
-                <p>{{ bip.phisical_and_medical_status }}</p>
+                <p>{{ bip.physical_and_medical_status }}</p>
               </div>
             </div>
             <div class="col-xs-12 col-md-6">
@@ -58,19 +58,19 @@
                 <div class="col-xs-12">
                   <div class="detail-personal">
                     <h2>Physical And Medical Status</h2>
-                    <p>{{ bip.phiysical_and_medical }}</p>
+                    <p>{{ bip.physical_and_medical_status }}</p>
                   </div>
                 </div>
                 <div
                   *ngIf="
-                    !bip.phisical_and_medical ||
-                    bip.phisical_and_medical === null
+                    !bip.physical_and_medical ||
+                    bip.physical_and_medical === null
                   "
                 >
                   <app-no-info></app-no-info>
                 </div>
                 <ng-container
-                  *ngFor="let medication of bip.phisical_and_medical"
+                  *ngFor="let medication of bip.physical_and_medical"
                 >
                   <div class="col-xs-12 col-sm-3">
                     <div class="detail-personal">

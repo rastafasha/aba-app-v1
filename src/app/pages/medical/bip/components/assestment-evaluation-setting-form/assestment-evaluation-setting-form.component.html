@@ -1,56 +1,46 @@
 <h3 mat-dialog-title class="h3">Assessment Evaluation Setting</h3>
 <div mat-dialog-content>
   <div class="row mt-4">
-    <form>
-      <div class="row">
-        <div class="col-xs-12 col-sm-6">
-          <div class="form-group local-forms">
-            <label> Tangible<span class="login-danger">*</span> </label>
-            <textarea
-              class="form-control"
-              name="tangible"
-              [(ngModel)]="input.tangible"
-              rows="4"
-              cols="30"
-            >
-            </textarea>
-            <!-- <input class="form-control" name="assestment_title"  [(ngModel)]="assestment_title" type="text"  > -->
-          </div>
-        </div>
-        <div class="col-xs-12 col-sm-6">
-          <div class="form-group local-forms">
-            <label> Activities<span class="login-danger">*</span> </label>
-            <textarea
-              class="form-control"
-              name="activities"
-              [(ngModel)]="input.activities"
-              rows="4"
-              cols="30"
-            >
-            </textarea>
-          </div>
-        </div>
-        <div class="col-xs-12">
-          <div class="form-group local-forms">
-            <label>Other<span class="login-danger">*</span> </label>
-            <textarea
-              class="form-control"
-              name="other"
-              [(ngModel)]="input.other"
-              rows="4"
-              cols="30"
-            >
-            </textarea>
-          </div>
-        </div>
-
-        <div class="col-12 mb-3 doctor-submit text-end">
-          <button class="btn btn-primary btn-sm" (click)="onSave()">
-            Save
-          </button>
-        </div>
+    <div class="col-xs-12 col-sm-6">
+      <div class="form-group local-forms">
+        <label> Tangible<span class="login-danger">*</span> </label>
+        <textarea
+          class="form-control"
+          name="tangible"
+          [(ngModel)]="input.tangible"
+          rows="4"
+          cols="30"
+        >
+        </textarea>
+        <!-- <input class="form-control" name="assestment_title"  [(ngModel)]="assestment_title" type="text"  > -->
       </div>
-    </form>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <div class="form-group local-forms">
+        <label> Activities<span class="login-danger">*</span> </label>
+        <textarea
+          class="form-control"
+          name="activities"
+          [(ngModel)]="input.activities"
+          rows="4"
+          cols="30"
+        >
+        </textarea>
+      </div>
+    </div>
+    <div class="col-xs-12">
+      <div class="form-group local-forms">
+        <label>Other<span class="login-danger">*</span> </label>
+        <textarea
+          class="form-control"
+          name="other"
+          [(ngModel)]="input.other"
+          rows="4"
+          cols="30"
+        >
+        </textarea>
+      </div>
+    </div>
   </div>
 </div>
 <div mat-dialog-actions align="end">

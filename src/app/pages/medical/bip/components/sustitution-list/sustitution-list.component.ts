@@ -10,7 +10,16 @@ import { OnPlansEdit } from '../on-plans-edit/on-plans-edit';
 export class SustitutionListComponent extends OnPlansEdit {
   protected newGoal: PlanV2 = {
     ...PlanV2.getDefault(),
-    category: 'sustitution',
+    category: 'replacement',
   };
   options = this.defaultOptions;
+
+  onDataSourceChange(data: PlanV2[]) {
+    this.input = data;
+    this.inputChange.emit(this.input);
+  }
+
+  onSave() {
+    this.save.emit(this.input);
+  }
 }

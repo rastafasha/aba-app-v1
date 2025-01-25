@@ -25,14 +25,14 @@ export const PLAN_STATUS_MAP: Record<PlanStatus, string> = {
 
 export type PlanCategory =
   | 'maladaptive'
-  | 'sustitution'
-  | 'caregiver'
+  | 'replacement'
+  | 'caregiver_training'
   | 'rbt_training';
 
 export const PLAN_CATEGORY_MAP: Record<PlanCategory, string> = {
   maladaptive: 'Maladaptive',
-  sustitution: 'Substitution',
-  caregiver: 'Caregiver',
+  replacement: 'Replacement',
+  caregiver_training: 'Caregiver Training',
   rbt_training: 'RBT Training',
 };
 
@@ -48,7 +48,6 @@ export class PlanV2 {
   description: string;
   baseline_level: number;
   baseline_date: Date;
-  end_date: Date;
   initial_intensity: number;
   current_intensity: number;
   //
@@ -67,7 +66,6 @@ export class PlanV2 {
       description: StringOrNullOrUndefined(data.description),
       baseline_level: NumberOrNullOrUndefined(data.baseline_level),
       baseline_date: DateOrNullOrUndefined(data.baseline_date),
-      end_date: DateOrNullOrUndefined(data.end_date),
       initial_intensity: NumberOrNullOrUndefined(data.initial_intensity),
       current_intensity: NumberOrNullOrUndefined(data.current_intensity),
       category: StringOrNullOrUndefined(data.category) as 'maladaptive',
@@ -77,6 +75,11 @@ export class PlanV2 {
       updated_at: DateOrNullOrUndefined(data.updated_at),
       deleted_at: DateOrNullOrUndefined(data.deleted_at),
     };
+    //Extra Changes
+    self.objectives = self.objectives.map((item, index) => ({
+      ...item,
+      index,
+    }));
     return self;
   }
 
@@ -93,6 +96,10 @@ export class PlanV2 {
       category: 'maladaptive',
       status: 'active',
       objectives: [],
+      index: undefined, // Changed from 0 to undefined
+      created_at: undefined,
+      updated_at: undefined,
+      deleted_at: undefined,
     });
   }
 }

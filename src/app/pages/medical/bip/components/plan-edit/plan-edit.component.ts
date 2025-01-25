@@ -1,26 +1,15 @@
 import { DatePipe, TitleCasePipe } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  inject,
-  Input,
-  LOCALE_ID,
-  Output,
-} from '@angular/core';
-import { Objective, PlanV2 } from 'src/app/core/models';
+import { Component, inject, Input, LOCALE_ID } from '@angular/core';
+import { Objective, ObjectiveType, PlanV2 } from 'src/app/core/models';
 import { ListRender } from 'src/app/shared/components/list/list.component';
+import { InputDirective } from 'src/app/shared/directives/input.directive';
 
 @Component({
   selector: 'app-plan-edit',
   templateUrl: './plan-edit.component.html',
   styleUrls: ['./plan-edit.component.scss'],
 })
-export class PlanEditComponent {
-  @Input() input: PlanV2;
-  @Output() inputChange = new EventEmitter<PlanV2>();
-  @Output() save = new EventEmitter<PlanV2>();
-  @Output() cancel = new EventEmitter<void>();
-  //
+export class PlanEditComponent extends InputDirective<PlanV2> {
   @Input() title = 'Plan';
   //
   displayedColumns: (keyof Objective)[] = [
@@ -41,11 +30,10 @@ export class PlanEditComponent {
     initial_date: (x) => this.datePipe.transform(x.initial_date, 'shortDate'),
     end_date: (x) => this.datePipe.transform(x.end_date, 'shortDate'),
   };
-  onSave() {
+
+  onListChange(objectives: Objective[], type: ObjectiveType) {
+    const others = this.input.objectives.filter((item) => item.type !== type);
+    this.input.objectives = [...others, ...objectives];
     this.inputChange.emit(this.input);
-    this.save.emit(this.input);
-  }
-  onCancel() {
-    this.cancel.emit();
   }
 }

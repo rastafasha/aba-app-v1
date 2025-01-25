@@ -98,24 +98,6 @@
         </div>
       </div>
 
-      <!-- End Date -->
-      <div class="col-xs-12 col-md-6">
-        <div class="form-group local-forms">
-          <label>End Date <span class="login-danger">*</span></label>
-          <input
-            class="form-control datetimepicker"
-            name="end_date"
-            [(ngModel)]="input.end_date"
-            type="text"
-            matInput
-            [matDatepicker]="pickerEndDate"
-          />
-          <mat-datepicker #pickerEndDate></mat-datepicker>
-          <mat-datepicker-toggle matIconSuffix [for]="pickerEndDate">
-          </mat-datepicker-toggle>
-        </div>
-      </div>
-
       <!-- Description -->
       <div class="col-xs-12 col-md-12">
         <div class="form-group local-forms">
@@ -138,9 +120,15 @@
 
 <div mat-dialog-actions>
   <div class="col-12 mb-3 text-end">
-    <button (click)="onCancel()" class="btn btn-outline-danger btn-sm">
+    <button
+      *ngIf="showCancel"
+      (click)="onCancel()"
+      class="btn btn-outline-danger btn-sm"
+    >
       Cancel
     </button>
-    <button (click)="onSave()" class="btn btn-primary btn-sm">Save</button>
+    <button *ngIf="showSave" (click)="onSave()" class="btn btn-primary btn-sm">
+      Save
+    </button>
   </div>
 </div>

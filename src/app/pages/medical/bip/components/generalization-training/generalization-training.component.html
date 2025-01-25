@@ -35,9 +35,16 @@
           <app-generalization-training-form
             [(input)]="newItem"
             (cancel)="list.onClose()"
-            (save)="list.onAdd($event)"
+            (save)="list.onAdd($event); onSave()"
           ></app-generalization-training-form>
         </app-list-and-form>
+
+        <!-- Save -->
+        <div *ngIf="state === 'list'" class="doctor-submit text-end mt-4">
+          <button class="btn btn-primary btn-sm" (click)="onSave()">
+            Save
+          </button>
+        </div>
         <!-- Back -->
         <div *ngIf="state !== 'list'" class="doctor-submit text-end">
           <button class="btn btn-primary btn-sm" (click)="onBack()">
@@ -50,7 +57,7 @@
             title="Generalization Training"
             [(input)]="newItem"
             (cancel)="onBack()"
-            (save)="onSave()"
+            (save)="onSave(); onBack()"
           >
           </app-generalization-training-edit>
         </div>
