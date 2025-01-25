@@ -37,7 +37,7 @@ export class LoginUseCasesService {
         break;
         // solo tiene una locacion pero se comporta como superadmin
         case 'ADMIN':
-          this.router.navigate([AppRoutes.dashboard.admin]);
+          this.router.navigate([AppRoutes.location.list]);
           break;
           // solo tiene una locacion 
       case 'MANAGER':

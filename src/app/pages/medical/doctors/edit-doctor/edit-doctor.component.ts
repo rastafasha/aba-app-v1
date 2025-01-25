@@ -253,12 +253,12 @@ export class EditDoctorComponent implements OnInit {
       return;
     }
 
-    if (this.password) {
-      if (this.password !== this.password_confirmation) {
-        this.text_validation = 'Las contraseña debe ser igual';
-        return;
-      }
-    }
+    // if (this.password) {
+    //   if (this.password !== this.password_confirmation) {
+    //     this.text_validation = 'Las contraseña debe ser igual';
+    //     return;
+    //   }
+    // }
 
     const formData = new FormData();
     formData.append('name', this.name);
@@ -282,9 +282,6 @@ export class EditDoctorComponent implements OnInit {
       formData.append('address', this.address);
     }
 
-    if (this.password) {
-      formData.append('password', this.password);
-    }
 
     if (this.currently_pay_through_company) {
       formData.append(
