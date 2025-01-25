@@ -141,7 +141,7 @@ export class AddDoctorComponent implements OnInit {
       console.log(this.selectedValue);
       this.isManager = false;
 
-      if (role === 3) {
+      if (role === 3 || role === 'MANAGER') {
         this.isManager = true;
       }
     }
