@@ -10,6 +10,7 @@ import { LocationService } from '../services/location.service';
 import { AppUser } from 'src/app/core/models/users.model';
 import { C } from '@fullcalendar/core/internal-common';
 import { TitleStrategy } from '@angular/router';
+import { DoctorService } from '../../doctors/service/doctor.service';
 
 declare var $;
 
@@ -50,12 +51,15 @@ export class LocationListComponent implements OnInit {
   text_validation: string;
   role: string;
   user: AppUser;
+  doctor_selected: AppUser;
+  locations= [];
 
   constructor(
     private locationService: LocationService,
     private pageService: PageService,
     private fileSaver: FileSaverService,
-    private location: Location
+    private location: Location,
+    private doctorService: DoctorService
   ) {}
 
   ngOnInit() {
@@ -84,17 +88,28 @@ export class LocationListComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.list);
       this.calculateTotalPages(this.totalDataLocation, this.pageSize);
 
-      if(this.role === 'ADMIN'){
-        this.isADMIN = true;
-        //filtramos los datos para que solo se muestren los de la sede del admin
-        this.list = this.list.filter((location) => location.id === this.user.location_id);
-        this.filteredList = this.filteredList.filter((location) => location.id === this.user.location_id);
-      }
-    });
+      //traemos el doctor seleccionado
+      this.doctorService.showDoctor(this.user.id).subscribe((resp) => {
+        console.log(resp);
+        this.doctor_selected = resp.doctor;
+        this.locations = resp.locations;
+        console.log('Doctor locations:', this.locations);
+        // si el role es ADMIN mostramos las locaciones asignadas
+        if(this.role === 'ADMIN'){
+            this.isADMIN = true;
+            //unimos la respuesta con la lista de locaciones
+            this.filteredList = this.locations;// vienen las locaciones asignadas pero sin el title
+            
+          }
+      });
 
-    
-    
+      
+    });
   }
+
+ 
+  
+  
 
   getTableDataGeneral() {
     this.filteredList = [];
