@@ -155,17 +155,25 @@
                     </div>
                   </div>
                 </div>
+                <!-- roles -->
                 <div
                   class="col-12 col-md-4 col-xl-4"
                   *ngIf="user.roles[0] === 'SUPERADMIN' "
                 >
                   <div class="form-group local-forms">
-                    <label>Roles <span class="login-danger">*</span></label>
+                    <label>Roles <span class="login-danger">*</span>
+                      <i
+                      class="fa fa-info-circle"
+                      style="padding: 5px 0px"
+                      tooltip="SUPERADMIN, ADMIN, RBT and BCBA: All Locations, MANAGER: only 1 Location"
+                    ></i>
+                    </label>
                     <mat-select
                       [(ngModel)]="selectedValue"
                       [ngModelOptions]="{ standalone: true }"
                       class="form-control select"
                       placeholder="Select Role"
+                      (selectionChange)="selectRol($event)"
                     >
                       <mat-option *ngFor="let data of roles" [value]="data.id">
                         {{ data.name }}
@@ -178,12 +186,19 @@
                   *ngIf="user.roles[0] === 'ADMIN'"
                 >
                   <div class="form-group local-forms">
-                    <label>Roles <span class="login-danger">*</span></label>
+                    <label>Roles <span class="login-danger">*</span>
+                      <i
+                      class="fa fa-info-circle"
+                      style="padding: 5px 0px"
+                      tooltip="SUPERADMIN, ADMIN, RBT and BCBA: All Locations, MANAGER: only 1 Location"
+                    ></i>
+                    </label>
                     <mat-select
                       [(ngModel)]="selectedValue"
                       [ngModelOptions]="{ standalone: true }"
                       class="form-control select"
                       placeholder="Select Role"
+                      (selectionChange)="selectRol($event)"
                     >
                       <mat-option *ngFor="let data of roles | adminFilter" [value]="data.id">
                         {{ data.name }}
@@ -208,28 +223,21 @@
                         [value]="data.id"
                       >
                         {{data.name}}
-                        <!-- {{
-                          data.name === "BCBA" || data.name === "RBT"
-                            ? data.name
-                            : ""
-                        }} -->
                       </mat-option>
                     </mat-select>
                   </div>
                 </div>
+                <!-- roles -->
+                 <!-- locations -->
+                  <!-- si NO esta seleccionado el manager y el rol es SUPERADMIN o ADMIN -->
                 <div
                   class="col-12 col-md-4 col-xl-4"
-                  *ngIf="user.roles[0] === 'SUPERADMIN' || user.roles[0] === 'ADMIN'"
+                  *ngIf="!isManager && user.roles[0] === 'SUPERADMIN' || user.roles[0] === 'ADMIN'"
                 >
                   <div class="form-group local-forms">
                     <label
                       >Location <span class="login-danger">*</span>
-                      <i
-                        class="fa fa-info-circle"
-                        style="padding: 5px 0px"
-                        tooltip="SUPERADMIN, ADMIN, RBT and BCBA: All Locations, MANAGER: only 1 Location"
-                      ></i
-                    ></label>
+                     </label>
                     <mat-select
                       multiple="multiple"
                       [(ngModel)]="locations_selected"
@@ -246,6 +254,31 @@
                     </mat-select>
                   </div>
                 </div>
+                <!-- si viene el rol MANAGER -->
+                 <!-- Si esta seleccionado el manager y el rol es SUPERADMIN o ADMIN -->
+                <div
+                class="col-12 col-md-4 col-xl-4"
+                *ngIf="isManager && user.roles[0] === 'SUPERADMIN' || user.roles[0] === 'ADMIN'"
+              >
+                <div class="form-group local-forms">
+                  <label>Location <span class="login-danger">*</span></label>
+                  <mat-select
+                    [(ngModel)]="locations_selected"
+                    name="locations_selected"
+                    class="form-control select"
+                    [ngModelOptions]="{ standalone: true }"
+                    placeholder="Select Location"
+                  >
+                    <mat-option
+                      *ngFor="let data of locations"
+                      [value]="data.id"
+                    >
+                      {{ data.title }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+                <!-- si viene el rol MANAGER -->
                 <div
                   class="col-12 col-md-6 col-xl-4"
                   *ngIf="user.roles[0] === 'MANAGER'"
@@ -255,6 +288,8 @@
                     <h4 style="padding: 15px">{{ location.title }}</h4>
                   </div>
                 </div>
+                <!-- locations -->
+
                 <div class="col-12 col-sm-12">
                   <div class="form-group local-forms">
                     <label>Address <span class="login-danger">*</span></label>

@@ -16,7 +16,7 @@ export class EditDoctorComponent implements OnInit {
   routes = AppRoutes;
   selectedValue!: number;
   selectedValueLocation!: number;
-
+  isManager = false;
   name = '';
   surname = '';
   phone: any;
@@ -145,6 +145,19 @@ export class EditDoctorComponent implements OnInit {
     });
   }
 
+  selectRol(event: any) {
+    const role = event.value;
+    if (role) {
+      this.selectedValue = role;
+      console.log(this.selectedValue);
+      this.isManager = false;
+
+      if (role === 3 || role === 'MANAGER') {
+        this.isManager = true;
+      }
+    }
+  }
+
   showDoctortoEdit() {
     this.doctorService.showDoctor(this.doctor_id).subscribe((resp) => {
       this.locations_selected = resp.locations || [];
@@ -173,11 +186,6 @@ export class EditDoctorComponent implements OnInit {
       this.ss_number = this.doctor_selected.ss_number;
 
       this.birth_date = new Date(this.doctor_selected.birth_date).toISOString();
-      // if(this.birth_date ){
-      // }else{
-      //   this.birth_date = this.doctor_selected.birth_date;
-
-      // }
 
       this.initial_pay = this.doctor_selected.start_pay;
 
@@ -217,6 +225,12 @@ export class EditDoctorComponent implements OnInit {
       this.caqh_bcbas_only = this.doctor_selected.caqh_bcbas_only;
       this.contract_type = this.doctor_selected.contract_type;
       this.salary = this.doctor_selected.salary;
+
+      if (this.doctor_selected.roles.name === 'MANAGER') {
+        this.isManager = true;
+        // console.log(this.isManager);
+        this.locations_selected = [this.doctor_selected.location_id];
+      }
     });
   }
 
