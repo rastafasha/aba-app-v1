@@ -173,12 +173,13 @@
                     ></i
                   >
                     </label>
+                    <!-- (selectionChange)="selectRol($event)" -->
                     <mat-select
                       [(ngModel)]="selectedValue"
                       [ngModelOptions]="{ standalone: true }"
                       class="form-control select"
                       placeholder="Select Role"
-                      (selectionChange)="selectRol($event)"
+                      
                     >
                       <mat-option *ngFor="let data of roles" [value]="data.id">
                         {{ data.name }}
@@ -200,12 +201,13 @@
                     ></i
                   >
                     </label>
+                    <!-- (selectionChange)="selectRol($event)" -->
                     <mat-select
                       [(ngModel)]="selectedValue"
                       [ngModelOptions]="{ standalone: true }"
                       class="form-control select"
                       placeholder="Select Role"
-                      (selectionChange)="selectRol($event)"
+                      
                     >
                       <mat-option
                         *ngFor="let data of roles | adminFilter"
@@ -243,9 +245,10 @@
                 <!-- roles -->
                  <!-- location -->
                 <!-- si No seleciona el MANAGER y  el rol SUPERADMIN  o ADMIN-->
+                <!-- *ngIf=" !isManager && (role === 'SUPERADMIN' || role === 'ADMIN') "> -->
                 <div
                   class="col-12 col-md-4 col-xl-4"
-                  *ngIf=" !isManager && (role === 'SUPERADMIN' || role === 'ADMIN') ">
+                  *ngIf=" role === 'SUPERADMIN' || role === 'ADMIN' ">
                   
                   <div class="form-group local-forms">
                     <label
@@ -268,7 +271,7 @@
                   </div>
                 </div>
                 <!-- si seleciona el rol MANAGER -->
-                <div class="col-12 col-md-4 col-xl-4"  *ngIf="isManager " >
+                <!-- <div class="col-12 col-md-4 col-xl-4"  *ngIf="isManager " >
                   
                 <div class="form-group local-forms">
                   <label>Location <span class="login-danger">*</span></label>
@@ -287,7 +290,7 @@
                     </mat-option>
                   </mat-select>
                 </div>
-              </div>
+              </div> -->
                 
                 <!-- si el usuario es el rol MANAGER -->
                 <div

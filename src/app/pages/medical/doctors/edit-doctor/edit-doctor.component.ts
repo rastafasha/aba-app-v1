@@ -91,7 +91,7 @@ export class EditDoctorComponent implements OnInit {
   doctor_id: any;
   doctor_selected: DoctorV2;
   user: AppUser;
-  location_id: number;
+  // location_id: number;
 
   constructor(
     private doctorService: DoctorService,
@@ -146,24 +146,24 @@ export class EditDoctorComponent implements OnInit {
       this.showDoctortoEdit();
     });
   }
+  // filtro para el select de MANAGER
+  // selectRol(event: any) {
+  //   const role = event.value;
+  //   if (role) {
+  //     this.selectedValue = role;
+  //     console.log(this.selectedValue);
+  //     this.isManager = false;
 
-  selectRol(event: any) {
-    const role = event.value;
-    if (role) {
-      this.selectedValue = role;
-      console.log(this.selectedValue);
-      this.isManager = false;
-
-      if (role === 3 ) {
-        this.isManager = true;
-        this.isManager = this.selectedValue === 3;
-      }
-    }
-  }
+  //     if (role === 3 ) {
+  //       this.isManager = true;
+  //       this.isManager = this.selectedValue === 3;
+  //     }
+  //   }
+  // }
 
   showDoctortoEdit() {
     this.doctorService.showDoctor(this.doctor_id).subscribe((resp) => {
-      this.locations_selected = resp.locations || [];
+      this.locations_selected = resp.locations;
       this.doctor_selected = resp.user;
 
       this.selectedValue = this.doctor_selected.roles.id;
@@ -229,11 +229,11 @@ export class EditDoctorComponent implements OnInit {
       this.contract_type = this.doctor_selected.contract_type;
       this.salary = this.doctor_selected.salary;
 
-      if (this.doctor_selected.roles.name === 'MANAGER') {
-        this.isManager = true;
-        // console.log(this.isManager);
-        this.location_id = this.doctor_selected.location_id;
-      }
+      // if (this.doctor_selected.roles.name === 'MANAGER') {
+      //   this.isManager = true;
+      //   // console.log(this.isManager);
+      //   this.location_id = this.doctor_selected.location_id;
+      // }
       
       
     });
@@ -453,9 +453,9 @@ export class EditDoctorComponent implements OnInit {
       formData.append('schedule', this.schedule);
     }
 
-    if (this.location_id) {
-      formData.append('location_id',this.location_id+'' );
-    }
+    // if (this.location_id) {
+    //   formData.append('location_id',this.location_id+'' );
+    // }
 
     let locations = '';
     this.locations_selected.forEach((location, index) => {
