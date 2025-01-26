@@ -232,7 +232,7 @@
                   <!-- si NO esta seleccionado el manager y el rol es SUPERADMIN o ADMIN -->
                 <div
                   class="col-12 col-md-4 col-xl-4"
-                  *ngIf="!isManager && user.roles[0] === 'SUPERADMIN' || user.roles[0] === 'ADMIN'"
+                  *ngIf="!isManager && (user.roles[0] === 'SUPERADMIN' || user.roles[0] === 'ADMIN')"
                 >
                   <div class="form-group local-forms">
                     <label
@@ -258,13 +258,13 @@
                  <!-- Si esta seleccionado el manager y el rol es SUPERADMIN o ADMIN -->
                 <div
                 class="col-12 col-md-4 col-xl-4"
-                *ngIf="isManager && user.roles[0] === 'SUPERADMIN' || user.roles[0] === 'ADMIN'"
+                *ngIf="isManager && (user.roles[0] === 'SUPERADMIN' || user.roles[0] === 'ADMIN')"
               >
                 <div class="form-group local-forms">
                   <label>Location <span class="login-danger">*</span></label>
                   <mat-select
-                    [(ngModel)]="locations_selected"
-                    name="locations_selected"
+                    [(ngModel)]="location_id"
+                    name="location_id"
                     class="form-control select"
                     [ngModelOptions]="{ standalone: true }"
                     placeholder="Select Location"

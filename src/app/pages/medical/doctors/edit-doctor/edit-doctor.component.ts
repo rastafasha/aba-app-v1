@@ -91,6 +91,7 @@ export class EditDoctorComponent implements OnInit {
   doctor_id: any;
   doctor_selected: DoctorV2;
   user: AppUser;
+  location_id: number;
 
   constructor(
     private doctorService: DoctorService,
@@ -117,6 +118,7 @@ export class EditDoctorComponent implements OnInit {
     } else {
       this.getConfig();
     }
+   
   }
 
   goBack() {
@@ -152,8 +154,9 @@ export class EditDoctorComponent implements OnInit {
       console.log(this.selectedValue);
       this.isManager = false;
 
-      if (role === 3 || role === 'MANAGER') {
+      if (role === 3 ) {
         this.isManager = true;
+        this.isManager = this.selectedValue === 3;
       }
     }
   }
@@ -229,8 +232,10 @@ export class EditDoctorComponent implements OnInit {
       if (this.doctor_selected.roles.name === 'MANAGER') {
         this.isManager = true;
         // console.log(this.isManager);
-        this.locations_selected = [this.doctor_selected.location_id];
+        this.location_id = this.doctor_selected.location_id;
       }
+      
+      
     });
   }
 
@@ -447,6 +452,11 @@ export class EditDoctorComponent implements OnInit {
     if (this.schedule) {
       formData.append('schedule', this.schedule);
     }
+
+    if (this.location_id) {
+      formData.append('location_id',this.location_id+'' );
+    }
+
     let locations = '';
     this.locations_selected.forEach((location, index) => {
       if (index !== 0) {
