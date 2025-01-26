@@ -225,6 +225,8 @@ export class NoteBcbaComponent implements OnInit {
   objectives = [];
   obj_inprogress = [];
   obj_inprogress1 = [];
+  public textSchoolAlarm = 'It looks like the session time you entered is outside the standard school hours of Monday through Friday, 8:00 AM to 3:00 PM. Please double-check the time or update the POS as needed';
+  public textTelehealtWarning = 'You’ve selected POS 51 (Telehealth). Please make sure all telehealth requirements are met and confirm that this session complies with telehealth regulations before proceeding';
 
   constructor(
     private bipV2Service: BipsV2Service,
@@ -963,5 +965,18 @@ export class NoteBcbaComponent implements OnInit {
     const isCpt97151 = this.selectedPaService?.cpt === '97151';
     const isTelehealth = this.meet_with_client_at === '02';
     this.showPosWarning = isCpt97151 && isTelehealth;
+  }
+
+  public showAlarmSchool(): boolean {
+    let [horas, minutos] = this.selectedValueTimeIn.split(':').map(Number);
+    const selectedValueTimeIn = horas + minutos / 60;
+
+    [horas, minutos] = this.selectedValueTimeOut.split(':').map(Number);
+    const selectedValueTimeOut = horas + minutos / 60;
+
+    return (selectedValueTimeIn < 8 || selectedValueTimeOut > 15) && 
+            this.meet_with_client_at=='03' &&
+            this.selectedValueTimeIn.trim() !== '' &&
+            this.selectedValueTimeOut.trim() !== ''
   }
 }
