@@ -26,9 +26,13 @@
               >
             </li>
             <li class="submenu" *ngIf="menu.hasSubRoute === true">
+              <!-- (mouseenter)="expandSubMenus(menu)"
+              (mouseleave)="collapseSubMenus(menu)" -->
+              <!-- (click)="expandSubMenus(menu)" -->
               <a
-                [class.active]="base === menu.base"
-                (click)="expandSubMenus(menu)"
+              [class.active]="base === menu.base"
+              (mouseenter)="expandSubMenus(menu)"
+              
                 [ngClass]="{ subdrop: menu.showSubRoute === true }"
                 ><span class="menu-side"
                   ><i
