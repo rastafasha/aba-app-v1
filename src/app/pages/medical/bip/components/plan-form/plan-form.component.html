@@ -53,7 +53,7 @@
       </div>
 
       <!-- Initial Intensity -->
-      <div class="col-xs-12 col-md-6">
+      <div class="col-xs-12 col-md-6" *ngIf="showIntensity">
         <div class="form-group local-forms">
           <label>Initial Intensity <span class="login-danger">*</span></label>
           <input
@@ -67,7 +67,7 @@
       </div>
 
       <!-- Current Intensity -->
-      <div class="col-xs-12 col-md-6">
+      <div class="col-xs-12 col-md-6" *ngIf="showIntensity">
         <div class="form-group local-forms">
           <label>Current Intensity <span class="login-danger">*</span></label>
           <input

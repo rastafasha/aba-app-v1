@@ -74,6 +74,7 @@ export class ClientsLocationComponent {
   specialistList = [];
   patientid: any;
   patient_id: any;
+  patient_identifier: string;
   doctor_generals: any;
   doctor_id: any;
   search: any = null;
@@ -83,7 +84,8 @@ export class ClientsLocationComponent {
     private pageService: PageService,
     private locationService: LocationService,
     private activatedRoute: ActivatedRoute,
-    private patientService: PatientMService
+    private patientService: PatientMService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -132,6 +134,7 @@ export class ClientsLocationComponent {
       this.location_info = this.location_selected.location;
       // this.title= this.location_selected.location.title;
       this.patients = resp.patients;
+      
       this.specialists = resp.specialists;
 
       this.totalDatapatient = resp.specialists.length;
@@ -139,10 +142,11 @@ export class ClientsLocationComponent {
       this.locationService
         .listLocationPatients(this.search, this.status, this.location_id)
         .subscribe((resp) => {
+          console.log(resp);
           this.totalDatapatient = resp.patients.data.length;
           this.patient_generals = resp.patients.data;
           this.patientid = resp.patients.data.id;
-          this.patient_id = resp.patients.data.patient_id;
+          
           this.getTableDataGeneralPatient();
         });
     });

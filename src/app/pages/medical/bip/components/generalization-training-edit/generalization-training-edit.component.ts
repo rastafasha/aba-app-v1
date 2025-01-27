@@ -15,6 +15,6 @@ export class GeneralizationTrainingEditComponent extends InputDirective<Generali
   @Input() title: string;
 
   displayedColumns: (keyof TransitionFadingPlan)[] = ['phase', 'description'];
-  newPlan: TransitionFadingPlan = TransitionFadingPlan.getDefault();
+  newItem: TransitionFadingPlan = TransitionFadingPlan.getDefault();
   renders: ListRender<TransitionFadingPlan> = {};
 }

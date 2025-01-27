@@ -15,7 +15,7 @@ export class GeneralizationTrainingComponent extends InputDirective<
   GeneralizationTraining[]
 > {
   state: 'list' | 'edit' = 'list';
-  newItem: GeneralizationTraining = {} as GeneralizationTraining;
+  newItem: GeneralizationTraining = GeneralizationTraining.getDefault();
 
   displayedColumns: (keyof GeneralizationTraining)[] = ['discharge_plan'];
   renders = {};

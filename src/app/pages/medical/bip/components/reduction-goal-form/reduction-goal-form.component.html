@@ -16,6 +16,7 @@
         >
           <app-plan-form
             [(input)]="newGoal"
+            [showIntensity]="true"
             (save)="list.onAdd($event); onSave()"
             (cancel)="list.onClose()"
           ></app-plan-form>

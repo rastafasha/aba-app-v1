@@ -1,24 +1,29 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
-import { BaseDialogComponent } from '../shared/base-dialog.component';
-import { TransitionFadingPlan } from 'src/app/core/models';
+import { Component, OnInit } from '@angular/core';
+import {
+  deafultTransitionFadingPlan,
+  TransitionFadingPlan,
+} from 'src/app/core/models';
+import { InputDirective } from 'src/app/shared/directives/input.directive';
 
 @Component({
   selector: 'app-transition-fading-plan-form',
   templateUrl: './transition-fading-plan-form.component.html',
   styleUrls: ['./transition-fading-plan-form.component.scss'],
 })
-export class TransitionFadingPlanFormComponent extends BaseDialogComponent<TransitionFadingPlan> {
-  @Input() input: TransitionFadingPlan;
-  @Output() inputChange = new EventEmitter<TransitionFadingPlan>();
-  @Output() save = new EventEmitter<TransitionFadingPlan>();
+export class TransitionFadingPlanFormComponent
+  extends InputDirective<TransitionFadingPlan>
+  implements OnInit
+{
+  phases_map = deafultTransitionFadingPlan;
 
-  constructor(dialogRef: MatDialogRef<TransitionFadingPlanFormComponent>) {
-    super(dialogRef);
+  ngOnInit() {
+    if (!this.input.description) {
+      this.input.description = this.phases_map[this.input.phase];
+    }
   }
-
-  onSave() {
-    this.inputChange.emit(this.input);
-    this.save.emit(this.input);
+  onPhaseChange() {
+    if (this.input.phase) {
+      this.input.description = this.phases_map[this.input.phase];
+    }
   }
 }
