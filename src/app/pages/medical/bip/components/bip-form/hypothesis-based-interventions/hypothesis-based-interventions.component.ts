@@ -6,6 +6,7 @@ import {
   Sensory,
   Tangible,
 } from 'src/app/core/models';
+import { HeadRender } from 'src/app/shared/components/list/list.component';
 import { InputDirective } from 'src/app/shared/directives/input.directive';
 
 @Component({
@@ -18,4 +19,10 @@ export class HypothesisBasedInterventionsComponent extends InputDirective<BipV2>
   newSensory: Sensory = Sensory.getDefault();
   newEscape: Escape = Escape.getDefault();
   newAttention: Attention = Attention.getDefault();
+
+  headRenders: HeadRender<Tangible | Sensory | Escape | Attention> = {
+    preventive_strategies: () => 'Antecedent Based',
+    replacement_skills: () => 'Related to Function',
+    manager_strategies: () => 'Consequence Based',
+  };
 }

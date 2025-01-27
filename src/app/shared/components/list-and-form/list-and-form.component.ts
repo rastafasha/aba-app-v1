@@ -14,6 +14,7 @@ import { ListFormStrategy } from 'src/app/pages/medical/bip/components/bip-form/
 import {
   AddButtonOption,
   HeadRender,
+  KeyOf,
   ListOption,
   ListRender,
 } from '../list/list.component';
@@ -35,7 +36,7 @@ export class ListAndFormComponent<T> implements OnInit {
   @Output() view = new EventEmitter<T>();
   @Output() delete = new EventEmitter<T>();
   @Output() add = new EventEmitter<ListAndFormComponent<T>>();
-  @Input() displayedColumns: (keyof T)[] = [];
+  @Input() displayedColumns: KeyOf<T>[] = [];
   //options
   @Input() addButtonOptions: AddButtonOption = {
     show: true,

@@ -8,16 +8,20 @@
           people and settings to improve the durability of the behavioral
           outcomes. To enhance generalization, lead analyst/Behavior assistant
           will collaborate with caregivers as well as the primary care
-          physician, if requested.<br /><br />
+          physician, if requested.
+        </p>
+        <p>
           Specific strategies to facilitate generalization will include
           (training loosely or diversely, engaging support providers, using
           multiple exemplars, fading cues and prompts, variable reinforcement
           schedules, accessing natural and indiscriminate contingencies, and
-          thinning schedules of reinforcement).<br /><br />
+          thinning schedules of reinforcement).
+        </p>
+        <p>
           Once caregivers demonstrate proficiency in the implementation of
           procedures, they should start to consistently implement the Behavior
           plan with Analyst’s supervision. Program will be conducted during
-          daily living activities.<br /><br />
+          daily living activities.
         </p>
       </div>
       <div class="col-xs-12">
@@ -39,12 +43,6 @@
           ></app-generalization-training-form>
         </app-list-and-form>
 
-        <!-- Save -->
-        <div *ngIf="state === 'list'" class="doctor-submit text-end mt-4">
-          <button class="btn btn-primary btn-sm" (click)="onSave()">
-            Save
-          </button>
-        </div>
         <!-- Back -->
         <div *ngIf="state !== 'list'" class="doctor-submit text-end">
           <button class="btn btn-primary btn-sm" (click)="onBack()">
@@ -60,6 +58,12 @@
             (save)="onSave(); onBack()"
           >
           </app-generalization-training-edit>
+        </div>
+        <!-- Save -->
+        <div class="doctor-submit text-end mt-4">
+          <button class="btn btn-primary btn-sm" (click)="onSave()">
+            Save
+          </button>
         </div>
       </div>
     </div>

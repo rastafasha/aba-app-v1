@@ -2,39 +2,21 @@
   <div class="card-body">
     <div class="row align-items-center mb-4">
       <app-behavior-analysis-assessment-form
-        [(input)]="bip"
+        [(input)]="input"
       ></app-behavior-analysis-assessment-form>
-      <!-- Documents -->
-      <div class="row align-items-center mb-4">
-        <app-list-and-form
-          #documentsList
-          title="Documents Reviewed"
-          [(newItem)]="newDocument"
-          [(dataSource)]="bip.documents_reviewed"
-          [displayedColumns]="['title']"
-        >
-          <app-document-form
-            [(input)]="newDocument"
-            (cancel)="documentsList.onClose()"
-            (save)="documentsList.onAdd($event)"
-          >
-          </app-document-form>
-        </app-list-and-form>
-      </div>
-
       <!-- Medicals -->
 
       <div class="row align-items-center">
         <div class="col-xs-12">
           <div class="form-group local-forms">
             <label>
-              Phiysical And Medical Status
+              Physical And Medical Status
               <span class="login-danger">*</span>
             </label>
             <textarea
               class="form-control"
               name="phiysical_and_medical"
-              [(ngModel)]="bip.physical_and_medical_status"
+              [(ngModel)]="input.physical_and_medical_status"
               rows="4"
               cols="30"
             >
@@ -48,7 +30,7 @@
           #phisicalAndMedicalList
           title="Physical And Medical"
           [(newItem)]="newMedication"
-          [(dataSource)]="bip.physical_and_medical"
+          [(dataSource)]="input.physical_and_medical"
           [displayedColumns]="[
             'medication',
             'dose',
@@ -68,6 +50,7 @@
       <div class="row align-items-center my-2">
         <div class="doctor-submit text-end">
           <button
+            *ngIf="showSave"
             type="button"
             class="btn btn-primary submit-form"
             (click)="onSave()"

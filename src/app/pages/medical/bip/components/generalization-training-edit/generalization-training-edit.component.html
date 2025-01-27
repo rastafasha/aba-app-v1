@@ -4,6 +4,8 @@
 
     <app-generalization-training-form
       title=""
+      [showCancel]="false"
+      [showSave]="false"
       [(input)]="input"
       (cancel)="onCancel()"
       (save)="onSave()"
@@ -12,13 +14,16 @@
     <app-list-and-form
       class="mt-4"
       title="Transition Fading Plans"
-      [(newItem)]="newPlan"
+      #list
+      [(newItem)]="newItem"
       [dataSource]="input.transition_fading_plans"
       [displayedColumns]="displayedColumns"
       [renders]="renders"
     >
       <app-transition-fading-plan-form
-        [(input)]="newPlan"
+        [(input)]="newItem"
+        (cancel)="list.onClose()"
+        (save)="list.onAdd($event); onSave()"
       ></app-transition-fading-plan-form>
     </app-list-and-form>
   </div>
