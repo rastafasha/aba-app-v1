@@ -35,14 +35,6 @@
                 <div class="col-12 py-4">
                   <h4>Create Note Bcba</h4>
                 </div>
-
-                <app-alert
-                  *ngIf="showPosWarning"
-                  title="Potential erroneous POS selection"
-                  type="warning"
-                  content="Please make sure you have selected the correct POS code for this client."
-                >
-                </app-alert>
                 <!-- patient -->
                 <!-- First Name  -->
                 <div class="col-12 col-md-6 col-xl-4">
@@ -198,6 +190,14 @@
                     </select>
                   </div>
                 </div>
+                <div class="row" *ngIf="showPosWarning">
+                  <app-alert
+                    title="Oops!"
+                    type="warning"
+                    [content]="textTelehealtWarning"
+                  >
+                  </app-alert>
+                </div>
                 <div class="clear"></div>
                 <!-- time -->
                 <div class="row">
@@ -299,6 +299,13 @@
                       </div>
                     </div>
                   </div>
+                </div>
+                <div class="row mb-3" *ngIf="showAlarmSchool()">
+                  <app-alert
+                    [title]="'Oops!'"
+                    [type]="'warning'"
+                    [content]="textSchoolAlarm"
+                  ></app-alert>
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
