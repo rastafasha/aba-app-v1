@@ -173,64 +173,6 @@
                       }}
                     </td>
                     <td>{{ data.patient_identifier }}</td>
-
-                    <!-- <td>
-                      <span
-                        class="badge bg-primary"
-                        *ngIf="data.status === 'incoming'"
-                        >Incoming</span
-                      >
-                      <span
-                        class="badge bg-success"
-                        *ngIf="data.status === 'active'"
-                        >Active</span
-                      >
-                      <span
-                        class="badge bg-danger"
-                        *ngIf="data.status === 'inactive'"
-                        >Inactive</span
-                      >
-                      <span
-                        class="badge bg-primary"
-                        *ngIf="data.status === 'onHold'"
-                        >On Hold</span
-                      >
-                      <span
-                        class="badge bg-primary"
-                        *ngIf="data.status === 'onDischarge'"
-                        >On Discharge</span
-                      >
-                      <span
-                        class="badge bg-primary"
-                        *ngIf="data.status === 'waitintOnPa'"
-                        >Waiting on PA</span
-                      >
-                      <span
-                        class="badge bg-primary"
-                        *ngIf="data.status === 'waitintOnPaIa'"
-                        >Waiting on PA IA</span
-                      >
-                      <span
-                        class="badge bg-primary"
-                        *ngIf="data.status === 'waitintOnIa'"
-                        >Waiting on School</span
-                      >
-                      <span
-                        class="badge bg-primary"
-                        *ngIf="data.status === 'waitintOnServices'"
-                        >Waiting on Services</span
-                      >
-                      <span
-                        class="badge bg-primary"
-                        *ngIf="data.status === 'waitintOnStaff'"
-                        >Waiting on Staff</span
-                      >
-                      <span
-                        class="badge bg-primary"
-                        *ngIf="data.status === 'waitintOnSchool'"
-                        >Waiting on School</span
-                      >
-                    </td> -->
                     <td *ngIf="roles === 'SUPERADMIN' || roles === 'ADMIN'">
                       <select
                         class="form-control form-select-solid fw-bolder"

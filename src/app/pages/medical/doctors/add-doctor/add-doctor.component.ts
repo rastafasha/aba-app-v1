@@ -17,7 +17,7 @@ const url_servicios = environment.url_servicios;
 })
 export class AddDoctorComponent implements OnInit {
   routes = AppRoutes;
-  selectedValue!: string;
+  selectedValue!: number;
   selectedValueLocation!: number;
   isManager = false;
   name = '';
@@ -91,6 +91,7 @@ export class AddDoctorComponent implements OnInit {
   user: AppUser;
   doctor_id: number;
   location: any;
+  location_id: number;
   emailExists: boolean;
 
   constructor(
@@ -133,19 +134,23 @@ export class AddDoctorComponent implements OnInit {
   goBack() {
     this.locationBack.back(); // <-- go back to previous location on cancel
   }
+  // filtro para el select de MANAGER
+  // selectRol(event: any) {
+  //   const role = event.value;
+  //   this.isManager = false;
+  //   if (role) {
+  //     this.selectedValue = role;
+  //     console.log(this.selectedValue);
+  //     this.isManager = false;
 
-  selectRol(event: any) {
-    const role = event.value;
-    if (role) {
-      this.selectedValue = role;
-      console.log(this.selectedValue);
-      this.isManager = false;
+  //     if (role === 3 ) {
+  //       this.isManager = this.selectedValue === 3;
+  //       this.isManager = true;
+  //       console.log(this.isManager);
 
-      if (role === 2) {
-        this.isManager = true;
-      }
-    }
-  }
+  //     }
+  //   }
+  // }
 
   getConfig() {
     this.doctorService.listConfig().subscribe((resp) => {
@@ -258,7 +263,7 @@ export class AddDoctorComponent implements OnInit {
     formData.append('gender', this.gender + '');
 
     formData.append('address', this.address);
-    formData.append('role_id', this.selectedValue);
+    formData.append('role_id', this.selectedValue+'');
 
     formData.append('imagen', this.FILE_AVATAR);
     formData.append('imagenn', this.FILE_SIGNATURE);
@@ -338,6 +343,12 @@ export class AddDoctorComponent implements OnInit {
     formData.append('salary', this.salary + '');
     formData.append('schedule', this.schedule);
     formData.append('note', this.note );
+
+    
+
+    // if (this.location_id) {
+    //   formData.append('location_id',this.location_id+'' );
+    // }
     
     let locations = '';
 

@@ -7,6 +7,10 @@ import { PageService } from 'src/app/shared/services/pages.service';
 import * as XLSX from 'xlsx';
 import { LocationApi } from '../models/locations.model';
 import { LocationService } from '../services/location.service';
+import { AppUser } from 'src/app/core/models/users.model';
+import { C } from '@fullcalendar/core/internal-common';
+import { TitleStrategy } from '@angular/router';
+import { DoctorService } from '../../doctors/service/doctor.service';
 
 declare var $;
 
@@ -28,6 +32,7 @@ export class LocationListComponent implements OnInit {
   dataSource!: MatTableDataSource<LocationApi>;
 
   showFilter = false;
+  isADMIN = false;
   searchDataValue = '';
   lastIndex = 0;
   pageSize = 10;
@@ -44,17 +49,25 @@ export class LocationListComponent implements OnInit {
   location_id: number;
   selected: LocationApi;
   text_validation: string;
+  role: string;
+  user: AppUser;
+  doctor_selected: AppUser;
+  locations= [];
 
   constructor(
     private locationService: LocationService,
     private pageService: PageService,
     private fileSaver: FileSaverService,
-    private location: Location
+    private location: Location,
+    private doctorService: DoctorService
   ) {}
 
   ngOnInit() {
     this.pageService.onInitPage();
     this.getTableData();
+    const USER = localStorage.getItem('user');
+    this.user = JSON.parse(USER ? USER : '');
+    this.role = this.user.roles[0];
   }
 
   goBack() {
@@ -62,10 +75,11 @@ export class LocationListComponent implements OnInit {
   }
 
   private getTableData(page = 1): void {
+    
     this.list = [];
     this.filteredList = [];
     this.serialNumberArray = [];
-
+    
     this.locationService.getLocations(page).subscribe((resp) => {
       this.totalDataLocation = resp.total;
       this.list = resp.locations.data;
@@ -73,8 +87,29 @@ export class LocationListComponent implements OnInit {
       this.location_id = resp.locations.id;
       this.dataSource = new MatTableDataSource(this.list);
       this.calculateTotalPages(this.totalDataLocation, this.pageSize);
+
+      //traemos el doctor seleccionado
+      this.doctorService.showDoctor(this.user.id).subscribe((resp) => {
+        console.log(resp);
+        this.doctor_selected = resp.doctor;
+        this.locations = resp.locations;
+        console.log('Doctor locations:', this.locations);
+        // si el role es ADMIN mostramos las locaciones asignadas
+        if(this.role === 'ADMIN'){
+            this.isADMIN = true;
+            //unimos la respuesta con la lista de locaciones
+            this.filteredList = this.locations;// vienen las locaciones asignadas pero sin el title
+            
+          }
+      });
+
+      
     });
   }
+
+ 
+  
+  
 
   getTableDataGeneral() {
     this.filteredList = [];

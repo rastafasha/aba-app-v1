@@ -16,7 +16,7 @@ export class EditDoctorComponent implements OnInit {
   routes = AppRoutes;
   selectedValue!: number;
   selectedValueLocation!: number;
-
+  isManager = false;
   name = '';
   surname = '';
   phone: any;
@@ -91,6 +91,7 @@ export class EditDoctorComponent implements OnInit {
   doctor_id: any;
   doctor_selected: DoctorV2;
   user: AppUser;
+  // location_id: number;
 
   constructor(
     private doctorService: DoctorService,
@@ -117,6 +118,7 @@ export class EditDoctorComponent implements OnInit {
     } else {
       this.getConfig();
     }
+   
   }
 
   goBack() {
@@ -144,10 +146,24 @@ export class EditDoctorComponent implements OnInit {
       this.showDoctortoEdit();
     });
   }
+  // filtro para el select de MANAGER
+  // selectRol(event: any) {
+  //   const role = event.value;
+  //   if (role) {
+  //     this.selectedValue = role;
+  //     console.log(this.selectedValue);
+  //     this.isManager = false;
+
+  //     if (role === 3 ) {
+  //       this.isManager = true;
+  //       this.isManager = this.selectedValue === 3;
+  //     }
+  //   }
+  // }
 
   showDoctortoEdit() {
     this.doctorService.showDoctor(this.doctor_id).subscribe((resp) => {
-      this.locations_selected = resp.locations || [];
+      this.locations_selected = resp.locations;
       this.doctor_selected = resp.user;
 
       this.selectedValue = this.doctor_selected.roles.id;
@@ -173,11 +189,6 @@ export class EditDoctorComponent implements OnInit {
       this.ss_number = this.doctor_selected.ss_number;
 
       this.birth_date = new Date(this.doctor_selected.birth_date).toISOString();
-      // if(this.birth_date ){
-      // }else{
-      //   this.birth_date = this.doctor_selected.birth_date;
-
-      // }
 
       this.initial_pay = this.doctor_selected.start_pay;
 
@@ -217,6 +228,14 @@ export class EditDoctorComponent implements OnInit {
       this.caqh_bcbas_only = this.doctor_selected.caqh_bcbas_only;
       this.contract_type = this.doctor_selected.contract_type;
       this.salary = this.doctor_selected.salary;
+
+      // if (this.doctor_selected.roles.name === 'MANAGER') {
+      //   this.isManager = true;
+      //   // console.log(this.isManager);
+      //   this.location_id = this.doctor_selected.location_id;
+      // }
+      
+      
     });
   }
 
@@ -253,12 +272,12 @@ export class EditDoctorComponent implements OnInit {
       return;
     }
 
-    if (this.password) {
-      if (this.password !== this.password_confirmation) {
-        this.text_validation = 'Las contraseña debe ser igual';
-        return;
-      }
-    }
+    // if (this.password) {
+    //   if (this.password !== this.password_confirmation) {
+    //     this.text_validation = 'Las contraseña debe ser igual';
+    //     return;
+    //   }
+    // }
 
     const formData = new FormData();
     formData.append('name', this.name);
@@ -282,9 +301,6 @@ export class EditDoctorComponent implements OnInit {
       formData.append('address', this.address);
     }
 
-    if (this.password) {
-      formData.append('password', this.password);
-    }
 
     if (this.currently_pay_through_company) {
       formData.append(
@@ -436,6 +452,11 @@ export class EditDoctorComponent implements OnInit {
     if (this.schedule) {
       formData.append('schedule', this.schedule);
     }
+
+    // if (this.location_id) {
+    //   formData.append('location_id',this.location_id+'' );
+    // }
+
     let locations = '';
     this.locations_selected.forEach((location, index) => {
       if (index !== 0) {

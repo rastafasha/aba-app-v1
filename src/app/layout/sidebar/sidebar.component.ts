@@ -86,6 +86,20 @@ export class SidebarComponent implements OnInit {
       });
     });
   }
+  collapseSubMenus(menu: MenuItem): void {
+    sessionStorage.removeItem('menuValue');
+    this.sidebarData.map((mainMenus: SideBarData) => {
+      mainMenus.menu.map((resMenu: MenuItem) => {
+        if (resMenu.menuValue === menu.menuValue) {
+          menu.showSubRoute = !menu.showSubRoute;
+        } else {
+          resMenu.showSubRoute = false;
+        }
+      });
+    });
+  }
+
+
   private getRoutes(route: { url: string }): void {
     const bodyTag = document.body;
 
