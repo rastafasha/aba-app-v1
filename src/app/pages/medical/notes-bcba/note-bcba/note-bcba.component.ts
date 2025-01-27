@@ -6,6 +6,7 @@ import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
 import { NoteBcbaService } from '../../../../core/services/notes-bcba.service';
+import { NotesBcbaV2Service } from '../../../../core/services/notes-bcba.v2.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
 import {
   interventionsList,
@@ -16,12 +17,13 @@ import {
 } from '../listasSelectData';
 
 import { AuthService } from 'src/app/core/auth/auth.service';
-import { PaServiceV2, PatientV2 } from 'src/app/core/models';
+import { NoteBcbaV2, PaServiceV2, PatientV2 } from 'src/app/core/models';
 import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
 import { PatientMService } from '../../patient-m/service/patient-m.service';
 import { show97151L, ValidationResult } from '../interfaces';
 import { AISummaryData } from 'src/app/shared/components/generate-ai-summary/generate-ai-summary.component';
 import { convertToHours, convertToMinutes } from 'src/app/utils/time-functions';
+
 
 @Component({
   selector: 'app-note-bcba',
@@ -56,7 +58,7 @@ export class NoteBcbaComponent implements OnInit {
   selectedValueProviderName!: string;
   selectedValueMaladaptive!: string;
   selectedValueRendering!: string;
-  selectedValueAba!: string;
+  selectedValueAba!: number;
   selectedValueCode!: string;
   selectedValueCode1!: string;
   option_selected = 0;
@@ -69,10 +71,10 @@ export class NoteBcbaComponent implements OnInit {
   client_id: number;
   patient_id: number;
   patient_identifier: string;
-  doctor_id: string | number;
+  doctor_id: number;
   patient_selected: any;
   client_selected: PatientV2;
-  bip_id: string | number;
+  bip_id: number;
   user: AppUser;
 
   patientLocation_id: number;
@@ -236,6 +238,7 @@ export class NoteBcbaComponent implements OnInit {
     private router: Router,
     private ativatedRoute: ActivatedRoute,
     private noteBcbaService: NoteBcbaService,
+    private noteBcbaV2Service: NotesBcbaV2Service,
     private doctorService: DoctorService,
     private locations: Location,
     private authService: AuthService
@@ -534,7 +537,7 @@ export class NoteBcbaComponent implements OnInit {
       return;
     }
 
-    const bcbaData = {
+    const bcbaData: Partial<NoteBcbaV2> = {
       patient_id: this.patient_id,
       patient_identifier: this.patient_identifier,
       summary_note: this.summary_note,
@@ -546,7 +549,7 @@ export class NoteBcbaComponent implements OnInit {
       rendering_provider: this.doctor_id,
       provider_id: this.doctor_id,
       supervisor_id: this.selectedValueAba,
-      aba_supervisor: this.selectedValueAba,
+      // aba_supervisor: this.selectedValueAba,
       pa_service_id: this.selectedPaService?.id,
       cpt_code: this.selectedPaService?.cpt,
       meet_with_client_at: this.meet_with_client_at,
@@ -557,30 +560,20 @@ export class NoteBcbaComponent implements OnInit {
       participants: this.participants,
       environmental_changes: this.environmental_changes,
       caregiver_goals: this.caregivers_training_goalsgroup,
-      interventions: this.interventionsList,
-      interventions2: this.interventionsListDoble,
-      replacements: this.obj_inprogress,
-      replacements2: this.obj_inprogress1,
-      newlist_added: this.newList.reduce<string[]>((prev, cur) => {
-        if (cur.value) prev.push(cur.name);
-        return prev;
-      }, []),
-      intake_outcome: this.outcomeList.reduce<string[]>((prev, cur) => {
-        if (cur.value) prev.push(cur.name);
-        return prev;
-      }, []),
-      behaviors: this.behaviorList,
-      modifications_needed_at_this_time: this.modifications_needed_at_this_time,
-      cargiver_participation: this.cargiver_participation,
-      was_the_client_present: this.was_the_client_present,
-      BCBA_conducted_assessments: this.BCBA_conducted_assessments,
-      BCBA_conducted_client_observations: this.BCBA_conducted_client_observations,
-      additional_goals_or_interventions: this.additional_goals_or_interventions,
-      asked_and_clarified_questions_about_the_implementation_of: this.asked_and_clarified_questions_about_the_implementation_of,
-      reinforced_caregiver_strengths_in: this.reinforced_caregiver_strengths_in,
-      gave_constructive_feedback_on: this.gave_constructive_feedback_on,
-      recomended_more_practice_on: this.recomended_more_practice_on,
-      type: this.selectedPaService1?.cpt?.toString(),
+      // interventions: this.interventionsList,
+      // interventions2: this.interventionsListDoble,
+      // replacements: this.obj_inprogress,
+      // replacements2: this.obj_inprogress1,
+      // behaviors: this.behaviorList,
+      // modifications_needed_at_this_time: this.modifications_needed_at_this_time,
+      // cargiver_participation: this.cargiver_participation,
+      // was_the_client_present: this.was_the_client_present,
+      // additional_goals_or_interventions: this.additional_goals_or_interventions,
+      // asked_and_clarified_questions_about_the_implementation_of: this.asked_and_clarified_questions_about_the_implementation_of,
+      // reinforced_caregiver_strengths_in: this.reinforced_caregiver_strengths_in,
+      // gave_constructive_feedback_on: this.gave_constructive_feedback_on,
+      // recomended_more_practice_on: this.recomended_more_practice_on,
+      // type: this.selectedPaService1?.cpt?.toString(),
       session_date: this.session_date,
       time_in: this.selectedValueTimeIn || null,
       time_out: this.selectedValueTimeOut || null,
@@ -590,19 +583,61 @@ export class NoteBcbaComponent implements OnInit {
       supervisor_signature: this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED,
     };
 
+    if (this.selectedPaService?.cpt === '97151') {
+      bcbaData.assessment_tools = this.newList.reduce<string[]>((prev, cur) => {
+        if (cur.value) prev.push(cur.name);
+        return prev;
+      }, []);
+      bcbaData.intake_outcome = this.outcomeList.reduce<string[]>((prev, cur) => {
+        if (cur.value) prev.push(cur.name);
+        return prev;
+      }, []);
+      bcbaData.BCBA_conducted_client_observations = this.BCBA_conducted_client_observations;
+      bcbaData.BCBA_conducted_assessments = this.BCBA_conducted_assessments;
+    }
+
     console.log('BCBA Data:', bcbaData);
 
-    this.noteBcbaService.create(bcbaData).subscribe((resp) => {
-      if (resp.message === 403) {
-        this.text_validation = resp.message_text;
-      } else {
-        this.text_success = 'Note BCBA created';
-        Swal.fire('Created', ` Note BCBA Created`, 'success');
-        this.router.navigate([
-          AppRoutes.noteBcba.list,
-          this.patient_identifier,
-        ]);
+    this.noteBcbaV2Service.create(bcbaData).subscribe({
+      next: (resp) => {
+        if (resp.status === 'success') {
+          Swal.fire('Success', 'Note BCBA created', 'success');
+          this.router.navigate([
+            AppRoutes.noteBcba.list,
+            this.patient_identifier,
+          ]);
+        } else {
+          Swal.fire('Error', 'There was an error saving the note.', 'error');
+        }
+      },
+      error: (error) => {
+        console.error('Error saving RBT note:', error);
+        let errorMessage = 'There was an error saving the note.';
+
+        if (error.error?.message) {
+          errorMessage = error.error.message;
+        }
+        if (error.error?.errors) {
+          const errors = Object.values(error.error.errors).flat();
+          errorMessage += '<br>' + errors.join('<br>');
+        }
+
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          html: errorMessage,
+        });
       }
+      // if (resp.message === 403) {
+      //   this.text_validation = resp.message_text;
+      // } else {
+      //   this.text_success = 'Note BCBA created';
+      //   Swal.fire('Created', ` Note BCBA Created`, 'success');
+      //   this.router.navigate([
+      //     AppRoutes.noteBcba.list,
+      //     this.patient_identifier,
+      //   ]);
+      // }
     });
   }
 

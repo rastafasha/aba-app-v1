@@ -1,4 +1,5 @@
 import {
+  BooleanOrNullOrUndefined,
   DateOrNullOrUndefined,
   NumberOrNullOrUndefined,
   StringOrNullOrUndefined,
@@ -14,6 +15,8 @@ export class NoteBcbaV2 {
   patient_id: number;
   insurance_identifier: string;
   patient_identifier: string;
+  participants: string;
+  environmental_changes: string;
 
   doctor_id: number;
   patient_code: string;
@@ -59,6 +62,14 @@ export class NoteBcbaV2 {
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;
+
+  // 97151
+  subtype?: string;
+  assessment_tools?: string[];
+  intake_outcome?: string[];
+  BCBA_conducted_client_observations?: boolean;
+  BCBA_conducted_assessments?: boolean;
+
   //
   insurance_id: number;
   constructor(data: Partial<NoteBcbaV2>) {
@@ -73,6 +84,8 @@ export class NoteBcbaV2 {
       client_id:
         NumberOrNullOrUndefined(data.client_id) ??
         NumberOrNullOrUndefined(data.patient_id),
+      participants: StringOrNullOrUndefined(data.participants),
+      environmental_changes: StringOrNullOrUndefined(data.environmental_changes),
 
       patient_code: StringOrNullOrUndefined(data.patient_id),
       patient_identifier: StringOrNullOrUndefined(data.patient_identifier),
@@ -120,6 +133,13 @@ export class NoteBcbaV2 {
       updated_at: DateOrNullOrUndefined(data.updated_at),
       deleted_at: DateOrNullOrUndefined(data.deleted_at),
       insurance_id: NumberOrNullOrUndefined(data.insurance_id),
+
+      // 97151
+      subtype: StringOrNullOrUndefined(data.subtype),
+      assessment_tools: data.assessment_tools,
+      intake_outcome: data.intake_outcome,
+      BCBA_conducted_client_observations: BooleanOrNullOrUndefined(data.BCBA_conducted_client_observations),
+      BCBA_conducted_assessments: BooleanOrNullOrUndefined(data.BCBA_conducted_assessments),
     };
     return result;
   }
