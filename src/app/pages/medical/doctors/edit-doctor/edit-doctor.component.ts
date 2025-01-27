@@ -7,6 +7,7 @@ import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
 import Swal from 'sweetalert2';
 import { DoctorService } from '../service/doctor.service';
+import { LocationService } from '../../location/services/location.service';
 @Component({
   selector: 'app-edit-doctor',
   templateUrl: './edit-doctor.component.html',
@@ -97,7 +98,8 @@ export class EditDoctorComponent implements OnInit {
     private doctorService: DoctorService,
     private pageService: PageService,
     private activatedRoute: ActivatedRoute,
-    private locationBack: Location
+    private locationBack: Location,
+    private locationService: LocationService
   ) {}
 
   ngOnInit(): void {
@@ -118,6 +120,7 @@ export class EditDoctorComponent implements OnInit {
     } else {
       this.getConfig();
     }
+
    
   }
 
@@ -139,7 +142,7 @@ export class EditDoctorComponent implements OnInit {
   }
   getConfig() {
     this.doctorService.listConfig().subscribe((resp) => {
-      // console.log(resp);
+      console.log(resp);
       this.roles = resp.roles;
       this.locations = resp.locations;
       this.location = resp.location;
@@ -163,7 +166,8 @@ export class EditDoctorComponent implements OnInit {
 
   showDoctortoEdit() {
     this.doctorService.showDoctor(this.doctor_id).subscribe((resp) => {
-      this.locations_selected = resp.locations;
+      console.log(resp);
+      this.locations_selected = resp.locations || [];
       this.doctor_selected = resp.user;
 
       this.selectedValue = this.doctor_selected.roles.id;
