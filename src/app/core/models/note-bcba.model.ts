@@ -2,8 +2,8 @@ import { NoteRbt } from './note-rbt.model';
 import { Supervisor, Tecnico } from './notes.model';
 
 export interface NoteBcba {
-  
-  
+
+
   summary_note: string;
   rendering_provider: string;
   type: 'bcba';
@@ -13,7 +13,7 @@ export interface NoteBcba {
   patient_id: string;
   bip_id: number;
   cpt_code: string;
-  
+
   session_date: string;
   tecnico: Tecnico;
   session_length_total: string;
@@ -44,6 +44,12 @@ export interface NoteBcba {
 
   provider: ProviderBcba;
   pa_service_id: number;
+
+  // new fields from BCBA
+  BCBA_conducted_assessments?: boolean;
+  BCBA_conducted_client_observations?: boolean;
+  newlist_added?: string[];
+  intake_outcome?: string[];
 }
 
 export interface ProviderBcba {
@@ -95,6 +101,10 @@ export class NoteBcbaBuilder implements NoteBcba {
   rendering_provider: string;
   summary_note: string;
 
+  BCBA_conducted_assessments?: boolean;
+  BCBA_conducted_client_observations?: boolean;
+  newlist_added?: string[]
+
   constructor(data: Partial<NoteBcba> = {}) {
     this.type = 'bcba';
     this.insurance_key = data.insurance_key || (data as any).insuranceId || '';
@@ -136,6 +146,9 @@ export class NoteBcbaBuilder implements NoteBcba {
     this.time_out2 = data.time_out2 || '';
     this.rendering_provider = data.rendering_provider || '';
     this.summary_note = data.summary_note || '';
+    this.BCBA_conducted_assessments = data.BCBA_conducted_assessments;
+    this.BCBA_conducted_client_observations = data.BCBA_conducted_client_observations;
+    this.newlist_added = data.newlist_added;
   }
 }
 

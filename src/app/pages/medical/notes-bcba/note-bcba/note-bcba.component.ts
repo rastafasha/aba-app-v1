@@ -20,6 +20,8 @@ import { PaServiceV2, PatientV2 } from 'src/app/core/models';
 import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
 import { PatientMService } from '../../patient-m/service/patient-m.service';
 import { show97151L, ValidationResult } from '../interfaces';
+import { AISummaryData } from 'src/app/shared/components/generate-ai-summary/generate-ai-summary.component';
+import { convertToHours, convertToMinutes } from 'src/app/utils/time-functions';
 
 @Component({
   selector: 'app-note-bcba',
@@ -419,43 +421,14 @@ export class NoteBcbaComponent implements OnInit {
   }
 
   calculateTotalHours() {
-    const timeIn1 = this.convertToMinutes(this.selectedValueTimeIn);
-    const timeOut1 = this.convertToMinutes(this.selectedValueTimeOut);
-    const timeIn2 = this.convertToMinutes(this.selectedValueTimeIn2);
-    const timeOut2 = this.convertToMinutes(this.selectedValueTimeOut2);
+    const timeIn1 = convertToMinutes(this.selectedValueTimeIn);
+    const timeOut1 = convertToMinutes(this.selectedValueTimeOut);
+    const timeIn2 = convertToMinutes(this.selectedValueTimeIn2);
+    const timeOut2 = convertToMinutes(this.selectedValueTimeOut2);
 
     const totalMinutes = timeOut1 - timeIn1 + (timeOut2 - timeIn2);
-    const totalHours = this.convertToHours(totalMinutes);
+    const totalHours = convertToHours(totalMinutes);
     this.total_hour_session = totalHours;
-  }
-
-  convertToMinutes(time: string): number {
-    if (!time || !time.includes(':')) {
-      // console.error(`Invalid time format: ${time}`);
-      return 0; // O manejar el error de otra manera
-    }
-
-    const [hours, minutes] = time.split(':').map(Number);
-
-    // Validar que hours y minutes sean números válidos
-    if (
-      isNaN(hours) ||
-      isNaN(minutes) ||
-      hours < 0 ||
-      minutes < 0 ||
-      minutes >= 60
-    ) {
-      // console.error(`Invalid time values: hours=${hours}, minutes=${minutes}`);
-      return 0; // O manejar el error de otra manera
-    }
-
-    return hours * 60 + minutes;
-  }
-
-  convertToHours(totalMinutes: number): string {
-    const hours = Math.floor(totalMinutes / 60);
-    const minutes = totalMinutes % 60;
-    return `${hours}h ${minutes}m`;
   }
 
   updateCaregiverGoal(id: number) {
@@ -505,6 +478,7 @@ export class NoteBcbaComponent implements OnInit {
   }
   onReplacement2Change(updatedReplacements2: object) {
     this.replacements2_added = updatedReplacements2;
+    console.log(updatedReplacements2, 'updatedReplacements2');
   }
 
   onIntakeoutcomeChange(updatedIntakeoutcome: object) {
@@ -520,6 +494,7 @@ export class NoteBcbaComponent implements OnInit {
   }
 
   save() {
+    console.log(this.getAISummaryData());
     this.text_validation = '';
     if (
       // !this.rbt_training_goals ||
@@ -557,179 +532,65 @@ export class NoteBcbaComponent implements OnInit {
       return;
     }
 
-    const formData = new FormData();
-    formData.append('summary_note', this.summary_note);
+    const bcbaData = {
+      patient_id: this.patient_id,
+      patient_identifier: this.patient_identifier,
+      summary_note: this.summary_note,
+      doctor_id: this.doctor_id,
+      bip_id: this.bip_id,
+      diagnosis_code: this.diagnosis_code,
+      location_id: this.patientLocation_id,
+      birth_date: this.birth_date,
+      rendering_provider: this.doctor_id,
+      provider_id: this.doctor_id,
+      supervisor_id: this.selectedValueAba,
+      aba_supervisor: this.selectedValueAba,
+      pa_service_id: this.selectedPaService?.id,
+      cpt_code: this.selectedPaService?.cpt,
+      meet_with_client_at: this.meet_with_client_at,
+      provider_name: this.doctor_id,
+      supervisor_name: this.selectedValueBcba_id,
+      insurance_id: this.insurance_id,
+      insurance_identifier: this.insurance_identifier,
+      participants: this.participants,
+      environmental_changes: this.environmental_changes,
+      caregiver_goals: this.caregivers_training_goalsgroup,
+      interventions: this.interventionsList,
+      interventions2: this.interventionsListDoble,
+      replacements: this.obj_inprogress,
+      replacements2: this.obj_inprogress1,
+      newlist_added: this.newList.reduce<string[]>((prev, cur) => {
+        if (cur.value) prev.push(cur.name);
+        return prev;
+      }, []),
+      intake_outcome: this.outcomeList.reduce<string[]>((prev, cur) => {
+        if (cur.value) prev.push(cur.name);
+        return prev;
+      }, []),
+      behaviors: this.behaviorList,
+      modifications_needed_at_this_time: this.modifications_needed_at_this_time,
+      cargiver_participation: this.cargiver_participation,
+      was_the_client_present: this.was_the_client_present,
+      BCBA_conducted_assessments: this.BCBA_conducted_assessments,
+      BCBA_conducted_client_observations: this.BCBA_conducted_client_observations,
+      additional_goals_or_interventions: this.additional_goals_or_interventions,
+      asked_and_clarified_questions_about_the_implementation_of: this.asked_and_clarified_questions_about_the_implementation_of,
+      reinforced_caregiver_strengths_in: this.reinforced_caregiver_strengths_in,
+      gave_constructive_feedback_on: this.gave_constructive_feedback_on,
+      recomended_more_practice_on: this.recomended_more_practice_on,
+      type: this.selectedPaService1?.cpt?.toString(),
+      session_date: this.session_date,
+      time_in: this.selectedValueTimeIn || null,
+      time_out: this.selectedValueTimeOut || null,
+      time_in2: this.selectedValueTimeIn2 || null,
+      time_out2: this.selectedValueTimeOut2 || null,
+      provider_signature: this.doctor?.electronic_signature,
+      supervisor_signature: this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED,
+    };
 
-    formData.append('patient_id', this.patient_id + '');
-    formData.append('patient_identifier', this.patient_identifier);
-    formData.append('doctor_id', this.doctor_id + '');
-    formData.append('bip_id', this.bip_id + '');
+    console.log('BCBA Data:', bcbaData);
 
-    formData.append('diagnosis_code', this.diagnosis_code);
-    formData.append('location_id', this.patientLocation_id + '');
-    formData.append('birth_date', this.birth_date);
-
-    formData.append('rendering_provider', this.doctor_id + '');
-    formData.append('provider_id', this.doctor_id + '');
-    formData.append('supervisor_id', this.selectedValueAba + '');
-    formData.append('aba_supervisor', this.selectedValueAba + '');
-    formData.append('pa_service_id', this.selectedPaService.id.toString());
-    formData.append('cpt_code', this.selectedPaService.cpt);
-    formData.append('meet_with_client_at', this.meet_with_client_at);
-
-    formData.append('provider_name', this.doctor_id + '');
-    formData.append('supervisor_name', this.selectedValueBcba_id + '');
-
-    formData.append('insurance_id', this.insurance_id + ''); // id del seguro preferiblemente que solo agarre la data al crear
-    formData.append('insurance_identifier', this.insurance_identifier); // id del seguro preferiblemente que solo agarre la data al crear
-
-    formData.append('participants', this.participants);
-    formData.append('environmental_changes', this.environmental_changes);
-
-    // formData.append(
-    //   'rbt_training_goals',
-    //   JSON.stringify(this.rbt_training_goals)
-    // );
-
-    if (this.caregivers_training_goalsgroup) {
-      formData.append(
-        'caregiver_goals',
-        JSON.stringify(this.caregivers_training_goalsgroup)
-      );
-    }
-    if (this.interventionsList) {
-      formData.append('interventions', JSON.stringify(this.interventionsList));
-    }
-
-    if (this.interventionsListDoble) {
-      formData.append(
-        'interventions2',
-        JSON.stringify(this.interventionsListDoble)
-      );
-    }
-
-    if (this.obj_inprogress) {
-      formData.append('replacements', JSON.stringify(this.obj_inprogress));
-    }
-
-    if (this.obj_inprogress1) {
-      formData.append('replacements2', JSON.stringify(this.obj_inprogress1));
-    }
-
-    if (this.newList) {
-      formData.append('newlist_added', JSON.stringify(this.newList));
-    }
-
-    if (this.outcomeList) {
-      formData.append('intake_outcome', JSON.stringify(this.outcomeList));
-    }
-
-    if (this.behaviorList) {
-      formData.append('behaviors', JSON.stringify(this.behaviorList));
-    }
-
-    if (this.modifications_needed_at_this_time) {
-      formData.append(
-        'modifications_needed_at_this_time',
-        this.modifications_needed_at_this_time ? '1' : '0'
-      );
-    }
-    if (this.cargiver_participation) {
-      formData.append(
-        'cargiver_participation',
-        this.cargiver_participation ? '1' : '0'
-      );
-    }
-    if (this.was_the_client_present) {
-      formData.append(
-        'was_the_client_present',
-        this.was_the_client_present ? '1' : '0'
-      );
-    }
-    if (this.BCBA_conducted_assessments) {
-      formData.append(
-        'BCBA_conducted_assessments',
-        this.BCBA_conducted_assessments ? '1' : '0'
-      );
-    }
-    if (this.BCBA_conducted_client_observations) {
-      formData.append(
-        'BCBA_conducted_client_observations',
-        this.BCBA_conducted_client_observations ? '1' : '0'
-      );
-    }
-    if (this.additional_goals_or_interventions) {
-      formData.append(
-        'additional_goals_or_interventions',
-        this.additional_goals_or_interventions
-      );
-    }
-    if (this.asked_and_clarified_questions_about_the_implementation_of) {
-      formData.append(
-        'asked_and_clarified_questions_about_the_implementation_of',
-        this.asked_and_clarified_questions_about_the_implementation_of
-      );
-    }
-    if (this.reinforced_caregiver_strengths_in) {
-      formData.append(
-        'reinforced_caregiver_strengths_in',
-        this.reinforced_caregiver_strengths_in
-      );
-    }
-    if (this.gave_constructive_feedback_on) {
-      formData.append(
-        'gave_constructive_feedback_on',
-        this.gave_constructive_feedback_on
-      );
-    }
-    if (this.recomended_more_practice_on) {
-      formData.append(
-        'recomended_more_practice_on',
-        this.recomended_more_practice_on
-      );
-    }
-
-    if (this.selectedPaService1) {
-      formData.append('type', this.selectedPaService1.cpt.toString());
-    }
-
-    formData.append('session_date', this.session_date);
-
-    if (this.selectedValueTimeIn) {
-      formData.append(
-        'time_in',
-        this.selectedValueTimeIn + '' ? this.selectedValueTimeIn + '' : '0'
-      );
-    }
-    if (this.selectedValueTimeOut) {
-      formData.append(
-        'time_out',
-        this.selectedValueTimeOut + '' ? this.selectedValueTimeOut + '' : '0'
-      );
-    }
-    if (this.selectedValueTimeIn2) {
-      formData.append(
-        'time_in2',
-        this.selectedValueTimeIn2 + '' ? this.selectedValueTimeIn2 + '' : '0'
-      );
-    }
-    if (this.selectedValueTimeOut2) {
-      formData.append(
-        'time_out2',
-        this.selectedValueTimeOut2 + '' ? this.selectedValueTimeOut2 + '' : '0'
-      );
-    }
-
-    formData.append('provider_signature', this.doctor.electronic_signature);
-
-    if (this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED) {
-      formData.append(
-        'supervisor_signature',
-        this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED
-      );
-    }
-
-    this.noteBcbaService.create(formData).subscribe((resp) => {
+    this.noteBcbaService.create(bcbaData).subscribe((resp) => {
       if (resp.message === 403) {
         this.text_validation = resp.message_text;
       } else {
@@ -743,138 +604,63 @@ export class NoteBcbaComponent implements OnInit {
     });
   }
 
-  generateAISummary() {
-    const validationResult = this.checkDataSufficient();
-
-    if (!validationResult.isValid) {
-      const missingFieldsList = validationResult.missingFields.join('\n• ');
-      Swal.fire(
-        'Warning',
-        `Oops! It looks like you’re missing the following information. Please review and complete the required fields before proceeding:\n\n• ${missingFieldsList}`,
-        'warning'
-      );
-      return;
-    }
-
-    this.isGeneratingSummary = true;
-    const data = {
-      diagnosis: this.diagnosis_code,
-      birthDate: this.birth_date || null,
-      startTime: this.selectedValueTimeIn ? this.selectedValueTimeIn : null,
-      endTime: this.selectedValueTimeOut ? this.selectedValueTimeOut : null,
-      startTime2: this.selectedValueTimeIn2 ? this.selectedValueTimeIn2 : null,
-      endTime2: this.selectedValueTimeOut2 ? this.selectedValueTimeOut2 : null,
-      pos: this.getPos(this.meet_with_client_at),
-      caregiverGoals: this.show97155
-        ? this.caregivers_training_goals.map((g) => ({
-            goal: g.caregiver_goal,
-            percentCorrect: g.porcent_of_correct_response,
-          }))
-        : [],
-      rbtTrainingGoals: this.show97156
-        ? this.rbt_training_goals.map((g) => ({
-            goal: g.lto,
-            percentCorrect: g.porcent_of_correct_response,
-          }))
-        : [],
-      noteDescription: this.note_description,
-    };
-
-    this.noteBcbaService.generateAISummary(data).subscribe(
-      (response: any) => {
-        this.summary_note = response.summary;
-        this.isGeneratingSummary = false;
-      },
-      (error) => {
-        console.error('Error generating AI summary:', error);
-        Swal.fire(
-          'Error',
-          'Error generating AI summary. Please try again.',
-          'error'
-        );
-        this.isGeneratingSummary = false;
-      }
-    );
-  }
-
-  checkDataSufficient(): ValidationResult {
-    const missingFields: string[] = [];
-
-    if (!this.client_selected) {
-      missingFields.push('Client information');
-    }
-
-    const hasTime1 = this.selectedValueTimeIn && this.selectedValueTimeOut;
-    const hasTime2 = this.selectedValueTimeIn2 && this.selectedValueTimeOut2;
-    if (!hasTime1 && !hasTime2) {
-      missingFields.push('At least one session time period (Time In/Out)');
-    }
-
-    if (!this.meet_with_client_at) {
-      missingFields.push('POS');
-    }
-
-    // Only validate caregiver goals if CPT code is 97156
-    if (this.show97156) {
-      if (
-        !this.caregivers_training_goals ||
-        this.caregivers_training_goals.length === 0
-      ) {
-        missingFields.push('Caregiver training goals');
-      } else {
-        const allCaregiverGoalsValid = this.caregivers_training_goals.every(
-          (g) =>
-            g.caregiver_goal &&
-            g.porcent_of_correct_response !== undefined &&
-            g.porcent_of_correct_response !== null
-        );
-        if (!allCaregiverGoalsValid) {
-          missingFields.push(
-            'Complete caregiver goal information (goals and percentages)'
-          );
-        }
-      }
-    }
-
-    // Only validate RBT goals if CPT code is 97155
-    if (this.show97155) {
-      if (!this.rbt_training_goals || this.rbt_training_goals.length === 0) {
-        missingFields.push('RBT training goals');
-      } else {
-        const allRbtGoalsValid = this.rbt_training_goals.every(
-          (g) =>
-            g.lto &&
-            g.porcent_of_correct_response !== undefined &&
-            g.porcent_of_correct_response !== null
-        );
-        if (!allRbtGoalsValid) {
-          missingFields.push(
-            'Complete RBT goal information (goals and percentages)'
-          );
-        }
-      }
+  getAISummaryData(): AISummaryData {
+    console.log(this.replacements2_added, 'replacements2_added');
+    if (!this.selectedPaService || !this.selectedPaService.cpt) {
+      return null;
     }
 
     return {
-      isValid: missingFields.length === 0,
-      missingFields,
+      diagnosis: this.diagnosis_code,
+      birthDate: this.birth_date || null,
+      startTime: this.selectedValueTimeIn || null,
+      endTime: this.selectedValueTimeOut || null,
+      startTime2: this.selectedValueTimeIn2 || null,
+      endTime2: this.selectedValueTimeOut2 || null,
+      pos: this.meet_with_client_at,
+      cptCode: this.selectedPaService.cpt,
+      // Common fields
+      clientResponse: this.client_response_to_treatment_this_session,
+      progressNoted: this.progress_noted_this_session_compared_to_previous_session,
+      nextSession: this.next_session_is_scheduled_for,
+      reinforcedCaregiverStrengths: this.reinforced_caregiver_strengths_in,
+      constructiveFeedback: this.gave_constructive_feedback_on,
+      recommendedPractice: this.recomended_more_practice_on,
+      environmentalChanges: this.environmental_changes,
+      clientAppeared: this.client_appeared,
+      evidencedBy: this.as_evidenced_by,
+      // 97151
+      cpt51type: this.selectedPaService1?.cpt === 'Observation' ? 'observation' :
+                 this.selectedPaService1?.cpt === 'Report' ? 'report' : undefined,
+      procedure: [
+        ...(this.BCBA_conducted_client_observations ? ['BCBA conducted client observations'] : []),
+        ...(this.BCBA_conducted_assessments ? ['BCBA conducted assessments'] : [])
+      ].join(', '),
+      instruments: this.newList?.filter(item => item.value).map(item => item.name).join(', '),
+      intakeAndOutcomeMeasurements: this.outcomeList?.filter(item => item.value).map(item => item.name).join(', '),
+      // 97155
+      interventionProtocols: Object.values(this.interventionsListDoble).map(item => ({
+        name: item.name,
+        assessed: item.value,
+        modified: item.value2
+      })),
+      replacementProtocols: this.replacements2_added ? Object.values(this.replacements2_added).map(item => ({
+        name: item.description,
+        assessed: item.assessed,
+        modified: item.modified
+      })) : [],
+      // pending
+      rbtTrainingGoals: this.rbt_training_goals?.map(g => ({
+        goal: g.lto,
+        percentCorrect: g.porcent_of_correct_response
+      })),
+      caregiverGoals: this.caregivers_training_goals?.map(g => ({
+        goal: g.caregiver_goal,
+        percentCorrect: g.porcent_of_correct_response
+      })),
     };
   }
 
-  getPos(posCode: string) {
-    switch (posCode) {
-      case '03':
-        return 'School';
-      case '12':
-        return 'Home';
-      case '02':
-        return 'Telehealth';
-      case '99':
-        return 'Other';
-      default:
-        return 'Unknown';
-    }
-  }
 
   onPaServiceSelect(event: any) {
     const service = event.value;
@@ -963,5 +749,55 @@ export class NoteBcbaComponent implements OnInit {
     const isCpt97151 = this.selectedPaService?.cpt === '97151';
     const isTelehealth = this.meet_with_client_at === '02';
     this.showPosWarning = isCpt97151 && isTelehealth;
+  }
+
+  checkDataSufficient(): ValidationResult {
+    const missingFields: string[] = [];
+
+    // Basic required fields
+    if (!this.client_selected) {
+      missingFields.push('Client information');
+    }
+
+    if (!this.selectedPaService || !this.selectedPaService.cpt) {
+      missingFields.push('CPT Code selection');
+      return { isValid: false, missingFields }; // Return early as CPT is required for further validation
+    }
+
+    const hasTime1 = this.selectedValueTimeIn && this.selectedValueTimeOut;
+    const hasTime2 = this.selectedValueTimeIn2 && this.selectedValueTimeOut2;
+    if (!hasTime1 && !hasTime2) {
+      missingFields.push('At least one session time period (Time In/Out)');
+    }
+
+    if (!this.meet_with_client_at) {
+      missingFields.push('POS');
+    }
+
+    // CPT specific validations
+    switch (this.selectedPaService.cpt) {
+      case '97151':
+        if (!this.selectedPaService1 || !this.selectedPaService1.cpt) {
+          missingFields.push('Assessment type (Observation or Report)');
+        }
+        break;
+
+      case '97155':
+        if (!this.rbt_training_goals || this.rbt_training_goals.length === 0) {
+          missingFields.push('RBT training goals');
+        }
+        break;
+
+      case '97156':
+        if (!this.caregivers_training_goals || this.caregivers_training_goals.length === 0) {
+          missingFields.push('Caregiver training goals');
+        }
+        break;
+    }
+
+    return {
+      isValid: missingFields.length === 0,
+      missingFields,
+    };
   }
 }

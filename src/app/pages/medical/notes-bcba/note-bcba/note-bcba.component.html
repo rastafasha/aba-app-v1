@@ -576,28 +576,25 @@
             <form autocomplete="false">
               <div class="col-12">
                 <div class="form-group local-forms">
-                  <label
-                    >Summary Note<span class="login-danger">*</span>
-                  </label>
-                  <textarea
-                    class="form-control"
-                    name="summary_note"
-                    [(ngModel)]="summary_note"
-                    rows="4"
-                    cols="30"
-                  >
-                  </textarea>
-                  <button
-                    class="btn btn-primary ml-2 btn-sm"
-                    (click)="generateAISummary()"
-                    [disabled]="isGeneratingSummary"
-                  >
-                    {{
-                      isGeneratingSummary
-                        ? "Generating..."
-                        : "Generate AI Summary"
-                    }}
-                  </button>
+                  <label>Summary Note <span class="login-danger">*</span></label>
+                  <div class="row">
+                    <div class="col-12 col-md-10">
+                      <textarea
+                        class="form-control"
+                        name="summary_note"
+                        [(ngModel)]="summary_note"
+                        rows="4"
+                        cols="30">
+                      </textarea>
+                    </div>
+                    <div class="col-12 col-md-2 d-flex align-items-center">
+                      <app-generate-ai-summary
+                        [type]="'bcba'"
+                        [summaryData]="getAISummaryData()"
+                        (summaryGenerated)="summary_note = $event">
+                      </app-generate-ai-summary>
+                    </div>
+                  </div>
                 </div>
               </div>
 

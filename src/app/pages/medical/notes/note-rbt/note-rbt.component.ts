@@ -16,6 +16,7 @@ import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
 import { PatientMService } from '../../patient-m/service/patient-m.service';
 import { Goal, Intervention, MaladaptiveBehavior, POSModel, ValidationResult } from '../interfaces';
 import {interventionsList} from '../listaInterventionData';
+import { AISummaryData } from 'src/app/shared/components/generate-ai-summary/generate-ai-summary.component';
 
 
 
@@ -184,8 +185,6 @@ export class NoteRbtComponent implements OnInit {
   projectedUnits = 0;
 
   constructor(
-    private bipService: BipService,
-    private goalService: GoalService,
     private bipV2Service: BipsV2Service,
     private patientService: PatientMService,
     private router: Router,
@@ -322,7 +321,7 @@ getPatient(){
     event.value = this.selectedValueCode;
   }
 
-  
+
 
   specialistData() {
     this.doctorService.showDoctorProfile(this.doctor_id).subscribe((resp) => {
@@ -748,33 +747,16 @@ getPatient(){
     }
   }
 
-  generateAISummary() {
-    const validationResult = this.checkDataSufficient();
-
-    if (!validationResult.isValid) {
-      const missingFieldsList = validationResult.missingFields.join('\n• ');
-      Swal.fire(
-        'Warning',
-        `Oops! It looks like you’re missing the following information. Please review and complete the required fields before proceeding:\n\n• ${missingFieldsList}`,
-        'warning'
-      );
-      return;
-    }
-
-    this.isGeneratingSummary = true;
-    const data = {
+  getAISummaryData(): AISummaryData {
+    return {
       diagnosis: this.diagnosis_code,
-      birthDate: this.client_selected?.birth_date
-        ? this.client_selected.birth_date
-        : null,
+      birthDate: this.client_selected?.birth_date ? this.client_selected.birth_date : null,
       startTime: this.selectedValueTimeIn ? this.selectedValueTimeIn : null,
       endTime: this.selectedValueTimeOut ? this.selectedValueTimeOut : null,
       startTime2: this.selectedValueTimeIn2 ? this.selectedValueTimeIn2 : null,
       endTime2: this.selectedValueTimeOut2 ? this.selectedValueTimeOut2 : null,
-      progressNotedThisSessionComparedToPreviousSession:
-        this.progress_noted_this_session_compared_to_previous_session,
       mood: this.client_appeared,
-      pos: this.getPos(this.meet_with_client_at),
+      pos: this.meet_with_client_at,
       maladaptives: this.maladaptives.map((m) => ({
         behavior: m.name,
         frequency: m.number_of_occurrences,
@@ -784,28 +766,13 @@ getPatient(){
         totalTrials: r.total_trials,
         correctResponses: r.number_of_correct_response,
       })),
-      interventions:
-        this.intervention_added.length > 0
-          ? Object.keys(this.intervention_added[0]).filter(
-              (key) => this.intervention_added[0][key]
-            )
-          : [],
+      interventions: this.intervention_added.length > 0
+        ? Object.keys(this.intervention_added[0]).filter(
+            (key) => this.intervention_added[0][key]
+          )
+        : [],
+      participants: this.participants
     };
-
-    this.noteRbtService.generateAISummary(data).subscribe(
-      (response: any) => {
-        this.summary_note = response.summary;
-        this.isGeneratingSummary = false;
-      },
-      (error) => {
-        Swal.fire(
-          'Error',
-          'Error generating AI summary. Please try again.',
-          'error'
-        );
-        this.isGeneratingSummary = false;
-      }
-    );
   }
 
   checkDataSufficient(): ValidationResult {
@@ -887,18 +854,4 @@ getPatient(){
     };
   }
 
-  getPos(posCode: string) {
-    switch (posCode) {
-      case '03':
-        return 'School';
-      case '12':
-        return 'Home';
-      case '02':
-        return 'Telehealth';
-      case '99':
-        return 'Other';
-      default:
-        return 'Unknown';
-    }
-  }
 }
