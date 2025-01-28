@@ -23,13 +23,25 @@ export class EditWrapperDirective implements OnInit {
     this.renderer.addClass(this.editIcon, 'fas');
     this.updateIcon();
 
-    // Style the icon
+    // Style the icon with circular background
     this.renderer.setStyle(this.editIcon, 'position', 'absolute');
     this.renderer.setStyle(this.editIcon, 'top', '8px');
     this.renderer.setStyle(this.editIcon, 'right', '8px');
     this.renderer.setStyle(this.editIcon, 'cursor', 'pointer');
     this.renderer.setStyle(this.editIcon, 'opacity', '0');
     this.renderer.setStyle(this.editIcon, 'transition', 'opacity 0.3s ease');
+    this.renderer.setStyle(this.editIcon, 'background-color', '#f8f9fa');
+    this.renderer.setStyle(this.editIcon, 'border-radius', '50%');
+    this.renderer.setStyle(this.editIcon, 'width', '30px');
+    this.renderer.setStyle(this.editIcon, 'height', '30px');
+    this.renderer.setStyle(this.editIcon, 'display', 'flex');
+    this.renderer.setStyle(this.editIcon, 'align-items', 'center');
+    this.renderer.setStyle(this.editIcon, 'justify-content', 'center');
+    this.renderer.setStyle(
+      this.editIcon,
+      'box-shadow',
+      '0 2px 4px rgba(0,0,0,0.1)'
+    );
   }
 
   private updateIcon() {
@@ -89,11 +101,28 @@ export class EditWrapperDirective implements OnInit {
     this.editingChange.emit(true);
   }
 
+  private scrollToTop(): void {
+    // Get the element's position relative to the viewport
+    const rect = this.el.nativeElement.getBoundingClientRect();
+    // Get the current scroll position
+    const currentScroll =
+      window.pageYOffset || document.documentElement.scrollTop;
+    // Calculate the absolute position of the element
+    const absoluteElementTop = currentScroll + rect.top;
+    // Scroll to the element with smooth behavior
+    window.scrollTo({
+      top: absoluteElementTop - 80, // 20px padding from top
+      behavior: 'smooth',
+    });
+  }
+
   public stopEditing(): void {
     this.isEditing = false;
     this.updateIcon();
     this.renderer.removeClass(this.el.nativeElement, 'editing');
     this.renderer.setStyle(this.editIcon, 'opacity', '0');
     this.editingChange.emit(false);
+    // Add scroll to top when returning to view mode
+    setTimeout(() => this.scrollToTop(), 100); // Small delay to ensure DOM has updated
   }
 }

@@ -43,7 +43,7 @@
           ></app-behavior-analysis-assessment>
         </div>
 
-        <!-- Maladaptives Behaviors-->
+        <!-- Maladaptives Behaviors -->
         <div
           appEditWrapper
           #maladaptivesWrapper="editWrapper"
@@ -51,9 +51,9 @@
         >
           <app-bip-profile-maladaptives
             *ngIf="!maladaptivesWrapper.editing"
-            [patient]="patient"
-            [maladaptives]="bip.maladaptives"
+            [input]="bip.maladaptives"
           ></app-bip-profile-maladaptives>
+          <!-- Edit -->
           <app-reduction-goal-form
             *ngIf="maladaptivesWrapper.editing"
             [(input)]="bip.maladaptives"
@@ -61,6 +61,229 @@
             (save)="maladaptivesWrapper.stopEditing()"
             (cancel)="maladaptivesWrapper.stopEditing()"
           ></app-reduction-goal-form>
+        </div>
+
+        <!-- Assestment Conducted-->
+        <div
+          appEditWrapper
+          #assessmentWrapper="editWrapper"
+          (save)="assessmentWrapper.stopEditing()"
+        >
+          <app-bip-profile-assestment
+            *ngIf="!assessmentWrapper.editing"
+            [bip]="bip"
+          ></app-bip-profile-assestment>
+          <!-- Edit -->
+          <app-assestment
+            *ngIf="assessmentWrapper.editing"
+            [(assestmentEvaluationSettings)]="
+              bip.assestment_evaluation_settings
+            "
+            [(assesstmentsDocuments)]="bip.assestment_conducted_options"
+            [(assestmentConducted)]="bip.assestment_conducted"
+            (save)="assessmentWrapper.stopEditing()"
+            (cancel)="assessmentWrapper.stopEditing()"
+          ></app-assestment>
+        </div>
+
+        <!-- Prevalent Setting Events & Antecedents-->
+        <div
+          appEditWrapper
+          #prevalentWrapper="editWrapper"
+          (save)="prevalentWrapper.stopEditing()"
+        >
+          <app-bip-profile-prevalent
+            *ngIf="!prevalentWrapper.editing"
+            [prevalent_setting_event_and_atecedents]="
+              bip.prevalent_setting_event_and_atecedents
+            "
+          ></app-bip-profile-prevalent>
+          <!-- Edit -->
+          <app-prevalent-setting
+            *ngIf="prevalentWrapper.editing"
+            [(prevalentSettingEventAndAntecedents)]="
+              bip.prevalent_setting_event_and_atecedents
+            "
+            (save)="prevalentWrapper.stopEditing()"
+            (cancel)="prevalentWrapper.stopEditing()"
+          ></app-prevalent-setting>
+        </div>
+
+        <!-- Hypothesis-based interventions-->
+        <div
+          appEditWrapper
+          #hypothesisWrapper="editWrapper"
+          (save)="hypothesisWrapper.stopEditing()"
+        >
+          <app-bip-profile-hypothesis
+            *ngIf="!hypothesisWrapper.editing"
+            [bip]="bip"
+          ></app-bip-profile-hypothesis>
+          <!-- Edit -->
+          <app-hypothesis-based-interventions
+            *ngIf="hypothesisWrapper.editing"
+            [(input)]="bip"
+            (save)="hypothesisWrapper.stopEditing()"
+            (cancel)="hypothesisWrapper.stopEditing()"
+          ></app-hypothesis-based-interventions>
+        </div>
+
+        <!-- interventions -->
+        <div
+          appEditWrapper
+          #interventionsWrapper="editWrapper"
+          (save)="interventionsWrapper.stopEditing()"
+        >
+          <app-bip-profile-interventions
+            *ngIf="!interventionsWrapper.editing"
+            [interventions]="bip.interventions"
+          ></app-bip-profile-interventions>
+          <!-- Edit -->
+          <app-interventions
+            *ngIf="interventionsWrapper.editing"
+            [(input)]="bip.interventions"
+            (save)="interventionsWrapper.stopEditing()"
+            (cancel)="interventionsWrapper.stopEditing()"
+          ></app-interventions>
+        </div>
+
+        <!-- Reduction Goals-->
+        <div
+          appEditWrapper
+          #reductionsWrapper="editWrapper"
+          (save)="reductionsWrapper.stopEditing()"
+        >
+          <app-bip-profile-reductions
+            *ngIf="!reductionsWrapper.editing"
+            [reduction_goal]="bip.maladaptives"
+          ></app-bip-profile-reductions>
+          <!-- Edit -->
+          <app-reduction-goal-form
+            *ngIf="reductionsWrapper.editing"
+            [(input)]="bip.maladaptives"
+            [patient_identifier]="patient.patient_identifier"
+            (save)="reductionsWrapper.stopEditing()"
+            (cancel)="reductionsWrapper.stopEditing()"
+          ></app-reduction-goal-form>
+        </div>
+
+        <!-- Replacement Goals-->
+        <div
+          appEditWrapper
+          #replacementsWrapper="editWrapper"
+          (save)="replacementsWrapper.stopEditing()"
+        >
+          <app-bip-profile-replacements
+            *ngIf="!replacementsWrapper.editing"
+            [bip]="bip"
+          ></app-bip-profile-replacements>
+          <!-- Edit -->
+          <app-sustitution-list
+            *ngIf="replacementsWrapper.editing"
+            [(input)]="bip.replacements"
+            (save)="replacementsWrapper.stopEditing()"
+            (cancel)="replacementsWrapper.stopEditing()"
+          ></app-sustitution-list>
+        </div>
+
+        <!-- Family Involvement-->
+        <div
+          appEditWrapper
+          #familyWrapper="editWrapper"
+          (save)="familyWrapper.stopEditing()"
+        >
+          <app-bip-profile-family
+            *ngIf="!familyWrapper.editing"
+            [family_envolment]="bip.caregiver_trainings"
+          ></app-bip-profile-family>
+          <!-- Edit -->
+          <app-family-involvement-goal-form
+            *ngIf="familyWrapper.editing"
+            [(input)]="bip.caregiver_trainings"
+            (save)="familyWrapper.stopEditing()"
+            (cancel)="familyWrapper.stopEditing()"
+          ></app-family-involvement-goal-form>
+        </div>
+
+        <!-- Monitoring Evaluating-->
+        <div
+          appEditWrapper
+          #monitoringWrapper="editWrapper"
+          (save)="monitoringWrapper.stopEditing()"
+        >
+          <app-bip-profile-monotoring
+            *ngIf="!monitoringWrapper.editing"
+            [rbt_training_goals]="bip.rbt_trainings"
+          ></app-bip-profile-monotoring>
+          <!-- Edit -->
+          <app-monitoring-evaluating
+            *ngIf="monitoringWrapper.editing"
+            [(input)]="bip.rbt_trainings"
+            (save)="monitoringWrapper.stopEditing()"
+            (cancel)="monitoringWrapper.stopEditing()"
+          ></app-monitoring-evaluating>
+        </div>
+
+        <!-- behavior asistant (only text) -->
+        <div appEditWrapper>
+          <app-bip-profile-behavior [bip]="bip"></app-bip-profile-behavior>
+        </div>
+
+        <!-- Generalization Training-->
+        <div
+          appEditWrapper
+          #generalizationWrapper="editWrapper"
+          (save)="generalizationWrapper.stopEditing()"
+        >
+          <app-bip-profile-generalization
+            *ngIf="!generalizationWrapper.editing"
+            [generalization_training]="bip.generalization_trainings[0]"
+          ></app-bip-profile-generalization>
+          <!-- Edit -->
+          <app-generalization-training
+            *ngIf="generalizationWrapper.editing"
+            [(input)]="bip.generalization_trainings"
+            (save)="generalizationWrapper.stopEditing()"
+            (cancel)="generalizationWrapper.stopEditing()"
+          ></app-generalization-training>
+        </div>
+
+        <!-- Crisis Plan-->
+        <div
+          appEditWrapper
+          #crisisWrapper="editWrapper"
+          (save)="crisisWrapper.stopEditing()"
+        >
+          <app-bip-profile-crisis-plan
+            *ngIf="!crisisWrapper.editing"
+            [crisis_plan]="bip.crisis_plans[0]"
+          ></app-bip-profile-crisis-plan>
+          <!-- Edit -->
+          <app-crisis-plan
+            *ngIf="crisisWrapper.editing"
+            [(input)]="bip.crisis_plans"
+            (save)="crisisWrapper.stopEditing()"
+            (cancel)="crisisWrapper.stopEditing()"
+          ></app-crisis-plan>
+        </div>
+
+        <!-- De-escalation Techniques-->
+        <div
+          appEditWrapper
+          #deEscalationWrapper="editWrapper"
+          (save)="deEscalationWrapper.stopEditing()"
+        >
+          <app-bip-profile-de-escalation
+            *ngIf="!deEscalationWrapper.editing"
+            [de_escalation_techniques]="bip.de_escalation_techniques"
+          ></app-bip-profile-de-escalation>
+          <!-- Edit -->
+          <app-de-escalation-tecniques
+            *ngIf="deEscalationWrapper.editing"
+            [(input)]="bip.de_escalation_techniques"
+            (save)="deEscalationWrapper.stopEditing()"
+            (cancel)="deEscalationWrapper.stopEditing()"
+          ></app-de-escalation-tecniques>
         </div>
 
         <!-- documents Reviewed-->
@@ -71,91 +294,23 @@
           </app-bip-documents-show>
         </div>
 
-        <!-- Assestment Conducted-->
-        <div appEditWrapper>
-          <app-bip-profile-assestment [bip]="bip"></app-bip-profile-assestment>
-        </div>
-
-        <!-- Prevalent Setting Events & Antecedents-->
-        <div appEditWrapper>
-          <app-bip-profile-prevalent
-            [prevalent_setting_event_and_atecedents]="
-              bip.prevalent_setting_event_and_atecedents
-            "
-          ></app-bip-profile-prevalent>
-        </div>
-
-        <!-- Hypothesis-based interventions-->
-        <div appEditWrapper>
-          <app-bip-profile-hypothesis [bip]="bip"></app-bip-profile-hypothesis>
-        </div>
-
-        <!-- interventions -->
-        <div appEditWrapper>
-          <app-bip-profile-interventions
-            [interventions]="bip.interventions"
-          ></app-bip-profile-interventions>
-        </div>
-
-        <!-- Reduction Goals-->
-        <div appEditWrapper>
-          <app-bip-profile-reductions
-            [reduction_goal]="bip.maladaptives"
-          ></app-bip-profile-reductions>
-        </div>
-
-        <!-- Replacement Goals-->
-        <div appEditWrapper>
-          <app-bip-profile-replacements
-            [bip]="bip"
-          ></app-bip-profile-replacements>
-        </div>
-
-        <!-- Family Involvement-->
-        <div appEditWrapper>
-          <app-bip-profile-family
-            [family_envolment]="bip.caregiver_trainings"
-          ></app-bip-profile-family>
-        </div>
-
-        <!-- Monitoring Evaluating-->
-        <div appEditWrapper>
-          <app-bip-profile-monotoring
-            [rbt_training_goals]="bip.rbt_trainings"
-          ></app-bip-profile-monotoring>
-        </div>
-
-        <!-- behavior asistant (only text) -->
-        <div appEditWrapper>
-          <app-bip-profile-behavior [bip]="bip"></app-bip-profile-behavior>
-        </div>
-
-        <!-- Generalization Training-->
-        <div appEditWrapper>
-          <app-bip-profile-generalization
-            [generalization_training]="bip.generalization_trainings[0]"
-          ></app-bip-profile-generalization>
-        </div>
-
-        <!-- Crisis Plan-->
-        <div appEditWrapper>
-          <app-bip-profile-crisis-plan
-            [crisis_plan]="bip.crisis_plans[0]"
-          ></app-bip-profile-crisis-plan>
-        </div>
-
-        <!-- De-escalation Techniques-->
-        <div appEditWrapper>
-          <app-bip-profile-de-escalation
-            [de_escalation_techniques]="bip.de_escalation_techniques"
-          ></app-bip-profile-de-escalation>
-        </div>
-
         <!-- Consent to Treatment-->
-        <div appEditWrapper>
+        <div
+          appEditWrapper
+          #consentWrapper="editWrapper"
+          (save)="consentWrapper.stopEditing()"
+        >
           <app-bip-profile-consent
+            *ngIf="!consentWrapper.editing"
             [consent_to_treatment]="bip.consent_to_treatments[0]"
           ></app-bip-profile-consent>
+          <!-- Edit -->
+          <app-consent-treatment-edit
+            *ngIf="consentWrapper.editing"
+            [(input)]="bip.consent_to_treatments"
+            (save)="consentWrapper.stopEditing()"
+            (cancel)="consentWrapper.stopEditing()"
+          ></app-consent-treatment-edit>
         </div>
       </div>
     </div>
