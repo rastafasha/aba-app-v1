@@ -321,3 +321,22 @@ p {
     font-weight: 500;
   }
 }
+.edit-icon {
+  background-color: white;
+  padding: 8px;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #666;
+  z-index: 1000;
+}
+
+.edit-icon:hover {
+  color: #007bff;
+  transform: scale(1.1);
+}
+
+.editing {
+  border: 1px dashed #007bff;
+  padding: 8px;
+  border-radius: 4px;
+}

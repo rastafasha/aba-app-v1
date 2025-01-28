@@ -29,6 +29,7 @@ import { PageService } from './services/pages.service';
 import { ListColumnsPipe } from './components/pipes/list-columns.pipe';
 import { PdfButtonComponent } from './components/pdf-button/pdf-button.component';
 import { InputDirective } from './directives/input.directive';
+import { EditWrapperDirective } from './directives/edit-wrapper.directive';
 
 const components = [
   NoInfoComponent,
@@ -43,6 +44,7 @@ const components = [
   ListColumnsPipe,
   PdfButtonComponent,
   InputDirective,
+  EditWrapperDirective,
 ];
 
 @NgModule({
