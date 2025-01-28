@@ -26,18 +26,41 @@
         <!-- Background Information-->
         <div
           appEditWrapper
-          #editWrapper="editWrapper"
-          (save)="editWrapper.stopEditing()"
+          #backgroundWrapper="editWrapper"
+          (save)="backgroundWrapper.stopEditing()"
         >
-          <app-bip-profile-background *ngIf="!editWrapper.editing" [bip]="bip">
+          <app-bip-profile-background
+            *ngIf="!backgroundWrapper.editing"
+            [bip]="bip"
+          >
           </app-bip-profile-background>
           <!-- Edit -->
           <app-behavior-analysis-assessment
-            *ngIf="editWrapper.editing"
+            *ngIf="backgroundWrapper.editing"
             [(input)]="bip"
-            (save)="editWrapper.stopEditing()"
-            (cancel)="editWrapper.stopEditing()"
+            (save)="backgroundWrapper.stopEditing()"
+            (cancel)="backgroundWrapper.stopEditing()"
           ></app-behavior-analysis-assessment>
+        </div>
+
+        <!-- Maladaptives Behaviors-->
+        <div
+          appEditWrapper
+          #maladaptivesWrapper="editWrapper"
+          (save)="maladaptivesWrapper.stopEditing()"
+        >
+          <app-bip-profile-maladaptives
+            *ngIf="!maladaptivesWrapper.editing"
+            [patient]="patient"
+            [maladaptives]="bip.maladaptives"
+          ></app-bip-profile-maladaptives>
+          <app-reduction-goal-form
+            *ngIf="maladaptivesWrapper.editing"
+            [(input)]="bip.maladaptives"
+            [patient_identifier]="patient.patient_identifier"
+            (save)="maladaptivesWrapper.stopEditing()"
+            (cancel)="maladaptivesWrapper.stopEditing()"
+          ></app-reduction-goal-form>
         </div>
 
         <!-- documents Reviewed-->
@@ -46,14 +69,6 @@
             [documents]="bip.assestment_conducted_options"
           >
           </app-bip-documents-show>
-        </div>
-
-        <!-- Maladaptives Behaviors-->
-        <div appEditWrapper>
-          <app-bip-profile-maladaptives
-            [patient]="patient"
-            [maladaptives]="bip.maladaptives"
-          ></app-bip-profile-maladaptives>
         </div>
 
         <!-- Assestment Conducted-->
