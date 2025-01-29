@@ -38,8 +38,10 @@ export interface AISummaryData {
   // 97153 specific fields
   interventions?: string[];
   // 97155 specific fields
-  interventionProtocols?: {name: string; assessed: boolean, modified: boolean}[];
-  replacementProtocols?: {name: string; assessed: boolean, modified: boolean}[];
+  interventionProtocols?: string;
+  replacementProtocols?: string;
+  modificationsNeededAtThisTime?: boolean;
+  additionalGoalsOrInterventions?: string;
 }
 
 @Component({
@@ -98,21 +100,6 @@ export class GenerateAiSummaryComponent {
 
         case '97155':
           // Protocol modification validations
-          if (!this.summaryData.interventions?.length) {
-            missingFields.push('Interventions');
-          }
-          if (!this.summaryData.rbtTrainingGoals?.length) {
-            missingFields.push('RBT Training Goals');
-          }
-          if (!this.summaryData.reinforcedCaregiverStrengths) {
-            missingFields.push('Reinforced Caregiver Strengths');
-          }
-          if (!this.summaryData.constructiveFeedback) {
-            missingFields.push('Constructive Feedback');
-          }
-          if (!this.summaryData.recommendedPractice) {
-            missingFields.push('Recommended Practice');
-          }
           break;
 
         case '97156':
@@ -252,13 +239,10 @@ export class GenerateAiSummaryComponent {
 
       case '97155':
         Object.assign(preparedData, {
-          interventions: this.summaryData.interventions,
-          rbtTrainingGoals: this.summaryData.rbtTrainingGoals,
-          reinforcedCaregiverStrengths: this.summaryData.reinforcedCaregiverStrengths,
-          constructiveFeedback: this.summaryData.constructiveFeedback,
-          recommendedPractice: this.summaryData.recommendedPractice,
-          environmentalChanges: this.summaryData.environmentalChanges,
-          nextSession: this.summaryData.nextSession
+          interventionProtocols: this.summaryData.interventionProtocols,
+          replacementProtocols: this.summaryData.replacementProtocols,
+          modificationsNeededAtThisTime: this.summaryData.modificationsNeededAtThisTime,
+          additionalGoalsOrInterventions: this.summaryData.additionalGoalsOrInterventions
         });
         break;
 

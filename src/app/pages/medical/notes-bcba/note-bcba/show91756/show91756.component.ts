@@ -52,7 +52,7 @@ export class Show91756Component {
     this.recomendedChange.emit(this.recomended_more_practice_on);
   }
 
-  
+
   updateCaregiverGoal(id: number) {
     this.caregivers_training.emit(this.caregivers_training_goalsgroup[id]);
     // console.log('Caregiver goal updated:', this.caregivers_training[id]);

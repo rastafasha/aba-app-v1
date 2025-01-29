@@ -70,6 +70,12 @@ export class NoteBcbaV2 {
   BCBA_conducted_client_observations?: boolean;
   BCBA_conducted_assessments?: boolean;
 
+  // 97155
+  replacement_protocols?: ReplacementProtocols;
+  intervention_protocols?: InterventionProtocols;
+  modifications_needed_at_this_time?: boolean;
+  additional_goals_or_interventions?: string;
+
   //
   insurance_id: number;
   constructor(data: Partial<NoteBcbaV2>) {
@@ -140,6 +146,12 @@ export class NoteBcbaV2 {
       intake_outcome: data.intake_outcome,
       BCBA_conducted_client_observations: BooleanOrNullOrUndefined(data.BCBA_conducted_client_observations),
       BCBA_conducted_assessments: BooleanOrNullOrUndefined(data.BCBA_conducted_assessments),
+
+      // 97155
+      replacement_protocols: ReplacementProtocolsBuilder(data.replacement_protocols),
+      intervention_protocols: InterventionProtocolsBuilder(data.intervention_protocols),
+      modifications_needed_at_this_time: BooleanOrNullOrUndefined(data.modifications_needed_at_this_time),
+      additional_goals_or_interventions: StringOrNullOrUndefined(data.additional_goals_or_interventions),
     };
     return result;
   }
@@ -147,9 +159,13 @@ export class NoteBcbaV2 {
 
 export type CaregiverGoals = object[];
 export type RbtTrainingGoals = object[];
+export type ReplacementProtocols = object[];
+export type InterventionProtocols = object[];
 
 const CaregiverGoalsBuilder = (data: object[]): CaregiverGoals => data;
 const RbtTrainingGoalsBuilder = (data: object[]): RbtTrainingGoals => data;
+const ReplacementProtocolsBuilder = (data: object[]): ReplacementProtocols => data;
+const InterventionProtocolsBuilder = (data: object[]): InterventionProtocols => data;
 
 export function isNoteBcbaV2(data: NoteRbtV2 | NoteBcbaV2): data is NoteBcbaV2 {
   return data?.type === 'bcba';

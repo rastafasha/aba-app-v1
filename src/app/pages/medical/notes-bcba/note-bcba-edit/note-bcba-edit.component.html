@@ -550,14 +550,14 @@
       <!--   only 55-->
       <app-show91755
         [show97155]="show97155"
-        (modificationsChange)="modifications_needed_at_this_time = $event"
-        (additionalChange)="additional_goals_or_interventions = $event"
         [interventionsListDoble]="interventionsListDoble"
-        [onInterventions2Change]="onInterventions2Change"
         [obj_inprogress1]="obj_inprogress1"
-        [onReplacement2Change]="onReplacement2Change"
         [modifications_needed_at_this_time]="modifications_needed_at_this_time"
         [additional_goals_or_interventions]="additional_goals_or_interventions"
+        (modificationsChange)="modifications_needed_at_this_time = $event"
+        (additionalChange)="additional_goals_or_interventions = $event"
+        (interventions2Change)="onInterventions2Change($event)"
+        (replacements2Change)="onReplacement2Change($event)"
       ></app-show91755>
 
       <!--  only 56 -->

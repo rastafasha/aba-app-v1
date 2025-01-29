@@ -158,7 +158,6 @@ export class NoteBcbaComponent implements OnInit {
   specialists = [];
   maladaptives = [];
   replacementGoals = [];
-  replacementList = [];
   replacements = [];
 
   intervention_added: object;
@@ -226,11 +225,10 @@ export class NoteBcbaComponent implements OnInit {
   newList = newList;
   outcomeList = outcomeList;
   show97151List = show97151List;
-  objectives = [];
   obj_inprogress = [];
   obj_inprogress1 = [];
   public textSchoolAlarm = 'It looks like the session time you entered is outside the standard school hours of Monday through Friday, 8:00 AM to 3:00 PM. Please double-check the time or update the POS as needed';
-  public textTelehealtWarning = 'You’ve selected POS 51 (Telehealth). Please make sure all telehealth requirements are met and confirm that this session complies with telehealth regulations before proceeding';
+  public textTelehealtWarning = "You've selected POS 51 (Telehealth). Please make sure all telehealth requirements are met and confirm that this session complies with telehealth regulations before proceeding";
 
   constructor(
     private bipV2Service: BipsV2Service,
@@ -335,25 +333,29 @@ export class NoteBcbaComponent implements OnInit {
       console.log(this.caregivers_training_goalsgroup);
 
       this.behaviorList = resp.data[0].maladaptives;
-      this.replacementList = resp.data[0].replacements;
 
       // Filtrar la lista replacementList por estado
-      this.replacementList = this.replacementList.filter(
+      const replacementList = resp.data[0].replacements.filter(
         (goal) => goal.status === 'active'
       );
 
-      // Recorrer la lista replacementList y extraemos los objectives
-      this.objectives = this.replacementList.flatMap(
-        (objective) => objective.objectives
+      // Map through replacements to add the name to each objective and transform the structure
+      const objectives = replacementList.flatMap(replacement =>
+        replacement.objectives.map(objective => ({
+          status: objective.status,
+          name: replacement.name,
+          id: objective.id,
+          description: objective.description,
+          assessed: true,
+          modified: false
+        }))
       );
-      // console.log('Objetives', this.objectives );
 
       // filtrado los que estan en status in progress
-      const objetivosEnProgreso = this.objectives.filter(
+      const objetivosEnProgreso = objectives.filter(
         (objetivo) => objetivo.status === 'in progress'
       );
 
-      // console.log(objetivosEnProgreso);
       this.obj_inprogress = objetivosEnProgreso;
       this.obj_inprogress1 = objetivosEnProgreso;
     });
@@ -553,6 +555,7 @@ export class NoteBcbaComponent implements OnInit {
       pa_service_id: this.selectedPaService?.id,
       cpt_code: this.selectedPaService?.cpt,
       meet_with_client_at: this.meet_with_client_at,
+      pos: this.meet_with_client_at,
       provider_name: this.doctor_id,
       supervisor_name: this.selectedValueBcba_id,
       insurance_id: this.insurance_id,
@@ -584,6 +587,7 @@ export class NoteBcbaComponent implements OnInit {
     };
 
     if (this.selectedPaService?.cpt === '97151') {
+      bcbaData.subtype = this.selectedPaService1?.cpt;
       bcbaData.assessment_tools = this.newList.reduce<string[]>((prev, cur) => {
         if (cur.value) prev.push(cur.name);
         return prev;
@@ -594,6 +598,23 @@ export class NoteBcbaComponent implements OnInit {
       }, []);
       bcbaData.BCBA_conducted_client_observations = this.BCBA_conducted_client_observations;
       bcbaData.BCBA_conducted_assessments = this.BCBA_conducted_assessments;
+    }
+
+    if (this.selectedPaService?.cpt === '97155') {
+      // bcbaData.rbt_training_goals = this.rbt_training_goals;
+      bcbaData.replacement_protocols = Object.values(this.replacements2_added).map(item => ({
+        id: item.id,
+        description: item.description,
+        assessed: item.assessed,
+        modified: item.modified
+      }));
+      bcbaData.intervention_protocols = this.interventionsListDoble.map(item => ({
+        name: item.name,
+        assessed: item.value,
+        modified: item.value2
+      }));
+      bcbaData.modifications_needed_at_this_time = this.modifications_needed_at_this_time;
+      bcbaData.additional_goals_or_interventions = this.additional_goals_or_interventions;
     }
 
     console.log('BCBA Data:', bcbaData);
@@ -676,16 +697,17 @@ export class NoteBcbaComponent implements OnInit {
       instruments: this.newList?.filter(item => item.value).map(item => item.name).join(', '),
       intakeAndOutcomeMeasurements: this.outcomeList?.filter(item => item.value).map(item => item.name).join(', '),
       // 97155
-      interventionProtocols: Object.values(this.interventionsListDoble).map(item => ({
-        name: item.name,
-        assessed: item.value,
-        modified: item.value2
-      })),
-      replacementProtocols: this.replacements2_added ? Object.values(this.replacements2_added).map(item => ({
-        name: item.description,
-        assessed: item.assessed,
-        modified: item.modified
-      })) : [],
+      interventionProtocols: this.interventionsListDoble ? Object.values(this.interventionsListDoble)
+        .filter(item => item.value2)
+        .map(item => item.name)
+        .join(', ') : '',
+      replacementProtocols: this.replacements2_added ? Object.values(this.replacements2_added)
+        .filter(item => item.modified)
+        .map(item => item.description)
+        .join(', ') : '',
+
+      modificationsNeededAtThisTime: this.modifications_needed_at_this_time,
+      additionalGoalsOrInterventions: this.additional_goals_or_interventions,
       // pending
       rbtTrainingGoals: this.rbt_training_goals?.map(g => ({
         goal: g.lto,
