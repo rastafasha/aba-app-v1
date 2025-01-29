@@ -1,5 +1,6 @@
+import { BooleanOrNullOrUndefined, StringOrNullOrUndefined } from 'src/app/shared/utils';
 import { NoteRbt } from './note-rbt.model';
-import { Supervisor, Tecnico } from './notes.model';
+import { AssessmentToolType, Protocol, CaregiverGoalProtocol, PlanProtocol, Supervisor, Tecnico, DiscussedPlanProtocol } from './notes.model';
 
 export interface NoteBcba {
 
@@ -22,8 +23,8 @@ export interface NoteBcba {
   supervisor_name: string;
   supervisor: Supervisor;
   provider_id: number;
-  aba_supervisor: number;
-  abasupervisor: Supervisor;
+  // aba_supervisor: number;
+  // abasupervisor: Supervisor;
   xp: number;
   md: string;
   md2: string;
@@ -45,11 +46,23 @@ export interface NoteBcba {
   provider: ProviderBcba;
   pa_service_id: number;
 
-  // new fields from BCBA
+  // 97151
+  subtype?: AssessmentToolType;
   BCBA_conducted_assessments?: boolean;
   BCBA_conducted_client_observations?: boolean;
-  newlist_added?: string[];
+  assessment_tools?: string[];
   intake_outcome?: string[];
+
+  // 97155
+  intervention_protocols?: Protocol[];
+  replacement_protocols?: PlanProtocol[];
+  modifications_needed_at_this_time?: boolean;
+  additional_goals_or_interventions?: string;
+
+  // 97156
+  behavior_protocols?: DiscussedPlanProtocol[];
+  caregiver_goals?: CaregiverGoalProtocol[];
+
 }
 
 export interface ProviderBcba {
@@ -75,8 +88,8 @@ export class NoteBcbaBuilder implements NoteBcba {
   supervisor_id: number;
   supervisor_name: string;
   supervisor: Supervisor;
-  aba_supervisor: number;
-  abasupervisor: Supervisor;
+  // aba_supervisor: number;
+  // abasupervisor: Supervisor;
   xp: number;
   md: string;
   md2: string;
@@ -101,9 +114,24 @@ export class NoteBcbaBuilder implements NoteBcba {
   rendering_provider: string;
   summary_note: string;
 
+  // 97151
+  subtype?: AssessmentToolType;
   BCBA_conducted_assessments?: boolean;
   BCBA_conducted_client_observations?: boolean;
-  newlist_added?: string[]
+  assessment_tools?: string[];
+  intake_outcome?: string[];
+
+  // 97155
+  intervention_protocols?: Protocol[];
+  replacement_protocols?: PlanProtocol[];
+  modifications_needed_at_this_time?: boolean;
+  additional_goals_or_interventions?: string;
+
+  // 97156
+  behavior_protocols?: DiscussedPlanProtocol[];
+  caregiver_goals?: CaregiverGoalProtocol[];
+
+
 
   constructor(data: Partial<NoteBcba> = {}) {
     this.type = 'bcba';
@@ -123,8 +151,8 @@ export class NoteBcbaBuilder implements NoteBcba {
     this.supervisor_id = data.supervisor_id || 0;
     this.supervisor_name = data.supervisor_name || '';
     this.supervisor = data.supervisor || ({} as Supervisor);
-    this.aba_supervisor = data.aba_supervisor || 0;
-    this.abasupervisor = data.abasupervisor || ({} as Supervisor);
+    // this.aba_supervisor = data.aba_supervisor || 0;
+    // this.abasupervisor = data.abasupervisor || ({} as Supervisor);
     this.xp = data.xp || 0;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     this.md = data.md || (data as any).mdbcba || '';
@@ -146,9 +174,17 @@ export class NoteBcbaBuilder implements NoteBcba {
     this.time_out2 = data.time_out2 || '';
     this.rendering_provider = data.rendering_provider || '';
     this.summary_note = data.summary_note || '';
+    this.subtype = data.subtype || 'observation';
     this.BCBA_conducted_assessments = data.BCBA_conducted_assessments;
     this.BCBA_conducted_client_observations = data.BCBA_conducted_client_observations;
-    this.newlist_added = data.newlist_added;
+    this.assessment_tools = data.assessment_tools || [];
+    this.intake_outcome = data.intake_outcome || [];
+    this.intervention_protocols = data.intervention_protocols || [];
+    this.replacement_protocols = data.replacement_protocols || [];
+    this.modifications_needed_at_this_time = BooleanOrNullOrUndefined(data.modifications_needed_at_this_time);
+    this.additional_goals_or_interventions = StringOrNullOrUndefined(data.additional_goals_or_interventions);
+    this.behavior_protocols = data.behavior_protocols || [];
+    this.caregiver_goals = data.caregiver_goals || [];
   }
 }
 

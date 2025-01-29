@@ -5,6 +5,7 @@ import {
   StringOrNullOrUndefined,
 } from 'src/app/shared/utils';
 import { NoteRbtV2 } from './note.rbt.v2.model';
+import { AssessmentToolType, Protocol, PlanProtocol, DiscussedPlanProtocol, CaregiverGoalProtocol } from '../notes.model';
 
 type NoteStatus = 'pending' | 'ok' | 'no';
 export class NoteBcbaV2 {
@@ -41,7 +42,6 @@ export class NoteBcbaV2 {
   pa_service_id: number;
 
   note_description: string;
-  caregiver_goals: CaregiverGoals;
   rbt_training_goals: RbtTrainingGoals;
   location_id: number;
   summary_note: string;
@@ -64,19 +64,23 @@ export class NoteBcbaV2 {
   deleted_at: Date;
 
   // 97151
-  subtype?: string;
+  subtype?: AssessmentToolType;
+  BCBA_conducted_assessments?: boolean;
+  BCBA_conducted_client_observations?: boolean;
   assessment_tools?: string[];
   intake_outcome?: string[];
-  BCBA_conducted_client_observations?: boolean;
-  BCBA_conducted_assessments?: boolean;
 
   // 97155
-  replacement_protocols?: ReplacementProtocols;
-  intervention_protocols?: InterventionProtocols;
+  intervention_protocols?: Protocol[];
+  replacement_protocols?: PlanProtocol[];
   modifications_needed_at_this_time?: boolean;
   additional_goals_or_interventions?: string;
 
-  //
+  // 97156
+  behavior_protocols?: DiscussedPlanProtocol[];
+  caregiver_goals?: CaregiverGoalProtocol[];
+
+
   insurance_id: number;
   constructor(data: Partial<NoteBcbaV2>) {
     if (!data) return null;
@@ -97,7 +101,6 @@ export class NoteBcbaV2 {
       patient_identifier: StringOrNullOrUndefined(data.patient_identifier),
       doctor_id: NumberOrNullOrUndefined(data.doctor_id),
       note_description: StringOrNullOrUndefined(data.note_description),
-      caregiver_goals: CaregiverGoalsBuilder(data.caregiver_goals),
       rbt_training_goals: RbtTrainingGoalsBuilder(data.rbt_training_goals),
       summary_note: StringOrNullOrUndefined(data.summary_note),
       birth_date: StringOrNullOrUndefined(data.birth_date),
@@ -141,7 +144,7 @@ export class NoteBcbaV2 {
       insurance_id: NumberOrNullOrUndefined(data.insurance_id),
 
       // 97151
-      subtype: StringOrNullOrUndefined(data.subtype),
+      subtype: (StringOrNullOrUndefined(data.subtype) as AssessmentToolType) ?? 'observation',
       assessment_tools: data.assessment_tools,
       intake_outcome: data.intake_outcome,
       BCBA_conducted_client_observations: BooleanOrNullOrUndefined(data.BCBA_conducted_client_observations),
@@ -152,20 +155,26 @@ export class NoteBcbaV2 {
       intervention_protocols: InterventionProtocolsBuilder(data.intervention_protocols),
       modifications_needed_at_this_time: BooleanOrNullOrUndefined(data.modifications_needed_at_this_time),
       additional_goals_or_interventions: StringOrNullOrUndefined(data.additional_goals_or_interventions),
+
+      // 97156
+      behavior_protocols: BehaviorProtocolsBuilder(data.behavior_protocols),
+      caregiver_goals: CaregiverGoalsBuilder(data.caregiver_goals),
     };
     return result;
   }
 }
 
-export type CaregiverGoals = object[];
+export type CaregiverGoals = CaregiverGoalProtocol[];
 export type RbtTrainingGoals = object[];
-export type ReplacementProtocols = object[];
-export type InterventionProtocols = object[];
+export type ReplacementProtocols = PlanProtocol[];
+export type InterventionProtocols = Protocol[];
+export type BehaviorProtocols = DiscussedPlanProtocol[];
 
-const CaregiverGoalsBuilder = (data: object[]): CaregiverGoals => data;
+const CaregiverGoalsBuilder = (data: CaregiverGoalProtocol[]): CaregiverGoals => data;
 const RbtTrainingGoalsBuilder = (data: object[]): RbtTrainingGoals => data;
-const ReplacementProtocolsBuilder = (data: object[]): ReplacementProtocols => data;
-const InterventionProtocolsBuilder = (data: object[]): InterventionProtocols => data;
+const ReplacementProtocolsBuilder = (data: PlanProtocol[]): ReplacementProtocols => data;
+const InterventionProtocolsBuilder = (data: Protocol[]): InterventionProtocols => data;
+const BehaviorProtocolsBuilder = (data: DiscussedPlanProtocol[]): BehaviorProtocols => data;
 
 export function isNoteBcbaV2(data: NoteRbtV2 | NoteBcbaV2): data is NoteBcbaV2 {
   return data?.type === 'bcba';

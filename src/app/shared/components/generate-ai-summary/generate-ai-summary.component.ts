@@ -14,7 +14,7 @@ export interface AISummaryData {
   pos: string;
   maladaptives?: Array<{behavior: string; frequency: number}>;
   replacements?: Array<{name: string; totalTrials: number; correctResponses: number}>;
-  caregiverGoals?: Array<{goal: string; percentCorrect: number}>;
+  caregiverGoals?: string;
   rbtTrainingGoals?: Array<{goal: string; percentCorrect: number}>;
   participants?: string;
   noteDescription?: string;
@@ -43,7 +43,9 @@ export interface AISummaryData {
   modificationsNeededAtThisTime?: boolean;
   additionalGoalsOrInterventions?: string;
   // 97156 specific fields
-  interventionProtocolsDemonstrated?: string;
+  demonstratedReplacementProtocols?: string;
+  demonstratedInterventionProtocols?: string;
+  discussedBehaviors?: string;
 }
 
 @Component({
@@ -110,6 +112,7 @@ export class GenerateAiSummaryComponent {
   }
 
   private validateData(summaryData: AISummaryData): { isValid: boolean; missingFields: string[] } {
+    console.log(summaryData, 'summaryData')
     const missingFields: string[] = [];
 
     // Common validations for all types
@@ -149,34 +152,20 @@ export class GenerateAiSummaryComponent {
           if (!summaryData.caregiverGoals?.length) {
             missingFields.push('Caregiver Goals');
           }
-          if (!summaryData.environmentalChanges) {
-            missingFields.push('Environmental Changes');
+          if (!summaryData.demonstratedReplacementProtocols?.length) {
+            missingFields.push('Demonstrated Replacement Protocols');
           }
-          if (!summaryData.nextSession) {
-            missingFields.push('Next Session Information');
+          if (!summaryData.demonstratedInterventionProtocols?.length) {
+            missingFields.push('Demonstrated Intervention Protocols');
+          }
+          if (!summaryData.discussedBehaviors?.length) {
+            missingFields.push('Discussed Behaviors');
           }
           break;
 
         case '97153':
           // Direct treatment validations
-          if (!summaryData.environmentalChanges) {
-            missingFields.push('Environmental Changes');
-          }
-          if (!summaryData.clientAppeared) {
-            missingFields.push('Client Appearance');
-          }
-          if (!summaryData.evidencedBy) {
-            missingFields.push('Evidence');
-          }
-          if (!summaryData.clientResponse) {
-            missingFields.push('Client Response');
-          }
-          if (!summaryData.progressNoted) {
-            missingFields.push('Progress Notes');
-          }
-          if (!summaryData.nextSession) {
-            missingFields.push('Next Session Information');
-          }
+          missingFields.push('THIS CPT HAS NOT BEEN IMPLEMENTED YET');
           break;
       }
     } else {
@@ -255,8 +244,9 @@ export class GenerateAiSummaryComponent {
       case '97156':
         Object.assign(preparedData, {
           caregiverGoals: summaryData.caregiverGoals,
-          environmentalChanges: summaryData.environmentalChanges,
-          nextSession: summaryData.nextSession
+          demonstratedReplacementProtocols: summaryData.demonstratedReplacementProtocols,
+          demonstratedInterventionProtocols: summaryData.demonstratedInterventionProtocols,
+          discussedBehaviors: summaryData.discussedBehaviors
         });
         break;
 

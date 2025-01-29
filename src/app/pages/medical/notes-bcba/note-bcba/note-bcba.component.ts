@@ -17,7 +17,7 @@ import {
 } from '../listasSelectData';
 
 import { AuthService } from 'src/app/core/auth/auth.service';
-import { NoteBcbaV2, PaServiceV2, PatientV2 } from 'src/app/core/models';
+import { AssessmentToolType, NoteBcbaV2, PaServiceV2, PatientV2 } from 'src/app/core/models';
 import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
 import { PatientMService } from '../../patient-m/service/patient-m.service';
 import { show97151L, ValidationResult } from '../interfaces';
@@ -348,10 +348,12 @@ export class NoteBcbaComponent implements OnInit {
             description: objective.description,
             status: objective.status,
             assessed: false,
-            modified: false
+            modified: false,
+            demonstrated: false,
           }))
         )
         .filter(protocol => protocol.status === 'in progress');
+
     });
   }
 
@@ -526,6 +528,15 @@ export class NoteBcbaComponent implements OnInit {
     }
 
     const bcbaData: Partial<NoteBcbaV2> = {
+      type: 'bcba',
+      id: 0,
+      client_id: this.patient_id,
+      patient_code: this.patient_identifier,
+      session_length_total: Number(this.total_hour_session),
+      total_hours: '',
+      total_minutes: 0,
+      total_units: 0,
+      note_description: this.summary_note,
       patient_id: this.patient_id,
       patient_identifier: this.patient_identifier,
       summary_note: this.summary_note,
@@ -537,7 +548,6 @@ export class NoteBcbaComponent implements OnInit {
       rendering_provider: this.doctor_id,
       provider_id: this.doctor_id,
       supervisor_id: this.selectedValueAba,
-      // aba_supervisor: this.selectedValueAba,
       pa_service_id: this.selectedPaService?.id,
       cpt_code: this.selectedPaService?.cpt,
       meet_with_client_at: this.meet_with_client_at,
@@ -548,20 +558,6 @@ export class NoteBcbaComponent implements OnInit {
       insurance_identifier: this.insurance_identifier,
       participants: this.participants,
       environmental_changes: this.environmental_changes,
-      caregiver_goals: this.caregivers_training_goalsgroup,
-      // interventions: this.interventionsList,
-      // interventions2: this.interventionsListDoble,
-      // replacements: this.obj_inprogress,
-      // behaviors: this.behaviorList,
-      // modifications_needed_at_this_time: this.modifications_needed_at_this_time,
-      // cargiver_participation: this.cargiver_participation,
-      // was_the_client_present: this.was_the_client_present,
-      // additional_goals_or_interventions: this.additional_goals_or_interventions,
-      // asked_and_clarified_questions_about_the_implementation_of: this.asked_and_clarified_questions_about_the_implementation_of,
-      // reinforced_caregiver_strengths_in: this.reinforced_caregiver_strengths_in,
-      // gave_constructive_feedback_on: this.gave_constructive_feedback_on,
-      // recomended_more_practice_on: this.recomended_more_practice_on,
-      // type: this.selectedPaService1?.cpt?.toString(),
       session_date: this.session_date,
       time_in: this.selectedValueTimeIn || null,
       time_out: this.selectedValueTimeOut || null,
@@ -572,7 +568,7 @@ export class NoteBcbaComponent implements OnInit {
     };
 
     if (this.selectedPaService?.cpt === '97151') {
-      bcbaData.subtype = this.selectedPaService1?.cpt;
+      bcbaData.subtype = this.selectedPaService1?.cpt as AssessmentToolType;
       bcbaData.assessment_tools = this.newList.reduce<string[]>((prev, cur) => {
         if (cur.value) prev.push(cur.name);
         return prev;
@@ -588,20 +584,45 @@ export class NoteBcbaComponent implements OnInit {
     if (this.selectedPaService?.cpt === '97155') {
       // bcbaData.rbt_training_goals = this.rbt_training_goals;
       bcbaData.replacement_protocols = this.replacementProtocols
-        .filter(p => p.assessed || p.modified)
         .map(p => ({
-          id: p.id,
-          description: p.description,
+          plan_id: p.id,
+          name: p.name,
           assessed: p.assessed,
-          modified: p.modified
+          modified: p.modified,
         }));
-      bcbaData.intervention_protocols = this.interventionsListDoble.map(item => ({
-        name: item.name,
-        assessed: item.value,
-        modified: item.value2
-      }));
+      bcbaData.intervention_protocols = this.interventionsListDoble
+        .map((item) => ({
+          name: item.name,
+          assessed: item.value,
+          modified: item.value2,
+        }));
       bcbaData.modifications_needed_at_this_time = this.modifications_needed_at_this_time;
       bcbaData.additional_goals_or_interventions = this.additional_goals_or_interventions;
+    }
+
+    // 97156
+    if (this.selectedPaService?.cpt === '97156') {
+      bcbaData.replacement_protocols = this.replacementProtocols
+        .map((p, index) => ({
+          plan_id: p.id,
+          name: p.name,
+          discussed: this.behaviorList[index].value,
+        }));
+      bcbaData.behavior_protocols = this.behaviorList.map(item => ({
+        plan_id: item.id,
+        name: item.name,
+        discussed: item.value,
+      }));
+      bcbaData.caregiver_goals = this.caregivers_training_goalsgroup.map(item => ({
+        plan_id: item.id,
+        name: item.name,
+        porcent_of_correct_response: item.porcent_of_correct_response,
+      }));
+      bcbaData.intervention_protocols = this.interventionsListDoble
+        .map((item, index) => ({
+          name: item.name,
+          demonstrated: this.interventionsList[index].value,
+        }));
     }
 
     console.log('BCBA Data:', bcbaData);
@@ -696,17 +717,25 @@ export class NoteBcbaComponent implements OnInit {
       modificationsNeededAtThisTime: this.modifications_needed_at_this_time,
       additionalGoalsOrInterventions: this.additional_goals_or_interventions,
       // 97156
-      interventionProtocolsDemonstrated: this.interventionsList ? Object.values(this.interventionsList)
+      demonstratedReplacementProtocols: this.replacementProtocols ? this.replacementProtocols
+        .filter(p => p.demonstrated)
+        .map(p => p.name)
+        .join(', ') : '',
+      demonstratedInterventionProtocols: this.interventionsList ? Object.values(this.interventionsList)
         .filter(item => item.value)
         .map(item => item.name)
         .join(', ') : '',
-      // pending
+      discussedBehaviors: this.behaviorList ? Object.values(this.behaviorList)
+        .filter(item => item.value)
+        .map(item => item.name)
+        .join(', ') : '',
+      caregiverGoals: this.caregivers_training_goalsgroup
+        ?.filter(g => g.porcent_of_correct_response !== undefined && g.porcent_of_correct_response !== null)
+        ?.map(g => `${g.name} - ${g.porcent_of_correct_response}% correct`)
+        .join(', '),
+        // pending
       rbtTrainingGoals: this.rbt_training_goals?.map(g => ({
         goal: g.lto,
-        percentCorrect: g.porcent_of_correct_response
-      })),
-      caregiverGoals: this.caregivers_training_goals?.map(g => ({
-        goal: g.caregiver_goal,
         percentCorrect: g.porcent_of_correct_response
       })),
     };

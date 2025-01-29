@@ -38,21 +38,27 @@ import { ReplacementProtocol } from '../interfaces';
   `,
 })
 export class Replacements3Component {
+  private _protocols: ReplacementProtocol[] = [];
+
   @Input() set replacementProtocols(protocols: ReplacementProtocol[]) {
-    this._protocols = protocols.map(p => ({
-      ...p,
-      demonstrated: false
-    }));
+    // Only initialize values if they haven't been set before
+    this._protocols = protocols.map(p => {
+      const existingProtocol = this._protocols.find(ep => ep.id === p.id);
+      return {
+        ...p,
+        demonstrated: existingProtocol?.demonstrated ?? false,
+      };
+    });
   }
+
   get replacementProtocols(): ReplacementProtocol[] {
     return this._protocols;
   }
 
   @Output() protocolsChange = new EventEmitter<ReplacementProtocol[]>();
 
-  private _protocols: ReplacementProtocol[] = [];
-
   updateProtocols() {
-    this.protocolsChange.emit(this._protocols);
+    // Emit a copy of the protocols to ensure change detection
+    this.protocolsChange.emit([...this._protocols]);
   }
 }

@@ -10,7 +10,6 @@ export class Show91756Component {
   @Input() show97156;
   @Input() interventionsList;
   @Input() onInterventionsChange;
-  @Input() obj_inprogress;
   @Input() onReplacementChange;
   @Input() $event;
   @Input() replacementProtocols: ReplacementProtocol[] = [];

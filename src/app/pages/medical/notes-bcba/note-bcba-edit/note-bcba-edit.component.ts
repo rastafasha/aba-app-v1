@@ -262,6 +262,7 @@ export class NoteBcbaEditComponent implements OnInit {
   obj_inprogress1 = [];
 
   replacementProtocols: ReplacementProtocol[] = [];
+  replacementProtocols56: ReplacementProtocol[] = [];
 
   constructor(
     private bipService: BipService,
@@ -440,6 +441,19 @@ export class NoteBcbaEditComponent implements OnInit {
           modified: protocol.modified || false
         }));
       }
+
+      this.replacementProtocols56 = this.note_selected.replacements
+        .filter(replacement => replacement.status === 'active')
+        .flatMap(replacement =>
+          replacement.objectives.map(objective => ({
+            id: objective.id,
+            name: replacement.name,
+            description: objective.description,
+            status: objective.status,
+            demonstrated: false
+          }))
+        )
+        .filter(protocol => protocol.status === 'in progress');
 
       // this.getBipv2();
     });
