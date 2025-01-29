@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { BipService } from '../../bip/service/bip.service';
@@ -17,6 +17,7 @@ import { PatientMService } from '../../patient-m/service/patient-m.service';
 import { Goal, Intervention, MaladaptiveBehavior, POSModel, ValidationResult } from '../interfaces';
 import {interventionsList} from '../listaInterventionData';
 import { AISummaryData } from 'src/app/shared/components/generate-ai-summary/generate-ai-summary.component';
+import { GenerateAiSummaryComponent } from 'src/app/shared/components/generate-ai-summary/generate-ai-summary.component';
 
 
 
@@ -33,6 +34,8 @@ interface ReplacementBehavior extends Replacements {
   styleUrls: ['./note-rbt.component.scss'],
 })
 export class NoteRbtComponent implements OnInit {
+  @ViewChild(GenerateAiSummaryComponent) aiSummaryComponent: GenerateAiSummaryComponent;
+
   routes = AppRoutes;
 
   url_media: string | null = null;
@@ -852,6 +855,13 @@ getPatient(){
       isValid: missingFields.length === 0,
       missingFields,
     };
+  }
+
+  onAISummaryRequested() {
+    const summaryData = this.getAISummaryData();
+    if (summaryData) {
+      this.aiSummaryComponent.generateSummary(summaryData);
+    }
   }
 
 }

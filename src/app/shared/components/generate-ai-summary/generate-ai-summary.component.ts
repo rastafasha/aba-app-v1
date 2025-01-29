@@ -49,7 +49,7 @@ export interface AISummaryData {
   template: `
     <button
       class="btn btn-primary btn-sm"
-      (click)="generateSummary()"
+      (click)="onGenerateClick()"
       [disabled]="isGenerating">
       {{ isGenerating ? "Generating..." : "Generate AI Summary" }}
     </button>
@@ -57,8 +57,8 @@ export interface AISummaryData {
 })
 export class GenerateAiSummaryComponent {
   @Input() type: 'rbt' | 'bcba' = 'rbt';
-  @Input() summaryData: AISummaryData;
   @Output() summaryGenerated = new EventEmitter<string>();
+  @Output() requestData = new EventEmitter<void>();
 
   isGenerating = false;
 
@@ -67,114 +67,17 @@ export class GenerateAiSummaryComponent {
     private noteBcbaService: NoteBcbaService
   ) {}
 
-  private validateData(): { isValid: boolean; missingFields: string[] } {
-    const missingFields: string[] = [];
-
-    // Common validations for all types
-    if (!this.summaryData.diagnosis) missingFields.push('Diagnosis');
-    if (!this.summaryData.pos) missingFields.push('Location (POS)');
-
-    const hasTime1 = this.summaryData.startTime && this.summaryData.endTime;
-    const hasTime2 = this.summaryData.startTime2 && this.summaryData.endTime2;
-    if (!hasTime1 && !hasTime2) missingFields.push('Session Time');
-
-    if (this.type === 'bcba') {
-      switch (this.summaryData.cptCode) {
-        case '97151':
-          // Assessment validations
-          if (!this.summaryData.cpt51type) {
-            missingFields.push('Assessment Type (Observation/Report)');
-          }
-          if (this.summaryData.cpt51type === 'observation') {
-            if (!this.summaryData.procedure?.length) {
-              missingFields.push('Assessment Procedures');
-            }
-            if (!this.summaryData.instruments?.length) {
-              missingFields.push('Assessment Instruments');
-            }
-            if (!this.summaryData.intakeAndOutcomeMeasurements?.length) {
-              missingFields.push('Intake and Outcome Measurements');
-            }
-          }
-          break;
-
-        case '97155':
-          // Protocol modification validations
-          break;
-
-        case '97156':
-          // Caregiver training validations
-          if (!this.summaryData.caregiverGoals?.length) {
-            missingFields.push('Caregiver Goals');
-          }
-          if (!this.summaryData.environmentalChanges) {
-            missingFields.push('Environmental Changes');
-          }
-          if (!this.summaryData.nextSession) {
-            missingFields.push('Next Session Information');
-          }
-          break;
-
-        case '97153':
-          // Direct treatment validations
-          if (!this.summaryData.environmentalChanges) {
-            missingFields.push('Environmental Changes');
-          }
-          if (!this.summaryData.clientAppeared) {
-            missingFields.push('Client Appearance');
-          }
-          if (!this.summaryData.evidencedBy) {
-            missingFields.push('Evidence');
-          }
-          if (!this.summaryData.clientResponse) {
-            missingFields.push('Client Response');
-          }
-          if (!this.summaryData.progressNoted) {
-            missingFields.push('Progress Notes');
-          }
-          if (!this.summaryData.nextSession) {
-            missingFields.push('Next Session Information');
-          }
-          break;
-      }
-    } else {
-      // RBT validations remain the same
-      if (!this.summaryData.maladaptives?.length) {
-        missingFields.push('Maladaptive Behaviors');
-      } else {
-        const invalidMaladaptives = this.summaryData.maladaptives.some(
-          m => !m.behavior || m.frequency === undefined || m.frequency === null
-        );
-        if (invalidMaladaptives) missingFields.push('Complete Maladaptive Behavior Data');
-      }
-
-      if (!this.summaryData.replacements?.length) {
-        missingFields.push('Replacement Behaviors');
-      } else {
-        const invalidReplacements = this.summaryData.replacements.some(
-          r => !r.name || r.totalTrials === undefined || r.correctResponses === undefined
-        );
-        if (invalidReplacements) missingFields.push('Complete Replacement Behavior Data');
-      }
-
-      if (!this.summaryData.interventions?.length) {
-        missingFields.push('Interventions');
-      }
-    }
-
-    return {
-      isValid: missingFields.length === 0,
-      missingFields
-    };
+  onGenerateClick() {
+    this.requestData.emit();
   }
 
-  generateSummary() {
-    const validationResult = this.validateData();
+  generateSummary(summaryData: AISummaryData) {
+    const validationResult = this.validateData(summaryData);
     if (!validationResult.isValid) {
       const missingFieldsList = validationResult.missingFields.join('\n• ');
       Swal.fire(
         'Warning',
-        `Please complete the following required fields for ${this.type === 'bcba' ? `CPT ${this.summaryData.cptCode}` : 'RBT'} note:\n\n• ${missingFieldsList}`,
+        `Please complete the following required fields for ${this.type === 'bcba' ? `CPT ${summaryData.cptCode}` : 'RBT'} note:\n\n• ${missingFieldsList}`,
         'warning'
       );
       return;
@@ -184,10 +87,10 @@ export class GenerateAiSummaryComponent {
     const service = this.type === 'rbt' ? this.noteRbtService : this.noteBcbaService;
 
     // Prepare data based on type and CPT code
-    const summaryData = this.type === 'bcba' ? this.prepareBcbaData() : this.summaryData;
-    console.log(summaryData, 'summaryData sent')
+    const preparedData = this.type === 'bcba' ? this.prepareBcbaData(summaryData) : summaryData;
+    console.log(preparedData, 'summaryData sent')
 
-    service.generateAISummary({...summaryData, pos: this.getPos(this.summaryData.pos)}).subscribe(
+    service.generateAISummary({...preparedData, pos: this.getPos(summaryData.pos)}).subscribe(
       (response: any) => {
         this.summaryGenerated.emit(response.summary);
         this.isGenerating = false;
@@ -204,64 +107,165 @@ export class GenerateAiSummaryComponent {
     );
   }
 
-  private prepareBcbaData(): AISummaryData {
+  private validateData(summaryData: AISummaryData): { isValid: boolean; missingFields: string[] } {
+    const missingFields: string[] = [];
+
+    // Common validations for all types
+    if (!summaryData.diagnosis) missingFields.push('Diagnosis');
+    if (!summaryData.pos) missingFields.push('Location (POS)');
+
+    const hasTime1 = summaryData.startTime && summaryData.endTime;
+    const hasTime2 = summaryData.startTime2 && summaryData.endTime2;
+    if (!hasTime1 && !hasTime2) missingFields.push('Session Time');
+
+    if (this.type === 'bcba') {
+      switch (summaryData.cptCode) {
+        case '97151':
+          // Assessment validations
+          if (!summaryData.cpt51type) {
+            missingFields.push('Assessment Type (Observation/Report)');
+          }
+          if (summaryData.cpt51type === 'observation') {
+            if (!summaryData.procedure?.length) {
+              missingFields.push('Assessment Procedures');
+            }
+            if (!summaryData.instruments?.length) {
+              missingFields.push('Assessment Instruments');
+            }
+            if (!summaryData.intakeAndOutcomeMeasurements?.length) {
+              missingFields.push('Intake and Outcome Measurements');
+            }
+          }
+          break;
+
+        case '97155':
+          // Protocol modification validations
+          break;
+
+        case '97156':
+          // Caregiver training validations
+          if (!summaryData.caregiverGoals?.length) {
+            missingFields.push('Caregiver Goals');
+          }
+          if (!summaryData.environmentalChanges) {
+            missingFields.push('Environmental Changes');
+          }
+          if (!summaryData.nextSession) {
+            missingFields.push('Next Session Information');
+          }
+          break;
+
+        case '97153':
+          // Direct treatment validations
+          if (!summaryData.environmentalChanges) {
+            missingFields.push('Environmental Changes');
+          }
+          if (!summaryData.clientAppeared) {
+            missingFields.push('Client Appearance');
+          }
+          if (!summaryData.evidencedBy) {
+            missingFields.push('Evidence');
+          }
+          if (!summaryData.clientResponse) {
+            missingFields.push('Client Response');
+          }
+          if (!summaryData.progressNoted) {
+            missingFields.push('Progress Notes');
+          }
+          if (!summaryData.nextSession) {
+            missingFields.push('Next Session Information');
+          }
+          break;
+      }
+    } else {
+      // RBT validations remain the same
+      if (!summaryData.maladaptives?.length) {
+        missingFields.push('Maladaptive Behaviors');
+      } else {
+        const invalidMaladaptives = summaryData.maladaptives.some(
+          m => !m.behavior || m.frequency === undefined || m.frequency === null
+        );
+        if (invalidMaladaptives) missingFields.push('Complete Maladaptive Behavior Data');
+      }
+
+      if (!summaryData.replacements?.length) {
+        missingFields.push('Replacement Behaviors');
+      } else {
+        const invalidReplacements = summaryData.replacements.some(
+          r => !r.name || r.totalTrials === undefined || r.correctResponses === undefined
+        );
+        if (invalidReplacements) missingFields.push('Complete Replacement Behavior Data');
+      }
+
+      if (!summaryData.interventions?.length) {
+        missingFields.push('Interventions');
+      }
+    }
+
+    return {
+      isValid: missingFields.length === 0,
+      missingFields
+    };
+  }
+
+  private prepareBcbaData(summaryData: AISummaryData): AISummaryData {
     // Common fields
     const preparedData: AISummaryData = {
-      diagnosis: this.summaryData.diagnosis,
-      birthDate: this.summaryData.birthDate,
-      startTime: this.summaryData.startTime,
-      endTime: this.summaryData.endTime,
-      startTime2: this.summaryData.startTime2,
-      endTime2: this.summaryData.endTime2,
-      pos: this.summaryData.pos,
-      cptCode: this.summaryData.cptCode
+      diagnosis: summaryData.diagnosis,
+      birthDate: summaryData.birthDate,
+      startTime: summaryData.startTime,
+      endTime: summaryData.endTime,
+      startTime2: summaryData.startTime2,
+      endTime2: summaryData.endTime2,
+      pos: summaryData.pos,
+      cptCode: summaryData.cptCode
     };
 
-    console.log(this.summaryData, 'summaryData')
+    console.log(summaryData, 'summaryData')
 
     // CPT-specific fields
-    switch (this.summaryData.cptCode) {
+    switch (summaryData.cptCode) {
       case '97151':
-        if (this.summaryData.cpt51type === 'observation') {
+        if (summaryData.cpt51type === 'observation') {
           Object.assign(preparedData, {
             cpt51type: 'observation',
-            procedure: this.summaryData.procedure,
-            instruments: this.summaryData.instruments,
-            intakeAndOutcomeMeasurements: this.summaryData.intakeAndOutcomeMeasurements
+            procedure: summaryData.procedure,
+            instruments: summaryData.instruments,
+            intakeAndOutcomeMeasurements: summaryData.intakeAndOutcomeMeasurements
           });
         } else {
           Object.assign(preparedData, {
             cpt51type: 'report',
-            procedure: this.summaryData.procedure
+            procedure: summaryData.procedure
           });
         }
         break;
 
       case '97155':
         Object.assign(preparedData, {
-          interventionProtocols: this.summaryData.interventionProtocols,
-          replacementProtocols: this.summaryData.replacementProtocols,
-          modificationsNeededAtThisTime: this.summaryData.modificationsNeededAtThisTime,
-          additionalGoalsOrInterventions: this.summaryData.additionalGoalsOrInterventions
+          interventionProtocols: summaryData.interventionProtocols,
+          replacementProtocols: summaryData.replacementProtocols,
+          modificationsNeededAtThisTime: summaryData.modificationsNeededAtThisTime,
+          additionalGoalsOrInterventions: summaryData.additionalGoalsOrInterventions
         });
         break;
 
       case '97156':
         Object.assign(preparedData, {
-          caregiverGoals: this.summaryData.caregiverGoals,
-          environmentalChanges: this.summaryData.environmentalChanges,
-          nextSession: this.summaryData.nextSession
+          caregiverGoals: summaryData.caregiverGoals,
+          environmentalChanges: summaryData.environmentalChanges,
+          nextSession: summaryData.nextSession
         });
         break;
 
       case '97153':
         Object.assign(preparedData, {
-          environmentalChanges: this.summaryData.environmentalChanges,
-          clientAppeared: this.summaryData.clientAppeared,
-          evidencedBy: this.summaryData.evidencedBy,
-          clientResponse: this.summaryData.clientResponse,
-          progressNoted: this.summaryData.progressNoted,
-          nextSession: this.summaryData.nextSession
+          environmentalChanges: summaryData.environmentalChanges,
+          clientAppeared: summaryData.clientAppeared,
+          evidencedBy: summaryData.evidencedBy,
+          clientResponse: summaryData.clientResponse,
+          progressNoted: summaryData.progressNoted,
+          nextSession: summaryData.nextSession
         });
         break;
     }

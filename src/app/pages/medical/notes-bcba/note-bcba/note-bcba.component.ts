@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppUser } from 'src/app/core/models/users.model';
 import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
@@ -23,6 +23,7 @@ import { PatientMService } from '../../patient-m/service/patient-m.service';
 import { show97151L, ValidationResult } from '../interfaces';
 import { AISummaryData } from 'src/app/shared/components/generate-ai-summary/generate-ai-summary.component';
 import { convertToHours, convertToMinutes } from 'src/app/utils/time-functions';
+import { GenerateAiSummaryComponent } from 'src/app/shared/components/generate-ai-summary/generate-ai-summary.component';
 
 
 @Component({
@@ -229,6 +230,8 @@ export class NoteBcbaComponent implements OnInit {
   obj_inprogress1 = [];
   public textSchoolAlarm = 'It looks like the session time you entered is outside the standard school hours of Monday through Friday, 8:00 AM to 3:00 PM. Please double-check the time or update the POS as needed';
   public textTelehealtWarning = "You've selected POS 51 (Telehealth). Please make sure all telehealth requirements are met and confirm that this session complies with telehealth regulations before proceeding";
+
+  @ViewChild(GenerateAiSummaryComponent) aiSummaryComponent: GenerateAiSummaryComponent;
 
   constructor(
     private bipV2Service: BipsV2Service,
@@ -720,6 +723,12 @@ export class NoteBcbaComponent implements OnInit {
     };
   }
 
+  onAISummaryRequested() {
+    const summaryData = this.getAISummaryData();
+    if (summaryData) {
+      this.aiSummaryComponent.generateSummary(summaryData);
+    }
+  }
 
   onPaServiceSelect(event: any) {
     const service = event.value;

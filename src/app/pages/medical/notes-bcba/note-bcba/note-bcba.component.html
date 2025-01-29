@@ -597,7 +597,7 @@
                     <div class="col-12 col-md-2 d-flex align-items-center">
                       <app-generate-ai-summary
                         [type]="'bcba'"
-                        [summaryData]="getAISummaryData()"
+                        (requestData)="onAISummaryRequested()"
                         (summaryGenerated)="summary_note = $event">
                       </app-generate-ai-summary>
                     </div>
