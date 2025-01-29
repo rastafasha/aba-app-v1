@@ -24,6 +24,7 @@ import { show97151L, ValidationResult } from '../interfaces';
 import { AISummaryData } from 'src/app/shared/components/generate-ai-summary/generate-ai-summary.component';
 import { convertToHours, convertToMinutes } from 'src/app/utils/time-functions';
 import { GenerateAiSummaryComponent } from 'src/app/shared/components/generate-ai-summary/generate-ai-summary.component';
+import { ReplacementProtocol } from '../interfaces';
 
 
 @Component({
@@ -163,11 +164,9 @@ export class NoteBcbaComponent implements OnInit {
 
   intervention_added: object;
   intervention2_added: object;
-  replacements_added: object;
-  replacements2_added: object;
-  intakeoutcome_added: object;
   newlist_added: object;
   behaviorsList_added: object;
+  intakeoutcome_added: object;
 
   maladaptiveSelected: any = null;
   replacementSelected: any = null;
@@ -230,6 +229,8 @@ export class NoteBcbaComponent implements OnInit {
   obj_inprogress1 = [];
   public textSchoolAlarm = 'It looks like the session time you entered is outside the standard school hours of Monday through Friday, 8:00 AM to 3:00 PM. Please double-check the time or update the POS as needed';
   public textTelehealtWarning = "You've selected POS 51 (Telehealth). Please make sure all telehealth requirements are met and confirm that this session complies with telehealth regulations before proceeding";
+
+  replacementProtocols: ReplacementProtocol[] = [];
 
   @ViewChild(GenerateAiSummaryComponent) aiSummaryComponent: GenerateAiSummaryComponent;
 
@@ -337,30 +338,20 @@ export class NoteBcbaComponent implements OnInit {
 
       this.behaviorList = resp.data[0].maladaptives;
 
-      // Filtrar la lista replacementList por estado
-      const replacementList = resp.data[0].replacements.filter(
-        (goal) => goal.status === 'active'
-      );
-
-      // Map through replacements to add the name to each objective and transform the structure
-      const objectives = replacementList.flatMap(replacement =>
-        replacement.objectives.map(objective => ({
-          status: objective.status,
-          name: replacement.name,
-          id: objective.id,
-          description: objective.description,
-          assessed: true,
-          modified: false
-        }))
-      );
-
-      // filtrado los que estan en status in progress
-      const objetivosEnProgreso = objectives.filter(
-        (objetivo) => objetivo.status === 'in progress'
-      );
-
-      this.obj_inprogress = objetivosEnProgreso;
-      this.obj_inprogress1 = objetivosEnProgreso;
+      // Transform replacements into ReplacementProtocol format
+      this.replacementProtocols = resp.data[0].replacements
+        .filter(replacement => replacement.status === 'active')
+        .flatMap(replacement =>
+          replacement.objectives.map(objective => ({
+            id: objective.id,
+            name: replacement.name,
+            description: objective.description,
+            status: objective.status,
+            assessed: false,
+            modified: false
+          }))
+        )
+        .filter(protocol => protocol.status === 'in progress');
     });
   }
 
@@ -483,14 +474,6 @@ export class NoteBcbaComponent implements OnInit {
     this.intervention2_added = updatedInterventions2;
   }
 
-  onReplacementChange(updatedReplacements: object) {
-    this.replacements_added = updatedReplacements;
-  }
-  onReplacement2Change(updatedReplacements2: object) {
-    this.replacements2_added = updatedReplacements2;
-    console.log(updatedReplacements2, 'updatedReplacements2');
-  }
-
   onIntakeoutcomeChange(updatedIntakeoutcome: object) {
     this.intakeoutcome_added = updatedIntakeoutcome;
   }
@@ -569,7 +552,6 @@ export class NoteBcbaComponent implements OnInit {
       // interventions: this.interventionsList,
       // interventions2: this.interventionsListDoble,
       // replacements: this.obj_inprogress,
-      // replacements2: this.obj_inprogress1,
       // behaviors: this.behaviorList,
       // modifications_needed_at_this_time: this.modifications_needed_at_this_time,
       // cargiver_participation: this.cargiver_participation,
@@ -605,12 +587,14 @@ export class NoteBcbaComponent implements OnInit {
 
     if (this.selectedPaService?.cpt === '97155') {
       // bcbaData.rbt_training_goals = this.rbt_training_goals;
-      bcbaData.replacement_protocols = Object.values(this.replacements2_added).map(item => ({
-        id: item.id,
-        description: item.description,
-        assessed: item.assessed,
-        modified: item.modified
-      }));
+      bcbaData.replacement_protocols = this.replacementProtocols
+        .filter(p => p.assessed || p.modified)
+        .map(p => ({
+          id: p.id,
+          description: p.description,
+          assessed: p.assessed,
+          modified: p.modified
+        }));
       bcbaData.intervention_protocols = this.interventionsListDoble.map(item => ({
         name: item.name,
         assessed: item.value,
@@ -666,7 +650,7 @@ export class NoteBcbaComponent implements OnInit {
   }
 
   getAISummaryData(): AISummaryData {
-    console.log(this.replacements2_added, 'replacements2_added');
+    console.log(this.replacementProtocols, 'replacementProtocols');
     if (!this.selectedPaService || !this.selectedPaService.cpt) {
       return null;
     }
@@ -704,13 +688,18 @@ export class NoteBcbaComponent implements OnInit {
         .filter(item => item.value2)
         .map(item => item.name)
         .join(', ') : '',
-      replacementProtocols: this.replacements2_added ? Object.values(this.replacements2_added)
-        .filter(item => item.modified)
-        .map(item => item.description)
+      replacementProtocols: this.replacementProtocols ? this.replacementProtocols
+        .filter(p => p.modified)
+        .map(p => p.name)
         .join(', ') : '',
 
       modificationsNeededAtThisTime: this.modifications_needed_at_this_time,
       additionalGoalsOrInterventions: this.additional_goals_or_interventions,
+      // 97156
+      interventionProtocolsDemonstrated: this.interventionsList ? Object.values(this.interventionsList)
+        .filter(item => item.value)
+        .map(item => item.name)
+        .join(', ') : '',
       // pending
       rbtTrainingGoals: this.rbt_training_goals?.map(g => ({
         goal: g.lto,
@@ -879,5 +868,23 @@ export class NoteBcbaComponent implements OnInit {
             this.meet_with_client_at==='03' &&
             this.selectedValueTimeIn.trim() !== '' &&
             this.selectedValueTimeOut.trim() !== ''
+  }
+
+  onModificationsChange(value: boolean) {
+    this.modifications_needed_at_this_time = value;
+  }
+
+  onAdditionalChange(value: string) {
+    this.additional_goals_or_interventions = value;
+  }
+
+  onReplacementProtocolsChange(protocols: ReplacementProtocol[]) {
+    // When saving the note, we'll use the protocols array directly
+    console.log('Updated protocols:', protocols);
+    this.replacementProtocols = protocols;
+  }
+
+  onReplacementChange(updatedReplacements: any) {
+    this.obj_inprogress = updatedReplacements;
   }
 }

@@ -42,6 +42,8 @@ export interface AISummaryData {
   replacementProtocols?: string;
   modificationsNeededAtThisTime?: boolean;
   additionalGoalsOrInterventions?: string;
+  // 97156 specific fields
+  interventionProtocolsDemonstrated?: string;
 }
 
 @Component({

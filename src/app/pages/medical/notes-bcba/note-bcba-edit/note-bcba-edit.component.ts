@@ -21,6 +21,7 @@ import {
   show97151List,
 } from '../listasSelectData';
 import { show97151L } from '../interfaces';
+import { ReplacementProtocol } from '../interfaces';
 
 interface Behavior {
   index: number;
@@ -260,6 +261,8 @@ export class NoteBcbaEditComponent implements OnInit {
   obj_inprogress = [];
   obj_inprogress1 = [];
 
+  replacementProtocols: ReplacementProtocol[] = [];
+
   constructor(
     private bipService: BipService,
     private router: Router,
@@ -367,7 +370,7 @@ export class NoteBcbaEditComponent implements OnInit {
         this.note_selected.provider_signature;
       this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED =
         this.note_selected.supervisor_signature;
-      
+
         this.selectedPaService1 = this.show97151List.find(type => type.cpt === this.note_selected.type);
       console.log(this.selectedPaService1);
 
@@ -426,6 +429,18 @@ export class NoteBcbaEditComponent implements OnInit {
         this.caregivers_training_goalsgroup = {};
       }
 
+      // When loading the note data, transform the replacements into ReplacementProtocol format
+      if (this.note_selected.replacement_protocols) {
+        this.replacementProtocols = this.note_selected.replacement_protocols.map(protocol => ({
+          id: protocol.id,
+          name: protocol.name || '',
+          description: protocol.description,
+          status: 'in progress',
+          assessed: protocol.assessed || false,
+          modified: protocol.modified || false
+        }));
+      }
+
       // this.getBipv2();
     });
   }
@@ -451,10 +466,6 @@ export class NoteBcbaEditComponent implements OnInit {
         });
     });
   }
-
-
-  
-  
 
   specialistData(selectedValueInsurer) {
     this.doctorService
@@ -887,6 +898,22 @@ export class NoteBcbaEditComponent implements OnInit {
       );
     }
 
+    if (this.selectedPaService?.cpt === '97155') {
+      formData.append(
+        'replacement_protocols',
+        JSON.stringify(
+          this.replacementProtocols
+            .filter(p => p.assessed || p.modified)
+            .map(p => ({
+              id: p.id,
+              description: p.description,
+              assessed: p.assessed,
+              modified: p.modified
+            }))
+        )
+      );
+    }
+
     this.noteBcbaService
       .update(formData as any, this.note_selectedId)
       .subscribe((resp) => {
@@ -1086,5 +1113,19 @@ export class NoteBcbaEditComponent implements OnInit {
     const isCpt97151 = this.selectedPaService?.cpt === '97151';
     const isTelehealth = this.meet_with_client_at === '02';
     this.showPosWarning = isCpt97151 && isTelehealth;
+  }
+
+  onModificationsChange(value: boolean) {
+    this.modifications_needed_at_this_time = value;
+  }
+
+  onAdditionalChange(value: string) {
+    this.additional_goals_or_interventions = value;
+  }
+
+  onReplacementProtocolsChange(protocols: ReplacementProtocol[]) {
+    // When saving the note, we'll use the protocols array directly
+    console.log('Updated protocols:', protocols);
+    this.replacementProtocols = protocols;
   }
 }

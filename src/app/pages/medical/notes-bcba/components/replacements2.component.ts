@@ -1,58 +1,47 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {  Objetives, ReplacementL2 } from '../interfaces';
+import { ReplacementProtocol } from '../interfaces';
 
 @Component({
   selector: 'app-replacements2',
   template: `
     <div class="col-12">
-      <h5>replacements protocols</h5>
-      <div class="table-responsive ">
-        <table class="table mb-0 ">
+      <h5>Replacement Protocols</h5>
+      <div class="table-responsive">
+        <table class="table mb-0">
           <thead>
             <tr>
-              <th>please check as needed</th>
+              <th>Protocol</th>
               <th>Assessed</th>
               <th>Modified</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let replac of obj_inprogress1; let i = index">
-              <td>{{ replac.description }}</td>
+            <tr *ngFor="let protocol of replacementProtocols">
+              <td>{{ protocol.description }}</td>
               <td>
-                <div
-                  class="status-toggle d-flex justify-content-between align-items-center"
-                >
+                <div class="status-toggle d-flex justify-content-between align-items-center">
                   <input
                     type="checkbox"
-                    [id]="replac.id + '-assessed'"
+                    [id]="protocol.id + '-assessed'"
                     class="check"
-                    [(ngModel)]="replac.value"
-                    [name]="replac.id + '-assessed'"
-                    (ngModelChange)="updateReplacements()"
+                    [(ngModel)]="protocol.assessed"
+                    [name]="protocol.id + '-assessed'"
+                    (ngModelChange)="updateProtocols()"
                   />
-                  <label [for]="replac.id + '-assessed'" class="checktoggle"
-                  
-                    >checkbox</label
-                  >
+                  <label [for]="protocol.id + '-assessed'" class="checktoggle">checkbox</label>
                 </div>
               </td>
               <td>
-                <div
-                  class="status-toggle d-flex justify-content-between align-items-center"
-                >
+                <div class="status-toggle d-flex justify-content-between align-items-center">
                   <input
                     type="checkbox"
-                    [id]="replac.id + '-modified'"
+                    [id]="protocol.id + '-modified'"
                     class="check"
-                    [(ngModel)]="replac.value2"
-                    [name]="replac.description + '-modified'"
-                    (ngModelChange)="updateReplacements()"
+                    [(ngModel)]="protocol.modified"
+                    [name]="protocol.id + '-modified'"
+                    (ngModelChange)="updateProtocols()"
                   />
-                  <label
-                    [for]="replac.id + '-modified'"
-                    class="checktoggle"
-                    >checkbox</label
-                  >
+                  <label [for]="protocol.id + '-modified'" class="checktoggle">checkbox</label>
                 </div>
               </td>
             </tr>
@@ -63,23 +52,28 @@ import {  Objetives, ReplacementL2 } from '../interfaces';
   `,
 })
 export class Replacements2Component {
-  @Input() obj_inprogress1: Objetives[];
-  @Output() replacementsChange2 = new EventEmitter<object>();
+  private _protocols: ReplacementProtocol[] = [];
 
-  
+  @Input() set replacementProtocols(protocols: ReplacementProtocol[]) {
+    // Only initialize values if they haven't been set before
+    this._protocols = protocols.map(p => {
+      const existingProtocol = this._protocols.find(ep => ep.id === p.id);
+      return {
+        ...p,
+        assessed: existingProtocol?.assessed ?? false,
+        modified: existingProtocol?.modified ?? false
+      };
+    });
+  }
 
-  updateReplacements() {
-    const replacementsObj = this.obj_inprogress1
-      .filter((replac) => replac.value || replac.value2)
-      .reduce((acc, replac) => {
-        acc[replac.id] = {
-          id: replac.id, 
-          modified:!!replac.value2, 
-          assessed:!!replac.value, 
-          description:replac.description};
-        return acc;
-      }, {});
-      console.log(replacementsObj);
-    this.replacementsChange2.emit(replacementsObj);
+  get replacementProtocols(): ReplacementProtocol[] {
+    return this._protocols;
+  }
+
+  @Output() protocolsChange = new EventEmitter<ReplacementProtocol[]>();
+
+  updateProtocols() {
+    // Emit a copy of the protocols to ensure change detection
+    this.protocolsChange.emit([...this._protocols]);
   }
 }

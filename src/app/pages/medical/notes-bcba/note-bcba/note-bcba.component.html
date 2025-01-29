@@ -536,13 +536,13 @@
       <app-show91755
         [show97155]="show97155"
         [interventionsListDoble]="interventionsListDoble"
-        [obj_inprogress1]="obj_inprogress1"
+        [replacementProtocols]="replacementProtocols"
         [modifications_needed_at_this_time]="modifications_needed_at_this_time"
         [additional_goals_or_interventions]="additional_goals_or_interventions"
-        (modificationsChange)="modifications_needed_at_this_time = $event"
-        (additionalChange)="additional_goals_or_interventions = $event"
+        (modificationsChange)="onModificationsChange($event)"
+        (additionalChange)="onAdditionalChange($event)"
         (interventions2Change)="onInterventions2Change($event)"
-        (replacements2Change)="onReplacement2Change($event)"
+        (protocolsChange)="onReplacementProtocolsChange($event)"
       >
       </app-show91755>
 

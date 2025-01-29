@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ReplacementProtocol } from '../../interfaces';
 
 @Component({
   selector: 'app-show91755',
@@ -8,14 +9,14 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class Show91755Component {
   @Input() show97155;
   @Input() interventionsListDoble;
-  @Input() obj_inprogress1;
+  @Input() replacementProtocols: ReplacementProtocol[] = [];
   @Input() modifications_needed_at_this_time;
   @Input() additional_goals_or_interventions;
 
   @Output() modificationsChange = new EventEmitter<boolean>();
   @Output() additionalChange = new EventEmitter<string>();
   @Output() interventions2Change = new EventEmitter<object>();
-  @Output() replacements2Change = new EventEmitter<object>();
+  @Output() protocolsChange = new EventEmitter<ReplacementProtocol[]>();
 
   onCheckboxChange() {
     this.modificationsChange.emit(this.modifications_needed_at_this_time);
@@ -29,7 +30,7 @@ export class Show91755Component {
     this.interventions2Change.emit(event);
   }
 
-  onReplacement2Change(event: object) {
-    this.replacements2Change.emit(event);
+  onReplacementProtocolsChange(protocols: ReplacementProtocol[]) {
+    this.protocolsChange.emit(protocols);
   }
 }
