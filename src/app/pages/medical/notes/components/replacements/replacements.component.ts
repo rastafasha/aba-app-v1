@@ -51,22 +51,22 @@ import { ReplacementService } from "../../services/replacement.service";
                      >
               <div class="row">
                 <app-alert
-                  [title]="'Oops!'"
+                  [title]="getTitle(replacement)"
                   [type]="'warning'"
-                  [content]="lowPercentageWarning"
+                  [content]="highPercentageWarning"
                   *ngIf="
-                    (replacement.number_of_correct_response * 100 / replacement.total_trials) > (replacement.expectedPercentaje + 0.1*replacement.target)
+                    (replacement.number_of_correct_response * 100 / replacement.total_trials) > (replacement.expectedPercentaje + 10)
                     && !!replacement.number_of_correct_response
                     && !!replacement.total_trials
                   "
                 ></app-alert>
 
                 <app-alert
-                  [title]="'Oops!'"
+                  [title]="getTitle(replacement)"
                   [type]="'warning'"
-                  [content]="highPercentageWarning"
+                  [content]="lowPercentageWarning"
                   *ngIf="
-                    (replacement.number_of_correct_response * 100 / replacement.total_trials) < (replacement.expectedPercentaje - 0.1*replacement.target)
+                    (replacement.number_of_correct_response * 100 / replacement.total_trials) < (replacement.expectedPercentaje - 10)
                     && !!replacement.number_of_correct_response
                     && !!replacement.total_trials
                   "
@@ -111,5 +111,11 @@ export class ReplacementsComponent {
         rep['target'] = objectiveInProgess.target
       }
     })
+  }
+
+  public getTitle(replacement: any): string {
+    return `Expected range: 
+              ${(replacement.expectedPercentaje > 10 ? replacement.expectedPercentaje - 10 : 0).toFixed(0)}% - 
+              ${(replacement.expectedPercentaje + 10).toFixed(0)}%` 
   }
 }

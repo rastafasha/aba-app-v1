@@ -10,115 +10,153 @@
     <!-- /Page Header -->
     <div class="row" id="contentToConvert" #contentToConvert>
       <div class="col-sm-12" *ngIf="bip">
-        <app-bip-profile-head
-          [patient]="patient"
-          [contentToConvert]="$any(contentToConvert)"
-        ></app-bip-profile-head>
+        <div>
+          <app-bip-profile-head
+            [patient]="patient"
+            [contentToConvert]="$any(contentToConvert)"
+          ></app-bip-profile-head>
+        </div>
         <!-- data client -->
-        <app-bip-profile-patient-data [patient]="patient" [bip]="bip">
-        </app-bip-profile-patient-data>
-
-        <!-- data client end-->
-        <!-- documents Reviewed-->
-        <app-bip-documents-show [documents]="bip.documents_reviewed">
-        </app-bip-documents-show>
-
-        <!-- documents Reviewed end-->
+        <div appEditWrapper (editingChange)="onEditClient()">
+          <app-bip-profile-patient-data
+            [patient]="patient"
+          ></app-bip-profile-patient-data>
+        </div>
 
         <!-- Background Information-->
-        <app-bip-profile-background [bip]="bip"></app-bip-profile-background>
-
-        <!-- Background Information end-->
+        <div
+          appEditWrapper
+          #backgroundWrapper="editWrapper"
+          (save)="backgroundWrapper.stopEditing()"
+        >
+          <app-bip-profile-background
+            *ngIf="!backgroundWrapper.editing"
+            [bip]="bip"
+          >
+          </app-bip-profile-background>
+          <!-- Edit -->
+          <app-behavior-analysis-assessment
+            *ngIf="backgroundWrapper.editing"
+            [(input)]="bip"
+            (save)="backgroundWrapper.stopEditing()"
+            (cancel)="backgroundWrapper.stopEditing()"
+          ></app-behavior-analysis-assessment>
+        </div>
 
         <!-- Maladaptives Behaviors-->
-        <app-bip-profile-maladaptives
-          [patient]="patient"
-          [maladaptives]="bip.maladaptives"
+        <div
+          appEditWrapper
+          #maladaptivesWrapper="editWrapper"
+          (save)="maladaptivesWrapper.stopEditing()"
         >
-        </app-bip-profile-maladaptives>
+          <app-bip-profile-maladaptives
+            *ngIf="!maladaptivesWrapper.editing"
+            [patient]="patient"
+            [maladaptives]="bip.maladaptives"
+          ></app-bip-profile-maladaptives>
+          <app-reduction-goal-form
+            *ngIf="maladaptivesWrapper.editing"
+            [(input)]="bip.maladaptives"
+            [patient_identifier]="patient.patient_identifier"
+            (save)="maladaptivesWrapper.stopEditing()"
+            (cancel)="maladaptivesWrapper.stopEditing()"
+          ></app-reduction-goal-form>
+        </div>
 
-        <!-- Maladaptives Behaviors end-->
+        <!-- documents Reviewed-->
+        <div appEditWrapper>
+          <app-bip-documents-show
+            [documents]="bip.assestment_conducted_options"
+          >
+          </app-bip-documents-show>
+        </div>
 
         <!-- Assestment Conducted-->
-        <app-bip-profile-assestment [bip]="bip"></app-bip-profile-assestment>
-
-        <!-- Assestment Conducted end-->
+        <div appEditWrapper>
+          <app-bip-profile-assestment [bip]="bip"></app-bip-profile-assestment>
+        </div>
 
         <!-- Prevalent Setting Events & Antecedents-->
-        <app-bip-profile-prevalent
-          [prevalent_setting_event_and_atecedents]="
-            bip.prevalent_setting_event_and_atecedents
-          "
-        ></app-bip-profile-prevalent>
+        <div appEditWrapper>
+          <app-bip-profile-prevalent
+            [prevalent_setting_event_and_atecedents]="
+              bip.prevalent_setting_event_and_atecedents
+            "
+          ></app-bip-profile-prevalent>
+        </div>
 
-        <!-- Prevalent Setting Events & Antecedents end-->
         <!-- Hypothesis-based interventions-->
-        <app-bip-profile-hypothesis [bip]="bip"></app-bip-profile-hypothesis>
+        <div appEditWrapper>
+          <app-bip-profile-hypothesis [bip]="bip"></app-bip-profile-hypothesis>
+        </div>
 
-        <!-- Hypothesis-based interventions end-->
         <!-- interventions -->
-        <app-bip-profile-interventions
-          [interventions]="bip.interventions"
-        ></app-bip-profile-interventions>
-
-        <!-- interventions end-->
+        <div appEditWrapper>
+          <app-bip-profile-interventions
+            [interventions]="bip.interventions"
+          ></app-bip-profile-interventions>
+        </div>
 
         <!-- Reduction Goals-->
-        <app-bip-profile-reductions
-          [reduction_goal]="bip.maladaptives"
-        ></app-bip-profile-reductions>
+        <div appEditWrapper>
+          <app-bip-profile-reductions
+            [reduction_goal]="bip.maladaptives"
+          ></app-bip-profile-reductions>
+        </div>
 
-        <!-- Reduction Goals end-->
         <!-- Replacement Goals-->
-        <app-bip-profile-replacements
-          [bip]="bip"
-        ></app-bip-profile-replacements>
-
-        <!-- Replacement Goals end-->
+        <div appEditWrapper>
+          <app-bip-profile-replacements
+            [bip]="bip"
+          ></app-bip-profile-replacements>
+        </div>
 
         <!-- Family Involvement-->
-        <app-bip-profile-family
-          [family_envolment]="bip.caregiver_trainings"
-        ></app-bip-profile-family>
+        <div appEditWrapper>
+          <app-bip-profile-family
+            [family_envolment]="bip.caregiver_trainings"
+          ></app-bip-profile-family>
+        </div>
 
-        <!-- Family Involvement end-->
         <!-- Monitoring Evaluating-->
-        <app-bip-profile-monotoring
-          [rbt_training_goals]="bip.rbt_trainings"
-        ></app-bip-profile-monotoring>
+        <div appEditWrapper>
+          <app-bip-profile-monotoring
+            [rbt_training_goals]="bip.rbt_trainings"
+          ></app-bip-profile-monotoring>
+        </div>
 
-        <!-- Monitoring Evaluating end-->
         <!-- behavior asistant (only text) -->
-        <app-bip-profile-behavior [bip]="bip"></app-bip-profile-behavior>
-
-        <!-- behavior asistant end-->
+        <div appEditWrapper>
+          <app-bip-profile-behavior [bip]="bip"></app-bip-profile-behavior>
+        </div>
 
         <!-- Generalization Training-->
-        <app-bip-profile-generalization
-          [generalization_training]="bip.generalization_trainings[0]"
-        ></app-bip-profile-generalization>
-
-        <!-- Generalization Training end-->
+        <div appEditWrapper>
+          <app-bip-profile-generalization
+            [generalization_training]="bip.generalization_trainings[0]"
+          ></app-bip-profile-generalization>
+        </div>
 
         <!-- Crisis Plan-->
-        <app-bip-profile-crisis-plan
-          [crisis_plan]="bip.crisis_plans[0]"
-        ></app-bip-profile-crisis-plan>
+        <div appEditWrapper>
+          <app-bip-profile-crisis-plan
+            [crisis_plan]="bip.crisis_plans[0]"
+          ></app-bip-profile-crisis-plan>
+        </div>
 
-        <!-- Crisis Plan end-->
         <!-- De-escalation Techniques-->
+        <div appEditWrapper>
+          <app-bip-profile-de-escalation
+            [de_escalation_techniques]="bip.de_escalation_techniques"
+          ></app-bip-profile-de-escalation>
+        </div>
 
-        <app-bip-profile-de-escalation
-          [de_escalation_techniques]="bip.de_escalation_techniques"
-        ></app-bip-profile-de-escalation>
-
-        <!-- De-escalation Techniques end-->
         <!-- Consent to Treatment-->
-        <app-bip-profile-consent
-          [consent_to_treatment]="bip.consent_to_treatments[0]"
-        ></app-bip-profile-consent>
-
-        <!-- Consent to Treatment end-->
+        <div appEditWrapper>
+          <app-bip-profile-consent
+            [consent_to_treatment]="bip.consent_to_treatments[0]"
+          ></app-bip-profile-consent>
+        </div>
       </div>
     </div>
   </div>

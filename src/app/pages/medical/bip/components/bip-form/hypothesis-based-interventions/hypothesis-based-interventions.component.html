@@ -8,10 +8,10 @@
           <div class="row align-items-center">
             <div class="col-12">
               <div class="form-group local-forms">
-                <label
-                  >Hypothesis-based interventions
-                  <span class="login-danger">* </span></label
-                >
+                <label>
+                  Hypothesis-based interventions
+                  <span class="login-danger">* </span>
+                </label>
                 <textarea
                   class="form-control"
                   name="hypothesis_based_intervention"
@@ -19,7 +19,8 @@
                   (ngModelChange)="inputChange.emit(input)"
                   rows="4"
                   cols="30"
-                ></textarea>
+                >
+                </textarea>
               </div>
             </div>
           </div>
@@ -27,6 +28,7 @@
           <!-- Tangibles Section -->
           <div class="row align-items-center my-4">
             <app-list-and-form
+              [headRenders]="headRenders"
               #tangiblesList
               title="Access to Tangibles Activities"
               [(newItem)]="newTangible"
@@ -41,15 +43,17 @@
                 [(input)]="newTangible"
                 (cancel)="tangiblesList.onClose()"
                 (save)="tangiblesList.onAdd($event)"
-              ></app-tangible-form>
+              >
+              </app-tangible-form>
             </app-list-and-form>
           </div>
 
           <!-- Sensory Section -->
           <div class="row align-items-center my-4">
             <app-list-and-form
+              [headRenders]="headRenders"
               #sensoryList
-              title="Access to Sensory Activities"
+              title="Automatic"
               [(newItem)]="newSensory"
               [(dataSource)]="input.sensory"
               [displayedColumns]="[
@@ -62,15 +66,17 @@
                 [(input)]="newSensory"
                 (cancel)="sensoryList.onClose()"
                 (save)="sensoryList.onAdd($event)"
-              ></app-sensory-form>
+              >
+              </app-sensory-form>
             </app-list-and-form>
           </div>
 
           <!-- Escape Section -->
           <div class="row align-items-center my-4">
             <app-list-and-form
+              [headRenders]="headRenders"
               #escapeList
-              title="Access to Escape Activities"
+              title="Escape"
               [(newItem)]="newEscape"
               [(dataSource)]="input.escape"
               [displayedColumns]="[
@@ -83,15 +89,17 @@
                 [(input)]="newEscape"
                 (cancel)="escapeList.onClose()"
                 (save)="escapeList.onAdd($event)"
-              ></app-escape-form>
+              >
+              </app-escape-form>
             </app-list-and-form>
           </div>
 
           <!-- Attention Section -->
           <div class="row align-items-center my-4">
             <app-list-and-form
+              [headRenders]="headRenders"
               #attentionList
-              title="Access to Attention Activities"
+              title="Attention"
               [(newItem)]="newAttention"
               [(dataSource)]="input.attention"
               [displayedColumns]="[
@@ -104,7 +112,8 @@
                 [(input)]="newAttention"
                 (cancel)="attentionList.onClose()"
                 (save)="attentionList.onAdd($event)"
-              ></app-attention-form>
+              >
+              </app-attention-form>
             </app-list-and-form>
           </div>
 

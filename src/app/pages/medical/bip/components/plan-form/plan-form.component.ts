@@ -9,5 +9,6 @@ import { InputDirective } from 'src/app/shared/directives/input.directive';
 })
 export class GoalFormSimpleComponent extends InputDirective<PlanV2> {
   @Input() title = 'Plan';
+  @Input() showIntensity = false;
   status = PLAN_STATUS_MAP;
 }

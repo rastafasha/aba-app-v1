@@ -8,11 +8,14 @@ import { Objective } from './objective.v2.model';
 import { PlanV2 } from './plan.v2.model';
 import { DocumentV2 } from './document.v2.model';
 import { CrisisPlanV2 } from './crisis-plan.v2.model';
-type TypeOfAssessment = 1 | 2 | 3;
+const HYPOTHESIS_BASED_INTERVEMTION =
+  'The following hypothesis-based interventions and instructional practices will be initiated to address the different patterns of behavior/response classes. These strategies have been selected because they are directly linked to the functions of the client’s behavior and they are the least intrusive and most effective options available that will work within the environments in which the client participates.';
+
+type TypeOfAssessment = '1' | '2' | '3';
 export const TYPE_OF_ASSESSMENT_MAP: Record<TypeOfAssessment, string> = {
-  1: 'Assessment',
-  2: 'Reassessment',
-  3: 'Initial',
+  '1': 'Assessment',
+  '2': 'Reassessment',
+  '3': 'Initial',
 };
 
 export class Intervention {
@@ -217,8 +220,6 @@ export class DeEscalationTechnique {
   id: number;
   bip_id: number;
   index?: number;
-  patient_id: string;
-  client_id: number;
   description: string;
   service_recomendation: string;
   recomendation_lists: Recomendation[];
@@ -236,8 +237,6 @@ export class DeEscalationTechnique {
     return {
       id: 0,
       bip_id: 0,
-      patient_id: '',
-      client_id: 0,
       description: '',
       service_recomendation: '',
       recomendation_lists: [],
@@ -280,7 +279,6 @@ export class BipV2 {
   crisis_plans: CrisisPlanV2[]; //make endpoint
   current_treatment_and_progress: string;
   de_escalation_techniques: DeEscalationTechnique[]; //make endpoint
-  documents_reviewed: DocumentV2[];
   education_status: string;
   escape: Escape[];
   generalization_trainings: GeneralizationTraining[];
@@ -309,7 +307,7 @@ export class BipV2 {
       ...data,
       id: NumberOrNullOrUndefined(data.id),
       client_id: NumberOrNullOrUndefined(data.client_id),
-      type_of_assessment: NumberOrNullOrUndefined(
+      type_of_assessment: StringOrNullOrUndefined(
         data.type_of_assessment
       ) as TypeOfAssessment,
       doctor_id: NumberOrNullOrUndefined(data.doctor_id),
@@ -336,9 +334,9 @@ export class BipV2 {
       ),
       education_status: StringOrNullOrUndefined(data.education_status),
       caregiver_trainings: ForceMap(data.caregiver_trainings, PlanV2),
-      hypothesis_based_intervention: StringOrNullOrUndefined(
-        data.hypothesis_based_intervention
-      ),
+      hypothesis_based_intervention:
+        StringOrNullOrUndefined(data.hypothesis_based_intervention) ??
+        HYPOTHESIS_BASED_INTERVEMTION,
       interventions: ForceMap(data.interventions, Intervention),
       rbt_trainings: ForceMap(data.rbt_trainings, PlanV2),
       physical_and_medical: ForceMap(data.physical_and_medical, Medication),
@@ -361,7 +359,6 @@ export class BipV2 {
         data.consent_to_treatments,
         ConsentToTreatment
       ),
-      documents_reviewed: ForceMap(data.documents_reviewed, DocumentV2),
       generalization_trainings: ForceMap(
         data.generalization_trainings,
         GeneralizationTraining
@@ -407,7 +404,7 @@ export class BipV2 {
       current_treatment_and_progress: undefined,
       education_status: undefined,
       caregiver_trainings: [],
-      hypothesis_based_intervention: undefined,
+      hypothesis_based_intervention: HYPOTHESIS_BASED_INTERVEMTION,
       interventions: [],
       rbt_trainings: [],
       physical_and_medical: [],
@@ -421,7 +418,6 @@ export class BipV2 {
       generalization_trainings: [],
       maladaptives: [],
       replacements: [],
-      documents_reviewed: [],
       crisis_plans: [],
       de_escalation_techniques: [],
       consent_to_treatments: [],
