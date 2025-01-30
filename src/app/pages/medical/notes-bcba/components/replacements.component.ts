@@ -11,7 +11,7 @@ import {  Objetives1, ReplacementL } from '../interfaces';
           <thead>
             <tr>
               <th>please check as needed</th>
-              <th>Demostrated</th>
+              <th>Demonstrated</th>
             </tr>
           </thead>
           <tbody>
@@ -42,7 +42,7 @@ import {  Objetives1, ReplacementL } from '../interfaces';
     </div>
 
 
-    
+
   `,
 })
 export class ReplacementsComponent {
@@ -55,8 +55,8 @@ export class ReplacementsComponent {
       .reduce((acc, replac) => {
         acc[replac.id] = true;
         // acc[replac.id] = {
-        //   id: replac.id, 
-        //   demostrated: !!replac.value, 
+        //   id: replac.id,
+        //   demonstrated: !!replac.value,
         //   name: replac.description };
         return acc;
       }, {});

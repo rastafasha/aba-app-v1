@@ -105,7 +105,6 @@ export class NoteBcbaComponent implements OnInit {
   BCBA_conducted_client_observations = false;
   BCBA_conducted_assessments = false;
 
-  demostrated = false;
   modifications_needed_at_this_time = false;
   cargiver_participation = false;
   was_the_client_present = false;

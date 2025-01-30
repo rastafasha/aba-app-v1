@@ -16,7 +16,7 @@ import { PlanProtocol } from 'src/app/core/models/notes.model';
           <thead>
             <tr>
               <th>please check as needed</th>
-              <th>Demostrated</th>
+              <th>Demonstrated</th>
             </tr>
           </thead>
           <tbody>

@@ -16,7 +16,7 @@ import { Protocol } from 'src/app/core/models/notes.model';
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Demostrated</th>
+                <th>Demonstrated</th>
               </tr>
             </thead>
             <tbody>
