@@ -568,7 +568,7 @@ export class NoteBcbaComponent implements OnInit {
     };
 
     if (this.selectedPaService?.cpt === '97151') {
-      bcbaData.subtype = this.selectedPaService1?.cpt as AssessmentToolType;
+      bcbaData.subtype = this.selectedPaService1?.cpt.toLowerCase() as AssessmentToolType;
       bcbaData.assessment_tools = this.newList.reduce<string[]>((prev, cur) => {
         if (cur.value) prev.push(cur.name);
         return prev;
