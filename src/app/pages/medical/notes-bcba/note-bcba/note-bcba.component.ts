@@ -210,7 +210,6 @@ export class NoteBcbaComponent implements OnInit {
 
         this.first_name = this.client_selected.first_name;
         this.last_name = this.client_selected.last_name;
-        this.patient_identifier = this.client_selected.patient_identifier;
 
         this.insurance_id = this.client_selected.insurer_id;
 
@@ -254,7 +253,7 @@ export class NoteBcbaComponent implements OnInit {
             name: replacement.name,
             description: objective.description,
             status: objective.status,
-            assessed: false,
+            assessed: true,
             modified: false,
             demonstrated: false,
           }))
@@ -493,10 +492,10 @@ export class NoteBcbaComponent implements OnInit {
     // 97156
     if (this.selectedPaService?.cpt === '97156') {
       bcbaData.replacement_protocols = this.replacementProtocols
-        .map((p, index) => ({
+        .map(p => ({
           plan_id: p.id,
           name: p.name,
-          discussed: this.behaviorList[index].value,
+          demonstrated: p.demonstrated,
         }));
       bcbaData.behavior_protocols = this.behaviorList.map(item => ({
         plan_id: item.id,

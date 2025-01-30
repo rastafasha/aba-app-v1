@@ -55,13 +55,13 @@ export class Replacements2Component {
   private _protocols: ReplacementProtocol[] = [];
 
   @Input() set replacementProtocols(protocols: ReplacementProtocol[]) {
-    // Only initialize values if they haven't been set before
+    // Keep existing values if they exist, otherwise use the incoming values
     this._protocols = protocols.map(p => {
       const existingProtocol = this._protocols.find(ep => ep.id === p.id);
       return {
         ...p,
-        assessed: existingProtocol?.assessed ?? false,
-        modified: existingProtocol?.modified ?? false
+        assessed: existingProtocol?.assessed ?? p.assessed ?? false,
+        modified: existingProtocol?.modified ?? p.modified ?? false
       };
     });
   }
