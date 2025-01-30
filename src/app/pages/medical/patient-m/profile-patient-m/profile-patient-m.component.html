@@ -371,9 +371,9 @@
                             <div class="detail-personal">
                               <h2>Parent's Sex</h2>
                               <span *ngIf="patient_selected.parent_gender === 2"
-                          >Female</span
+                          ><h3>Female</h3></span
                         >
-                        <span *ngIf="patient_selected.parent_gender === 1">Male</span>
+                        <span *ngIf="patient_selected.parent_gender === 1"><h3>Male</h3></span>
                             </div>
                           </div>
                           <div class="col-xl-3 col-md-6">
@@ -389,52 +389,6 @@
                             </div>
                           </div>
 
-                          <h5>Is Patient's Condition Related to:</h5>
-                          <div class="col-xl-3 col-md-6">
-                            <div class="detail-personal">
-                              <h2>Employment? (current or previews)</h2>
-                              <span
-                                class="badge bg-success"
-                                *ngIf="patient_selected.emmployment === true"
-                                >true</span
-                              >
-                              <span
-                                class="badge bg-danger"
-                                *ngIf="patient_selected.emmployment === false"
-                                >false</span
-                              >
-                            </div>
-                          </div>
-                          <div class="col-xl-3 col-md-6">
-                            <div class="detail-personal">
-                              <h2>Auto Accident?</h2>
-                              <span
-                                class="badge bg-success"
-                                *ngIf="patient_selected.auto_accident === true"
-                                >true</span
-                              >
-                              <span
-                                class="badge bg-danger"
-                                *ngIf="patient_selected.auto_accident === false"
-                                >false</span
-                              >
-                            </div>
-                          </div>
-                          <div class="col-xl-3 col-md-6">
-                            <div class="detail-personal">
-                              <h2>Other Accident?</h2>
-                              <span
-                                class="badge bg-success"
-                                *ngIf="patient_selected.other_accident === true"
-                                >true</span
-                              >
-                              <span
-                                class="badge bg-danger"
-                                *ngIf="patient_selected.other_accident === false"
-                                >false</span
-                              >
-                            </div>
-                          </div>
                         </div>
 
                         <div class="col-xl-3 col-md-6">
@@ -452,12 +406,12 @@
                             <h3>{{ patient_selected.referring_provider_npi }}</h3>
                           </div>
                         </div>
-                        <div class="col-xl-3 col-md-6">
+                        <!-- <div class="col-xl-3 col-md-6">
                           <div class="detail-personal">
                             <h2>NPI</h2>
                             <h3>{{ patient_selected.npi }}</h3>
                           </div>
-                        </div>
+                        </div> -->
                         <div class="col-xl-3 col-md-6">
                           <div class="detail-personal">
                             <h2>Diagnosis Code</h2>

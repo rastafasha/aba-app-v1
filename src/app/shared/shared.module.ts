@@ -30,6 +30,7 @@ import { ListColumnsPipe } from './components/pipes/list-columns.pipe';
 import { PdfButtonComponent } from './components/pdf-button/pdf-button.component';
 import { InputDirective } from './directives/input.directive';
 import { GenerateAiSummaryComponent } from './components/generate-ai-summary/generate-ai-summary.component';
+import { EditWrapperDirective } from './directives/edit-wrapper.directive';
 
 const components = [
   NoInfoComponent,
@@ -45,6 +46,7 @@ const components = [
   PdfButtonComponent,
   InputDirective,
   GenerateAiSummaryComponent
+  EditWrapperDirective,
 ];
 
 @NgModule({

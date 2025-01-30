@@ -11,11 +11,11 @@ import { CrisisPlanV2 } from './crisis-plan.v2.model';
 const HYPOTHESIS_BASED_INTERVEMTION =
   'The following hypothesis-based interventions and instructional practices will be initiated to address the different patterns of behavior/response classes. These strategies have been selected because they are directly linked to the functions of the client’s behavior and they are the least intrusive and most effective options available that will work within the environments in which the client participates.';
 
-type TypeOfAssessment = 1 | 2 | 3;
+type TypeOfAssessment = '1' | '2' | '3';
 export const TYPE_OF_ASSESSMENT_MAP: Record<TypeOfAssessment, string> = {
-  1: 'Assessment',
-  2: 'Reassessment',
-  3: 'Initial',
+  '1': 'Assessment',
+  '2': 'Reassessment',
+  '3': 'Initial',
 };
 
 export class Intervention {
@@ -307,7 +307,7 @@ export class BipV2 {
       ...data,
       id: NumberOrNullOrUndefined(data.id),
       client_id: NumberOrNullOrUndefined(data.client_id),
-      type_of_assessment: NumberOrNullOrUndefined(
+      type_of_assessment: StringOrNullOrUndefined(
         data.type_of_assessment
       ) as TypeOfAssessment,
       doctor_id: NumberOrNullOrUndefined(data.doctor_id),

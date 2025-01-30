@@ -3,14 +3,20 @@
     <div class="row align-items-center mb-4">
       <app-behavior-analysis-assessment-form
         [(input)]="input"
+        [showCancel]="false"
+        [showSave]="false"
       ></app-behavior-analysis-assessment-form>
       <!-- Medicals -->
-
+      <div class="col-xs-12">
+        <div class="about-info detail-personal">
+          <h3>Physical And Medical Status</h3>
+        </div>
+      </div>
       <div class="row align-items-center">
         <div class="col-xs-12">
           <div class="form-group local-forms">
             <label>
-              Physical And Medical Status
+              Description
               <span class="login-danger">*</span>
             </label>
             <textarea
@@ -28,7 +34,7 @@
       <div class="row align-items-center mt-4">
         <app-list-and-form
           #phisicalAndMedicalList
-          title="Physical And Medical"
+          title="Medications"
           [(newItem)]="newMedication"
           [(dataSource)]="input.physical_and_medical"
           [displayedColumns]="[

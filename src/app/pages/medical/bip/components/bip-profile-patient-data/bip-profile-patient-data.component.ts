@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { BipV2, PatientV2 } from 'src/app/core/models';
+import { PatientV2 } from 'src/app/core/models';
 
 @Component({
   selector: 'app-bip-profile-patient-data',
@@ -8,5 +8,4 @@ import { BipV2, PatientV2 } from 'src/app/core/models';
 })
 export class BipProfilePatientDataComponent {
   @Input() patient: PatientV2;
-  @Input() bip: BipV2;
 }

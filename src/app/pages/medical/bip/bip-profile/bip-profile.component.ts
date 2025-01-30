@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { map, of, switchMap, tap } from 'rxjs';
 import { BipV2, PatientV2 } from 'src/app/core/models';
@@ -19,10 +19,11 @@ export class BipProfileComponent implements OnInit {
   patient_identifier: string;
 
   constructor(
+    private pageService: PageService,
     private bipService: BipsV2Service,
     private patientService: PatientsV2Service,
     private activatedRoute: ActivatedRoute,
-    private pageService: PageService
+    private router: Router
   ) {}
   ngOnInit(): void {
     this.pageService.onInitPage();
@@ -66,5 +67,9 @@ export class BipProfileComponent implements OnInit {
         return this.bip;
       })
     );
+  }
+  //////////
+  onEditClient() {
+    this.router.navigate([this.routes.patients.listEdit, this.patient.id]);
   }
 }
