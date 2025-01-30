@@ -26,6 +26,8 @@ import { View917511Component } from '../note-bcba-view/view917511/view917511.com
 import { View917512Component } from '../note-bcba-view/view917512/view917512.component';
 import { View91755Component } from '../note-bcba-view/view91755/view91755.component';
 import { View91756Component } from '../note-bcba-view/view91756/view91756.component';
+import { AssessmentToolsViewComponent } from './assessment-tools-view.component';
+import { IntakeOutcomeMeasuresUsedComponent } from './intake-outcome-measures-used.component';
 
 
 
@@ -52,10 +54,11 @@ import { View91756Component } from '../note-bcba-view/view91756/view91756.compon
         Show917512Component,
         Show917511Component,
         View917511Component,
-            View917512Component,
-            View91755Component,
-            View91756Component,
-
+        View917512Component,
+        View91755Component,
+        View91756Component,
+        AssessmentToolsViewComponent,
+        IntakeOutcomeMeasuresUsedComponent,
   ],
   exports: [
 
@@ -79,9 +82,11 @@ import { View91756Component } from '../note-bcba-view/view91756/view91756.compon
         Show917512Component,
         Show917511Component,
         View917511Component,
-    View917512Component,
-    View91755Component,
-    View91756Component,
+      View917512Component,
+        View91755Component,
+        View91756Component,
+        AssessmentToolsViewComponent,
+        IntakeOutcomeMeasuresUsedComponent,
   ],
   imports: [
     CommonModule,

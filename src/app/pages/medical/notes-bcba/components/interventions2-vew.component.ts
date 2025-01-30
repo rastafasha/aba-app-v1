@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Protocol } from 'src/app/core/models/notes.model';
 
 @Component({
   selector: 'app-intervention2-view',
-  
+
   template: `
     <!-- Interventions -->
     <div class="card">
@@ -24,26 +25,26 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
               <tr *ngFor="let interv of interventions2; let i = index">
                 <td>{{ interv.name }}</td>
                 <td>
-                <i  *ngIf="interv.value === true"><i class="fa fa-check"  ></i></i>
-                <i  *ngIf="interv.value === false"><i class="fa fa-times"  ></i></i>
+                <i  *ngIf="interv.assessed === true"><i class="fa fa-check"  ></i></i>
+                <i  *ngIf="interv.assessed === false"><i class="fa fa-times"  ></i></i>
                 </td>
                 <td>
-                <i  *ngIf="interv.value2 === true"><i class="fa fa-check"  ></i></i>
-                <i  *ngIf="interv.value2 === false"><i class="fa fa-times"  ></i></i>
+                <i  *ngIf="interv.modified === true"><i class="fa fa-check"  ></i></i>
+                <i  *ngIf="interv.modified === false"><i class="fa fa-times"  ></i></i>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-      
+
     </div>
     <!-- Interventions -->
   `,
 })
 export class interventions2ViewComponent {
-  @Input() interventions2;
+  @Input() interventions2: Protocol[];
 
-  
- 
+
+
 }

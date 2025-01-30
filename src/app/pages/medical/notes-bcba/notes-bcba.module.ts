@@ -30,6 +30,7 @@ import { ComponentsBCBAModule } from './components/components-bcba.module';
     NoteBcbaViewComponent,
     NoteBcbaByClientComponent,
     NoteBcbaEditComponent,
+    NoteBcbaComponent,
   ],
   imports: [
     CommonModule,

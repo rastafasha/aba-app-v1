@@ -616,7 +616,7 @@ export class NoteBcbaComponent implements OnInit {
       bcbaData.caregiver_goals = this.caregivers_training_goalsgroup.map(item => ({
         plan_id: item.id,
         name: item.name,
-        porcent_of_correct_response: item.porcent_of_correct_response,
+        percentage_achieved: item.porcent_of_correct_response,
       }));
       bcbaData.intervention_protocols = this.interventionsListDoble
         .map((item, index) => ({

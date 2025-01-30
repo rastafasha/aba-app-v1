@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { DiscussedPlanProtocol } from 'src/app/core/models/notes.model';
 
 @Component({
   selector: 'app-replacements-view',
@@ -19,11 +20,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let replaceme of obj_inprogress; let i = index">
-              <td>{{ replaceme.description }}</td>
+            <tr *ngFor="let replaceme of replacements; let i = index">
+              <td>{{ replaceme.name }}</td>
               <td>
-              <i  *ngIf="replaceme.value === true"><i class="fa fa-check"  ></i></i>
-              <i  *ngIf="replaceme.value === false"><i class="fa fa-times"  ></i></i>
+              <i  *ngIf="replaceme.discussed"><i class="fa fa-check"  ></i></i>
+              <i  *ngIf="!replaceme.discussed"><i class="fa fa-times"  ></i></i>
               </td>
             </tr>
           </tbody>
@@ -35,22 +36,22 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   `,
 })
 export class ReplacementViewComponent {
-  @Input() obj_inprogress;
-  
-  
+  @Input() replacements: DiscussedPlanProtocol[];
+
+
   updatereplacements() {
-    const replacementsObj = this.obj_inprogress
-      .filter((replacements) => replacements.value)
+    const replacementsObj = this.replacements
+      .filter((replacements) => replacements.discussed)
       .reduce((acc, replacements) => {
         // acc[replacements.id] = true;
-        acc[replacements.id] = {
-          id: replacements.id,
-          description: replacements.description,
-          demostrated: !!replacements.value,
+        acc[replacements.plan_id] = {
+          plan_id: replacements.plan_id,
+          name: replacements.name,
+          discussed: !!replacements.discussed,
         };
         return acc;
       }, {});
 
-      
+
   }
 }
