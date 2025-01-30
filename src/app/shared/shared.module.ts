@@ -45,7 +45,7 @@ const components = [
   ListColumnsPipe,
   PdfButtonComponent,
   InputDirective,
-  GenerateAiSummaryComponent
+  GenerateAiSummaryComponent,
   EditWrapperDirective,
 ];
 
