@@ -82,7 +82,7 @@
                   </div>
                 </div>
                 <!-- Diagnosis Code -->
-                <div class="col-12 col-md-6 col-xl-4">
+                <div *ngIf="client_selected" class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
                       >Diagnosis Code <span class="login-danger">*</span>
@@ -96,8 +96,20 @@
                     />
                   </div>
                 </div>
+                <div *ngIf="!client_selected" class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label>Diagnosis Code <span class="login-danger">*</span>
+                    </label>
+                    <input
+                      class="form-control"
+                      name="diagnosis_code"
+                      value="Loading..."
+                      disabled
+                      type="text" />
+                  </div>
+                </div>
                 <!-- Birth day -->
-                <div class="col-12 col-md-6 col-xl-4">
+                <div *ngIf="client_selected" class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
                       >Birth day <span class="login-danger">*</span>
@@ -114,6 +126,12 @@
                     <mat-datepicker #picker> </mat-datepicker>
                     <mat-datepicker-toggle matIconSuffix [for]="picker">
                     </mat-datepicker-toggle>
+                  </div>
+                </div>
+                <div *ngIf="!client_selected" class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label>Birth day <span class="login-danger">*</span> </label>
+                    <input class="form-control" value="Loading..." disabled type="text" />
                   </div>
                 </div>
                 <!-- patient -->

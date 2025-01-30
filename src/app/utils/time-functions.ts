@@ -63,9 +63,18 @@ export function calculateTimeDifference(startTime: string, endTime: string, appe
 
 export function calculateUnitsFromTime(startTime: string, endTime: string): number {
   if (!startTime || !endTime) return 0;
-  const start = this.parseTime(startTime);
-  const end = this.parseTime(endTime);
+  const start = parseTime(startTime);
+  const end = parseTime(endTime);
   if (!start || !end) return 0;
   const durationMinutes = (end.getTime() - start.getTime()) / (1000 * 60);
   return Math.ceil(durationMinutes / 15);
+}
+
+
+export function parseTime(timeStr: string): Date | null {
+  if (!timeStr) return null;
+  const [hours, minutes] = timeStr.split(':').map(Number);
+  const date = new Date();
+  date.setHours(hours, minutes, 0, 0);
+  return date;
 }

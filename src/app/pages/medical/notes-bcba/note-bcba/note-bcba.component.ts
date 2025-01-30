@@ -42,11 +42,9 @@ export class NoteBcbaComponent implements OnInit {
   show971511 = false;
   show971512 = false;
 
-  text_success = '';
   text_validation = '';
 
   selectedValueRBT!: string;
-  selectedValueBCBA!: string;
   selectedValueTimeIn = '';
   selectedValueTimeOut = '';
   selectedValueTimeIn2 = '';
@@ -54,8 +52,6 @@ export class NoteBcbaComponent implements OnInit {
   selectedValueAba!: number;
   selectedValueCode!: string;
   selectedValueCode1!: string;
-  option_selected = 0;
-  totalMinutos = 0;
   total_hour_session = '';
 
   selectedValueProviderRBT_id: number;
@@ -74,8 +70,6 @@ export class NoteBcbaComponent implements OnInit {
   first_name = '';
   last_name = '';
 
-  provider_credential = '';
-  pos = '';
   session_date = '';
   time_in = '';
   time_out = '';
@@ -85,40 +79,6 @@ export class NoteBcbaComponent implements OnInit {
   session_length_total2 = '';
   environmental_changes = '';
 
-  sumary_note = '';
-  meet_with_client_at = '';
-  client_appeared = '';
-  as_evidenced_by = '';
-  rbt_modeled_and_demonstrated_to_caregiver = '';
-  client_response_to_treatment_this_session = '';
-  progress_noted_this_session_compared_to_previous_session = '';
-  next_session_is_scheduled_for = '';
-  provider_name = '';
-  supervisor_name = '';
-
-  maladaptive = '';
-  replacement = '';
-  interventions: any;
-  provider_signature: any;
-  supervisor_signature: any;
-
-  token_economy = false;
-  generalization = false;
-  NCR = false;
-  behavioral_momentum = false;
-  DRA = false;
-  DRI = false;
-  DRO = false;
-  DRL = false;
-  response_block = false;
-  errorless_teaching = false;
-  extinction = false;
-  chaining = false;
-  natural_teaching = false;
-  redirection = false;
-  shaping = false;
-  pairing = false;
-
   FILE_SIGNATURE_RBT: any;
   IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED: any = 'assets/img/user-06.jpg';
   FILE_SIGNATURE_BCBA: any;
@@ -127,51 +87,13 @@ export class NoteBcbaComponent implements OnInit {
 
   rbt_id: number;
   bcba_id: number;
-  maladaptivename: string;
-  replacementName: string;
-  note_rbt_id: number;
-  note_id: number;
-  location: any;
-  rendering_provider: number;
-
-  roles_rbt = [];
-  roles_bcba = [];
-
-  hours_days = [];
-  specialists = [];
-  maladaptives = [];
-  replacementGoals = [];
-  replacements = [];
-
-  intervention_added: object;
-  intervention2_added: object;
-  newlist_added: object;
-  behaviorsList_added: object;
-  intakeoutcome_added: object;
-
-  familiEnvolments = [];
-  monitoringEvaluating = [];
-  caregivers_training_goals = [];
-  caregivers_training_goalsgroup = [];
-  caregivers_training = [];
-  rbt_training_goals = [];
-
-  posGruoup = [];
-  note_description: string;
-  insurer_name: string;
-  insurer_id: number;
-  cpt: number;
-  roles: string[];
-  electronic_signature: string;
-  doctor: any;
-  full_name: string;
 
   pa_services: PaService[] = [];
   selectedPaService: PaServiceV2 | null = null;
   selectedPaService1: show97151L;
   projectedUnits = 0;
-  start_date: Date; // Fecha de inicio
-  end_date: Date; // Fecha de fin
+  start_date: Date;
+  end_date: Date;
   showPosWarning = false;
 
   participants = '';
@@ -180,7 +102,6 @@ export class NoteBcbaComponent implements OnInit {
   reinforced_caregiver_strengths_in = '';
   gave_constructive_feedback_on = '';
   recomended_more_practice_on = '';
-  type = '';
   BCBA_conducted_client_observations = false;
   BCBA_conducted_assessments = false;
 
@@ -189,16 +110,38 @@ export class NoteBcbaComponent implements OnInit {
   cargiver_participation = false;
   was_the_client_present = false;
 
-  interventionsSelected = {};
-
   interventionsList = interventionsList;
   interventionsListDoble = interventionsListDoble;
   behaviorList: any[];
   newList = newList;
   outcomeList = outcomeList;
   show97151List = show97151List;
+
+  // Required for template
+  doctor: any;
+  electronic_signature: string;
+  full_name: string;
+  roles_rbt = [];
+  roles_bcba = [];
+  hours_days = [];
+  specialists = [];
+  caregivers_training_goalsgroup = [];
+  meet_with_client_at = '';
+  provider_credential = '';
+  caregivers_training = [];
+  rbt_training_goals = [];
+  intervention_added: object;
+  intervention2_added: object;
+  intakeoutcome_added: object;
+  newlist_added: object;
+  behaviorsList_added: object;
+  client_response_to_treatment_this_session = '';
+  progress_noted_this_session_compared_to_previous_session = '';
+  next_session_is_scheduled_for = '';
+  client_appeared = '';
+  as_evidenced_by = '';
   obj_inprogress = [];
-  obj_inprogress1 = [];
+
   public textSchoolAlarm = 'It looks like the session time you entered is outside the standard school hours of Monday through Friday, 8:00 AM to 3:00 PM. Please double-check the time or update the POS as needed';
   public textTelehealtWarning = "You've selected POS 51 (Telehealth). Please make sure all telehealth requirements are met and confirm that this session complies with telehealth regulations before proceeding";
 
@@ -228,7 +171,6 @@ export class NoteBcbaComponent implements OnInit {
     this.end_date = new Date(); // fecha actual
 
     this.user = this.authService.user as AppUser;
-    this.roles = this.user.roles;
     this.doctor_id = this.user.id;
     this.getDoctor();
     this.specialistData();
@@ -261,7 +203,6 @@ export class NoteBcbaComponent implements OnInit {
     this.patientService
       .getPatientByPatientId(this.patient_identifier)
       .subscribe((resp) => {
-        // console.log('patient',resp);
         this.client_selected = resp.patient;
         this.patient_id = resp.patient.id;
         this.patient_identifier = this.client_selected.patient_identifier;
@@ -271,10 +212,10 @@ export class NoteBcbaComponent implements OnInit {
         this.last_name = this.client_selected.last_name;
         this.patient_identifier = this.client_selected.patient_identifier;
 
-        this.insurer_id = this.client_selected.insurer_id;
+        this.insurance_id = this.client_selected.insurer_id;
 
         this.selectedValueAba = resp.patient.clin_director_id;
-        this.selectedValueBCBA = resp.patient.clin_director_id;
+        this.selectedValueAba = resp.patient.clin_director_id;
         this.selectedValueRBT = resp.patient.bcba_id;
 
         this.pa_services = resp.patient.pa_services;
@@ -617,7 +558,7 @@ export class NoteBcbaComponent implements OnInit {
 
     return {
       diagnosis: this.client_selected.diagnosis_code,
-      birthDate: this.client_selected.birth_date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) || null,
+      birthDate: typeof this.client_selected.birth_date === 'string' ? this.client_selected.birth_date : null,
       startTime: this.selectedValueTimeIn || null,
       endTime: this.selectedValueTimeOut || null,
       startTime2: this.selectedValueTimeIn2 || null,
@@ -794,7 +735,7 @@ export class NoteBcbaComponent implements OnInit {
         break;
 
       case '97156':
-        if (!this.caregivers_training_goals || this.caregivers_training_goals.length === 0) {
+        if (!this.caregivers_training_goalsgroup || this.caregivers_training_goalsgroup.length === 0) {
           missingFields.push('Caregiver training goals');
         }
         break;
