@@ -6,14 +6,14 @@
         <div class="col-sm-12">
           <ul class="breadcrumb">
             <li class="breadcrumb-item">
-              <a [routerLink]="[routes.noteBcba.list, patient_identifier]"
+              <a [routerLink]="[routes.noteBcba.list, patient_id]"
                 >BCBA Notes
               </a>
             </li>
             <li class="breadcrumb-item">
               <i class="feather icon-chevron-right"> </i>
             </li>
-            <li class="breadcrumb-item active">Add Note</li>
+            <li class="breadcrumb-item active">{{ isEditMode ? 'Edit' : 'Add' }} Note</li>
           </ul>
           <div class="doctor-submit text-start">
             <button class="btn btn-primary btn-sm" (click)="goBack()">
@@ -33,7 +33,11 @@
               <!-- paciente -->
               <div class="row align-items-center py-4">
                 <div class="col-12 py-4">
-                  <h4>Create Note Bcba</h4>
+                  <h4>{{ isEditMode ? 'Edit' : 'Create' }} Note BCBA</h4>
+                  <div *ngIf="isEditMode" class="alert alert-info mt-3">
+                    <i class="feather icon-info me-2"></i>
+                    You are currently editing an existing note. All changes will update the original note.
+                  </div>
                 </div>
                 <!-- patient -->
                 <!-- First Name  -->
@@ -338,7 +342,7 @@
                 <!-- time -->
 
                 <!-- CPT Code -->
-                <div class="col-12 col-md-6 col-xl-4">
+                <div *ngIf="!isEditMode" class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label>CPT Code <span class="login-danger">*</span> </label>
                     <mat-select
@@ -357,10 +361,19 @@
                     </mat-select>
                   </div>
                 </div>
+                <div *ngIf="isEditMode" class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label>CPT Code<span class="login-danger">*</span>
+                    </label>
+                    <p class="text-center p-3">
+                      {{ selectedPaService?.cpt }}
+                    </p>
+                  </div>
+                </div>
                 <!-- CPT Code -->
                 <!-- CPT Code51 -->
                 <div
-                  *ngIf="show97151 || show971511 || show971512"
+                  *ngIf="!isEditMode && (show97151 || show971511 || show971512)"
                   class="col-12 col-md-6 col-xl-4"
                 >
                   <div class="form-group local-forms">
@@ -379,6 +392,15 @@
                         {{ type.cpt }}
                       </mat-option>
                     </mat-select>
+                  </div>
+                </div>
+
+                <div *ngIf="isEditMode && (show97151 || show971511 || show971512)" class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label>Type<span class="login-danger">*</span> </label>
+                    <p class="text-center p-3">
+                      {{ selectedPaService1.cpt }}
+                    </p>
                   </div>
                 </div>
                 <!-- CPT Code51 -->
@@ -736,7 +758,7 @@
                     class="btn btn-primary submit-form me-2"
                     (click)="save()"
                   >
-                    Save
+                    {{ isEditMode ? 'Update' : 'Save' }}
                   </button>
                 </div>
               </div>

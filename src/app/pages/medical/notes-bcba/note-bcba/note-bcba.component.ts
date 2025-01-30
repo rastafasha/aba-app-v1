@@ -2,7 +2,6 @@ import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppUser } from 'src/app/core/models/users.model';
-import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
 import { NoteBcbaService } from '../../../../core/services/notes-bcba.service';
@@ -19,12 +18,12 @@ import {
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { AssessmentToolType, NoteBcbaV2, PaServiceV2, PatientV2 } from 'src/app/core/models';
 import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
-import { PatientMService } from '../../patient-m/service/patient-m.service';
 import { show97151L, ValidationResult } from '../interfaces';
 import { AISummaryData } from 'src/app/shared/components/generate-ai-summary/generate-ai-summary.component';
 import { calculateUnitsFromTime, convertToHours, convertToMinutes } from 'src/app/utils/time-functions';
 import { GenerateAiSummaryComponent } from 'src/app/shared/components/generate-ai-summary/generate-ai-summary.component';
 import { ReplacementProtocol } from '../interfaces';
+import { PatientsV2Service } from 'src/app/core/services/patients.v2.service';
 
 
 @Component({
@@ -88,7 +87,7 @@ export class NoteBcbaComponent implements OnInit {
   rbt_id: number;
   bcba_id: number;
 
-  pa_services: PaService[] = [];
+  pa_services: PaServiceV2[] = [];
   selectedPaService: PaServiceV2 | null = null;
   selectedPaService1: show97151L;
   projectedUnits = 0;
@@ -148,9 +147,12 @@ export class NoteBcbaComponent implements OnInit {
 
   @ViewChild(GenerateAiSummaryComponent) aiSummaryComponent: GenerateAiSummaryComponent;
 
+  isEditMode = false;
+  noteId: number;
+
   constructor(
     private bipV2Service: BipsV2Service,
-    private patientService: PatientMService,
+    private patientService: PatientsV2Service,
     private router: Router,
     private ativatedRoute: ActivatedRoute,
     private noteBcbaService: NoteBcbaService,
@@ -161,9 +163,11 @@ export class NoteBcbaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    //
     this.ativatedRoute.params.subscribe((resp) => {
       this.patient_identifier = resp['patient_id'];
+      this.patient_id = Number(resp['patient_id']);
+      this.noteId = resp['id']; // Get note ID if present
+      this.isEditMode = !!this.noteId;
     });
     this.getConfig();
     this.start_date = new Date(); //  fecha actual
@@ -173,7 +177,11 @@ export class NoteBcbaComponent implements OnInit {
     this.doctor_id = this.user.id;
     this.getDoctor();
     this.specialistData();
-    this.getPatient();
+    this.getPatient(this.patient_id || null);
+
+    if (this.isEditMode) {
+      this.loadNote();
+    }
   }
 
   goBack() {
@@ -198,40 +206,43 @@ export class NoteBcbaComponent implements OnInit {
       this.FILE_SIGNATURE_BCBA = resp.roles_bcba.electronic_signature;
     });
   }
-  getPatient() {
-    this.patientService
-      .getPatientByPatientId(this.patient_identifier)
-      .subscribe((resp) => {
-        this.client_selected = resp.patient;
-        this.patient_id = resp.patient.id;
-        this.patient_identifier = this.client_selected.patient_identifier;
-        this.insurance_id = this.client_selected.insurer_id;
+  getPatient(patient_id: number | null): Promise<void> {
+    if (!patient_id) {
+      return Promise.resolve();
+    }
+    return new Promise((resolve) => {
+      this.patientService
+        .get(patient_id)
+        .subscribe((resp) => {
+          this.client_selected = resp.data;
+          this.patient_id = resp.data.id;
+          this.patient_identifier = this.client_selected.patient_identifier;
+          this.insurance_id = this.client_selected.insurer_id;
 
-        this.first_name = this.client_selected.first_name;
-        this.last_name = this.client_selected.last_name;
+          this.first_name = this.client_selected.first_name;
+          this.last_name = this.client_selected.last_name;
 
-        this.insurance_id = this.client_selected.insurer_id;
+          this.insurance_id = this.client_selected.insurer_id;
 
-        this.selectedValueAba = resp.patient.clin_director_id;
-        this.selectedValueAba = resp.patient.clin_director_id;
-        this.selectedValueRBT = resp.patient.bcba_id;
+          this.selectedValueAba = resp.data.clin_director_id;
+          // this.selectedValueRBT = resp.data.bcba_id;
 
-        this.pa_services = resp.patient.pa_services;
-        this.start_date = resp.patient.start_date;
-        this.end_date = resp.patient.end_date;
+          this.pa_services = resp.data.pa_services;
+          this.start_date = resp.data.pa_services[0]?.start_date;
+          this.end_date = resp.data.pa_services[0]?.end_date;
 
-        // console.log(this.pa_services);
+          //filtramos lo pa_services usando star_date y end_date comparado con el dia de hoy
+          this.pa_services = this.pa_services.filter((pa) => {
+            const dateStart = new Date(pa.start_date).getTime();
+            const dateEnd = new Date(pa.end_date).getTime();
+            const dateToday = new Date().getTime();
+            return dateStart <= dateToday && dateEnd >= dateToday;
+          });
 
-        //filtramos lo pa_services usando star_date y end_date comparado con el dia de hoy
-        this.pa_services = this.pa_services.filter((pa) => {
-          const dateStart = new Date(pa.start_date).getTime();
-          const dateEnd = new Date(pa.end_date).getTime();
-          const dateToday = new Date().getTime();
-          return dateStart <= dateToday && dateEnd >= dateToday;
+          this.getBipV2();
+          resolve();
         });
-        //devolvemos la respuesta da los pa_services disponibles
-        this.getBipV2();
-      });
+    });
   }
 
   getBipV2() {
@@ -376,48 +387,174 @@ export class NoteBcbaComponent implements OnInit {
     this.behaviorsList_added = updatedbehaviorsList;
   }
 
+  loadNote() {
+    this.noteBcbaV2Service.get(this.noteId).subscribe({
+      next: (resp) => {
+        console.log(resp, 'resp loadNote');
+        if (resp.data) {
+          const note = resp.data;
+
+          // First load the patient to get pa_services and other data
+          this.getPatient(note.patient_id).then(() => {
+            // Set PA service first since other fields depend on it
+            const paService = this.pa_services.find(s => s.id === note.pa_service_id);
+            if (paService) {
+              this.selectedPaService = new PaServiceV2({
+                id: paService.id,
+                patient_id: this.patient_id,
+                pa_service: paService.pa_service,
+                cpt: paService.cpt,
+                n_units: paService.n_units,
+                spent_units: paService.spent_units,
+                start_date: new Date(paService.start_date),
+                end_date: new Date(paService.end_date)
+              });
+              // Trigger CPT code selection
+              this.onPaServiceSelect({ value: this.selectedPaService });
+            }
+
+            // Populate form fields with note data
+            this.patient_id = note.patient_id;
+            this.patient_identifier = note.patient_identifier;
+
+            // Time fields - ensure proper format HH:mm
+            const formatTime = (time: string) => {
+              if (!time) return '';
+              const [hours, minutes] = time.split(':');
+              return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
+            };
+
+            // Time fields - set both variables for each
+            this.selectedValueTimeIn = formatTime(note.time_in);
+            this.time_in = formatTime(note.time_in);
+            this.selectedValueTimeOut = formatTime(note.time_out);
+            this.time_out = formatTime(note.time_out);
+            this.selectedValueTimeIn2 = formatTime(note.time_in2);
+            this.time_in2 = formatTime(note.time_in2);
+            this.selectedValueTimeOut2 = formatTime(note.time_out2);
+            this.time_out2 = formatTime(note.time_out2);
+
+            // Rest of the fields
+            this.selectedValueAba = note.supervisor_id;
+            this.selectedValueCode = note.cpt_code;
+            this.total_hour_session = note.session_length_total?.toString() || '';
+            this.selectedValueProviderRBT_id = note.provider_id;
+            this.selectedValueBcba_id = note.supervisor_id;
+            this.session_date = note.session_date as string;
+            this.environmental_changes = note.environmental_changes;
+            this.participants = note.participants;
+            this.summary_note = note.summary_note;
+            this.meet_with_client_at = note.meet_with_client_at;
+            this.doctor_id = note.provider_id; // Use the original provider
+
+            // Handle CPT code specific data
+            if (note.cpt_code === '97151') {
+              this.BCBA_conducted_client_observations = note.BCBA_conducted_client_observations;
+              this.BCBA_conducted_assessments = note.BCBA_conducted_assessments;
+              // Set assessment tools and intake outcome
+              if (note.assessment_tools) {
+                this.newList.forEach(item => {
+                  item.value = note.assessment_tools.includes(item.name);
+                });
+              }
+              if (note.intake_outcome) {
+                this.outcomeList.forEach(item => {
+                  item.value = note.intake_outcome.includes(item.name);
+                });
+              }
+              // Set the subtype (Observation/Report)
+              if (note.subtype) {
+                this.selectedPaService1 = this.show97151List.find(item =>
+                  item.cpt.toLowerCase() === note.subtype
+                );
+                if (this.selectedPaService1) {
+                  this.onPaServiceSelect2({ value: this.selectedPaService1 });
+                }
+              }
+            } else if (note.cpt_code === '97155') {
+              this.modifications_needed_at_this_time = note.modifications_needed_at_this_time;
+              this.additional_goals_or_interventions = note.additional_goals_or_interventions;
+              // Handle intervention protocols
+              if (note.intervention_protocols) {
+                this.interventionsListDoble.forEach(item => {
+                  const protocol = note.intervention_protocols.find(p => p.name === item.name);
+                  if (protocol) {
+                    item.value = protocol.assessed;
+                    item.value2 = protocol.modified;
+                  }
+                });
+              }
+              // Handle replacement protocols
+              if (note.replacement_protocols) {
+                this.replacementProtocols = note.replacement_protocols.map(p => ({
+                  id: p.plan_id,
+                  name: p.name,
+                  description: p.name,
+                  assessed: p.assessed,
+                  modified: p.modified,
+                  demonstrated: false,
+                  status: 'in progress'
+                }));
+              }
+            } else if (note.cpt_code === '97156') {
+              // Handle behavior protocols
+              if (note.behavior_protocols) {
+                this.behaviorList.forEach(item => {
+                  const protocol = note.behavior_protocols.find(p => p.plan_id === item.id);
+                  if (protocol) {
+                    item.value = protocol.discussed;
+                  }
+                });
+              }
+              // Handle caregiver goals
+              if (note.caregiver_goals) {
+                this.caregivers_training_goalsgroup.forEach(goal => {
+                  const savedGoal = note.caregiver_goals.find(g => g.plan_id === goal.id);
+                  if (savedGoal) {
+                    goal.porcent_of_correct_response = savedGoal.percentage_achieved;
+                  }
+                });
+              }
+            }
+
+            this.calculateProjectedUnits();
+            this.calculateTotalHours();
+          });
+        }
+      },
+      error: (error) => {
+        console.error('Error loading note:', error);
+        Swal.fire('Error', 'There was an error loading the note.', 'error');
+      }
+    });
+  }
+
   save() {
     console.log(this.getAISummaryData());
     this.text_validation = '';
-    if (
-      // !this.rbt_training_goals ||
-      // !this.caregivers_training_goals ||
-      !this.meet_with_client_at ||
-      !this.session_date
-    )
+    if (!this.meet_with_client_at || !this.session_date) {
       if (!this.selectedValueAba) {
-        // {
-        //   this.text_validation = 'All Fields (*) are required';
-        //   return;
-        // }
-        // this.text_validation = 'ABA Supervisor must be selected';
-        // return;
         Swal.fire('Warning', 'ABA Supervisor must be selected ', 'warning');
         return;
       }
+    }
 
     if (!this.selectedPaService) {
-      // this.text_validation = 'Please select a service';
-      // return;
       Swal.fire('Warning', 'Please select a service ', 'warning');
       return;
     }
     if (!this.meet_with_client_at) {
-      // this.text_validation = 'Please select a POS';
-      // return;
       Swal.fire('Warning', 'Please select a POS ', 'warning');
       return;
     }
     if (!this.session_date) {
-      // this.text_validation = 'Please select a session date';
-      // return;
       Swal.fire('Warning', 'Please select a session date ', 'warning');
       return;
     }
 
     const bcbaData: Partial<NoteBcbaV2> = {
       type: 'bcba',
-      id: 0,
+      id: this.isEditMode ? this.noteId : 0,
       client_id: this.patient_id,
       patient_code: this.patient_identifier,
       session_length_total: Number(this.total_hour_session),
@@ -470,7 +607,6 @@ export class NoteBcbaComponent implements OnInit {
     }
 
     if (this.selectedPaService?.cpt === '97155') {
-      // bcbaData.rbt_training_goals = this.rbt_training_goals;
       bcbaData.replacement_protocols = this.replacementProtocols
         .map(p => ({
           plan_id: p.id,
@@ -488,7 +624,6 @@ export class NoteBcbaComponent implements OnInit {
       bcbaData.additional_goals_or_interventions = this.additional_goals_or_interventions;
     }
 
-    // 97156
     if (this.selectedPaService?.cpt === '97156') {
       bcbaData.replacement_protocols = this.replacementProtocols
         .map(p => ({
@@ -513,23 +648,25 @@ export class NoteBcbaComponent implements OnInit {
         }));
     }
 
-    console.log('BCBA Data:', bcbaData);
+    const request = this.isEditMode
+      ? this.noteBcbaV2Service.update(bcbaData as NoteBcbaV2, this.noteId)
+      : this.noteBcbaV2Service.create(bcbaData);
 
-    this.noteBcbaV2Service.create(bcbaData).subscribe({
+    request.subscribe({
       next: (resp) => {
         if (resp.status === 'success') {
-          Swal.fire('Success', 'Note BCBA created', 'success');
+          Swal.fire('Success', `Note BCBA ${this.isEditMode ? 'updated' : 'created'}`, 'success');
           this.router.navigate([
             AppRoutes.noteBcba.list,
             this.patient_identifier,
           ]);
         } else {
-          Swal.fire('Error', 'There was an error saving the note.', 'error');
+          Swal.fire('Error', `There was an error ${this.isEditMode ? 'updating' : 'saving'} the note.`, 'error');
         }
       },
       error: (error) => {
-        console.error('Error saving RBT note:', error);
-        let errorMessage = 'There was an error saving the note.';
+        console.error(`Error ${this.isEditMode ? 'updating' : 'saving'} RBT note:`, error);
+        let errorMessage = `There was an error ${this.isEditMode ? 'updating' : 'saving'} the note.`;
 
         if (error.error?.message) {
           errorMessage = error.error.message;
@@ -721,9 +858,6 @@ export class NoteBcbaComponent implements OnInit {
     // CPT specific validations
     switch (this.selectedPaService.cpt) {
       case '97151':
-        if (!this.selectedPaService1 || !this.selectedPaService1.cpt) {
-          missingFields.push('Assessment type (Observation or Report)');
-        }
         break;
 
       case '97155':
