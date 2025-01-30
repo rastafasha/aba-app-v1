@@ -6,14 +6,14 @@
         <div class="col-sm-12">
           <ul class="breadcrumb">
             <li class="breadcrumb-item">
-              <a [routerLink]="[routes.noteBcba.list, patient_identifier]"
+              <a [routerLink]="[routes.noteBcba.list, patient_id]"
                 >BCBA Notes
               </a>
             </li>
             <li class="breadcrumb-item">
               <i class="feather icon-chevron-right"> </i>
             </li>
-            <li class="breadcrumb-item active">Add Note</li>
+            <li class="breadcrumb-item active">{{ isEditMode ? 'Edit' : 'Add' }} Note</li>
           </ul>
           <div class="doctor-submit text-start">
             <button class="btn btn-primary btn-sm" (click)="goBack()">
@@ -33,7 +33,11 @@
               <!-- paciente -->
               <div class="row align-items-center py-4">
                 <div class="col-12 py-4">
-                  <h4>Create Note Bcba</h4>
+                  <h4>{{ isEditMode ? 'Edit' : 'Create' }} Note BCBA</h4>
+                  <div *ngIf="isEditMode" class="alert alert-info mt-3">
+                    <i class="feather icon-info me-2"></i>
+                    You are currently editing an existing note. All changes will update the original note.
+                  </div>
                 </div>
                 <!-- patient -->
                 <!-- First Name  -->
@@ -82,7 +86,7 @@
                   </div>
                 </div>
                 <!-- Diagnosis Code -->
-                <div class="col-12 col-md-6 col-xl-4">
+                <div *ngIf="client_selected" class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
                       >Diagnosis Code <span class="login-danger">*</span>
@@ -91,13 +95,25 @@
                       class="form-control"
                       name="diagnosis_code"
                       disabled
-                      [(ngModel)]="diagnosis_code"
+                      [(ngModel)]="client_selected.diagnosis_code"
                       type="text"
                     />
                   </div>
                 </div>
+                <div *ngIf="!client_selected" class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label>Diagnosis Code <span class="login-danger">*</span>
+                    </label>
+                    <input
+                      class="form-control"
+                      name="diagnosis_code"
+                      value="Loading..."
+                      disabled
+                      type="text" />
+                  </div>
+                </div>
                 <!-- Birth day -->
-                <div class="col-12 col-md-6 col-xl-4">
+                <div *ngIf="client_selected" class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label
                       >Birth day <span class="login-danger">*</span>
@@ -106,7 +122,7 @@
                       class="form-control datetimepicker"
                       disabled
                       name="birth_date"
-                      [(ngModel)]="birth_date"
+                      [(ngModel)]="client_selected.birth_date"
                       type="text"
                       matInput
                       [matDatepicker]="picker"
@@ -114,6 +130,12 @@
                     <mat-datepicker #picker> </mat-datepicker>
                     <mat-datepicker-toggle matIconSuffix [for]="picker">
                     </mat-datepicker-toggle>
+                  </div>
+                </div>
+                <div *ngIf="!client_selected" class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label>Birth day <span class="login-danger">*</span> </label>
+                    <input class="form-control" value="Loading..." disabled type="text" />
                   </div>
                 </div>
                 <!-- patient -->
@@ -320,7 +342,7 @@
                 <!-- time -->
 
                 <!-- CPT Code -->
-                <div class="col-12 col-md-6 col-xl-4">
+                <div *ngIf="!isEditMode" class="col-12 col-md-6 col-xl-4">
                   <div class="form-group local-forms">
                     <label>CPT Code <span class="login-danger">*</span> </label>
                     <mat-select
@@ -339,10 +361,19 @@
                     </mat-select>
                   </div>
                 </div>
+                <div *ngIf="isEditMode" class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label>CPT Code<span class="login-danger">*</span>
+                    </label>
+                    <p class="text-center p-3">
+                      {{ selectedPaService?.cpt }}
+                    </p>
+                  </div>
+                </div>
                 <!-- CPT Code -->
                 <!-- CPT Code51 -->
                 <div
-                  *ngIf="show97151 || show971511 || show971512"
+                  *ngIf="!isEditMode && (show97151 || show971511 || show971512)"
                   class="col-12 col-md-6 col-xl-4"
                 >
                   <div class="form-group local-forms">
@@ -361,6 +392,15 @@
                         {{ type.cpt }}
                       </mat-option>
                     </mat-select>
+                  </div>
+                </div>
+
+                <div *ngIf="isEditMode && (show97151 || show971511 || show971512)" class="col-12 col-md-6 col-xl-4">
+                  <div class="form-group local-forms">
+                    <label>Type<span class="login-danger">*</span> </label>
+                    <p class="text-center p-3">
+                      {{ selectedPaService1.cpt }}
+                    </p>
                   </div>
                 </div>
                 <!-- CPT Code51 -->
@@ -535,14 +575,14 @@
       <!--   only 55-->
       <app-show91755
         [show97155]="show97155"
-        (modificationsChange)="modifications_needed_at_this_time = $event"
-        (additionalChange)="additional_goals_or_interventions = $event"
         [interventionsListDoble]="interventionsListDoble"
-        [onInterventions2Change]="onInterventions2Change"
-        [obj_inprogress1]="obj_inprogress1"
-        [onReplacement2Change]="onReplacement2Change"
+        [replacementProtocols]="replacementProtocols"
         [modifications_needed_at_this_time]="modifications_needed_at_this_time"
         [additional_goals_or_interventions]="additional_goals_or_interventions"
+        (modificationsChange)="onModificationsChange($event)"
+        (additionalChange)="onAdditionalChange($event)"
+        (interventions2Change)="onInterventions2Change($event)"
+        (protocolsChange)="onReplacementProtocolsChange($event)"
       >
       </app-show91755>
 
@@ -559,7 +599,8 @@
         (recomendedChange)="recomended_more_practice_on = $event"
         [interventionsList]="interventionsList"
         [onInterventionsChange]="onInterventionsChange"
-        [obj_inprogress]="obj_inprogress"
+        [replacementProtocols]="replacementProtocols"
+        (protocolsChange)="onReplacementProtocolsChange($event)"
         [onReplacementChange]="onReplacementChange"
         [behaviorList]="behaviorList"
         [onBehaviorChange]="onBehaviorChange"
@@ -583,28 +624,25 @@
             <form autocomplete="false">
               <div class="col-12">
                 <div class="form-group local-forms">
-                  <label
-                    >Summary Note<span class="login-danger">*</span>
-                  </label>
-                  <textarea
-                    class="form-control"
-                    name="summary_note"
-                    [(ngModel)]="summary_note"
-                    rows="4"
-                    cols="30"
-                  >
-                  </textarea>
-                  <button
-                    class="btn btn-primary ml-2 btn-sm"
-                    (click)="generateAISummary()"
-                    [disabled]="isGeneratingSummary"
-                  >
-                    {{
-                      isGeneratingSummary
-                        ? "Generating..."
-                        : "Generate AI Summary"
-                    }}
-                  </button>
+                  <label>Summary Note <span class="login-danger">*</span></label>
+                  <div class="row">
+                    <div class="col-12 col-md-10">
+                      <textarea
+                        class="form-control"
+                        name="summary_note"
+                        [(ngModel)]="summary_note"
+                        rows="4"
+                        cols="30">
+                      </textarea>
+                    </div>
+                    <div class="col-12 col-md-2 d-flex align-items-center">
+                      <app-generate-ai-summary
+                        [type]="'bcba'"
+                        (requestData)="onAISummaryRequested()"
+                        (summaryGenerated)="summary_note = $event">
+                      </app-generate-ai-summary>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -720,7 +758,7 @@
                     class="btn btn-primary submit-form me-2"
                     (click)="save()"
                   >
-                    Save
+                    {{ isEditMode ? 'Update' : 'Save' }}
                   </button>
                 </div>
               </div>

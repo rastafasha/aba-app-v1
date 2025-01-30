@@ -1,11 +1,11 @@
 <div class="col-xs-12 " *ngIf="show97156">
                   <div class="card">
-                    
+
                     <app-intervention-view [interventions]="interventions"></app-intervention-view>
                   </div>
                   <!-- replacement protocols -->
                   <div class="card">
-                    <app-replacements-view [obj_inprogress]="obj_inprogress"></app-replacements-view>
+                    <app-replacements-view [replacements]="replacements"></app-replacements-view>
                   </div>
                   <!-- replacement protocols -->
                   <!-- behaviors -->
@@ -48,7 +48,7 @@
                                     </td>
                                     <td>
                                       <p>
-                                        {{ caregiver.porcent_of_correct_response }}
+                                        {{ caregiver.percentage_achieved }}
                                       </p>
                                     </td>
                                   </tr>
@@ -121,5 +121,5 @@
                   </div> -->
 
                   <!-- info -->
-                  
+
                 </div>

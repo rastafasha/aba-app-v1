@@ -3,37 +3,14 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import html2canvas from 'html2canvas';
 import * as jspdf from 'jspdf';
-import { AppUser } from 'src/app/core/models/users.model';
 import { PatientsV2Service } from 'src/app/core/services';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
-import { NoteBcbaService } from '../../../../core/services/notes-bcba.service';
+import { NotesBcbaV2Service } from '../../../../core/services/notes-bcba.v2.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import {
-  NoteBehaviorsList,
-  NoteIntervention,
-  NoteIntervention2,
-  NoteNewList,
-  NoteOutcomeList
-} from '../interfaces';
-import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
-
-interface Behavior {
-  id: number;
-  discused: boolean;
-  name: string;
-}
-interface Replacement {
-  id: number;
-  name:string;
-  assessed:boolean;
-  modified:boolean;
-}
-interface Replacement1 {
-  id: number;
-  name:string;
-  demostrated:boolean;
-}
+import { NoteBcbaV2 } from 'src/app/core/models/v2/note-bcba.v2.model';
+import { PatientV2 } from 'src/app/core/models/v2/patient.v2.model';
+import { calculateTimeDifference, convertToHours } from 'src/app/utils/time-functions';
 
 
 @Component({
@@ -44,235 +21,48 @@ interface Replacement1 {
 export class NoteBcbaViewComponent implements OnInit {
   routes = AppRoutes;
   @ViewChild('contentToConvert') contentToConvert!: ElementRef;
-  patientProfile: any[];
-  option_selected = 1;
-  patient_id: number;
+
+  // Core properties
+  note_id!: number;
+  note_selected!: NoteBcbaV2;
+  patient_selected!: PatientV2;
   patient_identifier: string;
-  // option_selected:number = 0;
+  patient_id: number;
 
-
-  showFamily = false;
-  showMonitoring = false;
-
+  // View flags
   show97156 = false;
   show97155 = false;
   show97151 = false;
   show971511 = false;
   show971512 = false;
 
-  selectedValueProvider!: string;
-  selectedValueRBT!: string;
-  selectedValueBCBA!: string;
-  selectedValueTimeIn!: number;
-  selectedValueTimeOut!: number;
-  selectedValueTimeIn2!: number;
-  selectedValueTimeOut2!: number;
-  selectedValueProviderName!: string;
-  selectedValueMaladaptive!: string;
-  selectedValueAba!: string;
-  selectedValueRendering!: number;
+  // Signature images
+  IMAGE_PREVISUALIZA_SIGNATURE__BCBA_CREATED = 'assets/img/user-06.jpg';
+  IMAGE_PREVISUALIZA_SIGNATURE_SUPERVISOR_CREATED = 'assets/img/user-06.jpg';
 
-  client_id: any;
-  doctor_id: any;
-  patient_selected: any;
-  client_selected: any;
-  note_selected: any;
-  bip_id: any;
-  user: AppUser;
+  // Doctor information
+  doctor_selected_full_name: string;
+  doctor_selected_full_name_supervisor: string;
 
-  first_name = '';
-  last_name = '';
-  diagnosis_code = '';
-
-  provider_name_g = '';
-  provider_credential = '';
-  pos = '';
-  session_date = '';
-  time_in = '';
-  time_out = '';
-  time_in2 = '';
-  time_out2 = '';
-  session_length_total = '';
-  session_length_total2 = '';
-  environmental_changes = '';
-
-  sumary_note = '';
-  meet_with_client_at = '';
-  client_appeared = '';
-  as_evidenced_by = '';
-  rbt_modeled_and_demonstrated_to_caregiver = '';
-  client_response_to_treatment_this_session = '';
-  progress_noted_this_session_compared_to_previous_session = '';
-  next_session_is_scheduled_for = '';
-  provider_name = '';
-  supervisor_name = '';
-
-  number_of_occurrences = 0;
-  number_of_correct_responses = 0;
-  total_trials = 0;
-  number_of_correct_response = 0;
-  maladaptive = '';
-  replacement = '';
-  maladaptive_behavior = '';
-  interventions: any;
-  provider_signature: any;
-  supervisor_signature: any;
-
-  pairing: any;
-  response_block: any;
-  DRA: any;
-  DRO: any;
-  redirection: any;
-  errorless_teaching: any;
-  NCR: any;
-  shaping: any;
-  chaining: any;
-  token_economy: any;
-  extinction: any;
-  natural_teaching: any;
-
-  public FILE_SIGNATURE_RBT: any;
-  public IMAGE_PREVISUALIZA_SIGNATURE__BCBA_CREATED = 'assets/img/user-06.jpg';
-  public FILE_SIGNATURE_BCBA: any;
-  public IMAGE_PREVISUALIZA_SIGNATURE_SUPERVISOR_CREATED =
-    'assets/img/user-06.jpg';
-
-  rbt_id: any;
-  bcba_id: any;
-  maladaptivename: any;
-  replacementName: any;
-  note_rbt_id: any;
-  goal: any;
-  note_id: any;
-  note_selectedId: any;
-
-  roles_rbt = [];
-  roles_bcba = [];
-
-  hours_days = [];
-  behaviors = [];
-  behaviorsview = [];
-  replacementsview = [];
-  replacementsview1 = [];
-  behavior_selected: string;
-  replacementGoals = [];
-  intervention_added = [];
-  replacements = [];
-  replacements2 = [];
-  newlist_added = [];
-  intake_outcome = [];
-  interventionsgroup = [];
-  newlistgroup = [];
-
-  objectives = [];
-  obj_inprogress = [];
-
-  maladaptivegroup = [];
-  replacementgroup = [];
-
-  maladaptiveSelected: any = null;
-  replacementSelected: any = null;
-
-  note_description: any;
-  caregivers_training_goals :any;
-  rbt_training_goals = [];
-  rbt_training_goalsgroup: any;
-  caregivers_training_goalsgroup: any;
-  aba_supervisor: number;
-
-  location: any;
-  birth_date: any;
-  porcent_of_occurrences = 0;
-  porcent_of_correct_response = 0;
-  lto: any = null;
-  caregiver_goal: any = null;
-  cpt_code: any = null;
-  type: string = null;
-  doctor_selected: any = null;
-  doctor_selected_full_name: any = null;
-  doctor_selected_rbt: any = null;
-  doctor_selected_full_name_supervisor: any = null;
-  doctor_selected_bcba: any = null;
-  doctor_selected_full_name_bcba: any = null;
-  pa_assessments: string;
-  pa_assessmentsgroup = [];
-
+  // Time information
+  morning_total_time: string;
+  afternoon_total_time: string;
+  total_time: string;
   fromParam: string | null = null;
 
-  intervention: NoteIntervention = {
-    token_economy: false,
-    generalization: false,
-    NCR: false,
-    behavioral_momentum: false,
-    DRA: false,
-    DRI: false,
-    DRO: false,
-    DRL: false,
-    response_block: false,
-    errorless_teaching: false,
-    extinction: false,
-    chaining: false,
-    natural_teaching: false,
-    redirection: false,
-    shaping: false,
-    pairing: false,
-  };
-  interventions2: NoteIntervention2 = {
-    token_economy: false,
-    generalization: false,
-    NCR: false,
-    behavioral_momentum: false,
-    DRA: false,
-    DRI: false,
-    DRO: false,
-    DRL: false,
-    response_block: false,
-    errorless_teaching: false,
-    extinction: false,
-    chaining: false,
-    natural_teaching: false,
-    redirection: false,
-    shaping: false,
-    pairing: false,
-  };
-  newlist: NoteNewList = {
-    FAST: false,
-    MAST: false,
-    QABF: false,
-    ABC_data_collection: false,
-    VBmapp: false,
-    Ablls: false,
-    EFL: false,
-    Peak: false,
-    parent_interview: false,
-    reinforcement_questionnaire: false,
-    preference_assessment: false,
-    other: false,
-  };
-  outcomeList: NoteOutcomeList = {
-    SRS_2: false,
-    vineland_3: false,
-    PDDBI: false,
-    PSI_4_short_form: false,
-  };
-  behaviorsList: NoteBehaviorsList = {
-    maladaptive_behavior: '',
-  };
-
   constructor(
-    private noteBcbaService: NoteBcbaService,
+    private noteBcbaService: NotesBcbaV2Service,
     private activatedRoute: ActivatedRoute,
     private pageService: PageService,
     private doctorService: DoctorService,
     private patientService: PatientsV2Service,
     private locations: Location,
-    private bipV2Service: BipsV2Service,
   ) {}
 
   ngOnInit(): void {
     this.pageService.onInitPage();
     this.activatedRoute.params.subscribe((resp) => {
-      this.note_id = resp['id'];
+      this.note_id = Number(resp['id']);
     });
 
     this.activatedRoute.queryParams.subscribe(params => {
@@ -282,131 +72,78 @@ export class NoteBcbaViewComponent implements OnInit {
   }
 
   goBack() {
-    this.locations.back(); // <-- go back to previous location on cancel
+    this.locations.back();
   }
+
   print() {
     window.print();
-    }
-
-
-
-  getNote() {
-    this.noteBcbaService.getNote(this.note_id).subscribe((resp) => {
-      console.log(resp, 'resp');
-      this.note_selected = resp.noteBcba;
-      this.note_selectedId = resp.noteBcba.id;
-      this.patient_identifier = this.note_selected.patient_identifier;
-      this.patient_id = this.note_selected.patient_id;
-      this.bip_id = this.note_selected.bip_id;
-      this.cpt_code = this.note_selected.cpt_code;
-      this.type = this.note_selected.type;
-      this.aba_supervisor = resp.noteBcba.supervisor_id;
-      this.selectedValueRendering = resp.noteBcba.provider_id;
-      this.selectedValueProviderName = this.note_selected.provider_name_g;
-      this.selectedValueRBT = this.note_selected.provider_name;
-      this.selectedValueBCBA = this.note_selected.supervisor_name;
-      this.IMAGE_PREVISUALIZA_SIGNATURE__BCBA_CREATED =
-      this.note_selected.provider_signature;
-      this.IMAGE_PREVISUALIZA_SIGNATURE_SUPERVISOR_CREATED =
-      this.note_selected.supervisor_signature;
-
-        this.getProfilePatient();
-        this.getDoctor();
-        this.getDoctorRbt();
-  
-      if(this.cpt_code === '97155' ){
-        this.show97155 = true;
-      }
-      if(this.cpt_code === '97156' ){
-        this.show97156 = true;
-      }
-      if(this.type === 'Observation' ){
-        this.show971511 = true;
-      }
-      if(this.type === 'Report' ){
-        this.show971512 = true;
-      }
-
-      //nota 511 = observation
-      this.newlist_added = this.note_selected.newlist_added;
-      this.intake_outcome = this.note_selected.intake_outcome;
-     
-      //nota 55 
-      this.interventions2 = this.note_selected?.interventions2;
-      this.replacements2 = this.note_selected?.replacements2;
-
-      //nota 56
-      this.interventions = this.note_selected?.interventions;
-      this.behaviors = this.note_selected?.behaviors;
-      //nota 56 y 55
-      this.obj_inprogress = this.note_selected.replacements;
-      // this.obj_inprogress1 = this.note_selected.replacements2;
-
-      this.caregivers_training_goals = this.note_selected.caregiver_goals;
-
-      try {
-        const jsonObj90 = JSON.parse(this.caregivers_training_goals as string);
-        if (Array.isArray(jsonObj90)) {
-          this.caregivers_training_goals = jsonObj90;
-        } else {
-          console.error("Parsed object is not an array:", jsonObj90);
-          this.caregivers_training_goals = [];
-        }
-      } catch (e) {
-        console.error("Failed to parse caregivers_training_goals:", e);
-        this.caregivers_training_goals = [];
-      }
-    });
-    
   }
 
+  getNote() {
+    this.noteBcbaService.get(this.note_id).subscribe((resp) => {
+      this.note_selected = resp.data;
+      this.patient_identifier = this.note_selected.patient_identifier;
+      this.patient_id = this.note_selected.patient_id;
+
+      // Set up signatures if available
+      if (this.note_selected.provider_signature) {
+        this.IMAGE_PREVISUALIZA_SIGNATURE__BCBA_CREATED = this.note_selected.provider_signature;
+      }
+      if (this.note_selected.supervisor_signature) {
+        this.IMAGE_PREVISUALIZA_SIGNATURE_SUPERVISOR_CREATED = this.note_selected.supervisor_signature;
+      }
+
+      // Get additional data
+      this.getProfilePatient();
+      this.getDoctor();
+      this.getDoctorRbt();
+
+      // Set view flags based on CPT code and type
+      this.show97155 = this.note_selected.cpt_code === '97155';
+      this.show97156 = this.note_selected.cpt_code === '97156';
+      this.show971511 = this.note_selected.cpt_code === '97151' && this.note_selected.subtype.toLowerCase() === 'observation';
+      this.show971512 = this.note_selected.cpt_code === '97151' && this.note_selected.subtype.toLowerCase() === 'report';
+
+      this.morning_total_time = calculateTimeDifference(this.note_selected.time_in, this.note_selected.time_out);
+      this.afternoon_total_time = calculateTimeDifference(this.note_selected.time_in2, this.note_selected.time_out2);
+      this.total_time = convertToHours(this.note_selected.total_minutes);
+      console.log(this.note_selected);
+    });
+  }
 
   getDoctor() {
-    this.doctorService
-      .showDoctor(this.selectedValueRendering)
-      .subscribe((resp) => {
-        // console.log(resp);
-        this.doctor_selected = resp.user;
+    if (this.note_selected?.provider_id) {
+      this.doctorService.showDoctor(this.note_selected.provider_id).subscribe((resp) => {
         this.doctor_selected_full_name = resp.user.full_name;
       });
+    }
   }
 
   getDoctorRbt() {
-    this.doctorService.showDoctor(this.aba_supervisor).subscribe((resp) => {
-      // console.log(resp);
-      this.doctor_selected_rbt = resp.user;
-      this.doctor_selected_full_name_supervisor = resp.user.full_name;
-    });
-  }
-  getDoctorBcba() {
-    this.doctorService.showDoctor(this.selectedValueBCBA).subscribe((resp) => {
-      // console.log(resp);
-      this.doctor_selected_bcba = resp.user;
-      this.doctor_selected_full_name_bcba = resp.user.full_name;
-    });
+    if (this.note_selected?.supervisor_id) {
+      this.doctorService.showDoctor(this.note_selected.supervisor_id).subscribe((resp) => {
+        this.doctor_selected_full_name_supervisor = resp.user.full_name;
+      });
+    }
   }
 
   getProfilePatient() {
-    this.patientService.get(this.patient_id).subscribe((resp) => {
+    if (this.patient_id) {
+      this.patientService.get(this.patient_id).subscribe((resp) => {
         this.patient_selected = resp.data;
       });
-  }
-
-  optionSelected(value: number) {
-    this.option_selected = value;
+    }
   }
 
   convertToPdf(): void {
     const data = this.contentToConvert.nativeElement;
 
     html2canvas(data).then((canvas) => {
-      // Few necessary setting options
       const imgWidth = 210;
       const pageHeight = 295;
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
       let heightLeft = imgHeight;
 
-      // Create a new PDF document
       const pdf = new jspdf.jsPDF('p', 'mm');
       let position = 0;
 
@@ -434,29 +171,7 @@ export class NoteBcbaViewComponent implements OnInit {
         heightLeft -= pageHeight;
       }
 
-      // Save the PDF
-      pdf.save('note_bcba_client_' + this.patient_selected.patient_id + '.pdf');
-      // pdf.save('note_rbt_client_'+this.patient_selected.patient_id+'_'+this.patient_selected.last_name+".pdf");
+      pdf.save(`note_bcba_client_${this.patient_id}.pdf`);
     });
   }
-  // convertToPdf(): void {
-  //   const data = this.contentToConvert.nativeElement;
-  //   html2canvas(data).then(canvas => {
-  //     // Few necessary setting options
-  //     const imgWidth = 208;
-  //     const pageHeight = 695;
-  //     const imgHeight = canvas.height * imgWidth / canvas.width;
-  //     const heightLeft = imgHeight;
-
-  //     // Create a new PDF document
-  //     const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
-
-  //     // Add an image of the canvas to the PDF
-  //     pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, imgWidth, imgHeight);
-
-  //     // Save the PDF
-  //     pdf.save('note_rbt_client_'+this.patient_selected.patient_id+".pdf");
-  //     // pdf.save('note_rbt_client_'+this.patient_selected.patient_id+'_'+this.patient_selected.last_name+".pdf");
-  //   });
-  // }
 }

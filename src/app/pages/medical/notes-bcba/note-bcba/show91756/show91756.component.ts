@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ReplacementProtocol } from '../../interfaces';
 
 @Component({
   selector: 'app-show91756',
@@ -9,9 +10,9 @@ export class Show91756Component {
   @Input() show97156;
   @Input() interventionsList;
   @Input() onInterventionsChange;
-  @Input() $event;
-  @Input() obj_inprogress;
   @Input() onReplacementChange;
+  @Input() $event;
+  @Input() replacementProtocols: ReplacementProtocol[] = [];
   @Input() behaviorList;
   @Input() onBehaviorChange;
   @Input() cargiver_participation;
@@ -30,6 +31,7 @@ export class Show91756Component {
   @Output() gaveChange = new EventEmitter<string>();
   @Output() recomendedChange = new EventEmitter<string>();
   @Output() caregivers_training = new EventEmitter<string>();
+  @Output() protocolsChange = new EventEmitter<ReplacementProtocol[]>();
 
   onCheckboxChange() {
     this.cargiverChange.emit(this.cargiver_participation);
@@ -52,9 +54,12 @@ export class Show91756Component {
     this.recomendedChange.emit(this.recomended_more_practice_on);
   }
 
-  
   updateCaregiverGoal(id: number) {
     this.caregivers_training.emit(this.caregivers_training_goalsgroup[id]);
     // console.log('Caregiver goal updated:', this.caregivers_training[id]);
+  }
+
+  onReplacementProtocolsChange(protocols: ReplacementProtocol[]) {
+    this.protocolsChange.emit(protocols);
   }
 }

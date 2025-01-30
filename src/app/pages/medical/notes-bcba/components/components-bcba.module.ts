@@ -7,6 +7,7 @@ import { InterventionsComponent } from './interventions.component';
 import { Interventions2Component } from './interventions2.component';
 
 import { Replacements2Component } from './replacements2.component';
+import { Replacements3Component } from './replacements3.component';
 import { BehaviorsComponent } from './behaviors.component';
 import { IntakeOutcomeComponent } from './intake-outcome.component';
 import { NewListComponent } from './newlist.component';
@@ -25,6 +26,8 @@ import { View917511Component } from '../note-bcba-view/view917511/view917511.com
 import { View917512Component } from '../note-bcba-view/view917512/view917512.component';
 import { View91755Component } from '../note-bcba-view/view91755/view91755.component';
 import { View91756Component } from '../note-bcba-view/view91756/view91756.component';
+import { AssessmentToolsViewComponent } from './assessment-tools-view.component';
+import { IntakeOutcomeMeasuresUsedComponent } from './intake-outcome-measures-used.component';
 
 
 
@@ -35,6 +38,7 @@ import { View91756Component } from '../note-bcba-view/view91756/view91756.compon
         Interventions2Component,
         ReplacementsComponent,
         Replacements2Component,
+        Replacements3Component,
         BehaviorsComponent,
         IntakeOutcomeComponent,
         NewListComponent,
@@ -50,10 +54,11 @@ import { View91756Component } from '../note-bcba-view/view91756/view91756.compon
         Show917512Component,
         Show917511Component,
         View917511Component,
-            View917512Component,
-            View91755Component,
-            View91756Component,
-
+        View917512Component,
+        View91755Component,
+        View91756Component,
+        AssessmentToolsViewComponent,
+        IntakeOutcomeMeasuresUsedComponent,
   ],
   exports: [
 
@@ -61,6 +66,7 @@ import { View91756Component } from '../note-bcba-view/view91756/view91756.compon
         Interventions2Component,
         ReplacementsComponent,
         Replacements2Component,
+        Replacements3Component,
         BehaviorsComponent,
         IntakeOutcomeComponent,
         NewListComponent,
@@ -76,9 +82,11 @@ import { View91756Component } from '../note-bcba-view/view91756/view91756.compon
         Show917512Component,
         Show917511Component,
         View917511Component,
-    View917512Component,
-    View91755Component,
-    View91756Component,
+      View917512Component,
+        View91755Component,
+        View91756Component,
+        AssessmentToolsViewComponent,
+        IntakeOutcomeMeasuresUsedComponent,
   ],
   imports: [
     CommonModule,

@@ -17,6 +17,15 @@
           ></app-bip-profile-head>
         </div>
         <!-- data client -->
+        <app-bip-profile-patient-data [patient]="patient">
+        </app-bip-profile-patient-data>
+
+        <!-- data client end-->
+        <!-- documents Reviewed-->
+        <app-bip-documents-show [documents]="bip.assestment_conducted_options">
+        </app-bip-documents-show>
+
+        <!-- documents Reviewed end-->
         <div appEditWrapper (editingChange)="onEditClient()">
           <app-bip-profile-patient-data
             [patient]="patient"

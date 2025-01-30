@@ -12,7 +12,7 @@ import { Intervention } from '../interfaces';
           <thead>
             <tr>
               <th>please check as needed</th>
-              <th>Demostrated</th>
+              <th>Demonstrated</th>
             </tr>
           </thead>
           <tbody>
@@ -51,7 +51,7 @@ export class InterventionsComponent {
         acc[interv.id] = {
           id: interv.id,
           name: interv.name,
-          demostrated: !!interv.value,
+          demonstrated: !!interv.value,
         };
         // acc[interv.id] = true;
         return acc;

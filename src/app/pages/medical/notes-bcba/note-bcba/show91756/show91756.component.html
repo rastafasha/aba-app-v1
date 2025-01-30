@@ -15,10 +15,10 @@
   <div class="col-xs-12">
     <div class="card">
       <div class="card-body">
-        <app-replacements
-          [obj_inprogress]="obj_inprogress"
-          (replacementChange)="onReplacementChange($event)"
-        ></app-replacements>
+        <app-replacements3
+          [replacementProtocols]="replacementProtocols"
+          (protocolsChange)="onReplacementProtocolsChange($event)"
+        ></app-replacements3>
       </div>
     </div>
   </div>
