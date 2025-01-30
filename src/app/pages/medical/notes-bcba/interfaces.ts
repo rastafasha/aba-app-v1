@@ -47,18 +47,18 @@ export interface NoteNewList {
     reinforcement_questionnaire: boolean;
     preference_assessment: boolean;
     other: boolean;
-    
+
 }
 export interface NoteOutcomeList {
     SRS_2: boolean;
     vineland_3: boolean;
     PDDBI: boolean;
     PSI_4_short_form: boolean;
-    
+
 }
 export interface NoteBehaviorsList {
   maladaptive_behavior: string;
-    
+
 }
 
 
@@ -121,6 +121,16 @@ export interface Maladaptives {
   id: number;
   name: string;
   value: boolean;
+}
+
+export interface ReplacementProtocol {
+  id: number;
+  name: string;
+  description: string;
+  status: string;
+  assessed?: boolean;
+  modified?: boolean;
+  demonstrated?: boolean;
 }
 
 

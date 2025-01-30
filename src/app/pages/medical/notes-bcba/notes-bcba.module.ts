@@ -18,7 +18,7 @@ import { ComponentsBCBAModule } from './components/components-bcba.module';
 
 @NgModule({
   declarations: [
-    
+
     NotesBcbaComponent,
     NoteBcbaViewComponent,
     NoteBcbaByClientComponent,
@@ -30,6 +30,7 @@ import { ComponentsBCBAModule } from './components/components-bcba.module';
     NoteBcbaViewComponent,
     NoteBcbaByClientComponent,
     NoteBcbaEditComponent,
+    NoteBcbaComponent,
   ],
   imports: [
     CommonModule,
