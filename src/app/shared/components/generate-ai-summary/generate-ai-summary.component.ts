@@ -27,9 +27,6 @@ export interface AISummaryData {
   clientResponse?: string;
   progressNoted?: string;
   nextSession?: string;
-  reinforcedCaregiverStrengths?: string;
-  constructiveFeedback?: string;
-  recommendedPractice?: string;
   // 97151 specific fields
   cpt51type?: 'observation' | 'report';
   procedure?: string;

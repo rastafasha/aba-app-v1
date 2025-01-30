@@ -22,7 +22,7 @@ import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
 import { PatientMService } from '../../patient-m/service/patient-m.service';
 import { show97151L, ValidationResult } from '../interfaces';
 import { AISummaryData } from 'src/app/shared/components/generate-ai-summary/generate-ai-summary.component';
-import { convertToHours, convertToMinutes } from 'src/app/utils/time-functions';
+import { calculateUnitsFromTime, convertToHours, convertToMinutes } from 'src/app/utils/time-functions';
 import { GenerateAiSummaryComponent } from 'src/app/shared/components/generate-ai-summary/generate-ai-summary.component';
 import { ReplacementProtocol } from '../interfaces';
 
@@ -33,9 +33,6 @@ import { ReplacementProtocol } from '../interfaces';
   styleUrls: ['./note-bcba.component.scss'],
 })
 export class NoteBcbaComponent implements OnInit {
-  Number(arg0: string) {
-    throw new Error('Method not implemented.');
-  }
   routes = AppRoutes;
   summary_note = '';
   isGeneratingSummary = false;
@@ -44,22 +41,16 @@ export class NoteBcbaComponent implements OnInit {
   show97151 = false;
   show971511 = false;
   show971512 = false;
-  valid_form = false;
-  valid_form_success = false;
 
   text_success = '';
   text_validation = '';
 
-  selectedValueProvider!: string;
   selectedValueRBT!: string;
   selectedValueBCBA!: string;
   selectedValueTimeIn = '';
   selectedValueTimeOut = '';
   selectedValueTimeIn2 = '';
   selectedValueTimeOut2 = '';
-  selectedValueProviderName!: string;
-  selectedValueMaladaptive!: string;
-  selectedValueRendering!: string;
   selectedValueAba!: number;
   selectedValueCode!: string;
   selectedValueCode1!: string;
@@ -74,20 +65,15 @@ export class NoteBcbaComponent implements OnInit {
   patient_id: number;
   patient_identifier: string;
   doctor_id: number;
-  patient_selected: any;
   client_selected: PatientV2;
   bip_id: number;
   user: AppUser;
 
-  patientLocation_id: number;
   insurance_id: number;
-  insurance_identifier: string;
 
   first_name = '';
   last_name = '';
-  diagnosis_code = '';
 
-  provider_name_g = '';
   provider_credential = '';
   pos = '';
   session_date = '';
@@ -110,12 +96,9 @@ export class NoteBcbaComponent implements OnInit {
   provider_name = '';
   supervisor_name = '';
 
-  porcent_of_occurrences = 0;
-  porcent_of_correct_response = 0;
   maladaptive = '';
   replacement = '';
   interventions: any;
-  interventions2: any;
   provider_signature: any;
   supervisor_signature: any;
 
@@ -147,10 +130,8 @@ export class NoteBcbaComponent implements OnInit {
   maladaptivename: string;
   replacementName: string;
   note_rbt_id: number;
-  goal: any;
   note_id: number;
   location: any;
-  birth_date: any;
   rendering_provider: number;
 
   roles_rbt = [];
@@ -168,14 +149,6 @@ export class NoteBcbaComponent implements OnInit {
   behaviorsList_added: object;
   intakeoutcome_added: object;
 
-  maladaptiveSelected: any = null;
-  replacementSelected: any = null;
-  lto: any = null;
-  caregiver_goal: any = null;
-
-  pa_assessments: string;
-  pa_assessmentsgroup = [];
-
   familiEnvolments = [];
   monitoringEvaluating = [];
   caregivers_training_goals = [];
@@ -186,7 +159,6 @@ export class NoteBcbaComponent implements OnInit {
   posGruoup = [];
   note_description: string;
   insurer_name: string;
-  services: any;
   insurer_id: number;
   cpt: number;
   roles: string[];
@@ -292,22 +264,16 @@ export class NoteBcbaComponent implements OnInit {
         // console.log('patient',resp);
         this.client_selected = resp.patient;
         this.patient_id = resp.patient.id;
-        this.patientLocation_id = this.client_selected.location_id;
         this.patient_identifier = this.client_selected.patient_identifier;
         this.insurance_id = this.client_selected.insurer_id;
-        this.insurance_identifier = this.client_selected.insurance_identifier;
 
         this.first_name = this.client_selected.first_name;
         this.last_name = this.client_selected.last_name;
         this.patient_identifier = this.client_selected.patient_identifier;
-        this.diagnosis_code = this.client_selected.diagnosis_code;
-        this.birth_date = this.client_selected.birth_date;
 
-        this.diagnosis_code = this.client_selected.diagnosis_code;
         this.insurer_id = this.client_selected.insurer_id;
 
         this.selectedValueAba = resp.patient.clin_director_id;
-        this.selectedValueRendering = resp.patient.bcba_id;
         this.selectedValueBCBA = resp.patient.clin_director_id;
         this.selectedValueRBT = resp.patient.bcba_id;
 
@@ -398,10 +364,6 @@ export class NoteBcbaComponent implements OnInit {
       });
   }
 
-  selectFirmaSpecialistBcba(event) {
-    this.speciaFirmaDataBcba(this.selectedValueBcba_id);
-  }
-
   hourTimeInSelected(value: string) {
     this.selectedValueTimeIn = value;
     this.calculateProjectedUnits();
@@ -454,19 +416,6 @@ export class NoteBcbaComponent implements OnInit {
     reader.readAsDataURL(this.FILE_SIGNATURE_RBT);
     reader.onloadend = () =>
       (this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED = reader.result);
-  }
-
-  loadFileSignature($event) {
-    if ($event.target.files[0].type.indexOf('image')) {
-      this.text_validation = 'Solamente pueden ser archivos de tipo imagen';
-      return;
-    }
-    this.text_validation = '';
-    this.FILE_SIGNATURE_BCBA = $event.target.files[0];
-    const reader2 = new FileReader();
-    reader2.readAsDataURL(this.FILE_SIGNATURE_BCBA);
-    reader2.onloadend = () =>
-      (this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED = reader2.result);
   }
 
   onInterventionsChange(updatedInterventions: object) {
@@ -542,9 +491,9 @@ export class NoteBcbaComponent implements OnInit {
       summary_note: this.summary_note,
       doctor_id: this.doctor_id,
       bip_id: this.bip_id,
-      diagnosis_code: this.diagnosis_code,
-      location_id: this.patientLocation_id,
-      birth_date: this.birth_date,
+      diagnosis_code: this.client_selected.diagnosis_code,
+      location_id: this.client_selected.location_id,
+      birth_date: this.client_selected.birth_date,
       rendering_provider: this.doctor_id,
       provider_id: this.doctor_id,
       supervisor_id: this.selectedValueAba,
@@ -555,7 +504,7 @@ export class NoteBcbaComponent implements OnInit {
       provider_name: this.doctor_id,
       supervisor_name: this.selectedValueBcba_id,
       insurance_id: this.insurance_id,
-      insurance_identifier: this.insurance_identifier,
+      insurance_identifier: this.client_selected.insurance_identifier,
       participants: this.participants,
       environmental_changes: this.environmental_changes,
       session_date: this.session_date,
@@ -657,16 +606,6 @@ export class NoteBcbaComponent implements OnInit {
           html: errorMessage,
         });
       }
-      // if (resp.message === 403) {
-      //   this.text_validation = resp.message_text;
-      // } else {
-      //   this.text_success = 'Note BCBA created';
-      //   Swal.fire('Created', ` Note BCBA Created`, 'success');
-      //   this.router.navigate([
-      //     AppRoutes.noteBcba.list,
-      //     this.patient_identifier,
-      //   ]);
-      // }
     });
   }
 
@@ -677,8 +616,8 @@ export class NoteBcbaComponent implements OnInit {
     }
 
     return {
-      diagnosis: this.diagnosis_code,
-      birthDate: this.birth_date || null,
+      diagnosis: this.client_selected.diagnosis_code,
+      birthDate: this.client_selected.birth_date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) || null,
       startTime: this.selectedValueTimeIn || null,
       endTime: this.selectedValueTimeOut || null,
       startTime2: this.selectedValueTimeIn2 || null,
@@ -689,9 +628,6 @@ export class NoteBcbaComponent implements OnInit {
       clientResponse: this.client_response_to_treatment_this_session,
       progressNoted: this.progress_noted_this_session_compared_to_previous_session,
       nextSession: this.next_session_is_scheduled_for,
-      reinforcedCaregiverStrengths: this.reinforced_caregiver_strengths_in,
-      constructiveFeedback: this.gave_constructive_feedback_on,
-      recommendedPractice: this.recomended_more_practice_on,
       environmentalChanges: this.environmental_changes,
       clientAppeared: this.client_appeared,
       evidencedBy: this.as_evidenced_by,
@@ -792,28 +728,11 @@ export class NoteBcbaComponent implements OnInit {
     }
   }
 
-  calculateUnitsFromTime(startTime: string, endTime: string): number {
-    if (!startTime || !endTime) return 0;
-    const start = this.parseTime(startTime);
-    const end = this.parseTime(endTime);
-    if (!start || !end) return 0;
-    const durationMinutes = (end.getTime() - start.getTime()) / (1000 * 60);
-    return Math.ceil(durationMinutes / 15);
-  }
-
-  parseTime(timeStr: string): Date | null {
-    if (!timeStr) return null;
-    const [hours, minutes] = timeStr.split(':').map(Number);
-    const date = new Date();
-    date.setHours(hours, minutes, 0, 0);
-    return date;
-  }
-
   calculateProjectedUnits(): void {
     let totalUnits = 0;
 
     if (this.selectedValueTimeIn && this.selectedValueTimeOut) {
-      const morningUnits = this.calculateUnitsFromTime(
+      const morningUnits = calculateUnitsFromTime(
         this.selectedValueTimeIn,
         this.selectedValueTimeOut
       );
@@ -821,7 +740,7 @@ export class NoteBcbaComponent implements OnInit {
     }
 
     if (this.selectedValueTimeIn2 && this.selectedValueTimeOut2) {
-      const afternoonUnits = this.calculateUnitsFromTime(
+      const afternoonUnits = calculateUnitsFromTime(
         this.selectedValueTimeIn2,
         this.selectedValueTimeOut2
       );

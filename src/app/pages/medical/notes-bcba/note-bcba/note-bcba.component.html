@@ -91,7 +91,7 @@
                       class="form-control"
                       name="diagnosis_code"
                       disabled
-                      [(ngModel)]="diagnosis_code"
+                      [(ngModel)]="client_selected.diagnosis_code"
                       type="text"
                     />
                   </div>
@@ -106,7 +106,7 @@
                       class="form-control datetimepicker"
                       disabled
                       name="birth_date"
-                      [(ngModel)]="birth_date"
+                      [(ngModel)]="client_selected.birth_date"
                       type="text"
                       matInput
                       [matDatepicker]="picker"

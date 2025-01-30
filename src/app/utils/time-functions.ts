@@ -59,3 +59,13 @@ export function calculateTimeDifference(startTime: string, endTime: string, appe
 
   return `${hours}h ${minutes}m ${append}`.trim();
 }
+
+
+export function calculateUnitsFromTime(startTime: string, endTime: string): number {
+  if (!startTime || !endTime) return 0;
+  const start = this.parseTime(startTime);
+  const end = this.parseTime(endTime);
+  if (!start || !end) return 0;
+  const durationMinutes = (end.getTime() - start.getTime()) / (1000 * 60);
+  return Math.ceil(durationMinutes / 15);
+}
