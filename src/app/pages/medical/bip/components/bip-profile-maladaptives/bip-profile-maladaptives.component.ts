@@ -16,7 +16,7 @@ export class BipProfileMaladaptivesComponent {
   displayedColumns: KeyOf<PlanV2>[] = ['name', 'description', 'baseline_level'];
   renders: ListRender<PlanV2> = {
     baseline_level: (item: PlanV2) => {
-      return `Average ${item.current_intensity} occurrences per hour Observed by BCBA`;
+      return `Average ${item.baseline_level} occurrences per hour Observed by BCBA`;
     },
   };
   headRenders: HeadRender<PlanV2> = {

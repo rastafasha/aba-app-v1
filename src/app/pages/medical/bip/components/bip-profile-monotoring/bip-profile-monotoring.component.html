@@ -33,11 +33,10 @@
           <div *ngIf="rbt_training_goals">
             <ng-container *ngFor="let itemrtg of rbt_training_goals">
               <div class="row">
-                <p>RBT Training Goals</p>
                 <div class="col-xs-12">
                   <div class="detail-personal">
-                    <h2>lto</h2>
-                    <p>{{ itemrtg.name }}</p>
+                    <h2>{{ itemrtg.name }}</h2>
+                    <p>{{ itemrtg.description }}</p>
                   </div>
                 </div>
 

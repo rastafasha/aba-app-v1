@@ -52,7 +52,7 @@ export class BipUseCasesService {
       plan.bip_id = bipId;
       const oldPlan = oldPlans.find((p) => p.id === plan.id);
 
-      if (!oldPlan) {
+      if (!oldPlan || plan.id === 0) {
         return this.planService
           .create(this.repositoryUtils.stripIndex(plan))
           .pipe(

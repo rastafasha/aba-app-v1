@@ -32,7 +32,6 @@ import { BipProfileMonotoringComponent } from './bip-profile-monotoring/bip-prof
 import { BipProfilePatientDataComponent } from './bip-profile-patient-data/bip-profile-patient-data.component';
 import { BipProfilePrevalentComponent } from './bip-profile-prevalent/bip-profile-prevalent.component';
 import { BipProfileReductionsComponent } from './bip-profile-reductions/bip-profile-reductions.component';
-import { BipProfileReplacementsComponent } from './bip-profile-replacements/bip-profile-replacements.component';
 import { ChartReductionComponent } from './charts/chart-reduction/chart-reduction.component';
 import { ChartReplacementComponent } from './charts/chart-replacement/chart-replacement.component';
 import { ConsentTreatmentEditComponent } from './consent-treatment-edit/consent-treatment-edit.component';
@@ -92,7 +91,6 @@ const components = [
   BipProfilePatientDataComponent,
   BipProfilePrevalentComponent,
   BipProfileReductionsComponent,
-  BipProfileReplacementsComponent,
   ChartReductionComponent,
   ChartReplacementComponent,
   ConsentTreatmentFormComponent,

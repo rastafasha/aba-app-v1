@@ -16,9 +16,7 @@
 
   <app-prevalent-setting
     (save)="onSave()"
-    [(prevalentSettingEventAndAntecedents)]="
-      bip.prevalent_setting_event_and_atecedents
-    "
+    [(input)]="bip.prevalent_setting_event_and_atecedents"
   ></app-prevalent-setting>
 
   <app-hypothesis-based-interventions

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Intervention } from 'src/app/core/models/v2/bip.v2.model';
+import { Intervention } from 'src/app/core/models/v2/intervention.v2.model';
 
 @Component({
   selector: 'app-bip-profile-interventions',
@@ -7,5 +7,5 @@ import { Intervention } from 'src/app/core/models/v2/bip.v2.model';
   styleUrls: ['./bip-profile-interventions.component.scss'],
 })
 export class BipProfileInterventionsComponent {
-  @Input() interventions: Intervention[];
+  @Input() input: Intervention[];
 }

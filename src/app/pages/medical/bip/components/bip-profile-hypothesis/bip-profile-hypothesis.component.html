@@ -9,121 +9,53 @@
           <div class="row">
             <div class="col-xs-12">
               <div class="detail-personal">
-                <h2>Hypothesis-based interventions</h2>
-                <p>{{ bip.hypothesis_based_intervention }}</p>
+                <p class="pre-wrap">{{ bip.hypothesis_based_intervention }}</p>
               </div>
             </div>
 
-            <div class="about-info mb-10">
-              <h4>Tangibles</h4>
-            </div>
+            <app-list
+              title="Tangibles"
+              [dataSource]="bip.tangibles"
+              [displayedColumns]="[
+                'preventive_strategies',
+                'replacement_skills',
+                'manager_strategies'
+              ]"
+            >
+            </app-list>
 
-            <ng-container *ngFor="let access of bip.tangibles">
-              <div *ngIf="!bip.tangibles">
-                <app-no-info></app-no-info>
-              </div>
-              <div class="col-xs-12 col-sm-4">
-                <div class="detail-personal">
-                  <h2>Preventive Strategies</h2>
-                  <p>{{ access.preventive_strategies }}</p>
-                </div>
-              </div>
-              <div class="col-xs-12 col-sm-4">
-                <div class="detail-personal">
-                  <h2>Replacement Skills</h2>
-                  <p>{{ access.replacement_skills }}</p>
-                </div>
-              </div>
-              <div class="col-xs-12 col-sm-4">
-                <div class="detail-personal">
-                  <h2>Manager Strategies</h2>
-                  <p>{{ access.manager_strategies }}</p>
-                </div>
-              </div>
-            </ng-container>
-            <div class="about-info mb-10">
-              <h4>Attention</h4>
-            </div>
+            <app-list
+              title="Attention"
+              [dataSource]="bip.attention"
+              [displayedColumns]="[
+                'preventive_strategies',
+                'replacement_skills',
+                'manager_strategies'
+              ]"
+            >
+            </app-list>
 
-            <ng-container *ngFor="let access of bip.attention">
-              <div *ngIf="!bip.attention">
-                <app-no-info></app-no-info>
-              </div>
-              <div class="col-xs-12 col-sm-4">
-                <div class="detail-personal">
-                  <h2>Preventive Strategies</h2>
-                  <p>{{ access.preventive_strategies }}</p>
-                </div>
-              </div>
-              <div class="col-xs-12 col-sm-4">
-                <div class="detail-personal">
-                  <h2>Replacement Skills</h2>
-                  <p>{{ access.replacement_skills }}</p>
-                </div>
-              </div>
-              <div class="col-xs-12 col-sm-4">
-                <div class="detail-personal">
-                  <h2>Manager Strategies</h2>
-                  <p>{{ access.manager_strategies }}</p>
-                </div>
-              </div>
-            </ng-container>
+            <app-list
+              title="Escape"
+              [dataSource]="bip.escape"
+              [displayedColumns]="[
+                'preventive_strategies',
+                'replacement_skills',
+                'manager_strategies'
+              ]"
+            >
+            </app-list>
 
-            <div class="about-info mb-10">
-              <h4>Escape</h4>
-            </div>
-
-            <ng-container *ngFor="let access of bip.escape">
-              <div *ngIf="!bip.escape">
-                <app-no-info></app-no-info>
-              </div>
-              <div class="col-xs-12 col-sm-4">
-                <div class="detail-personal">
-                  <h2>Preventive Strategies</h2>
-                  <p>{{ access.preventive_strategies }}</p>
-                </div>
-              </div>
-              <div class="col-xs-12 col-sm-4">
-                <div class="detail-personal">
-                  <h2>Replacement Skills</h2>
-                  <p>{{ access.replacement_skills }}</p>
-                </div>
-              </div>
-              <div class="col-xs-12 col-sm-4">
-                <div class="detail-personal">
-                  <h2>Manager Strategies</h2>
-                  <p>{{ access.manager_strategies }}</p>
-                </div>
-              </div>
-            </ng-container>
-
-            <div class="about-info mb-10">
-              <h4>Sensory</h4>
-            </div>
-
-            <ng-container *ngFor="let access of bip.sensory">
-              <div *ngIf="!bip.sensory">
-                <app-no-info></app-no-info>
-              </div>
-              <div class="col-xs-12 col-sm-4">
-                <div class="detail-personal">
-                  <h2>Preventive Strategies</h2>
-                  <p>{{ access.preventive_strategies }}</p>
-                </div>
-              </div>
-              <div class="col-xs-12 col-sm-4">
-                <div class="detail-personal">
-                  <h2>Replacement Skills</h2>
-                  <p>{{ access.replacement_skills }}</p>
-                </div>
-              </div>
-              <div class="col-xs-12 col-sm-4">
-                <div class="detail-personal">
-                  <h2>Manager Strategies</h2>
-                  <p>{{ access.manager_strategies }}</p>
-                </div>
-              </div>
-            </ng-container>
+            <app-list
+              title="Sensory"
+              [dataSource]="bip.escape"
+              [displayedColumns]="[
+                'preventive_strategies',
+                'replacement_skills',
+                'manager_strategies'
+              ]"
+            >
+            </app-list>
           </div>
         </div>
       </div>

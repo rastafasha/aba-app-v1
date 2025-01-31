@@ -233,6 +233,7 @@ ngx-material-timepicker-content {
   margin-bottom: 10px;
   border-bottom: 1px dashed #ccc;
   padding-bottom: 10px;
+  height: 100%;
 }
 
 .detail-personal h2 {
@@ -339,4 +340,8 @@ p {
   border: 1px dashed #007bff;
   padding: 8px;
   border-radius: 4px;
+}
+
+.pre-wrap {
+  white-space: pre-wrap;
 }

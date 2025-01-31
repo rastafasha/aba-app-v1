@@ -1,41 +1,17 @@
-<div class="row">
-  <div class="col-12">
-    <div class="personal-list-out">
-      <div class="card">
-        <div class="card-body">
-          <div class="about-info mb-10">
-            <h4>Prevalent Setting Events & Antecedents</h4>
-          </div>
-          <div class="row">
-            <div *ngIf="!prevalent_setting_event_and_atecedents">
-              <app-no-info></app-no-info>
-            </div>
-            <ng-container
-              *ngFor="let prevalent of prevalent_setting_event_and_atecedents"
-            >
-              <div class="col-xs-12 col-sm-4">
-                <div class="detail-personal">
-                  <h2>Prevalent Setting Events & Antecedents</h2>
-                  <p>
-                    {{ prevalent.prevalent_setting_event_and_atecedent }}
-                  </p>
-                </div>
-              </div>
-              <div class="col-xs-12 col-sm-4">
-                <div class="detail-personal">
-                  <h2>Behavior</h2>
-                  <p>{{ prevalent.behavior }}</p>
-                </div>
-              </div>
-              <div class="col-xs-12 col-sm-4">
-                <div class="detail-personal">
-                  <h2>Hypothesized Function(s)</h2>
-                  <p>{{ prevalent.hypothesized_functions }}</p>
-                </div>
-              </div>
-            </ng-container>
-          </div>
-        </div>
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-xs-12">
+        <app-list
+          title="Evaluation Settings"
+          [dataSource]="input"
+          [displayedColumns]="[
+            'prevalent_setting_event_and_antecedent',
+            'behavior',
+            'hypothesized_functions'
+          ]"
+        >
+        </app-list>
       </div>
     </div>
   </div>

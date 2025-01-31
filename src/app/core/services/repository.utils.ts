@@ -42,12 +42,14 @@ export class RepositoryUtils {
       if (beforeSave) beforeSave(item);
       const oldItem = oldItems.find((o) => o.id === item.id);
 
-      if (!oldItem) {
+      if (!oldItem || item.id === 0) {
+        console.log('creating', item);
         operations.push(service.create(this.stripIndex(item)));
       } else if (
         JSON.stringify(this.stripIndex(item)) !==
         JSON.stringify(this.stripIndex(oldItem))
       ) {
+        console.log('updating', item);
         operations.push(service.update(this.stripIndex(item), item.id));
       }
     });

@@ -4,14 +4,14 @@ import { BipV2, PatientV2 } from 'src/app/core/models';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import Swal from 'sweetalert2';
 import { BipUseCasesService } from '../services/bip-use-cases.service';
-import { BIP_ATTENTION_OPTIONS } from './bip-attention.const';
+import { BIP_ATTENTION_OPTIONS } from './bip-edit.const';
 
 @Component({
-  selector: 'app-bip-attention',
-  templateUrl: './bip-attention.component.html',
-  styleUrls: ['./bip-attention.component.scss'],
+  selector: 'app-bip-edit',
+  templateUrl: './bip-edit.component.html',
+  styleUrls: ['./bip-edit.component.scss'],
 })
-export class BipAttentionComponent implements OnInit {
+export class BipEditComponent implements OnInit {
   routes = AppRoutes;
   bipAttentionOptions = BIP_ATTENTION_OPTIONS;
   optionSelected = 1;

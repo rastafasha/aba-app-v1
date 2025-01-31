@@ -1,50 +1,43 @@
-<div class="row">
-  <div class="col-12">
-    <div class="personal-list-out">
-      <div class="card">
-        <div class="card-body">
-          <div class="about-info mb-10">
-            <h4>Reduction Goals</h4>
-          </div>
-
-          <div class="row">
-            <div *ngIf="!reduction_goal?.length">
-              <app-no-info></app-no-info>
-            </div>
-            <ng-container *ngFor="let item of reduction_goal">
-              <div class="col-xs-12 col-sm-4">
-                <div class="detail-personal">
-                  <h2>Goal</h2>
-                  <p>{{ item.name }}</p>
-                </div>
-              </div>
-              <div class="col-xs-12 col-sm-4">
-                <div class="detail-personal">
-                  <h2>Current Status</h2>
-                  <p>{{ item.status }}</p>
-                </div>
-              </div>
-              <div class="col-xs-12 col-sm-4">
-                <div class="detail-personal">
-                  <h2>Created at</h2>
-                  <p>{{ item.created_at | date : "shortDate" }}</p>
-                </div>
-              </div>
-              <div *ngIf="!item.objectives?.length">
-                <app-no-info></app-no-info>
-              </div>
-
-              <!-- <h2 class="text-center">Grafico</h2> -->
-              <app-chart-reduction [maladaptive]="item"></app-chart-reduction>
-              <!-- [maladaptive_behavior]="item.name"
-                [baseline_date]="item.baseline_date"
-                [baseline_level]="item.baseline_level"
-                [initial_interesting]="item.initial_intensity"
-              ></app-chart-reduction> -->
-            </ng-container>
-          </div>
-        </div>
+<div class="card">
+  <div class="card-body">
+    <!-- Title -->
+    <div class="row">
+      <div class="col-xs-12">
+        <h2>{{ title }}</h2>
       </div>
+    </div>
+    <!-- Goals -->
+    <div *ngFor="let item of input">
+      <div class="col-xs-12 detail-personal">
+        <h4>{{ item.name }}</h4>
+      </div>
+      <ul class="col-xs-12 mx-8">
+        <li>
+          <strong>Baseline: </strong>
+          <span>{{ item.baseline_level }} occurrences per hour</span>
+        </li>
+        <li *ngFor="let obj of item.objectives | arrayFilter : 'type' : 'STO'">
+          <strong>{{ obj.type }} #{{ obj.index + 1 }}: </strong>
+          <span>{{ obj.description }}</span>
+        </li>
+        <li *ngFor="let obj of item.objectives | arrayFilter : 'type' : 'LTO'">
+          <strong>{{ obj.type }}: </strong>
+          <span>{{ obj.description }}</span>
+        </li>
+      </ul>
+    </div>
+    <!-- Graficos -->
+
+    <div class="col-xs-12 detail-personal">
+      <h2>{{ graphTitle }}</h2>
+      <h4>All observed by BCBA</h4>
+    </div>
+
+    <div *ngFor="let item of input">
+      <div class="col-xs-12 detail-personal">
+        <h4>{{ item.name }}</h4>
+      </div>
+      <app-chart-reduction [maladaptive]="item"></app-chart-reduction>
     </div>
   </div>
 </div>

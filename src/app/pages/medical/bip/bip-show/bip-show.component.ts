@@ -6,19 +6,23 @@ import { BipV2, PatientV2 } from 'src/app/core/models';
 import { BipsV2Service, PatientsV2Service } from 'src/app/core/services';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
+import Swal from 'sweetalert2';
+import { BipUseCasesService } from '../services/bip-use-cases.service';
 
 @Component({
-  selector: 'app-bip-profile',
-  templateUrl: './bip-profile.component.html',
-  styleUrls: ['./bip-profile.component.scss'],
+  selector: 'app-bip-show',
+  templateUrl: './bip-show.component.html',
+  styleUrls: ['./bip-show.component.scss'],
 })
-export class BipProfileComponent implements OnInit {
+export class BipShowComponent implements OnInit {
   routes = AppRoutes;
   patient: PatientV2;
   bip: BipV2 = null;
+  old_bip: BipV2 = null;
   patient_identifier: string;
 
   constructor(
+    private useCases: BipUseCasesService,
     private pageService: PageService,
     private bipService: BipsV2Service,
     private patientService: PatientsV2Service,
@@ -64,6 +68,7 @@ export class BipProfileComponent implements OnInit {
       switchMap((resp) => this.bipService.get(resp.data[0].id)),
       map((resp) => {
         this.bip = resp.data;
+        this.old_bip = this.cloneBip(this.bip);
         return this.bip;
       })
     );
@@ -71,5 +76,22 @@ export class BipProfileComponent implements OnInit {
   //////////
   onEditClient() {
     this.router.navigate([this.routes.patients.listEdit, this.patient.id]);
+  }
+
+  onSave() {
+    this.useCases.save(this.bip, this.old_bip).subscribe({
+      next: (resp) => {
+        this.old_bip = this.cloneBip(resp.data);
+        this.bip = this.cloneBip(resp.data);
+        Swal.fire('Updated', `Bip Updated successfully!`, 'success');
+      },
+      error: () => Swal.fire('Error', `Error updating`, 'error'),
+    });
+  }
+  onCancel() {
+    this.bip = this.cloneBip(this.old_bip);
+  }
+  private cloneBip(bip: BipV2) {
+    return new BipV2(JSON.parse(JSON.stringify(bip)));
   }
 }

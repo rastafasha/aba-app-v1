@@ -7,6 +7,5 @@ import { PrevalentSettingEventAndAntecedent } from 'src/app/core/models';
   styleUrls: ['./bip-profile-prevalent.component.scss'],
 })
 export class BipProfilePrevalentComponent {
-  @Input()
-  prevalent_setting_event_and_atecedents: PrevalentSettingEventAndAntecedent[];
+  @Input() input: PrevalentSettingEventAndAntecedent[];
 }

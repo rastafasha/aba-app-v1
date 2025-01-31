@@ -3,267 +3,21 @@ import {
   NumberOrNullOrUndefined,
   StringOrNullOrUndefined,
 } from 'src/app/shared/utils';
-import { GeneralizationTraining } from './generalization-training.v2.model';
-import { Objective } from './objective.v2.model';
-import { PlanV2 } from './plan.v2.model';
-import { DocumentV2 } from './document.v2.model';
+import { ConsentToTreatment } from './consent-to-treatment.v2.model';
+import { PLAN_CONST, TypeOfAssessment } from './constants';
 import { CrisisPlanV2 } from './crisis-plan.v2.model';
-const HYPOTHESIS_BASED_INTERVEMTION =
-  'The following hypothesis-based interventions and instructional practices will be initiated to address the different patterns of behavior/response classes. These strategies have been selected because they are directly linked to the functions of the client’s behavior and they are the least intrusive and most effective options available that will work within the environments in which the client participates.';
-
-type TypeOfAssessment = '1' | '2' | '3';
-export const TYPE_OF_ASSESSMENT_MAP: Record<TypeOfAssessment, string> = {
-  '1': 'Assessment',
-  '2': 'Reassessment',
-  '3': 'Initial',
-};
-
-export class Intervention {
-  index?: number;
-  title: string;
-  description: string;
-  constructor(data: Partial<Intervention>) {
-    Object.assign(this, data);
-  }
-  static getDefault(): Intervention {
-    return {
-      index: undefined,
-      title: '',
-      description: '',
-    };
-  }
-}
-
-export class Attention {
-  index?: number;
-  preventive_strategies: string;
-  replacement_skills: string;
-  manager_strategies: string;
-  constructor(data: Partial<Attention>) {
-    Object.assign(this, data);
-  }
-  static getDefault(): Attention {
-    return new Attention({
-      index: undefined, // Changed from 0
-      preventive_strategies: '',
-      replacement_skills: '',
-      manager_strategies: '',
-    });
-  }
-}
-
-export class Escape {
-  index?: number;
-  preventive_strategies: string;
-  replacement_skills: string;
-  manager_strategies: string;
-  constructor(data: Partial<Escape>) {
-    Object.assign(this, data);
-  }
-  static getDefault(): Escape {
-    return new Escape({
-      index: undefined, // Changed from 0
-      preventive_strategies: '',
-      replacement_skills: '',
-      manager_strategies: '',
-    });
-  }
-}
-
-export class Sensory {
-  index?: number;
-  preventive_strategies: string;
-  replacement_skills: string;
-  manager_strategies: string;
-  constructor(data: Partial<Sensory>) {
-    Object.assign(this, data);
-  }
-  static getDefault(): Sensory {
-    return new Sensory({
-      index: undefined, // Changed from 0
-      preventive_strategies: '',
-      replacement_skills: '',
-      manager_strategies: '',
-    });
-  }
-}
-
-export class Tangible {
-  index?: number;
-  preventive_strategies: string;
-  replacement_skills: string;
-  manager_strategies: string;
-  constructor(data: Partial<Tangible>) {
-    Object.assign(this, data);
-  }
-  static getDefault(): Tangible {
-    return new Tangible({
-      index: undefined, // Changed from 0
-      preventive_strategies: '',
-      replacement_skills: '',
-      manager_strategies: '',
-    });
-  }
-}
-
-export class PrevalentSettingEventAndAntecedent {
-  index?: number;
-  prevalent_setting_event_and_atecedent: string;
-  behavior: string;
-  hypothesized_functions: string;
-  constructor(data: Partial<PrevalentSettingEventAndAntecedent>) {
-    Object.assign(this, data);
-  }
-  static getDeafult(): PrevalentSettingEventAndAntecedent {
-    return {
-      index: undefined, // Changed from 0
-      prevalent_setting_event_and_atecedent: '',
-      behavior: '',
-      hypothesized_functions: '',
-    };
-  }
-}
-
-export class AssestmentEvaluationSetting {
-  index?: number;
-  tangible: string;
-  activities: string;
-  other: string;
-  constructor(data: Partial<AssestmentEvaluationSetting>) {
-    Object.assign(this, data);
-  }
-  static getDefault() {
-    return new AssestmentEvaluationSetting({
-      index: undefined, // Changed from 0
-      tangible: '',
-      activities: '',
-      other: '',
-    });
-  }
-}
-
-export class Medication {
-  index: number;
-  medication: string;
-  dose: string;
-  frecuency: string;
-  reason: string;
-  preescribing_physician: string;
-  constructor(data: Partial<Medication>) {
-    Object.assign(this, data);
-  }
-  static getDefault(): Medication {
-    return {
-      index: undefined, // Changed from 0
-      medication: '',
-      dose: '',
-      frecuency: '',
-      reason: '',
-      preescribing_physician: '',
-    };
-  }
-}
-
-export class Doctor {
-  id: number;
-  full_name: string;
-  avatar: string | null;
-  constructor(data: Partial<Doctor>) {
-    Object.assign(this, data);
-  }
-}
-
-export class ConsentToTreatment {
-  id: number;
-  bip_id: number;
-  patient_id: string;
-  client_id: number;
-  analyst_signature: string;
-  analyst_signature_date: string;
-  parent_guardian_signature: string;
-  parent_guardian_signature_date: string;
-  created_at?: Date;
-  updated_at?: Date;
-  deleted_at?: Date;
-  constructor(data: Partial<ConsentToTreatment>) {
-    Object.assign(this, data);
-  }
-}
-
-export class Recomendation {
-  id: number;
-  de_escalation_technique_id: number;
-  index?: number;
-  cpt: string;
-  num_units: number;
-  breakdown_per_week: string;
-  location: string;
-  description_service: string;
-  constructor(data: Partial<Recomendation>) {
-    Object.assign(this, data);
-  }
-  static getDefault(): Recomendation {
-    return {
-      id: 0,
-      de_escalation_technique_id: 0,
-      index: undefined, // Changed from 0
-      cpt: '',
-      num_units: 0,
-      breakdown_per_week: '',
-      location: '',
-      description_service: '',
-    };
-  }
-}
-
-export class DeEscalationTechnique {
-  id: number;
-  bip_id: number;
-  index?: number;
-  description: string;
-  service_recomendation: string;
-  recomendation_lists: Recomendation[];
-  created_at?: Date;
-  updated_at?: Date;
-  deleted_at?: Date;
-  constructor(data: Partial<DeEscalationTechnique>) {
-    Object.assign(this, data);
-    this.recomendation_lists = ForceMap(
-      data.recomendation_lists,
-      Recomendation
-    );
-  }
-  static getDefault(): DeEscalationTechnique {
-    return {
-      id: 0,
-      bip_id: 0,
-      description: '',
-      service_recomendation: '',
-      recomendation_lists: [],
-    };
-  }
-}
-
-export class Sustitution extends PlanV2 {
-  stos: Objective[];
-  ltos: Objective[];
-  constructor(data: Partial<Sustitution>) {
-    super(data);
-    this.category = 'replacement';
-    this.stos = ForceMap(data.stos, Objective);
-    this.ltos = ForceMap(data.ltos, Objective);
-  }
-}
-
-export class DocumentReviewed {
-  document_title: string;
-  document_status: string;
-  constructor(data: Partial<DocumentReviewed>) {
-    Object.assign(this, data);
-    this.document_title = StringOrNullOrUndefined(data.document_title);
-    this.document_status = StringOrNullOrUndefined(data.document_status);
-  }
-}
+import { DocumentV2 } from './document.v2.model';
+import { GeneralizationTraining } from './generalization-training.v2.model';
+import { Intervention } from './intervention.v2.model';
+import { PlanV2 } from './plan.v2.model';
+import { Attention } from './attention.model';
+import { Escape } from './escape.model';
+import { Sensory } from './sensory.model';
+import { Tangible } from './tangible.model';
+import { PrevalentSettingEventAndAntecedent } from './prevalent-setting-event-and-antecedent';
+import { AssestmentEvaluationSetting } from './assestment-evaluation-setting';
+import { Medication } from './medication.model';
+import { DeEscalationTechnique } from './de-escalation-technique';
 
 export class BipV2 {
   id: number;
@@ -294,7 +48,6 @@ export class BipV2 {
   replacements: PlanV2[];
   sensory: Sensory[];
   strengths: string;
-  sustitution_goal: Sustitution[];
   tangibles: Tangible[];
   type_of_assessment: TypeOfAssessment;
   weakneses: string;
@@ -336,7 +89,7 @@ export class BipV2 {
       caregiver_trainings: ForceMap(data.caregiver_trainings, PlanV2),
       hypothesis_based_intervention:
         StringOrNullOrUndefined(data.hypothesis_based_intervention) ??
-        HYPOTHESIS_BASED_INTERVEMTION,
+        PLAN_CONST.HYPOTHESIS_BASED_INTERVENTION,
       interventions: ForceMap(data.interventions, Intervention),
       rbt_trainings: ForceMap(data.rbt_trainings, PlanV2),
       physical_and_medical: ForceMap(data.physical_and_medical, Medication),
@@ -347,7 +100,6 @@ export class BipV2 {
         data.previus_treatment_and_result
       ),
       sensory: ForceMap(data.sensory, Sensory),
-      sustitution_goal: ForceMap(data.sustitution_goal, Sustitution),
       tangibles: ForceMap(data.tangibles, Tangible),
       attention: ForceMap(data.attention, Attention),
       escape: ForceMap(data.escape, Escape),
@@ -403,15 +155,14 @@ export class BipV2 {
       background_information: undefined,
       current_treatment_and_progress: undefined,
       education_status: undefined,
-      caregiver_trainings: [],
-      hypothesis_based_intervention: HYPOTHESIS_BASED_INTERVEMTION,
-      interventions: [],
+      caregiver_trainings: [PlanV2.getDefaultCaregiverPlan()],
+      hypothesis_based_intervention: PLAN_CONST.HYPOTHESIS_BASED_INTERVENTION,
+      interventions: Intervention.getDefaults(),
       rbt_trainings: [],
       physical_and_medical: [],
       physical_and_medical_status: undefined,
       previus_treatment_and_result: undefined,
       sensory: [],
-      sustitution_goal: [],
       tangibles: [],
       attention: [],
       escape: [],
