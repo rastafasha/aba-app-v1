@@ -13,13 +13,10 @@ export class FamilyInvolvementGoalFormComponent extends OnPlansEdit {
     category: 'caregiver_training',
   };
   options = this.defaultOptions;
+  displayedColumns: (keyof PlanV2)[] = ['description'];
 
   onDataSourceChange(data: PlanV2[]) {
     this.input = data;
     this.inputChange.emit(this.input);
-  }
-
-  onSave() {
-    this.save.emit(this.input);
   }
 }
