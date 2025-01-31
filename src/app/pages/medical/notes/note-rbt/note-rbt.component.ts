@@ -285,7 +285,9 @@ getPatient(){
         total_trials: 0,
         number_of_correct_response: 0,
         objectives: repl.objectives,
-        description: repl.description
+        description: repl.objectives
+          .filter(obj => obj.status === 'in progress')[0]
+          .description || ''
       }));
 
       //extraemos los replacementGoals con status in progress o active

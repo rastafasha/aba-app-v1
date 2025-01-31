@@ -2,13 +2,16 @@ import { Location } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as jspdf from 'jspdf';
-import { NoteRbtV2, Replacements } from 'src/app/core/models';
+import { NoteRbtV2 } from 'src/app/core/models';
 import { AppUser } from 'src/app/core/models/users.model';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
 import { NoteRbtService } from '../../../../core/services/notes-rbt.service';
 import { BipService } from '../../bip/service/bip.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
+import { NotesRbtV2Service } from 'src/app/core/services/notes-rbt.v2.service';
+import { calculateTimeDifference } from 'src/app/utils/time-functions';
+import { convertToHours } from 'src/app/utils/time-functions';
 
 interface NoteIntervention {
   token_economy: boolean;
@@ -42,6 +45,10 @@ export class NoteRbtViewComponent implements OnInit {
   patient_identifier: string;
   patient_id: number;
   // option_selected:number = 0;
+
+  morning_total_time: string;
+  afternoon_total_time: string;
+  total_time: string;
 
   selectedValueProvider;
   selectedValueRBT;
@@ -95,7 +102,6 @@ export class NoteRbtViewComponent implements OnInit {
   number_of_correct_response = 0;
   maladaptive = '';
   replacement :any;
-  replacements: any;
   maladaptive_behavior = '';
   interventions: any;
   provider_signature: any;
@@ -132,7 +138,6 @@ export class NoteRbtViewComponent implements OnInit {
   note_rbt_id: any;
   goal: any;
   note_id: any;
-  note_selectedId: any;
   statusNote: any;
   insurance_identifier: string;
 
@@ -140,7 +145,6 @@ export class NoteRbtViewComponent implements OnInit {
   roles_bcba = [];
 
   hours_days = [];
-  maladaptives = [];
   replacementGoals = [];
   intervention_added = [];
 
@@ -163,6 +167,7 @@ export class NoteRbtViewComponent implements OnInit {
 
   constructor(
     private noteRbtService: NoteRbtService,
+    private noteRbtV2Service: NotesRbtV2Service,
     private activatedRoute: ActivatedRoute,
     private doctorService: DoctorService,
     private pageService: PageService,
@@ -199,10 +204,9 @@ export class NoteRbtViewComponent implements OnInit {
   }
 
   getNote() {
-    this.noteRbtService.getNote(this.note_id).subscribe((resp) => {
-      this.note_selected = resp.noteRbt as unknown as NoteRbtV2;
+    this.noteRbtV2Service.get(this.note_id).subscribe((resp) => {
+      this.note_selected = resp.data as unknown as NoteRbtV2;
       console.log('noteRbt', this.note_selected);
-      this.note_selectedId = resp.noteRbt.id;
       this.patient_identifier = this.note_selected.patient_identifier;
       this.bip_id = this.note_selected.bip_id;
       this.statusNote = this.note_selected.status;
@@ -213,18 +217,6 @@ export class NoteRbtViewComponent implements OnInit {
       this.client_appeared = this.note_selected.client_appeared;
       this.client_response_to_treatment_this_session =
         this.note_selected.client_response_to_treatment_this_session;
-
-      this.interventions = resp.interventions;
-      const jsonObj =
-        typeof this.interventions === 'string'
-          ? JSON.parse(this.interventions)
-          : this.interventions;
-      this.interventionsgroup = jsonObj;
-      //TODO Remove
-      this.intervention = this.interventionsgroup[0];
-
-      this.maladaptives = resp.maladaptives;
-      this.replacements = this.note_selected.replacements;
 
       this.pos = this.note_selected.pos;
 
@@ -248,10 +240,9 @@ export class NoteRbtViewComponent implements OnInit {
           ).toISOString()
         : '';
 
-      this.session_length_total =
-        this.note_selected.session_length_morning_total;
-      this.session_length_total2 =
-        this.note_selected.session_length_afternon_total;
+      this.morning_total_time = calculateTimeDifference(this.note_selected.time_in, this.note_selected.time_out);
+      this.afternoon_total_time = calculateTimeDifference(this.note_selected.time_in2, this.note_selected.time_out2);
+      this.total_time = convertToHours(this.note_selected.total_minutes);
 
       this.selectedValueTimeIn = this.note_selected.time_in;
       this.selectedValueTimeOut = this.note_selected.time_in2;
