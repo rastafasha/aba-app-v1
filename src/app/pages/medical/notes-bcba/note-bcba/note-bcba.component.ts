@@ -255,20 +255,22 @@ export class NoteBcbaComponent implements OnInit {
       this.behaviorList = resp.data[0].maladaptives;
 
       // Transform replacements into ReplacementProtocol format
-      this.replacementProtocols = resp.data[0].replacements
+      const bipReplacements = resp.data[0].replacements
         .filter(replacement => replacement.status === 'active')
         .flatMap(replacement =>
           replacement.objectives.map(objective => ({
-            id: objective.id,
+            id: replacement.id,
             name: replacement.name,
             description: objective.description,
             status: objective.status,
-            assessed: true,
-            modified: false,
-            demonstrated: false,
+            assessed: this.replacementProtocols.find(p => p.id === replacement.id)?.assessed || false,
+            modified: this.replacementProtocols.find(p => p.id === replacement.id)?.modified || false,
+            demonstrated: this.replacementProtocols.find(p => p.id === replacement.id)?.demonstrated || false,
           }))
         )
         .filter(protocol => protocol.status === 'in progress');
+
+      this.replacementProtocols = bipReplacements;
 
     });
   }
