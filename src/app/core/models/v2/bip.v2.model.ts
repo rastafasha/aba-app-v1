@@ -146,6 +146,8 @@ export class BipV2 {
     if (!self.crisis_plan) self.crisis_plan = CrisisPlanV2.getDefault();
     if (!self.recommendations.length)
       self.recommendations = Recommendation.getDefaults();
+    if (!self.de_escalation_techniques.length)
+      self.de_escalation_techniques = DeEscalationTechnique.getDefaults();
     return self;
   }
   static getDefault(): BipV2 {
