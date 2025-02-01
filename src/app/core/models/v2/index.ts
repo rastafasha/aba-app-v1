@@ -27,6 +27,6 @@ export * from './plan.v2.model';
 export * from './pos-covered.v2.model';
 export * from './prevalent-setting-event-and-antecedent';
 export * from './provider.v2.model';
-export * from './recomendation.model';
+export * from './recommendation.model';
 export * from './sensory.model';
 export * from './tangible.model';

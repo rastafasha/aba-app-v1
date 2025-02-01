@@ -8,6 +8,19 @@
       <ng-content></ng-content>
     </div>
     <div class="row align-items-center">
+      <div class="col-xs-12">
+        <div class="form-group local-forms">
+          <label> Name <span class="login-danger">*</span> </label>
+          <input
+            class="form-control"
+            name="name"
+            [(ngModel)]="input.name"
+            type="text"
+            matInput
+            placeholder="STO"
+          />
+        </div>
+      </div>
       <div class="col-xs-12 col-md-4">
         <div class="form-group local-forms">
           <label>

@@ -13,9 +13,9 @@ export class CrisisPlanV2 {
   id: number;
   bip_id: number;
   client_id: number;
-  crisis_description: string;
-  caregiver_requirements_for_prevention_of_crisis: string;
-  crisis_note?: string;
+  description: string;
+  prevention: string;
+  note?: string;
   risk_factors?: RiskFactor;
   suicidalities?: Suicidality;
   homicidalities?: Homicidality;
@@ -33,10 +33,9 @@ export class CrisisPlanV2 {
       id: 0,
       bip_id: 0,
       client_id: 0,
-      crisis_description: DEFAULT_CRISIS_PLAN,
-      crisis_note: '',
-      caregiver_requirements_for_prevention_of_crisis:
-        DEFAULT_CRISIS_PLAN_PREVENTION,
+      description: DEFAULT_CRISIS_PLAN,
+      note: '',
+      prevention: DEFAULT_CRISIS_PLAN_PREVENTION,
       risk_factors: RiskFactor.getDefault(),
       suicidalities: Suicidality.getDefault(),
       homicidalities: Homicidality.getDefault(),

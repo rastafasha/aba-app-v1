@@ -17,7 +17,7 @@ import { PlanV2 } from './plan.v2.model';
 import { PrevalentSettingEventAndAntecedent } from './prevalent-setting-event-and-antecedent';
 import { Sensory } from './sensory.model';
 import { Tangible } from './tangible.model';
-import { Recomendation } from './recomendation.model';
+import { Recommendation } from './recommendation.model';
 
 export class BipV2 {
   id: number;
@@ -32,21 +32,21 @@ export class BipV2 {
   consent_to_treatment: ConsentToTreatment;
   crisis_plan: CrisisPlanV2;
   current_treatment_and_progress: string;
-  de_escalation_techniques: DeEscalationTechnique[]; //make endpoint
+  de_escalation_techniques: DeEscalationTechnique[];
   education_status: string;
   escape: Escape[];
-  generalization_trainings: string;
+  generalization_training: string;
   risk_assessment: string;
   fading_plan: string;
   discharge_plan: string;
-  recommendations: Recomendation[];
+  recommendations: Recommendation[];
   hypothesis_based_intervention: string;
   interventions: Intervention[];
   maladaptives: PlanV2[];
   patient_identifier: string;
   physical_and_medical: Medication[];
   physical_and_medical_status: string;
-  prevalent_setting_event_and_atecedents: PrevalentSettingEventAndAntecedent[];
+  prevalent_setting_event_and_antecedents: PrevalentSettingEventAndAntecedent[];
   previus_treatment_and_result: string;
   rbt_trainings: PlanV2[];
   replacements: PlanV2[];
@@ -112,16 +112,16 @@ export class BipV2 {
         DeEscalationTechnique
       ),
       consent_to_treatment: new ConsentToTreatment(data.consent_to_treatment),
-      generalization_trainings: StringOrNullOrUndefined(
-        data.generalization_trainings
+      generalization_training: StringOrNullOrUndefined(
+        data.generalization_training
       ),
       risk_assessment: StringOrNullOrUndefined(data.risk_assessment),
       fading_plan: StringOrNullOrUndefined(data.fading_plan),
       discharge_plan: StringOrNullOrUndefined(data.discharge_plan),
       crisis_plan: data.crisis_plan && new CrisisPlanV2(data.crisis_plan),
-      recommendations: ForceMap(data.recommendations, Recomendation),
-      prevalent_setting_event_and_atecedents: ForceMap(
-        data.prevalent_setting_event_and_atecedents,
+      recommendations: ForceMap(data.recommendations, Recommendation),
+      prevalent_setting_event_and_antecedents: ForceMap(
+        data.prevalent_setting_event_and_antecedents,
         PrevalentSettingEventAndAntecedent
       ),
     };
@@ -142,22 +142,10 @@ export class BipV2 {
       ...item,
       index,
     }));
-    //HACK
-    self.generalization_trainings = PLAN_CONST.GENERALIZATION_TRAININGS;
-    //HACK
-    self.risk_assessment = PLAN_CONST.RISK_ASSESSMENT;
-    //HACK
-    self.fading_plan = PLAN_CONST.FADING_PLAN;
-    //HACK
-    self.discharge_plan = PLAN_CONST.DISCHARGE_PLAN;
-    //HACK
-    self.de_escalation_techniques = DeEscalationTechnique.getDefaults();
-    //HACK
-    self.crisis_plan = CrisisPlanV2.getDefault();
-    //HACK
-    self.recommendations = Recomendation.getDefaults();
-    //HACK
-    self.consent_to_treatment = ConsentToTreatment.getDefault();
+
+    if (!self.crisis_plan) self.crisis_plan = CrisisPlanV2.getDefault();
+    if (!self.recommendations.length)
+      self.recommendations = Recommendation.getDefaults();
     return self;
   }
   static getDefault(): BipV2 {
@@ -186,17 +174,17 @@ export class BipV2 {
       tangibles: [],
       attention: [],
       escape: [],
-      generalization_trainings: PLAN_CONST.GENERALIZATION_TRAININGS,
+      generalization_training: PLAN_CONST.GENERALIZATION_TRAINING,
       risk_assessment: PLAN_CONST.RISK_ASSESSMENT,
       fading_plan: PLAN_CONST.FADING_PLAN,
       discharge_plan: PLAN_CONST.DISCHARGE_PLAN,
-      recommendations: Recomendation.getDefaults(),
+      recommendations: Recommendation.getDefaults(),
       maladaptives: [],
       replacements: [],
       crisis_plan: CrisisPlanV2.getDefault(),
       de_escalation_techniques: [],
       consent_to_treatment: ConsentToTreatment.getDefault(),
-      prevalent_setting_event_and_atecedents: [],
+      prevalent_setting_event_and_antecedents: [],
       created_at: undefined,
       updated_at: undefined,
       deleted_at: undefined,

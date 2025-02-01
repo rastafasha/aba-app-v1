@@ -96,12 +96,12 @@
         >
           <app-prevalent-show
             *ngIf="!prevalentWrapper.editing"
-            [input]="bip.prevalent_setting_event_and_atecedents"
+            [input]="bip.prevalent_setting_event_and_antecedents"
           ></app-prevalent-show>
           <!-- Edit -->
           <app-prevalent-edit
             *ngIf="prevalentWrapper.editing"
-            [(input)]="bip.prevalent_setting_event_and_atecedents"
+            [(input)]="bip.prevalent_setting_event_and_antecedents"
             (save)="prevalentWrapper.stopEditing(true)"
             (cancel)="prevalentWrapper.stopEditing(false)"
           ></app-prevalent-edit>
@@ -245,11 +245,11 @@
         >
           <app-generalization-show
             *ngIf="!generalizationWrapper.editing"
-            [input]="bip.generalization_trainings"
+            [input]="bip.generalization_training"
           ></app-generalization-show>
           <app-generalization-edit
             *ngIf="generalizationWrapper.editing"
-            [(input)]="bip.generalization_trainings"
+            [(input)]="bip.generalization_training"
             (save)="generalizationWrapper.stopEditing(true)"
             (cancel)="generalizationWrapper.stopEditing(false)"
           ></app-generalization-edit>

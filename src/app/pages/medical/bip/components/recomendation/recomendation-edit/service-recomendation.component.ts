@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Recomendation } from 'src/app/core/models';
+import { Recommendation } from 'src/app/core/models';
 import { ListRender } from 'src/app/shared/components/list/list.component';
 import { InputDirective } from 'src/app/shared/directives/input.directive';
 
@@ -9,8 +9,8 @@ import { InputDirective } from 'src/app/shared/directives/input.directive';
   styleUrls: ['./service-recomendation.component.scss'],
 })
 export class ServiceRecomendationComponent extends InputDirective<
-  Recomendation[]
+  Recommendation[]
 > {
-  newItem = Recomendation.getDefault();
-  renders: ListRender<Recomendation> = {};
+  newItem = Recommendation.getDefault();
+  renders: ListRender<Recommendation> = {};
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PLAN_CONST, Recomendation } from 'src/app/core/models';
+import { PLAN_CONST, Recommendation } from 'src/app/core/models';
 import {
   HeadRender,
   ListRender,
@@ -12,12 +12,12 @@ import { InputDirective } from 'src/app/shared/directives/input.directive';
   styleUrls: ['./bip-profile-service-recomendation.component.scss'],
 })
 export class BipProfileServiceRecomendationComponent extends InputDirective<
-  Recomendation[]
+  Recommendation[]
 > {
-  renders: ListRender<Recomendation> = {
+  renders: ListRender<Recommendation> = {
     num_units: (item) => item.num_units + ' units',
   };
-  headRenders: HeadRender<Recomendation> = {
+  headRenders: HeadRender<Recommendation> = {
     cpt: () => 'CPT',
     description_service: () => 'Description of service',
     num_units: () => '# of units/ 6 months period',

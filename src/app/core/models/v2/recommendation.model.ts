@@ -1,4 +1,4 @@
-export class Recomendation {
+export class Recommendation {
   id: number;
   index?: number;
   cpt: string;
@@ -6,10 +6,10 @@ export class Recomendation {
   breakdown_per_week: string;
   location: string;
   description_service: string;
-  constructor(data: Partial<Recomendation>) {
+  constructor(data: Partial<Recommendation>) {
     Object.assign(this, data);
   }
-  static getDefault(): Recomendation {
+  static getDefault(): Recommendation {
     return {
       id: 0,
       index: undefined, // Changed from 0
@@ -20,7 +20,7 @@ export class Recomendation {
       description_service: '',
     };
   }
-  static getDefaults(): Recomendation[] {
+  static getDefaults(): Recommendation[] {
     return [
       {
         id: 0,

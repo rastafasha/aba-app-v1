@@ -5,9 +5,6 @@ export class PrevalentSettingEventAndAntecedent {
   hypothesized_functions: string;
   constructor(data: Partial<PrevalentSettingEventAndAntecedent>) {
     Object.assign(this, data);
-    this.prevalent_setting_event_and_antecedent =
-      data.prevalent_setting_event_and_antecedent ??
-      data['prevalent_setting_event_and_atecedent'];
   }
   static getDeafult(): PrevalentSettingEventAndAntecedent {
     return {

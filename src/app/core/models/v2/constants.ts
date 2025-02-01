@@ -19,7 +19,7 @@ Teaching plans will be developed for complex skills and will include the environ
 
 Caregivers will be taught a variety of behavior interventions throughout the session. This will allow parents to successfully work with the client and any of his problem behaviors when the behavior assistant and analyst are not present. Ongoing training and monitoring will continue to occur on a weekly basis to ensure proper implementation of the behavior program. Each month, clinicians will conduct competency checks of the caregivers to ensure proper program implementation.
   `,
-  GENERALIZATION_TRAININGS: `As Client makes progress on the goals identified in this plan, specific strategies will be used to promote generalization across people and settings to improve the durability of the behavioral outcomes. To enhance generalization, lead analyst/Behavior assistant will collaborate with caregivers as well as the primary care physician, if requested.
+  GENERALIZATION_TRAINING: `As Client makes progress on the goals identified in this plan, specific strategies will be used to promote generalization across people and settings to improve the durability of the behavioral outcomes. To enhance generalization, lead analyst/Behavior assistant will collaborate with caregivers as well as the primary care physician, if requested.
 
 Specific strategies to facilitate generalization will include (training loosely or diversely, engaging support providers, using multiple exemplars, fading cues and prompts, variable reinforcement schedules, accessing natural and indiscriminate contingencies, and thinning schedules of reinforcement).
 

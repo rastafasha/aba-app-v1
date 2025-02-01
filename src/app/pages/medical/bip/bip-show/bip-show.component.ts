@@ -63,8 +63,9 @@ export class BipShowComponent implements OnInit {
   }
 
   getBip() {
+    console.log(this.patient);
     if (!this.patient) return of(null);
-    return this.bipService.list({ patient_id: this.patient.id }).pipe(
+    return this.bipService.list({ client_id: this.patient.id }).pipe(
       switchMap((resp) => this.bipService.get(resp.data[0].id)),
       map((resp) => {
         this.bip = resp.data;
