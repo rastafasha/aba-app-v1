@@ -177,7 +177,9 @@ export class NoteBcbaComponent implements OnInit {
     this.doctor_id = this.user.id;
     this.getDoctor();
     this.specialistData();
-    this.getPatient(this.patient_id || null);
+    if (!this.isEditMode) {
+      this.getPatient(this.patient_id || null);
+    }
 
     if (this.isEditMode) {
       this.loadNote();
