@@ -13,7 +13,8 @@ const routes: Routes = [
       path:':patient_id', component:NoteBcbaComponent
     },
     {
-      path:'edit/:id', component:NoteBcbaEditComponent
+      path:'edit/:id', component:NoteBcbaComponent
+      // path:'edit/:id', component:NoteBcbaEditComponent
     },
     {
       path:'listbyclient/:id', component:NoteBcbaByClientComponent
@@ -21,7 +22,7 @@ const routes: Routes = [
     {
       path:'view/:id', component:NoteBcbaViewComponent
     },
-    
+
   ]
   }
 ];

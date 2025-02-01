@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { DiscussedPlanProtocol } from 'src/app/core/models/notes.model';
 
 @Component({
   selector: 'app-behaviorslist-view',
@@ -20,8 +21,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
             <tr *ngFor="let behav of behaviors; let i = index">
               <td>{{ behav.name }}</td>
               <td>
-              <i  *ngIf="behav.value === true"><i class="fa fa-check"  ></i></i>
-              <i  *ngIf="behav.value === false"><i class="fa fa-times"  ></i></i>
+              <i  *ngIf="behav.discussed"><i class="fa fa-check"  ></i></i>
+              <i  *ngIf="!behav.discussed"><i class="fa fa-times"  ></i></i>
               </td>
             </tr>
           </tbody>
@@ -31,6 +32,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   `,
 })
 export class BehaviorViewComponent {
-  @Input() behaviors;
+  @Input() behaviors: DiscussedPlanProtocol[];
 
 }

@@ -20,8 +20,8 @@ import { interventionsList } from '../listaInterventionData';
 export class EditNoteRbtComponent implements OnInit {
   routes = AppRoutes;
   target: number;
-  
-  
+
+
 
   changeTime() {
     this.selectedValueTimeIn = this.formatTime('11:00:00');
@@ -302,7 +302,7 @@ export class EditNoteRbtComponent implements OnInit {
       this.summary_note = this.note_selected.summary_note;
       this.environmental_changes = this.note_selected.environmental_changes;
       this.status = this.note_selected.status;
-      
+
       this.selectedValueCode = this.note_selected.cpt_code;
 
       // if (Array.isArray(this.note_selected.interventions)) {
@@ -319,8 +319,17 @@ export class EditNoteRbtComponent implements OnInit {
         this.interventions[0]
       );
 
-      this.maladaptives = this.note_selected.maladaptives;
-      this.replacements = this.note_selected.replacements; 
+      // Transform maladaptives data to match component expectations
+      this.maladaptives = this.note_selected.maladaptives.map(m => ({
+        ...m,
+        number_of_occurrences: m.ocurrences
+      }));
+
+      // Transform replacements data to match component expectations
+      this.replacements = this.note_selected.replacements.map(r => ({
+        ...r,
+        number_of_correct_response: r.correct_responses
+      }));
 
       this.meet_with_client_at = this.note_selected.meet_with_client_at;
       this.progress_noted_this_session_compared_to_previous_session =
@@ -332,7 +341,7 @@ export class EditNoteRbtComponent implements OnInit {
       this.session_date = this.note_selected.session_date
         ? new Date(this.note_selected.session_date).toISOString()
         : '';
-        
+
       this.next_session_is_scheduled_for = this.note_selected
         .next_session_is_scheduled_for
         ? new Date(
@@ -353,7 +362,7 @@ export class EditNoteRbtComponent implements OnInit {
       this.selectedValueTimeOut2 = this.formatTime(
         this.note_selected.time_out2
       );
-      
+
       const noteServiceId = resp.noteRbt.pa_service_id;
       if (this.paServices?.length && noteServiceId) {
         this.selectedPaService =
@@ -437,10 +446,10 @@ export class EditNoteRbtComponent implements OnInit {
       { id: 'pairing', name: 'Pairing', value: input['pairing'] || false },
     ];
   }
- 
+
 
   getProfileBip(noteServiceId?: number) {
-    
+
     this.bipService
       .getBipProfilePatient_id(this.patient_identifier)
       .subscribe((resp) => {
@@ -464,7 +473,7 @@ export class EditNoteRbtComponent implements OnInit {
       });
   }
 
-  
+
 
   onPosChange(event: Event) {
     const target = event.target as HTMLSelectElement;
@@ -510,9 +519,9 @@ export class EditNoteRbtComponent implements OnInit {
     this.intervention_added = updatedInterventions;
   }
 
-  
 
-  
+
+
   hourTimeInSelected(value: string) {
     this.selectedValueTimeIn = value;
     this.recalculateSessionLength();
@@ -646,7 +655,7 @@ export class EditNoteRbtComponent implements OnInit {
       });
   }
 
-  
+
   selectFirmaSpecialistBcba(event) {
     event = this.selectedValueBcba_id;
     this.speciaFirmaDataBcba(this.selectedValueBcba_id);
@@ -795,8 +804,19 @@ export class EditNoteRbtComponent implements OnInit {
       total_minutes: this.totalMinutos,
       total_units: this.projectedUnits,
       environmental_changes: this.environmental_changes,
-      maladaptives: this.maladaptives,
-      replacements: this.replacements,
+      // Transform maladaptives data back to API format
+      maladaptives: this.maladaptives.map(m => ({
+        id: m.id,
+        name: m.name,
+        ocurrences: m.number_of_occurrences
+      })),
+      // Transform replacements data back to API format
+      replacements: this.replacements.map(r => ({
+        id: r.id,
+        name: r.name,
+        total_trials: r.total_trials,
+        correct_responses: r.number_of_correct_response
+      })),
       interventions: this.intervention_added,
       summary_note: this.summary_note,
       meet_with_client_at: this.meet_with_client_at,
@@ -815,7 +835,7 @@ export class EditNoteRbtComponent implements OnInit {
 
     console.log('Final noteData:', noteData);
 
-   
+
     this.noteRbtService.update(noteData as any, this.note_selectedId).subscribe(
       (resp) => {
         // console.log(resp);

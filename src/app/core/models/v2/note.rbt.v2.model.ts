@@ -188,9 +188,18 @@ export class NoteRbtV2 {
   }
 }
 
-export type Maladaptives = object;
-export type Replacements = object;
-export type Interventions = object;
+export type Maladaptives = {
+  id: number;
+  name: string;
+  ocurrences: number;
+}[];
+export type Replacements = {
+  id: number;
+  name: string;
+  total_trials: number;
+  correct_responses: number;
+}[];
+export type Interventions = string[];
 
 export function isNoteRbtV2(data: NoteRbtV2 | NoteBcbaV2): data is NoteRbtV2 {
   return data?.type === 'rbt';

@@ -178,7 +178,7 @@
                             <h2>Session Length Total</h2>
                             <p>
                               {{
-                                note_selected?.session_length_total || "&nbsp;"
+                                total_time || "&nbsp;"
                               }}
                             </p>
                           </div>
@@ -206,8 +206,7 @@
                             <h2>Total First Session</h2>
                             <p>
                               {{
-                                note_selected?.session_length_morning_total ||
-                                  "&nbsp;"
+                                morning_total_time || "&nbsp;"
                               }}
                             </p>
                           </div>
@@ -235,8 +234,7 @@
                             <h2>Total Second Session</h2>
                             <p>
                               {{
-                                note_selected?.session_length_afternon_total ||
-                                  "&nbsp;"
+                                afternoon_total_time || "&nbsp;"
                               }}
                             </p>
                           </div>
@@ -302,7 +300,7 @@
                               <tbody>
                                 <tr
                                   *ngFor="
-                                    let behavior of maladaptives;
+                                    let behavior of (this.note_selected?.maladaptives || []);
                                     let i = index
                                   "
                                 >
@@ -310,7 +308,7 @@
                                     {{ behavior.name }}
                                   </td>
                                   <td>
-                                    {{ behavior.number_of_occurrences }}
+                                    {{ behavior.ocurrences }}
                                   </td>
                                 </tr>
                               </tbody>
@@ -360,18 +358,18 @@
                               <tbody>
                                 <tr
                                   *ngFor="
-                                    let replacemen of replacements;
+                                    let replacement of (this.note_selected?.replacements || []);
                                     let i = index
                                   "
                                 >
                                   <td>
-                                    {{ replacemen.name }}
+                                    {{ replacement.name }}
                                   </td>
                                   <td>
-                                    {{ replacemen.total_trials }}
+                                    {{ replacement.total_trials }}
                                   </td>
                                   <td>
-                                    {{ replacemen.number_of_correct_response }}
+                                    {{ replacement.correct_responses }}
                                   </td>
                                 </tr>
                               </tbody>
@@ -385,7 +383,7 @@
               </div>
               <div class="page-break" style="page-break-after: always"></div>
               <!-- Interventions -->
-              <app-interventionviews [intervention]="intervention"></app-interventionviews>
+              <app-interventionviews [interventions]="this.note_selected?.interventions"></app-interventionviews>
               <!-- Interventions -->
               <div class="card">
                 <div class="card-header">

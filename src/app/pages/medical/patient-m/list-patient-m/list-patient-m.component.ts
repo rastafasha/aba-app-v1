@@ -429,7 +429,7 @@ export class ListPatientMComponent implements OnInit {
         onClick: () =>
           this.router.navigate([
             AppRoutes.noteRbt.noteRbt,
-            patient.patient_identifier,
+            patient.id,
           ]),
       },
       {
@@ -439,7 +439,7 @@ export class ListPatientMComponent implements OnInit {
         onClick: () =>
           this.router.navigate([
             AppRoutes.noteRbt.list,
-            patient.patient_identifier,
+            patient.id,
           ]),
       },
       {
@@ -449,7 +449,7 @@ export class ListPatientMComponent implements OnInit {
         onClick: () =>
           this.router.navigate([
             AppRoutes.noteBcba.noteBcba,
-            patient.patient_identifier,
+            patient.id,
           ]),
       },
       {
@@ -459,7 +459,7 @@ export class ListPatientMComponent implements OnInit {
         onClick: () =>
           this.router.navigate([
             AppRoutes.noteBcba.list,
-            patient.patient_identifier,
+            patient.id,
           ]),
       },
 

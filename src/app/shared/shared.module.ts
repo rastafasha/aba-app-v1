@@ -29,6 +29,7 @@ import { PageService } from './services/pages.service';
 import { ListColumnsPipe } from './components/pipes/list-columns.pipe';
 import { PdfButtonComponent } from './components/pdf-button/pdf-button.component';
 import { InputDirective } from './directives/input.directive';
+import { GenerateAiSummaryComponent } from './components/generate-ai-summary/generate-ai-summary.component';
 import { EditWrapperDirective } from './directives/edit-wrapper.directive';
 
 const components = [
@@ -44,6 +45,7 @@ const components = [
   ListColumnsPipe,
   PdfButtonComponent,
   InputDirective,
+  GenerateAiSummaryComponent,
   EditWrapperDirective,
 ];
 
@@ -100,6 +102,7 @@ const components = [
     RouterModule,
     PipesModule,
     TableModule,
+    GenerateAiSummaryComponent
   ],
   providers: [DataService, PageService],
 })

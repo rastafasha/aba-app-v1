@@ -24,7 +24,7 @@
           <div class="card-body">
             <div class="col">
               <div class="doctor-table-blk">
-                <h3>BCBA Notes : {{patient_id}}</h3>
+                <h3>BCBA Notes : {{ patient_identifier }}</h3>
                 <div class="doctor-search-blk">
                   <!-- <div class="top-nav-search table-search-blk">
                     <input
@@ -39,7 +39,7 @@
                   </div> -->
                   <div class="add-group">
                     <a
-                      [routerLink]="[routes.noteBcba.add, patient_identifier]"
+                      [routerLink]="[routes.noteBcba.add, patient_id]"
                       class="btn btn-primary add-pluss ms-2"
                       *ngIf="isPermission('register_patient')"
                       ><img src="assets/img/icons/plus.svg" alt=""
@@ -89,10 +89,10 @@
               <td>{{ data.total_units }}</td>
               <td>{{ data.diagnosis_code }}</td>
               <td>{{ data.cpt_code }}</td>
-  
+
               <td>{{ data.created_at | date : "shortDate" }}</td>
               <td>{{ data.updated_at | date : "shortDate" }}</td>
-  
+
               <td class="text-end">
                 <div class="dropdown dropdown-action">
                   <a
@@ -120,7 +120,7 @@
                       [routerLink]="[routes.noteBcba.view, data.id]"
                       ><i class="fa-solid fa-eye m-r-5"></i> View</a
                     >
-  
+
                     <a
                       class="dropdown-item"
                       *ngIf="
@@ -136,7 +136,7 @@
                   </div>
                 </div>
               </td>
-  
+
               <!-- modal -->
               <div
                 [attr.id]="'delete_doctor-' + data.id"
@@ -207,7 +207,7 @@
               {{ totalDataNotepatient }} entries
             </div>
           </div>
-  
+
           <div class="col-sm-12 col-md-7">
             <div class="pagination_section">
               <ul class="pagination">
@@ -225,7 +225,7 @@
                     >Previous</a
                   >
                 </li>
-  
+
                 <ng-container *ngFor="let item of pageNumberArray; let i = index">
                   <li
                     class="page-item"
@@ -279,7 +279,7 @@
                                             </a>
                                           </li> -->
                 </ng-container>
-  
+
                 <li
                   class="page-item"
                   [ngClass]="{
@@ -303,4 +303,3 @@
       </div>
     </div>
   </div>
-  

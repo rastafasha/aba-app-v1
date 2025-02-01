@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { PlanProtocol } from 'src/app/core/models/notes.model';
 
 @Component({
   selector: 'app-replacements2-view',
@@ -21,14 +22,14 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
             </thead>
             <tbody>
             <tr *ngFor="let replace of obj_inprogress; let i = index">
-              <td>{{ replace.description }}</td>
+              <td>{{ replace.name }}</td>
               <td>
-              <i  *ngIf="replace.value === true"><i class="fa fa-check"  ></i></i>
-              <i  *ngIf="replace.value === false"><i class="fa fa-times"  ></i></i>
+              <i  *ngIf="replace.assessed === true"><i class="fa fa-check"  ></i></i>
+              <i  *ngIf="replace.assessed === false"><i class="fa fa-times"  ></i></i>
               </td>
               <td>
-              <i  *ngIf="replace.value2 === true"><i class="fa fa-check"  ></i></i>
-              <i  *ngIf="replace.value2 === false"><i class="fa fa-times"  ></i></i>
+              <i  *ngIf="replace.modified === true"><i class="fa fa-check"  ></i></i>
+              <i  *ngIf="replace.modified === false"><i class="fa fa-times"  ></i></i>
               </td>
             </tr>
           </tbody>
@@ -40,8 +41,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   `,
 })
 export class Replacement2ViewComponent {
-  @Input() obj_inprogress;
+  @Input() obj_inprogress: PlanProtocol[];
 
-  
+
 
 }
