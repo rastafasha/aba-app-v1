@@ -24,7 +24,7 @@
                 type="radio"
                 [id]="'view_type_' + item.key"
                 class="check"
-                [checked]="bip.type_of_assessment === item.key"
+                [checked]="input.type_of_assessment === item.key"
                 disabled
               />
               <label [for]="'view_type_' + item.key" class="checktoggle">
@@ -41,7 +41,7 @@
         <div class="detail-personal">
           <h2>Background Information</h2>
           <div style="white-space: pre-wrap">
-            {{ bip.background_information }}
+            {{ input.background_information }}
           </div>
         </div>
       </div>
@@ -49,20 +49,20 @@
       <div class="col-xs-12 col-md-6">
         <div class="detail-personal">
           <h2>Previous treatments and results</h2>
-          <p>{{ bip.previus_treatment_and_result }}</p>
+          <p>{{ input.previus_treatment_and_result }}</p>
         </div>
       </div>
       <div class="col-xs-12 col-md-6">
         <div class="detail-personal">
           <h2>Current treatment and progress</h2>
-          <p>{{ bip.current_treatment_and_progress }}</p>
+          <p>{{ input.current_treatment_and_progress }}</p>
         </div>
       </div>
 
       <div class="col-xs-12 col-md-6">
         <div class="detail-personal">
           <h2>Education status</h2>
-          <p>{{ bip.education_status }}</p>
+          <p>{{ input.education_status }}</p>
         </div>
       </div>
     </div>
@@ -78,13 +78,13 @@
       <div class="col-xs-12 col-md-6">
         <div class="detail-personal">
           <h2>Strengths</h2>
-          <p>{{ bip.strengths }}</p>
+          <p>{{ input.strengths }}</p>
         </div>
       </div>
       <div class="col-xs-12 col-md-6">
         <div class="detail-personal">
           <h2>Weakneses</h2>
-          <p>{{ bip.weakneses }}</p>
+          <p>{{ input.weakneses }}</p>
         </div>
       </div>
     </div>
@@ -99,13 +99,13 @@
       <div class="col-xs-12">
         <div class="detail-personal">
           <h2>(Obtained from medical records and caregiver information)</h2>
-          <p>{{ bip.physical_and_medical_status }}</p>
+          <p>{{ input.physical_and_medical_status }}</p>
         </div>
       </div>
       <div class="col-xs-12 detail-personal">
         <app-list
           title="Medication"
-          [dataSource]="bip.physical_and_medical"
+          [dataSource]="input.physical_and_medical"
           [displayedColumns]="[
             'medication',
             'dose',

@@ -1,26 +1,23 @@
-<div *ngIf="!patient">
-  <app-no-info></app-no-info>
-</div>
-
-<div class="page-wrapper" *ngIf="patient">
-  <div class="content">
+<div class="page-wrapper">
+  <div *ngIf="!patient">
+    <app-no-info></app-no-info>
+  </div>
+  <div class="content" *ngIf="patient">
     <!-- Page Header -->
     <app-page-header></app-page-header>
 
     <!-- /Page Header -->
-    <div class="row" id="contentToConvert" #contentToConvert>
+    <div class="row" #contentToConvert>
       <div class="col-sm-12" *ngIf="bip">
         <div>
-          <app-bip-profile-head
+          <app-bip-show-head
             [patient]="patient"
             [contentToConvert]="$any(contentToConvert)"
-          ></app-bip-profile-head>
+          ></app-bip-show-head>
         </div>
         <!-- data client -->
         <div appEditWrapper (editingChange)="onEditClient()">
-          <app-bip-profile-patient-data
-            [patient]="patient"
-          ></app-bip-profile-patient-data>
+          <app-bip-show-patient [input]="patient"></app-bip-show-patient>
         </div>
 
         <!-- Background Information-->
@@ -33,7 +30,7 @@
         >
           <app-bip-profile-background
             *ngIf="!backgroundWrapper.editing"
-            [bip]="bip"
+            [input]="bip"
           >
           </app-bip-profile-background>
           <!-- Edit -->
@@ -75,7 +72,7 @@
         >
           <app-bip-profile-assestment
             *ngIf="!assessmentWrapper.editing"
-            [bip]="bip"
+            [input]="bip"
           ></app-bip-profile-assestment>
           <!-- Edit -->
           <app-assestment

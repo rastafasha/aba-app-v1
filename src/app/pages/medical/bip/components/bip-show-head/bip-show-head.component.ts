@@ -6,11 +6,11 @@ import html2canvas from 'html2canvas';
 import * as jspdf from 'jspdf';
 
 @Component({
-  selector: 'app-bip-profile-head',
-  templateUrl: './bip-profile-head.component.html',
-  styleUrls: ['./bip-profile-head.component.scss'],
+  selector: 'app-bip-show-head',
+  templateUrl: './bip-show-head.component.html',
+  styleUrls: ['./bip-show-head.component.scss'],
 })
-export class BipProfileHeadComponent implements OnInit {
+export class BipShowHeadComponent implements OnInit {
   @Input() contentToConvert: ElementRef;
   @Input() patient: PatientV2;
   routes = AppRoutes;

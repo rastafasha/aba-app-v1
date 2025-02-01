@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { PlanV2 } from 'src/app/core/models';
-import { OnPlansEdit } from '../on-plans-edit/on-plans-edit';
+import { OnPlansEdit } from '../../on-plans-edit/on-plans-edit';
 import { HeadRender } from 'src/app/shared/components/list/list.component';
 
 @Component({

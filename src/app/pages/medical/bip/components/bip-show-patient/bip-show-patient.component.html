@@ -8,41 +8,41 @@
               <div class="detail-personal">
                 <h2>Name</h2>
                 <p>
-                  {{ patient.first_name }}
-                  {{ patient.last_name }}
+                  {{ input.first_name }}
+                  {{ input.last_name }}
                 </p>
               </div>
             </div>
             <div class="col-xl-3 col-md-6">
               <div class="detail-personal">
                 <h2>Patient Id</h2>
-                <p>{{ patient.patient_identifier }}</p>
+                <p>{{ input.patient_identifier }}</p>
               </div>
             </div>
             <div class="col-xl-3 col-md-6">
               <div class="detail-personal">
                 <h2>Birth Day</h2>
                 <p>
-                  {{ patient.birth_date | date : "shortDate" }}
+                  {{ input.birth_date | date : "shortDate" }}
                 </p>
               </div>
             </div>
             <div class="col-xl-3 col-md-6">
               <div class="detail-personal">
                 <h2>Age</h2>
-                <p>{{ patient.age }}</p>
+                <p>{{ input.age }}</p>
               </div>
             </div>
             <div class="col-xl-3 col-md-6 col-xl-3">
               <div class="detail-personal">
                 <h2>Phone</h2>
-                <p>{{ patient.phone }}</p>
+                <p>{{ input.phone }}</p>
               </div>
             </div>
             <div class="col-xl-3 col-md-6 col-xl-6">
               <div class="detail-personal">
                 <h2>Address</h2>
-                <p>{{ patient.address }}</p>
+                <p>{{ input.address }}</p>
               </div>
             </div>
           </div>
