@@ -14,10 +14,7 @@ export class DeEscalationTecniquesComponent {
   @Output() save = new EventEmitter<DeEscalationTechnique[]>();
 
   newItem = DeEscalationTechnique.getDefault();
-  displayedColumns: (keyof DeEscalationTechnique)[] = [
-    'description',
-    'service_recomendation',
-  ];
+  displayedColumns: (keyof DeEscalationTechnique)[] = ['description'];
 
   options = [
     {

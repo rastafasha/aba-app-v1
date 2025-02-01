@@ -6,19 +6,5 @@
     (cancel)="onCancel()"
     (save)="onSave()"
   >
-    <ng-content></ng-content>
   </app-de-escalation-form>
-
-  <app-list-and-form
-    #recomendationListForm
-    class="mt-4"
-    title="Recomendation List"
-    [(newItem)]="newRecomendation"
-    [(dataSource)]="input.recomendation_lists"
-    [displayedColumns]="displayedColumns"
-  >
-    <app-recomendation-form
-      (save)="recomendationListForm.onAdd($event)"
-    ></app-recomendation-form>
-  </app-list-and-form>
 </div>

@@ -236,7 +236,7 @@
         </div>
 
         <!-- behavior asistant (only text) -->
-        <div appEditWrapper>
+        <div>
           <app-bip-profile-behavior [bip]="bip"></app-bip-profile-behavior>
         </div>
 
@@ -249,7 +249,7 @@
         >
           <app-bip-profile-generalization
             *ngIf="!generalizationWrapper.editing"
-            [generalization_training]="bip.generalization_trainings[0]"
+            [input]="bip.generalization_trainings"
           ></app-bip-profile-generalization>
           <!-- Edit -->
           <app-generalization-training
@@ -258,6 +258,66 @@
             (save)="generalizationWrapper.stopEditing(true)"
             (cancel)="generalizationWrapper.stopEditing(false)"
           ></app-generalization-training>
+        </div>
+
+        <!-- Risk Assestment -->
+        <div
+          appEditWrapper
+          #riskAssestmentWrapper="editWrapper"
+          (save)="onSave()"
+          (cancel)="onCancel()"
+        >
+          <app-bip-profile-risk-assestment
+            *ngIf="!riskAssestmentWrapper.editing"
+            [input]="bip.risk_assessment"
+          ></app-bip-profile-risk-assestment>
+          <!-- Edit -->
+          <app-risk-assestment-form
+            *ngIf="riskAssestmentWrapper.editing"
+            [(input)]="bip.risk_assessment"
+            (save)="riskAssestmentWrapper.stopEditing(true)"
+            (cancel)="riskAssestmentWrapper.stopEditing(false)"
+          ></app-risk-assestment-form>
+        </div>
+
+        <!-- Fading Plan -->
+        <div
+          appEditWrapper
+          #fadingPlanWrapper="editWrapper"
+          (save)="onSave()"
+          (cancel)="onCancel()"
+        >
+          <app-bip-profile-fading-plan
+            *ngIf="!fadingPlanWrapper.editing"
+            [input]="bip.fading_plan"
+          ></app-bip-profile-fading-plan>
+          <!-- Edit -->
+          <app-fading-plan-form
+            *ngIf="fadingPlanWrapper.editing"
+            [(input)]="bip.fading_plan"
+            (save)="fadingPlanWrapper.stopEditing(true)"
+            (cancel)="fadingPlanWrapper.stopEditing(false)"
+          ></app-fading-plan-form>
+        </div>
+
+        <!-- Discharge Plan -->
+        <div
+          appEditWrapper
+          #dischargePlanWrapper="editWrapper"
+          (save)="onSave()"
+          (cancel)="onCancel()"
+        >
+          <app-bip-profile-discharge-plan
+            *ngIf="!dischargePlanWrapper.editing"
+            [input]="bip.discharge_plan"
+          ></app-bip-profile-discharge-plan>
+          <!-- Edit -->
+          <app-discharge-plan-form
+            *ngIf="dischargePlanWrapper.editing"
+            [(input)]="bip.discharge_plan"
+            (save)="dischargePlanWrapper.stopEditing(true)"
+            (cancel)="dischargePlanWrapper.stopEditing(false)"
+          ></app-discharge-plan-form>
         </div>
 
         <!-- Crisis Plan-->
@@ -269,12 +329,12 @@
         >
           <app-bip-profile-crisis-plan
             *ngIf="!crisisWrapper.editing"
-            [crisis_plan]="bip.crisis_plans[0]"
+            [input]="bip.crisis_plan"
           ></app-bip-profile-crisis-plan>
           <!-- Edit -->
           <app-crisis-plan
             *ngIf="crisisWrapper.editing"
-            [(input)]="bip.crisis_plans"
+            [(input)]="bip.crisis_plan"
             (save)="crisisWrapper.stopEditing(true)"
             (cancel)="crisisWrapper.stopEditing(false)"
           ></app-crisis-plan>
@@ -289,7 +349,7 @@
         >
           <app-bip-profile-de-escalation
             *ngIf="!deEscalationWrapper.editing"
-            [de_escalation_techniques]="bip.de_escalation_techniques"
+            [input]="bip.de_escalation_techniques"
           ></app-bip-profile-de-escalation>
           <!-- Edit -->
           <app-de-escalation-tecniques
@@ -300,12 +360,24 @@
           ></app-de-escalation-tecniques>
         </div>
 
-        <!-- documents Reviewed-->
-        <div appEditWrapper>
-          <app-bip-documents-show
-            [documents]="bip.assestment_conducted_options"
-          >
-          </app-bip-documents-show>
+        <!--Service Recomendations-->
+        <div
+          appEditWrapper
+          #serviceRecomendationWrapper="editWrapper"
+          (save)="onSave()"
+          (cancel)="onCancel()"
+        >
+          <app-bip-profile-service-recomendation
+            *ngIf="!serviceRecomendationWrapper.editing"
+            [input]="bip.recommendations"
+          ></app-bip-profile-service-recomendation>
+          <!-- Edit -->
+          <app-service-recomendation
+            *ngIf="serviceRecomendationWrapper.editing"
+            [(input)]="bip.recommendations"
+            (save)="serviceRecomendationWrapper.stopEditing(true)"
+            (cancel)="serviceRecomendationWrapper.stopEditing(false)"
+          ></app-service-recomendation>
         </div>
 
         <!-- Consent to Treatment-->
@@ -317,12 +389,12 @@
         >
           <app-bip-profile-consent
             *ngIf="!consentWrapper.editing"
-            [consent_to_treatment]="bip.consent_to_treatments[0]"
+            [input]="bip.consent_to_treatment"
           ></app-bip-profile-consent>
           <!-- Edit -->
           <app-consent-treatment-edit
             *ngIf="consentWrapper.editing"
-            [(input)]="bip.consent_to_treatments"
+            [(input)]="bip.consent_to_treatment"
             (save)="consentWrapper.stopEditing(true)"
             (cancel)="consentWrapper.stopEditing(false)"
           ></app-consent-treatment-edit>

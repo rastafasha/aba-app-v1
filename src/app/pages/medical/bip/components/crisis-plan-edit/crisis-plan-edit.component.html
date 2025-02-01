@@ -1,59 +1,56 @@
-<!-- other -->
-<div class="col-sm-12">
-  <div class="card">
-    <div class="card-body">
-      <form autocomplete="false">
-        <div class="row">
-          <!-- documents -->
-          <div class="col-12">
-            <div class="card-box">
-              <div class="card-block">
-                <h3 class="card-title">Crisis Plan</h3>
-                <div class="row align-items-center">
-                  <div class="col-xs-12">
-                    <div class="row">
-                      <app-crisis-plan-form
-                        title=""
-                        [(input)]="input"
-                      ></app-crisis-plan-form>
+<div class="card">
+  <div class="card-body">
+    <form autocomplete="false">
+      <div class="row">
+        <!-- documents -->
+        <div class="col-12">
+          <div class="card-box">
+            <div class="card-block">
+              <h3 class="card-title">Crisis Plan</h3>
+              <div class="row align-items-center">
+                <div class="col-xs-12">
+                  <div class="row">
+                    <app-crisis-plan-form
+                      title=""
+                      [(input)]="input"
+                    ></app-crisis-plan-form>
 
-                      <h3 class="card-title">
-                        Please check risk factors as applicable.
-                      </h3>
-                      <app-risk-factors [(input)]="input.risk_factors">
-                      </app-risk-factors>
+                    <h3 class="card-title">
+                      Please check risk factors as applicable.
+                    </h3>
+                    <app-risk-factors [(input)]="input.risk_factors">
+                    </app-risk-factors>
 
-                      <h3 class="card-title">Suicidality.</h3>
-                      <app-suicidalities
-                        [(suicidalities)]="input.suicidalities"
-                      ></app-suicidalities>
+                    <h3 class="card-title">Suicidality.</h3>
+                    <app-suicidalities
+                      [(suicidalities)]="input.suicidalities"
+                    ></app-suicidalities>
 
-                      <h3 class="card-title">Homicidality.</h3>
-                      <app-homicidalities
-                        [(input)]="input.homicidalities"
-                      ></app-homicidalities>
-                    </div>
+                    <h3 class="card-title">Homicidality.</h3>
+                    <app-homicidalities
+                      [(input)]="input.homicidalities"
+                    ></app-homicidalities>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <!-- documents -->
+        </div>
+        <!-- documents -->
 
-          <div class="col-12">
-            <div class="doctor-submit text-end">
-              <button
-                type="button"
-                class="btn btn-primary submit-form me-2"
-                (click)="onSave()"
-              >
-                Save
-              </button>
-            </div>
+        <div class="col-12">
+          <div class="doctor-submit text-end">
+            <button
+              *ngIf="showSave"
+              type="button"
+              class="btn btn-primary submit-form me-2"
+              (click)="onSave()"
+            >
+              Save
+            </button>
           </div>
         </div>
-      </form>
-    </div>
+      </div>
+    </form>
   </div>
 </div>
-<!-- fin other -->

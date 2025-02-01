@@ -32,6 +32,7 @@ import { BipProfileMonotoringComponent } from './bip-profile-monotoring/bip-prof
 import { BipProfilePatientDataComponent } from './bip-profile-patient-data/bip-profile-patient-data.component';
 import { BipProfilePrevalentComponent } from './bip-profile-prevalent/bip-profile-prevalent.component';
 import { BipProfileReductionsComponent } from './bip-profile-reductions/bip-profile-reductions.component';
+import { BipProfileRiskAssestmentComponent } from './bip-profile-risk-assestment/bip-profile-risk-assestment.component';
 import { ChartReductionComponent } from './charts/chart-reduction/chart-reduction.component';
 import { ChartReplacementComponent } from './charts/chart-replacement/chart-replacement.component';
 import { ConsentTreatmentEditComponent } from './consent-treatment-edit/consent-treatment-edit.component';
@@ -62,12 +63,20 @@ import { PrevalentSettingEventAndAntecedentComponent } from './prevalent-setting
 import { RbtTrainingGoalFormComponent } from './rbt-training-goal-form/rbt-training-goal-form.component';
 import { RecomendationFormComponent } from './recomendation-form/recomendation-form.component';
 import { ReductionGoalFormComponent } from './reduction-goal-form/reduction-goal-form.component';
+import { RiskAssestmentFormComponent } from './risk-assestment-form/risk-assestment-form.component';
 import { RiskFactorsComponent } from './risk-factors/risk-factors.component';
 import { SensoryFormComponent } from './sensory-form/sensory-form.component';
 import { SuicidalitiesComponent } from './suicidalities/suicidalities.component';
 import { SustitutionListComponent } from './sustitution-list/sustitution-list.component';
 import { TangibleFormComponent } from './tangible-form/tangible-form.component';
 import { TransitionFadingPlanFormComponent } from './transition-fading-plan-form/transition-fading-plan-form.component';
+import { BipProfileFadingPlanComponent } from './bip-profile-fading-plan/bip-profile-fading-plan.component';
+import { FadingPlanFormComponent } from './fading-plan-form/fading-plan-form.component';
+import { DischargePlanFormComponent } from './discharge-plan-form/discharge-plan-form.component';
+import { BipProfileDischargePlanComponent } from './bip-profile-discharge-plan/bip-profile-discharge-plan.component';
+import { BipProfileServiceRecomendationComponent } from './bip-profile-service-recomendation/bip-profile-service-recomendation.component';
+import { ServiceRecomendationComponent } from './service-recomendation/service-recomendation.component';
+import { ServiceRecomendationFormComponent } from './service-recomendation-form/service-recomendation-form.component';
 
 const components = [
   AssestmentComponent,
@@ -91,6 +100,9 @@ const components = [
   BipProfilePatientDataComponent,
   BipProfilePrevalentComponent,
   BipProfileReductionsComponent,
+  BipProfileRiskAssestmentComponent,
+  BipProfileFadingPlanComponent,
+  BipProfileDischargePlanComponent,
   ChartReductionComponent,
   ChartReplacementComponent,
   ConsentTreatmentFormComponent,
@@ -134,6 +146,12 @@ const components = [
   DeEscalationFormComponent,
   DeEscalationEditComponent,
   ConsentTreatmentEditComponent,
+  RiskAssestmentFormComponent,
+  FadingPlanFormComponent,
+  DischargePlanFormComponent,
+  BipProfileServiceRecomendationComponent,
+  ServiceRecomendationComponent,
+  ServiceRecomendationFormComponent,
 ];
 @NgModule({
   declarations: [...components],

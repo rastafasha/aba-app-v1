@@ -1,26 +1,9 @@
-<div class="row">
-  <h3 class="card-title">Consent to Treatment</h3>
-
-  <app-list-and-form
-    class="mt-4"
-    title="Consent Records"
-    #list
-    [(newItem)]="newConsent"
-    [dataSource]="input"
-    [displayedColumns]="displayedColumns"
-    [renders]="renders"
-  >
+<div class="card">
+  <div class="card-body">
     <app-consent-treatment-form
-      [(input)]="newConsent"
-      (save)="list.onAdd($event)"
-      (cancel)="list.onClose()"
+      [(input)]="input"
+      (save)="onSave()"
+      (cancel)="onCancel()"
     ></app-consent-treatment-form>
-  </app-list-and-form>
-
-  <div class="col-12 mb-3 text-end">
-    <button (click)="onCancel()" class="btn btn-outline-danger btn-sm">
-      Cancel
-    </button>
-    <button (click)="onSave()" class="btn btn-primary btn-sm">Save</button>
   </div>
 </div>

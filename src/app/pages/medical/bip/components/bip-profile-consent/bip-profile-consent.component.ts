@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { ConsentToTreatment } from 'src/app/core/models';
+import { Component } from '@angular/core';
+import { ConsentToTreatment, PLAN_CONST } from 'src/app/core/models';
+import { InputDirective } from 'src/app/shared/directives/input.directive';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -7,7 +8,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './bip-profile-consent.component.html',
   styleUrls: ['./bip-profile-consent.component.scss'],
 })
-export class BipProfileConsentComponent {
-  @Input() consent_to_treatment: ConsentToTreatment;
+export class BipProfileConsentComponent extends InputDirective<ConsentToTreatment> {
+  consent = PLAN_CONST.CONSENT;
   imagenSerUrl = environment.url_media;
 }

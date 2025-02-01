@@ -3,21 +3,21 @@ import {
   NumberOrNullOrUndefined,
   StringOrNullOrUndefined,
 } from 'src/app/shared/utils';
+import { AssestmentEvaluationSetting } from './assestment-evaluation-setting';
+import { Attention } from './attention.model';
 import { ConsentToTreatment } from './consent-to-treatment.v2.model';
 import { PLAN_CONST, TypeOfAssessment } from './constants';
 import { CrisisPlanV2 } from './crisis-plan.v2.model';
+import { DeEscalationTechnique } from './de-escalation-technique';
 import { DocumentV2 } from './document.v2.model';
-import { GeneralizationTraining } from './generalization-training.v2.model';
-import { Intervention } from './intervention.v2.model';
-import { PlanV2 } from './plan.v2.model';
-import { Attention } from './attention.model';
 import { Escape } from './escape.model';
+import { Intervention } from './intervention.v2.model';
+import { Medication } from './medication.model';
+import { PlanV2 } from './plan.v2.model';
+import { PrevalentSettingEventAndAntecedent } from './prevalent-setting-event-and-antecedent';
 import { Sensory } from './sensory.model';
 import { Tangible } from './tangible.model';
-import { PrevalentSettingEventAndAntecedent } from './prevalent-setting-event-and-antecedent';
-import { AssestmentEvaluationSetting } from './assestment-evaluation-setting';
-import { Medication } from './medication.model';
-import { DeEscalationTechnique } from './de-escalation-technique';
+import { Recomendation } from './recomendation.model';
 
 export class BipV2 {
   id: number;
@@ -29,13 +29,17 @@ export class BipV2 {
   attention: Attention[];
   background_information: string;
   caregiver_trainings: PlanV2[];
-  consent_to_treatments: ConsentToTreatment[];
-  crisis_plans: CrisisPlanV2[]; //make endpoint
+  consent_to_treatment: ConsentToTreatment;
+  crisis_plan: CrisisPlanV2;
   current_treatment_and_progress: string;
   de_escalation_techniques: DeEscalationTechnique[]; //make endpoint
   education_status: string;
   escape: Escape[];
-  generalization_trainings: GeneralizationTraining[];
+  generalization_trainings: string;
+  risk_assessment: string;
+  fading_plan: string;
+  discharge_plan: string;
+  recommendations: Recomendation[];
   hypothesis_based_intervention: string;
   interventions: Intervention[];
   maladaptives: PlanV2[];
@@ -107,15 +111,15 @@ export class BipV2 {
         data.de_escalation_techniques,
         DeEscalationTechnique
       ),
-      consent_to_treatments: ForceMap(
-        data.consent_to_treatments,
-        ConsentToTreatment
+      consent_to_treatment: new ConsentToTreatment(data.consent_to_treatment),
+      generalization_trainings: StringOrNullOrUndefined(
+        data.generalization_trainings
       ),
-      generalization_trainings: ForceMap(
-        data.generalization_trainings,
-        GeneralizationTraining
-      ),
-      crisis_plans: ForceMap(data.crisis_plans, CrisisPlanV2),
+      risk_assessment: StringOrNullOrUndefined(data.risk_assessment),
+      fading_plan: StringOrNullOrUndefined(data.fading_plan),
+      discharge_plan: StringOrNullOrUndefined(data.discharge_plan),
+      crisis_plan: data.crisis_plan && new CrisisPlanV2(data.crisis_plan),
+      recommendations: ForceMap(data.recommendations, Recomendation),
       prevalent_setting_event_and_atecedents: ForceMap(
         data.prevalent_setting_event_and_atecedents,
         PrevalentSettingEventAndAntecedent
@@ -138,6 +142,22 @@ export class BipV2 {
       ...item,
       index,
     }));
+    //HACK
+    self.generalization_trainings = PLAN_CONST.GENERALIZATION_TRAININGS;
+    //HACK
+    self.risk_assessment = PLAN_CONST.RISK_ASSESSMENT;
+    //HACK
+    self.fading_plan = PLAN_CONST.FADING_PLAN;
+    //HACK
+    self.discharge_plan = PLAN_CONST.DISCHARGE_PLAN;
+    //HACK
+    self.de_escalation_techniques = DeEscalationTechnique.getDefaults();
+    //HACK
+    self.crisis_plan = CrisisPlanV2.getDefault();
+    //HACK
+    self.recommendations = Recomendation.getDefaults();
+    //HACK
+    self.consent_to_treatment = ConsentToTreatment.getDefault();
     return self;
   }
   static getDefault(): BipV2 {
@@ -166,12 +186,16 @@ export class BipV2 {
       tangibles: [],
       attention: [],
       escape: [],
-      generalization_trainings: [],
+      generalization_trainings: PLAN_CONST.GENERALIZATION_TRAININGS,
+      risk_assessment: PLAN_CONST.RISK_ASSESSMENT,
+      fading_plan: PLAN_CONST.FADING_PLAN,
+      discharge_plan: PLAN_CONST.DISCHARGE_PLAN,
+      recommendations: Recomendation.getDefaults(),
       maladaptives: [],
       replacements: [],
-      crisis_plans: [],
+      crisis_plan: CrisisPlanV2.getDefault(),
       de_escalation_techniques: [],
-      consent_to_treatments: [],
+      consent_to_treatment: ConsentToTreatment.getDefault(),
       prevalent_setting_event_and_atecedents: [],
       created_at: undefined,
       updated_at: undefined,

@@ -13,4 +13,5 @@ export class MonitoringEvaluatingComponent extends OnPlansEdit {
     category: 'rbt_training',
   };
   options = this.defaultOptions;
+  displayedColumns: (keyof PlanV2)[] = ['name', 'description'];
 }

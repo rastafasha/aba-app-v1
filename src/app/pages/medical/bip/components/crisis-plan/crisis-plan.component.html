@@ -1,50 +1,10 @@
-<div class="col-sm-12">
-  <div class="card">
-    <div class="card-body">
-      <div class="col-xs-12">
-        <!-- list -->
-        <app-list-and-form
-          *ngIf="state === 'list'"
-          #list
-          title="Crisis Plans"
-          [(newItem)]="newItem"
-          [(dataSource)]="input"
-          [displayedColumns]="displayedColumns"
-          [renders]="renders"
-          [options]="options"
-        >
-          <app-crisis-plan-form
-            [(input)]="newItem"
-            (cancel)="list.onClose()"
-            (save)="list.onAdd($event); onSave()"
-          >
-          </app-crisis-plan-form>
-        </app-list-and-form>
-
-        <!-- Save -->
-        <div *ngIf="state === 'list'" class="doctor-submit text-end mt-4">
-          <button class="btn btn-primary btn-sm" (click)="onSave()">
-            Save
-          </button>
-        </div>
-
-        <!-- Back -->
-        <div *ngIf="state !== 'list'" class="doctor-submit text-end">
-          <button class="btn btn-primary btn-sm" (click)="onBack()">
-            Back
-          </button>
-        </div>
-
-        <!-- Edit -->
-        <div *ngIf="state === 'edit'">
-          <app-crisis-plan-edit
-            [(input)]="newItem"
-            (cancel)="onBack()"
-            (save)="onSave(); onBack()"
-          >
-          </app-crisis-plan-edit>
-        </div>
-      </div>
-    </div>
+<div class="card">
+  <div class="card-body">
+    <app-crisis-plan-form
+      [(input)]="newItem"
+      (save)="onSave()"
+      (cancel)="onCancel()"
+    >
+    </app-crisis-plan-form>
   </div>
 </div>
