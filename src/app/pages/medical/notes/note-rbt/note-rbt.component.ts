@@ -682,7 +682,11 @@ export class NoteRbtComponent implements OnInit {
       interventions: this.intervention_added.length > 0
         ? this.intervention_added
         : [],
-      participants: this.participants
+      participants: this.participants,
+      evidencedBy: this.as_evidenced_by,
+      rbtModeledAndDemonstrated: this.rbt_modeled_and_demonstrated_to_caregiver,
+      progressNoted: this.progress_noted_this_session_compared_to_previous_session,
+      nextSession: this.next_session_is_scheduled_for,
     };
   }
 
