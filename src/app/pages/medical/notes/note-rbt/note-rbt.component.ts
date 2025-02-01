@@ -8,39 +8,16 @@ import Swal from 'sweetalert2';
 import { Location } from '@angular/common';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { AppUser } from 'src/app/core/models/users.model';
-import { PaService } from 'src/app/shared/interfaces/pa-service.interface';
-import { Interventions, Objective, PaServiceV2, PatientV2, Replacements } from 'src/app/core/models';
+import { Interventions, PaServiceV2, PatientV2, NoteRbtV2 } from 'src/app/core/models';
 import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
-import { PatientMService } from '../../patient-m/service/patient-m.service';
-import { Goal, MaladaptiveBehavior, POSModel, ValidationResult } from '../interfaces';
+import { MaladaptiveRegistry, ReplacementRegistry, ReplacementBehavior, POSModel, MaladaptiveBehavior, ValidationResult } from '../interfaces';
 import {interventionsList} from '../listaInterventionData';
 import { AISummaryData } from 'src/app/shared/components/generate-ai-summary/generate-ai-summary.component';
 import { GenerateAiSummaryComponent } from 'src/app/shared/components/generate-ai-summary/generate-ai-summary.component';
 import { calculateUnitsFromTime, convertToHours, convertToMinutes } from 'src/app/utils/time-functions';
+import { PatientsV2Service } from 'src/app/core/services/patients.v2.service';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
-
-interface ReplacementBehavior extends Replacements {
-  status: string;
-  goal?: Goal;
-  total_trials?: number;
-  number_of_correct_response?: number;
-}
-
-interface MaladaptiveRegistry {
-  id: number;
-  name: string;
-  number_of_occurrences: number;
-}
-
-interface ReplacementRegistry {
-  status: string;
-  id: number;
-  name: string;
-  description: string;
-  total_trials: number;
-  number_of_correct_response: number;
-  objectives: Objective[];
-}
 
 @Component({
   selector: 'app-note-rbt',
@@ -55,6 +32,8 @@ export class NoteRbtComponent implements OnInit {
   valid_form = false;
 
   text_validation = '';
+  isEditMode = false;
+  noteId: number;
 
   selectedValueTimeIn = '';
   selectedValueTimeOut = '';
@@ -65,22 +44,20 @@ export class NoteRbtComponent implements OnInit {
   option_selected = 0;
   isGeneratingSummary = false;
   totalMinutos = 0;
-  total_hour_session = '';
+  total_hour_session = '0';
 
   selectedValueRBT!: string;
   selectedValueRenderingProvider!: string;
   selectedValueProviderRBT_id!: number;
 
-  selectedValueBcba_id!: string;
+  selectedValueBcba_id!: number;
   selectedValueAbaSupervisor!: string;
-  selectedValueBcba_id_id!: number;
 
   client_id!: number;
   patient_identifier!: string;
   patient_id!: number;
   doctor_id!: number;
   insurer_id!: number;
-  patient_selected: any;
   client_selected: PatientV2;
   bip_id: number | null = null;
   user!: AppUser;
@@ -97,21 +74,20 @@ export class NoteRbtComponent implements OnInit {
   time_out = '';
   time_in2 = '';
   time_out2 = '';
-  session_length_total = '';
-  session_length_total2 = '';
+  session_length_total = '0';
+  session_length_total2 = '0';
   environmental_changes = '';
-  participants: '';
+  participants = '';
 
   summary_note = '';
   meet_with_client_at = '';
   client_appeared = '';
   as_evidenced_by = '';
   rbt_modeled_and_demonstrated_to_caregiver = '';
-  // client_response_to_treatment_this_session = '';
   progress_noted_this_session_compared_to_previous_session = '';
   next_session_is_scheduled_for = '';
   provider_name = '';
-  supervisor_name = '';
+  // supervisor_name = '';
 
   number_of_occurrences!: number;
   number_of_correct_responses!: number;
@@ -135,7 +111,6 @@ export class NoteRbtComponent implements OnInit {
 
   hours_days: string[] = [];
   maladaptives: MaladaptiveRegistry[] = [];
-  // maladaptives: MaladaptiveBehavior[] = [];
   replacementGoals: ReplacementRegistry[] = [];
   replacements: ReplacementBehavior[] = [];
 
@@ -152,11 +127,11 @@ export class NoteRbtComponent implements OnInit {
   insurance_id!: number;
   insurance_identifier!: string;
 
-  intervention_added: Interventions[] = [];
+  intervention_added: Interventions = [];
   interventionsSelected: { [key: string]: boolean } = {};
-  interventionsList= interventionsList ;
+  interventionsList = interventionsList;
 
-  pa_services: PaService[] = [];
+  pa_services: PaServiceV2[] = [];
   selectedPaService: PaServiceV2 | null = null;
 
   selectedValueCode = '';
@@ -165,29 +140,36 @@ export class NoteRbtComponent implements OnInit {
 
   constructor(
     private bipV2Service: BipsV2Service,
-    private patientService: PatientMService,
+    private patientService: PatientsV2Service,
     private router: Router,
     private ativatedRoute: ActivatedRoute,
     private noteRbtService: NoteRbtService,
     private notesRbtV2Service: NotesRbtV2Service,
     private doctorService: DoctorService,
-    private location: Location
+    private location: Location,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    const USER = localStorage.getItem('user');
-    this.user = JSON.parse(USER ? USER : '');
+    this.user = this.authService.user as AppUser;
     this.doctor_id = this.user.id;
     this.getDoctor();
 
     this.ativatedRoute.params.subscribe((resp) => {
-      this.patient_identifier = resp['patient_id'];
+      // this.patient_identifier = resp['patient_id'];
+      this.patient_id = Number(resp['patient_id']);
+      this.noteId = resp['id']; // Get note ID if present
+      this.isEditMode = !!this.noteId;
     });
 
     this.getConfig();
-    this.getPatient();
+    this.getPatient(this.patient_id || null);
 
     this.specialistData();
+
+    if (this.isEditMode) {
+      this.loadNote();
+    }
 
     // this.updateInterventions();
 
@@ -203,8 +185,12 @@ export class NoteRbtComponent implements OnInit {
   //   this.intervention_added = [interventionsObj];
   // }
 
-  onInterventionsChange(updatedInterventions: any[]) {
-    this.intervention_added = updatedInterventions;
+  onInterventionsChange(updatedInterventions: any) {
+    // Convert the object of {id: true} to array of ids
+    const interventionIds = Object.keys(updatedInterventions[0]).filter(
+      key => updatedInterventions[0][key]
+    );
+    this.intervention_added = interventionIds;
   }
 
   goBack() {
@@ -227,73 +213,97 @@ export class NoteRbtComponent implements OnInit {
       this.selectedValueProviderCredential = resp.roles_rbt.certificate_number;
     });
   }
-getPatient(){
-    this.patientService.getPatientByPatientId(this.patient_identifier).subscribe((resp)=>{
-      // console.log('API Response:', resp);
-      this.client_selected = resp.patient;
-      // console.log('Client Selected:', this.client_selected);
+  getPatient(patient_id: number | null): Promise<void> {
+    if (!patient_id) {
+      return Promise.resolve();
+    }
+    return new Promise((resolve) => {
+      this.patientService.get(patient_id).subscribe((resp)=>{
+        // console.log('API Response:', resp);
+        this.client_selected = resp.data;
+        // console.log('Client Selected:', this.client_selected);
 
-      this.first_name = this.client_selected.first_name;
-      this.last_name = this.client_selected.last_name;
-      this.patient_identifier = this.client_selected.patient_identifier;
-      this.patient_id = this.client_selected.id;
-      this.client_id = this.client_selected.id;
-      this.insurance_id = this.client_selected.insurer_id;
-      this.insurance_identifier = this.client_selected.insurance_identifier;
-      this.selectedValueProviderRBT_id = this.doctor_id;
-      this.diagnosis_code = this.client_selected.diagnosis_code;
+        this.first_name = this.client_selected.first_name;
+        this.last_name = this.client_selected.last_name;
+        this.patient_identifier = this.client_selected.patient_identifier;
+        this.patient_id = this.client_selected.id;
+        this.client_id = this.client_selected.id;
+        this.insurance_id = this.client_selected.insurer_id;
+        this.insurance_identifier = this.client_selected.insurance_identifier;
+        if (!this.isEditMode) {
+          this.selectedValueProviderRBT_id = this.doctor_id;
+        }
+        this.diagnosis_code = this.client_selected.diagnosis_code;
 
-      console.log('After setting values:', {
-        client_id: this.client_id,
-        provider_id: this.selectedValueProviderRBT_id,
-        supervisor_id: this.selectedValueBcba_id,
-        patient_id: this.patient_id
-      });
+        this.pa_services = resp.data.pa_services;
 
-      this.pa_services = resp.patient.pa_services;
+        // Filter pa_services by date
+        this.pa_services = this.pa_services.filter((pa) => {
+          const dateStart = new Date(pa.start_date).getTime();
+          const dateEnd = new Date(pa.end_date).getTime();
+          const dateToday = new Date().getTime();
+          return dateStart <= dateToday && dateEnd >= dateToday;
+        });
 
-      // Filter pa_services by date
-      this.pa_services = this.pa_services.filter((pa) => {
-        const dateStart = new Date(pa.start_date).getTime();
-        const dateEnd = new Date(pa.end_date).getTime();
-        const dateToday = new Date().getTime();
-        return dateStart <= dateToday && dateEnd >= dateToday;
-      });
+        this.selectedPaService = resp.data.pa_services.find(service => service.cpt === '97153') || null;
+        // console.log('Selected Service:', this.selectedPaService);
+        console.log('Selected Service:', this.selectedPaService);
+        this.selectedValueCode = this.selectedPaService?.cpt || '';
 
-      this.selectedPaService = resp.patient.pa_services.find(service => service.cpt === '97153') || null;
-      // console.log('Selected Service:', this.selectedPaService);
-      console.log('Selected Service:', this.selectedPaService);
-      this.selectedValueCode = this.selectedPaService?.cpt || '';
-
-      this.getBipV2();
-    })
+        this.getBipV2();
+        resolve();
+      })
+    });
   }
 
   getBipV2() {
     this.bipV2Service.list({ client_id: this.patient_id }).subscribe((resp) => {
       console.log('BIP', resp);
       this.bip_id = resp.data[0].id;
-      this.maladaptives = resp.data[0].maladaptives.map((mal) => ({
+
+      // Store BIP maladaptives and replacements temporarily
+      const bipMaladaptives = resp.data[0].maladaptives.map((mal) => ({
         id: mal.id,
         name: mal.name,
         number_of_occurrences: 0
       }));
-      this.replacementGoals = resp.data[0].replacements.map((repl) => ({
-        status: repl.status,
-        id: repl.id,
-        name: repl.name,
-        total_trials: 0,
-        number_of_correct_response: 0,
-        objectives: repl.objectives,
-        description: repl.objectives
-          .filter(obj => obj.status === 'in progress')[0]
-          .description || ''
-      }));
 
-      //extraemos los replacementGoals con status in progress o active
-      this.replacementGoals = this.replacementGoals.filter(
-        (goal) => goal.status === 'active'
-      );
+      const bipReplacements = resp.data[0].replacements
+        .filter(repl => repl.status === 'active')
+        .map((repl) => ({
+          status: repl.status,
+          id: repl.id,
+          name: repl.name,
+          total_trials: 0,
+          number_of_correct_response: 0,
+          objectives: repl.objectives,
+          description: repl.objectives
+            .filter(obj => obj.status === 'in progress')[0]
+            ?.description || ''
+        }));
+
+        console.log('BIP Replacements:', bipReplacements);
+
+      if (this.isEditMode) {
+        // In edit mode, preserve existing values but add any missing items from BIP
+        const existingMaladaptiveIds = this.maladaptives.map(m => m.id);
+        const newMaladaptives = bipMaladaptives.filter(m => !existingMaladaptiveIds.includes(m.id));
+        this.maladaptives = [...this.maladaptives, ...newMaladaptives];
+
+        this.replacementGoals = this.replacementGoals.map(r => {
+          const bipReplacement = bipReplacements.find(bip => bip.id === r.id);
+          return {
+            ...r,
+            description: bipReplacement?.description || '',
+            objectives: bipReplacement?.objectives || []
+          };
+        });
+        console.log('ReplacementGoals:', this.replacementGoals);
+      } else {
+        // In create mode, use BIP data directly
+        this.maladaptives = bipMaladaptives;
+        this.replacementGoals = bipReplacements;
+      }
     });
   }
 
@@ -332,7 +342,7 @@ getPatient(){
   }
 
   selectFirmaSpecialistBcba(event) {
-    this.speciaFirmaDataBcba(this.selectedValueBcba_id);
+    this.speciaFirmaDataBcba(event.value);
   }
 
 
@@ -500,6 +510,7 @@ getPatient(){
       maladaptives: this.maladaptives,
       replacements: this.replacementGoals,
       interventions: this.intervention_added,
+      other_interventions: this.interventions,
     });
 
     const validation = this.checkDataSufficient();
@@ -514,8 +525,9 @@ getPatient(){
       return;
     }
 
-    const noteData = {
-      type: 'rbt',
+    const noteData: Partial<NoteRbtV2> = {
+      type: 'rbt' as const,
+      id: this.isEditMode ? this.noteId : 0,
       bip_id: this.bip_id,
       patient_id: this.patient_id,
       client_id: this.client_id,
@@ -524,24 +536,24 @@ getPatient(){
       insurance_identifier: this.insurance_identifier,
       doctor_id: this.doctor_id,
       provider_id: this.selectedValueProviderRBT_id,
-      supervisor_id: this.selectedValueBcba_id,
-      provider_name_g: this.provider_name_g,
+      supervisor_id: Number(this.selectedValueBcba_id),
+      provider_name_g: Number(this.provider_name_g),
       provider_credential: this.provider_credential,
       provider_signature: this.provider_signature,
-      provider_name: this.provider_name,
+      provider_name: Number(this.provider_name),
       supervisor_signature: this.supervisor_signature,
-      supervisor_name: this.supervisor_name,
+      // supervisor_name: Number(this.supervisor_name),
       session_date: this.session_date,
       time_in: this.selectedValueTimeIn,
       time_out: this.selectedValueTimeOut,
       time_in2: this.selectedValueTimeIn2,
       time_out2: this.selectedValueTimeOut2,
       participants: this.participants,
-      session_length_morning_total: this.session_length_total,
-      session_length_afternon_total: this.session_length_total2,
-      // total_hours: this.total_hour_session,
-      // total_minutes: this.totalMinutos,
-      // total_units: this.projectedUnits,
+      session_length_morning_total: Number(this.session_length_total),
+      session_length_afternon_total: Number(this.session_length_total2),
+      total_hours: 0,
+      total_minutes: 0,
+      total_units: 0,
       environmental_changes: this.environmental_changes,
       summary_note: this.summary_note,
       meet_with_client_at: this.meet_with_client_at,
@@ -549,11 +561,11 @@ getPatient(){
       as_evidenced_by: this.as_evidenced_by,
       rbt_modeled_and_demonstrated_to_caregiver:
       this.rbt_modeled_and_demonstrated_to_caregiver,
-      // client_response_to_treatment_this_session: this.client_response_to_treatment_this_session,
+      client_response_to_treatment_this_session: '',
       progress_noted_this_session_compared_to_previous_session:
       this.progress_noted_this_session_compared_to_previous_session,
       next_session_is_scheduled_for: this.next_session_is_scheduled_for,
-      status: 'pending',
+      status: 'pending' as const,
       cpt_code: this.selectedValueCode,
       location_id: this.client_selected.location_id,
       insurance_id: this.insurance_id,
@@ -563,7 +575,7 @@ getPatient(){
         .map((m) => ({
           id: m.id,
           name: m.name,
-          occurrences: m.number_of_occurrences,
+          ocurrences: m.number_of_occurrences,
         })),
       replacements: this.replacementGoals
         .map((r) => ({
@@ -572,38 +584,46 @@ getPatient(){
           total_trials: r.total_trials,
           correct_responses: r.number_of_correct_response,
         })),
-      interventions: Object.entries(this.intervention_added)
-        .filter(([, value]) => value)
-        .map(([key]) => key),
+      interventions: this.intervention_added,
+      billed: false,
+      paid: false,
+      md: '',
+      md2: '',
+      md3: '',
+      created_at: new Date(),
+      updated_at: new Date(),
+      deleted_at: null,
     };
 
-    console.log('Final noteData:', noteData);
+    const request = this.isEditMode
+      ? this.notesRbtV2Service.update(noteData as unknown as NoteRbtV2, this.noteId)
+      : this.notesRbtV2Service.create(noteData as unknown as NoteRbtV2);
 
-    this.notesRbtV2Service.create(noteData).subscribe({
+    request.subscribe({
       next: (response) => {
         if (response.status === 'success') {
           Swal.fire({
             icon: 'success',
             title: 'Success',
-            text: 'RBT Note saved successfully!',
+            text: `RBT Note ${this.isEditMode ? 'updated' : 'saved'} successfully!`,
             showConfirmButton: false,
             timer: 1500,
           });
           this.router.navigate([
             this.routes.noteRbt.list,
-            this.patient_identifier,
+            this.patient_id,
           ]);
         } else {
           Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: 'There was an error saving the note. Please try again.',
+            text: `There was an error ${this.isEditMode ? 'updating' : 'saving'} the note.`,
           });
         }
       },
       error: (error) => {
-        console.error('Error saving RBT note:', error);
-        let errorMessage = 'There was an error saving the note.';
+        console.error(`Error ${this.isEditMode ? 'updating' : 'saving'} RBT note:`, error);
+        let errorMessage = `There was an error ${this.isEditMode ? 'updating' : 'saving'} the note.`;
 
         if (error.error?.message) {
           errorMessage = error.error.message;
@@ -660,9 +680,7 @@ getPatient(){
         correctResponses: r.number_of_correct_response,
       })),
       interventions: this.intervention_added.length > 0
-        ? Object.keys(this.intervention_added[0]).filter(
-            (key) => this.intervention_added[0][key]
-          )
+        ? this.intervention_added
         : [],
       participants: this.participants
     };
@@ -752,6 +770,123 @@ getPatient(){
     if (summaryData) {
       this.aiSummaryComponent.generateSummary(summaryData);
     }
+  }
+
+  loadNote() {
+    this.notesRbtV2Service.get(this.noteId).subscribe({
+      next: (resp) => {
+        if (resp.data) {
+          const note = resp.data;
+          this.patient_id = note.patient_id;
+
+          // First load the patient to get pa_services and other data
+          this.getPatient(this.patient_id).then(() => {
+            // Set PA service first since other fields depend on it
+            const paService = this.pa_services.find(s => s.id === note.pa_service_id);
+            if (paService) {
+              this.selectedPaService = new PaServiceV2({
+                id: paService.id,
+                patient_id: this.patient_id,
+                pa_service: paService.pa_service,
+                cpt: paService.cpt,
+                n_units: paService.n_units,
+                spent_units: paService.spent_units,
+                start_date: new Date(paService.start_date),
+                end_date: new Date(paService.end_date)
+              });
+              // Trigger CPT code selection
+              this.onPaServiceSelect({ value: this.selectedPaService });
+            }
+
+            // Handle maladaptives from note
+            if (note.maladaptives) {
+              this.maladaptives = note.maladaptives.map(m => ({
+                id: m.id,
+                name: m.name,
+                number_of_occurrences: m.ocurrences || 0,
+                description: m.name // Add description field
+              }));
+            }
+
+            // Handle replacements from note
+            if (note.replacements) {
+              this.replacementGoals = note.replacements.map(r => ({
+                id: r.id,
+                name: r.name,
+                total_trials: r.total_trials || 0,
+                number_of_correct_response: r.correct_responses || 0,
+                status: 'active',
+                objectives: [],
+                description: r.name // Add description field
+              }));
+
+              // Force change detection by creating a new array reference
+              this.replacementGoals = [...this.replacementGoals];
+            }
+
+            // Time fields - ensure proper format HH:mm
+            const formatTime = (time: string) => {
+              if (!time) return '';
+              const [hours, minutes] = time.split(':');
+              return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
+            };
+
+            // Time fields - set both variables for each
+            this.selectedValueTimeIn = formatTime(note.time_in);
+            this.time_in = formatTime(note.time_in);
+            this.selectedValueTimeOut = formatTime(note.time_out);
+            this.time_out = formatTime(note.time_out);
+            this.selectedValueTimeIn2 = formatTime(note.time_in2);
+            this.time_in2 = formatTime(note.time_in2);
+            this.selectedValueTimeOut2 = formatTime(note.time_out2);
+            this.time_out2 = formatTime(note.time_out2);
+
+            // Rest of the fields
+            this.selectedValueCode = note.cpt_code;
+            this.total_hour_session = String(note.session_length_total || 0);
+            this.selectedValueProviderRBT_id = note.provider_id;
+            this.selectedValueBcba_id = note.supervisor_id;
+            this.session_date = note.session_date as string;
+            this.environmental_changes = note.environmental_changes;
+            this.participants = note.participants;
+            this.summary_note = note.summary_note;
+            this.meet_with_client_at = note.meet_with_client_at;
+            this.doctor_id = note.provider_id;
+            this.client_appeared = note.client_appeared;
+            this.as_evidenced_by = note.as_evidenced_by;
+            this.rbt_modeled_and_demonstrated_to_caregiver = note.rbt_modeled_and_demonstrated_to_caregiver;
+            this.progress_noted_this_session_compared_to_previous_session = note.progress_noted_this_session_compared_to_previous_session;
+            this.next_session_is_scheduled_for = note.next_session_is_scheduled_for as string;
+
+            // Convert numeric fields to strings for form display
+            this.total_hour_session = String(note.session_length_total || 0);
+            this.session_length_total = String(note.session_length_morning_total || 0);
+            this.session_length_total2 = String(note.session_length_afternon_total || 0);
+
+            // Handle interventions
+            if (note.interventions) {
+              // Create a copy of the interventionsList with updated values
+              this.interventionsList = this.interventionsList.map(intervention => ({
+                ...intervention,
+                value: note.interventions.includes(intervention.id)
+              }));
+
+              // Set the intervention_added as the array of intervention IDs
+              this.intervention_added = note.interventions;
+            }
+
+            console.log('note', note, 'interventions', this.interventionsSelected);
+
+            this.calculateProjectedUnits();
+            this.calculateTotalHours();
+          });
+        }
+      },
+      error: (error) => {
+        console.error('Error loading note:', error);
+        Swal.fire('Error', 'There was an error loading the note.', 'error');
+      }
+    });
   }
 
 }

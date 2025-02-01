@@ -100,8 +100,9 @@ import { ReplacementService } from "../../services/replacement.service";
                     <div class="form-group">
                       <label class="form-label">Total Trials:</label>
                       <input class="form-control"
-                             name="total_trials"
-                             [(ngModel)]="replacement.total_trials"
+                             [name]="'total_trials_' + i"
+                             [ngModel]="replacement.total_trials"
+                             (ngModelChange)="onTrialsChange(replacement, $event)"
                              type="number"
                              min="0"
                              required
@@ -111,8 +112,9 @@ import { ReplacementService } from "../../services/replacement.service";
                     <div class="form-group">
                       <label class="form-label">Correct response</label>
                       <input class="form-control"
-                             name="number_of_correct_response"
-                             [(ngModel)]="replacement.number_of_correct_response"
+                             [name]="'number_of_correct_response_' + i"
+                             [ngModel]="replacement.number_of_correct_response"
+                             (ngModelChange)="onCorrectResponseChange(replacement, $event)"
                              type="number"
                              min="0"
                              [max]="replacement.total_trials"
@@ -162,9 +164,19 @@ export class ReplacementsComponent {
   constructor( private replacementService: ReplacementService ){}
 
   ngOnChanges(): void {
-    if(this.replacements.length > 0) {
+    if(this.replacements?.length > 0) {
       this.setExpectedPercentajesInReplacements();
     }
+  }
+
+  onTrialsChange(replacement: any, value: number): void {
+    replacement.total_trials = value;
+    this.replacementsChange.emit([...this.replacements]);
+  }
+
+  onCorrectResponseChange(replacement: any, value: number): void {
+    replacement.number_of_correct_response = value;
+    this.replacementsChange.emit([...this.replacements]);
   }
 
   isValidCorrectResponse(replacement: any): boolean {
@@ -176,7 +188,7 @@ export class ReplacementsComponent {
   public setExpectedPercentajesInReplacements(): void {
     this.replacements.forEach(rep => {
       let objectiveInProgess = null;
-      objectiveInProgess = rep.objectives.find(obj => obj.status === ObjectivesStatusEnum.inProgress)
+      objectiveInProgess = rep.objectives?.find(obj => obj.status === ObjectivesStatusEnum.inProgress)
       if (objectiveInProgess) {
         rep['expectedPercentaje'] = this.replacementService.getEstimatedPercentaje(objectiveInProgess.initial_date, objectiveInProgess.target);
         rep['target'] = objectiveInProgess.target

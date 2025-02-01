@@ -1,4 +1,4 @@
-
+import { Objective, Replacements } from 'src/app/core/models';
 export interface ValidationResult {
   isValid: boolean;
   missingFields: string[];
@@ -35,3 +35,25 @@ export interface Goal {
 }
 
 
+export interface ReplacementBehavior extends Replacements {
+  status: string;
+  goal?: Goal;
+  total_trials?: number;
+  number_of_correct_response?: number;
+}
+
+export interface MaladaptiveRegistry {
+  id: number;
+  name: string;
+  number_of_occurrences: number;
+}
+
+export interface ReplacementRegistry {
+  status: string;
+  id: number;
+  name: string;
+  description: string;
+  total_trials: number;
+  number_of_correct_response: number;
+  objectives: Objective[];
+}

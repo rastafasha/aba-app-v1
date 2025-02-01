@@ -19,7 +19,7 @@
       </div>
     </div>
     <!-- /Page Header -->
-    
+
     <div class="page-table-header mb-2">
       <div class="card">
         <div class="card-body">
@@ -40,7 +40,7 @@
                 </div> -->
                 <div class="add-group">
                   <a
-                    [routerLink]="[routes.noteRbt.add, patient_identifier]"
+                    [routerLink]="[routes.noteRbt.add, patient_id]"
                     class="btn btn-primary add-pluss ms-2"
                     *ngIf="isPermission('register_patient')"
                     ><img src="assets/img/icons/plus.svg" alt=""
@@ -51,8 +51,8 @@
           </div>
         </div>
       </div>
-        
-      
+
+
     </div>
     <div class="table-responsive">
       <!-- Skeleton loader -->
