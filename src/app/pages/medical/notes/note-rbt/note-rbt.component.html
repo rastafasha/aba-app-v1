@@ -732,6 +732,15 @@
                       </button>
                     </div>
                   </div>
+                  <div class="row" *ngIf="showWarningTrialsAndObjectives()">
+                    <div class="col-md-4 offset-md-8">
+                      <app-alert
+                        [title]="'Attention'"
+                        [type]="'warning'"
+                        [content]="msjWarningTrialOrObjectives"
+                      ></app-alert>
+                    </div>
+                  </div>
                 </form>
               </div>
             </div>

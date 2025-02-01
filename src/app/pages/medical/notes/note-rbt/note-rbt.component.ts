@@ -137,6 +137,7 @@ export class NoteRbtComponent implements OnInit {
   selectedValueCode = '';
 
   projectedUnits = 0;
+  msjWarningTrialOrObjectives = '';
 
   constructor(
     private bipV2Service: BipsV2Service,
@@ -219,9 +220,7 @@ export class NoteRbtComponent implements OnInit {
     }
     return new Promise((resolve) => {
       this.patientService.get(patient_id).subscribe((resp)=>{
-        // console.log('API Response:', resp);
         this.client_selected = resp.data;
-        // console.log('Client Selected:', this.client_selected);
 
         this.first_name = this.client_selected.first_name;
         this.last_name = this.client_selected.last_name;
@@ -246,8 +245,6 @@ export class NoteRbtComponent implements OnInit {
         });
 
         this.selectedPaService = resp.data.pa_services.find(service => service.cpt === '97153') || null;
-        // console.log('Selected Service:', this.selectedPaService);
-        console.log('Selected Service:', this.selectedPaService);
         this.selectedValueCode = this.selectedPaService?.cpt || '';
 
         this.getBipV2();
@@ -258,7 +255,6 @@ export class NoteRbtComponent implements OnInit {
 
   getBipV2() {
     this.bipV2Service.list({ client_id: this.patient_id }).subscribe((resp) => {
-      console.log('BIP', resp);
       this.bip_id = resp.data[0].id;
 
       // Store BIP maladaptives and replacements temporarily
@@ -282,7 +278,6 @@ export class NoteRbtComponent implements OnInit {
             ?.description || ''
         }));
 
-        console.log('BIP Replacements:', bipReplacements);
 
       if (this.isEditMode) {
         // In edit mode, preserve existing values but add any missing items from BIP
@@ -298,7 +293,6 @@ export class NoteRbtComponent implements OnInit {
             objectives: bipReplacement?.objectives || []
           };
         });
-        console.log('ReplacementGoals:', this.replacementGoals);
       } else {
         // In create mode, use BIP data directly
         this.maladaptives = bipMaladaptives;
@@ -312,7 +306,6 @@ export class NoteRbtComponent implements OnInit {
     if (service) {
       this.selectedValueCode = service.cpt;
     }
-    console.log('Servicio seleccionado:', event.value);
   }
 
 
@@ -371,29 +364,21 @@ export class NoteRbtComponent implements OnInit {
   hourTimeInSelected(value: string) {
     this.selectedValueTimeIn = value;
     this.calculateProjectedUnits();
-    console.log(this.selectedValueTimeIn);
-    // this.sumarHoras(this.selectedValueTimeIn);
     this.calculateTotalHours();
   }
   hourTimeOutSelected(value: string) {
     this.selectedValueTimeOut = value;
     this.calculateProjectedUnits();
-    console.log(this.selectedValueTimeOut);
-    // this.sumarHoras(this.selectedValueTimeOut);
     this.calculateTotalHours();
   }
   hourTimeIn2Selected(value: string) {
     this.selectedValueTimeIn2 = value;
     this.calculateProjectedUnits();
-    console.log(this.selectedValueTimeIn2);
-    // this.sumarHoras(this.selectedValueTimeIn2);
     this.calculateTotalHours();
   }
   hourTimeOut2Selected(value: string) {
     this.selectedValueTimeOut2 = value;
     this.calculateProjectedUnits();
-    console.log(this.selectedValueTimeOut2);
-    // this.sumarHoras(this.selectedValueTimeOut2);
     this.calculateTotalHours();
   }
 
@@ -406,8 +391,6 @@ export class NoteRbtComponent implements OnInit {
     const totalMinutes = timeOut1 - timeIn1 + (timeOut2 - timeIn2);
     const totalHours = convertToHours(totalMinutes);
     this.total_hour_session = totalHours;
-    console.log(`Total hours: ${totalHours}`);
-    console.log('para el html', this.total_hour_session);
   }
 
   selectMaladaptive(behavior: MaladaptiveBehavior) {
@@ -502,17 +485,6 @@ export class NoteRbtComponent implements OnInit {
   }
 
   onSave() {
-    console.log('Pre-save values:', {
-      client_id: this.client_id,
-      provider_id: this.selectedValueProviderRBT_id,
-      supervisor_id: this.selectedValueBcba_id,
-      patient_id: this.patient_id,
-      maladaptives: this.maladaptives,
-      replacements: this.replacementGoals,
-      interventions: this.intervention_added,
-      other_interventions: this.interventions,
-    });
-
     const validation = this.checkDataSufficient();
     if (!validation.isValid) {
       Swal.fire({
@@ -682,7 +654,11 @@ export class NoteRbtComponent implements OnInit {
       interventions: this.intervention_added.length > 0
         ? this.intervention_added
         : [],
-      participants: this.participants
+      participants: this.participants,
+      evidencedBy: this.as_evidenced_by,
+      rbtModeledAndDemonstrated: this.rbt_modeled_and_demonstrated_to_caregiver,
+      progressNoted: this.progress_noted_this_session_compared_to_previous_session,
+      nextSession: this.next_session_is_scheduled_for,
     };
   }
 
@@ -875,8 +851,6 @@ export class NoteRbtComponent implements OnInit {
               this.intervention_added = note.interventions;
             }
 
-            console.log('note', note, 'interventions', this.interventionsSelected);
-
             this.calculateProjectedUnits();
             this.calculateTotalHours();
           });
@@ -887,6 +861,33 @@ export class NoteRbtComponent implements OnInit {
         Swal.fire('Error', 'There was an error loading the note.', 'error');
       }
     });
+  }
+
+  public showWarningTrialsAndObjectives(): boolean {
+    const [hoursIn1, minutesIn1] = this.selectedValueTimeIn.split(':').map(Number);
+    const [hoursOut1, minutesOut1] = this.selectedValueTimeOut.split(':').map(Number);
+    const [hoursIn2, minutesIn2] = this.selectedValueTimeIn2.split(':').map(Number);
+    const [hoursOut2, minutesOut2] = this.selectedValueTimeOut2.split(':').map(Number);
+
+    const morningMinutes = hoursOut1 * 60 + minutesOut1 - (hoursIn1 * 60 + minutesIn1);
+    const afternoonMinutes = hoursOut2 * 60 + minutesOut2 - (hoursIn2 * 60 + minutesIn2);
+    const totalMinutes = morningMinutes || 0 + afternoonMinutes || 0;
+
+    let objectivesIsOk = this.replacementGoals.filter(item => item.total_trials !== 0).length >= 5 ||
+                          this.replacementGoals.filter(item => item.total_trials !== 0).length == this.replacementGoals.length;
+
+    const total_trials = this.replacementGoals.reduce((suma, item) => suma + item.total_trials, 0)
+    const trialsIsOk = total_trials >= (totalMinutes/60)*10;
+    if(!objectivesIsOk) {
+      this.msjWarningTrialOrObjectives = 'The number of objectives worked on is very small';
+      return true;
+    }
+    if(!trialsIsOk) {
+      this.msjWarningTrialOrObjectives = 'The number of trials worked on is very small';
+      return true;
+    }
+
+    return false;
   }
 
 }
