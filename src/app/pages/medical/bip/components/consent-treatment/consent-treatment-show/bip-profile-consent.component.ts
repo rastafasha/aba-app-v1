@@ -4,7 +4,7 @@ import { InputDirective } from 'src/app/shared/directives/input.directive';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-bip-profile-consent',
+  selector: 'app-consent-treatment-show',
   templateUrl: './bip-profile-consent.component.html',
   styleUrls: ['./bip-profile-consent.component.scss'],
 })

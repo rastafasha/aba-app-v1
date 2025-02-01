@@ -7,7 +7,7 @@ import {
 import { InputDirective } from 'src/app/shared/directives/input.directive';
 
 @Component({
-  selector: 'app-bip-profile-service-recomendation',
+  selector: 'app-service-recomendation-show',
   templateUrl: './bip-profile-service-recomendation.component.html',
   styleUrls: ['./bip-profile-service-recomendation.component.scss'],
 })

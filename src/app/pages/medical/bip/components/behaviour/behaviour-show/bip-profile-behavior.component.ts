@@ -2,10 +2,10 @@ import { Component, Input } from '@angular/core';
 import { BipV2 } from 'src/app/core/models';
 
 @Component({
-  selector: 'app-bip-profile-behavior',
+  selector: 'app-behavior-show',
   templateUrl: './bip-profile-behavior.component.html',
   styleUrls: ['./bip-profile-behavior.component.scss'],
 })
 export class BipProfileBehaviorComponent {
-  @Input() bip: BipV2;
+  @Input() input: BipV2;
 }

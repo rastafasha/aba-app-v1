@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { InputDirective } from 'src/app/shared/directives/input.directive';
 
 @Component({
-  selector: 'app-discharge-plan-form',
+  selector: 'app-discharge-plan-edit',
   templateUrl: './discharge-plan-form.component.html',
   styleUrls: ['./discharge-plan-form.component.scss'],
 })

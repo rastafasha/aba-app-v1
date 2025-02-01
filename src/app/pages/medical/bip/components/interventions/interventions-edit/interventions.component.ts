@@ -3,7 +3,7 @@ import { Intervention } from 'src/app/core/models';
 import { InputDirective } from 'src/app/shared/directives/input.directive';
 
 @Component({
-  selector: 'app-interventions',
+  selector: 'app-interventions-edit',
   templateUrl: './interventions.component.html',
   styleUrls: ['./interventions.component.scss'],
 })

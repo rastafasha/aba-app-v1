@@ -3,7 +3,7 @@ import { DeEscalationTechnique } from 'src/app/core/models';
 import { ListAndFormComponent } from 'src/app/shared/components/list-and-form/list-and-form.component';
 
 @Component({
-  selector: 'app-de-escalation-tecniques',
+  selector: 'app-de-escalation-edit-show',
   templateUrl: './de-escalation-tecniques.component.html',
   styleUrls: ['./de-escalation-tecniques.component.scss'],
 })

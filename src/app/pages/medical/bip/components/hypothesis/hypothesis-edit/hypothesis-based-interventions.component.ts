@@ -10,7 +10,7 @@ import { HeadRender } from 'src/app/shared/components/list/list.component';
 import { InputDirective } from 'src/app/shared/directives/input.directive';
 
 @Component({
-  selector: 'app-hypothesis-based-interventions',
+  selector: 'app-hypothesis-edit',
   templateUrl: './hypothesis-based-interventions.component.html',
   styleUrls: ['./hypothesis-based-interventions.component.scss'],
 })

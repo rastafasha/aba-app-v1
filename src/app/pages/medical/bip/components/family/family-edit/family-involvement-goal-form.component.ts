@@ -3,7 +3,7 @@ import { PlanV2 } from 'src/app/core/models';
 import { OnPlansEdit } from '../../on-plans-edit/on-plans-edit';
 
 @Component({
-  selector: 'app-family-involvement-goal-form',
+  selector: 'app-family-edit',
   templateUrl: './family-involvement-goal-form.component.html',
   styleUrls: ['./family-involvement-goal-form.component.scss'],
 })

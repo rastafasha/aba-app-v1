@@ -3,7 +3,7 @@ import { DeEscalationTechnique } from 'src/app/core/models';
 import { InputDirective } from 'src/app/shared/directives/input.directive';
 
 @Component({
-  selector: 'app-bip-profile-de-escalation',
+  selector: 'app-de-escalation-show',
   templateUrl: './bip-profile-de-escalation.component.html',
   styleUrls: ['./bip-profile-de-escalation.component.scss'],
 })

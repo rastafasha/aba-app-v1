@@ -7,7 +7,7 @@ import {
 } from 'src/app/shared/components/list/list.component';
 
 @Component({
-  selector: 'app-bip-profile-family',
+  selector: 'app-family-show',
   templateUrl: './bip-profile-family.component.html',
   styleUrls: ['./bip-profile-family.component.scss'],
 })

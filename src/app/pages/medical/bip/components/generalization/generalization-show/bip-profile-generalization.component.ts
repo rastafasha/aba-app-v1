@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-bip-profile-generalization',
+  selector: 'app-generalization-show',
   templateUrl: './bip-profile-generalization.component.html',
   styleUrls: ['./bip-profile-generalization.component.scss'],
 })

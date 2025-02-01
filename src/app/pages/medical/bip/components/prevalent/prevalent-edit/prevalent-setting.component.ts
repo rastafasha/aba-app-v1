@@ -3,7 +3,7 @@ import { PrevalentSettingEventAndAntecedent } from 'src/app/core/models';
 import { InputDirective } from 'src/app/shared/directives/input.directive';
 
 @Component({
-  selector: 'app-prevalent-setting',
+  selector: 'app-prevalent-edit',
   templateUrl: './prevalent-setting.component.html',
   styleUrls: ['./prevalent-setting.component.scss'],
 })
