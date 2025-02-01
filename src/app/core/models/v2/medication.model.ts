@@ -2,7 +2,7 @@ export class Medication {
   index: number;
   medication: string;
   dose: string;
-  frecuency: string;
+  frequency: string;
   reason: string;
   preescribing_physician: string;
   constructor(data: Partial<Medication>) {
@@ -13,7 +13,7 @@ export class Medication {
       index: undefined, // Changed from 0
       medication: '',
       dose: '',
-      frecuency: '',
+      frequency: '',
       reason: '',
       preescribing_physician: '',
     };

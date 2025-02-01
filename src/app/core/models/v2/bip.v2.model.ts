@@ -47,14 +47,14 @@ export class BipV2 {
   physical_and_medical: Medication[];
   physical_and_medical_status: string;
   prevalent_setting_event_and_antecedents: PrevalentSettingEventAndAntecedent[];
-  previus_treatment_and_result: string;
+  previous_treatment_and_result: string;
   rbt_trainings: PlanV2[];
   replacements: PlanV2[];
   sensory: Sensory[];
   strengths: string;
   tangibles: Tangible[];
   type_of_assessment: TypeOfAssessment;
-  weakneses: string;
+  weaknesses: string;
   updated_at?: Date;
   created_at?: Date;
   deleted_at?: Date;
@@ -73,7 +73,7 @@ export class BipV2 {
       maladaptives: ForceMap(data.maladaptives, PlanV2),
       replacements: ForceMap(data.replacements, PlanV2),
       strengths: StringOrNullOrUndefined(data.strengths),
-      weakneses: StringOrNullOrUndefined(data.weakneses),
+      weaknesses: StringOrNullOrUndefined(data.weaknesses),
       assestment_evaluation_settings: ForceMap(
         data.assestment_evaluation_settings,
         AssestmentEvaluationSetting
@@ -100,8 +100,8 @@ export class BipV2 {
       physical_and_medical_status: StringOrNullOrUndefined(
         data.physical_and_medical_status
       ),
-      previus_treatment_and_result: StringOrNullOrUndefined(
-        data.previus_treatment_and_result
+      previous_treatment_and_result: StringOrNullOrUndefined(
+        data.previous_treatment_and_result
       ),
       sensory: ForceMap(data.sensory, Sensory),
       tangibles: ForceMap(data.tangibles, Tangible),
@@ -156,7 +156,7 @@ export class BipV2 {
       doctor_id: undefined,
       patient_identifier: undefined,
       strengths: undefined,
-      weakneses: undefined,
+      weaknesses: undefined,
       assestment_evaluation_settings: [],
       assestment_conducted_options: [],
       assestment_conducted: undefined,
@@ -169,7 +169,7 @@ export class BipV2 {
       rbt_trainings: [],
       physical_and_medical: [],
       physical_and_medical_status: undefined,
-      previus_treatment_and_result: undefined,
+      previous_treatment_and_result: undefined,
       sensory: [],
       tangibles: [],
       attention: [],
