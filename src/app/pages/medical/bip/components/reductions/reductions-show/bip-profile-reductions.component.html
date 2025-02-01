@@ -1,0 +1,43 @@
+<div class="card">
+  <div class="card-body">
+    <!-- Title -->
+    <div class="row">
+      <div class="col-xs-12">
+        <h2>{{ title }}</h2>
+      </div>
+    </div>
+    <!-- Goals -->
+    <div *ngFor="let item of input">
+      <div class="col-xs-12 detail-personal">
+        <h4>{{ item.name }}</h4>
+      </div>
+      <ul class="col-xs-12 mx-8">
+        <li>
+          <strong>Baseline: </strong>
+          <span>{{ item.baseline_level }} occurrences per hour</span>
+        </li>
+        <li *ngFor="let obj of item.objectives | arrayFilter : 'type' : 'STO'">
+          <strong>{{ obj.type }} #{{ obj.index + 1 }}: </strong>
+          <span>{{ obj.description }}</span>
+        </li>
+        <li *ngFor="let obj of item.objectives | arrayFilter : 'type' : 'LTO'">
+          <strong>{{ obj.type }}: </strong>
+          <span>{{ obj.description }}</span>
+        </li>
+      </ul>
+    </div>
+    <!-- Graficos -->
+
+    <div class="col-xs-12 detail-personal">
+      <h2>{{ graphTitle }}</h2>
+      <h4>All observed by BCBA</h4>
+    </div>
+
+    <div *ngFor="let item of input">
+      <div class="col-xs-12 detail-personal">
+        <h4>{{ item.name }}</h4>
+      </div>
+      <app-chart-reduction [maladaptive]="item"></app-chart-reduction>
+    </div>
+  </div>
+</div>

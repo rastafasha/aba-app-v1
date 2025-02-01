@@ -1,0 +1,31 @@
+<div mat-dialog-title class="h3" style="font-size: 1.5rem !important">
+  {{ title }}
+</div>
+
+<div mat-dialog-content>
+  <div class="container mt-4">
+    <div class="col-12"><ng-content></ng-content></div>
+    <div class="row align-items-center">
+      <div class="col-xs-12">
+        <div class="form-group local-forms">
+          <label> Description <span class="login-danger">*</span> </label>
+          <textarea
+            class="form-control"
+            name="description"
+            [(ngModel)]="input.description"
+            rows="4"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <div class="col-12 mb-3 text-end">
+    <button (click)="onCancel()" class="btn btn-outline-danger btn-sm">
+      Cancel
+    </button>
+    <button (click)="onSave()" class="btn btn-primary btn-sm">Save</button>
+  </div>
+</div>

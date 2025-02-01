@@ -1,0 +1,21 @@
+<div class="card">
+  <div class="card-body">
+    <app-list
+      title="Service Recomendations"
+      [dataSource]="input"
+      [displayedColumns]="[
+        'cpt',
+        'description_service',
+        'num_units',
+        'breakdown_per_week',
+        'location'
+      ]"
+      [renders]="renders"
+      [headRenders]="headRenders"
+    >
+      <p class="pre-wrap">
+        {{ advice }}
+      </p>
+    </app-list>
+  </div>
+</div>

@@ -10,7 +10,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ListFormStrategy } from 'src/app/pages/medical/bip/components/bip-form/list-form.strategy';
+import { ListFormStrategy } from 'src/app/shared/components/list/list-form.strategy';
 import {
   AddButtonOption,
   HeadRender,

@@ -1,0 +1,128 @@
+<div mat-dialog-title class="h3" style="font-size: 1.5rem !important">
+  Consent to Treatment
+</div>
+
+<div mat-dialog-content>
+  <div class="card">
+    <div class="card-body">
+      <!-- Consent text -->
+      <div class="col-xs-12">
+        <p class="pre-wrap">
+          {{ consent }}
+        </p>
+      </div>
+
+      <form autocomplete="false">
+        <h4>Confirmation</h4>
+        <div class="row">
+          <!-- foto 1 -->
+          <div class="col-12 col-md-6">
+            <div class="form-group local-top-form">
+              <label class="local-top">
+                Analyst Signature <span class="login-danger">*</span>
+              </label>
+              <div class="settings-btn upload-files-avator">
+                <input
+                  type="file"
+                  accept="image/*"
+                  name="image"
+                  id="file"
+                  (change)="onLoadFile($event, 'analyst')"
+                  class="hide-input"
+                />
+                <label for="file" class="upload">Choose File</label>
+              </div>
+            </div>
+
+            <!-- previsualizacion de la foto del analista -->
+            <div class="mb-4">
+              <img
+                [src]="input.analyst_signature || image_placeholder"
+                style="width: 250px"
+                alt="Analyst signature"
+              />
+            </div>
+
+            <!-- previsualizacion de la foto -->
+          </div>
+
+          <div class="col-12 col-md-6 col-xl-6">
+            <div class="form-group local-forms">
+              <label>
+                Analyst Signature date<span class="login-danger">*</span>
+              </label>
+              <input
+                class="form-control datetimepicker"
+                name="analyst_signature_date"
+                [(ngModel)]="input.analyst_signature_date"
+                type="text"
+                matInput
+                [matDatepicker]="pickerAnalyst"
+              />
+              <mat-datepicker #pickerAnalyst> </mat-datepicker>
+              <mat-datepicker-toggle matIconSuffix [for]="pickerAnalyst">
+              </mat-datepicker-toggle>
+            </div>
+          </div>
+
+          <!-- foto 2 -->
+          <div class="col-12 col-md-6 col-xl-6">
+            <div class="form-group local-top-form">
+              <label class="local-top">
+                Parent/Guardian/Caregiver Signature:
+                <span class="login-danger">*</span>
+              </label>
+              <div class="settings-btn upload-files-avator">
+                <input
+                  type="file"
+                  accept="image/*"
+                  name="imagenn"
+                  id="file1"
+                  (change)="onLoadFile($event, 'parent')"
+                  class="hide-input"
+                />
+                <label for="file1" class="upload">Choose File</label>
+              </div>
+            </div>
+            <!-- previsualizacion de la foto del guardian -->
+            <div class="mb-4">
+              <img
+                [src]="input.parent_guardian_signature || image_placeholder"
+                style="width: 250px"
+                alt="Guardian signature"
+              />
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-xl-6">
+            <div class="form-group local-forms">
+              <label>
+                Guardian Signature day<span class="login-danger">*</span>
+              </label>
+              <input
+                class="form-control datetimepicker"
+                name="parent_guardian_signature_date"
+                [(ngModel)]="input.parent_guardian_signature_date"
+                type="text"
+                matInput
+                [matDatepicker]="pickerGuardian"
+              />
+              <mat-datepicker #pickerGuardian> </mat-datepicker>
+              <mat-datepicker-toggle matIconSuffix [for]="pickerGuardian">
+              </mat-datepicker-toggle>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <div class="col-12 mb-3 text-end">
+    <button (click)="onCancel()" class="btn btn-outline-danger btn-sm me-2">
+      Cancel
+    </button>
+    <button (click)="onSave()" class="btn btn-primary btn-sm">Save</button>
+  </div>
+</div>
