@@ -1,0 +1,39 @@
+<div class="col-sm-12">
+  <div class="card">
+    <div class="card-body">
+      <h3 class="card-title">Generalization Training</h3>
+      <div class="col-12">
+        <div class="form-group local-forms">
+          <label>
+            Generalization Training<span class="login-danger">*</span>
+          </label>
+          <textarea
+            class="form-control"
+            name="discharge_plan"
+            [(ngModel)]="input"
+            rows="10"
+            cols="30"
+          >
+          </textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 mb-3 text-end">
+      <button
+        *ngIf="showCancel"
+        (click)="onCancel()"
+        class="btn btn-outline-danger btn-sm"
+      >
+        Cancel
+      </button>
+      <button
+        *ngIf="showSave"
+        (click)="onSave()"
+        class="btn btn-primary btn-sm"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</div>

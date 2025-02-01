@@ -1,0 +1,20 @@
+<div class="card">
+  <div class="card-body">
+    <h2 class="card-title">Crisis Plan</h2>
+    <div *ngIf="!input">
+      <app-no-info></app-no-info>
+    </div>
+    <div *ngIf="input" class="row">
+      <div class="col-xs-12">
+        <p class="pre-wrap">{{ input.description }}</p>
+      </div>
+
+      <div class="col-xs-12">
+        <h4>Caregiver Requirements for Prevention of Crisis:</h4>
+        <p class="pre-wrap">
+          {{ input.prevention }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

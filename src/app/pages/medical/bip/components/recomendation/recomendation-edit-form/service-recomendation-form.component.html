@@ -1,0 +1,81 @@
+<h3 mat-dialog-title class="card-title h3">Service Recomendations</h3>
+<div mat-dialog-content class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="form-group local-forms">
+          <label for="cpt">CPT</label>
+          <input
+            class="form-control"
+            type="number"
+            [(ngModel)]="input.cpt"
+            name="cpt"
+            id="cpt"
+          />
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <div class="form-group local-forms">
+          <label for="serviceRecommendations"> Description of Service </label>
+          <textarea
+            class="form-control"
+            id="serviceRecommendations"
+            rows="4"
+            cols="30"
+            [(ngModel)]="input.description_service"
+          ></textarea>
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <div class="form-group local-forms">
+          <label for="num_units"> # of units/ 6 months period </label>
+          <input
+            class="form-control"
+            type="number"
+            [(ngModel)]="input.num_units"
+            name="num_units"
+            id="num_units"
+          />
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <div class="form-group local-forms">
+          <label for="breakdown_per_week"> Breakdown per week </label>
+          <input
+            class="form-control"
+            type="text"
+            [(ngModel)]="input.breakdown_per_week"
+            name="breakdown_per_week"
+            id="breakdown_per_week"
+          />
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <div class="form-group local-forms">
+          <label for="location">
+            Location (Where Services are to be Delivered)
+          </label>
+          <input
+            class="form-control"
+            type="text"
+            [(ngModel)]="input.location"
+            name="location"
+            id="location"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions align="end" class="col-xs-12 text-end">
+  <button
+    *ngIf="showCancel"
+    (click)="onCancel()"
+    class="btn btn-outline-danger btn-sm"
+  >
+    Cancel
+  </button>
+  <button *ngIf="showSave" (click)="onSave()" class="btn btn-primary btn-sm">
+    Save
+  </button>
+</div>

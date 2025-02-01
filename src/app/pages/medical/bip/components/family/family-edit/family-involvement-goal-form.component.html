@@ -1,0 +1,42 @@
+<div class="card">
+  <div class="card-body">
+    <div class="col-xs-12">
+      <!-- list -->
+      <app-list-and-form
+        *ngIf="state === 'list'"
+        #list
+        title="Caregiver Training Goals"
+        [(newItem)]="newGoal"
+        [(dataSource)]="input"
+        [displayedColumns]="displayedColumns"
+        [renders]="renders"
+        [options]="options"
+        (dataSourceChange)="onDataSourceChange($event)"
+      >
+        <app-plan-form
+          title="Family Involvement"
+          [(input)]="newGoal"
+          (cancel)="list.onClose()"
+          (save)="list.onAdd($event); onSave()"
+        ></app-plan-form>
+      </app-list-and-form>
+      <!-- Save -->
+      <div *ngIf="state === 'list'" class="doctor-submit text-end mt-4">
+        <button class="btn btn-primary btn-sm" (click)="onSave()">Save</button>
+      </div>
+      <!-- Back -->
+      <div *ngIf="state !== 'list'" class="doctor-submit text-end">
+        <button class="btn btn-primary btn-sm" (click)="onBack()">Back</button>
+      </div>
+      <!-- Edit -->
+      <div *ngIf="state === 'edit'">
+        <app-plan-edit
+          title="Family Involvolment Objective"
+          [(input)]="newGoal"
+          (cancel)="onBack()"
+          (save)="onUpdate($event)"
+        ></app-plan-edit>
+      </div>
+    </div>
+  </div>
+</div>

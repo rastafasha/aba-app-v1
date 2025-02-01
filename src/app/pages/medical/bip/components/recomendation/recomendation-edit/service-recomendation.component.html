@@ -1,0 +1,46 @@
+<div class="card">
+  <div class="card-body">
+    <h3 class="card-title">Service Recomendations</h3>
+
+    <app-list-and-form
+      class="mt-4"
+      [title]="'Add Service Recomendation'"
+      #list
+      [(newItem)]="newItem"
+      [dataSource]="input"
+      [displayedColumns]="[
+        'cpt',
+        'description_service',
+        'num_units',
+        'breakdown_per_week',
+        'location'
+      ]"
+      [renders]="renders"
+      (cancel)="onCancel()"
+      (save)="onSave()"
+    >
+      <app-service-recomendation-form
+        [(input)]="newItem"
+        (save)="list.onAdd($event); onSave()"
+        (cancel)="list.onClose()"
+      ></app-service-recomendation-form>
+    </app-list-and-form>
+
+    <div class="col-12 my-3 text-end">
+      <button
+        *ngIf="showCancel"
+        (click)="onCancel()"
+        class="btn btn-outline-danger btn-sm"
+      >
+        Cancel
+      </button>
+      <button
+        *ngIf="showSave"
+        (click)="onSave()"
+        class="btn btn-primary btn-sm"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</div>

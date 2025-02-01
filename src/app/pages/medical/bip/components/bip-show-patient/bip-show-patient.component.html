@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col-12">
+    <div class="personal-list-out">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-xl-3 col-md-6">
+              <div class="detail-personal">
+                <h2>Name</h2>
+                <p>
+                  {{ input.first_name }}
+                  {{ input.last_name }}
+                </p>
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+              <div class="detail-personal">
+                <h2>Patient Id</h2>
+                <p>{{ input.patient_identifier }}</p>
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+              <div class="detail-personal">
+                <h2>Birth Day</h2>
+                <p>
+                  {{ input.birth_date | date : "shortDate" }}
+                </p>
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-6">
+              <div class="detail-personal">
+                <h2>Age</h2>
+                <p>{{ input.age }}</p>
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-6 col-xl-3">
+              <div class="detail-personal">
+                <h2>Phone</h2>
+                <p>{{ input.phone }}</p>
+              </div>
+            </div>
+            <div class="col-xl-3 col-md-6 col-xl-6">
+              <div class="detail-personal">
+                <h2>Address</h2>
+                <p>{{ input.address }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

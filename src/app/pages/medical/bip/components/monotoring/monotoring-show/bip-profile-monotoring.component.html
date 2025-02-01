@@ -1,0 +1,37 @@
+<div class="card">
+  <div class="card-body">
+    <div class="about-info mb-10">
+      <h4>
+        Monitoring and Evaluating the Effectiveness of the plan/ Treatment
+        Fidelity
+      </h4>
+
+      <p>
+        Ongoing training and monitoring of the RBT will occur on a weekly basis
+        to ensure proper implementation of the behavior program. The BCBA/lead
+        analyst will conduct weekly competency checks to ensure proper program
+        implementation. The BCBA/lead analyst will graph the data, depicting the
+        results of the competency checks on monthly progress reports. Also, the
+        BCBA/lead analyst will collect IOA data at least once a month to ensure
+        proper data collection.
+      </p>
+      <p>Objectives included in assistant competency checks:</p>
+      <ol>
+        <li>Data collection</li>
+        <li>Interventions/Environmental manipulations.</li>
+        <li>
+          Replacement goals used to teach the proper alternative to the
+          maladaptive behavior targeted.
+        </li>
+        <li>Use of reinforcement</li>
+      </ol>
+    </div>
+
+    <div class="row" *ngFor="let itemrtg of rbt_training_goals">
+      <div class="col-xs-12">
+        <h4>{{ itemrtg.name }}</h4>
+        <p class="pre-wrap">{{ itemrtg.description }}</p>
+      </div>
+    </div>
+  </div>
+</div>

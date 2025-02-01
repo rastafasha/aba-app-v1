@@ -1,0 +1,121 @@
+<div class="card">
+  <div class="card-body">
+    <h3 class="card-title">Behavior Analysis Assessment</h3>
+    <div class="row">
+      <div class="col-xs-12 detail-personal">
+        <h2>Type of Assessment</h2>
+      </div>
+    </div>
+    <!-- Checks -->
+    <div class="row detail-personal">
+      <div
+        class="col-xs-12 col-sm-4"
+        *ngFor="let item of assessments_types | keyvalue"
+      >
+        <div class="form-group">
+          <div
+            class="card-header d-flex justify-content-between align-items-center opacity-75"
+          >
+            <div>{{ item.value }}</div>
+            <div
+              class="status-toggle d-flex justify-content-between align-items-center"
+            >
+              <input
+                type="radio"
+                [id]="'view_type_' + item.key"
+                class="check"
+                [checked]="input.type_of_assessment === item.key"
+                disabled
+              />
+              <label [for]="'view_type_' + item.key" class="checktoggle">
+                checkbox
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Questions -->
+    <div class="row detail-personal">
+      <div class="col-xs-12">
+        <div class="detail-personal">
+          <h2>Background Information</h2>
+          <div style="white-space: pre-wrap">
+            {{ input.background_information }}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-md-6">
+        <div class="detail-personal">
+          <h2>Previous treatments and results</h2>
+          <p>{{ input.previous_treatment_and_result }}</p>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-6">
+        <div class="detail-personal">
+          <h2>Current treatment and progress</h2>
+          <p>{{ input.current_treatment_and_progress }}</p>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-md-6">
+        <div class="detail-personal">
+          <h2>Education status</h2>
+          <p>{{ input.education_status }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- S&W -->
+    <div class="row">
+      <div class="col-xs-12 detail-personal">
+        <h4>Strengths and Weakness</h4>
+      </div>
+    </div>
+
+    <div class="row detail-personal">
+      <div class="col-xs-12 col-md-6">
+        <div class="detail-personal">
+          <h2>Strengths</h2>
+          <p>{{ input.strengths }}</p>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-6">
+        <div class="detail-personal">
+          <h2>Weaknesses</h2>
+          <p>{{ input.weaknesses }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Replace the type of assessment section -->
+      <div class="col-xs-12 detail-personal">
+        <h4>Physical And Medical Status</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="detail-personal">
+          <h2>(Obtained from medical records and caregiver information)</h2>
+          <p>{{ input.physical_and_medical_status }}</p>
+        </div>
+      </div>
+      <div class="col-xs-12 detail-personal">
+        <app-list
+          title="Medication"
+          [dataSource]="input.physical_and_medical"
+          [displayedColumns]="[
+            'medication',
+            'dose',
+            'frequency',
+            'preescribing_physician',
+            'reason'
+          ]"
+        >
+        </app-list>
+      </div>
+    </div>
+  </div>
+</div>
