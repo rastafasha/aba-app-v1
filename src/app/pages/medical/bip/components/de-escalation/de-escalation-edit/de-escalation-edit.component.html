@@ -1,0 +1,10 @@
+<div class="row">
+  <h3 class="card-title">{{ title }}</h3>
+  <app-de-escalation-form
+    title=""
+    [(input)]="input"
+    (cancel)="onCancel()"
+    (save)="onSave()"
+  >
+  </app-de-escalation-form>
+</div>

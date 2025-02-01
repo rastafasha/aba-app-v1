@@ -1,0 +1,19 @@
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-xs-12">
+        <h4>Interventions</h4>
+        <p>
+          The teaching strategies described will be used either through Discrete
+          Trials interventions or Natural Environment approaches:
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div *ngFor="let item of input" class="col-xs-12 col-sm-6">
+        <h4>{{ item.title }}</h4>
+        <p>{{ item.description }}</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,115 @@
+<div class="page-wrapper">
+  <div class="content">
+    <app-page-header> </app-page-header>
+    <div class="row">
+      <!-- <div class="col-4"> -->
+      <!-- TODO remove -->
+      <!-- <pre>{{ bip | json }}</pre> -->
+      <!-- </div> -->
+      <div class="col-12">
+        <div class="row" *ngIf="bip">
+          <!--  -->
+          <app-patient-form [patient]="patient"> </app-patient-form>
+          <!-- Tabs -->
+          <div class="tab-content-set">
+            <ul class="nav justify-content-center">
+              <li
+                *ngFor="let item of bipAttentionOptions; let i = index"
+                class="px-0"
+              >
+                <a
+                  class="btn link rounded"
+                  [ngClass]="{ active: optionSelected === i + 1 }"
+                  (click)="onSelectOption(i + 1)"
+                >
+                  <span class="set-about-icon me-2">
+                    <img src="assets/img/icons/menu-icon-02.svg" alt="" />
+                  </span>
+                  {{ item }}
+                </a>
+              </li>
+              <li class="px-0">
+                <a
+                  class="btn link rounded"
+                  [routerLink]="[routes.bip.show, patient.id]"
+                >
+                  <span class="set-about-icon me-2">
+                    <img src="assets/img/icons/menu-icon-02.svg" alt="" />
+                  </span>
+                  View BIP
+                </a>
+              </li>
+            </ul>
+          </div>
+          <!-- 1 -->
+          <app-bip-form
+            *ngIf="optionSelected === 1"
+            [(bip)]="bip"
+            (save)="onSave($event)"
+          >
+          </app-bip-form>
+          <!-- 2 -->
+          <app-reduction-goal-form
+            *ngIf="optionSelected === 2"
+            [patient_identifier]="bip.patient_identifier"
+            [(input)]="bip.maladaptives"
+            (save)="onSave(bip)"
+          >
+          </app-reduction-goal-form>
+          <!-- 3 -->
+          <app-sustitution-list
+            *ngIf="optionSelected === 3"
+            [(input)]="bip.replacements"
+            (save)="onSave(bip)"
+          >
+          </app-sustitution-list>
+          <!-- 4 -->
+          <!-- <app-family-involvement-goal-form
+            *ngIf="optionSelected === 4"
+            [(input)]="bip.caregiver_trainings"
+            (save)="onSave(bip)"
+          >
+          </app-family-involvement-goal-form> -->
+          <!-- 5 -->
+          <!-- <app-monitoring-evaluating
+            *ngIf="optionSelected === 5"
+            [(input)]="bip.rbt_trainings"
+            (save)="onSave(bip)"
+          >
+          </app-monitoring-evaluating> -->
+          <!-- 6 -->
+          <app-behavior-assistant *ngIf="optionSelected === 6">
+          </app-behavior-assistant>
+          <!-- 7 -->
+          <!-- <app-generalization-training
+            *ngIf="optionSelected === 7"
+            [(input)]="bip.generalization_trainings"
+            (save)="onSave(bip)"
+          >
+          </app-generalization-training> -->
+          <!-- 8 -->
+          <!-- <app-crisis-plan
+            *ngIf="optionSelected === 8"
+            [(input)]="bip.crisis_plans"
+            (save)="onSave(bip)"
+          >
+          </app-crisis-plan> -->
+          <!-- 9 -->
+          <!-- <app-de-escalation-tecniques
+            *ngIf="optionSelected === 9"
+            [(input)]="bip.de_escalation_techniques"
+            (save)="onSave(bip)"
+          >
+          </app-de-escalation-tecniques> -->
+          <!-- 10 -->
+          <!-- <app-consent-treatment-edit
+            *ngIf="optionSelected === 10"
+            [(input)]="bip.consent_to_treatments"
+            (save)="onSave(bip)"
+          >
+          </app-consent-treatment-edit> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

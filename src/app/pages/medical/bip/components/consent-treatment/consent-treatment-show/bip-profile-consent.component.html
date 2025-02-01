@@ -1,0 +1,54 @@
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title">Consent to Treatment</h4>
+    <div class="row">
+      <div class="col-xs-12">
+        <p class="pre-wrap">
+          {{ consent }}
+        </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-6">
+        <div class="detail-personal">
+          <h2>Analyst Signature</h2>
+          <!-- <p>{{analyst_signature}}</p> -->
+          <!-- <img  [src]="analyst_signature" style="width:100%"  > -->
+          <img [src]="input?.analyst_signature" style="width: 100%" alt="" />
+          <!-- <img  [src]="imageData2" style="width:100%"  > -->
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="detail-personal">
+          <h2>Analyst Signature date</h2>
+          <p>
+            {{
+              input?.analyst_signature_date | date : "shortDate" : "shortDate"
+            }}
+          </p>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="detail-personal">
+          <h2>Parent / Guardian / Caregiver Signature</h2>
+          <!-- <p>{{parent_guardian_signature}}</p> -->
+          <!-- <img  [src]="parent_guardian_signature" style="width:100%"  > -->
+          <img
+            [src]="input?.parent_guardian_signature"
+            style="width: 100%"
+            alt=""
+          />
+          <!-- <img  [src]="imageData" style="width:100%"  > -->
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="detail-personal">
+          <h2>Guardian Signature day</h2>
+          <p>
+            {{ input?.parent_guardian_signature_date | date : "shortDate" }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

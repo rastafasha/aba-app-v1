@@ -27,6 +27,7 @@ export class Objective {
   plan_id: number;
   type: ObjectiveType;
   status: ObjectiveStatus;
+  name?: string;
   description: string;
   start_point: number;
   target: number;
@@ -49,6 +50,7 @@ export class Objective {
       type: StringOrNullOrUndefined(data.type) as ObjectiveType,
       initial_date: DateOrNullOrUndefined(data.initial_date),
       end_date: DateOrNullOrUndefined(data.end_date),
+      name: StringOrNullOrUndefined(data.name),
       description: StringOrNullOrUndefined(data.description),
       target: NumberOrNullOrUndefined(data.target),
       start_point: NumberOrNullOrUndefined(data.start_point),
@@ -74,5 +76,308 @@ export class Objective {
       order: 0,
       index: undefined, // Changed from 0 to undefined
     });
+  }
+  static getDefaultCaregiverObjectives(): Objective[] {
+    return [
+      {
+        id: 0,
+        plan_id: 0,
+        type: 'STO' as const,
+        status: 'not started' as const,
+        initial_date: new Date(),
+        end_date: null,
+        name: 'Caregiver demonstrate understanding of the 4 functions of behavior',
+        description:
+          'Monthly fidelity checks in which the percentage of times (across 4 data points) the parent demonstrated concept.',
+        target: 0,
+        start_point: 0,
+        order: 0,
+        index: 0,
+      },
+
+      {
+        id: 0,
+        plan_id: 0,
+        type: 'STO' as const,
+        status: 'not started' as const,
+        initial_date: new Date(),
+        end_date: null,
+        name: `
+Caregiver demonstrate
+understanding of
+Reinforcement
+`,
+        description: `
+Monthly fidelity checks in which the
+percentage of times (across 4 data
+points) the parent demonstrated
+concept.
+`,
+
+        target: 0,
+        start_point: 0,
+        order: 0,
+        index: 0,
+      },
+      {
+        id: 0,
+        plan_id: 0,
+        type: 'STO' as const,
+        status: 'not started' as const,
+        initial_date: new Date(),
+        end_date: null,
+        name: `
+Caregiver demonstrate
+understanding of extinction
+`,
+        description: `
+Monthly fidelity checks in which the
+percentage of times (across 4 data
+points) the parent demonstrated
+concept.
+`,
+
+        target: 0,
+        start_point: 0,
+        order: 0,
+        index: 0,
+      },
+      {
+        id: 0,
+        plan_id: 0,
+        type: 'STO' as const,
+        status: 'not started' as const,
+        initial_date: new Date(),
+        end_date: null,
+        name: `
+Caregiver demonstrate
+understanding of Differential
+Reinforcement
+`,
+        description: `
+Monthly fidelity checks in which the
+percentage of times (across 4 data
+points) the parent demonstrated
+concept.
+
+`,
+
+        target: 0,
+        start_point: 0,
+        order: 0,
+        index: 0,
+      },
+      {
+        id: 0,
+        plan_id: 0,
+        type: 'STO' as const,
+        status: 'not started' as const,
+        initial_date: new Date(),
+        end_date: null,
+        name: `
+Caregiver demonstrate
+understanding of Motivating
+operations
+`,
+        description: `
+Monthly fidelity checks in which the
+percentage of times (across 4 data
+points) the parent demonstrated
+concept.
+`,
+        target: 0,
+        start_point: 0,
+        order: 0,
+        index: 0,
+      },
+      {
+        id: 0,
+        plan_id: 0,
+        type: 'STO' as const,
+        status: 'not started' as const,
+        initial_date: new Date(),
+        end_date: null,
+        name: `
+Caregiver demonstrate
+understanding of Prompting
+`,
+        description: `
+Monthly fidelity checks in which the
+percentage of times (across 4 data
+points) the parent demonstrated
+concept.
+
+`,
+
+        target: 0,
+        start_point: 0,
+        order: 0,
+        index: 0,
+      },
+      {
+        id: 0,
+        plan_id: 0,
+        type: 'STO' as const,
+        status: 'not started' as const,
+        initial_date: new Date(),
+        end_date: null,
+        name: `
+Caregiver demonstrate
+understanding of fading
+`,
+        description: `
+Monthly fidelity checks in which the
+percentage of times (across 4 data
+points) the parent demonstrated
+concept.
+
+`,
+
+        target: 0,
+        start_point: 0,
+        order: 0,
+        index: 0,
+      },
+      {
+        id: 0,
+        plan_id: 0,
+        type: 'STO' as const,
+        status: 'not started' as const,
+        initial_date: new Date(),
+        end_date: null,
+        name: `
+Caregiver demonstrate
+understanding of shaping
+`,
+        description: `
+Monthly fidelity checks in which the
+percentage of times (across 4 data
+points) the parent demonstrated
+concept.
+
+`,
+
+        target: 0,
+        start_point: 0,
+        order: 0,
+        index: 0,
+      },
+      {
+        id: 0,
+        plan_id: 0,
+        type: 'STO' as const,
+        status: 'not started' as const,
+        initial_date: new Date(),
+        end_date: null,
+        name: `
+Caregiver demonstrate
+understanding of antecedents
+`,
+        description: `
+Monthly fidelity checks in which the
+percentage of times (across 4 data
+points) the parent demonstrated
+concept.
+`,
+
+        target: 0,
+        start_point: 0,
+        order: 0,
+        index: 0,
+      },
+      {
+        id: 0,
+        plan_id: 0,
+        type: 'STO' as const,
+        status: 'not started' as const,
+        initial_date: new Date(),
+        end_date: null,
+        name: `
+Caregiver demonstrate
+understanding of
+consequences
+`,
+        description: `
+Monthly fidelity checks in which the
+percentage of times (across 4 data
+points) the parent demonstrated
+concept.
+`,
+
+        target: 0,
+        start_point: 0,
+        order: 0,
+        index: 0,
+      },
+      {
+        id: 0,
+        plan_id: 0,
+        type: 'STO' as const,
+        status: 'not started' as const,
+        initial_date: new Date(),
+        end_date: null,
+        name: `
+Caregiver demonstrate
+understanding of task
+analysis
+`,
+        description: `
+Monthly fidelity checks in which the
+percentage of times (across 4 data
+points) the parent demonstrated
+concept.
+`,
+
+        target: 0,
+        start_point: 0,
+        order: 0,
+        index: 0,
+      },
+      {
+        id: 0,
+        plan_id: 0,
+        type: 'STO' as const,
+        status: 'not started' as const,
+        initial_date: new Date(),
+        end_date: null,
+        name: `
+Caregiver demonstrate
+understanding of chaining
+`,
+        description: `
+Monthly fidelity checks in which the
+percentage of times (across 4 data
+points) the parent demonstrated
+concept.
+`,
+
+        target: 0,
+        start_point: 0,
+        order: 0,
+        index: 0,
+      },
+      {
+        id: 0,
+        plan_id: 0,
+        type: 'STO' as const,
+        status: 'not started' as const,
+        initial_date: new Date(),
+        end_date: null,
+        name: `
+Caregiver demonstrate
+generalization of skills to
+natural environment
+`,
+        description: `
+Monthly fidelity checks in which the
+percentage of times (across 4 data
+points) the parent demonstrated concept.
+      `,
+        target: 0,
+        start_point: 0,
+        order: 0,
+        index: 0,
+      },
+    ].map((_, index) => ({ ..._, index }));
   }
 }

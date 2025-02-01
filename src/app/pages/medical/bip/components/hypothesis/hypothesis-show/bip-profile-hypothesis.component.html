@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="col-12">
+    <div class="personal-list-out">
+      <div class="card">
+        <div class="card-body">
+          <div class="about-info mb-10">
+            <h4>Hypothesis-based interventions</h4>
+          </div>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="detail-personal">
+                <p class="pre-wrap">{{ bip.hypothesis_based_intervention }}</p>
+              </div>
+            </div>
+
+            <app-list
+              title="Tangibles"
+              [dataSource]="bip.tangibles"
+              [displayedColumns]="[
+                'preventive_strategies',
+                'replacement_skills',
+                'manager_strategies'
+              ]"
+            >
+            </app-list>
+
+            <app-list
+              title="Attention"
+              [dataSource]="bip.attention"
+              [displayedColumns]="[
+                'preventive_strategies',
+                'replacement_skills',
+                'manager_strategies'
+              ]"
+            >
+            </app-list>
+
+            <app-list
+              title="Escape"
+              [dataSource]="bip.escape"
+              [displayedColumns]="[
+                'preventive_strategies',
+                'replacement_skills',
+                'manager_strategies'
+              ]"
+            >
+            </app-list>
+
+            <app-list
+              title="Sensory"
+              [dataSource]="bip.escape"
+              [displayedColumns]="[
+                'preventive_strategies',
+                'replacement_skills',
+                'manager_strategies'
+              ]"
+            >
+            </app-list>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

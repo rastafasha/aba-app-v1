@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Objective, OBJECTIVE_STATUS_MAP } from 'src/app/core/models';
-import { ObjectiveFormComponent } from '../objective-form/objective-form.component';
+import { ObjectiveFormComponent } from '../objective/objective-form/objective-form.component';
 
 @Component({
   selector: 'app-rbt-training-goal-form',

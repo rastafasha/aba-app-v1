@@ -1,5 +1,5 @@
 export const DEFAULT_CRISIS_PLAN = `The client does not display behaviors that require Crisis Management. However, Analyst and Assistant are trained in response blocking techniques (15 sec) and redirections should be implemented if recipient engages in intense behavior. If recipient engages in behavior that poses an immediate and continuing risk to themself or the people around them, the crisis will be managed using the least intrusive and safest strategies to curtail the behavior. If recipient engages in an activity that threatens harm, or if any novel problem behaviors of concern surfaces, the behavior may be safely managed by removing the client from danger and blocking them from aggressing toward others using response blocking (15 sec). Also by removing all throw-able items from recipient’s vicinity and/or moving them to an area where they cannot damage property or hurt others while engaging in the activity. If, during one of these episodes, recipient becomes injured, appropriate medical attention should be sought. If the client cannot be managed safely, caregivers are encouraged to call 911 immediately and report the incident to the behavior analyst, who will return your call within 24 hours.`;
-export const DEFAULT_CRISIS_PLAN_PREVENTION = `Caregiver Requirements for Prevention of Crisis:
+export const DEFAULT_CRISIS_PLAN_PREVENTION = `
 • Caregiver needs to have a clear understanding of the goals and objectives detailed in the behavior plan.
 • Caregiver needs to have a clear understanding of the the client’s target maladaptive behavior, the precursors to the target behavior, the triggers which cause escalation and a general understanding of de-escalation techniques.
 • Caregivers should have with them contact details of people that can be involved in the de-escalation process. Names and Phone Numbers clearly available, preferably written down physically and digitally (cell phone). Emergency information cards with the crisis plan and important information about your child can be posted in your home for caregivers, therapists, and first responders.
@@ -13,12 +13,12 @@ export class CrisisPlanV2 {
   id: number;
   bip_id: number;
   client_id: number;
-  crisis_description: string;
-  crisis_note: string;
-  caregiver_requirements_for_prevention_of_crisis: string;
-  risk_factors: RiskFactor;
-  suicidalities: Suicidality;
-  homicidalities: Homicidality;
+  description: string;
+  prevention: string;
+  note?: string;
+  risk_factors?: RiskFactor;
+  suicidalities?: Suicidality;
+  homicidalities?: Homicidality;
   created_at?: Date;
   updated_at?: Date;
   deleted_at?: Date;
@@ -33,10 +33,9 @@ export class CrisisPlanV2 {
       id: 0,
       bip_id: 0,
       client_id: 0,
-      crisis_description: DEFAULT_CRISIS_PLAN,
-      crisis_note: '',
-      caregiver_requirements_for_prevention_of_crisis:
-        DEFAULT_CRISIS_PLAN_PREVENTION,
+      description: DEFAULT_CRISIS_PLAN,
+      note: '',
+      prevention: DEFAULT_CRISIS_PLAN_PREVENTION,
       risk_factors: RiskFactor.getDefault(),
       suicidalities: Suicidality.getDefault(),
       homicidalities: Homicidality.getDefault(),

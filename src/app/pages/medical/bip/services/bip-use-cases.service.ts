@@ -1,13 +1,6 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, of, switchMap, Observable, map } from 'rxjs';
-import {
-  BipV2,
-  CrisisPlanV2,
-  DeEscalationTechnique,
-  GeneralizationTraining,
-  Objective,
-  PlanV2,
-} from 'src/app/core/models';
+import { forkJoin, of, switchMap } from 'rxjs';
+import { BipV2, CrisisPlanV2, Objective, PlanV2 } from 'src/app/core/models';
 import {
   BipsV2Service,
   CrisisPlansV2Service,
@@ -16,8 +9,6 @@ import {
 } from 'src/app/core/services';
 import { RepositoryUtils } from 'src/app/core/services/repository.utils';
 import { logTable } from 'src/app/shared/utils';
-import { DeEscalationTechniquesV2Service } from 'src/app/core/services/de-escalation-techniques.v2.service';
-import { GeneralizationTrainingsV2Service } from 'src/app/core/services/generalization-trainings.v2.service';
 
 @Injectable({
   providedIn: 'root',
@@ -52,7 +43,7 @@ export class BipUseCasesService {
       plan.bip_id = bipId;
       const oldPlan = oldPlans.find((p) => p.id === plan.id);
 
-      if (!oldPlan) {
+      if (!oldPlan || plan.id === 0) {
         return this.planService
           .create(this.repositoryUtils.stripIndex(plan))
           .pipe(
@@ -96,63 +87,27 @@ export class BipUseCasesService {
   }
 
   private handleCrisisPlanChanges(
-    newPlans: CrisisPlanV2[],
-    oldPlans: CrisisPlanV2[],
+    newPlan: CrisisPlanV2,
+    oldPlan: CrisisPlanV2,
     bipId: number
   ) {
     const createAndUpdateOperations =
       this.repositoryUtils.handleUpdatesAndCreates(
-        newPlans,
-        oldPlans,
+        [newPlan],
+        [oldPlan],
         this.crisisPlanService,
         (plan) => (plan.bip_id = bipId)
       );
 
     const deleteOperations = this.repositoryUtils.handleDeletes(
-      oldPlans,
-      newPlans,
+      [oldPlan],
+      [newPlan],
       this.crisisPlanService
     );
 
     return createAndUpdateOperations.length || deleteOperations.length
       ? forkJoin([...createAndUpdateOperations, ...deleteOperations])
       : of(null);
-  }
-
-  private handleDeEscalationTechniqueChanges(
-    newTechniques: DeEscalationTechnique[],
-    oldTechniques: DeEscalationTechnique[],
-    bipId: number
-  ): Observable<unknown[]> {
-    const operations = this.repositoryUtils.handleEntityChanges(
-      newTechniques,
-      oldTechniques,
-      this.deEscalationService,
-      (technique) => {
-        technique.bip_id = bipId;
-        technique.recomendation_lists?.forEach((rec, index) => {
-          rec.de_escalation_technique_id = technique.id;
-          rec.index = index;
-        });
-      }
-    );
-
-    return operations.pipe(map((result) => (result ? [result] : [])));
-  }
-
-  private handleGeneralizationTrainingChanges(
-    newTrainings: GeneralizationTraining[],
-    oldTrainings: GeneralizationTraining[],
-    bipId: number
-  ): Observable<unknown[]> {
-    const operations = this.repositoryUtils.handleEntityChanges(
-      newTrainings,
-      oldTrainings,
-      this.generalizationTrainingService,
-      (training) => (training.bip_id = bipId)
-    );
-
-    return operations.pipe(map((result) => (result ? [result] : [])));
   }
 
   save(bip: BipV2, old_bip: BipV2) {
@@ -178,18 +133,8 @@ export class BipUseCasesService {
         // Add crisis plan and other handlers
         planOperations.push(
           this.handleCrisisPlanChanges(
-            bip.crisis_plans,
-            old_bip.crisis_plans,
-            bip.id
-          ),
-          this.handleDeEscalationTechniqueChanges(
-            bip.de_escalation_techniques,
-            old_bip.de_escalation_techniques,
-            bip.id
-          ),
-          this.handleGeneralizationTrainingChanges(
-            bip.generalization_trainings,
-            old_bip.generalization_trainings,
+            bip.crisis_plan,
+            old_bip.crisis_plan,
             bip.id
           )
         );
@@ -206,8 +151,6 @@ export class BipUseCasesService {
     private planService: PlansV2Service,
     private objectiveService: ObjectivesV2Service,
     private crisisPlanService: CrisisPlansV2Service,
-    private deEscalationService: DeEscalationTechniquesV2Service,
-    private generalizationTrainingService: GeneralizationTrainingsV2Service,
     private repositoryUtils: RepositoryUtils
   ) {}
 }
