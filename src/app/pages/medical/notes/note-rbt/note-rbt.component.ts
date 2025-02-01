@@ -871,7 +871,7 @@ export class NoteRbtComponent implements OnInit {
 
     const morningMinutes = hoursOut1 * 60 + minutesOut1 - (hoursIn1 * 60 + minutesIn1);
     const afternoonMinutes = hoursOut2 * 60 + minutesOut2 - (hoursIn2 * 60 + minutesIn2);
-    const totalMinutes = morningMinutes + afternoonMinutes;
+    const totalMinutes = morningMinutes || 0 + afternoonMinutes || 0;
 
     let objectivesIsOk = this.replacementGoals.filter(item => item.total_trials !== 0).length >= 5 ||
                           this.replacementGoals.filter(item => item.total_trials !== 0).length == this.replacementGoals.length;
