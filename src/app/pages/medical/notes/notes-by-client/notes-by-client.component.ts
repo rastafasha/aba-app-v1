@@ -100,7 +100,7 @@ export class NotesByClientComponent implements OnInit {
     this.notesRbtV2Service
       .list({
         per_page: 15,
-        patient_identifier: this.patient_id,
+        patient_id: this.patient_id,
       })
       .pipe(
         finalize(() => {

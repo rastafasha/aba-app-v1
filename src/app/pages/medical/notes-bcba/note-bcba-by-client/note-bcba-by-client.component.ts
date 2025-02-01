@@ -62,10 +62,9 @@ export class NoteBcbaByClientComponent implements OnInit {
     });
     this.getTableData();
 
-    const USER = localStorage.getItem('user');
-    this.user = JSON.parse(USER ? USER : '');
-    this.doctor_id = this.user.id;
+    // const USER = localStorage.getItem('user');
     this.user = this.authService.user as AppUser;
+    this.doctor_id = this.user.id;
   }
 
   goBack() {
@@ -93,7 +92,7 @@ export class NoteBcbaByClientComponent implements OnInit {
     this.notesBcbaV2Service
       .list({
         per_page: 15,
-        patient_id: this.patient_id,
+        client_id: this.patient_id,
       })
       .subscribe((resp) => {
         console.log(resp);

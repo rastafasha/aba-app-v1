@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as jspdf from 'jspdf';
-import { NoteRbtV2 } from 'src/app/core/models';
+import { NoteRbtV2, PatientV2 } from 'src/app/core/models';
 import { AppUser } from 'src/app/core/models/users.model';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
@@ -60,13 +60,13 @@ export class NoteRbtViewComponent implements OnInit {
   selectedValueProviderName;
   selectedValueMaladaptive;
 
-  client_id: any;
-  doctor_id: any;
+  client_id: number;
+  doctor_id: number;
   doctor_selected: any;
   patient_selected: any;
-  client_selected: any;
+  client_selected: PatientV2;
   note_selected: NoteRbtV2;
-  bip_id: any;
+  bip_id: number;
   user: AppUser;
 
   first_name = '';
@@ -101,7 +101,6 @@ export class NoteRbtViewComponent implements OnInit {
   total_trials = 0;
   number_of_correct_response = 0;
   maladaptive = '';
-  replacement :any;
   maladaptive_behavior = '';
   interventions: any;
   provider_signature: any;
@@ -252,8 +251,8 @@ export class NoteRbtViewComponent implements OnInit {
       this.selectedValueProviderName = this.note_selected.provider_id;
       this.provider_name = this.note_selected.provider_name;
 
-      this.selectedValueRBT = this.note_selected.provider_name;
-      this.selectedValueBCBA = this.note_selected.supervisor_name;
+      this.selectedValueRBT = this.note_selected.provider_id;
+      this.selectedValueBCBA = this.note_selected.supervisor_id;
 
       this.IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED =
         this.note_selected.provider_signature;

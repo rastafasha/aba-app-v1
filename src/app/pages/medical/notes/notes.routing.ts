@@ -18,7 +18,8 @@ const routes: Routes = [
       },
       {
         path: lastRoutes(AppRoutes.noteRbt.edit, 1, '/:id'),
-        component: EditNoteRbtComponent,
+        // component: EditNoteRbtComponent,
+        component: NoteRbtComponent,
       },
       {
         path: lastRoutes(AppRoutes.noteRbt.list, 1, '/:id'),
