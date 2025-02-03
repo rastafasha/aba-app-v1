@@ -379,7 +379,7 @@
 
           <!-- fin infopaciente -->
           <!-- Cards Maladaptives -->
-          <div class="col-xs-12">
+          <div class="col-12">
             <div class="card">
               <div class="card-body">
                 <app-maladaptives-options
@@ -393,7 +393,7 @@
           <!-- Cards Maladaptives -->
 
           <!-- Cards Replacements -->
-          <div class="col-xs-12">
+          <div class="col-12">
             <div class="card">
               <div class="card-body">
                 <app-replacements
@@ -723,6 +723,15 @@
 
                   <div class="col-12">
                     <div class="doctor-submit text-end">
+                      <div class="row" *ngIf="showWarningTrialsAndObjectives()">
+                        <div class="col-12 col-md-6 offset-md-6">
+                          <app-alert
+                            [title]="'Attention'"
+                            [type]="'warning'"
+                            [content]="msjWarningTrialOrObjectives"
+                          ></app-alert>
+                        </div>
+                      </div>
                       <button
                         type="button"
                         class="btn btn-primary submit-form me-2"
@@ -730,15 +739,6 @@
                       >
                         {{ isEditMode ? 'Update' : 'Save' }}
                       </button>
-                    </div>
-                  </div>
-                  <div class="row" *ngIf="showWarningTrialsAndObjectives()">
-                    <div class="col-md-4 offset-md-8">
-                      <app-alert
-                        [title]="'Attention'"
-                        [type]="'warning'"
-                        [content]="msjWarningTrialOrObjectives"
-                      ></app-alert>
                     </div>
                   </div>
                 </form>

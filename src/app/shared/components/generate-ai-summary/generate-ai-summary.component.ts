@@ -120,6 +120,9 @@ export class GenerateAiSummaryComponent {
     const hasTime2 = summaryData.startTime2 && summaryData.endTime2;
     if (!hasTime1 && !hasTime2) missingFields.push('Session Time');
 
+    if (!summaryData.participants) missingFields.push('Participants');
+    if (!summaryData.environmentalChanges) missingFields.push('Environmental Changes');
+
     if (this.type === 'bcba') {
       switch (summaryData.cptCode) {
         case '97151':
@@ -165,8 +168,7 @@ export class GenerateAiSummaryComponent {
           missingFields.push('THIS CPT HAS NOT BEEN IMPLEMENTED YET');
           break;
       }
-    } else {
-      // RBT validations remain the same
+    } else { // RBT validations
       if (!summaryData.maladaptives?.length) {
         missingFields.push('Maladaptive Behaviors');
       } else {
@@ -180,7 +182,7 @@ export class GenerateAiSummaryComponent {
         missingFields.push('Replacement Behaviors');
       } else {
         const invalidReplacements = summaryData.replacements.some(
-          r => !r.name || r.totalTrials === undefined || r.correctResponses === undefined
+          r => !r.name || typeof r.totalTrials !== 'number' || typeof r.correctResponses !== 'number'
         );
         if (invalidReplacements) missingFields.push('Complete Replacement Behavior Data');
       }
@@ -188,6 +190,20 @@ export class GenerateAiSummaryComponent {
       if (!summaryData.interventions?.length) {
         missingFields.push('Interventions');
       }
+
+      if (!summaryData.mood?.length) {
+        missingFields.push('Mood');
+      }
+      if (!summaryData.evidencedBy?.length) {
+        missingFields.push('Evidenced By');
+      }
+      if (!summaryData.progressNoted?.length) {
+        missingFields.push('Progress Noted');
+      }
+      if (!summaryData.rbtModeledAndDemonstrated?.length) {
+        missingFields.push('RBT Modeled and Demonstrated to Caregiver');
+      }
+
     }
 
     return {
