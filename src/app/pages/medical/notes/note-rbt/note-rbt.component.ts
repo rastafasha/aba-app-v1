@@ -261,7 +261,7 @@ export class NoteRbtComponent implements OnInit {
       const bipMaladaptives = resp.data[0].maladaptives.map((mal) => ({
         id: mal.id,
         name: mal.name,
-        number_of_occurrences: 0
+        number_of_occurrences: null
       }));
 
       const bipReplacements = resp.data[0].replacements
@@ -270,8 +270,8 @@ export class NoteRbtComponent implements OnInit {
           status: repl.status,
           id: repl.id,
           name: repl.name,
-          total_trials: 0,
-          number_of_correct_response: 0,
+          total_trials: null,
+          number_of_correct_response: null,
           objectives: repl.objectives,
           description: repl.objectives
             .filter(obj => obj.status === 'in progress')[0]
@@ -640,8 +640,9 @@ export class NoteRbtComponent implements OnInit {
       endTime: this.selectedValueTimeOut ? this.selectedValueTimeOut : null,
       startTime2: this.selectedValueTimeIn2 ? this.selectedValueTimeIn2 : null,
       endTime2: this.selectedValueTimeOut2 ? this.selectedValueTimeOut2 : null,
-      mood: this.client_appeared,
       pos: this.meet_with_client_at,
+      participants: this.participants,
+      environmentalChanges: this.environmental_changes,
       maladaptives: this.maladaptives.map((m) => ({
         behavior: m.name,
         frequency: m.number_of_occurrences,
@@ -652,12 +653,12 @@ export class NoteRbtComponent implements OnInit {
         correctResponses: r.number_of_correct_response,
       })),
       interventions: this.intervention_added.length > 0
-        ? this.intervention_added
-        : [],
-      participants: this.participants,
+      ? this.intervention_added
+      : [],
+      mood: this.client_appeared,
       evidencedBy: this.as_evidenced_by,
-      rbtModeledAndDemonstrated: this.rbt_modeled_and_demonstrated_to_caregiver,
       progressNoted: this.progress_noted_this_session_compared_to_previous_session,
+      rbtModeledAndDemonstrated: this.rbt_modeled_and_demonstrated_to_caregiver,
       nextSession: this.next_session_is_scheduled_for,
     };
   }
@@ -776,25 +777,29 @@ export class NoteRbtComponent implements OnInit {
 
             // Handle maladaptives from note
             if (note.maladaptives) {
-              this.maladaptives = note.maladaptives.map(m => ({
-                id: m.id,
-                name: m.name,
-                number_of_occurrences: m.ocurrences || 0,
-                description: m.name // Add description field
-              }));
+              this.maladaptives = note.maladaptives
+                .filter(m => m.ocurrences !== 0)
+                .map(m => ({
+                  id: m.id,
+                  name: m.name,
+                  number_of_occurrences: m.ocurrences || 0,
+                  description: m.name // Add description field
+                }));
             }
 
             // Handle replacements from note
             if (note.replacements) {
-              this.replacementGoals = note.replacements.map(r => ({
-                id: r.id,
-                name: r.name,
-                total_trials: r.total_trials || 0,
-                number_of_correct_response: r.correct_responses || 0,
-                status: 'active',
-                objectives: [],
-                description: r.name // Add description field
-              }));
+              this.replacementGoals = note.replacements
+                .filter(r => r.total_trials !== 0)
+                .map(r => ({
+                  id: r.id,
+                  name: r.name,
+                  total_trials: r.total_trials || 0,
+                  number_of_correct_response: r.correct_responses || 0,
+                  status: 'active',
+                  objectives: [],
+                  description: r.name // Add description field
+                }));
 
               // Force change detection by creating a new array reference
               this.replacementGoals = [...this.replacementGoals];
@@ -873,8 +878,8 @@ export class NoteRbtComponent implements OnInit {
     const afternoonMinutes = hoursOut2 * 60 + minutesOut2 - (hoursIn2 * 60 + minutesIn2);
     const totalMinutes = morningMinutes || 0 + afternoonMinutes || 0;
 
-    let objectivesIsOk = this.replacementGoals.filter(item => item.total_trials !== 0).length >= 5 ||
-                          this.replacementGoals.filter(item => item.total_trials !== 0).length == this.replacementGoals.length;
+    const objectivesIsOk = this.replacementGoals.filter(item => item.total_trials !== 0).length >= 5 ||
+                          this.replacementGoals.filter(item => item.total_trials !== 0).length === this.replacementGoals.length;
 
     const total_trials = this.replacementGoals.reduce((suma, item) => suma + item.total_trials, 0)
     const trialsIsOk = total_trials >= (totalMinutes/60)*10;
