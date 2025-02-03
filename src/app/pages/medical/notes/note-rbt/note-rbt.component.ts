@@ -736,6 +736,38 @@ export class NoteRbtComponent implements OnInit {
       missingFields.push('Interventions');
     }
 
+    if (!this.participants || this.participants === '') {
+      missingFields.push('Present this session');
+    }
+
+    if (!this.environmental_changes || this.environmental_changes === '') {
+      missingFields.push('Environmental changes');
+    }
+
+    if (!this.summary_note || this.summary_note === '') {
+      missingFields.push('Summary note');
+    }
+
+    if (!this.next_session_is_scheduled_for || this.next_session_is_scheduled_for === '') {
+      missingFields.push('Next session date');
+    }
+
+    if (!this.rbt_modeled_and_demonstrated_to_caregiver || this.rbt_modeled_and_demonstrated_to_caregiver === '') {
+      missingFields.push('RBT modeled and demonstrated to caregiver');
+    }
+
+    if (!this.progress_noted_this_session_compared_to_previous_session || this.progress_noted_this_session_compared_to_previous_session === '') {
+      missingFields.push('Progress noted this session compared to previous session');
+    }
+
+    if (!this.as_evidenced_by || this.as_evidenced_by === '') {
+      missingFields.push('As evidenced by');
+    }
+
+    if (!this.client_appeared || this.client_appeared === '') {
+      missingFields.push('Client appeared');
+    }
+
     return {
       isValid: missingFields.length === 0,
       missingFields,
