@@ -534,21 +534,14 @@ export class NoteBcbaComponent implements OnInit {
   }
 
   save() {
-    console.log(this.getAISummaryData());
-    this.text_validation = '';
-    if (!this.meet_with_client_at || !this.session_date) {
-      if (!this.selectedValueAba) {
-        Swal.fire('Warning', 'ABA Supervisor must be selected ', 'warning');
-        return;
-      }
+    const missingFields = this.checkDataSufficient();
+    if (!missingFields.isValid) {
+      Swal.fire('Warning', missingFields.missingFields.join(', '), 'warning');
+      return;
     }
 
     if (!this.selectedPaService) {
       Swal.fire('Warning', 'Please select a service ', 'warning');
-      return;
-    }
-    if (!this.meet_with_client_at) {
-      Swal.fire('Warning', 'Please select a POS ', 'warning');
       return;
     }
     if (!this.session_date) {
@@ -844,10 +837,6 @@ export class NoteBcbaComponent implements OnInit {
       missingFields.push('Client information');
     }
 
-    if (!this.selectedPaService || !this.selectedPaService.cpt) {
-      missingFields.push('CPT Code selection');
-      return { isValid: false, missingFields }; // Return early as CPT is required for further validation
-    }
 
     const hasTime1 = this.selectedValueTimeIn && this.selectedValueTimeOut;
     const hasTime2 = this.selectedValueTimeIn2 && this.selectedValueTimeOut2;
@@ -857,6 +846,10 @@ export class NoteBcbaComponent implements OnInit {
 
     if (!this.meet_with_client_at) {
       missingFields.push('POS');
+    }
+
+    if (!this.selectedValueAba) {
+      missingFields.push('ABA Supervisor');
     }
 
     if (!this.participants || this.participants === '') {
@@ -869,6 +862,11 @@ export class NoteBcbaComponent implements OnInit {
 
     if (!this.summary_note || this.summary_note === '') {
       missingFields.push('Summary note');
+    }
+
+    if (!this.selectedPaService || !this.selectedPaService.cpt) {
+      missingFields.push('CPT Code selection');
+      return { isValid: false, missingFields }; // Return early as CPT is required for further validation
     }
 
     // CPT specific validations
