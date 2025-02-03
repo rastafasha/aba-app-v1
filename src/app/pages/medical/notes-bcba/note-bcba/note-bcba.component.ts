@@ -859,6 +859,18 @@ export class NoteBcbaComponent implements OnInit {
       missingFields.push('POS');
     }
 
+    if (!this.participants || this.participants === '') {
+      missingFields.push('Present this session');
+    }
+
+    if (!this.environmental_changes || this.environmental_changes === '') {
+      missingFields.push('Environmental changes');
+    }
+
+    if (!this.summary_note || this.summary_note === '') {
+      missingFields.push('Summary note');
+    }
+
     // CPT specific validations
     switch (this.selectedPaService.cpt) {
       case '97151':
