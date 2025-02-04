@@ -21,8 +21,8 @@ export class HypothesisBasedInterventionsComponent extends InputDirective<BipV2>
   newAttention: Attention = Attention.getDefault();
 
   headRenders: HeadRender<Tangible | Sensory | Escape | Attention> = {
-    preventive_strategies: () => 'Antecedent Based',
-    replacement_skills: () => 'Related to Function',
-    manager_strategies: () => 'Consequence Based',
+    preventive_strategies: () => 'Preventive Strategies (antecedent-based)',
+    replacement_skills: () => 'Replacement Skills (related to function) ',
+    manager_strategies: () => 'Management Strategies (consequence-based)',
   };
 }

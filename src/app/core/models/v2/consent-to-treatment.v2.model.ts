@@ -1,3 +1,5 @@
+import { DateOrNullOrUndefined } from 'src/app/shared/utils';
+
 export class ConsentToTreatment {
   id: number;
   bip_id: number;
@@ -12,6 +14,12 @@ export class ConsentToTreatment {
   deleted_at?: Date;
   constructor(data: Partial<ConsentToTreatment>) {
     Object.assign(this, data);
+    this.analyst_signature_date = DateOrNullOrUndefined(
+      this.analyst_signature_date
+    );
+    this.parent_guardian_signature_date = DateOrNullOrUndefined(
+      this.parent_guardian_signature_date
+    );
   }
   static getDefault(): ConsentToTreatment {
     return {

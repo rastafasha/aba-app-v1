@@ -16,7 +16,7 @@ import { HypothesisBasedInterventionsComponent } from './hypothesis/hypothesis-e
 import { InterventionsComponent } from './interventions/interventions-edit/interventions.component';
 import { MaladaptivesComponent } from './maladaptives/maladaptives-xxx/maladaptives.component';
 import { PrevalentSettingComponent } from './prevalent/prevalent-edit/prevalent-setting.component';
-import { BipProfileAssestmentComponent } from './assestment/assestment-show/bip-profile-assestment.component';
+import { AssestmentShowComponent } from './assestment/assestment-show/assestment-show.component';
 import { BipProfileBackgroundComponent } from './background/background-show/bip-profile-background.component';
 import { BipProfileBehaviorComponent } from './behaviour/behaviour-show/bip-profile-behavior.component';
 import { BipProfileConsentComponent } from './consent-treatment/consent-treatment-show/bip-profile-consent.component';
@@ -84,7 +84,7 @@ const components = [
   BehaviorAssistantComponent,
   BipDocumentsShowComponent,
   BipFormComponent,
-  BipProfileAssestmentComponent,
+  AssestmentShowComponent,
   BipProfileBackgroundComponent,
   BipProfileBehaviorComponent,
   BipProfileConsentComponent,
