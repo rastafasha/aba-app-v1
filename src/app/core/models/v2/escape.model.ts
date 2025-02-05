@@ -1,3 +1,5 @@
+import { BIP_CONST } from './constants';
+
 export class Escape {
   index?: number;
   preventive_strategies: string;
@@ -9,9 +11,12 @@ export class Escape {
   static getDefault(): Escape {
     return new Escape({
       index: undefined, // Changed from 0
-      preventive_strategies: '',
-      replacement_skills: '',
-      manager_strategies: '',
+      preventive_strategies: BIP_CONST.ESCAPE.STRATEGY,
+      replacement_skills: BIP_CONST.ESCAPE.REPLACEMENT_SKILLS,
+      manager_strategies: BIP_CONST.ESCAPE.MANAGER_STRATEGY,
     });
+  }
+  static getDefaults(): Escape[] {
+    return [this.getDefault()];
   }
 }
