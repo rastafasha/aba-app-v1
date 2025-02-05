@@ -22,9 +22,12 @@ import { logTable } from 'src/app/shared/utils';
 })
 export class BipUseCasesService {
   getBipByClientId(client_id: number) {
-    return this.bipService
-      .list({ client_id })
-      .pipe(switchMap((resp) => this.bipService.get(resp.data[0].id)));
+    return this.bipService.list({ client_id }).pipe(
+      switchMap((resp) => {
+        if (resp.data[0]) return this.bipService.get(resp.data[0].id);
+        else return of({ ...resp, data: { ...BipV2.getDefault(), client_id } });
+      })
+    );
   }
 
   private handleObjectiveChanges(
