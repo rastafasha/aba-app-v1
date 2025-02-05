@@ -11,13 +11,12 @@ import { AppUser } from 'src/app/core/models/users.model';
 import { Interventions, PaServiceV2, PatientV2, NoteRbtV2 } from 'src/app/core/models';
 import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
 import { MaladaptiveRegistry, ReplacementRegistry, ReplacementBehavior, POSModel, MaladaptiveBehavior, ValidationResult } from '../interfaces';
-import {interventionsList} from '../listaInterventionData';
 import { AISummaryData } from 'src/app/shared/components/generate-ai-summary/generate-ai-summary.component';
 import { GenerateAiSummaryComponent } from 'src/app/shared/components/generate-ai-summary/generate-ai-summary.component';
 import { calculateUnitsFromTime, convertToHours, convertToMinutes } from 'src/app/utils/time-functions';
 import { PatientsV2Service } from 'src/app/core/services/patients.v2.service';
 import { AuthService } from 'src/app/core/auth/auth.service';
-
+import { Intervention } from 'src/app/core/models/v2/intervention.v2.model';
 
 @Component({
   selector: 'app-note-rbt',
@@ -129,7 +128,7 @@ export class NoteRbtComponent implements OnInit {
 
   intervention_added: Interventions = [];
   interventionsSelected: { [key: string]: boolean } = {};
-  interventionsList = interventionsList;
+  interventionsList = [];
 
   pa_services: PaServiceV2[] = [];
   selectedPaService: PaServiceV2 | null = null;
@@ -278,6 +277,8 @@ export class NoteRbtComponent implements OnInit {
             ?.description || ''
         }));
 
+      this.interventionsList = this.generateInterventionsList(resp.data[0].interventions);
+
 
       if (this.isEditMode) {
         // In edit mode, preserve existing values but add any missing items from BIP
@@ -391,6 +392,30 @@ export class NoteRbtComponent implements OnInit {
     const totalMinutes = timeOut1 - timeIn1 + (timeOut2 - timeIn2);
     const totalHours = convertToHours(totalMinutes);
     this.total_hour_session = totalHours;
+  }
+
+  generateInterventionsList(interventions: Intervention[]) {
+    const newInterventions = interventions.map((intervention) => ({
+      id: intervention.title,
+      name: intervention.title,
+      value: false,
+    }));
+
+    // filter repeated interventions, prioritize existing interventions
+    const mixedInterventions = [...(this.interventionsList || []), ...newInterventions]
+      .filter((intervention, index, self) =>
+        self.findIndex(t => t.name === intervention.name) === index
+      );
+
+    if (mixedInterventions.length === 0) {
+      return Intervention.getDefaults().map((intervention) => ({
+      id: intervention.title,
+      name: intervention.title,
+      value: false,
+     }));
+    }
+
+    return mixedInterventions;
   }
 
   selectMaladaptive(behavior: MaladaptiveBehavior) {
@@ -835,6 +860,15 @@ export class NoteRbtComponent implements OnInit {
 
               // Force change detection by creating a new array reference
               this.replacementGoals = [...this.replacementGoals];
+            }
+
+            // Handle interventions from note
+            if (note.interventions) {
+              this.interventionsList = this.generateInterventionsList(note.interventions.map(title => ({
+                id: title,
+                title: title,
+                description: '',
+              })));
             }
 
             // Time fields - ensure proper format HH:mm

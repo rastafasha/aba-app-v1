@@ -383,7 +383,10 @@
               </div>
               <div class="page-break" style="page-break-after: always"></div>
               <!-- Interventions -->
-              <app-interventionviews [interventions]="this.note_selected?.interventions"></app-interventionviews>
+              <app-interventionviews
+                [interventions]="this.note_selected?.interventions"
+                [interventionsBase]="this.interventionsBase">
+              </app-interventionviews>
               <!-- Interventions -->
               <div class="card">
                 <div class="card-header">

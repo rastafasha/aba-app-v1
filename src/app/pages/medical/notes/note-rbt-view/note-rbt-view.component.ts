@@ -12,6 +12,8 @@ import { DoctorService } from '../../doctors/service/doctor.service';
 import { NotesRbtV2Service } from 'src/app/core/services/notes-rbt.v2.service';
 import { calculateTimeDifference } from 'src/app/utils/time-functions';
 import { convertToHours } from 'src/app/utils/time-functions';
+import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
+import { PatientsV2Service } from 'src/app/core/services/patients.v2.service';
 
 interface NoteIntervention {
   token_economy: boolean;
@@ -63,19 +65,14 @@ export class NoteRbtViewComponent implements OnInit {
   client_id: number;
   doctor_id: number;
   doctor_selected: any;
-  patient_selected: any;
+  patient_selected: PatientV2;
   client_selected: PatientV2;
   note_selected: NoteRbtV2;
   bip_id: number;
   user: AppUser;
 
-  first_name = '';
-  last_name = '';
-  diagnosis_code = '';
-
   provider_name_g = '';
   provider_credential = '';
-  pos = '';
   session_date = '';
   time_in = '';
   time_out = '';
@@ -106,25 +103,6 @@ export class NoteRbtViewComponent implements OnInit {
   provider_signature: any;
   supervisor_signature: any;
 
-  intervention: NoteIntervention = {
-    token_economy: false,
-    generalization: false,
-    NCR: false,
-    behavioral_momentum: false,
-    DRA: false,
-    DRI: false,
-    DRO: false,
-    DRL: false,
-    response_block: false,
-    errorless_teaching: false,
-    extinction: false,
-    chaining: false,
-    natural_teaching: false,
-    redirection: false,
-    shaping: false,
-    pairing: false,
-  };
-
   FILE_SIGNATURE_RBT: any;
   IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED: any = 'assets/img/user-06.jpg';
   FILE_SIGNATURE_BCBA: any;
@@ -146,6 +124,7 @@ export class NoteRbtViewComponent implements OnInit {
   hours_days = [];
   replacementGoals = [];
   intervention_added = [];
+  interventionsBase: string[] = [];
 
   interventionsgroup;
 
@@ -170,8 +149,9 @@ export class NoteRbtViewComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private doctorService: DoctorService,
     private pageService: PageService,
-    private bipService: BipService,
-    private location: Location
+    private location: Location,
+    private bipV2Service: BipsV2Service,
+    private patientV2Service: PatientsV2Service
   ) {}
   ngOnInit(): void {
     this.pageService.onInitPage();
@@ -217,8 +197,6 @@ export class NoteRbtViewComponent implements OnInit {
       this.client_response_to_treatment_this_session =
         this.note_selected.client_response_to_treatment_this_session;
 
-      this.pos = this.note_selected.pos;
-
       this.environmental_changes = this.note_selected.environmental_changes;
       this.meet_with_client_at = this.note_selected.meet_with_client_at;
       this.progress_noted_this_session_compared_to_previous_session =
@@ -259,21 +237,24 @@ export class NoteRbtViewComponent implements OnInit {
       this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED =
         this.note_selected.supervisor_signature;
 
-      this.getProfileBip();
+      // this.getProfileBip();
       this.getDoctor();
       this.getDoctorBcba();
       this.getDoctorRbt();
+
+      this.getBipV2();
+      this.getPatientV2();
     });
   }
 
   getDoctor() {
     this.doctorService
-      .showDoctor(this.selectedValueProviderName)
-      .subscribe((resp) => {
-        console.log(resp);
-        this.doctor_selected = resp.user;
-        this.doctor_selected_full_name = resp.user.full_name;
-      });
+    .showDoctor(this.selectedValueProviderName)
+    .subscribe((resp) => {
+      console.log(resp);
+      this.doctor_selected = resp.user;
+      this.doctor_selected_full_name = resp.user.full_name;
+    });
   }
 
   getDoctorRbt() {
@@ -291,21 +272,17 @@ export class NoteRbtViewComponent implements OnInit {
     });
   }
 
-  getProfileBip() {
-    this.bipService
-      .getBipProfilePatient_id(this.patient_identifier)
-      .subscribe((resp) => {
-        console.log(resp);
-        this.patient_selected = resp.patient;
+  getBipV2() {
+    this.bipV2Service.get(this.bip_id).subscribe((resp) => {
+      this.interventionsBase = resp.data.interventions
+        .map((intervention) => intervention.title);
+    });
+  }
 
-        this.first_name = this.patient_selected.first_name;
-        this.last_name = this.patient_selected.last_name;
-        this.patient_identifier = this.patient_selected.patient_identifier;
-        this.patient_id = this.patient_selected.id;
-        this.pos = this.patient_selected.pos_covered;
-        // console.log(this.patient_id);
-        this.diagnosis_code = this.patient_selected.diagnosis_code;
-      });
+  getPatientV2() {
+    this.patientV2Service.get(this.patient_id).subscribe((resp) => {
+      this.patient_selected = resp.data;
+    });
   }
 
   optionSelected(value: number) {
@@ -328,7 +305,7 @@ export class NoteRbtViewComponent implements OnInit {
       margin: [10, 10, 10, 10],
       callback: (pdf) =>
         pdf.save(
-          'note_rbt_client_' + this.patient_selected.patient_id + '.pdf'
+          'note_rbt_client_' + this.patient_selected.id + '.pdf'
         ),
     });
   }
