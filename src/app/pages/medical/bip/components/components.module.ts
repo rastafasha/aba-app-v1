@@ -67,7 +67,7 @@ import { GoalFormSimpleComponent } from './plan/plan-form/plan-form.component';
 import { PrevalentSettingEventAndAntecedentComponent } from './prevalent/prevalent-form/prevalent-setting-event-and-antecedent.component';
 import { RbtTrainingGoalFormComponent } from './rbt-training-goal-form/rbt-training-goal-form.component';
 import { RecomendationFormComponent } from './recomendation/recomendation-form/recomendation-form.component';
-import { ReductionGoalFormComponent } from './maladaptives/maladaptives-edit/reduction-goal-form.component';
+import { MaladaptivesEditComponent } from './maladaptives/maladaptives-edit/reduction-goal-form.component';
 import { RiskAssestmentFormComponent } from './risk-assestment/risk-assestment-edit/risk-assestment-form.component';
 import { RiskFactorsComponent } from './risk-factors/risk-factors.component';
 import { SensoryFormComponent } from './sensory/sensory-form/sensory-form.component';
@@ -126,7 +126,7 @@ const components = [
   RbtTrainingGoalFormComponent,
   RecomendationFormComponent,
   PlanEditComponent,
-  ReductionGoalFormComponent,
+  MaladaptivesEditComponent,
   RiskFactorsComponent,
   ObjectiveFormComponent,
   SuicidalitiesComponent,

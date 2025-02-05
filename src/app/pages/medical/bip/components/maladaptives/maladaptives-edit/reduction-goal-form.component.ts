@@ -8,7 +8,7 @@ import { HeadRender } from 'src/app/shared/components/list/list.component';
   templateUrl: './reduction-goal-form.component.html',
   styleUrls: ['./reduction-goal-form.component.scss'],
 })
-export class ReductionGoalFormComponent extends OnPlansEdit {
+export class MaladaptivesEditComponent extends OnPlansEdit {
   @Input() patient_identifier: string;
   protected newGoal: PlanV2 = {
     ...PlanV2.getDefault(),
