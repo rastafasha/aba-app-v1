@@ -15,9 +15,9 @@ import { Intervention } from './intervention.v2.model';
 import { Medication } from './medication.model';
 import { PlanV2 } from './plan.v2.model';
 import { PrevalentSettingEventAndAntecedent } from './prevalent-setting-event-and-antecedent';
+import { Recommendation } from './recommendation.model';
 import { Sensory } from './sensory.model';
 import { Tangible } from './tangible.model';
-import { Recommendation } from './recommendation.model';
 
 export class BipV2 {
   id: number;
@@ -148,6 +148,15 @@ export class BipV2 {
       self.recommendations = Recommendation.getDefaults();
     if (!self.de_escalation_techniques.length)
       self.de_escalation_techniques = DeEscalationTechnique.getDefaults();
+    if (!self.interventions.length)
+      self.interventions = Intervention.getDefaults();
+    if (!self.generalization_training)
+      self.generalization_training = PLAN_CONST.GENERALIZATION_TRAINING;
+    if (!self.risk_assessment)
+      self.risk_assessment = PLAN_CONST.RISK_ASSESSMENT;
+    if (!self.fading_plan) self.fading_plan = PLAN_CONST.FADING_PLAN;
+    if (!self.discharge_plan) self.discharge_plan = PLAN_CONST.DISCHARGE_PLAN;
+
     return self;
   }
   static getDefault(): BipV2 {

@@ -14,7 +14,8 @@
             </div>
 
             <app-list
-              title="Tangibles"
+              title="Tangibles/Activities"
+              [headRenders]="headRenders"
               [dataSource]="bip.tangibles"
               [displayedColumns]="[
                 'preventive_strategies',
@@ -26,6 +27,7 @@
 
             <app-list
               title="Attention"
+              [headRenders]="headRenders"
               [dataSource]="bip.attention"
               [displayedColumns]="[
                 'preventive_strategies',
@@ -37,6 +39,7 @@
 
             <app-list
               title="Escape"
+              [headRenders]="headRenders"
               [dataSource]="bip.escape"
               [displayedColumns]="[
                 'preventive_strategies',
@@ -47,8 +50,9 @@
             </app-list>
 
             <app-list
-              title="Sensory"
-              [dataSource]="bip.escape"
+              title="Automatic"
+              [headRenders]="headRenders"
+              [dataSource]="bip.sensory"
               [displayedColumns]="[
                 'preventive_strategies',
                 'replacement_skills',

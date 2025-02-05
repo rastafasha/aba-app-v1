@@ -4,7 +4,7 @@ import { InputDirective } from 'src/app/shared/directives/input.directive';
 
 @Component({
   selector: 'app-bip-profile-assestment',
-  templateUrl: './bip-profile-assestment.component.html',
-  styleUrls: ['./bip-profile-assestment.component.scss'],
+  templateUrl: './assestment-show.component.html',
+  styleUrls: ['./assestment-show.component.scss'],
 })
-export class BipProfileAssestmentComponent extends InputDirective<BipV2> {}
+export class AssestmentShowComponent extends InputDirective<BipV2> {}

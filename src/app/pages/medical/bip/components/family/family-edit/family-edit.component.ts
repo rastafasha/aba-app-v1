@@ -4,10 +4,10 @@ import { OnPlansEdit } from '../../on-plans-edit/on-plans-edit';
 
 @Component({
   selector: 'app-family-edit',
-  templateUrl: './family-involvement-goal-form.component.html',
-  styleUrls: ['./family-involvement-goal-form.component.scss'],
+  templateUrl: './family-edit.component.html',
+  styleUrls: ['./family-edit.component.scss'],
 })
-export class FamilyInvolvementGoalFormComponent extends OnPlansEdit {
+export class FamilyEditComponent extends OnPlansEdit {
   protected newGoal: PlanV2 = {
     ...PlanV2.getDefault(),
     category: 'caregiver_training',

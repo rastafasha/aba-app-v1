@@ -16,7 +16,7 @@ import { HypothesisBasedInterventionsComponent } from './hypothesis/hypothesis-e
 import { InterventionsComponent } from './interventions/interventions-edit/interventions.component';
 import { MaladaptivesComponent } from './maladaptives/maladaptives-xxx/maladaptives.component';
 import { PrevalentSettingComponent } from './prevalent/prevalent-edit/prevalent-setting.component';
-import { BipProfileAssestmentComponent } from './assestment/assestment-show/bip-profile-assestment.component';
+import { AssestmentShowComponent } from './assestment/assestment-show/assestment-show.component';
 import { BipProfileBackgroundComponent } from './background/background-show/bip-profile-background.component';
 import { BipProfileBehaviorComponent } from './behaviour/behaviour-show/bip-profile-behavior.component';
 import { BipProfileConsentComponent } from './consent-treatment/consent-treatment-show/bip-profile-consent.component';
@@ -24,7 +24,7 @@ import { BipProfileCrisisPlanComponent } from './crisis/crisis-show/bip-profile-
 import { BipProfileDeEscalationComponent } from './de-escalation/de-escalation-show/bip-profile-de-escalation.component';
 import { BipProfileDischargePlanComponent } from './discharge/discharge-show/bip-profile-discharge-plan.component';
 import { BipProfileFadingPlanComponent } from './fading/fading-show/bip-profile-fading-plan.component';
-import { BipProfileFamilyComponent } from './family/family-show/bip-profile-family.component';
+import { FamilyShowComponent } from './family/family-show/family-show.component';
 import { BipProfileGeneralizationComponent } from './generalization/generalization-show/bip-profile-generalization.component';
 import { BipShowHeadComponent } from './bip-show-head/bip-show-head.component';
 import { BipProfileHypothesisComponent } from './hypothesis/hypothesis-show/bip-profile-hypothesis.component';
@@ -51,7 +51,7 @@ import { DocumentFormComponent } from './document/document-form/document-form.co
 import { DocumentReviewedFormComponent } from './document/document-reviewed-form/document-reviewed-form.component';
 import { EscapeFormComponent } from './escape/escape-form/escape-form.component';
 import { FadingPlanFormComponent } from './fading/fading-edit/fading-plan-form.component';
-import { FamilyInvolvementGoalFormComponent } from './family/family-edit/family-involvement-goal-form.component';
+import { FamilyEditComponent } from './family/family-edit/family-edit.component';
 import { GeneralizationTrainingEditComponent } from './generalization/generalization-training-edit/generalization-training-edit.component';
 import { GeneralizationTrainingFormComponent } from './generalization/generalization-training-form/generalization-training-form.component';
 import { GeneralizationTrainingComponent } from './generalization/generalization-edit/generalization-training.component';
@@ -67,7 +67,7 @@ import { GoalFormSimpleComponent } from './plan/plan-form/plan-form.component';
 import { PrevalentSettingEventAndAntecedentComponent } from './prevalent/prevalent-form/prevalent-setting-event-and-antecedent.component';
 import { RbtTrainingGoalFormComponent } from './rbt-training-goal-form/rbt-training-goal-form.component';
 import { RecomendationFormComponent } from './recomendation/recomendation-form/recomendation-form.component';
-import { ReductionGoalFormComponent } from './maladaptives/maladaptives-edit/reduction-goal-form.component';
+import { MaladaptivesEditComponent } from './maladaptives/maladaptives-edit/reduction-goal-form.component';
 import { RiskAssestmentFormComponent } from './risk-assestment/risk-assestment-edit/risk-assestment-form.component';
 import { RiskFactorsComponent } from './risk-factors/risk-factors.component';
 import { SensoryFormComponent } from './sensory/sensory-form/sensory-form.component';
@@ -77,6 +77,7 @@ import { SuicidalitiesComponent } from './suicidalities/suicidalities.component'
 import { SustitutionListComponent } from './reductions/reductions-edit/sustitution-list.component';
 import { TangibleFormComponent } from './tangible/tangible-form/tangible-form.component';
 import { TransitionFadingPlanFormComponent } from './fading/fading-edit-old/transition-fading-plan-form.component';
+import { FamilyFormComponent } from './family/family-form/family-form.component';
 
 const components = [
   AssestmentComponent,
@@ -84,13 +85,16 @@ const components = [
   BehaviorAssistantComponent,
   BipDocumentsShowComponent,
   BipFormComponent,
-  BipProfileAssestmentComponent,
+  AssestmentShowComponent,
   BipProfileBackgroundComponent,
   BipProfileBehaviorComponent,
   BipProfileConsentComponent,
   BipProfileCrisisPlanComponent,
   BipProfileDeEscalationComponent,
-  BipProfileFamilyComponent,
+  FamilyShowComponent,
+  FamilyEditComponent,
+  FamilyFormComponent,
+
   BipProfileGeneralizationComponent,
   BipShowHeadComponent,
   BipProfileHypothesisComponent,
@@ -109,7 +113,6 @@ const components = [
   CrisisPlanEditComponent,
   DeEscalationTecniquesComponent,
   DocumentFormComponent,
-  FamilyInvolvementGoalFormComponent,
   GeneralizationTrainingComponent,
   GoalFormSimpleComponent,
   HomicidalitiesComponent,
@@ -123,7 +126,7 @@ const components = [
   RbtTrainingGoalFormComponent,
   RecomendationFormComponent,
   PlanEditComponent,
-  ReductionGoalFormComponent,
+  MaladaptivesEditComponent,
   RiskFactorsComponent,
   ObjectiveFormComponent,
   SuicidalitiesComponent,

@@ -1,8 +1,15 @@
 import { Injectable } from '@angular/core';
 import { forkJoin, of, switchMap } from 'rxjs';
-import { BipV2, CrisisPlanV2, Objective, PlanV2 } from 'src/app/core/models';
+import {
+  BipV2,
+  ConsentToTreatment,
+  CrisisPlanV2,
+  Objective,
+  PlanV2,
+} from 'src/app/core/models';
 import {
   BipsV2Service,
+  ConsentToTreatmentV2Service,
   CrisisPlansV2Service,
   ObjectivesV2Service,
   PlansV2Service,
@@ -109,6 +116,29 @@ export class BipUseCasesService {
       ? forkJoin([...createAndUpdateOperations, ...deleteOperations])
       : of(null);
   }
+  private handleConsentToTreatmentChanges(
+    newPlan: ConsentToTreatment,
+    oldPlan: ConsentToTreatment,
+    bipId: number
+  ) {
+    const createAndUpdateOperations =
+      this.repositoryUtils.handleUpdatesAndCreates(
+        [newPlan],
+        [oldPlan],
+        this.consentToTreatmentService,
+        (plan) => (plan.bip_id = bipId)
+      );
+
+    const deleteOperations = this.repositoryUtils.handleDeletes(
+      [oldPlan],
+      [newPlan],
+      this.consentToTreatmentService
+    );
+
+    return createAndUpdateOperations.length || deleteOperations.length
+      ? forkJoin([...createAndUpdateOperations, ...deleteOperations])
+      : of(null);
+  }
 
   save(bip: BipV2, old_bip: BipV2) {
     logTable(old_bip, bip);
@@ -138,6 +168,13 @@ export class BipUseCasesService {
             bip.id
           )
         );
+        planOperations.push(
+          this.handleConsentToTreatmentChanges(
+            bip.consent_to_treatment,
+            old_bip.consent_to_treatment,
+            bip.id
+          )
+        );
         return forkJoin(planOperations);
       }),
       // Then update the BIP
@@ -150,6 +187,7 @@ export class BipUseCasesService {
     private bipService: BipsV2Service,
     private planService: PlansV2Service,
     private objectiveService: ObjectivesV2Service,
+    private consentToTreatmentService: ConsentToTreatmentV2Service,
     private crisisPlanService: CrisisPlansV2Service,
     private repositoryUtils: RepositoryUtils
   ) {}

@@ -32,7 +32,7 @@ Caregivers are to be trained on possible effects of treatment modalities such as
 
 Punishment procedures are not used in this program and least restrictive strategies are always encouraged first. In the case that Response Cost or Simple Corrections are used, procedures will be described and all people involved in treatment will learn and demonstrate how to use them and what the contingencies will be.`,
   FADING_PLAN: `Phase 1: All maladaptives will be reduced to 1 or less incidents per week, and the vineland maladaptive domain score is 17 or less. Behavior analyst and assistant will reduce services by 25%, for 3 consecutive months.
-Phase 2: Phase 1 sustained and Progress on current skill acquisition goals at 80%, pluss vineland socialization and communication domain scores at 80 or above. Behavior analyst and assistant will reduce services by 50%, for 3 consecutive months
+Phase 2: Phase 1 sustained and Progress on current skill acquisition goals at 80%, plus vineland socialization and communication domain scores at 80 or above. Behavior analyst and assistant will reduce services by 50%, for 3 consecutive months
 Phase 3: Phase 2 sustained, skills generalized/maintained 80%. Behavior analyst and assistant will reduce services by 75%, for 3 consecutive months.
 Phase 4: Phase 3 sustained. Behavior analyst will provide 1 hr per week consultation only model to ensure generalization/maintenance of skills, for 3 consecutive months Assistant will be discontinued.
 Phase 5: Phase 4 sustained. Behavior analyst will provide 1 hr per month consultation only model to ensure generalization/maintenance of skills, for 3 consecutive months.
