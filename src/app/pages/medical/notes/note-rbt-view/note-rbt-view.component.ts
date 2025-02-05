@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as jspdf from 'jspdf';
-import { NoteRbtV2, PatientV2 } from 'src/app/core/models';
+import { Intervention, NoteRbtV2, PatientV2 } from 'src/app/core/models';
 import { AppUser } from 'src/app/core/models/users.model';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
@@ -186,6 +186,7 @@ export class NoteRbtViewComponent implements OnInit {
     this.noteRbtV2Service.get(this.note_id).subscribe((resp) => {
       this.note_selected = resp.data as unknown as NoteRbtV2;
       console.log('noteRbt', this.note_selected);
+      this.patient_id = this.note_selected.patient_id;
       this.patient_identifier = this.note_selected.patient_identifier;
       this.bip_id = this.note_selected.bip_id;
       this.statusNote = this.note_selected.status;
@@ -276,6 +277,9 @@ export class NoteRbtViewComponent implements OnInit {
     this.bipV2Service.get(this.bip_id).subscribe((resp) => {
       this.interventionsBase = resp.data.interventions
         .map((intervention) => intervention.title);
+      if (this.interventionsBase.length === 0) {
+        this.interventionsBase = Intervention.getDefaults().map((intervention) => intervention.title);
+      }
     });
   }
 
