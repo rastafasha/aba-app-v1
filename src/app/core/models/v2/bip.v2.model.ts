@@ -156,6 +156,10 @@ export class BipV2 {
       self.risk_assessment = PLAN_CONST.RISK_ASSESSMENT;
     if (!self.fading_plan) self.fading_plan = PLAN_CONST.FADING_PLAN;
     if (!self.discharge_plan) self.discharge_plan = PLAN_CONST.DISCHARGE_PLAN;
+    if (!self.tangibles.length) self.tangibles = Tangible.getDefaults();
+    if (!self.attention.length) self.attention = Attention.getDefaults();
+    if (!self.escape.length) self.escape = Escape.getDefaults();
+    if (!self.sensory.length) self.sensory = Sensory.getDefaults();
 
     return self;
   }
