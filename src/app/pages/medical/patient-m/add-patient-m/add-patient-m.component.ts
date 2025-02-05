@@ -5,7 +5,6 @@ import { PatientMService } from '../service/patient-m.service';
 import { InsuranceService } from '../../../../core/services/insurances.service';
 import Swal from 'sweetalert2';
 import { Location } from '@angular/common';
-import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { PageService } from 'src/app/shared/services/pages.service';
 import { AppUser } from 'src/app/core/models/users.model';
@@ -404,7 +403,8 @@ export class AddPatientMComponent implements OnInit {
     if (!data) return;
     this.patientService
       .createPatient({ ...data, pa_services: this.pa_assessments })
-      .subscribe((resp) => {
+      .subscribe({
+        next: (resp) => {
         if (resp.message === 403) {
           this.text_validation = resp.message_text;
         } else {
@@ -416,8 +416,13 @@ export class AddPatientMComponent implements OnInit {
             ]);
           }
           if (this.user.roles[0] === 'SUPERADMIN' || this.user.roles[0] === 'ADMIN') {
-            this.router.navigate([AppRoutes.patients.list]);
+              this.router.navigate([AppRoutes.patients.list]);
+            }
           }
+        },
+        error: (error) => {
+          console.error('Error creating patient:', error);
+          Swal.fire('Error', `Error creating patient: ${error.message}`, 'error');
         }
       });
   }
