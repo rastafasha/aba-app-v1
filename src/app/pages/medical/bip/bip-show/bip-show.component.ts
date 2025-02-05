@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { map, of, switchMap, tap } from 'rxjs';
 import { BipV2, PatientV2 } from 'src/app/core/models';
-import { BipsV2Service, PatientsV2Service } from 'src/app/core/services';
+import { PatientsV2Service } from 'src/app/core/services';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
 import Swal from 'sweetalert2';
@@ -24,7 +24,6 @@ export class BipShowComponent implements OnInit {
   constructor(
     private useCases: BipUseCasesService,
     private pageService: PageService,
-    private bipService: BipsV2Service,
     private patientService: PatientsV2Service,
     private activatedRoute: ActivatedRoute,
     private router: Router
@@ -63,10 +62,8 @@ export class BipShowComponent implements OnInit {
   }
 
   getBip() {
-    console.log(this.patient);
     if (!this.patient) return of(null);
-    return this.bipService.list({ client_id: this.patient.id }).pipe(
-      switchMap((resp) => this.bipService.get(resp.data[0].id)),
+    return this.useCases.getBipByClientId(this.patient.id).pipe(
       map((resp) => {
         this.bip = resp.data;
         this.old_bip = this.cloneBip(this.bip);
