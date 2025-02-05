@@ -23,8 +23,8 @@ export class BipV2 {
   id: number;
   client_id: number; //patient_id
   doctor_id: number;
+  documents_reviewed: DocumentV2[];
   assestment_conducted: string;
-  assestment_conducted_options: DocumentV2[];
   assestment_evaluation_settings: AssestmentEvaluationSetting[];
   attention: Attention[];
   background_information: string;
@@ -78,10 +78,7 @@ export class BipV2 {
         data.assestment_evaluation_settings,
         AssestmentEvaluationSetting
       ),
-      assestment_conducted_options: ForceMap(
-        data.assestment_conducted_options,
-        DocumentV2
-      ),
+      documents_reviewed: ForceMap(data.documents_reviewed, DocumentV2),
       assestment_conducted: StringOrNullOrUndefined(data.assestment_conducted),
       background_information: StringOrNullOrUndefined(
         data.background_information
@@ -143,28 +140,10 @@ export class BipV2 {
       index,
     }));
 
-    if (!self.crisis_plan) self.crisis_plan = CrisisPlanV2.getDefault();
-    if (!self.recommendations.length)
-      self.recommendations = Recommendation.getDefaults();
-    if (!self.de_escalation_techniques.length)
-      self.de_escalation_techniques = DeEscalationTechnique.getDefaults();
-    if (!self.interventions.length)
-      self.interventions = Intervention.getDefaults();
-    if (!self.generalization_training)
-      self.generalization_training = PLAN_CONST.GENERALIZATION_TRAINING;
-    if (!self.risk_assessment)
-      self.risk_assessment = PLAN_CONST.RISK_ASSESSMENT;
-    if (!self.fading_plan) self.fading_plan = PLAN_CONST.FADING_PLAN;
-    if (!self.discharge_plan) self.discharge_plan = PLAN_CONST.DISCHARGE_PLAN;
-    if (!self.tangibles.length) self.tangibles = Tangible.getDefaults();
-    if (!self.attention.length) self.attention = Attention.getDefaults();
-    if (!self.escape.length) self.escape = Escape.getDefaults();
-    if (!self.sensory.length) self.sensory = Sensory.getDefaults();
-
-    return self;
+    return BipV2.addDefaults(self);
   }
   static getDefault(): BipV2 {
-    return {
+    return this.addDefaults({
       id: undefined,
       client_id: undefined,
       type_of_assessment: undefined,
@@ -173,36 +152,69 @@ export class BipV2 {
       strengths: undefined,
       weaknesses: undefined,
       assestment_evaluation_settings: [],
-      assestment_conducted_options: [],
+      documents_reviewed: [],
       assestment_conducted: undefined,
       background_information: undefined,
       current_treatment_and_progress: undefined,
       education_status: undefined,
-      caregiver_trainings: [PlanV2.getDefaultCaregiverPlan()],
-      hypothesis_based_intervention: PLAN_CONST.HYPOTHESIS_BASED_INTERVENTION,
-      interventions: Intervention.getDefaults(),
+      caregiver_trainings: [],
+      hypothesis_based_intervention: undefined,
+      interventions: [],
       rbt_trainings: [],
       physical_and_medical: [],
       physical_and_medical_status: undefined,
       previous_treatment_and_result: undefined,
-      sensory: [],
-      tangibles: [],
-      attention: [],
-      escape: [],
-      generalization_training: PLAN_CONST.GENERALIZATION_TRAINING,
-      risk_assessment: PLAN_CONST.RISK_ASSESSMENT,
-      fading_plan: PLAN_CONST.FADING_PLAN,
-      discharge_plan: PLAN_CONST.DISCHARGE_PLAN,
-      recommendations: Recommendation.getDefaults(),
+      sensory: undefined,
+      tangibles: undefined,
+      attention: undefined,
+      escape: undefined,
+      generalization_training: undefined,
+      risk_assessment: undefined,
+      fading_plan: undefined,
+      discharge_plan: undefined,
+      recommendations: [],
       maladaptives: [],
       replacements: [],
-      crisis_plan: CrisisPlanV2.getDefault(),
+      crisis_plan: undefined,
       de_escalation_techniques: [],
-      consent_to_treatment: ConsentToTreatment.getDefault(),
+      consent_to_treatment: undefined,
       prevalent_setting_event_and_antecedents: [],
       created_at: undefined,
       updated_at: undefined,
       deleted_at: undefined,
-    };
+    });
+  }
+  private static addDefaults(data: BipV2): BipV2 {
+    data.type_of_assessment ??= '1';
+    data.hypothesis_based_intervention ??=
+      PLAN_CONST.HYPOTHESIS_BASED_INTERVENTION;
+    data.generalization_training ??= PLAN_CONST.GENERALIZATION_TRAINING;
+    data.risk_assessment ??= PLAN_CONST.RISK_ASSESSMENT;
+    data.fading_plan ??= PLAN_CONST.FADING_PLAN;
+    data.discharge_plan ??= PLAN_CONST.DISCHARGE_PLAN;
+    data.crisis_plan ??= CrisisPlanV2.getDefault();
+    data.caregiver_trainings = data.caregiver_trainings?.length
+      ? data.caregiver_trainings
+      : PlanV2.getDefaultsCaregiverPlan();
+
+    data.interventions = data.interventions?.length
+      ? data.interventions
+      : Intervention.getDefaults();
+    data.tangibles = data.tangibles?.length
+      ? data.tangibles
+      : Tangible.getDefaults();
+    data.attention = data.attention?.length
+      ? data.attention
+      : Attention.getDefaults();
+    data.escape = data.escape?.length ? data.escape : Escape.getDefaults();
+    data.sensory = data.sensory?.length ? data.sensory : Sensory.getDefaults();
+    data.recommendations = data.recommendations?.length
+      ? data.recommendations
+      : Recommendation.getDefaults();
+    data.de_escalation_techniques = data.de_escalation_techniques?.length
+      ? data.de_escalation_techniques
+      : DeEscalationTechnique.getDefaults();
+    data.consent_to_treatment ??= ConsentToTreatment.getDefault();
+    return data;
   }
 }

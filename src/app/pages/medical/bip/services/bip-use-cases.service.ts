@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, of, switchMap } from 'rxjs';
+import { forkJoin, map, of, switchMap } from 'rxjs';
 import {
   BipV2,
   ConsentToTreatment,
@@ -29,6 +29,61 @@ export class BipUseCasesService {
       })
     );
   }
+  save(new_bip: BipV2, old_bip: BipV2) {
+    logTable(old_bip, new_bip);
+
+    const planCategories: (keyof BipV2)[] = [
+      'maladaptives',
+      'replacements',
+      'rbt_trainings',
+      'caregiver_trainings',
+    ];
+    const operation = !new_bip.id
+      ? this.bipService.create(new_bip).pipe(map((resp) => resp.data))
+      : of(new_bip);
+
+    return operation.pipe(
+      // Handle all plan changes first
+      switchMap((bip) => {
+        new_bip = bip;
+        const planOperations = planCategories.map((category) =>
+          this.handlePlanChanges(
+            bip[category as never],
+            old_bip[category as never],
+            bip.id
+          )
+        );
+        // Add crisis plan and other handlers
+        planOperations.push(
+          this.handleCrisisPlanChanges(
+            bip.crisis_plan,
+            old_bip.crisis_plan,
+            bip.id
+          )
+        );
+        planOperations.push(
+          this.handleConsentToTreatmentChanges(
+            bip.consent_to_treatment,
+            old_bip.consent_to_treatment,
+            bip.id
+          )
+        );
+        return forkJoin(planOperations);
+      }),
+      // Then update the BIP
+      switchMap(() => this.bipService.update(new_bip, new_bip.id)),
+      switchMap((resp) => this.bipService.get(resp.data.id))
+    );
+  }
+
+  constructor(
+    private bipService: BipsV2Service,
+    private planService: PlansV2Service,
+    private objectiveService: ObjectivesV2Service,
+    private consentToTreatmentService: ConsentToTreatmentV2Service,
+    private crisisPlanService: CrisisPlansV2Service,
+    private repositoryUtils: RepositoryUtils
+  ) {}
 
   private handleObjectiveChanges(
     newObjectives: Objective[],
@@ -142,56 +197,4 @@ export class BipUseCasesService {
       ? forkJoin([...createAndUpdateOperations, ...deleteOperations])
       : of(null);
   }
-
-  save(bip: BipV2, old_bip: BipV2) {
-    logTable(old_bip, bip);
-
-    const planCategories: (keyof BipV2)[] = [
-      'maladaptives',
-      'replacements',
-      'rbt_trainings',
-      'caregiver_trainings',
-    ];
-
-    return of(null).pipe(
-      // Handle all plan changes first
-      switchMap(() => {
-        const planOperations = planCategories.map((category) =>
-          this.handlePlanChanges(
-            bip[category as never],
-            old_bip[category as never],
-            bip.id
-          )
-        );
-        // Add crisis plan and other handlers
-        planOperations.push(
-          this.handleCrisisPlanChanges(
-            bip.crisis_plan,
-            old_bip.crisis_plan,
-            bip.id
-          )
-        );
-        planOperations.push(
-          this.handleConsentToTreatmentChanges(
-            bip.consent_to_treatment,
-            old_bip.consent_to_treatment,
-            bip.id
-          )
-        );
-        return forkJoin(planOperations);
-      }),
-      // Then update the BIP
-      switchMap(() => this.bipService.update(bip, bip.id)),
-      switchMap((resp) => this.bipService.get(resp.data.id))
-    );
-  }
-
-  constructor(
-    private bipService: BipsV2Service,
-    private planService: PlansV2Service,
-    private objectiveService: ObjectivesV2Service,
-    private consentToTreatmentService: ConsentToTreatmentV2Service,
-    private crisisPlanService: CrisisPlansV2Service,
-    private repositoryUtils: RepositoryUtils
-  ) {}
 }
