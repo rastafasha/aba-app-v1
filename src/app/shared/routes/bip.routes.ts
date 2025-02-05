@@ -28,8 +28,4 @@ export class BipRoutes {
   static get show(): string {
     return `${baseUrl}/bip/show/patient`;
   }
-
-  static get edit(): string {
-    return `${baseUrl}/bip/edit/patient`;
-  }
 }
