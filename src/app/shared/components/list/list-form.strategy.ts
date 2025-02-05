@@ -59,8 +59,7 @@ export class ListFormStrategy<T extends ListItem> {
       // New item - add to the end of the array
       item.index = items.length;
       items.push({ ...item });
-    } else {
-      // Existing item - update at the specified index
+    } else if (!items.find((x) => x === item)) {
       items[item.index] = { ...item };
     }
 
