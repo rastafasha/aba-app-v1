@@ -1,21 +1,21 @@
 import { Location } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { FileSaverService } from 'ngx-filesaver';
 import { AuthService } from 'src/app/core/auth/auth.service';
-import { ActionModalComponent } from 'src/app/shared/components/action-modal/action-modal.component';
+import { LocationV2, PatientV2 } from 'src/app/core/models';
 import { AppUser } from 'src/app/core/models/users.model';
+import { LocationsV2Service, PatientsV2Service } from 'src/app/core/services';
+import { ActionModalComponent } from 'src/app/shared/components/action-modal/action-modal.component';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
 import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
-import { PatientMService } from '../service/patient-m.service';
-import { LocationsV2Service, PatientsV2Service } from 'src/app/core/services';
-import { LocationV2, PatientV2 } from 'src/app/core/models';
-import { HttpErrorResponse } from '@angular/common/http';
 import { BipService } from '../../bip/service/bip.service';
+import { PatientMService } from '../service/patient-m.service';
 
 declare var $: any;
 @Component({
@@ -410,7 +410,7 @@ export class ListPatientMComponent implements OnInit {
         title: 'BIP Create',
         icon: 'fa fa-address-book',
         buttonClass: 'btn-outline-success',
-        onClick: () => this.router.navigate([AppRoutes.bip.edit, patient.id]),
+        onClick: () => this.router.navigate([AppRoutes.bip.show, patient.id]),
       },
       {
         title: 'BIP View',

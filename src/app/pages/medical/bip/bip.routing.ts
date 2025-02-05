@@ -20,11 +20,6 @@ const routes: Routes = [
         component: BipShowComponent,
         resolve: { patient: patientResolver },
       },
-
-      {
-        path: lastRoutes(AppRoutes.bip.edit, 2, '/:id'),
-        redirectTo: lastRoutes(AppRoutes.bip.edit, 2, '/:id/1'),
-      },
     ],
   },
 ];
