@@ -47,7 +47,11 @@
               <th mat-sort-header="telefonop">Phone</th>
               <th
                 mat-sort-header="ops"
-                *ngIf="roles === 'SUPERADMIN' || roles === 'ADMIN' || roles === 'MANAGER'"
+                *ngIf="
+                  roles === 'SUPERADMIN' ||
+                  roles === 'ADMIN' ||
+                  roles === 'MANAGER'
+                "
               >
                 Options
               </th>
@@ -82,7 +86,6 @@
               <td>{{ patient.email }}</td>
               <td>{{ patient.phone }}</td>
               <td>
-
                 <span *ngIf="patient.status === 'active'">
                   <button
                     class="btn btn-outline-success"
@@ -93,7 +96,7 @@
                       roles === 'LM' ||
                       roles === 'BCBA'
                     "
-                    [routerLink]="[routes.bip.edit, patient.id]"
+                    [routerLink]="[routes.bip.show, patient.id]"
                     tooltip="BIP Create"
                   >
                     <i class="fa fa-address-book"></i>
@@ -115,7 +118,10 @@
                       roles === 'LM' ||
                       roles === 'RBT'
                     "
-                    [routerLink]="[routes.noteRbt.noteRbt, patient.patient_identifier]"
+                    [routerLink]="[
+                      routes.noteRbt.noteRbt,
+                      patient.patient_identifier
+                    ]"
                     tooltip="Create RBT Note"
                   >
                     <i class="fa fa-id-card"></i>
@@ -129,7 +135,10 @@
                       roles === 'LM' ||
                       roles === 'RBT'
                     "
-                    [routerLink]="[routes.noteRbt.list, patient.patient_identifier]"
+                    [routerLink]="[
+                      routes.noteRbt.list,
+                      patient.patient_identifier
+                    ]"
                     tooltip="RBT Note list"
                   >
                     <i class="fa fa-bars"></i>
@@ -160,14 +169,17 @@
                       roles === 'LM' ||
                       roles === 'BCBA'
                     "
-                    [routerLink]="[routes.noteBcba.list, patient.patient_identifier]"
+                    [routerLink]="[
+                      routes.noteBcba.list,
+                      patient.patient_identifier
+                    ]"
                     tooltip="BCBA Note list"
                   >
                     <i class="fa fa-bars"></i>
                   </button>
                 </span>
               </td>
-              <td *ngIf="roles === 'SUPERADMIN'|| roles === 'ADMIN'">
+              <td *ngIf="roles === 'SUPERADMIN' || roles === 'ADMIN'">
                 <select
                   class="form-control form-select-solid fw-bolder"
                   name="state"
