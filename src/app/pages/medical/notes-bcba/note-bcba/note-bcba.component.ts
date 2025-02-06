@@ -24,7 +24,7 @@ import { calculateUnitsFromTime, convertToHours, convertToMinutes } from 'src/ap
 import { GenerateAiSummaryComponent } from 'src/app/shared/components/generate-ai-summary/generate-ai-summary.component';
 import { ReplacementProtocol } from '../interfaces';
 import { PatientsV2Service } from 'src/app/core/services/patients.v2.service';
-
+import { posCodes } from 'src/app/shared/utils/getPos';
 
 @Component({
   selector: 'app-note-bcba',
@@ -42,6 +42,8 @@ export class NoteBcbaComponent implements OnInit {
   show971512 = false;
 
   text_validation = '';
+
+  posCodes = posCodes;
 
   selectedValueRBT!: string;
   selectedValueTimeIn = '';
@@ -101,8 +103,9 @@ export class NoteBcbaComponent implements OnInit {
   reinforced_caregiver_strengths_in = '';
   gave_constructive_feedback_on = '';
   recomended_more_practice_on = '';
-  BCBA_conducted_client_observations = false;
-  BCBA_conducted_assessments = false;
+
+  BCBA_conducted_client_observations = true;
+  BCBA_conducted_assessments = true;
 
   modifications_needed_at_this_time = false;
   cargiver_participation = false;
@@ -265,7 +268,7 @@ export class NoteBcbaComponent implements OnInit {
             name: replacement.name,
             description: objective.description,
             status: objective.status,
-            assessed: this.replacementProtocols.find(p => p.id === replacement.id)?.assessed || false,
+            assessed: this.replacementProtocols.find(p => p.id === replacement.id)?.assessed || !this.isEditMode,
             modified: this.replacementProtocols.find(p => p.id === replacement.id)?.modified || false,
             demonstrated: this.replacementProtocols.find(p => p.id === replacement.id)?.demonstrated || false,
           }))
@@ -683,8 +686,8 @@ export class NoteBcbaComponent implements OnInit {
   }
 
   getAISummaryData(): AISummaryData {
-    console.log(this.replacementProtocols, 'replacementProtocols');
     if (!this.selectedPaService || !this.selectedPaService.cpt) {
+      Swal.fire('Warning', 'Please select a CPT Code', 'warning');
       return null;
     }
 
@@ -853,14 +856,6 @@ export class NoteBcbaComponent implements OnInit {
       missingFields.push('ABA Supervisor');
     }
 
-    if (!this.participants || this.participants === '') {
-      missingFields.push('Present this session');
-    }
-
-    if (!this.environmental_changes || this.environmental_changes === '') {
-      missingFields.push('Environmental changes');
-    }
-
     if (!this.summary_note || this.summary_note === '') {
       missingFields.push('Summary note');
     }
@@ -876,12 +871,26 @@ export class NoteBcbaComponent implements OnInit {
         break;
 
       case '97155':
-        if (!this.rbt_training_goals || this.rbt_training_goals.length === 0) {
-          missingFields.push('RBT training goals');
+        if (!this.participants || this.participants === '') {
+          missingFields.push('Present this session');
         }
+
+        if (!this.environmental_changes || this.environmental_changes === '') {
+          missingFields.push('Environmental changes');
+        }
+        // if (!this.rbt_training_goals || this.rbt_training_goals.length === 0) {
+        //   missingFields.push('RBT training goals');
+        // }
         break;
 
       case '97156':
+        if (!this.participants || this.participants === '') {
+          missingFields.push('Present this session');
+        }
+
+        if (!this.environmental_changes || this.environmental_changes === '') {
+          missingFields.push('Environmental changes');
+        }
         if (!this.caregivers_training_goalsgroup || this.caregivers_training_goalsgroup.length === 0) {
           missingFields.push('Caregiver training goals');
         }

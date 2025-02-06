@@ -46,34 +46,31 @@
             reaction, enter "0"
           </p>
         </div>
-        <div class="table-responsive">
-          <table class="table mb-0">
+        <app-split-table
+          [data]="caregivers_training_goalsgroup"
+          [headerTemplate]="headerTemplate"
+          [rowTemplate]="rowTemplate">
+          <ng-template #headerTemplate>
             <thead>
               <tr>
                 <th>Caregiver Goal</th>
                 <th>% of Occurrences</th>
               </tr>
             </thead>
-            <tbody>
-              <tr
-                *ngFor="
-                  let goal of caregivers_training_goalsgroup;
-                  let i = index
-                "
-              >
-                <td>{{ goal.name }}</td>
-                <td>
-                  <input
-                    class="form-control"
-                    type="number"
-                    [(ngModel)]="goal.porcent_of_correct_response"
-                    (ngModelChange)="updateCaregiverGoal(i)"
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+          </ng-template>
+
+          <ng-template #rowTemplate let-goal let-i="index">
+            <td>{{ goal.name }}</td>
+            <td>
+              <input
+                class="form-control"
+                type="number"
+                [(ngModel)]="goal.porcent_of_correct_response"
+                (ngModelChange)="updateCaregiverGoal(i)"
+              />
+            </td>
+          </ng-template>
+        </app-split-table>
       </div>
     </div>
   </div>

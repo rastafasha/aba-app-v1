@@ -7,36 +7,36 @@ import { Intervention } from '../interfaces';
   template: `
     <div class="col-12">
       <h5>Intervention protocols</h5>
-      <div class="table-responsive content-box">
-        <table class="table mb-0 ">
+      <app-split-table
+        [data]="interventionsList"
+        [headerTemplate]="headerTemplate"
+        [rowTemplate]="rowTemplate">
+        <ng-template #headerTemplate>
           <thead>
             <tr>
               <th>please check as needed</th>
               <th>Demonstrated</th>
             </tr>
           </thead>
-          <tbody>
-            <tr *ngFor="let interv of interventionsList; let i = index">
-              <td>{{ interv.name }}</td>
-              <td>
-                <div
-                  class="status-toggle d-flex justify-content-between align-items-center"
-                >
-                  <input
-                    type="checkbox"
-                    [id]="interv.id"
-                    class="check"
-                    [(ngModel)]="interv.value"
-                    [name]="interv.id"
-                    (ngModelChange)="updatedInterventions()"
-                  />
-                  <label [for]="interv.id" class="checktoggle">checkbox</label>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        </ng-template>
+
+        <ng-template #rowTemplate let-interv>
+          <td>{{ interv.name }}</td>
+          <td>
+            <div class="status-toggle d-flex justify-content-between align-items-center">
+              <input
+                type="checkbox"
+                [id]="interv.id"
+                class="check"
+                [(ngModel)]="interv.value"
+                [name]="interv.id"
+                (ngModelChange)="updatedInterventions()"
+              />
+              <label [for]="interv.id" class="checktoggle">checkbox</label>
+            </div>
+          </td>
+        </ng-template>
+      </app-split-table>
     </div>
   `,
 })
@@ -53,7 +53,6 @@ export class InterventionsComponent {
           name: interv.name,
           demonstrated: !!interv.value,
         };
-        // acc[interv.id] = true;
         return acc;
       }, {});
     console.log(interventionsObj);

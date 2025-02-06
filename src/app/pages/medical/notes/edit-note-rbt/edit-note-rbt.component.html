@@ -198,10 +198,7 @@
                       (change)="onPosChange($event)"
                     >
                       <option>-- Select --</option>
-                      <option value="03">03 School</option>
-                      <option value="12">12 Home</option>
-                      <option value="02">02 Telehealth</option>
-                      <option value="99">99 Other</option>
+                      <option *ngFor="let pos of posCodes" value="{{pos.code}}">{{pos.code}} {{pos.name}}</option>
                     </select>
                   </div>
                 </div>
@@ -432,7 +429,7 @@
             (maladaptivesChange)="onMaladaptivesChange($event)"
           >
           </app-maladaptives-options>
-          
+
         </div>
       </div>
     </div>
@@ -448,7 +445,7 @@
             (replacementsChange)="onReplacementsChange($event)"
           >
           </app-replacements>
-          
+
         </div>
       </div>
     </div>

@@ -7,8 +7,11 @@ import { InterventionsDoble } from '../interfaces';
   template: `
     <div class="col-12">
       <h5>Intervention protocols</h5>
-      <div class="table-responsive content-box">
-        <table class="table mb-0 ">
+      <app-split-table
+        [data]="interventionsListDoble"
+        [headerTemplate]="headerTemplate"
+        [rowTemplate]="rowTemplate">
+        <ng-template #headerTemplate>
           <thead>
             <tr>
               <th>please check as needed</th>
@@ -16,48 +19,39 @@ import { InterventionsDoble } from '../interfaces';
               <th>Modified</th>
             </tr>
           </thead>
-          <tbody>
-            <tr *ngFor="let intervent of interventionsListDoble; let i = index">
-              <td>{{ intervent.name }}</td>
-              <td>
-                <div
-                  class="status-toggle d-flex justify-content-between align-items-center"
-                >
-                  <input
-                    type="checkbox"
-                    [id]="intervent.id + '-assessed'"
-                    class="check"
-                    [(ngModel)]="intervent.value"
-                    disabled
-                    [name]="intervent.id + '-assessed'"
-                    (ngModelChange)="updatedInterventions2()"
-                  />
-                  <label [for]="intervent.id + '-assessed'" class="checktoggle"
-                    >checkbox</label
-                  >
-                </div>
-              </td>
-              <td>
-                <div
-                  class="status-toggle d-flex justify-content-between align-items-center"
-                >
-                  <input
-                    type="checkbox"
-                    [id]="intervent.id + '-modified'"
-                    class="check"
-                    [(ngModel)]="intervent.value2"
-                    [name]="intervent.id + '-modified'"
-                    (ngModelChange)="updatedInterventions2()"
-                  />
-                  <label [for]="intervent.id + '-modified'" class="checktoggle"
-                    >checkbox</label
-                  >
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        </ng-template>
+
+        <ng-template #rowTemplate let-intervent>
+          <td>{{ intervent.name }}</td>
+          <td>
+            <div class="status-toggle d-flex justify-content-between align-items-center">
+              <input
+                type="checkbox"
+                [id]="intervent.id + '-assessed'"
+                class="check"
+                [(ngModel)]="intervent.value"
+                disabled
+                [name]="intervent.id + '-assessed'"
+                (ngModelChange)="updatedInterventions2()"
+              />
+              <label [for]="intervent.id + '-assessed'" class="checktoggle">checkbox</label>
+            </div>
+          </td>
+          <td>
+            <div class="status-toggle d-flex justify-content-between align-items-center">
+              <input
+                type="checkbox"
+                [id]="intervent.id + '-modified'"
+                class="check"
+                [(ngModel)]="intervent.value2"
+                [name]="intervent.id + '-modified'"
+                (ngModelChange)="updatedInterventions2()"
+              />
+              <label [for]="intervent.id + '-modified'" class="checktoggle">checkbox</label>
+            </div>
+          </td>
+        </ng-template>
+      </app-split-table>
     </div>
   `,
 })

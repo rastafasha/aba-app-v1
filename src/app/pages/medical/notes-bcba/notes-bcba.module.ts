@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { PipesModule } from 'src/app/shared/pipes/pipes.module';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { SharedModule } from '../../../shared/shared.module';
 import { ComponentsModule } from '../bip/components/components.module';
 import { NoteBcbaByClientComponent } from './note-bcba-by-client/note-bcba-by-client.component';
 import { NoteBcbaEditComponent } from './note-bcba-edit/note-bcba-edit.component';

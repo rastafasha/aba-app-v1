@@ -17,6 +17,7 @@ import { calculateUnitsFromTime, convertToHours, convertToMinutes } from 'src/ap
 import { PatientsV2Service } from 'src/app/core/services/patients.v2.service';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { Intervention } from 'src/app/core/models/v2/intervention.v2.model';
+import { posCodes } from 'src/app/shared/utils/getPos';
 
 @Component({
   selector: 'app-note-rbt',
@@ -27,7 +28,7 @@ export class NoteRbtComponent implements OnInit {
   @ViewChild(GenerateAiSummaryComponent) aiSummaryComponent: GenerateAiSummaryComponent;
 
   routes = AppRoutes;
-
+  posCodes = posCodes;
   valid_form = false;
 
   text_validation = '';

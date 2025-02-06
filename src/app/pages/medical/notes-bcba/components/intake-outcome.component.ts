@@ -7,38 +7,36 @@ import { Outcome } from '../interfaces';
   template: `
     <div class="col-12">
       <h5>Intake and Outcome Measures</h5>
-      <div class="table-responsive content-box">
-        <table class="table mb-0 ">
-          <thead>
+      <app-split-table
+        [data]="outcomeList"
+        [headerTemplate]="headerTemplate"
+        [rowTemplate]="rowTemplate">
+        <ng-template #headerTemplate>
+          <thead style="break-inside: avoid;">
             <tr>
               <th>please check as needed</th>
-              <th>Option</th>
+              <th>Select</th>
             </tr>
           </thead>
-          <tbody>
-            <tr *ngFor="let intakeoutcome of outcomeList; let i = index">
-              <td>{{ intakeoutcome.name }}</td>
-              <td>
-                <div
-                  class="status-toggle d-flex justify-content-between align-items-center"
-                >
-                  <input
-                    type="checkbox"
-                    [id]="intakeoutcome.id"
-                    class="check"
-                    [(ngModel)]="intakeoutcome.value"
-                    [name]="intakeoutcome.id"
-                    (ngModelChange)="updateIntakeOutcomes()"
-                  />
-                  <label [for]="intakeoutcome.id" class="checktoggle"
-                    >checkbox</label
-                  >
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        </ng-template>
+
+        <ng-template #rowTemplate let-intakeoutcome>
+          <td>{{ intakeoutcome.name }}</td>
+          <td>
+            <div class="status-toggle d-flex justify-content-between align-items-center">
+              <input
+                type="checkbox"
+                [id]="intakeoutcome.id"
+                class="check"
+                [(ngModel)]="intakeoutcome.value"
+                [name]="intakeoutcome.id"
+                (ngModelChange)="updateIntakeOutcomes()"
+              />
+              <label [for]="intakeoutcome.id" class="checktoggle">checkbox</label>
+            </div>
+          </td>
+        </ng-template>
+      </app-split-table>
     </div>
   `,
 })
