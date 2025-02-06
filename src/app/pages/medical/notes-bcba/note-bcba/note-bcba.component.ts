@@ -704,6 +704,7 @@ export class NoteBcbaComponent implements OnInit {
       environmentalChanges: this.environmental_changes,
       clientAppeared: this.client_appeared,
       evidencedBy: this.as_evidenced_by,
+      participants: this.participants,
       // 97151
       cpt51type: this.selectedPaService1?.cpt === 'Observation' ? 'observation' :
                  this.selectedPaService1?.cpt === 'Report' ? 'report' : undefined,
