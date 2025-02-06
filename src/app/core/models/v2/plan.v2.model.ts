@@ -103,23 +103,25 @@ export class PlanV2 {
       deleted_at: undefined,
     });
   }
-  static getDefaultCaregiverPlan(): PlanV2 {
-    return {
-      id: 0,
-      bip_id: 0,
-      name: 'Caregiver Training Plan',
-      description: PLAN_CONST.CAREGIVER_PLAN,
-      baseline_level: 0,
-      baseline_date: new Date(),
-      initial_intensity: 0,
-      current_intensity: 0,
-      category: 'caregiver_training',
-      status: 'active',
-      objectives: Objective.getDefaultCaregiverObjectives(),
-      index: undefined, // Changed from 0 to undefined
-      created_at: undefined,
-      updated_at: undefined,
-      deleted_at: undefined,
-    };
+  static getDefaultsCaregiverPlan(): PlanV2[] {
+    return [
+      {
+        id: 0,
+        bip_id: 0,
+        name: 'Caregiver Training Plan',
+        description: PLAN_CONST.CAREGIVER_PLAN,
+        baseline_level: 0,
+        baseline_date: new Date(),
+        initial_intensity: 0,
+        current_intensity: 0,
+        category: 'caregiver_training',
+        status: 'active',
+        objectives: Objective.getDefaultCaregiverObjectives(),
+        index: undefined, // Changed from 0 to undefined
+        created_at: undefined,
+        updated_at: undefined,
+        deleted_at: undefined,
+      },
+    ];
   }
 }

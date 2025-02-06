@@ -1,3 +1,4 @@
+import { BIP_CONST } from './constants';
 
 export class Tangible {
   index?: number;
@@ -10,9 +11,12 @@ export class Tangible {
   static getDefault(): Tangible {
     return new Tangible({
       index: undefined, // Changed from 0
-      preventive_strategies: '',
-      replacement_skills: '',
-      manager_strategies: '',
+      preventive_strategies: BIP_CONST.TANGIBLE.STRATEGY,
+      replacement_skills: BIP_CONST.TANGIBLE.REPLACEMENT_SKILLS,
+      manager_strategies: BIP_CONST.TANGIBLE.MANAGER_STRATEGY,
     });
+  }
+  static getDefaults(): Tangible[] {
+    return [Tangible.getDefault()];
   }
 }
