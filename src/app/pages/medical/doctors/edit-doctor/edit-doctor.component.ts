@@ -8,6 +8,7 @@ import { PageService } from 'src/app/shared/services/pages.service';
 import Swal from 'sweetalert2';
 import { DoctorService } from '../service/doctor.service';
 import { LocationService } from '../../location/services/location.service';
+import { AuthService } from 'src/app/core/auth/auth.service';
 @Component({
   selector: 'app-edit-doctor',
   templateUrl: './edit-doctor.component.html',
@@ -99,14 +100,13 @@ export class EditDoctorComponent implements OnInit {
     private pageService: PageService,
     private activatedRoute: ActivatedRoute,
     private locationBack: Location,
-    private locationService: LocationService
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
     //
     this.pageService.onInitPage();
-    const USER = localStorage.getItem('user');
-    this.user = JSON.parse(USER ? USER : '');
+    this.user = this.authService.user as AppUser;
     this.roles = this.user.roles;
     this.doctor_id = this.user.id;
     this.activatedRoute.params.subscribe((resp) => {

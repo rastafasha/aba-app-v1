@@ -17,6 +17,7 @@ import {
   CHART_OPTIONS_2,
   CHART_OPTIONS_3,
 } from './doctor-dashboard.const';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
 @Component({
   selector: 'app-doctor-dashboard',
@@ -57,7 +58,8 @@ export class DoctorDashboardComponent implements OnInit {
 
   constructor(
     private dashboardService: DashboardService,
-    private pageService: PageService
+    private pageService: PageService,
+    private authService: AuthService,
   ) {
     this.chartOptionsIncome = JSON.parse(JSON.stringify(CHART_OPTIONS_1));
     this.chartOptionsTwo = JSON.parse(JSON.stringify(CHART_OPTIONS_2));
@@ -69,8 +71,7 @@ export class DoctorDashboardComponent implements OnInit {
 
     this.getDoctors();
 
-    const USER = localStorage.getItem('user');
-    this.user = JSON.parse(USER ? USER : '');
+    this.user = this.authService.user as AppUser;
   }
 
   getDoctors() {
