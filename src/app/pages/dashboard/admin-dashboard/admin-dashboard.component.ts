@@ -16,6 +16,7 @@ import {
   chartOptionsThree,
   chartOptionsTwo,
 } from './admin-dashboard.const';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -82,7 +83,9 @@ export class AdminDashboardComponent implements OnInit {
   constructor(
     private data: DataService,
     private dashboardService: DashboardService,
-    private pageService: PageService
+    private pageService: PageService,
+    private authService: AuthService,
+
   ) {
     this.chartOptionsOne = chartOptionsOne;
     this.chartOptionsTwo = chartOptionsTwo;
@@ -97,8 +100,7 @@ export class AdminDashboardComponent implements OnInit {
     this.getDashboardAdmin();
     this.getDashboardAdminYear();
     // this.getAppointmentPending();
-    const USER = localStorage.getItem('user');
-    this.user = JSON.parse(USER ? USER : '');
+    this.user = this.authService.user as AppUser;
   }
 
   getAppointmentPending() {

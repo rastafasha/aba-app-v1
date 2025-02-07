@@ -14,6 +14,7 @@ import {
   LocationPatient,
   LocationSpecialist,
 } from '../../models/locations.model';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
 @Component({
   selector: 'app-specialist-location',
@@ -87,14 +88,14 @@ export class SpecialistLocationComponent implements OnInit {
     private locationService: LocationService,
     private activatedRoute: ActivatedRoute,
     private location: Location,
-    private pageService: PageService
+    private pageService: PageService,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
     this.locationId;
 
-    const USER = localStorage.getItem('user');
-    this.user = JSON.parse(USER ? USER : '');
+    this.user = this.authService.user as AppUser;
     this.role = this.user.roles[0];
 
     this.pageService.onInitPage();

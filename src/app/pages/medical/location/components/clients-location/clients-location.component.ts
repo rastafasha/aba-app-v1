@@ -10,6 +10,7 @@ import { DoctorService } from '../../../doctors/service/doctor.service';
 import { PatientMService } from '../../../patient-m/service/patient-m.service';
 import { AppUser } from 'src/app/core/models/users.model';
 import { PageService } from 'src/app/shared/services/pages.service';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
 @Component({
   selector: 'app-clients-location',
@@ -85,14 +86,14 @@ export class ClientsLocationComponent {
     private locationService: LocationService,
     private activatedRoute: ActivatedRoute,
     private patientService: PatientMService,
+    private authService: AuthService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.locationId;
 
-    const USER = localStorage.getItem('user');
-    this.user = JSON.parse(USER ? USER : '');
+    this.user = this.authService.user as AppUser;
     this.roles = this.user.roles[0];
 
     this.pageService.onInitPage();

@@ -11,6 +11,7 @@ import { PaServiceV2 } from 'src/app/core/models';
 import { PatientsV2Service } from 'src/app/core/services';
 import { PaServicesV2Service } from 'src/app/core/services/pa-services.v2.service';
 import { interventionsList } from '../listaInterventionData';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
 @Component({
   selector: 'app-edit-note-rbt',
@@ -172,7 +173,8 @@ export class EditNoteRbtComponent implements OnInit {
     private ativatedRoute: ActivatedRoute,
     private noteRbtService: NoteRbtService,
     private doctorService: DoctorService,
-    private location: Location
+    private location: Location,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -188,8 +190,7 @@ export class EditNoteRbtComponent implements OnInit {
     this.number_of_occurrences = 0;
     this.number_of_correct_response = 0;
 
-    const USER = localStorage.getItem('user');
-    this.user = JSON.parse(USER ? USER : '');
+    this.user = this.authService.user as AppUser;
     this.doctor_id = this.user.id;
     this.getNote();
     this.getConfig();
