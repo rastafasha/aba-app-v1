@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ReplacementProtocol } from '../../interfaces';
+import { MaladaptiveData, MaladaptiveProtocol, ReplacementProtocol } from '../../interfaces';
 
 @Component({
   selector: 'app-show91755',
@@ -12,11 +12,13 @@ export class Show91755Component {
   @Input() replacementProtocols: ReplacementProtocol[] = [];
   @Input() modifications_needed_at_this_time;
   @Input() additional_goals_or_interventions;
-
+  @Input() maladaptives: MaladaptiveData[] = [];
+  @Input() was_the_rbt_present;
   @Output() modificationsChange = new EventEmitter<boolean>();
   @Output() additionalChange = new EventEmitter<string>();
   @Output() interventions2Change = new EventEmitter<object>();
   @Output() protocolsChange = new EventEmitter<ReplacementProtocol[]>();
+  @Output() maladaptivesChange = new EventEmitter<MaladaptiveProtocol[]>();
 
   onCheckboxChange() {
     this.modificationsChange.emit(this.modifications_needed_at_this_time);
@@ -32,5 +34,9 @@ export class Show91755Component {
 
   onReplacementProtocolsChange(protocols: ReplacementProtocol[]) {
     this.protocolsChange.emit(protocols);
+  }
+
+  onMaladaptivesChange(maladaptives: MaladaptiveProtocol[]) {
+    this.maladaptivesChange.emit(maladaptives);
   }
 }

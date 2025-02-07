@@ -71,6 +71,8 @@ export class NoteBcbaV2 {
   intake_outcome?: string[];
 
   // 97155
+  was_the_rbt_present?: boolean;
+  maladaptives?: MaladaptivesData;
   intervention_protocols?: Protocol[];
   replacement_protocols?: PlanProtocol[];
   modifications_needed_at_this_time?: boolean;
@@ -151,6 +153,8 @@ export class NoteBcbaV2 {
       BCBA_conducted_assessments: BooleanOrNullOrUndefined(data.BCBA_conducted_assessments),
 
       // 97155
+      was_the_rbt_present: BooleanOrNullOrUndefined(data.was_the_rbt_present),
+      maladaptives: MaladaptivesBuilder(data.maladaptives),
       replacement_protocols: ReplacementProtocolsBuilder(data.replacement_protocols),
       intervention_protocols: InterventionProtocolsBuilder(data.intervention_protocols),
       modifications_needed_at_this_time: BooleanOrNullOrUndefined(data.modifications_needed_at_this_time),
@@ -164,18 +168,21 @@ export class NoteBcbaV2 {
   }
 }
 
+export type Maladaptive = { plan_id: number; name: string; frequency: number };
+
 export type CaregiverGoals = CaregiverGoalProtocol[];
 export type RbtTrainingGoals = object[];
 export type ReplacementProtocols = PlanProtocol[];
 export type InterventionProtocols = Protocol[];
 export type BehaviorProtocols = DiscussedPlanProtocol[];
+export type MaladaptivesData = Maladaptive[];
 
 const CaregiverGoalsBuilder = (data: CaregiverGoalProtocol[]): CaregiverGoals => data;
 const RbtTrainingGoalsBuilder = (data: object[]): RbtTrainingGoals => data;
 const ReplacementProtocolsBuilder = (data: PlanProtocol[]): ReplacementProtocols => data;
 const InterventionProtocolsBuilder = (data: Protocol[]): InterventionProtocols => data;
 const BehaviorProtocolsBuilder = (data: DiscussedPlanProtocol[]): BehaviorProtocols => data;
-
+const MaladaptivesBuilder = (data: Maladaptive[]): MaladaptivesData => data;
 export function isNoteBcbaV2(data: NoteRbtV2 | NoteBcbaV2): data is NoteBcbaV2 {
   return data?.type === 'bcba';
 }

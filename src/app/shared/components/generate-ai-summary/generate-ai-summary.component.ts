@@ -13,7 +13,6 @@ export interface AISummaryData {
   endTime2: string | null;
   mood?: string;
   pos: string;
-  maladaptives?: Array<{behavior: string; frequency: number}>;
   replacements?: Array<{name: string; totalTrials: number; correctResponses: number}>;
   caregiverGoals?: string;
   rbtTrainingGoals?: Array<{goal: string; percentCorrect: number}>;
@@ -36,6 +35,8 @@ export interface AISummaryData {
   // 97153 specific fields
   interventions?: string[];
   // 97155 specific fields
+  maladaptives?: Array<{behavior: string; frequency: number}>;
+  wasTheRbtPresent?: boolean;
   interventionProtocols?: string;
   replacementProtocols?: string;
   modificationsNeededAtThisTime?: boolean;
@@ -143,7 +144,7 @@ export class GenerateAiSummaryComponent {
               missingFields.push('Assessment Procedures');
             }
             if (!summaryData.instruments?.length) {
-              missingFields.push('Assessment Instruments');
+              missingFields.push('Assessment Tools');
             }
             if (!summaryData.intakeAndOutcomeMeasurements?.length) {
               missingFields.push('Intake and Outcome Measurements');
@@ -259,6 +260,8 @@ export class GenerateAiSummaryComponent {
 
       case '97155':
         Object.assign(preparedData, {
+          wasTheRbtPresent: summaryData.wasTheRbtPresent,
+          maladaptives: summaryData.maladaptives,
           environmentalChanges: summaryData.environmentalChanges,
           participants: summaryData.participants,
           interventionProtocols: summaryData.interventionProtocols,

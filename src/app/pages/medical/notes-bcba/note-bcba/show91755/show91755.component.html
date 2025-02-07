@@ -1,4 +1,35 @@
 <ng-container *ngIf="show97155">
+  <!-- Was the RBT present? -->
+  <div class="col-xs-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="col-12">
+          <h4 class="card-title">
+            Was the RBT present?
+          </h4>
+          <div class="form-group">
+            <div class="status-toggle d-flex justify-content-between align-items-center">
+              <input type="checkbox" id="was_the_rbt_present" class="check"
+                [(ngModel)]="was_the_rbt_present" name="was_the_rbt_present"
+                />
+              <label for="was_the_rbt_present" class="checktoggle">checkbox</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Was the RBT present? -->
+  <!-- Cards Maladaptives -->
+  <div *ngIf="!was_the_rbt_present" class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <app-maladaptives-options [(maladaptives)]="maladaptives" (maladaptivesChange)="onMaladaptivesChange($event)">
+        </app-maladaptives-options>
+      </div>
+    </div>
+  </div>
+  <!-- Cards Maladaptives -->
   <!-- Intervention protocols -->
   <div class="col-xs-12">
     <div class="card">

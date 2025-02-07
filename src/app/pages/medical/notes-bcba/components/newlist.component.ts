@@ -6,7 +6,7 @@ import { NewList } from '../interfaces';
   styleUrls: ['../note-bcba/note-bcba.component.scss'],
   template: `
     <div class="col-12">
-      <!-- <h5>Intervention protocols</h5> -->
+      <h5>Assessment Tools</h5>
       <app-split-table
         [data]="newList"
         [headerTemplate]="headerTemplate"

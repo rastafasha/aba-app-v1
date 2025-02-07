@@ -29,6 +29,7 @@ import { View91756Component } from '../note-bcba-view/view91756/view91756.compon
 import { AssessmentToolsViewComponent } from './assessment-tools-view.component';
 import { IntakeOutcomeMeasuresUsedComponent } from './intake-outcome-measures-used.component';
 import { SharedModule } from '../../../../shared/shared.module';
+import { NotesModule } from '../../notes/notes.module';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,8 @@ import { SharedModule } from '../../../../shared/shared.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    NotesModule
   ]
 })
 export class ComponentsBCBAModule { }

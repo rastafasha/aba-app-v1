@@ -18,7 +18,7 @@ import {
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { AssessmentToolType, NoteBcbaV2, PaServiceV2, PatientV2 } from 'src/app/core/models';
 import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
-import { show97151L, ValidationResult } from '../interfaces';
+import { MaladaptiveData, show97151L, ValidationResult } from '../interfaces';
 import { AISummaryData } from 'src/app/shared/components/generate-ai-summary/generate-ai-summary.component';
 import { calculateUnitsFromTime, convertToHours, convertToMinutes } from 'src/app/utils/time-functions';
 import { GenerateAiSummaryComponent } from 'src/app/shared/components/generate-ai-summary/generate-ai-summary.component';
@@ -54,6 +54,8 @@ export class NoteBcbaComponent implements OnInit {
   selectedValueCode!: string;
   selectedValueCode1!: string;
   total_hour_session = '';
+
+  was_the_rbt_present = false;
 
   selectedValueProviderRBT_id: number;
   selectedValueBcba_id: number;
@@ -111,6 +113,7 @@ export class NoteBcbaComponent implements OnInit {
   cargiver_participation = false;
   was_the_client_present = false;
 
+  maladaptives: MaladaptiveData[] = [];
   interventionsList = interventionsList;
   interventionsListDoble = interventionsListDoble;
   behaviorList: any[];
@@ -258,6 +261,15 @@ export class NoteBcbaComponent implements OnInit {
       console.log(this.caregivers_training_goalsgroup);
 
       this.behaviorList = resp.data[0].maladaptives;
+
+      this.maladaptives = resp.data[0].maladaptives
+        .map(maladaptive => ({
+          id: maladaptive.id,
+          name: maladaptive.name,
+          description: maladaptive.description,
+          status: maladaptive.status,
+          number_of_occurrences: this.maladaptives.find(item => item.id === maladaptive.id)?.number_of_occurrences || null
+        }));
 
       // Transform replacements into ReplacementProtocol format
       const bipReplacements = resp.data[0].replacements
@@ -479,6 +491,12 @@ export class NoteBcbaComponent implements OnInit {
                 }
               }
             } else if (note.cpt_code === '97155') {
+              this.was_the_rbt_present = note.was_the_rbt_present;
+              this.maladaptives = note.maladaptives.map(item => ({
+                id: item.plan_id,
+                name: item.name,
+                number_of_occurrences: item.frequency
+              }));
               this.modifications_needed_at_this_time = note.modifications_needed_at_this_time;
               this.additional_goals_or_interventions = note.additional_goals_or_interventions;
               // Handle intervention protocols
@@ -534,6 +552,10 @@ export class NoteBcbaComponent implements OnInit {
         Swal.fire('Error', 'There was an error loading the note.', 'error');
       }
     });
+  }
+
+  onMaladaptivesChange(updatedMaladaptives: any) {
+    this.maladaptives = updatedMaladaptives;
   }
 
   save() {
@@ -607,6 +629,12 @@ export class NoteBcbaComponent implements OnInit {
     }
 
     if (this.selectedPaService?.cpt === '97155') {
+      bcbaData.was_the_rbt_present = this.was_the_rbt_present;
+      bcbaData.maladaptives = this.maladaptives && !this.was_the_rbt_present ? this.maladaptives.map(item => ({
+        plan_id: item.id,
+        name: item.name,
+        frequency: item.number_of_occurrences
+      })) : [];
       bcbaData.replacement_protocols = this.replacementProtocols
         .map(p => ({
           plan_id: p.id,
@@ -686,6 +714,7 @@ export class NoteBcbaComponent implements OnInit {
   }
 
   getAISummaryData(): AISummaryData {
+    console.log(this.maladaptives, 'maladaptives', this.was_the_rbt_present, 'was_the_rbt_present')
     if (!this.selectedPaService || !this.selectedPaService.cpt) {
       Swal.fire('Warning', 'Please select a CPT Code', 'warning');
       return null;
@@ -718,6 +747,11 @@ export class NoteBcbaComponent implements OnInit {
       instruments: this.newList?.filter(item => item.value).map(item => item.name).join(', '),
       intakeAndOutcomeMeasurements: this.outcomeList?.filter(item => item.value).map(item => item.name).join(', '),
       // 97155
+      wasTheRbtPresent: this.was_the_rbt_present,
+      maladaptives: this.maladaptives && !this.was_the_rbt_present ? this.maladaptives.map(item => ({
+        behavior: item.name,
+        frequency: item.number_of_occurrences
+      })) : null,
       interventionProtocols: this.interventionsListDoble ? Object.values(this.interventionsListDoble)
         .filter(item => item.value2)
         .map(item => item.name)

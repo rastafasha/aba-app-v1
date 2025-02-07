@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Maladaptives } from '../interfaces';
+import { MaladaptiveProtocol } from '../interfaces';
 
 @Component({
   selector: 'app-behaviors',
@@ -40,7 +40,7 @@ import { Maladaptives } from '../interfaces';
   `,
 })
 export class BehaviorsComponent {
-  @Input() behaviorList: Maladaptives[];
+  @Input() behaviorList: MaladaptiveProtocol[];
   @Output() behaviorsChange = new EventEmitter<object>();
 
   updateBehaviors() {
