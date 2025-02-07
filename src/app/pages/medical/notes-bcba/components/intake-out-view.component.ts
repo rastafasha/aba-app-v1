@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-intakeoutcome-view',
@@ -14,7 +14,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Option</th>
+                <th>Select</th>
               </tr>
             </thead>
             <tbody>

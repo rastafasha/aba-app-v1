@@ -15,7 +15,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Option</th>
+                <th>Select</th>
               </tr>
             </thead>
             <tbody>
@@ -36,5 +36,5 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class NewlistViewComponent {
   @Input() newlist_added;
-  
+
 }

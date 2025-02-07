@@ -117,10 +117,19 @@ export interface show97151L {
   cpt: string;
 }
 
-export interface Maladaptives {
+export interface MaladaptiveProtocol {
   id: number;
   name: string;
+  description?: string;
   value: boolean;
+}
+
+export interface MaladaptiveData {
+  id: number;
+  name: string;
+  description?: string;
+  status?: string;
+  number_of_occurrences: number | null;
 }
 
 export interface ReplacementProtocol {
@@ -132,6 +141,5 @@ export interface ReplacementProtocol {
   modified?: boolean;
   demonstrated?: boolean;
 }
-
 
 

@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { PipesModule } from 'src/app/shared/pipes/pipes.module';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { SharedModule } from '../../../shared/shared.module';
 import { ComponentsModule } from '../bip/components/components.module';
 import { NoteBcbaByClientComponent } from './note-bcba-by-client/note-bcba-by-client.component';
 import { NoteBcbaEditComponent } from './note-bcba-edit/note-bcba-edit.component';
@@ -15,10 +15,10 @@ import { NotesBcbaComponent } from './notes-bcba.component';
 import { NotesBcbaRoutingModule } from './notes-bcba.routing';
 import { LayoutModule } from '../../../layout/layout.module';
 import { ComponentsBCBAModule } from './components/components-bcba.module';
+import { NotesModule } from '../notes/notes.module';
 
 @NgModule({
   declarations: [
-
     NotesBcbaComponent,
     NoteBcbaViewComponent,
     NoteBcbaByClientComponent,
@@ -43,7 +43,8 @@ import { ComponentsBCBAModule } from './components/components-bcba.module';
     ComponentsModule,
     PipesModule,
     LayoutModule,
-    ComponentsBCBAModule
+    ComponentsBCBAModule,
+    NotesModule,
   ],
 })
 export class NotesBcbaModule {}

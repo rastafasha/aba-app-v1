@@ -22,6 +22,7 @@ import {
 } from '../listasSelectData';
 import { show97151L } from '../interfaces';
 import { ReplacementProtocol } from '../interfaces';
+import { getPos } from 'src/app/shared/utils/getPos';
 
 interface Behavior {
   index: number;
@@ -956,7 +957,7 @@ export class NoteBcbaEditComponent implements OnInit {
       endTime: this.selectedValueTimeOut ? this.selectedValueTimeOut : null,
       startTime2: this.selectedValueTimeIn2 ? this.selectedValueTimeIn2 : null,
       endTime2: this.selectedValueTimeOut2 ? this.selectedValueTimeOut2 : null,
-      pos: this.getPos(this.meet_with_client_at),
+      pos: getPos(this.meet_with_client_at),
       caregiverGoals: this.caregivers_training_goals.map((g) => ({
         goal: g.caregiver_goal,
         percentCorrect: g.porcent_of_correct_response,
@@ -1019,21 +1020,6 @@ export class NoteBcbaEditComponent implements OnInit {
     if (!this.note_description) return false;
 
     return true;
-  }
-
-  getPos(posCode: string) {
-    switch (posCode) {
-      case '03':
-        return 'School';
-      case '12':
-        return 'Home';
-      case '02':
-        return 'Telehealth';
-      case '99':
-        return 'Other';
-      default:
-        return 'Unknown';
-    }
   }
 
   onPaServiceSelect(event: any) {
