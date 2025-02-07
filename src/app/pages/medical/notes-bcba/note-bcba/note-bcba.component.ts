@@ -18,13 +18,13 @@ import {
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { AssessmentToolType, NoteBcbaV2, PaServiceV2, PatientV2 } from 'src/app/core/models';
 import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
-import { show97151L, ValidationResult } from '../interfaces';
+import { MaladaptiveData, show97151L, ValidationResult } from '../interfaces';
 import { AISummaryData } from 'src/app/shared/components/generate-ai-summary/generate-ai-summary.component';
 import { calculateUnitsFromTime, convertToHours, convertToMinutes } from 'src/app/utils/time-functions';
 import { GenerateAiSummaryComponent } from 'src/app/shared/components/generate-ai-summary/generate-ai-summary.component';
 import { ReplacementProtocol } from '../interfaces';
 import { PatientsV2Service } from 'src/app/core/services/patients.v2.service';
-
+import { posCodes } from 'src/app/shared/utils/getPos';
 
 @Component({
   selector: 'app-note-bcba',
@@ -43,6 +43,8 @@ export class NoteBcbaComponent implements OnInit {
 
   text_validation = '';
 
+  posCodes = posCodes;
+
   selectedValueRBT!: string;
   selectedValueTimeIn = '';
   selectedValueTimeOut = '';
@@ -52,6 +54,8 @@ export class NoteBcbaComponent implements OnInit {
   selectedValueCode!: string;
   selectedValueCode1!: string;
   total_hour_session = '';
+
+  was_the_rbt_present = false;
 
   selectedValueProviderRBT_id: number;
   selectedValueBcba_id: number;
@@ -101,13 +105,15 @@ export class NoteBcbaComponent implements OnInit {
   reinforced_caregiver_strengths_in = '';
   gave_constructive_feedback_on = '';
   recomended_more_practice_on = '';
-  BCBA_conducted_client_observations = false;
-  BCBA_conducted_assessments = false;
+
+  BCBA_conducted_client_observations = true;
+  BCBA_conducted_assessments = true;
 
   modifications_needed_at_this_time = false;
   cargiver_participation = false;
   was_the_client_present = false;
 
+  maladaptives: MaladaptiveData[] = [];
   interventionsList = interventionsList;
   interventionsListDoble = interventionsListDoble;
   behaviorList: any[];
@@ -256,6 +262,15 @@ export class NoteBcbaComponent implements OnInit {
 
       this.behaviorList = resp.data[0].maladaptives;
 
+      this.maladaptives = resp.data[0].maladaptives
+        .map(maladaptive => ({
+          id: maladaptive.id,
+          name: maladaptive.name,
+          description: maladaptive.description,
+          status: maladaptive.status,
+          number_of_occurrences: this.maladaptives.find(item => item.id === maladaptive.id)?.number_of_occurrences || null
+        }));
+
       // Transform replacements into ReplacementProtocol format
       const bipReplacements = resp.data[0].replacements
         .filter(replacement => replacement.status === 'active')
@@ -265,7 +280,7 @@ export class NoteBcbaComponent implements OnInit {
             name: replacement.name,
             description: objective.description,
             status: objective.status,
-            assessed: this.replacementProtocols.find(p => p.id === replacement.id)?.assessed || false,
+            assessed: this.replacementProtocols.find(p => p.id === replacement.id)?.assessed || !this.isEditMode,
             modified: this.replacementProtocols.find(p => p.id === replacement.id)?.modified || false,
             demonstrated: this.replacementProtocols.find(p => p.id === replacement.id)?.demonstrated || false,
           }))
@@ -476,6 +491,12 @@ export class NoteBcbaComponent implements OnInit {
                 }
               }
             } else if (note.cpt_code === '97155') {
+              this.was_the_rbt_present = note.was_the_rbt_present;
+              this.maladaptives = note.maladaptives.map(item => ({
+                id: item.plan_id,
+                name: item.name,
+                number_of_occurrences: item.frequency
+              }));
               this.modifications_needed_at_this_time = note.modifications_needed_at_this_time;
               this.additional_goals_or_interventions = note.additional_goals_or_interventions;
               // Handle intervention protocols
@@ -533,22 +554,19 @@ export class NoteBcbaComponent implements OnInit {
     });
   }
 
+  onMaladaptivesChange(updatedMaladaptives: any) {
+    this.maladaptives = updatedMaladaptives;
+  }
+
   save() {
-    console.log(this.getAISummaryData());
-    this.text_validation = '';
-    if (!this.meet_with_client_at || !this.session_date) {
-      if (!this.selectedValueAba) {
-        Swal.fire('Warning', 'ABA Supervisor must be selected ', 'warning');
-        return;
-      }
+    const missingFields = this.checkDataSufficient();
+    if (!missingFields.isValid) {
+      Swal.fire('Warning', missingFields.missingFields.join(', '), 'warning');
+      return;
     }
 
     if (!this.selectedPaService) {
       Swal.fire('Warning', 'Please select a service ', 'warning');
-      return;
-    }
-    if (!this.meet_with_client_at) {
-      Swal.fire('Warning', 'Please select a POS ', 'warning');
       return;
     }
     if (!this.session_date) {
@@ -611,6 +629,12 @@ export class NoteBcbaComponent implements OnInit {
     }
 
     if (this.selectedPaService?.cpt === '97155') {
+      bcbaData.was_the_rbt_present = this.was_the_rbt_present;
+      bcbaData.maladaptives = this.maladaptives && !this.was_the_rbt_present ? this.maladaptives.map(item => ({
+        plan_id: item.id,
+        name: item.name,
+        frequency: item.number_of_occurrences
+      })) : [];
       bcbaData.replacement_protocols = this.replacementProtocols
         .map(p => ({
           plan_id: p.id,
@@ -690,8 +714,9 @@ export class NoteBcbaComponent implements OnInit {
   }
 
   getAISummaryData(): AISummaryData {
-    console.log(this.replacementProtocols, 'replacementProtocols');
+    console.log(this.maladaptives, 'maladaptives', this.was_the_rbt_present, 'was_the_rbt_present')
     if (!this.selectedPaService || !this.selectedPaService.cpt) {
+      Swal.fire('Warning', 'Please select a CPT Code', 'warning');
       return null;
     }
 
@@ -711,6 +736,7 @@ export class NoteBcbaComponent implements OnInit {
       environmentalChanges: this.environmental_changes,
       clientAppeared: this.client_appeared,
       evidencedBy: this.as_evidenced_by,
+      participants: this.participants,
       // 97151
       cpt51type: this.selectedPaService1?.cpt === 'Observation' ? 'observation' :
                  this.selectedPaService1?.cpt === 'Report' ? 'report' : undefined,
@@ -721,6 +747,11 @@ export class NoteBcbaComponent implements OnInit {
       instruments: this.newList?.filter(item => item.value).map(item => item.name).join(', '),
       intakeAndOutcomeMeasurements: this.outcomeList?.filter(item => item.value).map(item => item.name).join(', '),
       // 97155
+      wasTheRbtPresent: this.was_the_rbt_present,
+      maladaptives: this.maladaptives && !this.was_the_rbt_present ? this.maladaptives.map(item => ({
+        behavior: item.name,
+        frequency: item.number_of_occurrences
+      })) : null,
       interventionProtocols: this.interventionsListDoble ? Object.values(this.interventionsListDoble)
         .filter(item => item.value2)
         .map(item => item.name)
@@ -844,10 +875,6 @@ export class NoteBcbaComponent implements OnInit {
       missingFields.push('Client information');
     }
 
-    if (!this.selectedPaService || !this.selectedPaService.cpt) {
-      missingFields.push('CPT Code selection');
-      return { isValid: false, missingFields }; // Return early as CPT is required for further validation
-    }
 
     const hasTime1 = this.selectedValueTimeIn && this.selectedValueTimeOut;
     const hasTime2 = this.selectedValueTimeIn2 && this.selectedValueTimeOut2;
@@ -859,18 +886,45 @@ export class NoteBcbaComponent implements OnInit {
       missingFields.push('POS');
     }
 
+    if (!this.selectedValueAba) {
+      missingFields.push('ABA Supervisor');
+    }
+
+    if (!this.summary_note || this.summary_note === '') {
+      missingFields.push('Summary note');
+    }
+
+    if (!this.selectedPaService || !this.selectedPaService.cpt) {
+      missingFields.push('CPT Code selection');
+      return { isValid: false, missingFields }; // Return early as CPT is required for further validation
+    }
+
     // CPT specific validations
     switch (this.selectedPaService.cpt) {
       case '97151':
         break;
 
       case '97155':
-        if (!this.rbt_training_goals || this.rbt_training_goals.length === 0) {
-          missingFields.push('RBT training goals');
+        if (!this.participants || this.participants === '') {
+          missingFields.push('Present this session');
         }
+
+        if (!this.environmental_changes || this.environmental_changes === '') {
+          missingFields.push('Environmental changes');
+        }
+        // if (!this.rbt_training_goals || this.rbt_training_goals.length === 0) {
+        //   missingFields.push('RBT training goals');
+        // }
         break;
 
       case '97156':
+        if (!this.participants || this.participants === '') {
+          missingFields.push('Present this session');
+        }
+
+        if (!this.environmental_changes || this.environmental_changes === '') {
+          missingFields.push('Environmental changes');
+        }
         if (!this.caregivers_training_goalsgroup || this.caregivers_training_goalsgroup.length === 0) {
           missingFields.push('Caregiver training goals');
         }

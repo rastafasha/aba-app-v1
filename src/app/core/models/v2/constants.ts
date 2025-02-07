@@ -32,7 +32,7 @@ Caregivers are to be trained on possible effects of treatment modalities such as
 
 Punishment procedures are not used in this program and least restrictive strategies are always encouraged first. In the case that Response Cost or Simple Corrections are used, procedures will be described and all people involved in treatment will learn and demonstrate how to use them and what the contingencies will be.`,
   FADING_PLAN: `Phase 1: All maladaptives will be reduced to 1 or less incidents per week, and the vineland maladaptive domain score is 17 or less. Behavior analyst and assistant will reduce services by 25%, for 3 consecutive months.
-Phase 2: Phase 1 sustained and Progress on current skill acquisition goals at 80%, pluss vineland socialization and communication domain scores at 80 or above. Behavior analyst and assistant will reduce services by 50%, for 3 consecutive months
+Phase 2: Phase 1 sustained and Progress on current skill acquisition goals at 80%, plus vineland socialization and communication domain scores at 80 or above. Behavior analyst and assistant will reduce services by 50%, for 3 consecutive months
 Phase 3: Phase 2 sustained, skills generalized/maintained 80%. Behavior analyst and assistant will reduce services by 75%, for 3 consecutive months.
 Phase 4: Phase 3 sustained. Behavior analyst will provide 1 hr per week consultation only model to ensure generalization/maintenance of skills, for 3 consecutive months Assistant will be discontinued.
 Phase 5: Phase 4 sustained. Behavior analyst will provide 1 hr per month consultation only model to ensure generalization/maintenance of skills, for 3 consecutive months.
@@ -51,4 +51,150 @@ The particular interventions included in this behavior plan include modification
 
 I have had an opportunity to review the complete behavior plan verbally and in written form and get clarification in response to any questions I have. I agree to implement and/or support the implementation of this behavior intervention plan, participating in training and monitoring to promote its success. I have been made aware of potential risks (including the possibility that the client’s behavior may escalate before improving and/or vary across settings based on how the plan is implemented) and the anticipated benefits of intervention. I understand that these procedures can only be implemented as written with my approval. I reserve the right to refuse or discontinue consent to the plan or specific intervention practices at any point without repercussions or a lapse in services. If I withdraw consent, interventions will be discontinued immediately. I recognize the importance of fidelity and consistency, and therefore agree to make every effort to implement the plan as designed. Rights and responsibilities were clearly explained to me.
 `,
+};
+
+export const BIP_CONST = {
+  TANGIBLE: {
+    STRATEGY: `Anticipate transitions and inform the client about what will happen next, allowing time to prepare and adjust.
+Use a timer to signal the end of one activity and the beginning of another.
+When possible, start activities only when there is enough time to complete them.
+Communicate when activities will be available again, such as by using a picture schedule.
+Encourage the client to engage in another activity while waiting.
+Provide reminders of upcoming positive activities using “if-then” statements.
+Keep highly preferred but unavailable items out of sight, out of reach, or remove them from the environment altogether.
+`,
+    REPLACEMENT_SKILLS: `Delay of Reinforcement (wait for tangibles)
+
+Accepting denied access to tangible.
+
+Requesting
+`,
+    MANAGER_STRATEGY: `Positive Behaviors:
+If the client waits appropriately for desired items or activities, provide praise and grant access to the tangible once the designated waiting time has passed.
+Maladaptive Behaviors:
+If the client engages in problem behavior to gain access to tangibles, do not provide access to the item. Once the client is calm for three seconds, redirect them to use an appropriate request or wait for the tangible.
+If the client engages in challenging behaviors, block the behavior (for less than 15 seconds) and do not allow access to the item. Once the client is calm for three seconds, redirect them to use an appropriate request or wait for the tangible.
+
+`,
+  },
+  ATTENTION: {
+    STRATEGY: `Time-contingent attention will be provided to the client every 10 minutes while at home.
+At the end of each 10-minute interval, the caregiver should approach the client and provide attention by engaging in a brief conversation.
+Clearly communicate when attention will be available and unavailable by, for example, informing the client before starting a phone call and explaining that attention will be available immediately afterward.
+Remind the client to request attention using appropriate behaviors.
+`,
+    REPLACEMENT_SKILLS: `Teach client to gain other’s attention appropriately`,
+    MANAGER_STRATEGY: `Positive Behaviors:
+Provide immediate attention whenever possible when the client appropriately requests attention.
+If immediate attention is not possible, inform the client of when you will be available.
+Reward extended periods of independent activity with special, attention-rich interactions, such as playing a game together.
+Maladaptive Behaviors:
+Withhold or minimize attention for challenging behaviors by limiting conversation, avoiding eye contact, and blocking any harmful actions as needed.
+If necessary, remove either yourself or the client from the situation to prevent interaction and escalation.
+If the client engages in challenging behaviors, block the behavior (for less than 15 seconds) and redirect them to request attention appropriately.
+`,
+  },
+  ESCAPE: {
+    STRATEGY: `Simplify and clarify tasks, activities, or demands.
+Incorporate preferred items (e.g., toys, edibles) into difficult or unpleasant tasks.
+Use “if-then” statements to remind the client of enjoyable activities following task completion.
+Start with easier tasks to build behavioral momentum.
+Clearly differentiate choices from directives.
+Avoid giving demands in noisy environments.
+Remind the client when they can say no, request breaks, or ask for help.
+Change working materials and environments periodically to prevent escape behaviors due to satiation.
+Teach the client to create a plan for completing activities, allowing brief breaks and structuring tasks for manageability
+`,
+    REPLACEMENT_SKILLS: `Teach the client to request a break
+Teach the client to ask for assistance
+Increase the client’s time spent on tasks gradually.
+Teach the client to accept transitions to non-preferred tasks.
+`,
+    MANAGER_STRATEGY: `Positive Behaviors:
+If the client says no and the task, activity, or demand is optional (e.g., playing a game), respect their decision.
+If the client requests a break, allow them to exit the activity for up to five minutes in a neutral setting (e.g., sitting on the sofa).
+If the client asks for assistance, provide appropriate help.
+If the client follows instructions at the expected percentage of trials (per replacement behavior goals), immediately provide praise and offer a break if needed.
+If the client remains on task, provide praise and remind them that a break will be available after a set period, based on their current objective.
+Maladaptive Behaviors:
+If the client engages in challenging behaviors, do not allow them to leave the task until at least part of it is completed.
+Withhold access to enjoyable activities until the task, activity, or demand has been completed.
+If the client engages in challenging behaviors, block the behavior (for less than 15 seconds) and redirect them to complete part of the task or appropriately request a break.
+`,
+  },
+  SENSORY: {
+    STRATEGY: `Modify the Environment – Adjust lighting, noise levels, seating arrangements, or other environmental factors to reduce triggers that may contribute to the behavior.
+
+
+Provide Predictable Routines – Establish structured daily schedules to help the client stay engaged and reduce the likelihood of maladaptive behaviors occurring in unstructured time.
+
+
+Offer Alternative Activities – Embed engaging tasks (e.g., fine motor tasks, arts and crafts, object manipulation) into routines to provide ongoing engagement.
+
+
+Schedule Breaks – Plan regular breaks throughout the day to provide structured opportunities for movement or other preferred activities.
+
+
+Increase Active Engagement – Ensure the client is consistently engaged in meaningful, interactive tasks to minimize opportunities for maladaptive behaviors.
+
+
+Introduce Visual Supports – Use visual schedules, timers, or first-then boards to signal transitions and expectations, reducing uncertainty and increasing focus.
+
+
+Incorporate Movement-Based Activities – Provide structured movement opportunities (e.g., stretching, walking, physical play) to channel energy into functional tasks.
+
+
+Adjust Task Demands – Modify task difficulty and presentation to maintain motivation and prevent disengagement that may lead to  maladaptive behaviors.
+
+
+Use Clear and Concise Instructions – Provide simple, direct, and consistent instructions to ensure understanding and reduce confusion.
+
+
+Embed Preferred Elements into Tasks – Incorporate items or activities the client enjoys into less preferred tasks to promote engagement and reduce maladaptive behaviors.
+
+
+`,
+    REPLACEMENT_SKILLS: `Engage in functional activities that provide similar input, such as manipulating objects, textured materials, or using tools designed for hands-on engagement.
+
+
+Use appropriate movement-based actions, such as hand exercises, squeezing an object, or engaging in controlled physical activities that serve a similar function.
+
+
+Learn to initiate structured engagement in activities that naturally provide the needed input, such as interactive play, specific vocational tasks, or guided movement activities.
+
+
+`,
+    MANAGER_STRATEGY: `Provide immediate reinforcement when the client engages in alternative behaviors that serve the same purpose, such as engaging in structured tasks or appropriate movement-based activities.
+
+
+Reinforce engagement in meaningful activities by offering access to preferred tasks, praise, or other motivating reinforcers.
+
+
+Use differential reinforcement by reinforcing periods where the behavior does not occur or when the client engages in more appropriate behaviors.
+
+
+
+Use response blocking only when necessary to prevent harm, while ensuring the client is redirected to an appropriate alternative activity.
+
+
+Limit access to items or conditions that may contribute to the behavior, and provide structured engagement to redirect focus.
+
+
+Introduce delayed access to highly preferred activities if the behavior occurs, ensuring reinforcement is only provided following appropriate behavior.
+
+
+Reinforce engagement in activities that are physically incompatible with the behavior, such as using hands for tasks instead of engaging in repetitive movements.
+
+
+Redirect the client to functional engagement when the behavior occurs, guiding them to participate in an alternative task or activity.
+
+
+Adjust task demands as needed, providing manageable and structured activities to prevent disengagement that may lead to maladaptive behaviors.
+
+
+
+
+
+`,
+  },
 };

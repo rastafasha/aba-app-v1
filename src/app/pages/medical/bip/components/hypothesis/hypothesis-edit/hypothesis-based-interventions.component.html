@@ -30,7 +30,7 @@
             <app-list-and-form
               [headRenders]="headRenders"
               #tangiblesList
-              title="Access to Tangibles Activities"
+              title="Access to Tangibles/Activities"
               [(newItem)]="newTangible"
               [(dataSource)]="input.tangibles"
               [displayedColumns]="[
@@ -45,6 +45,29 @@
                 (save)="tangiblesList.onAdd($event)"
               >
               </app-tangible-form>
+            </app-list-and-form>
+          </div>
+
+          <!-- Attention Section -->
+          <div class="row align-items-center my-4">
+            <app-list-and-form
+              [headRenders]="headRenders"
+              #attentionList
+              title="Attention"
+              [(newItem)]="newAttention"
+              [(dataSource)]="input.attention"
+              [displayedColumns]="[
+                'preventive_strategies',
+                'replacement_skills',
+                'manager_strategies'
+              ]"
+            >
+              <app-attention-form
+                [(input)]="newAttention"
+                (cancel)="attentionList.onClose()"
+                (save)="attentionList.onAdd($event)"
+              >
+              </app-attention-form>
             </app-list-and-form>
           </div>
 
@@ -93,30 +116,6 @@
               </app-escape-form>
             </app-list-and-form>
           </div>
-
-          <!-- Attention Section -->
-          <div class="row align-items-center my-4">
-            <app-list-and-form
-              [headRenders]="headRenders"
-              #attentionList
-              title="Attention"
-              [(newItem)]="newAttention"
-              [(dataSource)]="input.attention"
-              [displayedColumns]="[
-                'preventive_strategies',
-                'replacement_skills',
-                'manager_strategies'
-              ]"
-            >
-              <app-attention-form
-                [(input)]="newAttention"
-                (cancel)="attentionList.onClose()"
-                (save)="attentionList.onAdd($event)"
-              >
-              </app-attention-form>
-            </app-list-and-form>
-          </div>
-
           <!-- Save Button -->
           <div class="col-12">
             <div class="doctor-submit text-end">

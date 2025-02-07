@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NoteBcbaService } from 'src/app/core/services/notes-bcba.service';
 import { NoteRbtService } from 'src/app/core/services/notes-rbt.service';
 import Swal from 'sweetalert2';
+import { getPos } from '../../utils/getPos';
 
 export interface AISummaryData {
   diagnosis: string;
@@ -12,7 +13,6 @@ export interface AISummaryData {
   endTime2: string | null;
   mood?: string;
   pos: string;
-  maladaptives?: Array<{behavior: string; frequency: number}>;
   replacements?: Array<{name: string; totalTrials: number; correctResponses: number}>;
   caregiverGoals?: string;
   rbtTrainingGoals?: Array<{goal: string; percentCorrect: number}>;
@@ -35,6 +35,8 @@ export interface AISummaryData {
   // 97153 specific fields
   interventions?: string[];
   // 97155 specific fields
+  maladaptives?: Array<{behavior: string; frequency: number}>;
+  wasTheRbtPresent?: boolean;
   interventionProtocols?: string;
   replacementProtocols?: string;
   modificationsNeededAtThisTime?: boolean;
@@ -73,7 +75,9 @@ export class GenerateAiSummaryComponent {
   }
 
   generateSummary(summaryData: AISummaryData) {
+    console.log(summaryData, 'summaryData')
     const validationResult = this.validateData(summaryData);
+    console.log(validationResult, 'validationResult')
     if (!validationResult.isValid) {
       const missingFieldsList = validationResult.missingFields.join('\n• ');
       Swal.fire(
@@ -91,7 +95,7 @@ export class GenerateAiSummaryComponent {
     const preparedData = this.type === 'bcba' ? this.prepareBcbaData(summaryData) : summaryData;
     console.log(preparedData, 'summaryData sent')
 
-    service.generateAISummary({...preparedData, pos: this.getPos(summaryData.pos)}).subscribe(
+    service.generateAISummary({...preparedData, pos: getPos(summaryData.pos)}).subscribe(
       (response: any) => {
         this.summaryGenerated.emit(response.summary);
         this.isGenerating = false;
@@ -111,6 +115,14 @@ export class GenerateAiSummaryComponent {
   private validateData(summaryData: AISummaryData): { isValid: boolean; missingFields: string[] } {
     console.log(summaryData, 'summaryData')
     const missingFields: string[] = [];
+
+    if (!summaryData.cptCode) {
+      missingFields.push('CPT Code');
+      return {
+        isValid: false,
+        missingFields
+      }
+    }
 
     // Common validations for all types
     if (!summaryData.diagnosis) missingFields.push('Diagnosis');
@@ -132,7 +144,7 @@ export class GenerateAiSummaryComponent {
               missingFields.push('Assessment Procedures');
             }
             if (!summaryData.instruments?.length) {
-              missingFields.push('Assessment Instruments');
+              missingFields.push('Assessment Tools');
             }
             if (!summaryData.intakeAndOutcomeMeasurements?.length) {
               missingFields.push('Intake and Outcome Measurements');
@@ -142,6 +154,8 @@ export class GenerateAiSummaryComponent {
 
         case '97155':
           // Protocol modification validations
+          if (!summaryData.participants) missingFields.push('Participants');
+          if (!summaryData.environmentalChanges) missingFields.push('Environmental Changes');
           break;
 
         case '97156':
@@ -158,6 +172,8 @@ export class GenerateAiSummaryComponent {
           if (!summaryData.discussedBehaviors?.length) {
             missingFields.push('Discussed Behaviors');
           }
+          if (!summaryData.participants) missingFields.push('Participants');
+          if (!summaryData.environmentalChanges) missingFields.push('Environmental Changes');
           break;
 
         case '97153':
@@ -165,8 +181,7 @@ export class GenerateAiSummaryComponent {
           missingFields.push('THIS CPT HAS NOT BEEN IMPLEMENTED YET');
           break;
       }
-    } else {
-      // RBT validations remain the same
+    } else { // RBT validations
       if (!summaryData.maladaptives?.length) {
         missingFields.push('Maladaptive Behaviors');
       } else {
@@ -180,7 +195,7 @@ export class GenerateAiSummaryComponent {
         missingFields.push('Replacement Behaviors');
       } else {
         const invalidReplacements = summaryData.replacements.some(
-          r => !r.name || r.totalTrials === undefined || r.correctResponses === undefined
+          r => !r.name || typeof r.totalTrials !== 'number' || typeof r.correctResponses !== 'number'
         );
         if (invalidReplacements) missingFields.push('Complete Replacement Behavior Data');
       }
@@ -188,6 +203,20 @@ export class GenerateAiSummaryComponent {
       if (!summaryData.interventions?.length) {
         missingFields.push('Interventions');
       }
+
+      if (!summaryData.mood?.length) {
+        missingFields.push('Mood');
+      }
+      if (!summaryData.evidencedBy?.length) {
+        missingFields.push('Evidenced By');
+      }
+      if (!summaryData.progressNoted?.length) {
+        missingFields.push('Progress Noted');
+      }
+      if (!summaryData.rbtModeledAndDemonstrated?.length) {
+        missingFields.push('RBT Modeled and Demonstrated to Caregiver');
+      }
+
     }
 
     return {
@@ -231,6 +260,10 @@ export class GenerateAiSummaryComponent {
 
       case '97155':
         Object.assign(preparedData, {
+          wasTheRbtPresent: summaryData.wasTheRbtPresent,
+          maladaptives: summaryData.maladaptives,
+          environmentalChanges: summaryData.environmentalChanges,
+          participants: summaryData.participants,
           interventionProtocols: summaryData.interventionProtocols,
           replacementProtocols: summaryData.replacementProtocols,
           modificationsNeededAtThisTime: summaryData.modificationsNeededAtThisTime,
@@ -240,6 +273,8 @@ export class GenerateAiSummaryComponent {
 
       case '97156':
         Object.assign(preparedData, {
+          environmentalChanges: summaryData.environmentalChanges,
+          participants: summaryData.participants,
           caregiverGoals: summaryData.caregiverGoals,
           demonstratedReplacementProtocols: summaryData.demonstratedReplacementProtocols,
           demonstratedInterventionProtocols: summaryData.demonstratedInterventionProtocols,
@@ -250,6 +285,7 @@ export class GenerateAiSummaryComponent {
       case '97153':
         Object.assign(preparedData, {
           environmentalChanges: summaryData.environmentalChanges,
+          participants: summaryData.participants,
           clientAppeared: summaryData.clientAppeared,
           evidencedBy: summaryData.evidencedBy,
           clientResponse: summaryData.clientResponse,
@@ -262,18 +298,4 @@ export class GenerateAiSummaryComponent {
     return preparedData;
   }
 
-  private getPos(posCode: string): string {
-    switch (posCode) {
-      case '03':
-        return 'School';
-      case '12':
-        return 'Home';
-      case '02':
-        return 'Telehealth';
-      case '99':
-        return 'Other';
-      default:
-        return 'Unknown';
-    }
-  }
 }

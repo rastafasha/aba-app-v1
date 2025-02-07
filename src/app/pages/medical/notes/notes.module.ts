@@ -36,6 +36,7 @@ import { InterventionviewsComponent } from './note-rbt-view/interventionviews/in
     NotesComponent,
     NoteRbtComponent,
     NotesByClientComponent,
+    MaladaptivesOptionsComponent,
   ],
   imports: [
     CommonModule,

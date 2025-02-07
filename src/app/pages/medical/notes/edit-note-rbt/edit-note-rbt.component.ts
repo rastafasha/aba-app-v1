@@ -12,6 +12,7 @@ import { PatientsV2Service } from 'src/app/core/services';
 import { PaServicesV2Service } from 'src/app/core/services/pa-services.v2.service';
 import { interventionsList } from '../listaInterventionData';
 import { AuthService } from 'src/app/core/auth/auth.service';
+import { getPos, posCodes } from 'src/app/shared/utils/getPos';
 
 @Component({
   selector: 'app-edit-note-rbt',
@@ -21,7 +22,7 @@ import { AuthService } from 'src/app/core/auth/auth.service';
 export class EditNoteRbtComponent implements OnInit {
   routes = AppRoutes;
   target: number;
-
+  posCodes = posCodes;
 
 
   changeTime() {
@@ -897,7 +898,7 @@ export class EditNoteRbtComponent implements OnInit {
         ? `${this.selectedValueTimeOut2}`.trim()
         : null,
       mood: this.client_appeared,
-      pos: this.getPos(this.meet_with_client_at),
+      pos: getPos(this.meet_with_client_at),
       maladaptives: this.maladaptivegroup.map((m) => ({
         behavior: m.name,
         frequency: m.number_of_occurrences,
@@ -968,18 +969,5 @@ export class EditNoteRbtComponent implements OnInit {
     return true;
   }
 
-  getPos(posCode: string) {
-    switch (posCode) {
-      case '03':
-        return 'School';
-      case '12':
-        return 'Home';
-      case '02':
-        return 'Telehealth';
-      case '99':
-        return 'Other';
-      default:
-        return 'Unknown';
-    }
-  }
+
 }

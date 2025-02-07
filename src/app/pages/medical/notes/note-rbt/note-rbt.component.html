@@ -178,10 +178,7 @@
                         [(ngModel)]="meet_with_client_at"
                       >
                         <option>-- Select --</option>
-                        <option value="03">03 School</option>
-                        <option value="12">12 Home</option>
-                        <option value="02">02 Telehealth</option>
-                        <option value="99">99 Other</option>
+                        <option *ngFor="let pos of posCodes" value="{{pos.code}}">{{pos.code}} {{pos.name}}</option>
                       </select>
                     </div>
                   </div>
@@ -379,7 +376,7 @@
 
           <!-- fin infopaciente -->
           <!-- Cards Maladaptives -->
-          <div class="col-xs-12">
+          <div class="col-12">
             <div class="card">
               <div class="card-body">
                 <app-maladaptives-options
@@ -393,7 +390,7 @@
           <!-- Cards Maladaptives -->
 
           <!-- Cards Replacements -->
-          <div class="col-xs-12">
+          <div class="col-12">
             <div class="card">
               <div class="card-body">
                 <app-replacements
@@ -723,6 +720,15 @@
 
                   <div class="col-12">
                     <div class="doctor-submit text-end">
+                      <div class="row" *ngIf="showWarningTrialsAndObjectives()">
+                        <div class="col-12 col-md-6 offset-md-6">
+                          <app-alert
+                            [title]="'Attention'"
+                            [type]="'warning'"
+                            [content]="msjWarningTrialOrObjectives"
+                          ></app-alert>
+                        </div>
+                      </div>
                       <button
                         type="button"
                         class="btn btn-primary submit-form me-2"

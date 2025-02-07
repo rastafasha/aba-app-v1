@@ -7,9 +7,9 @@ import { AppUser } from 'src/app/core/models/users.model';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
 import * as XLSX from 'xlsx';
-import { BipService } from '../../bip/service/bip.service';
 import { PatientMService } from '../service/patient-m.service';
 import { PatientV2 } from 'src/app/core/models';
+import { BipService } from '../../bip/service/bip.service';
 
 declare var $: any;
 @Component({

@@ -11,13 +11,13 @@ import { AppUser } from 'src/app/core/models/users.model';
 import { Interventions, PaServiceV2, PatientV2, NoteRbtV2 } from 'src/app/core/models';
 import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
 import { MaladaptiveRegistry, ReplacementRegistry, ReplacementBehavior, POSModel, MaladaptiveBehavior, ValidationResult } from '../interfaces';
-import {interventionsList} from '../listaInterventionData';
 import { AISummaryData } from 'src/app/shared/components/generate-ai-summary/generate-ai-summary.component';
 import { GenerateAiSummaryComponent } from 'src/app/shared/components/generate-ai-summary/generate-ai-summary.component';
 import { calculateUnitsFromTime, convertToHours, convertToMinutes } from 'src/app/utils/time-functions';
 import { PatientsV2Service } from 'src/app/core/services/patients.v2.service';
 import { AuthService } from 'src/app/core/auth/auth.service';
-
+import { Intervention } from 'src/app/core/models/v2/intervention.v2.model';
+import { posCodes } from 'src/app/shared/utils/getPos';
 
 @Component({
   selector: 'app-note-rbt',
@@ -28,7 +28,7 @@ export class NoteRbtComponent implements OnInit {
   @ViewChild(GenerateAiSummaryComponent) aiSummaryComponent: GenerateAiSummaryComponent;
 
   routes = AppRoutes;
-
+  posCodes = posCodes;
   valid_form = false;
 
   text_validation = '';
@@ -129,7 +129,7 @@ export class NoteRbtComponent implements OnInit {
 
   intervention_added: Interventions = [];
   interventionsSelected: { [key: string]: boolean } = {};
-  interventionsList = interventionsList;
+  interventionsList = [];
 
   pa_services: PaServiceV2[] = [];
   selectedPaService: PaServiceV2 | null = null;
@@ -137,6 +137,7 @@ export class NoteRbtComponent implements OnInit {
   selectedValueCode = '';
 
   projectedUnits = 0;
+  msjWarningTrialOrObjectives = '';
 
   constructor(
     private bipV2Service: BipsV2Service,
@@ -219,9 +220,7 @@ export class NoteRbtComponent implements OnInit {
     }
     return new Promise((resolve) => {
       this.patientService.get(patient_id).subscribe((resp)=>{
-        // console.log('API Response:', resp);
         this.client_selected = resp.data;
-        // console.log('Client Selected:', this.client_selected);
 
         this.first_name = this.client_selected.first_name;
         this.last_name = this.client_selected.last_name;
@@ -246,8 +245,6 @@ export class NoteRbtComponent implements OnInit {
         });
 
         this.selectedPaService = resp.data.pa_services.find(service => service.cpt === '97153') || null;
-        // console.log('Selected Service:', this.selectedPaService);
-        console.log('Selected Service:', this.selectedPaService);
         this.selectedValueCode = this.selectedPaService?.cpt || '';
 
         this.getBipV2();
@@ -258,14 +255,13 @@ export class NoteRbtComponent implements OnInit {
 
   getBipV2() {
     this.bipV2Service.list({ client_id: this.patient_id }).subscribe((resp) => {
-      console.log('BIP', resp);
       this.bip_id = resp.data[0].id;
 
       // Store BIP maladaptives and replacements temporarily
       const bipMaladaptives = resp.data[0].maladaptives.map((mal) => ({
         id: mal.id,
         name: mal.name,
-        number_of_occurrences: 0
+        number_of_occurrences: null
       }));
 
       const bipReplacements = resp.data[0].replacements
@@ -274,15 +270,16 @@ export class NoteRbtComponent implements OnInit {
           status: repl.status,
           id: repl.id,
           name: repl.name,
-          total_trials: 0,
-          number_of_correct_response: 0,
+          total_trials: null,
+          number_of_correct_response: null,
           objectives: repl.objectives,
           description: repl.objectives
             .filter(obj => obj.status === 'in progress')[0]
             ?.description || ''
         }));
 
-        console.log('BIP Replacements:', bipReplacements);
+      this.interventionsList = this.generateInterventionsList(resp.data[0].interventions);
+
 
       if (this.isEditMode) {
         // In edit mode, preserve existing values but add any missing items from BIP
@@ -298,7 +295,6 @@ export class NoteRbtComponent implements OnInit {
             objectives: bipReplacement?.objectives || []
           };
         });
-        console.log('ReplacementGoals:', this.replacementGoals);
       } else {
         // In create mode, use BIP data directly
         this.maladaptives = bipMaladaptives;
@@ -312,7 +308,6 @@ export class NoteRbtComponent implements OnInit {
     if (service) {
       this.selectedValueCode = service.cpt;
     }
-    console.log('Servicio seleccionado:', event.value);
   }
 
 
@@ -371,29 +366,21 @@ export class NoteRbtComponent implements OnInit {
   hourTimeInSelected(value: string) {
     this.selectedValueTimeIn = value;
     this.calculateProjectedUnits();
-    console.log(this.selectedValueTimeIn);
-    // this.sumarHoras(this.selectedValueTimeIn);
     this.calculateTotalHours();
   }
   hourTimeOutSelected(value: string) {
     this.selectedValueTimeOut = value;
     this.calculateProjectedUnits();
-    console.log(this.selectedValueTimeOut);
-    // this.sumarHoras(this.selectedValueTimeOut);
     this.calculateTotalHours();
   }
   hourTimeIn2Selected(value: string) {
     this.selectedValueTimeIn2 = value;
     this.calculateProjectedUnits();
-    console.log(this.selectedValueTimeIn2);
-    // this.sumarHoras(this.selectedValueTimeIn2);
     this.calculateTotalHours();
   }
   hourTimeOut2Selected(value: string) {
     this.selectedValueTimeOut2 = value;
     this.calculateProjectedUnits();
-    console.log(this.selectedValueTimeOut2);
-    // this.sumarHoras(this.selectedValueTimeOut2);
     this.calculateTotalHours();
   }
 
@@ -406,8 +393,30 @@ export class NoteRbtComponent implements OnInit {
     const totalMinutes = timeOut1 - timeIn1 + (timeOut2 - timeIn2);
     const totalHours = convertToHours(totalMinutes);
     this.total_hour_session = totalHours;
-    console.log(`Total hours: ${totalHours}`);
-    console.log('para el html', this.total_hour_session);
+  }
+
+  generateInterventionsList(interventions: Intervention[]) {
+    const newInterventions = interventions.map((intervention) => ({
+      id: intervention.title,
+      name: intervention.title,
+      value: false,
+    }));
+
+    // filter repeated interventions, prioritize existing interventions
+    const mixedInterventions = [...(this.interventionsList || []), ...newInterventions]
+      .filter((intervention, index, self) =>
+        self.findIndex(t => t.name === intervention.name) === index
+      );
+
+    if (mixedInterventions.length === 0) {
+      return Intervention.getDefaults().map((intervention) => ({
+      id: intervention.title,
+      name: intervention.title,
+      value: false,
+     }));
+    }
+
+    return mixedInterventions;
   }
 
   selectMaladaptive(behavior: MaladaptiveBehavior) {
@@ -502,17 +511,6 @@ export class NoteRbtComponent implements OnInit {
   }
 
   onSave() {
-    console.log('Pre-save values:', {
-      client_id: this.client_id,
-      provider_id: this.selectedValueProviderRBT_id,
-      supervisor_id: this.selectedValueBcba_id,
-      patient_id: this.patient_id,
-      maladaptives: this.maladaptives,
-      replacements: this.replacementGoals,
-      interventions: this.intervention_added,
-      other_interventions: this.interventions,
-    });
-
     const validation = this.checkDataSufficient();
     if (!validation.isValid) {
       Swal.fire({
@@ -668,8 +666,9 @@ export class NoteRbtComponent implements OnInit {
       endTime: this.selectedValueTimeOut ? this.selectedValueTimeOut : null,
       startTime2: this.selectedValueTimeIn2 ? this.selectedValueTimeIn2 : null,
       endTime2: this.selectedValueTimeOut2 ? this.selectedValueTimeOut2 : null,
-      mood: this.client_appeared,
       pos: this.meet_with_client_at,
+      participants: this.participants,
+      environmentalChanges: this.environmental_changes,
       maladaptives: this.maladaptives.map((m) => ({
         behavior: m.name,
         frequency: m.number_of_occurrences,
@@ -680,12 +679,12 @@ export class NoteRbtComponent implements OnInit {
         correctResponses: r.number_of_correct_response,
       })),
       interventions: this.intervention_added.length > 0
-        ? this.intervention_added
-        : [],
-      participants: this.participants,
+      ? this.intervention_added
+      : [],
+      mood: this.client_appeared,
       evidencedBy: this.as_evidenced_by,
-      rbtModeledAndDemonstrated: this.rbt_modeled_and_demonstrated_to_caregiver,
       progressNoted: this.progress_noted_this_session_compared_to_previous_session,
+      rbtModeledAndDemonstrated: this.rbt_modeled_and_demonstrated_to_caregiver,
       nextSession: this.next_session_is_scheduled_for,
     };
   }
@@ -763,6 +762,38 @@ export class NoteRbtComponent implements OnInit {
       missingFields.push('Interventions');
     }
 
+    if (!this.participants || this.participants === '') {
+      missingFields.push('Present this session');
+    }
+
+    if (!this.environmental_changes || this.environmental_changes === '') {
+      missingFields.push('Environmental changes');
+    }
+
+    if (!this.summary_note || this.summary_note === '') {
+      missingFields.push('Summary note');
+    }
+
+    if (!this.next_session_is_scheduled_for || this.next_session_is_scheduled_for === '') {
+      missingFields.push('Next session date');
+    }
+
+    if (!this.rbt_modeled_and_demonstrated_to_caregiver || this.rbt_modeled_and_demonstrated_to_caregiver === '') {
+      missingFields.push('RBT modeled and demonstrated to caregiver');
+    }
+
+    if (!this.progress_noted_this_session_compared_to_previous_session || this.progress_noted_this_session_compared_to_previous_session === '') {
+      missingFields.push('Progress noted this session compared to previous session');
+    }
+
+    if (!this.as_evidenced_by || this.as_evidenced_by === '') {
+      missingFields.push('As evidenced by');
+    }
+
+    if (!this.client_appeared || this.client_appeared === '') {
+      missingFields.push('Client appeared');
+    }
+
     return {
       isValid: missingFields.length === 0,
       missingFields,
@@ -804,28 +835,41 @@ export class NoteRbtComponent implements OnInit {
 
             // Handle maladaptives from note
             if (note.maladaptives) {
-              this.maladaptives = note.maladaptives.map(m => ({
-                id: m.id,
-                name: m.name,
-                number_of_occurrences: m.ocurrences || 0,
-                description: m.name // Add description field
-              }));
+              this.maladaptives = note.maladaptives
+                .filter(m => m.ocurrences !== 0)
+                .map(m => ({
+                  id: m.id,
+                  name: m.name,
+                  number_of_occurrences: m.ocurrences || 0,
+                  description: m.name // Add description field
+                }));
             }
 
             // Handle replacements from note
             if (note.replacements) {
-              this.replacementGoals = note.replacements.map(r => ({
-                id: r.id,
-                name: r.name,
-                total_trials: r.total_trials || 0,
-                number_of_correct_response: r.correct_responses || 0,
-                status: 'active',
-                objectives: [],
-                description: r.name // Add description field
-              }));
+              this.replacementGoals = note.replacements
+                .filter(r => r.total_trials !== 0)
+                .map(r => ({
+                  id: r.id,
+                  name: r.name,
+                  total_trials: r.total_trials || 0,
+                  number_of_correct_response: r.correct_responses || 0,
+                  status: 'active',
+                  objectives: [],
+                  description: r.name // Add description field
+                }));
 
               // Force change detection by creating a new array reference
               this.replacementGoals = [...this.replacementGoals];
+            }
+
+            // Handle interventions from note
+            if (note.interventions) {
+              this.interventionsList = this.generateInterventionsList(note.interventions.map(title => ({
+                id: title,
+                title: title,
+                description: '',
+              })));
             }
 
             // Time fields - ensure proper format HH:mm
@@ -879,8 +923,6 @@ export class NoteRbtComponent implements OnInit {
               this.intervention_added = note.interventions;
             }
 
-            console.log('note', note, 'interventions', this.interventionsSelected);
-
             this.calculateProjectedUnits();
             this.calculateTotalHours();
           });
@@ -891,6 +933,33 @@ export class NoteRbtComponent implements OnInit {
         Swal.fire('Error', 'There was an error loading the note.', 'error');
       }
     });
+  }
+
+  public showWarningTrialsAndObjectives(): boolean {
+    const [hoursIn1, minutesIn1] = this.selectedValueTimeIn.split(':').map(Number);
+    const [hoursOut1, minutesOut1] = this.selectedValueTimeOut.split(':').map(Number);
+    const [hoursIn2, minutesIn2] = this.selectedValueTimeIn2.split(':').map(Number);
+    const [hoursOut2, minutesOut2] = this.selectedValueTimeOut2.split(':').map(Number);
+
+    const morningMinutes = hoursOut1 * 60 + minutesOut1 - (hoursIn1 * 60 + minutesIn1);
+    const afternoonMinutes = hoursOut2 * 60 + minutesOut2 - (hoursIn2 * 60 + minutesIn2);
+    const totalMinutes = morningMinutes || 0 + afternoonMinutes || 0;
+
+    const objectivesIsOk = this.replacementGoals.filter(item => item.total_trials !== 0).length >= 5 ||
+                          this.replacementGoals.filter(item => item.total_trials !== 0).length === this.replacementGoals.length;
+
+    const total_trials = this.replacementGoals.reduce((suma, item) => suma + item.total_trials, 0)
+    const trialsIsOk = total_trials >= (totalMinutes/60)*10;
+    if(!objectivesIsOk) {
+      this.msjWarningTrialOrObjectives = 'The number of objectives worked on is very small';
+      return true;
+    }
+    if(!trialsIsOk) {
+      this.msjWarningTrialOrObjectives = 'The number of trials worked on is very small';
+      return true;
+    }
+
+    return false;
   }
 
 }

@@ -4,6 +4,7 @@ export * from './bips.v2.service';
 export * from './crisis-plans.v2.service';
 export * from './doctors.service';
 export * from './doctors.v2.service';
+export * from './consent-to-treatment.v2.service';
 export * from './insurances.service';
 export * from './insurances.v2.service';
 export * from './locations.v2.service';

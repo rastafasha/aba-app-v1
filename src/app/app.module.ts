@@ -8,7 +8,6 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing';
-import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { AuthInterceptor } from './core/auth/auth.interceptor';
 import { CoreModule } from './core/core.module';
 import { PermisionInterceptor } from './core/interceptors/permision.interceptor';
@@ -17,7 +16,7 @@ import { PipesModule } from './shared/pipes/pipes.module';
 import { SharedModule } from './shared/shared.module';
 
 @NgModule({
-  declarations: [AppComponent, BreadcrumbsComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,

@@ -1,20 +1,18 @@
 import { DatePipe } from '@angular/common';
-import { Component, inject, Input, LOCALE_ID } from '@angular/core';
+import { Component, inject, LOCALE_ID } from '@angular/core';
 import { Objective, PlanV2 } from 'src/app/core/models';
 import {
   HeadRender,
   ListRender,
 } from 'src/app/shared/components/list/list.component';
+import { InputDirective } from 'src/app/shared/directives/input.directive';
 
 @Component({
   selector: 'app-family-show',
-  templateUrl: './bip-profile-family.component.html',
-  styleUrls: ['./bip-profile-family.component.scss'],
+  templateUrl: './family-show.component.html',
+  styleUrls: ['./family-show.component.scss'],
 })
-export class BipProfileFamilyComponent {
-  //We are making the suposition that always come 1 Plan (the family/caregiver plan)
-  @Input() input: PlanV2[];
-
+export class FamilyShowComponent extends InputDirective<PlanV2[]> {
   locale = inject(LOCALE_ID);
   datePipe = new DatePipe(this.locale);
 

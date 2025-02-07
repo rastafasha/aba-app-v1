@@ -42,7 +42,7 @@ export class RepositoryUtils {
       if (beforeSave) beforeSave(item);
       const oldItem = oldItems.find((o) => o.id === item.id);
 
-      if (!oldItem || item.id === 0) {
+      if (!oldItem || item.id === 0 || item.id === undefined) {
         console.log('creating', item);
         operations.push(service.create(this.stripIndex(item)));
       } else if (

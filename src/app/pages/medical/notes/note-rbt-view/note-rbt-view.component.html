@@ -12,7 +12,10 @@
               <li class="breadcrumb-item active">View Note</li>
             </ng-container>
             <ng-template #defaultBreadcrumb>
-              <li class="breadcrumb-item"><a [routerLink]="[routes.noteRbt.list, patient_identifier]">RBT Notes</a></li>
+              <li class="breadcrumb-item">
+                <a *ngIf="patient_selected?.id" [routerLink]="[routes.noteRbt.list, patient_selected.id]">RBT Notes</a>
+                <span *ngIf="!patient_selected?.id">RBT Notes</span>
+              </li>
               <li class="breadcrumb-item"><i class="feather icon-chevron-right"></i></li>
               <li class="breadcrumb-item active">View Note</li>
             </ng-template>
@@ -383,12 +386,15 @@
               </div>
               <div class="page-break" style="page-break-after: always"></div>
               <!-- Interventions -->
-              <app-interventionviews [interventions]="this.note_selected?.interventions"></app-interventionviews>
+              <app-interventionviews
+                [interventions]="this.note_selected?.interventions"
+                [interventionsBase]="this.interventionsBase">
+              </app-interventionviews>
               <!-- Interventions -->
               <div class="card">
                 <div class="card-header">
                   <h4 class="card-title">Summary Note</h4>
-                  <p>{{ note_selected?.summary_note }}</p>
+                  <!-- <p>{{ note_selected?.summary_note }}</p> -->
                 </div>
                 <div class="card-body p-0">
                   <div class="personal-list-out">

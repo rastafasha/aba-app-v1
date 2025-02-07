@@ -21,9 +21,9 @@ import { DataService } from 'src/app/shared/data/data.service';
 import { ChartOptions, PlanV2, PatientDashboard } from 'src/app/core/models';
 
 import { ActivatedRoute } from '@angular/router';
-import { BipService } from '../../../service/bip.service';
 import { GraphicReductionService } from '../../../service/graphic-reduction.service';
 import { AppUser } from 'src/app/core/models/users.model';
+import { BipService } from '../../../service/bip.service';
 interface data {
   value: string;
 }

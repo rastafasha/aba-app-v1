@@ -6,8 +6,11 @@ import { ReplacementProtocol } from '../interfaces';
   template: `
     <div class="col-12">
       <h5>Replacement Protocols</h5>
-      <div class="table-responsive">
-        <table class="table mb-0">
+      <app-split-table
+        [data]="replacementProtocols"
+        [headerTemplate]="headerTemplate"
+        [rowTemplate]="rowTemplate">
+        <ng-template #headerTemplate>
           <thead>
             <tr>
               <th>Protocol</th>
@@ -15,39 +18,38 @@ import { ReplacementProtocol } from '../interfaces';
               <th>Modified</th>
             </tr>
           </thead>
-          <tbody>
-            <tr *ngFor="let protocol of replacementProtocols">
-              <td>{{ protocol.description }}</td>
-              <td>
-                <div class="status-toggle d-flex justify-content-between align-items-center">
-                  <input
-                    type="checkbox"
-                    [id]="protocol.id + '-assessed'"
-                    class="check"
-                    [(ngModel)]="protocol.assessed"
-                    [name]="protocol.id + '-assessed'"
-                    (ngModelChange)="updateProtocols()"
-                  />
-                  <label [for]="protocol.id + '-assessed'" class="checktoggle">checkbox</label>
-                </div>
-              </td>
-              <td>
-                <div class="status-toggle d-flex justify-content-between align-items-center">
-                  <input
-                    type="checkbox"
-                    [id]="protocol.id + '-modified'"
-                    class="check"
-                    [(ngModel)]="protocol.modified"
-                    [name]="protocol.id + '-modified'"
-                    (ngModelChange)="updateProtocols()"
-                  />
-                  <label [for]="protocol.id + '-modified'" class="checktoggle">checkbox</label>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        </ng-template>
+
+        <ng-template #rowTemplate let-protocol>
+          <td>{{ protocol.description }}</td>
+          <td>
+            <div class="status-toggle d-flex justify-content-between align-items-center">
+              <input
+                type="checkbox"
+                [id]="protocol.id + '-assessed'"
+                class="check"
+                [(ngModel)]="protocol.assessed"
+                [name]="protocol.id + '-assessed'"
+                (ngModelChange)="updateProtocols()"
+              />
+              <label [for]="protocol.id + '-assessed'" class="checktoggle">checkbox</label>
+            </div>
+          </td>
+          <td>
+            <div class="status-toggle d-flex justify-content-between align-items-center">
+              <input
+                type="checkbox"
+                [id]="protocol.id + '-modified'"
+                class="check"
+                [(ngModel)]="protocol.modified"
+                [name]="protocol.id + '-modified'"
+                (ngModelChange)="updateProtocols()"
+              />
+              <label [for]="protocol.id + '-modified'" class="checktoggle">checkbox</label>
+            </div>
+          </td>
+        </ng-template>
+      </app-split-table>
     </div>
   `,
 })

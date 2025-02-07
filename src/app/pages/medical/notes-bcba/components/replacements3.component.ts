@@ -6,34 +6,36 @@ import { ReplacementProtocol } from '../interfaces';
   template: `
     <div class="col-12">
       <h5>Replacement Protocols</h5>
-      <div class="table-responsive">
-        <table class="table mb-0">
+      <app-split-table
+        [data]="replacementProtocols"
+        [headerTemplate]="headerTemplate"
+        [rowTemplate]="rowTemplate">
+        <ng-template #headerTemplate>
           <thead>
             <tr>
               <th>Protocol</th>
               <th>Demonstrated</th>
             </tr>
           </thead>
-          <tbody>
-            <tr *ngFor="let protocol of replacementProtocols">
-              <td>{{ protocol.description }}</td>
-              <td>
-                <div class="status-toggle d-flex justify-content-between align-items-center">
-                  <input
-                    type="checkbox"
-                    [id]="protocol.id + '-demonstrated'"
-                    class="check"
-                    [(ngModel)]="protocol.demonstrated"
-                    [name]="protocol.id + '-demonstrated'"
-                    (ngModelChange)="updateProtocols()"
-                  />
-                  <label [for]="protocol.id + '-demonstrated'" class="checktoggle">checkbox</label>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        </ng-template>
+
+        <ng-template #rowTemplate let-protocol>
+          <td>{{ protocol.description }}</td>
+          <td>
+            <div class="status-toggle d-flex justify-content-between align-items-center">
+              <input
+                type="checkbox"
+                [id]="protocol.id + '-demonstrated'"
+                class="check"
+                [(ngModel)]="protocol.demonstrated"
+                [name]="protocol.id + '-demonstrated'"
+                (ngModelChange)="updateProtocols()"
+              />
+              <label [for]="protocol.id + '-demonstrated'" class="checktoggle">checkbox</label>
+            </div>
+          </td>
+        </ng-template>
+      </app-split-table>
     </div>
   `,
 })

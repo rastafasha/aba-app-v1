@@ -1,21 +1,21 @@
 import { Location } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { FileSaverService } from 'ngx-filesaver';
 import { AuthService } from 'src/app/core/auth/auth.service';
-import { ActionModalComponent } from 'src/app/shared/components/action-modal/action-modal.component';
+import { LocationV2, PatientV2 } from 'src/app/core/models';
 import { AppUser } from 'src/app/core/models/users.model';
+import { LocationsV2Service, PatientsV2Service } from 'src/app/core/services';
+import { ActionModalComponent } from 'src/app/shared/components/action-modal/action-modal.component';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
 import Swal from 'sweetalert2';
 import * as XLSX from 'xlsx';
 import { BipService } from '../../bip/service/bip.service';
 import { PatientMService } from '../service/patient-m.service';
-import { LocationsV2Service, PatientsV2Service } from 'src/app/core/services';
-import { LocationV2, PatientV2 } from 'src/app/core/models';
-import { HttpErrorResponse } from '@angular/common/http';
 
 declare var $: any;
 @Component({
@@ -410,11 +410,7 @@ export class ListPatientMComponent implements OnInit {
         title: 'BIP Create',
         icon: 'fa fa-address-book',
         buttonClass: 'btn-outline-success',
-        onClick: () =>
-          this.router.navigate([
-            AppRoutes.bip.edit,
-            patient.id,
-          ]),
+        onClick: () => this.router.navigate([AppRoutes.bip.show, patient.id]),
       },
       {
         title: 'BIP View',
@@ -427,40 +423,28 @@ export class ListPatientMComponent implements OnInit {
         icon: 'fa fa-id-card',
         buttonClass: 'btn-outline-success',
         onClick: () =>
-          this.router.navigate([
-            AppRoutes.noteRbt.noteRbt,
-            patient.id,
-          ]),
+          this.router.navigate([AppRoutes.noteRbt.noteRbt, patient.id]),
       },
       {
         title: 'RBT Note list',
         icon: 'fa fa-bars',
         buttonClass: 'btn-outline-primary',
         onClick: () =>
-          this.router.navigate([
-            AppRoutes.noteRbt.list,
-            patient.id,
-          ]),
+          this.router.navigate([AppRoutes.noteRbt.list, patient.id]),
       },
       {
         title: 'Create BCBA Note',
         icon: 'fa fa-id-badge',
         buttonClass: 'btn-outline-secondary',
         onClick: () =>
-          this.router.navigate([
-            AppRoutes.noteBcba.noteBcba,
-            patient.id,
-          ]),
+          this.router.navigate([AppRoutes.noteBcba.noteBcba, patient.id]),
       },
       {
         title: 'BCBA Note list',
         icon: 'fa fa-bars',
         buttonClass: 'btn-outline-primary',
         onClick: () =>
-          this.router.navigate([
-            AppRoutes.noteBcba.list,
-            patient.id,
-          ]),
+          this.router.navigate([AppRoutes.noteBcba.list, patient.id]),
       },
 
       // {
@@ -494,19 +478,25 @@ export class ListPatientMComponent implements OnInit {
 
     switch (action.title) {
       case 'Edit Client':
-        return ['SUPERADMIN','ADMIN', 'MANAGER'].includes(this.roles);
+        return ['SUPERADMIN', 'ADMIN', 'MANAGER'].includes(this.roles);
       case 'BIP Create':
-        return ['SUPERADMIN','ADMIN', 'MANAGER', 'LM', 'BCBA'].includes(this.roles);
+        return ['SUPERADMIN', 'ADMIN', 'MANAGER', 'LM', 'BCBA'].includes(
+          this.roles
+        );
       case 'BIP View':
         return this.isPermission('view_bip');
       case 'Create RBT Note':
       case 'RBT Note list':
-        return ['SUPERADMIN','ADMIN', 'MANAGER', 'LM', 'RBT'].includes(this.roles);
+        return ['SUPERADMIN', 'ADMIN', 'MANAGER', 'LM', 'RBT'].includes(
+          this.roles
+        );
       case 'Create BCBA Note':
       case 'BCBA Note list':
-        return ['SUPERADMIN','ADMIN', 'MANAGER', 'LM', 'BCBA'].includes(this.roles);
+        return ['SUPERADMIN', 'ADMIN', 'MANAGER', 'LM', 'BCBA'].includes(
+          this.roles
+        );
       case 'Log Report':
-        return ['SUPERADMIN','ADMIN', 'MANAGER'].includes(this.roles);
+        return ['SUPERADMIN', 'ADMIN', 'MANAGER'].includes(this.roles);
       default:
         return false;
     }

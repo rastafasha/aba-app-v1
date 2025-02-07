@@ -1,3 +1,5 @@
+import { BIP_CONST } from './constants';
+
 export class Attention {
   index?: number;
   preventive_strategies: string;
@@ -9,9 +11,12 @@ export class Attention {
   static getDefault(): Attention {
     return new Attention({
       index: undefined, // Changed from 0
-      preventive_strategies: '',
-      replacement_skills: '',
-      manager_strategies: '',
+      preventive_strategies: BIP_CONST.ATTENTION.STRATEGY,
+      replacement_skills: BIP_CONST.ATTENTION.REPLACEMENT_SKILLS,
+      manager_strategies: BIP_CONST.ATTENTION.MANAGER_STRATEGY,
     });
+  }
+  static getDefaults(): Attention[] {
+    return [this.getDefault()];
   }
 }
