@@ -1,7 +1,3 @@
-
-// Create a component for Angular with what follows: AI!
-
-
 import { Component, Input } from '@angular/core';
 
 @Component({
