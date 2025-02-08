@@ -10,7 +10,8 @@
           <div class="form-group">
             <div class="status-toggle d-flex justify-content-between align-items-center">
               <input type="checkbox" id="was_the_rbt_present" class="check"
-                [(ngModel)]="was_the_rbt_present" name="was_the_rbt_present"
+                [(ngModel)]="wasTheRbtPresent" name="was_the_rbt_present"
+                (ngModelChange)="onWasTheRbtPresentChange()"
                 />
               <label for="was_the_rbt_present" class="checktoggle">checkbox</label>
             </div>
@@ -21,7 +22,7 @@
   </div>
   <!-- Was the RBT present? -->
   <!-- Cards Maladaptives -->
-  <div *ngIf="!was_the_rbt_present" class="col-12">
+  <div *ngIf="!wasTheRbtPresent" class="col-12">
     <div class="card">
       <div class="card-body">
         <app-maladaptives-options [(maladaptives)]="maladaptives" (maladaptivesChange)="onMaladaptivesChange($event)">

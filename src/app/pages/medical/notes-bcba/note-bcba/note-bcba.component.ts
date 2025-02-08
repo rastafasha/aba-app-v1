@@ -406,6 +406,10 @@ export class NoteBcbaComponent implements OnInit {
     this.behaviorsList_added = updatedbehaviorsList;
   }
 
+  onWasTheRbtPresentChange(value: boolean) {
+    this.was_the_rbt_present = value;
+  }
+
   loadNote() {
     this.noteBcbaV2Service.get(this.noteId).subscribe({
       next: (resp) => {
