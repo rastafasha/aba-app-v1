@@ -274,18 +274,29 @@ export class NoteBcbaComponent implements OnInit {
       // Transform replacements into ReplacementProtocol format
       const bipReplacements = resp.data[0].replacements
         .filter(replacement => replacement.status === 'active')
-        .flatMap(replacement =>
-          replacement.objectives.map(objective => ({
-            id: replacement.id,
-            name: replacement.name,
-            description: objective.description,
-            status: objective.status,
-            assessed: this.replacementProtocols.find(p => p.id === replacement.id)?.assessed || !this.isEditMode,
-            modified: this.replacementProtocols.find(p => p.id === replacement.id)?.modified || false,
-            demonstrated: this.replacementProtocols.find(p => p.id === replacement.id)?.demonstrated || false,
-          }))
-        )
-        .filter(protocol => protocol.status === 'in progress');
+        .map(replacement => {
+          // Get only in progress objectives
+          const inProgressObjectives = replacement.objectives
+            .filter(objective => objective.status === 'in progress');
+
+          // If there are multiple in progress objectives, take the latest one
+          // (assuming the last one in the array is the latest)
+          const latestObjective = inProgressObjectives[inProgressObjectives.length - 1];
+
+          if (latestObjective) {
+            return {
+              id: replacement.id,
+              name: replacement.name,
+              description: latestObjective.description,
+              status: latestObjective.status,
+              assessed: this.replacementProtocols.find(p => p.id === replacement.id)?.assessed || !this.isEditMode,
+              modified: this.replacementProtocols.find(p => p.id === replacement.id)?.modified || false,
+              demonstrated: this.replacementProtocols.find(p => p.id === replacement.id)?.demonstrated || false,
+            };
+          }
+          return null;
+        })
+        .filter(protocol => protocol !== null);
 
       this.replacementProtocols = bipReplacements;
 
