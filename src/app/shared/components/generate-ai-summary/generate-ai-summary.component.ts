@@ -102,9 +102,10 @@ export class GenerateAiSummaryComponent {
       },
       (error) => {
         console.error('Error generating AI summary:', error);
+        const errorMessage = error.error.message || 'Error generating AI summary. Please try again.';
         Swal.fire(
           'Error',
-          'Error generating AI summary. Please try again.',
+          errorMessage,
           'error'
         );
         this.isGenerating = false;
