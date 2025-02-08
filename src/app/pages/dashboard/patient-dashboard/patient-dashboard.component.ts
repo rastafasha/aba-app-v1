@@ -17,6 +17,7 @@ import { AppUser } from 'src/app/core/models/users.model';
 import { AppRoutes } from 'src/app/shared/routes/routes';
 import { PageService } from 'src/app/shared/services/pages.service';
 import { DashboardService } from '../service/dashboard.service';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
 @Component({
   selector: 'app-patient-dashboard',
@@ -97,6 +98,7 @@ export class PatientDashboardComponent implements OnInit {
     private data: DataService,
     private dashboardService: DashboardService,
     private activatedRoute: ActivatedRoute,
+    private authService: AuthService,
     private pageService: PageService
   ) {
     this.carousel1 = this.data.carousel1;
@@ -354,8 +356,7 @@ export class PatientDashboardComponent implements OnInit {
   ngOnInit() {
     this.pageService.onInitPage();
     this.getTableData();
-    const USER = localStorage.getItem('user');
-    this.user = JSON.parse(USER ? USER : '');
+    this.user = this.authService.user as AppUser;
 
     this.activatedRoute.params.subscribe((resp) => {
       // console.log(resp);

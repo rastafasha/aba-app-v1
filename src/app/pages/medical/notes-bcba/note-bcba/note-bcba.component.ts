@@ -274,18 +274,29 @@ export class NoteBcbaComponent implements OnInit {
       // Transform replacements into ReplacementProtocol format
       const bipReplacements = resp.data[0].replacements
         .filter(replacement => replacement.status === 'active')
-        .flatMap(replacement =>
-          replacement.objectives.map(objective => ({
-            id: replacement.id,
-            name: replacement.name,
-            description: objective.description,
-            status: objective.status,
-            assessed: this.replacementProtocols.find(p => p.id === replacement.id)?.assessed || !this.isEditMode,
-            modified: this.replacementProtocols.find(p => p.id === replacement.id)?.modified || false,
-            demonstrated: this.replacementProtocols.find(p => p.id === replacement.id)?.demonstrated || false,
-          }))
-        )
-        .filter(protocol => protocol.status === 'in progress');
+        .map(replacement => {
+          // Get only in progress objectives
+          const inProgressObjectives = replacement.objectives
+            .filter(objective => objective.status === 'in progress');
+
+          // If there are multiple in progress objectives, take the latest one
+          // (assuming the last one in the array is the latest)
+          const latestObjective = inProgressObjectives[inProgressObjectives.length - 1];
+
+          if (latestObjective) {
+            return {
+              id: replacement.id,
+              name: replacement.name,
+              description: latestObjective.description,
+              status: latestObjective.status,
+              assessed: this.replacementProtocols.find(p => p.id === replacement.id)?.assessed || !this.isEditMode,
+              modified: this.replacementProtocols.find(p => p.id === replacement.id)?.modified || false,
+              demonstrated: this.replacementProtocols.find(p => p.id === replacement.id)?.demonstrated || false,
+            };
+          }
+          return null;
+        })
+        .filter(protocol => protocol !== null);
 
       this.replacementProtocols = bipReplacements;
 
@@ -404,6 +415,10 @@ export class NoteBcbaComponent implements OnInit {
 
   onBehaviorChange(updatedbehaviorsList: object) {
     this.behaviorsList_added = updatedbehaviorsList;
+  }
+
+  onWasTheRbtPresentChange(value: boolean) {
+    this.was_the_rbt_present = value;
   }
 
   loadNote() {
@@ -583,7 +598,6 @@ export class NoteBcbaComponent implements OnInit {
       total_hours: '',
       total_minutes: 0,
       total_units: 0,
-      note_description: this.summary_note,
       patient_id: this.patient_id,
       patient_identifier: this.patient_identifier,
       summary_note: this.summary_note,
@@ -629,7 +643,7 @@ export class NoteBcbaComponent implements OnInit {
     }
 
     if (this.selectedPaService?.cpt === '97155') {
-      bcbaData.was_the_rbt_present = this.was_the_rbt_present;
+      bcbaData.was_the_rbt_present = this.was_the_rbt_present ? true : false;
       bcbaData.maladaptives = this.maladaptives && !this.was_the_rbt_present ? this.maladaptives.map(item => ({
         plan_id: item.id,
         name: item.name,

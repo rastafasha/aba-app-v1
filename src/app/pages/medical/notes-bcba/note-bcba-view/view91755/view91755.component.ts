@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { NoteBcbaV2 } from 'src/app/core/models/v2/note-bcba.v2.model';
+import { MaladaptivesData, NoteBcbaV2 } from 'src/app/core/models/v2/note-bcba.v2.model';
 import { Protocol, PlanProtocol } from 'src/app/core/models/notes.model';
 
 @Component({
@@ -9,6 +9,8 @@ import { Protocol, PlanProtocol } from 'src/app/core/models/notes.model';
 })
 export class View91755Component {
     @Input() show97155: boolean;
+    @Input() maladaptives: MaladaptivesData;
+    @Input() wasTheRbtPresent: boolean;
     @Input() interventions2: Protocol[];
     @Input() obj_inprogress: PlanProtocol[];
     @Input() note_selected: NoteBcbaV2;

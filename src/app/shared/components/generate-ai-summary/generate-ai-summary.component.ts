@@ -102,9 +102,10 @@ export class GenerateAiSummaryComponent {
       },
       (error) => {
         console.error('Error generating AI summary:', error);
+        const errorMessage = error.error.message || 'Error generating AI summary. Please try again.';
         Swal.fire(
           'Error',
-          'Error generating AI summary. Please try again.',
+          errorMessage,
           'error'
         );
         this.isGenerating = false;
@@ -154,6 +155,10 @@ export class GenerateAiSummaryComponent {
 
         case '97155':
           // Protocol modification validations
+          if (!summaryData.wasTheRbtPresent && summaryData.maladaptives
+            ?.filter(m => m.frequency === null).length > 0) {
+            missingFields.push('Maladaptive Behaviors');
+          }
           if (!summaryData.participants) missingFields.push('Participants');
           if (!summaryData.environmentalChanges) missingFields.push('Environmental Changes');
           break;

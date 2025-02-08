@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { DoctorService } from '../service/doctor.service';
 import { AppUser } from 'src/app/core/models/users.model';
 import { PageService } from 'src/app/shared/services/pages.service';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
 const url_servicios = environment.url_servicios;
 @Component({
@@ -99,14 +100,14 @@ export class AddDoctorComponent implements OnInit {
     private pageService: PageService,
     private router: Router,
     private locationBack: Location,
-    private http: HttpClient
+    private http: HttpClient,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
     //
     this.pageService.onInitPage();
-    const USER = localStorage.getItem('user');
-    this.user = JSON.parse(USER ? USER : '');
+    this.user = this.authService.user as AppUser;
     this.role = this.user.roles[0];
     this.doctor_id = this.user.id;
     if (this.user.roles[0] === 'MANAGER') {

@@ -11,6 +11,7 @@ import { AppUser } from 'src/app/core/models/users.model';
 import { C } from '@fullcalendar/core/internal-common';
 import { TitleStrategy } from '@angular/router';
 import { DoctorService } from '../../doctors/service/doctor.service';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
 declare var $;
 
@@ -59,14 +60,14 @@ export class LocationListComponent implements OnInit {
     private pageService: PageService,
     private fileSaver: FileSaverService,
     private location: Location,
-    private doctorService: DoctorService
+    private doctorService: DoctorService,
+    private authService: AuthService,
   ) {}
 
   ngOnInit() {
     this.pageService.onInitPage();
     this.getTableData();
-    const USER = localStorage.getItem('user');
-    this.user = JSON.parse(USER ? USER : '');
+    this.user = this.authService.user as AppUser;
     this.role = this.user.roles[0];
   }
 

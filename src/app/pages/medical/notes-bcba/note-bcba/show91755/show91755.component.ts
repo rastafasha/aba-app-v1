@@ -13,12 +13,17 @@ export class Show91755Component {
   @Input() modifications_needed_at_this_time;
   @Input() additional_goals_or_interventions;
   @Input() maladaptives: MaladaptiveData[] = [];
-  @Input() was_the_rbt_present;
+  @Input() wasTheRbtPresent;
+  @Output() wasTheRbtPresentChange = new EventEmitter<boolean>();
   @Output() modificationsChange = new EventEmitter<boolean>();
   @Output() additionalChange = new EventEmitter<string>();
   @Output() interventions2Change = new EventEmitter<object>();
   @Output() protocolsChange = new EventEmitter<ReplacementProtocol[]>();
   @Output() maladaptivesChange = new EventEmitter<MaladaptiveProtocol[]>();
+
+  onWasTheRbtPresentChange() {
+    this.wasTheRbtPresentChange.emit(this.wasTheRbtPresent);
+  }
 
   onCheckboxChange() {
     this.modificationsChange.emit(this.modifications_needed_at_this_time);
