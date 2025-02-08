@@ -32,6 +32,7 @@ import { InputDirective } from './directives/input.directive';
 import { GenerateAiSummaryComponent } from './components/generate-ai-summary/generate-ai-summary.component';
 import { EditWrapperDirective } from './directives/edit-wrapper.directive';
 import { SplitTableComponent } from './components/split-table/split-table.component';
+import { CardWithBooleanComponent } from './components/card-with-boolean/card-with-boolean.component';
 
 const components = [
   NoInfoComponent,
@@ -48,7 +49,8 @@ const components = [
   InputDirective,
   GenerateAiSummaryComponent,
   EditWrapperDirective,
-  SplitTableComponent
+  SplitTableComponent,
+  CardWithBooleanComponent
 ];
 
 @NgModule({

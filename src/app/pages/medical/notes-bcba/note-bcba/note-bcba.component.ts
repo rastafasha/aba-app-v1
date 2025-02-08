@@ -598,7 +598,6 @@ export class NoteBcbaComponent implements OnInit {
       total_hours: '',
       total_minutes: 0,
       total_units: 0,
-      note_description: this.summary_note,
       patient_id: this.patient_id,
       patient_identifier: this.patient_identifier,
       summary_note: this.summary_note,
@@ -644,7 +643,7 @@ export class NoteBcbaComponent implements OnInit {
     }
 
     if (this.selectedPaService?.cpt === '97155') {
-      bcbaData.was_the_rbt_present = this.was_the_rbt_present;
+      bcbaData.was_the_rbt_present = this.was_the_rbt_present ? true : false;
       bcbaData.maladaptives = this.maladaptives && !this.was_the_rbt_present ? this.maladaptives.map(item => ({
         plan_id: item.id,
         name: item.name,

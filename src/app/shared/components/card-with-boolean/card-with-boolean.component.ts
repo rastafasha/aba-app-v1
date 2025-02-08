@@ -7,5 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class CardWithBooleanComponent {
   @Input() value: boolean;
-  @Input() title: string;
+  @Input() label: string;
+  @Input() title: string | null = null;
 }
