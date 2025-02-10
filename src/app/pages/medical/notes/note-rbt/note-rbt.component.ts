@@ -17,7 +17,7 @@ import { calculateUnitsFromTime, convertToHours, convertToMinutes } from 'src/ap
 import { PatientsV2Service } from 'src/app/core/services/patients.v2.service';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { Intervention } from 'src/app/core/models/v2/intervention.v2.model';
-import { posCodes } from 'src/app/shared/utils/getPos';
+import { posCodes as basePosCodes } from 'src/app/shared/utils/getPos';
 
 @Component({
   selector: 'app-note-rbt',
@@ -28,7 +28,7 @@ export class NoteRbtComponent implements OnInit {
   @ViewChild(GenerateAiSummaryComponent) aiSummaryComponent: GenerateAiSummaryComponent;
 
   routes = AppRoutes;
-  posCodes = posCodes;
+  posCodes = basePosCodes.filter((pos) => (pos.code !== '10') && (pos.code !== '02'));
   valid_form = false;
 
   text_validation = '';
@@ -666,6 +666,7 @@ export class NoteRbtComponent implements OnInit {
       endTime: this.selectedValueTimeOut ? this.selectedValueTimeOut : null,
       startTime2: this.selectedValueTimeIn2 ? this.selectedValueTimeIn2 : null,
       endTime2: this.selectedValueTimeOut2 ? this.selectedValueTimeOut2 : null,
+      cptCode: this.selectedValueCode,
       pos: this.meet_with_client_at,
       participants: this.participants,
       environmentalChanges: this.environmental_changes,

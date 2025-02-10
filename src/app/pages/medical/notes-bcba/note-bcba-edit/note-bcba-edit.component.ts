@@ -1111,7 +1111,7 @@ export class NoteBcbaEditComponent implements OnInit {
 
   checkPosWarning() {
     const isCpt97151 = this.selectedPaService?.cpt === '97151';
-    const isTelehealth = this.meet_with_client_at === '02';
+    const isTelehealth = this.meet_with_client_at === '02' || this.meet_with_client_at === '10';
     this.showPosWarning = isCpt97151 && isTelehealth;
   }
 

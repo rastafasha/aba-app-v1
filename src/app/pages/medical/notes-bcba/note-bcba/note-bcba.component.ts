@@ -289,9 +289,9 @@ export class NoteBcbaComponent implements OnInit {
               name: replacement.name,
               description: latestObjective.description,
               status: latestObjective.status,
-              assessed: this.replacementProtocols.find(p => p.id === replacement.id)?.assessed || !this.isEditMode,
-              modified: this.replacementProtocols.find(p => p.id === replacement.id)?.modified || false,
-              demonstrated: this.replacementProtocols.find(p => p.id === replacement.id)?.demonstrated || false,
+              assessed: this.replacementProtocols.find(p => p.id === replacement.id) ? this.replacementProtocols.find(p => p.id === replacement.id)?.assessed : !this.isEditMode,
+              modified: this.replacementProtocols.find(p => p.id === replacement.id) ? this.replacementProtocols.find(p => p.id === replacement.id)?.modified : false,
+              demonstrated: this.replacementProtocols.find(p => p.id === replacement.id) ? this.replacementProtocols.find(p => p.id === replacement.id)?.demonstrated : true,
             };
           }
           return null;
@@ -574,6 +574,7 @@ export class NoteBcbaComponent implements OnInit {
   }
 
   save() {
+    console.log('replacementProtocols', this.replacementProtocols);
     const missingFields = this.checkDataSufficient();
     if (!missingFields.isValid) {
       Swal.fire('Warning', missingFields.missingFields.join(', '), 'warning');
@@ -877,7 +878,7 @@ export class NoteBcbaComponent implements OnInit {
 
   checkPosWarning() {
     const isCpt97151 = this.selectedPaService?.cpt === '97151';
-    const isTelehealth = this.meet_with_client_at === '02';
+    const isTelehealth = this.meet_with_client_at === '02' || this.meet_with_client_at === '10';
     this.showPosWarning = isCpt97151 && isTelehealth;
   }
 
