@@ -58,7 +58,7 @@
                         <span >this is required</span>
                       </div>
                       <div *ngIf="form.controls['first_name'].errors?.['minlength']">
-                        <span >this is required</span>
+                        <span >3 character minimal</span>
                       </div>
                     </div>
                 </div>
@@ -82,7 +82,7 @@
                       <span >this is required</span>
                     </div>
                     <div *ngIf="form.controls['last_name'].errors?.['minlength']">
-                      <span >this is required</span>
+                      <span >3 character minimal</span>
                     </div>
                   </div>
                 </div>
@@ -147,6 +147,14 @@
                     formControlName="patient_identifier"
                     type="text"
                   />
+                  <div class="text-danger">
+                    <div *ngIf="form.controls['patient_identifier'].touched">
+                      <span >this is required</span>
+                    </div>
+                    <div *ngIf="form.controls['patient_identifier'].errors?.['minlength']">
+                      <span >3 character minimal</span>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="col-12 col-md-6 col-xl-4">
@@ -219,7 +227,7 @@
                       <span >this is required</span>
                     </div>
                     <div *ngIf="form.controls['parent_guardian_name'].errors?.['minlength']">
-                      <span >this is required</span>
+                      <span >3 character minimal</span>
                     </div>
                   </div>
                 </div>
@@ -303,6 +311,14 @@
                     type="text"
                     placeholder="English, Spanish, Italian..."
                   />
+                  <div class="text-danger">
+                    <div *ngIf="form.controls['language'].touched">
+                      <span >this is required</span>
+                    </div>
+                    <div *ngIf="form.controls['language'].errors?.['minlength']">
+                      <span >3 character minimal</span>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="col-12 col-md-6 col-xl-4">
@@ -353,7 +369,7 @@
                   />
                   <div class="text-danger">
                     <div *ngIf="form.controls['email'].touched">
-                      <span >this is required</span>
+                      <span >Must be an email valid</span>
                     </div>
                   </div>
                   <div *ngIf="emailExists">
@@ -518,7 +534,7 @@
                         <span >this is required</span>
                       </div>
                       <div *ngIf="form.controls['referring_provider_first_name'].errors?.['minlength']">
-                        <span >this is required</span>
+                        <span >3 character minimal</span>
                       </div>
                     </div>
                   </div>
@@ -540,7 +556,7 @@
                         <span >this is required</span>
                       </div>
                       <div *ngIf="form.controls['referring_provider_last_name'].errors?.['minlength']">
-                        <span >this is required</span>
+                        <span >3 character minimal</span>
                       </div>
                     </div>
                   </div>

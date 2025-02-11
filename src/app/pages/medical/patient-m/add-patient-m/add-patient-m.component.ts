@@ -167,7 +167,7 @@ export class AddPatientMComponent implements OnInit {
     this.form = this.fb.group({
       id: [0],
       patient_id: [0],
-      patient_identifier: ['0'],
+      patient_identifier: ['0', [Validators.required, Validators.minLength(3)]],
       insurer_id: ['', Validators.required],
       insurer_secondary_id: [''],
       insurance_identifier: ['', Validators.required],
@@ -182,7 +182,7 @@ export class AddPatientMComponent implements OnInit {
       last_name: ['', [Validators.required, Validators.minLength(3)]],
       parent_guardian_name: ['', [Validators.required, Validators.minLength(3)]],
       relationship: ['', Validators.required],
-      language: ['', Validators.required],
+      language: ['', [Validators.required, Validators.minLength(3)]],
       phone: ['', Validators.required],
       home_phone: ['', Validators.required],
       work_phone: ['', Validators.required],
