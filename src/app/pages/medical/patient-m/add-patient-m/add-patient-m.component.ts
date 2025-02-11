@@ -9,8 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { PageService } from 'src/app/shared/services/pages.service';
 import { AppUser } from 'src/app/core/models/users.model';
 import { PatientsUseCasesService } from '../service/patients-use-cases.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Validators } from 'ngx-editor';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/core/auth/auth.service';
 import { PaServiceV2 } from 'src/app/core/models/v2/pa-service.v2.model';
 import { EditPaServiceModalComponent } from '../edit-pa-service-modal/edit-pa-service-modal.component';
@@ -168,7 +167,7 @@ export class AddPatientMComponent implements OnInit {
     this.form = this.fb.group({
       id: [0],
       patient_id: [0],
-      patient_identifier: ['0'],
+      patient_identifier: ['0', [Validators.required, Validators.minLength(3)]],
       insurer_id: ['', Validators.required],
       insurer_secondary_id: [''],
       insurance_identifier: ['', Validators.required],
@@ -179,17 +178,17 @@ export class AddPatientMComponent implements OnInit {
       bcba_home_id: ['', Validators.required],
       bcba2_school_id: ['', Validators.required],
       clin_director_id: ['', Validators.required],
-      first_name: ['', Validators.required],
-      last_name: ['', Validators.required],
-      parent_guardian_name: ['', Validators.required],
+      first_name: ['', [Validators.required, Validators.minLength(3)]],
+      last_name: ['', [Validators.required, Validators.minLength(3)]],
+      parent_guardian_name: ['', [Validators.required, Validators.minLength(3)]],
       relationship: ['', Validators.required],
-      language: ['', Validators.required],
+      language: ['', [Validators.required, Validators.minLength(3)]],
       phone: ['', Validators.required],
       home_phone: ['', Validators.required],
       work_phone: ['', Validators.required],
       zip: ['', Validators.required],
       state: ['', Validators.required],
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       education: ['', Validators.required],
       profession: ['', Validators.required],
       school_name: ['', Validators.required],
@@ -209,8 +208,8 @@ export class AddPatientMComponent implements OnInit {
       schedule: ['', Validators.required],
       summer_schedule: ['', Validators.required],
       diagnosis_code: ['', Validators.required],
-      referring_provider_first_name: ['', Validators.required],
-      referring_provider_last_name: ['', Validators.required],
+      referring_provider_first_name: ['', [Validators.required, Validators.minLength(3)]],
+      referring_provider_last_name: ['', [Validators.required, Validators.minLength(3)]],
       referring_provider_npi: ['', Validators.required],
       eqhlid: ['', Validators.required],
       elegibility_date: ['', Validators.required],

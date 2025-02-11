@@ -52,6 +52,15 @@
                     formControlName="first_name"
                     type="text"
                   />
+
+                    <div class="text-danger">
+                      <div *ngIf="form.controls['first_name'].touched">
+                        <span >this is required</span>
+                      </div>
+                      <div *ngIf="form.controls['first_name'].errors?.['minlength']">
+                        <span >3 character minimal</span>
+                      </div>
+                    </div>
                 </div>
               </div>
               <div class="col-12 col-md-6 col-xl-4">
@@ -67,6 +76,15 @@
                     formControlName="last_name"
                     type="text"
                   />
+
+                  <div class="text-danger">
+                    <div *ngIf="form.controls['last_name'].touched">
+                      <span >this is required</span>
+                    </div>
+                    <div *ngIf="form.controls['last_name'].errors?.['minlength']">
+                      <span >3 character minimal</span>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="col-12 col-md-6 col-xl-4">
@@ -129,6 +147,14 @@
                     formControlName="patient_identifier"
                     type="text"
                   />
+                  <div class="text-danger">
+                    <div *ngIf="form.controls['patient_identifier'].touched">
+                      <span >this is required</span>
+                    </div>
+                    <div *ngIf="form.controls['patient_identifier'].errors?.['minlength']">
+                      <span >3 character minimal</span>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="col-12 col-md-6 col-xl-4">
@@ -195,6 +221,15 @@
                     formControlName="parent_guardian_name"
                     type="text"
                   />
+
+                  <div class="text-danger">
+                    <div *ngIf="form.controls['parent_guardian_name'].touched">
+                      <span >this is required</span>
+                    </div>
+                    <div *ngIf="form.controls['parent_guardian_name'].errors?.['minlength']">
+                      <span >3 character minimal</span>
+                    </div>
+                  </div>
                 </div>
               </div>
               <!-- Gender -->
@@ -263,83 +298,7 @@
                   />
                 </div>
               </div>
-              <!-- <div class="row">
-                  <label>Is Patient's Condition Related to: <span class="login-danger">*</span></label>
-                  <div class="col-12 col-md-4">
-                    <div class="form-group">
-                      <div
-                        class="card-header d-flex justify-content-between align-items-center"
-                      >
-                        <p >Employment? (current or previews)</p>
-                        <div
-                          [formGroup]="form"
-                          class="status-toggle d-flex justify-content-between align-items-center"
-                        >
-                          <input
-                            type="checkbox"
-                            id="emmployment"
-                            class="check"
-                            name="emmployment"
-                            formControlName="emmployment"
-                          />
-                          <label for="emmployment" disabled class="checktoggle" value="true">
-                            checkbox
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4">
-                    <div class="form-group">
-                      <div
-                        class="card-header d-flex justify-content-between align-items-center"
-                      >
-                        <p class="card-title">Auto Accident?</p>
-                        <div
-                          [formGroup]="form"
-                          class="status-toggle d-flex justify-content-between align-items-center"
-                        >
-                          <input
-                            type="checkbox"
-                            id="auto_accident"
-                            class="check"
-                            name="auto_accident"
-                            disabled
-                            formControlName="auto_accident"
-                          />
-                          <label for="auto_accident" class="checktoggle" value="true">
-                            checkbox
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-4">
-                    <div class="form-group">
-                      <div
-                        class="card-header d-flex justify-content-between align-items-center"
-                      >
-                        <p class="card-title">Other Accident?</p>
-                        <div
-                          [formGroup]="form"
-                          class="status-toggle d-flex justify-content-between align-items-center"
-                        >
-                          <input
-                            type="checkbox"
-                            id="other_accident"
-                            class="check"
-                            name="other_accident"
-
-                            formControlName="other_accident"
-                          />
-                          <label for="other_accident" class="checktoggle" value="true">
-                            checkbox
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div> -->
+              
 
               <div class="col-12 col-md-6 col-xl-4">
                 <div class="form-group local-forms">
@@ -352,6 +311,14 @@
                     type="text"
                     placeholder="English, Spanish, Italian..."
                   />
+                  <div class="text-danger">
+                    <div *ngIf="form.controls['language'].touched">
+                      <span >this is required</span>
+                    </div>
+                    <div *ngIf="form.controls['language'].errors?.['minlength']">
+                      <span >3 character minimal</span>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="col-12 col-md-6 col-xl-4">
@@ -400,6 +367,11 @@
                     formControlName="email"
                     type="email"
                   />
+                  <div class="text-danger">
+                    <div *ngIf="form.controls['email'].touched">
+                      <span >Must be an email valid</span>
+                    </div>
+                  </div>
                   <div *ngIf="emailExists">
                     <small class="text-danger">Email already exists</small>
                   </div>
@@ -557,6 +529,14 @@
                       formControlName="referring_provider_first_name"
                       type="text"
                     />
+                    <div class="text-danger">
+                      <div *ngIf="form.controls['referring_provider_first_name'].touched">
+                        <span >this is required</span>
+                      </div>
+                      <div *ngIf="form.controls['referring_provider_first_name'].errors?.['minlength']">
+                        <span >3 character minimal</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
@@ -571,6 +551,14 @@
                       formControlName="referring_provider_last_name"
                       type="text"
                     />
+                    <div class="text-danger">
+                      <div *ngIf="form.controls['referring_provider_last_name'].touched">
+                        <span >this is required</span>
+                      </div>
+                      <div *ngIf="form.controls['referring_provider_last_name'].errors?.['minlength']">
+                        <span >3 character minimal</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div class="col-12 col-md-6 col-xl-4">
