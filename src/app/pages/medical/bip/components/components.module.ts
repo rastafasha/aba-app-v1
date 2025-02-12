@@ -28,7 +28,7 @@ import { FamilyShowComponent } from './family/family-show/family-show.component'
 import { BipProfileGeneralizationComponent } from './generalization/generalization-show/bip-profile-generalization.component';
 import { BipShowHeadComponent } from './bip-show-head/bip-show-head.component';
 import { BipProfileHypothesisComponent } from './hypothesis/hypothesis-show/bip-profile-hypothesis.component';
-import { BipProfileInterventionsComponent } from './interventions/interventions-show/bip-profile-interventions.component';
+import { BipProfileInterventionsComponent } from './interventions/interventions-show/interventions-show.component';
 import { BipProfileMaladaptivesComponent } from './maladaptives/maladaptives-show/bip-profile-maladaptives.component';
 import { BipProfileMonotoringComponent } from './monotoring/monotoring-show/bip-profile-monotoring.component';
 import { BipShowPatientComponent } from './bip-show-patient/bip-show-patient.component';
