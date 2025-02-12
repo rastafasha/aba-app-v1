@@ -208,6 +208,7 @@ export class BipV2 {
       : Attention.getDefaults();
     data.escape = data.escape?.length ? data.escape : Escape.getDefaults();
     data.sensory = data.sensory?.length ? data.sensory : Sensory.getDefaults();
+    console.log(data.recommendations);
     data.recommendations = data.recommendations?.length
       ? data.recommendations
       : Recommendation.getDefaults();

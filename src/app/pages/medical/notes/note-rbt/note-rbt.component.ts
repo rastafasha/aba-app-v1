@@ -1,23 +1,41 @@
+import { Location } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/core/auth/auth.service';
+import {
+  Interventions,
+  NoteRbtV2,
+  PaServiceV2,
+  PatientV2,
+} from 'src/app/core/models';
+import { AppUser } from 'src/app/core/models/users.model';
+import { Intervention } from 'src/app/core/models/v2/intervention.v2.model';
+import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
+import { PatientsV2Service } from 'src/app/core/services/patients.v2.service';
+import {
+  AISummaryData,
+  GenerateAiSummaryComponent,
+} from 'src/app/shared/components/generate-ai-summary/generate-ai-summary.component';
 import { AppRoutes } from 'src/app/shared/routes/routes';
+import { posCodes as basePosCodes } from 'src/app/shared/utils/getPos';
+import {
+  calculateUnitsFromTime,
+  convertToHours,
+  convertToMinutes,
+} from 'src/app/utils/time-functions';
+import Swal from 'sweetalert2';
 import { NoteRbtService } from '../../../../core/services/notes-rbt.service';
 import { NotesRbtV2Service } from '../../../../core/services/notes-rbt.v2.service';
 import { DoctorService } from '../../doctors/service/doctor.service';
-import Swal from 'sweetalert2';
-import { Location } from '@angular/common';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { AppUser } from 'src/app/core/models/users.model';
-import { Interventions, PaServiceV2, PatientV2, NoteRbtV2 } from 'src/app/core/models';
-import { BipsV2Service } from 'src/app/core/services/bips.v2.service';
-import { MaladaptiveRegistry, ReplacementRegistry, ReplacementBehavior, POSModel, MaladaptiveBehavior, ValidationResult } from '../interfaces';
-import { AISummaryData } from 'src/app/shared/components/generate-ai-summary/generate-ai-summary.component';
-import { GenerateAiSummaryComponent } from 'src/app/shared/components/generate-ai-summary/generate-ai-summary.component';
-import { calculateUnitsFromTime, convertToHours, convertToMinutes } from 'src/app/utils/time-functions';
-import { PatientsV2Service } from 'src/app/core/services/patients.v2.service';
-import { AuthService } from 'src/app/core/auth/auth.service';
-import { Intervention } from 'src/app/core/models/v2/intervention.v2.model';
-import { posCodes as basePosCodes } from 'src/app/shared/utils/getPos';
+import {
+  MaladaptiveBehavior,
+  MaladaptiveRegistry,
+  POSModel,
+  ReplacementBehavior,
+  ReplacementRegistry,
+  ValidationResult,
+} from '../interfaces';
 
 @Component({
   selector: 'app-note-rbt',
@@ -25,10 +43,13 @@ import { posCodes as basePosCodes } from 'src/app/shared/utils/getPos';
   styleUrls: ['./note-rbt.component.scss'],
 })
 export class NoteRbtComponent implements OnInit {
-  @ViewChild(GenerateAiSummaryComponent) aiSummaryComponent: GenerateAiSummaryComponent;
+  @ViewChild(GenerateAiSummaryComponent)
+  aiSummaryComponent: GenerateAiSummaryComponent;
 
   routes = AppRoutes;
-  posCodes = basePosCodes.filter((pos) => (pos.code !== '10') && (pos.code !== '02'));
+  posCodes = basePosCodes.filter(
+    (pos) => pos.code !== '10' && pos.code !== '02'
+  );
   valid_form = false;
 
   text_validation = '';
@@ -98,7 +119,6 @@ export class NoteRbtComponent implements OnInit {
   interventions!: Interventions;
   provider_signature: string | null = null;
   supervisor_signature: string | null = null;
-
 
   FILE_SIGNATURE_RBT: File | null = null;
   IMAGE_PREVISUALIZA_SIGNATURE__RBT_CREATED = 'assets/img/user-06.jpg';
@@ -173,7 +193,6 @@ export class NoteRbtComponent implements OnInit {
     }
 
     // this.updateInterventions();
-
   }
 
   // updateInterventions() {
@@ -189,7 +208,7 @@ export class NoteRbtComponent implements OnInit {
   onInterventionsChange(updatedInterventions: any) {
     // Convert the object of {id: true} to array of ids
     const interventionIds = Object.keys(updatedInterventions[0]).filter(
-      key => updatedInterventions[0][key]
+      (key) => updatedInterventions[0][key]
     );
     this.intervention_added = interventionIds;
   }
@@ -219,7 +238,7 @@ export class NoteRbtComponent implements OnInit {
       return Promise.resolve();
     }
     return new Promise((resolve) => {
-      this.patientService.get(patient_id).subscribe((resp)=>{
+      this.patientService.get(patient_id).subscribe((resp) => {
         this.client_selected = resp.data;
 
         this.first_name = this.client_selected.first_name;
@@ -244,12 +263,14 @@ export class NoteRbtComponent implements OnInit {
           return dateStart <= dateToday && dateEnd >= dateToday;
         });
 
-        this.selectedPaService = resp.data.pa_services.find(service => service.cpt === '97153') || null;
+        this.selectedPaService =
+          resp.data.pa_services.find((service) => service.cpt === '97153') ||
+          null;
         this.selectedValueCode = this.selectedPaService?.cpt || '';
 
         this.getBipV2();
         resolve();
-      })
+      });
     });
   }
 
@@ -261,11 +282,11 @@ export class NoteRbtComponent implements OnInit {
       const bipMaladaptives = resp.data[0].maladaptives.map((mal) => ({
         id: mal.id,
         name: mal.name,
-        number_of_occurrences: null
+        number_of_occurrences: null,
       }));
 
       const bipReplacements = resp.data[0].replacements
-        .filter(repl => repl.status === 'active')
+        .filter((repl) => repl.status === 'active')
         .map((repl) => ({
           status: repl.status,
           id: repl.id,
@@ -273,26 +294,29 @@ export class NoteRbtComponent implements OnInit {
           total_trials: null,
           number_of_correct_response: null,
           objectives: repl.objectives,
-          description: repl.objectives
-            .filter(obj => obj.status === 'in progress')[0]
-            ?.description || ''
+          description:
+            repl.objectives.filter((obj) => obj.status === 'in progress')[0]
+              ?.description || '',
         }));
 
-      this.interventionsList = this.generateInterventionsList(resp.data[0].interventions);
-
+      this.interventionsList = this.generateInterventionsList(
+        resp.data[0].interventions
+      );
 
       if (this.isEditMode) {
         // In edit mode, preserve existing values but add any missing items from BIP
-        const existingMaladaptiveIds = this.maladaptives.map(m => m.id);
-        const newMaladaptives = bipMaladaptives.filter(m => !existingMaladaptiveIds.includes(m.id));
+        const existingMaladaptiveIds = this.maladaptives.map((m) => m.id);
+        const newMaladaptives = bipMaladaptives.filter(
+          (m) => !existingMaladaptiveIds.includes(m.id)
+        );
         this.maladaptives = [...this.maladaptives, ...newMaladaptives];
 
-        this.replacementGoals = this.replacementGoals.map(r => {
-          const bipReplacement = bipReplacements.find(bip => bip.id === r.id);
+        this.replacementGoals = this.replacementGoals.map((r) => {
+          const bipReplacement = bipReplacements.find((bip) => bip.id === r.id);
           return {
             ...r,
             description: bipReplacement?.description || '',
-            objectives: bipReplacement?.objectives || []
+            objectives: bipReplacement?.objectives || [],
           };
         });
       } else {
@@ -309,7 +333,6 @@ export class NoteRbtComponent implements OnInit {
       this.selectedValueCode = service.cpt;
     }
   }
-
 
   specialistData() {
     this.doctorService.showDoctorProfile(this.doctor_id).subscribe((resp) => {
@@ -339,7 +362,6 @@ export class NoteRbtComponent implements OnInit {
   selectFirmaSpecialistBcba(event) {
     this.speciaFirmaDataBcba(event.value);
   }
-
 
   calculateProjectedUnits(): void {
     let totalUnits = 0;
@@ -403,17 +425,20 @@ export class NoteRbtComponent implements OnInit {
     }));
 
     // filter repeated interventions, prioritize existing interventions
-    const mixedInterventions = [...(this.interventionsList || []), ...newInterventions]
-      .filter((intervention, index, self) =>
-        self.findIndex(t => t.name === intervention.name) === index
-      );
+    const mixedInterventions = [
+      ...(this.interventionsList || []),
+      ...newInterventions,
+    ].filter(
+      (intervention, index, self) =>
+        self.findIndex((t) => t.name === intervention.name) === index
+    );
 
     if (mixedInterventions.length === 0) {
       return Intervention.getDefaults().map((intervention) => ({
-      id: intervention.title,
-      name: intervention.title,
-      value: false,
-     }));
+        id: intervention.title,
+        name: intervention.title,
+        value: false,
+      }));
     }
 
     return mixedInterventions;
@@ -452,7 +477,6 @@ export class NoteRbtComponent implements OnInit {
     this.number_of_occurrences = 0;
   }
 
-
   //funcion para la primera imagen.. funciona
   loadFile($event) {
     if ($event.target.files[0].type.indexOf('image')) {
@@ -481,7 +505,6 @@ export class NoteRbtComponent implements OnInit {
       (this.IMAGE_PREVISUALIZA_SIGNATURE_BCBA_CREATED =
         reader2.result as string);
   }
-
 
   validateMaladaptives(): boolean {
     return this.maladp_added.every(
@@ -558,10 +581,10 @@ export class NoteRbtComponent implements OnInit {
       client_appeared: this.client_appeared,
       as_evidenced_by: this.as_evidenced_by,
       rbt_modeled_and_demonstrated_to_caregiver:
-      this.rbt_modeled_and_demonstrated_to_caregiver,
+        this.rbt_modeled_and_demonstrated_to_caregiver,
       client_response_to_treatment_this_session: '',
       progress_noted_this_session_compared_to_previous_session:
-      this.progress_noted_this_session_compared_to_previous_session,
+        this.progress_noted_this_session_compared_to_previous_session,
       next_session_is_scheduled_for: this.next_session_is_scheduled_for,
       status: 'pending' as const,
       cpt_code: this.selectedValueCode,
@@ -569,19 +592,17 @@ export class NoteRbtComponent implements OnInit {
       insurance_id: this.insurance_id,
       pa_service_id: this.selectedPaService?.id,
       pos: this.meet_with_client_at,
-      maladaptives: this.maladaptives
-        .map((m) => ({
-          id: m.id,
-          name: m.name,
-          ocurrences: m.number_of_occurrences,
-        })),
-      replacements: this.replacementGoals
-        .map((r) => ({
-          id: r.id,
-          name: r.name,
-          total_trials: r.total_trials,
-          correct_responses: r.number_of_correct_response,
-        })),
+      maladaptives: this.maladaptives.map((m) => ({
+        id: m.id,
+        name: m.name,
+        ocurrences: m.number_of_occurrences,
+      })),
+      replacements: this.replacementGoals.map((r) => ({
+        id: r.id,
+        name: r.name,
+        total_trials: r.total_trials,
+        correct_responses: r.number_of_correct_response,
+      })),
       interventions: this.intervention_added,
       billed: false,
       paid: false,
@@ -594,7 +615,10 @@ export class NoteRbtComponent implements OnInit {
     };
 
     const request = this.isEditMode
-      ? this.notesRbtV2Service.update(noteData as unknown as NoteRbtV2, this.noteId)
+      ? this.notesRbtV2Service.update(
+          noteData as unknown as NoteRbtV2,
+          this.noteId
+        )
       : this.notesRbtV2Service.create(noteData as unknown as NoteRbtV2);
 
     request.subscribe({
@@ -603,25 +627,31 @@ export class NoteRbtComponent implements OnInit {
           Swal.fire({
             icon: 'success',
             title: 'Success',
-            text: `RBT Note ${this.isEditMode ? 'updated' : 'saved'} successfully!`,
+            text: `RBT Note ${
+              this.isEditMode ? 'updated' : 'saved'
+            } successfully!`,
             showConfirmButton: false,
             timer: 1500,
           });
-          this.router.navigate([
-            this.routes.noteRbt.list,
-            this.patient_id,
-          ]);
+          this.router.navigate([this.routes.noteRbt.list, this.patient_id]);
         } else {
           Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: `There was an error ${this.isEditMode ? 'updating' : 'saving'} the note.`,
+            text: `There was an error ${
+              this.isEditMode ? 'updating' : 'saving'
+            } the note.`,
           });
         }
       },
       error: (error) => {
-        console.error(`Error ${this.isEditMode ? 'updating' : 'saving'} RBT note:`, error);
-        let errorMessage = `There was an error ${this.isEditMode ? 'updating' : 'saving'} the note.`;
+        console.error(
+          `Error ${this.isEditMode ? 'updating' : 'saving'} RBT note:`,
+          error
+        );
+        let errorMessage = `There was an error ${
+          this.isEditMode ? 'updating' : 'saving'
+        } the note.`;
 
         if (error.error?.message) {
           errorMessage = error.error.message;
@@ -679,12 +709,12 @@ export class NoteRbtComponent implements OnInit {
         totalTrials: r.total_trials,
         correctResponses: r.number_of_correct_response,
       })),
-      interventions: this.intervention_added.length > 0
-      ? this.intervention_added
-      : [],
+      interventions:
+        this.intervention_added.length > 0 ? this.intervention_added : [],
       mood: this.client_appeared,
       evidencedBy: this.as_evidenced_by,
-      progressNoted: this.progress_noted_this_session_compared_to_previous_session,
+      progressNoted:
+        this.progress_noted_this_session_compared_to_previous_session,
       rbtModeledAndDemonstrated: this.rbt_modeled_and_demonstrated_to_caregiver,
       nextSession: this.next_session_is_scheduled_for,
     };
@@ -775,16 +805,27 @@ export class NoteRbtComponent implements OnInit {
       missingFields.push('Summary note');
     }
 
-    if (!this.next_session_is_scheduled_for || this.next_session_is_scheduled_for === '') {
+    if (
+      !this.next_session_is_scheduled_for ||
+      this.next_session_is_scheduled_for === ''
+    ) {
       missingFields.push('Next session date');
     }
 
-    if (!this.rbt_modeled_and_demonstrated_to_caregiver || this.rbt_modeled_and_demonstrated_to_caregiver === '') {
+    if (
+      !this.rbt_modeled_and_demonstrated_to_caregiver ||
+      this.rbt_modeled_and_demonstrated_to_caregiver === ''
+    ) {
       missingFields.push('RBT modeled and demonstrated to caregiver');
     }
 
-    if (!this.progress_noted_this_session_compared_to_previous_session || this.progress_noted_this_session_compared_to_previous_session === '') {
-      missingFields.push('Progress noted this session compared to previous session');
+    if (
+      !this.progress_noted_this_session_compared_to_previous_session ||
+      this.progress_noted_this_session_compared_to_previous_session === ''
+    ) {
+      missingFields.push(
+        'Progress noted this session compared to previous session'
+      );
     }
 
     if (!this.as_evidenced_by || this.as_evidenced_by === '') {
@@ -818,7 +859,9 @@ export class NoteRbtComponent implements OnInit {
           // First load the patient to get pa_services and other data
           this.getPatient(this.patient_id).then(() => {
             // Set PA service first since other fields depend on it
-            const paService = this.pa_services.find(s => s.id === note.pa_service_id);
+            const paService = this.pa_services.find(
+              (s) => s.id === note.pa_service_id
+            );
             if (paService) {
               this.selectedPaService = new PaServiceV2({
                 id: paService.id,
@@ -828,7 +871,7 @@ export class NoteRbtComponent implements OnInit {
                 n_units: paService.n_units,
                 spent_units: paService.spent_units,
                 start_date: new Date(paService.start_date),
-                end_date: new Date(paService.end_date)
+                end_date: new Date(paService.end_date),
               });
               // Trigger CPT code selection
               this.onPaServiceSelect({ value: this.selectedPaService });
@@ -837,27 +880,27 @@ export class NoteRbtComponent implements OnInit {
             // Handle maladaptives from note
             if (note.maladaptives) {
               this.maladaptives = note.maladaptives
-                .filter(m => m.ocurrences !== 0)
-                .map(m => ({
+                .filter((m) => m.ocurrences !== 0)
+                .map((m) => ({
                   id: m.id,
                   name: m.name,
                   number_of_occurrences: m.ocurrences || 0,
-                  description: m.name // Add description field
+                  description: m.name, // Add description field
                 }));
             }
 
             // Handle replacements from note
             if (note.replacements) {
               this.replacementGoals = note.replacements
-                .filter(r => r.total_trials !== 0)
-                .map(r => ({
+                .filter((r) => r.total_trials !== 0)
+                .map((r) => ({
                   id: r.id,
                   name: r.name,
                   total_trials: r.total_trials || 0,
                   number_of_correct_response: r.correct_responses || 0,
                   status: 'active',
                   objectives: [],
-                  description: r.name // Add description field
+                  description: r.name, // Add description field
                 }));
 
               // Force change detection by creating a new array reference
@@ -866,11 +909,14 @@ export class NoteRbtComponent implements OnInit {
 
             // Handle interventions from note
             if (note.interventions) {
-              this.interventionsList = this.generateInterventionsList(note.interventions.map(title => ({
-                id: title,
-                title: title,
-                description: '',
-              })));
+              this.interventionsList = this.generateInterventionsList(
+                note.interventions.map((title) => ({
+                  id: 0,
+                  title: title,
+                  description: '',
+                  added_date: new Date(),
+                }))
+              );
             }
 
             // Time fields - ensure proper format HH:mm
@@ -903,22 +949,31 @@ export class NoteRbtComponent implements OnInit {
             this.doctor_id = note.provider_id;
             this.client_appeared = note.client_appeared;
             this.as_evidenced_by = note.as_evidenced_by;
-            this.rbt_modeled_and_demonstrated_to_caregiver = note.rbt_modeled_and_demonstrated_to_caregiver;
-            this.progress_noted_this_session_compared_to_previous_session = note.progress_noted_this_session_compared_to_previous_session;
-            this.next_session_is_scheduled_for = note.next_session_is_scheduled_for as string;
+            this.rbt_modeled_and_demonstrated_to_caregiver =
+              note.rbt_modeled_and_demonstrated_to_caregiver;
+            this.progress_noted_this_session_compared_to_previous_session =
+              note.progress_noted_this_session_compared_to_previous_session;
+            this.next_session_is_scheduled_for =
+              note.next_session_is_scheduled_for as string;
 
             // Convert numeric fields to strings for form display
             this.total_hour_session = String(note.session_length_total || 0);
-            this.session_length_total = String(note.session_length_morning_total || 0);
-            this.session_length_total2 = String(note.session_length_afternon_total || 0);
+            this.session_length_total = String(
+              note.session_length_morning_total || 0
+            );
+            this.session_length_total2 = String(
+              note.session_length_afternon_total || 0
+            );
 
             // Handle interventions
             if (note.interventions) {
               // Create a copy of the interventionsList with updated values
-              this.interventionsList = this.interventionsList.map(intervention => ({
-                ...intervention,
-                value: note.interventions.includes(intervention.id)
-              }));
+              this.interventionsList = this.interventionsList.map(
+                (intervention) => ({
+                  ...intervention,
+                  value: note.interventions.includes(intervention.id),
+                })
+              );
 
               // Set the intervention_added as the array of intervention IDs
               this.intervention_added = note.interventions;
@@ -932,35 +987,52 @@ export class NoteRbtComponent implements OnInit {
       error: (error) => {
         console.error('Error loading note:', error);
         Swal.fire('Error', 'There was an error loading the note.', 'error');
-      }
+      },
     });
   }
 
   public showWarningTrialsAndObjectives(): boolean {
-    const [hoursIn1, minutesIn1] = this.selectedValueTimeIn.split(':').map(Number);
-    const [hoursOut1, minutesOut1] = this.selectedValueTimeOut.split(':').map(Number);
-    const [hoursIn2, minutesIn2] = this.selectedValueTimeIn2.split(':').map(Number);
-    const [hoursOut2, minutesOut2] = this.selectedValueTimeOut2.split(':').map(Number);
+    const [hoursIn1, minutesIn1] = this.selectedValueTimeIn
+      .split(':')
+      .map(Number);
+    const [hoursOut1, minutesOut1] = this.selectedValueTimeOut
+      .split(':')
+      .map(Number);
+    const [hoursIn2, minutesIn2] = this.selectedValueTimeIn2
+      .split(':')
+      .map(Number);
+    const [hoursOut2, minutesOut2] = this.selectedValueTimeOut2
+      .split(':')
+      .map(Number);
 
-    const morningMinutes = hoursOut1 * 60 + minutesOut1 - (hoursIn1 * 60 + minutesIn1);
-    const afternoonMinutes = hoursOut2 * 60 + minutesOut2 - (hoursIn2 * 60 + minutesIn2);
+    const morningMinutes =
+      hoursOut1 * 60 + minutesOut1 - (hoursIn1 * 60 + minutesIn1);
+    const afternoonMinutes =
+      hoursOut2 * 60 + minutesOut2 - (hoursIn2 * 60 + minutesIn2);
     const totalMinutes = morningMinutes || 0 + afternoonMinutes || 0;
 
-    const objectivesIsOk = this.replacementGoals.filter(item => item.total_trials !== 0).length >= 5 ||
-                          this.replacementGoals.filter(item => item.total_trials !== 0).length === this.replacementGoals.length;
+    const objectivesIsOk =
+      this.replacementGoals.filter((item) => item.total_trials !== 0).length >=
+        5 ||
+      this.replacementGoals.filter((item) => item.total_trials !== 0).length ===
+        this.replacementGoals.length;
 
-    const total_trials = this.replacementGoals.reduce((suma, item) => suma + item.total_trials, 0)
-    const trialsIsOk = total_trials >= (totalMinutes/60)*10;
-    if(!objectivesIsOk) {
-      this.msjWarningTrialOrObjectives = 'The number of objectives worked on is very small';
+    const total_trials = this.replacementGoals.reduce(
+      (suma, item) => suma + item.total_trials,
+      0
+    );
+    const trialsIsOk = total_trials >= (totalMinutes / 60) * 10;
+    if (!objectivesIsOk) {
+      this.msjWarningTrialOrObjectives =
+        'The number of objectives worked on is very small';
       return true;
     }
-    if(!trialsIsOk) {
-      this.msjWarningTrialOrObjectives = 'The number of trials worked on is very small';
+    if (!trialsIsOk) {
+      this.msjWarningTrialOrObjectives =
+        'The number of trials worked on is very small';
       return true;
     }
 
     return false;
   }
-
 }

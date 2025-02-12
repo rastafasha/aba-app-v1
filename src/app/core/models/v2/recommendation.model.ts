@@ -14,7 +14,7 @@ export class Recommendation {
       id: 0,
       index: undefined, // Changed from 0
       cpt: '',
-      num_units: 0,
+      num_units: undefined,
       breakdown_per_week: '',
       location: '',
       description_service: '',

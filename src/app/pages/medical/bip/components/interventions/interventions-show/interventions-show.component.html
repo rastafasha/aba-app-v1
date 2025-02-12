@@ -11,7 +11,10 @@
     </div>
     <div class="row">
       <div *ngFor="let item of input" class="col-xs-12 col-sm-6">
-        <h4>{{ item.title }}</h4>
+        <h4>
+          {{ item.title }}
+        </h4>
+        <small> {{ item.added_date | date : "mediumDate" }} </small>
         <p>{{ item.description }}</p>
       </div>
     </div>
